@@ -1,15 +1,20 @@
 import React from 'react';
-import { ButtonComp } from '../../components';
+import { ButtonComp, HomeSvg } from '../../components';
 import styles from './styles.module.css';
 
 const HomeMain = () => {
     return (
         <div className={styles.cover}>
             <section className={styles.sectionI}>
+                <div className={styles.Svg}>
+                    <HomeSvg />
+                    <p className={styles.SMeApp}>SME App</p>
+                </div>
                 <div className={styles.topLeft}></div>
                 <div className={styles.topRight}></div>
                 <div className={styles.bottomleft}></div>
                 <div className={styles.bottomRight}></div>
+                <div className={styles.sectionBottom}></div>
             </section>
             <section className={styles.sectionII}>
                 <div>
@@ -403,7 +408,7 @@ const HomeMain = () => {
                                 <option value="Zimbabwe">Zimbabwe</option>
                             </select>
                         </div>
-                        <div>
+                        <div className={styles.select2}>
                             <label for="languages">Language</label>
                             <br />
                             <select
@@ -649,7 +654,14 @@ const HomeMain = () => {
                         </div>
                     </form>
                 </div>
-                {/* <ButtonComp /> */}
+                <div className={styles.bottom}>
+                    <p>
+                        Get onboard and have access to unlimited possibilites
+                        with your account!
+                    </p>
+
+                    <ButtonComp />
+                </div>
             </section>
         </div>
     );

@@ -24,24 +24,44 @@
 .select {
     font-size: 14px;
     font-weight: 800;
-    width: 100%;
+    width: 95%;
     margin-top: 0.844rem;
 }
 .selectI {
     font-size: 14px;
     font-weight: 800;
-    width: 50%;
+    width: 100%;
     margin-top: 0.844rem;
 }
 .form:nth-child(1) {
     width: 100%;
 }
-.form:nth-child(2) {
+.select2 {
     width: 30%;
+}
+.Svg {
+    position: absolute;
+    top: 4.375rem;
+    left: 18.25rem;
 }
 
 .form div label {
     margin-bottom: 3%;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+}
+.sectionBottom {
+    position: absolute;
+    bottom: 4.676rem;
+    left: 9.625rem;
+    background: rgba(108, 207, 0, 0.12);
+    border-radius: 36px;
+    padding: 5% 15% 3% 15%;
 }
 .sectionI {
     width: 50%;
@@ -55,22 +75,57 @@
     backdrop-filter: blur(4px);
 }
 .topLeft {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
         url('/Assets/Images/WomanWithMac.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
 }
 .topRight {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
         url('/Assets/Images/Clothe.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
 }
 .bottomleft {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
         url('/Assets/Images/Barber.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
 }
 .bottomRight {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
         url('/Assets/Images/Equipment.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
 }
 .sectionII {
-    padding-left: 2%;
+    padding-left: 7.625rem;
+    padding-right: 7.625rem;
     width: 50%;
+}
+.bottom {
+    margin-top: 5.344rem;
+    width: fit-content;
+}
+.bottom p {
+    margin-bottom: 1.406rem;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #929292;
+}
+.SMeApp {
+    font-family: 'TT Norms';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #ffffff;
+    text-align: center;
 }
