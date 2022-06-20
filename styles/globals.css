@@ -1,5 +1,5 @@
 :root {
-    --global-button-padding: 2% 10% 2% 10%;
+    --global-button-padding: 1.2rem 12.568rem 1.2rem 12.568rem;
     --global-button-color: #ffffff;
     --global-button-backgroundColor: #6ccf00;
     --global-button-border: none;
@@ -33,6 +33,7 @@ select {
     padding: var(--global-select-padding);
     border-color: var(--global-select-borderColor);
     color: var(--global-select-color);
+    cursor: pointer;
 }
 
 button {
@@ -41,4 +42,6 @@ button {
     background-color: var(--global-button-backgroundColor);
     border: var(--global-button-border);
     border-radius: var(--global-button-borderRadius);
+    width: 100%;
+    cursor: pointer;
 }
