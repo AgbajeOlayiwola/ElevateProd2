@@ -23,8 +23,8 @@ const Signup = () => {
                 </h2>
                 <svg
                     width="2"
-                    height="342"
-                    viewBox="0 0 2 342"
+                    height="227"
+                    viewBox="0 0 2 227"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
@@ -96,7 +96,12 @@ const Signup = () => {
                         <span>This field is required</span>
                     )}
                 </form>
-                <ButtonComp link="../Success" />
+                <ButtonComp link="../Verify" text="Proceed" />
+                <div>
+                    <p className={styles.accout}>
+                        Do you Have An Accout? <span>Sign up</span>
+                    </p>
+                </div>
             </section>
         </div>
     );

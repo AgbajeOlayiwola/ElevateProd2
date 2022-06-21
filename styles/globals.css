@@ -35,6 +35,7 @@ select {
     border-color: var(--global-select-borderColor);
     color: var(--global-select-color);
     cursor: pointer;
+    outline: none;
 }
 input {
     border-radius: var(--global-select-borderRadius);
@@ -43,6 +44,7 @@ input {
     border-color: var(--global-select-borderColor);
     color: var(--global-select-color);
     width: 100%;
+    outline: none;
 }
 button {
     padding: var(--global-button-padding);
@@ -52,4 +54,5 @@ button {
     border-radius: var(--global-button-borderRadius);
     width: 100%;
     cursor: pointer;
+    outline: none;
 }

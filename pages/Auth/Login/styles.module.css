@@ -1,0 +1,106 @@
+.sectionCove {
+    display: flex;
+}
+.sectionI {
+    height: 100vh;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
+        url('/Assets/Images/bakingwoman.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
+    padding-left: 7.625rem;
+    padding-right: 7.625rem;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sectionII {
+    width: 50%;
+    height: 100vh;
+    padding-left: 7.625rem;
+    padding-right: 7.625rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bvn {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-top: 40vh;
+}
+.bvn span {
+    color: #6ccf00;
+}
+.welc h2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    /* identical to box height */
+    margin-bottom: 0.5rem;
+    color: #005b82;
+}
+.welc p {
+    margin-top: 0px;
+    margin-bottom: 3.56rem;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 152.52%;
+    /* or 21px */
+
+    color: #8c8c8c;
+}
+.form div label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    margin-bottom: 0.5rem;
+    color: #3e3e3e;
+}
+
+.form div input {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+.emailInput {
+    background-image: url('/Assets/Svgs/mail.svg');
+    background-position: 8%;
+    background-repeat: no-repeat;
+    padding-left: 65px;
+}
+.passwordInput {
+    background-image: url('/Assets/Svgs/lock.svg');
+    background-position: 8%;
+    background-repeat: no-repeat;
+    padding-left: 65px;
+    position: relative;
+}
+
+.accout {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #a5a5a5;
+}
+.accout span {
+    color: #005b82;
+    font-weight: 600;
+}
+.visible {
+    position: absolute;
+}

@@ -660,7 +660,7 @@ const HomeMain = () => {
                         with your account!
                     </p>
 
-                    <ButtonComp link="./Auth/SignUp" />
+                    <ButtonComp link="./Auth/SignUp" text="Proceed" />
                 </div>
             </section>
         </div>
