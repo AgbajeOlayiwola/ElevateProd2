@@ -1,0 +1,65 @@
+.cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bvn {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-top: 15vh;
+}
+.termcondition {
+    width: fit-content;
+    margin-bottom: 3rem;
+    margin-right: 0.75rem;
+}
+.termcondition label span {
+    color: #005b82;
+}
+.bvn span {
+    color: #6ccf00;
+}
+.sectionI {
+    width: 50%;
+    height: 100vh;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
+        url('/Assets/Images/signupimage.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
+    padding-left: 7.625rem;
+    padding-right: 7.625rem;
+    height: 100vh;
+}
+.sectionII {
+    width: 50%;
+    height: 100vh;
+    padding-left: 7.625rem;
+    padding-right: 7.625rem;
+}
+.textInput {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+.form div label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+}
+.signup {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    color: #005b82;
+}

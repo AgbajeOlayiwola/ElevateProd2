@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 
-const ButtonComp = () => {
+const ButtonComp = ({link}) => {
     return (
-        <Link href="#">
+        <Link href={link}>
             <button>Proceed</button>
         </Link>
     );
