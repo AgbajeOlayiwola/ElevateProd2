@@ -2,17 +2,23 @@ import React from 'react';
 import { ButtonComp } from '../../../components';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 const Login = () => {
+    const router = useRouter();
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
-    const onSubmit = (data) => console.log(data);
 
-    console.log(watch('example')); // watch input value by passing the name of it
+    const onSubmit = (data) => {
+        console.log(data);
+        router.push('#');
+    };
+
+    console.log(watch('email')); // watch input value by passing the name of it
 
     return (
         <div className={styles.sectionCove}>
@@ -32,7 +38,7 @@ const Login = () => {
                         <path
                             d="M1 0V387"
                             stroke="white"
-                            stroke-dasharray="8 8"
+                            strokeDasharray="8 8"
                         />
                     </svg>
                 </div>
@@ -46,15 +52,26 @@ const Login = () => {
                             Login.
                         </p>
                     </div>
-                    <form className={styles.form}>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className={styles.form}
+                    >
                         <div>
                             <label>Email Address</label>
                             <br />
                             <input
                                 type="email"
+                                name="email"
                                 placeholder="Enter Your Name"
                                 className={styles.emailInput}
-                                {...register('example')}
+                                {...register('email', {
+                                    required: 'Email is required',
+                                    pattern: {
+                                        // eslint-disable-next-line
+                                        value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                        message: 'Invalid email address'
+                                    }
+                                })}
                             />
                         </div>
                         <div>
@@ -62,9 +79,13 @@ const Login = () => {
                             <br />
                             <input
                                 type="password"
+                                name="password"
                                 placeholder="Enter Your Password"
                                 className={styles.passwordInput}
-                                {...register('example')}
+                                required
+                                {...register('password', {
+                                    required: 'Password is required'
+                                })}
                             />
                             {/* <svg
                                 className={styles.visible}
@@ -80,7 +101,7 @@ const Login = () => {
                                 />
                             </svg> */}
                         </div>
-                        <ButtonComp link="#" text="Login" />
+                        <ButtonComp text="Login" type="submit" />
                     </form>
                     <div>
                         <p className={styles.accout}>

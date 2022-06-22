@@ -42,10 +42,12 @@ input {
     border-radius: var(--global-select-borderRadius);
     background-color: var(--global-select-backgroundColor);
     padding: var(--global-inputtext-padding);
-    border-color: var(--global-select-borderColor);
+    /* border-color: var(--global-select-borderColor); */
+    border: 1px solid #dbdbdb;
     color: var(--global-select-color);
     width: 100%;
     outline: none;
+    box-sizing: border-box;
 }
 button {
     padding: var(--global-button-padding);

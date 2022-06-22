@@ -1,8 +1,24 @@
 import React from 'react';
 import { ButtonComp, HomeSvg } from '../../components';
 import styles from './styles.module.css';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 
 const HomeMain = () => {
+    const router = useRouter();
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors }
+    } = useForm();
+    const onSubmit = ({ data }) => {
+        console.log(data);
+        router.push('./Auth/SignUp');
+    };
+    console.log(watch('example')); // watch input value by passing the name of it
+
     return (
         <div className={styles.cover}>
             <section className={styles.sectionI}>
@@ -21,11 +37,15 @@ const HomeMain = () => {
                     <h3 className={styles.elevatenow}>elevate now</h3>
                 </div>
                 <div>
-                    <form className={styles.form}>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className={styles.form}
+                    >
                         <div className={styles.select2}>
                             <label htmlFor="languages">Language</label>
                             <br />
                             <select
+                                {...register('languages', { required: true })}
                                 id="languages"
                                 className={styles.selectI}
                                 name="languages"
@@ -271,7 +291,10 @@ const HomeMain = () => {
                                 Choose Your Country Where you Run Busines
                             </label>
                             <br />
-                            <select className={styles.select}>
+                            <select
+                                className={styles.select}
+                                {...register('countries', { required: true })}
+                            >
                                 <option value="Afghanistan">Afghanistan</option>
                                 <option value="Åland Islands">
                                     Åland Islands
@@ -652,6 +675,7 @@ const HomeMain = () => {
                                 <option value="Zimbabwe">Zimbabwe</option>
                             </select>
                         </div>
+                        <ButtonComp text="Proceed" type="submit" />
                     </form>
                 </div>
                 <div className={styles.bottom}>
@@ -659,8 +683,6 @@ const HomeMain = () => {
                         Get onboard and have access to unlimited possibilites
                         with your account!
                     </p>
-
-                    <ButtonComp link="./Auth/SignUp" text="Proceed" />
                 </div>
             </section>
         </div>
