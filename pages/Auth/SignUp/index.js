@@ -2,16 +2,21 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './style.module.css';
 import { ButtonComp } from '../../../components';
+import { useRouter } from 'next/router';
 
 const Signup = () => {
+    const router = useRouter();
+
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
-    const onSubmit = (data) => console.log(data);
-
+    const onSubmit = ({ data }) => {
+        console.log(data);
+        router.push('../Verify');
+    };
     console.log(watch('example')); // watch input value by passing the name of it
 
     return (
@@ -28,7 +33,7 @@ const Signup = () => {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
-                    <path d="M1 0V387" stroke="white" stroke-dasharray="8 8" />
+                    <path d="M1 0V387" stroke="white" strokeDasharray="8 8" />
                 </svg>
             </section>
             <section className={styles.sectionII}>
@@ -47,8 +52,7 @@ const Signup = () => {
                         <input
                             placeholder="Enter Your Name"
                             className={styles.textInput}
-                            defaultValue="test"
-                            {...register('example')}
+                            {...register('Name')}
                         />
                     </div>
 
@@ -59,7 +63,8 @@ const Signup = () => {
                         <input
                             placeholder="Enter Your Email"
                             className={styles.textInput}
-                            {...register('exampleRequired', { required: true })}
+                            required
+                            {...register('Email', { required: true })}
                         />
                     </div>
 
@@ -70,7 +75,7 @@ const Signup = () => {
                         <input
                             placeholder="Password"
                             className={styles.textInput}
-                            {...register('exampleRequired', { required: true })}
+                            {...register('password', { required: true })}
                         />
                     </div>
 
@@ -81,6 +86,7 @@ const Signup = () => {
                         <input
                             placeholder="Confirm Password"
                             className={styles.textInput}
+                            required
                             {...register('exampleRequired', { required: true })}
                         />
                     </div>
@@ -95,8 +101,9 @@ const Signup = () => {
                     {errors.exampleRequired && (
                         <span>This field is required</span>
                     )}
+                    <ButtonComp text="Proceed" type="submit" />
                 </form>
-                <ButtonComp link="../Verify" text="Proceed" />
+
                 <div>
                     <p className={styles.accout}>
                         Do you Have An Accout? <span>Sign up</span>
