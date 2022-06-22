@@ -1,0 +1,36 @@
+.verifyCov {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.body {
+    text-align: center;
+    width: 44%;
+    background: #fefefe;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 4.92rem 4.8rem;
+}
+.verifyEmail {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin-bottom: 0.8rem;
+    color: #005b82;
+}
+.hi {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    width: 70%;
+    text-align: center;
+    color: #a5a5a5;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+}

@@ -9,6 +9,7 @@
     --global-select-borderColor: #dbdbdb;
     --global-select-backgroundColor: #f8f8f8;
     --global-select-color: #235b7f;
+    --global-inputtext-padding: 1rem 1rem;
 }
 
 html,
@@ -34,8 +35,17 @@ select {
     border-color: var(--global-select-borderColor);
     color: var(--global-select-color);
     cursor: pointer;
+    outline: none;
 }
-
+input {
+    border-radius: var(--global-select-borderRadius);
+    background-color: var(--global-select-backgroundColor);
+    padding: var(--global-inputtext-padding);
+    border-color: var(--global-select-borderColor);
+    color: var(--global-select-color);
+    width: 100%;
+    outline: none;
+}
 button {
     padding: var(--global-button-padding);
     color: var(--global-button-color);
@@ -44,4 +54,5 @@ button {
     border-radius: var(--global-button-borderRadius);
     width: 100%;
     cursor: pointer;
+    outline: none;
 }
