@@ -34,7 +34,7 @@ const Signup = () => {
             <section className={styles.sectionII}>
                 <div>
                     <div>
-                        <h1 className={styles.signup}>Sign Up</h1>
+                        <h1 className={styles.signup}>Sign up</h1>
                     </div>
                 </div>
                 {/* /* "handleSubmit" will validate your inputs before invoking
