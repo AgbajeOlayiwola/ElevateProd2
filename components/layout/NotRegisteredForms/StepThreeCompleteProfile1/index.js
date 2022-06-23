@@ -1,9 +1,7 @@
 import React from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
-// import {
 
-// } from '../../RegisteredForm/styles.module';
 import {
     CardContainer,
     RegistrationStatus
@@ -18,7 +16,7 @@ import {
     InputWrapper
 } from './styles.module';
 
-const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
+const StepThreeCompleteProfile1 = () => {
     const {
         register,
         handleSubmit,
@@ -34,7 +32,7 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
             <CardContainer>
                 {/* <ProfileCard width="50%" height="0"> */}
                 <CardHeadingBVN>
-                    <LeftHeading>BVN (OTP) Authenticator</LeftHeading>
+                    <LeftHeading>Complete Profile</LeftHeading>
                     {/* <Imag 
                     src="/width" 
                     alt="lineImage" /> */}
@@ -68,7 +66,7 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                             color="#ffffff"
                             fontWeight="900"
                             margin="20% 0 0 0"
-                            onClick={handleShowThirdStep}
+                            // onClick={handleShowSecondStep}
                         />
                     </form>
                 </RegistrationStatus>{' '}
@@ -77,4 +75,4 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
     );
 };
 
-export default StepTwoBVNAuthenticator;
+export default StepThreeCompleteProfile1;

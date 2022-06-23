@@ -19,11 +19,14 @@ import {
 } from '../ProfileSetup/styles.module';
 import RegisteredForm from '../../../components/layout/RegisteredForm';
 import StepTwoBVNAuthenticator from '../../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
+import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
 
 const ProfileSetup = () => {
     const [isRegistered, setIsRegistered] = useState(false);
 
+    const [showFirstStep, setShowFirstStep] = useState(true);
     const [showSecondStep, setShowSecondStep] = useState(false);
+    const [showThirdStep, setShowThirdStep] = useState(false);
 
     // A function to handle business registration status
     const handleRegistrationStatus = () => {
@@ -33,6 +36,13 @@ const ProfileSetup = () => {
     // Handle the mulstistep hide and display of a particular step
     const handleShowSecondStep = () => {
         setShowSecondStep(true);
+        setShowFirstStep(false);
+    };
+
+    // Handle the multistep display the third step
+    const handleShowThirdStep = () => {
+        setShowThirdStep(true);
+        setShowSecondStep(false);
     };
 
     return (
@@ -40,7 +50,7 @@ const ProfileSetup = () => {
             {/* <ProfileCard width="50%" height="80" text="profile card" /> */}
             {/* yes
             </ProfileCard> */}
-            {!showSecondStep ? (
+            {showFirstStep ? (
                 <CardContainer>
                     {/* <ProfileCard width="50%" height="0"> */}
                     <CardHeading>
@@ -89,9 +99,15 @@ const ProfileSetup = () => {
             )}
 
             {/* Second step of the multistep form if registered */}
-            {showSecondStep ? <StepTwoBVNAuthenticator /> : ''}
+            {showSecondStep ? (
+                <StepTwoBVNAuthenticator
+                    handleShowThirdStep={handleShowThirdStep}
+                />
+            ) : (
+                ''
+            )}
 
-            {/* PERSONAL DETAILS */}
+            {showThirdStep ? <StepThreeCompleteProfile1 /> : ''}
         </BodyWrapper>
     );
 };
