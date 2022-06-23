@@ -13,6 +13,7 @@ import {
     RegStatusHeading,
     ButtonWrapper
 } from '../ProfileSetup/styles.module';
+import RegisteredForm from '../../../components/layout/RegisteredForm';
 
 const ProfileSetup = () => {
     const [isRegistered, setIsRegistered] = useState(false);
@@ -57,7 +58,8 @@ const ProfileSetup = () => {
                                     color="#ffffff"
                                     fontWeight="900"
                                     margin="0"
-                                    onClick={handleRegistrationStatus}
+                                    // onClick={handleRegistrationStatus}
+                                    onClick={handleShowSecondStep}
                                 />
                                 <ButtonComp
                                     width="50%"
@@ -71,6 +73,12 @@ const ProfileSetup = () => {
                                 />
                             </ButtonWrapper>
                         </RegStatusHeading>
+
+                        {/* THE FORM */}
+                        <RegisteredForm />
+
+                        {/* END OF THE FORM */}
+
                         <ButtonComp
                             width="100%"
                             height="52px"
@@ -142,6 +150,56 @@ const ProfileSetup = () => {
             ) : (
                 ''
             )}
+
+            {/* PERSONAL DETAILS */}
+            <CardContainer>
+                {/* <ProfileCard width="50%" height="0"> */}
+                <CardHeading>
+                    <LeftHeading>Complete Profile</LeftHeading>
+                    {/* <Imag 
+                    src="/width" 
+                    alt="lineImage" /> */}
+                    <h6>Progress bar here</h6>
+                </CardHeading>
+                <RegistrationStatus>
+                    {/* <RegStatusHeading>
+                            Is your business registered?
+                            <ButtonWrapper>
+                                <ButtonComp
+                                    width="50%"
+                                    height="52px"
+                                    text="Yes"
+                                    type="button"
+                                    backgroundColor="#6ccf00"
+                                    color="#ffffff"
+                                    fontWeight="900"
+                                    margin="0"
+                                />
+                                <ButtonComp
+                                    width="50%"
+                                    height="52px"
+                                    text="No"
+                                    type="button"
+                                    backgroundColor="#F8F8F8"
+                                    color="#A5A5A5"
+                                    fontWeight="900"
+                                    margin="0"
+                                />
+                            </ButtonWrapper>
+                        </RegStatusHeading> */}
+                    <ButtonComp
+                        width="100%"
+                        height="52px"
+                        text="Next"
+                        type="button"
+                        backgroundColor="#6ccf00"
+                        color="#ffffff"
+                        fontWeight="900"
+                        margin="80% 0 0 0"
+                    />
+                </RegistrationStatus>
+                {/* </ProfileCard> */}
+            </CardContainer>
         </BodyWrapper>
     );
 };
