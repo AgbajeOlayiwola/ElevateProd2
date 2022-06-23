@@ -2,18 +2,26 @@ import React from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 
+import { RegistrationStatus } from '../../../../pages/Onboarding/ProfileSetup/styles.module';
 import {
     CardContainer,
-    RegistrationStatus
-} from '../../../../pages/Onboarding/ProfileSetup/styles.module';
-import {
     CardHeadingBVN,
     LeftHeading,
-    SmallInstructionText,
+    // SmallInstructionText,
     Label,
     FormInput,
     ResetOTP,
-    InputWrapper
+    InputWrapper,
+    ProgressBar,
+    SmallCardContainer,
+    RegStatusHeading,
+    ButtonWrapper,
+    ToggleYes,
+    ToggleNo,
+    ToggleYesText,
+    ToggleNoText,
+    GenderWrapper,
+    LastFieldAndButton
 } from './styles.module';
 
 const StepThreeCompleteProfile1 = () => {
@@ -30,37 +38,70 @@ const StepThreeCompleteProfile1 = () => {
     return (
         <div>
             <CardContainer>
-                {/* <ProfileCard width="50%" height="0"> */}
                 <CardHeadingBVN>
-                    <LeftHeading>Complete Profile</LeftHeading>
+                    <LeftHeading>Complete your Profile</LeftHeading>
                     {/* <Imag 
                     src="/width" 
                     alt="lineImage" /> */}
-                    <h6>Progress bar here</h6>
+                    <ProgressBar>Progress bar here</ProgressBar>
                 </CardHeadingBVN>
-                <SmallInstructionText>
-                    An OTP has been sent to your Phone number registered with
-                    BVN. Please enter the OTP below to complete your profile.
-                </SmallInstructionText>
-                <RegistrationStatus>
-                    <form onSubmit={handleSubmit(sendOTP)}>
-                        {/* register your input into the hook by invoking the "register" function */}
-                        <div>
-                            <Label>Input OTP</Label>
+                {/* The small card that wraps the form */}
+                <form>
+                    <SmallCardContainer>
+                        <ButtonWrapper>
+                            <ToggleNo>
+                                <ToggleNoText>Personal details</ToggleNoText>
+                            </ToggleNo>
+                            <ToggleYes>
+                                <ToggleYesText>Business details</ToggleYesText>
+                            </ToggleYes>
+                        </ButtonWrapper>
+                        <div style={{ marginTop: '2rem' }}>
+                            <Label>Enter your Full Name</Label>
                             <br />
-                            <FormInput type="number" {...register('bvn')} />
+                            <FormInput
+                                type="text"
+                                placeholder="business name"
+                                {...register('bvn')}
+                            />
                         </div>
-                        <ResetOTP>
-                            <p style={{ color: '#005B82', cursor: 'pointer' }}>
-                                Resend OTP
-                            </p>
-                            <p style={{ cursor: 'pointer' }}>Clear</p>
-                        </ResetOTP>
-
+                        <GenderWrapper>
+                            <Label>Select your Gender</Label>
+                            <br />
+                            <div>
+                                <FormInput
+                                    type="radio"
+                                    name="gender"
+                                    value="male"
+                                    {...register('bvn')}
+                                />
+                                <label>Male</label>
+                            </div>
+                            <div>
+                                <FormInput
+                                    type="radio"
+                                    name="gender"
+                                    value="female"
+                                    {...register('bvn')}
+                                />
+                                <label>Female</label>
+                            </div>
+                        </GenderWrapper>
+                    </SmallCardContainer>
+                    <LastFieldAndButton>
+                        <div>
+                            <Label>Enter referral code(Optional)</Label>
+                            <br />
+                            <FormInput
+                                type="text"
+                                placeholder="Enter code"
+                                {...register('bvn')}
+                            />
+                        </div>
                         <ButtonComp
                             width="100%"
                             height="52px"
-                            text="Proceed"
+                            text="Next"
                             type="button"
                             backgroundColor="#6ccf00"
                             color="#ffffff"
@@ -68,8 +109,11 @@ const StepThreeCompleteProfile1 = () => {
                             margin="20% 0 0 0"
                             // onClick={handleShowSecondStep}
                         />
-                    </form>
-                </RegistrationStatus>{' '}
+                    </LastFieldAndButton>
+                </form>
+                {/* <RegistrationStatus>
+                   
+                </RegistrationStatus>{' '} */}
             </CardContainer>
         </div>
     );
