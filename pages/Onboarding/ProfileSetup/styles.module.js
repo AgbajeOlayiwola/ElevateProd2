@@ -48,5 +48,41 @@ export const RegStatusHeading = styled.h6`
     margin-right: auto;
 `;
 export const ButtonWrapper = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
     margin-top: 1rem;
+    background: #f8f8f8;
+`;
+export const ToggleNo = styled.span`
+    width: 50%;
+    height: 50px;
+    background: #6ccf00;
+    border-radius: 12px;
+    cursor: pointer;
+`;
+export const ToggleYes = styled.span`
+    width: 40%;
+    height: 50px;
+    border-radius: 12px;
+    background: #f8f8f8;
+    cursor: pointer;
+`;
+export const ToggleNoText = styled.p`
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    color: #ffffff;
+`;
+export const ToggleYesText = styled.p`
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    color: #a5a5a5;
 `;

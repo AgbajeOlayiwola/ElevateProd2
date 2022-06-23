@@ -11,9 +11,14 @@ import {
     LeftHeading,
     RegistrationStatus,
     RegStatusHeading,
-    ButtonWrapper
+    ButtonWrapper,
+    ToggleYes,
+    ToggleNo,
+    ToggleYesText,
+    ToggleNoText
 } from '../ProfileSetup/styles.module';
 import RegisteredForm from '../../../components/layout/RegisteredForm';
+import StepTwoBVNAuthenticator from '../../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
 
 const ProfileSetup = () => {
     const [isRegistered, setIsRegistered] = useState(false);
@@ -49,37 +54,23 @@ const ProfileSetup = () => {
                         <RegStatusHeading>
                             Is your business registered?
                             <ButtonWrapper>
-                                <ButtonComp
-                                    width="50%"
-                                    height="52px"
-                                    text="Yes"
-                                    type="button"
-                                    backgroundColor="#6ccf00"
-                                    color="#ffffff"
-                                    fontWeight="900"
-                                    margin="0"
-                                    // onClick={handleRegistrationStatus}
-                                    onClick={handleShowSecondStep}
-                                />
-                                <ButtonComp
-                                    width="50%"
-                                    height="52px"
-                                    text="No"
-                                    type="button"
-                                    backgroundColor="#F8F8F8"
-                                    color="#A5A5A5"
-                                    fontWeight="900"
-                                    margin="0"
-                                />
+                                <ToggleNo>
+                                    <ToggleNoText>No</ToggleNoText>
+                                </ToggleNo>
+                                <ToggleYes>
+                                    <ToggleYesText>Yes</ToggleYesText>
+                                </ToggleYes>
                             </ButtonWrapper>
                         </RegStatusHeading>
 
                         {/* THE FORM */}
-                        <RegisteredForm />
+                        <RegisteredForm
+                            handleShowSecondStep={handleShowSecondStep}
+                        />
 
                         {/* END OF THE FORM */}
 
-                        <ButtonComp
+                        {/* <ButtonComp
                             width="100%"
                             height="52px"
                             text="Next"
@@ -89,7 +80,7 @@ const ProfileSetup = () => {
                             fontWeight="900"
                             margin="80% 0 0 0"
                             onClick={handleShowSecondStep}
-                        />
+                        /> */}
                     </RegistrationStatus>
                     {/* </ProfileCard> */}
                 </CardContainer>
@@ -98,108 +89,9 @@ const ProfileSetup = () => {
             )}
 
             {/* Second step of the multistep form if registered */}
-            {showSecondStep ? (
-                <CardContainer>
-                    {/* <ProfileCard width="50%" height="0"> */}
-                    <CardHeading>
-                        <LeftHeading>Complete Profile</LeftHeading>
-                        {/* <Imag 
-                    src="/width" 
-                    alt="lineImage" /> */}
-                        <h6>Progress bar here</h6>
-                    </CardHeading>
-                    <RegistrationStatus>
-                        <RegStatusHeading>
-                            Is your business registered?
-                            <ButtonWrapper>
-                                <ButtonComp
-                                    width="50%"
-                                    height="52px"
-                                    text="Yes"
-                                    type="button"
-                                    backgroundColor="#6ccf00"
-                                    color="#ffffff"
-                                    fontWeight="900"
-                                    margin="0"
-                                />
-                                <ButtonComp
-                                    width="50%"
-                                    height="52px"
-                                    text="No"
-                                    type="button"
-                                    backgroundColor="#F8F8F8"
-                                    color="#A5A5A5"
-                                    fontWeight="900"
-                                    margin="0"
-                                />
-                            </ButtonWrapper>
-                        </RegStatusHeading>
-                        <ButtonComp
-                            width="100%"
-                            height="52px"
-                            text="Next"
-                            type="button"
-                            backgroundColor="#6ccf00"
-                            color="#ffffff"
-                            fontWeight="900"
-                            margin="80% 0 0 0"
-                        />
-                    </RegistrationStatus>
-                    {/* </ProfileCard> */}
-                </CardContainer>
-            ) : (
-                ''
-            )}
+            {showSecondStep ? <StepTwoBVNAuthenticator /> : ''}
 
             {/* PERSONAL DETAILS */}
-            <CardContainer>
-                {/* <ProfileCard width="50%" height="0"> */}
-                <CardHeading>
-                    <LeftHeading>Complete Profile</LeftHeading>
-                    {/* <Imag 
-                    src="/width" 
-                    alt="lineImage" /> */}
-                    <h6>Progress bar here</h6>
-                </CardHeading>
-                <RegistrationStatus>
-                    {/* <RegStatusHeading>
-                            Is your business registered?
-                            <ButtonWrapper>
-                                <ButtonComp
-                                    width="50%"
-                                    height="52px"
-                                    text="Yes"
-                                    type="button"
-                                    backgroundColor="#6ccf00"
-                                    color="#ffffff"
-                                    fontWeight="900"
-                                    margin="0"
-                                />
-                                <ButtonComp
-                                    width="50%"
-                                    height="52px"
-                                    text="No"
-                                    type="button"
-                                    backgroundColor="#F8F8F8"
-                                    color="#A5A5A5"
-                                    fontWeight="900"
-                                    margin="0"
-                                />
-                            </ButtonWrapper>
-                        </RegStatusHeading> */}
-                    <ButtonComp
-                        width="100%"
-                        height="52px"
-                        text="Next"
-                        type="button"
-                        backgroundColor="#6ccf00"
-                        color="#ffffff"
-                        fontWeight="900"
-                        margin="80% 0 0 0"
-                    />
-                </RegistrationStatus>
-                {/* </ProfileCard> */}
-            </CardContainer>
         </BodyWrapper>
     );
 };

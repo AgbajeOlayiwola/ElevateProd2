@@ -11,3 +11,17 @@ export const RegisteredCardWrapper = styled.div`
     box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
 `;
+
+export const Label = styled.label`
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #3e3e3e;
+`;
+export const FormInput = styled.input`
+    margin-top: 0.5rem;
+`;
+export const InputWrapper = styled.div`
+    margin-top: 1.4rem;
+`;
