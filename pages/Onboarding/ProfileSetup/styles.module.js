@@ -6,8 +6,9 @@ export const BodyWrapper = styled.div`
 `;
 export const CardContainer = styled.div`
     width: 50%;
-    height: 1010px;
+    height: auto;
     margin: 0 auto;
+    padding-bottom: 5%;
     background: #fefefe;
     border: 1px solid rgba(219, 219, 219, 0.6);
     box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
@@ -43,5 +44,9 @@ export const RegStatusHeading = styled.h6`
     font-size: 16px;
     line-height: 19px;
     color: #3e3e3e;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+`;
+export const ButtonWrapper = styled.div`
+    margin-top: 1rem;
 `;

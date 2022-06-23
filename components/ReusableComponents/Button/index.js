@@ -1,9 +1,30 @@
 import React from 'react';
 import Link from 'next/link';
 
-const ButtonComp = ({ width, height, type, text, backgroundColor, color }) => {
+const ButtonComp = ({
+    width,
+    height,
+    type,
+    onClick,
+    text,
+    fontWeight,
+    backgroundColor,
+    color,
+    margin
+}) => {
     return (
-        <button style={{ width, height, backgroundColor, color }} type={type}>
+        <button
+            style={{
+                width,
+                height,
+                backgroundColor,
+                fontWeight,
+                color,
+                margin
+            }}
+            type={type}
+            onClick={onClick}
+        >
             {text}
         </button>
     );
