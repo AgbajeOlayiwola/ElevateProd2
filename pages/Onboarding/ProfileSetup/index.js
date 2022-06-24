@@ -20,6 +20,8 @@ import {
 import RegisteredForm from '../../../components/layout/RegisteredForm';
 import StepTwoBVNAuthenticator from '../../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
 import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
+import StepFourCompProfile2BizDetails from '../../../components/layout/NotRegisteredForms/StepFourCompProfile2BizDetails';
+import StepFiveSuccessPage from '../../../components/layout/NotRegisteredForms/StepFiveSucceesPage';
 
 const ProfileSetup = () => {
     const [isRegistered, setIsRegistered] = useState(false);
@@ -27,10 +29,15 @@ const ProfileSetup = () => {
     const [showFirstStep, setShowFirstStep] = useState(true);
     const [showSecondStep, setShowSecondStep] = useState(false);
     const [showThirdStep, setShowThirdStep] = useState(false);
+    const [showFourthStep, setShowFourthStep] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     // A function to handle business registration status
     const handleRegistrationStatus = () => {
         setIsRegistered(true);
+    };
+    const switchRegistrationStatus = () => {
+        setIsRegistered(false);
     };
 
     // Handle the mulstistep hide and display of a particular step
@@ -39,17 +46,33 @@ const ProfileSetup = () => {
         setShowFirstStep(false);
     };
 
-    // Handle the multistep display the third step
+    // Handle the multistep to display the third step
     const handleShowThirdStep = () => {
         setShowThirdStep(true);
         setShowSecondStep(false);
     };
 
+    // Handle the multistep to display the fourth step
+    const handleShowFourthStep = () => {
+        setShowThirdStep(false);
+        setShowFourthStep(true);
+    };
+
+    // Handle the multistep to display the fifth-success step
+    const handleShowSuccessStep = () => {
+        setShowFourthStep(false);
+        setShowSuccess(true);
+    };
+    const handleShowThirdStepOnly = () => {
+        // setShowThirdStep(true);
+        // showFirstStep(false);
+        // setShowSecondStep(false);
+        // setShowFourthStep(false);
+        alert('working');
+    };
+
     return (
         <BodyWrapper>
-            {/* <ProfileCard width="50%" height="80" text="profile card" /> */}
-            {/* yes
-            </ProfileCard> */}
             {showFirstStep ? (
                 <CardContainer>
                     {/* <ProfileCard width="50%" height="0"> */}
@@ -64,17 +87,18 @@ const ProfileSetup = () => {
                         <RegStatusHeading>
                             Is your business registered?
                             <ButtonWrapper>
-                                <ToggleNo>
-                                    <ToggleNoText>No</ToggleNoText>
+                                <ToggleNo onClick={switchRegistrationStatus}>
+                                    <ToggleNoText>Yes</ToggleNoText>
                                 </ToggleNo>
-                                <ToggleYes>
-                                    <ToggleYesText>Yes</ToggleYesText>
+                                <ToggleYes onClick={handleRegistrationStatus}>
+                                    <ToggleYesText>No</ToggleYesText>
                                 </ToggleYes>
                             </ButtonWrapper>
                         </RegStatusHeading>
 
                         {/* THE FORM */}
                         <RegisteredForm
+                            isRegistered={isRegistered}
                             handleShowSecondStep={handleShowSecondStep}
                         />
 
@@ -107,7 +131,23 @@ const ProfileSetup = () => {
                 ''
             )}
 
-            {showThirdStep ? <StepThreeCompleteProfile1 /> : ''}
+            {showThirdStep ? (
+                <StepThreeCompleteProfile1
+                    handleShowFourthStep={handleShowFourthStep}
+                    handleShowThirdStepOnly={handleShowThirdStepOnly}
+                />
+            ) : (
+                ''
+            )}
+            {showFourthStep ? (
+                <StepFourCompProfile2BizDetails
+                    handleShowSuccessStep={handleShowSuccessStep}
+                />
+            ) : (
+                ''
+            )}
+
+            {showSuccess ? <StepFiveSuccessPage /> : ''}
         </BodyWrapper>
     );
 };

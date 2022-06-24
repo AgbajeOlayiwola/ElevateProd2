@@ -21,13 +21,11 @@ import {
     ToggleYesText,
     ToggleNoText,
     GenderWrapper,
-    LastFieldAndButton
+    LastFieldAndButton,
+    SelectInput
 } from './styles.module';
 
-const StepThreeCompleteProfile1 = ({
-    handleShowFourthStep,
-    handleShowThirdStepOnly
-}) => {
+const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
     const {
         register,
         handleSubmit,
@@ -52,15 +50,15 @@ const StepThreeCompleteProfile1 = ({
                 <form>
                     <SmallCardContainer>
                         <ButtonWrapper>
-                            <ToggleNo onClick={handleShowThirdStepOnly}>
+                            <ToggleNo>
                                 <ToggleNoText>Personal details</ToggleNoText>
                             </ToggleNo>
-                            <ToggleYes onClick={handleShowFourthStep}>
+                            <ToggleYes>
                                 <ToggleYesText>Business details</ToggleYesText>
                             </ToggleYes>
                         </ButtonWrapper>
                         <div style={{ marginTop: '2rem' }}>
-                            <Label>Enter your Full Name</Label>
+                            <Label>Enter Business Name</Label>
                             <br />
                             <FormInput
                                 type="text"
@@ -68,28 +66,32 @@ const StepThreeCompleteProfile1 = ({
                                 {...register('bvn')}
                             />
                         </div>
-                        <GenderWrapper>
-                            <Label>Select your Gender</Label>
+                        <div style={{ marginTop: '2rem' }}>
+                            <Label>Enter Business Phone number</Label>
                             <br />
-                            <div>
-                                <FormInput
-                                    type="radio"
-                                    name="gender"
-                                    value="male"
-                                    {...register('bvn')}
-                                />
-                                <label>Male</label>
-                            </div>
-                            <div>
-                                <FormInput
-                                    type="radio"
-                                    name="gender"
-                                    value="female"
-                                    {...register('bvn')}
-                                />
-                                <label>Female</label>
-                            </div>
-                        </GenderWrapper>
+                            <FormInput
+                                type="number"
+                                placeholder="+234 8999 4048 44"
+                                {...register('bvn')}
+                            />
+                        </div>
+                        <div style={{ marginTop: '2rem', width: '100%' }}>
+                            <Label>Select Business Type</Label>
+                            <br />
+                            <SelectInput>
+                                <option>Retail business</option>
+                                <option>Perishable business</option>
+                            </SelectInput>
+                        </div>
+                        <div style={{ marginTop: '2rem' }}>
+                            <Label>Enter Business Address</Label>
+                            <br />
+                            <FormInput
+                                type="text"
+                                placeholder="Your address here"
+                                {...register('bvn')}
+                            />
+                        </div>
                     </SmallCardContainer>
                     <LastFieldAndButton>
                         <div>
@@ -110,7 +112,7 @@ const StepThreeCompleteProfile1 = ({
                             color="#ffffff"
                             fontWeight="900"
                             margin="20% 0 0 0"
-                            // onClick={handleShowFourthStep}
+                            onClick={handleShowSuccessStep}
                         />
                     </LastFieldAndButton>
                 </form>
@@ -122,4 +124,4 @@ const StepThreeCompleteProfile1 = ({
     );
 };
 
-export default StepThreeCompleteProfile1;
+export default StepFourCompProfile2BizDetails;

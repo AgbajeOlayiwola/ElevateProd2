@@ -4,7 +4,7 @@ import ButtonComp from '../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import { Label, FormInput, InputWrapper } from './styles.module';
 
-const RegisteredForm = ({ handleShowSecondStep }) => {
+const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
     const {
         register,
         handleSubmit,
@@ -19,7 +19,35 @@ const RegisteredForm = ({ handleShowSecondStep }) => {
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* register your input into the hook by invoking the "register" function */}
-                <div>
+
+                {isRegistered ? (
+                    <>
+                        <div>
+                            <Label>
+                                Enter your RC Number/Business Registration
+                                Number
+                            </Label>
+                            <br />
+                            <FormInput
+                                type="text"
+                                placeholder="Your Business Registration number"
+                                {...register('bvn')}
+                            />
+                        </div>
+                        <InputWrapper>
+                            <Label>Enter your TIN</Label>
+                            <br />
+                            <FormInput
+                                type="text"
+                                placeholder="Your Tax Identification number"
+                                {...register('tin')}
+                            />
+                        </InputWrapper>
+                    </>
+                ) : (
+                    ''
+                )}
+                <InputWrapper>
                     <Label>Enter your BVN</Label>
                     <br />
                     <FormInput
@@ -27,7 +55,7 @@ const RegisteredForm = ({ handleShowSecondStep }) => {
                         placeholder="Your BVN"
                         {...register('bvn')}
                     />
-                </div>
+                </InputWrapper>
                 <InputWrapper>
                     <label>Phone Number</label>
                     <br />
