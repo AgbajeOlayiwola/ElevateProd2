@@ -101,7 +101,12 @@ const Signup = () => {
                     {errors.exampleRequired && (
                         <span>This field is required</span>
                     )}
-                    <ButtonComp text="Proceed" type="submit" />
+                    <ButtonComp
+                        width="100%"
+                        height="52px"
+                        text="Proceed"
+                        type="submit"
+                    />
                 </form>
 
                 <div>
