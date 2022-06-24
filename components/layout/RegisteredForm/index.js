@@ -82,7 +82,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                     backgroundColor="#6ccf00"
                     color="#ffffff"
                     fontWeight="900"
-                    margin="20% 0 0 0"
+                    margin="10% 0 0 0"
                     onClick={handleShowSecondStep}
                 />
             </form>

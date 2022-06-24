@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 export const CardContainer = styled.div`
     width: 50%;
-    height: auto;
-    margin: 0 auto;
     padding-bottom: 5%;
     background: #fefefe;
     border: 1px solid rgba(219, 219, 219, 0.6);

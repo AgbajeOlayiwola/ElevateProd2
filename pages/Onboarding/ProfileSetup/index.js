@@ -5,7 +5,6 @@ import Image from 'next/image';
 // import ProfileCard from '../../../components/ReusableComponents/ProfileCard';
 
 import {
-    CardContainer,
     BodyWrapper,
     CardHeading,
     LeftHeading,
@@ -22,23 +21,26 @@ import StepTwoBVNAuthenticator from '../../../components/layout/NotRegisteredFor
 import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
 import StepFourCompProfile2BizDetails from '../../../components/layout/NotRegisteredForms/StepFourCompProfile2BizDetails';
 import StepFiveSuccessPage from '../../../components/layout/NotRegisteredForms/StepFiveSucceesPage';
+import Card from '../../../components/layout/NotRegisteredForms/Card';
 
 const ProfileSetup = () => {
     const [isRegistered, setIsRegistered] = useState(false);
-
+    const [bgcolor, setBgcolor] = useState(true);
     const [showFirstStep, setShowFirstStep] = useState(true);
     const [showSecondStep, setShowSecondStep] = useState(false);
     const [showThirdStep, setShowThirdStep] = useState(false);
     const [showFourthStep, setShowFourthStep] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
-    const [progress, setProgress] = useState('20%');
+    const [progress, setProgress] = useState('25%');
 
     // A function to handle business registration status
     const handleRegistrationStatus = () => {
         setIsRegistered(true);
+        setBgcolor((prevState) => !prevState);
     };
     const switchRegistrationStatus = () => {
         setIsRegistered(false);
+        setBgcolor((prevState) => !prevState);
     };
 
     // Handle the mulstistep hide and display of a particular step
@@ -75,7 +77,7 @@ const ProfileSetup = () => {
     return (
         <BodyWrapper>
             {showFirstStep ? (
-                <CardContainer>
+                <Card>
                     {/* <ProfileCard width="50%" height="0"> */}
                     <CardHeading>
                         <LeftHeading>Profile Setup</LeftHeading>
@@ -92,11 +94,41 @@ const ProfileSetup = () => {
                         <RegStatusHeading>
                             Is your business registered?
                             <ButtonWrapper>
-                                <ToggleNo onClick={switchRegistrationStatus}>
-                                    <ToggleNoText>Yes</ToggleNoText>
+                                <ToggleNo
+                                    onClick={switchRegistrationStatus}
+                                    style={
+                                        bgcolor
+                                            ? { background: '#f8f8f8' }
+                                            : { background: '#6ccf00' }
+                                    }
+                                >
+                                    <ToggleNoText
+                                        style={
+                                            bgcolor
+                                                ? { color: '#a5a5a5' }
+                                                : { color: '#ffffff' }
+                                        }
+                                    >
+                                        Yes
+                                    </ToggleNoText>
                                 </ToggleNo>
-                                <ToggleYes onClick={handleRegistrationStatus}>
-                                    <ToggleYesText>No</ToggleYesText>
+                                <ToggleYes
+                                    onClick={handleRegistrationStatus}
+                                    style={
+                                        bgcolor
+                                            ? { background: '#6ccf00' }
+                                            : { background: '#f8f8f8' }
+                                    }
+                                >
+                                    <ToggleYesText
+                                        style={
+                                            bgcolor
+                                                ? { color: '#ffffff' }
+                                                : { color: '#a5a5a5' }
+                                        }
+                                    >
+                                        No
+                                    </ToggleYesText>
                                 </ToggleYes>
                             </ButtonWrapper>
                         </RegStatusHeading>
@@ -121,8 +153,7 @@ const ProfileSetup = () => {
                             onClick={handleShowSecondStep}
                         /> */}
                     </RegistrationStatus>
-                    {/* </ProfileCard> */}
-                </CardContainer>
+                </Card>
             ) : (
                 ''
             )}

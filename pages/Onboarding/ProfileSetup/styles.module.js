@@ -1,26 +1,18 @@
 import styled from 'styled-components';
 
 export const BodyWrapper = styled.div`
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-`;
-export const CardContainer = styled.div`
-    width: 50%;
-    height: auto;
-    margin: 0 auto;
-    padding-bottom: 5%;
-    background: #fefefe;
-    border: 1px solid rgba(219, 219, 219, 0.6);
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
+    width: 100vh;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 2rem 3rem;
 `;
 // Card heading wrapper styling
 export const CardHeading = styled.div`
     display: flex;
     flex-flow: wrap;
-    justify-content: space-evenly;
-    align-items: baseline;
-    margin-top: 76px;
+    justify-content: space-between;
+    align-items: baseline;4.7
     width: 100%;
 `;
 export const LeftHeading = styled.h3`
@@ -34,12 +26,7 @@ export const LeftHeading = styled.h3`
     /* identical to box height */
     color: #005b82;
 `;
-export const RegistrationStatus = styled.div`
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10%;
-`;
+export const RegistrationStatus = styled.div``;
 export const RegStatusHeading = styled.h6`
     font-family: 'Inter';
     font-style: normal;
@@ -56,6 +43,7 @@ export const ButtonWrapper = styled.div`
     width: 100%;
     margin-top: 1rem;
     background: #f8f8f8;
+    border-radius: 12px;
 `;
 export const ToggleNo = styled.span`
     width: 50%;
@@ -63,13 +51,21 @@ export const ToggleNo = styled.span`
     background: #6ccf00;
     border-radius: 12px;
     cursor: pointer;
+    &:hover {
+        background: #6ccf00;
+        transition: all 0.2s ease-in-out;
+    }
 `;
 export const ToggleYes = styled.span`
-    width: 40%;
+    width: 50%;
     height: 50px;
     border-radius: 12px;
     background: #f8f8f8;
     cursor: pointer;
+    &:hover {
+        background: #6ccf00;
+        transition: all 0.2s ease-in-out;
+    }
 `;
 export const ToggleNoText = styled.p`
     text-align: center;
