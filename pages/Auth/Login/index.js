@@ -57,7 +57,8 @@ const Login = () => {
                         className={styles.form}
                     >
                         <div>
-                            <label>Email Address</label>
+                            <label>Email Address </label>
+                            {errors.email?.message}
                             <br />
                             <input
                                 type="email"

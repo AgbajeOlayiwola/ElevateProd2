@@ -1,7 +1,13 @@
 import React from 'react';
 import { ButtonComp, Messagesvg } from '../../components';
 import styles from './styles.module.css';
+import { useRouter } from 'next/router';
 const Verify = () => {
+    const router = useRouter();
+
+    const handleClick = () => {
+        router.push('./Auth/Login');
+    };
     return (
         <div className={styles.verifyCov}>
             <div className={styles.body}>
@@ -14,7 +20,9 @@ const Verify = () => {
                     Hi Lanre! By proceeding, we will verify your email address.
                     Open your email and click on the link to verify.
                 </p>
-                <ButtonComp link="./Auth/Login" text="Verify" />
+                <div onClick={handleClick}>
+                    <ButtonComp type="submit" text="Verify" />
+                </div>
             </div>
         </div>
     );
