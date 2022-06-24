@@ -20,9 +20,12 @@ import {
 } from './styles.module';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import Card from '../../NotRegisteredForms/Card';
+import OtpInput from 'react-otp-input';
 
 const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
-    const [progress, setProgress] = useState('25%');
+    const [progress, setProgress] = useState('50%');
+    const [otps, setOtp] = useState('');
+    const handleChange = (otp) => setOtp();
 
     const {
         register,
@@ -55,12 +58,12 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                 </SmallInstructionText>
                 <RegistrationStatus>
                     <form onSubmit={handleSubmit(sendOTP)}>
-                        {/* register your input into the hook by invoking the "register" function */}
-                        <div>
-                            <Label>Input OTP</Label>
-                            <br />
-                            <FormInput type="number" {...register('bvn')} />
-                        </div>
+                        <OtpInput
+                            onChange={handleChange}
+                            numInputs={4}
+                            inputStyle={`${styles.inputs}`}
+                            separator={<span> </span>}
+                        />
                         <ResetOTP>
                             <p style={{ color: '#005B82', cursor: 'pointer' }}>
                                 Resend OTP
@@ -76,7 +79,7 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                             backgroundColor="#6ccf00"
                             color="#ffffff"
                             fontWeight="900"
-                            margin="20% 0 0 0"
+                            margin="10% 0 0 0"
                             onClick={handleShowThirdStep}
                         />
                     </form>

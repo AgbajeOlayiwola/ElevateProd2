@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 
@@ -23,11 +23,15 @@ import {
     GenderWrapper,
     LastFieldAndButton
 } from './styles.module';
+import styles from './styles.module.css';
+import Card from '../../NotRegisteredForms/Card';
+import Progressbar from '../../../ReusableComponents/Progressbar';
 
 const StepThreeCompleteProfile1 = ({
     handleShowFourthStep,
     handleShowThirdStepOnly
 }) => {
+    const [progress, setProgress] = useState('75%');
     const {
         register,
         handleSubmit,
@@ -39,15 +43,21 @@ const StepThreeCompleteProfile1 = ({
         console.log(data);
     };
     return (
-        <div>
-            <CardContainer>
-                <CardHeadingBVN>
-                    <LeftHeading>Complete your Profile</LeftHeading>
-                    {/* <Imag 
+        <div className={styles.cover}>
+            <Card>
+                <div className={styles.prog}>
+                    <CardHeadingBVN>
+                        <LeftHeading>Complete your Profile</LeftHeading>
+                        {/* <Imag 
                     src="/width" 
                     alt="lineImage" /> */}
-                    <ProgressBar>Progress bar here</ProgressBar>
-                </CardHeadingBVN>
+                    </CardHeadingBVN>
+                    <Progressbar
+                        bgcolor="#6CCF00"
+                        progressCount={progress}
+                        height={14}
+                    />
+                </div>
                 {/* The small card that wraps the form */}
                 <form>
                     <SmallCardContainer>
@@ -59,7 +69,10 @@ const StepThreeCompleteProfile1 = ({
                                 <ToggleYesText>Business details</ToggleYesText>
                             </ToggleYes>
                         </ButtonWrapper>
-                        <div style={{ marginTop: '2rem' }}>
+                        <div
+                            className={styles.dets}
+                            style={{ marginTop: '2rem' }}
+                        >
                             <Label>Enter your Full Name</Label>
                             <br />
                             <FormInput
@@ -67,29 +80,32 @@ const StepThreeCompleteProfile1 = ({
                                 placeholder="business name"
                                 {...register('bvn')}
                             />
+
+                            <GenderWrapper>
+                                <Label>Select your Gender</Label>
+                                <br />
+                                <div className={styles.male}>
+                                    <FormInput
+                                        style={{ width: '10%' }}
+                                        type="radio"
+                                        name="gender"
+                                        value="male"
+                                        {...register('bvn')}
+                                    />
+                                    <label>Male</label>
+                                </div>
+                                <div className={styles.female}>
+                                    <FormInput
+                                        style={{ width: '10%' }}
+                                        type="radio"
+                                        name="gender"
+                                        value="female"
+                                        {...register('bvn')}
+                                    />
+                                    <label>Female</label>
+                                </div>
+                            </GenderWrapper>
                         </div>
-                        <GenderWrapper>
-                            <Label>Select your Gender</Label>
-                            <br />
-                            <div>
-                                <FormInput
-                                    type="radio"
-                                    name="gender"
-                                    value="male"
-                                    {...register('bvn')}
-                                />
-                                <label>Male</label>
-                            </div>
-                            <div>
-                                <FormInput
-                                    type="radio"
-                                    name="gender"
-                                    value="female"
-                                    {...register('bvn')}
-                                />
-                                <label>Female</label>
-                            </div>
-                        </GenderWrapper>
                     </SmallCardContainer>
                     <LastFieldAndButton>
                         <div>
@@ -117,7 +133,7 @@ const StepThreeCompleteProfile1 = ({
                 {/* <RegistrationStatus>
                    
                 </RegistrationStatus>{' '} */}
-            </CardContainer>
+            </Card>
         </div>
     );
 };

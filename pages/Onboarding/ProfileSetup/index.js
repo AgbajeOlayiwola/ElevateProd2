@@ -25,7 +25,7 @@ import Card from '../../../components/layout/NotRegisteredForms/Card';
 
 const ProfileSetup = () => {
     const [isRegistered, setIsRegistered] = useState(false);
-    const [bgcolor, setBgcolor] = useState(true);
+    const [bgcolor, setBgcolor] = useState(false);
     const [showFirstStep, setShowFirstStep] = useState(true);
     const [showSecondStep, setShowSecondStep] = useState(false);
     const [showThirdStep, setShowThirdStep] = useState(false);

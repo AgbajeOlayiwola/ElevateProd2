@@ -11,28 +11,13 @@ export const CardContainer = styled.div`
     border-radius: 12px;
 `;
 
-export const SmallCardContainer = styled.div`
-    width: 80%;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5%;
-    padding-bottom: 5%;
-    padding-left: 5rem;
-    padding-right: 5rem;
-    background: #fefefe;
-    border: 1px solid rgba(219, 219, 219, 0.6);
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-`;
+export const SmallCardContainer = styled.div``;
 
 export const CardHeadingBVN = styled.div`
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-    align-items: baseline;
-    margin-left: 10%;
-    margin-top: 4.1rem;
+    align-items: center;
 `;
 export const ProgressBar = styled.h6`
     margin-right: 40%;
@@ -121,13 +106,19 @@ export const ToggleNo = styled.span`
     border-radius: 12px;
     cursor: pointer;
     background: rgba(108, 207, 0, 0.3);
+    &:hover {
+        background: rgba(108, 207, 0, 0.3);
+    }
 `;
 export const ToggleYes = styled.span`
-    width: 40%;
+    width: 50%;
     height: 50px;
     border-radius: 12px;
     background: #f8f8f8;
     cursor: pointer;
+    &:hover {
+        background: rgba(108, 207, 0, 0.3);
+    }
 `;
 export const ToggleNoText = styled.p`
     text-align: center;
@@ -156,9 +147,5 @@ export const GenderWrapper = styled.div`
     `;
 
 export const LastFieldAndButton = styled.div`
-    width: 80%;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
     margin-top: 1.5rem;
 `;
