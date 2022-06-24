@@ -17,7 +17,7 @@ import {
     ToggleYesText,
     ToggleNoText
 } from '../ProfileSetup/styles.module';
-import RegisteredForm from '../../../components/layout/RegisteredForm';
+import RegisteredForm from '../../../components/layout/RegisteredForms/RegisteredForm';
 import StepTwoBVNAuthenticator from '../../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
 import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
 import StepFourCompProfile2BizDetails from '../../../components/layout/NotRegisteredForms/StepFourCompProfile2BizDetails';
@@ -93,10 +93,10 @@ const ProfileSetup = () => {
                             Is your business registered?
                             <ButtonWrapper>
                                 <ToggleNo onClick={switchRegistrationStatus}>
-                                    <ToggleNoText>Yes</ToggleNoText>
+                                    <ToggleNoText>No</ToggleNoText>
                                 </ToggleNo>
                                 <ToggleYes onClick={handleRegistrationStatus}>
-                                    <ToggleYesText>No</ToggleYesText>
+                                    <ToggleYesText>Yes</ToggleYesText>
                                 </ToggleYes>
                             </ButtonWrapper>
                         </RegStatusHeading>

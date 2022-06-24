@@ -25,7 +25,7 @@ import {
 // import StepTwoBVNAuthenticator from '../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
 // import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
 // import StepFourCompProfile2BizDetails from '../../components/layout/NotRegisteredForms/StepFourCompProfile2BizDetails';
-import RegisteredForm from '../../RegisteredForm';
+import RegisteredForm from '../../RegisteredForms/RegisteredForm';
 import StepTwoBVNAuthenticator from '../StepTwoBVNAuthenticator';
 import StepThreeCompleteProfile1 from '../StepThreeCompleteProfile1';
 import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';

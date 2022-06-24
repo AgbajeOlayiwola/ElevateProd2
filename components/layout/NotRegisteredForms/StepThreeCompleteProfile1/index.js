@@ -26,7 +26,8 @@ import {
 
 const StepThreeCompleteProfile1 = ({
     handleShowFourthStep,
-    handleShowThirdStepOnly
+    handleShowThirdStepOnly,
+    showPersonalDetails
 }) => {
     const {
         register,
@@ -59,6 +60,15 @@ const StepThreeCompleteProfile1 = ({
                                 <ToggleYesText>Business details</ToggleYesText>
                             </ToggleYes>
                         </ButtonWrapper>
+                        {/*                     
+                        {
+                        showPersonalDetails
+                        ?
+                        :
+                        ""
+
+
+                        } */}
                         <div style={{ marginTop: '2rem' }}>
                             <Label>Enter your Full Name</Label>
                             <br />
