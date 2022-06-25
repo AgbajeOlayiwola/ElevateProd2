@@ -26,7 +26,6 @@ export const LeftHeading = styled.h3`
     /* identical to box height */
     color: #005b82;
 `;
-export const RegistrationStatus = styled.div``;
 export const RegStatusHeading = styled.h6`
     font-family: 'Inter';
     font-style: normal;
