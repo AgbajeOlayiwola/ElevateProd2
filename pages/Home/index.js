@@ -41,13 +41,13 @@ const HomeMain = () => {
                 <div className={styles.sectionBottom}>
                     <div className={styles.space}>
                         <SpaceshipSvg />
+
                         <p>Start</p>
                     </div>
                     <div className={styles.gears}>
                         <Gearsvg />
                         <p>Run</p>
                     </div>
-
                     <div className={styles.scale}>
                         <Scalesvg />
                         <p>Grow</p>

@@ -120,7 +120,9 @@ const StepThreeCompleteProfile1 = ({
                             className={styles.dets}
                             style={{ marginTop: '2rem' }}
                         >
-                            <Label>Enter your Full Name</Label>
+                            <Label className={styles.label}>
+                                Enter your Full Name
+                            </Label>
                             <br />
                             <FormInput
                                 type="text"
@@ -129,27 +131,40 @@ const StepThreeCompleteProfile1 = ({
                             />
 
                             <GenderWrapper>
-                                <Label>Select your Gender</Label>
+                                <Label className={styles.label}>
+                                    Select your Gender
+                                </Label>
                                 <br />
-                                <div className={styles.male}>
-                                    <FormInput
-                                        style={{ width: '10%' }}
-                                        type="radio"
-                                        name="gender"
-                                        value="male"
-                                        {...register('bvn')}
-                                    />
-                                    <label>Male</label>
-                                </div>
-                                <div className={styles.female}>
-                                    <FormInput
-                                        style={{ width: '10%' }}
-                                        type="radio"
-                                        name="gender"
-                                        value="female"
-                                        {...register('bvn')}
-                                    />
-                                    <label>Female</label>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        marginLeft: '-.4rem'
+                                    }}
+                                >
+                                    <div className={styles.male}>
+                                        <FormInput
+                                            style={{ width: '23%' }}
+                                            type="radio"
+                                            name="gender"
+                                            value="male"
+                                            {...register('bvn')}
+                                        />
+                                        <label className={styles.label}>
+                                            Male
+                                        </label>
+                                    </div>
+                                    <div className={styles.female}>
+                                        <FormInput
+                                            style={{ width: '25%' }}
+                                            type="radio"
+                                            name="gender"
+                                            value="female"
+                                            {...register('bvn')}
+                                        />
+                                        <label className={styles.label}>
+                                            Female
+                                        </label>
+                                    </div>
                                 </div>
                             </GenderWrapper>
                         </div>
