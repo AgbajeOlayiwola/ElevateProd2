@@ -12,11 +12,11 @@ const Signup = () => {
     // business ui
     const [business, setBusiness] = useState(false);
     // display Login with
-    const [displayLogUi, setDisplayLogUI] = useState(false);
-    const [labelI, setLabelI] = useState();
-    const [labelII, setLabelII] = useState();
-    const [placeholderI, setPlaceholderI] = useState();
-    const [placeholderII, setPlaceholderII] = useState();
+    const [displayLogUi, setDisplayLogUI] = useState(true);
+    const [labelI, setLabelI] = useState('Enter Your OmniLite Login ID');
+    const [labelII, setLabelII] = useState('Enter Your OmniLite Password');
+    const [placeholderI, setPlaceholderI] = useState('Login ID');
+    const [placeholderII, setPlaceholderII] = useState('Password');
     const [inputFields, setInputFields] = useState(false);
     const [bankDets, setBankDets] = useState(false);
     const [active, setActive] = useState(false);
@@ -74,7 +74,7 @@ const Signup = () => {
         console.log(data);
         router.push('../Verify');
     };
-    console.log(watch('example')); // watch input value by passing the name of it
+    console.log(watch('Email')); // watch input value by passing the name of it
 
     return (
         <>

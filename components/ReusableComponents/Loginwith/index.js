@@ -19,9 +19,9 @@ const LoginWith = ({
         formState: { errors }
     } = useForm();
     const onSubmit = ({ data }) => {
-        console.log(data);
         router.push('../Verify');
     };
+
     return (
         <div>
             {/* omnilite part  */}
@@ -33,7 +33,7 @@ const LoginWith = ({
                 <input
                     placeholder={placeholderI}
                     className={styles.idInput}
-                    {...register('Name')}
+                    {...register('Email')}
                 />
             </div>
             {/* bank details only */}
