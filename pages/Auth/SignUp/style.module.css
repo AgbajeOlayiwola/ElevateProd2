@@ -4,6 +4,9 @@
     justify-content: center;
     overflow: hidden;
 }
+.Bankcard {
+    background: #6ccf00;
+}
 .accout {
     font-family: 'Inter';
     font-style: normal;
@@ -13,14 +16,13 @@
     text-align: center;
     color: #a5a5a5;
 }
-.wrap{
+.wrap {
     display: inline-flex;
     width: 100%;
     padding-bottom: 2rem;
-
 }
-.wrap input{
-    width:10%;
+.wrap input {
+    width: 10%;
 }
 .accout span {
     color: #005b82;
@@ -113,6 +115,7 @@
     transition: all 0.3s ease-in-out;
     filter: none;
 }
+
 .choose {
     font-family: 'Inter';
     font-style: normal;
@@ -122,8 +125,37 @@
 
     color: #3e3e3e;
 }
-section .input-wrapper{
+section .input-wrapper {
     display: flex;
     align-items: baseline;
+}
+.Log {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 2.45rem 1.92rem 5% 1.92rem;
+    position: relative;
+    display: block;
+    transition: all 0.6s ease-in-out;
+    margin-bottom: 3.05rem;
+}
+.label {
+    color: #005b82;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+}
+.termcondition label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+
+    color: #2f2f2f;
 }
 /* end  */

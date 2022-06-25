@@ -3,7 +3,7 @@ import { ButtonComp } from '../../../components';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-
+import Link from 'next/link';
 const Login = () => {
     const router = useRouter();
     const {
@@ -106,7 +106,10 @@ const Login = () => {
                     </form>
                     <div>
                         <p className={styles.accout}>
-                            Do you Have An Accout? <span>Sign up</span>
+                            Do you Have An Accout?
+                            <span>
+                                <Link href="../Auth/SignUp"> Sign up</Link>
+                            </span>
                         </p>
                     </div>
                 </div>

@@ -87,6 +87,7 @@ const ProfileSetup = () => {
                             bgcolor="#6CCF00"
                             progressCount={progress}
                             height={14}
+                            progWidth="20%"
                         />
                         {/* <Imag 
                     src="/width" 

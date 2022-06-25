@@ -65,6 +65,7 @@ const StepThreeCompleteProfile1 = ({
                         bgcolor="#6CCF00"
                         progressCount={progress}
                         height={14}
+                        progWidth="20%"
                     />
                 </div>
                 {/* The small card that wraps the form */}
@@ -135,35 +136,26 @@ const StepThreeCompleteProfile1 = ({
                                     Select your Gender
                                 </Label>
                                 <br />
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        marginLeft: '-.4rem'
-                                    }}
-                                >
+                                <div className={styles.genderInps}>
                                     <div className={styles.male}>
                                         <FormInput
-                                            style={{ width: '23%' }}
+                                            style={{ width: '30%' }}
                                             type="radio"
                                             name="gender"
                                             value="male"
                                             {...register('bvn')}
                                         />
-                                        <label className={styles.label}>
-                                            Male
-                                        </label>
+                                        <label>Male</label>
                                     </div>
                                     <div className={styles.female}>
                                         <FormInput
-                                            style={{ width: '25%' }}
+                                            style={{ width: '30%' }}
                                             type="radio"
                                             name="gender"
                                             value="female"
                                             {...register('bvn')}
                                         />
-                                        <label className={styles.label}>
-                                            Female
-                                        </label>
+                                        <label>Female</label>
                                     </div>
                                 </div>
                             </GenderWrapper>

@@ -5,7 +5,7 @@
     width: 100%;
 }
 
-.cov{
+.cov {
     height: 100vh;
     width: 100%;
 }
@@ -19,21 +19,40 @@
     padding: 2rem;
     border-radius: 12px;
 }
-.label{
+.label {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 19px;
-    color: #3E3E3E;
-
+    color: #3e3e3e;
 }
 .male {
     width: 18%;
     display: flex;
     align-items: baseline;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #a5a5a5;
 }
 .female {
     width: 18%;
     display: flex;
+    align-items: baseline;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #a5a5a5;
+}
+.genderInps {
+    display: flex;
+    justify-content: space-between;
+    width: 43%;
     align-items: baseline;
 }

@@ -20,12 +20,15 @@ import {
 } from './styles.module';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import Card from '../../NotRegisteredForms/Card';
-import OtpInput from 'react-otp-input';
+import OtpInput from '../../../ReusableComponents/Otpinput';
 
 const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
     const [progress, setProgress] = useState('50%');
-    const [otps, setOtp] = useState('');
-    const handleChange = (otp) => setOtp();
+    const [otps, setOtp] = useState([]);
+    const handleChange = (otps) => {
+        setOtp();
+        console.log(otps);
+    };
 
     const {
         register,
@@ -51,6 +54,7 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                     bgcolor="#6CCF00"
                     progressCount={progress}
                     height={14}
+                    progWidth="100%"
                 />
                 <SmallInstructionText>
                     An OTP has been sent to your Phone number registered with
@@ -58,12 +62,7 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                 </SmallInstructionText>
                 <RegistrationStatus>
                     <form onSubmit={handleSubmit(sendOTP)}>
-                        <OtpInput
-                            onChange={handleChange}
-                            numInputs={4}
-                            inputStyle={`${styles.inputs}`}
-                            separator={<span> </span>}
-                        />
+                        <OtpInput />
                         <ResetOTP>
                             <p style={{ color: '#005B82', cursor: 'pointer' }}>
                                 Resend OTP
