@@ -16,7 +16,8 @@ import {
     ToggleNo,
     ToggleYesText,
     ToggleNoText,
-    SuccessMainHeading
+    SuccessMainHeading,
+    H6Wrapper
 } from './styles.module';
 // import {
 
@@ -51,9 +52,9 @@ const StepFiveSuccessPage = () => {
                     <SuccessMainHeading>
                         Your Business account is ready
                     </SuccessMainHeading>
-                    <h6 style={{ textAlign: 'center' }}>
+                    <H6Wrapper style={{ textAlign: 'center' }}>
                         Your account number is: <span>232222829</span>
-                    </h6>
+                    </H6Wrapper>
                     <ButtonComp
                         width="100%"
                         height="52px"
