@@ -121,7 +121,9 @@ const StepThreeCompleteProfile1 = ({
                             className={styles.dets}
                             style={{ marginTop: '2rem' }}
                         >
-                            <Label>Enter your Full Name</Label>
+                            <Label className={styles.label}>
+                                Enter your Full Name
+                            </Label>
                             <br />
                             <FormInput
                                 type="text"
@@ -130,7 +132,9 @@ const StepThreeCompleteProfile1 = ({
                             />
 
                             <GenderWrapper>
-                                <Label>Select your Gender</Label>
+                                <Label className={styles.label}>
+                                    Select your Gender
+                                </Label>
                                 <br />
                                 <div className={styles.genderInps}>
                                     <div className={styles.male}>

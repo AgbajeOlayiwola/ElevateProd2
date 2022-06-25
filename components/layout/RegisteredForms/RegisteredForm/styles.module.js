@@ -21,6 +21,13 @@ export const Label = styled.label`
 `;
 export const FormInput = styled.input`
     margin-top: 0.5rem;
+    ::placeholder {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 0.4;
+        line-height: 19px;
+        color: #7a7978;
+    }
 `;
 export const InputWrapper = styled.div`
     margin-top: 1.4rem;
