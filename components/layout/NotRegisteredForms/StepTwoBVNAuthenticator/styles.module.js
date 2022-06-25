@@ -2,20 +2,14 @@ import styled from 'styled-components';
 
 export const CardContainer = styled.div`
     width: 50%;
-    height: auto;
-    margin: 0 auto;
     padding-bottom: 5%;
     background: #fefefe;
     border: 1px solid rgba(219, 219, 219, 0.6);
     box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
 `;
-export const CardHeadingBVN = styled.div`
-    margin-left: 19%;
-    margin-top: 4.1rem;
-`;
+export const CardHeadingBVN = styled.div``;
 export const SmallInstructionText = styled.h6`
-    width: 53%;
     height: 68px;
     font-style: normal;
     font-weight: 400;
@@ -24,7 +18,6 @@ export const SmallInstructionText = styled.h6`
     /* or 141% */
     color: #005b82;
     text-align: left;
-    margin-left: 19%;
 `;
 
 export const LeftHeading = styled.h3`

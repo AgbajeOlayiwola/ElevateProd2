@@ -1,0 +1,12 @@
+.cover {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.dets {
+    border: 1px solid #d3d3d3;
+    padding: 2rem;
+    border-radius: 12px;
+}

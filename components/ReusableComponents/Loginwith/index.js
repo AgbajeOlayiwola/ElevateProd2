@@ -25,7 +25,7 @@ const LoginWith = ({
         <div>
             {/* omnilite part  */}
 
-            <form
+            <div
                 onSubmit={handleSubmit(onSubmit)}
                 className={display ? styles.Log : styles.notLog}
             >
@@ -52,7 +52,7 @@ const LoginWith = ({
                         })}
                     />
                 </div>
-            </form>
+            </div>
             {/* ominlite part end  */}
         </div>
     );

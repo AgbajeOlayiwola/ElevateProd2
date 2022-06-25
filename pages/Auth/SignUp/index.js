@@ -93,6 +93,16 @@ const Signup = () => {
                             <div>
                                 <h1 className={styles.signup}>Sign up</h1>
                             </div>
+
+                            <div className={styles.wrap}>
+                                <input
+                                    type="checkbox"
+                                    onChange={() => {
+                                        setBusiness((prevState) => !prevState);
+                                    }}
+                                />
+                                <label>Do you have an account?</label>
+                            </div>
                         </div>
                         {/* /* "handleSubmit" will validate your inputs before invoking
                 "onSubmit" */}
@@ -209,6 +219,17 @@ const Signup = () => {
                         <div>
                             <div>
                                 <h1 className={styles.signup}>Sign up</h1>
+                                <div className={styles.wrap}>
+                                    <input
+                                        type="checkbox"
+                                        onChange={() => {
+                                            setBusiness(
+                                                (prevState) => !prevState
+                                            );
+                                        }}
+                                    />
+                                    <label>Do you have an account?</label>
+                                </div>
                             </div>
                         </div>
                         {/* /* "handleSubmit" will validate your inputs before invoking
@@ -326,6 +347,7 @@ const Signup = () => {
                             {errors.exampleRequired && (
                                 <span>This field is required</span>
                             )}
+
                             <ButtonComp text="Proceed" type="submit" />
                         </form>
 

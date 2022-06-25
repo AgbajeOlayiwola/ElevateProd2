@@ -3,7 +3,7 @@ import { ButtonComp } from '../../../../components';
 // import lineImage from '../../../public/Assets/Svgs/Rectangle 12.svg';
 import Image from 'next/image';
 // import ProfileCard from '../../../components/ReusableComponents/ProfileCard';
-
+import Card from '../../NotRegisteredForms/Card';
 import {
     CardContainer,
     BodyWrapper,
@@ -40,11 +40,11 @@ const StepFiveSuccessPage = () => {
     };
 
     return (
-        <BodyWrapper>
-            {/* <ProfileCard width="50%" height="80" text="profile card" /> */}
-            {/* yes
+        <Card>
+            <BodyWrapper>
+                {/* <ProfileCard width="50%" height="80" text="profile card" /> */}
+                {/* yes
             </ProfileCard> */}
-            <CardContainer>
                 {/* <ProfileCard width="50%" height="0"> */}
 
                 <RegistrationStatus>
@@ -62,13 +62,13 @@ const StepFiveSuccessPage = () => {
                         backgroundColor="#6ccf00"
                         color="#ffffff"
                         fontWeight="900"
-                        margin="80% 0 0 0"
+                        margin="20% 0 0 0"
                         // onClick={handleShowSecondStep}
                     />
                 </RegistrationStatus>
                 {/* </ProfileCard> */}
-            </CardContainer>
-        </BodyWrapper>
+            </BodyWrapper>
+        </Card>
     );
 };
 
