@@ -94,3 +94,15 @@ export const SuccessMainHeading = styled.h3`
     color: #005b82;
     margin-top: 4%;
 `;
+export const H6Wrapper = styled.h6`
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    /* identical to box height, or 161% */
+
+    text-align: center;
+
+    color: #a5a5a5;
+`;

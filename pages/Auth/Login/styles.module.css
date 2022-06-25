@@ -104,3 +104,11 @@
 .visible {
     position: absolute;
 }
+.errors {
+    color: red;
+    font-size: 12px;
+    margin-top: -1rem;
+}
+.spacing {
+    margin-top: 1rem;
+}

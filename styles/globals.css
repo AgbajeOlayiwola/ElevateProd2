@@ -11,6 +11,9 @@
     --global-select-backgroundColor: #f8f8f8;
     --global-select-color: #235b7f;
     --global-inputtext-padding: 1rem 1rem;
+
+    --global-label-color: blue;
+    /* --global-label-fontSize: 5rem; */
 }
 html,
 body {

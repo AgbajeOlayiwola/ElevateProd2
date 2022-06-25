@@ -17,7 +17,8 @@ import {
     ToggleNo,
     ToggleYesText,
     ToggleNoText,
-    SuccessMainHeading
+    SuccessMainHeading,
+    H6Wrapper
 } from './styles.module';
 // import {
 
@@ -48,7 +49,13 @@ const StepFiveSuccessPage = () => {
                 {/* yes
             </ProfileCard> */}
                 {/* <ProfileCard width="50%" height="0"> */}
-                <div>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center'
+                    }}
+                >
                     <Success />
                 </div>
 
@@ -56,12 +63,13 @@ const StepFiveSuccessPage = () => {
                     <SuccessMainHeading>
                         Your Business account is ready
                     </SuccessMainHeading>
-                    <h6 style={{ textAlign: 'center' }}>
-                        Your account number is: <span>232222829</span>
-                    </h6>
+                    <H6Wrapper style={{ textAlign: 'center' }}>
+                        Your account number is:{' '}
+                        <span style={{ color: '#005b82' }}>232222829</span>
+                    </H6Wrapper>
 
                     <h6 className={styles.elevateSuccess}>
-                        With your Ellevate Account, you have{' '}
+                        With your Ellevate Account, you have <br />
                         <span> Deposit/Inflow Limit: N500,000</span>
                     </h6>
                     <ButtonComp
@@ -71,10 +79,13 @@ const StepFiveSuccessPage = () => {
                         type="button"
                         backgroundColor="#6ccf00"
                         color="#ffffff"
-                        fontWeight="900"
+                        fontWeight="800"
                         margin="20% 0 0 0"
                         // onClick={handleShowSecondStep}
                     />
+                    <p className={styles.centerP}>
+                        Click to open additional business account
+                    </p>
                 </RegistrationStatus>
                 {/* </ProfileCard> */}
             </BodyWrapper>
