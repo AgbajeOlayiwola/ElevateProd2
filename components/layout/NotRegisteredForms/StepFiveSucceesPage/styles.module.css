@@ -7,9 +7,20 @@
     /* or 141% */
 
     text-align: center;
-
+    margin-top: 9rem;
     color: #a5a5a5;
+    margin-bottom: -3rem;
 }
 .elevateSuccess span {
     color: #005b82;
+}
+.centerP {
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    text-align: center;
+    color: #A5A5A5;
+    cursor: pointer;
 }

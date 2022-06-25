@@ -58,7 +58,7 @@ const Login = () => {
                     >
                         <div>
                             <label>Email Address </label>
-                            {errors.email?.message}
+
                             <br />
                             <input
                                 type="email"
@@ -74,8 +74,11 @@ const Login = () => {
                                     }
                                 })}
                             />
+                            <div className={styles.errors}>
+                                {errors.email?.message}
+                            </div>
                         </div>
-                        <div>
+                        <div className={styles.spacing}>
                             <label>Password</label>
                             <br />
                             <input
@@ -85,9 +88,16 @@ const Login = () => {
                                 className={styles.passwordInput}
                                 required
                                 {...register('password', {
-                                    required: 'Password is required'
+                                    required: 'Password is required',
+                                    minLength: {
+                                        value: 8,
+                                        message: 'Min length is 8 characters'
+                                    }
                                 })}
                             />
+                            <div className={styles.errors}>
+                                {errors.password?.message}
+                            </div>
                             {/* <svg
                                 className={styles.visible}
                                 width="18"
@@ -102,7 +112,11 @@ const Login = () => {
                                 />
                             </svg> */}
                         </div>
-                        <ButtonComp text="Login" type="submit" />
+                        <ButtonComp
+                            margin="1.5rem 0 0 0"
+                            text="Login"
+                            type="submit"
+                        />
                     </form>
                     <div>
                         <p className={styles.accout}>
