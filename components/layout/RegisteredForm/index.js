@@ -8,11 +8,10 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors }
     } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data);
     };
     return (
@@ -29,10 +28,18 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             </Label>
                             <br />
                             <FormInput
-                                type="text"
+                                name="bvn"
+                                type="number"
                                 placeholder="Your Business Registration number"
-                                {...register('bvn')}
+                                {...register('bvn', {
+                                    required: 'BVN is required',
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Min length is 10'
+                                    }
+                                })}
                             />
+                            <div className="errors">{errors.bvn?.message}</div>
                         </div>
                         <InputWrapper>
                             <Label>Enter your TIN</Label>
@@ -78,11 +85,11 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                     width="100%"
                     height="52px"
                     text="Next"
-                    type="button"
+                    type="submit"
                     backgroundColor="#6ccf00"
                     color="#ffffff"
                     fontWeight="900"
-                    margin="20% 0 0 0"
+                    margin="10% 0 0 0"
                     onClick={handleShowSecondStep}
                 />
             </form>

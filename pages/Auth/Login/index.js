@@ -3,7 +3,7 @@ import { ButtonComp } from '../../../components';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-
+import Link from 'next/link';
 const Login = () => {
     const router = useRouter();
     const {
@@ -15,7 +15,7 @@ const Login = () => {
 
     const onSubmit = (data) => {
         console.log(data);
-        router.push('#');
+        router.push('../../Onboarding/ProfileSetup');
     };
 
     console.log(watch('email')); // watch input value by passing the name of it
@@ -57,7 +57,8 @@ const Login = () => {
                         className={styles.form}
                     >
                         <div>
-                            <label>Email Address</label>
+                            <label>Email Address </label>
+                            {errors.email?.message}
                             <br />
                             <input
                                 type="email"
@@ -105,7 +106,10 @@ const Login = () => {
                     </form>
                     <div>
                         <p className={styles.accout}>
-                            Do you Have An Accout? <span>Sign up</span>
+                            Do you Have An Accout?
+                            <span>
+                                <Link href="../Auth/SignUp"> Sign up</Link>
+                            </span>
                         </p>
                     </div>
                 </div>

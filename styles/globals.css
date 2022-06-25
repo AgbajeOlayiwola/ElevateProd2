@@ -1,4 +1,5 @@
 :root {
+    --global-button-padding: 1.2rem 0rem 1.2rem 0rem;
     /* --global-button-padding: 1.2rem 12.568rem 1.2rem 12.568rem; */
     --global-button-color: #ffffff;
     --global-button-backgroundColor: #6ccf00;
@@ -12,13 +13,13 @@
     --global-inputtext-padding: 1rem 1rem;
 }
 
-
 html,
 body {
     padding: 0;
     margin: 0;
-    font-family:inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-family: inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+        Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+        sans-serif;
 }
 
 a {
@@ -58,4 +59,12 @@ button {
     width: 100%;
     cursor: pointer;
     outline: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+
+    color: #ffffff;
 }

@@ -1,0 +1,10 @@
+.cover {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+.inputs {
+    width: 100%;
+    padding: 24px 30px;
+    margin-left: 10px;
+}

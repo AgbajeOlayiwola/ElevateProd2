@@ -1,0 +1,10 @@
+.otpInps {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.otpInps input {
+    width: 22%;
+    text-align: center;
+    padding: 2rem 2rem;
+}

@@ -11,10 +11,10 @@
     padding-left: 7.625rem;
     padding-right: 7.625rem;
     background-position: center;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 50%;
 }
 .sectionII {
     width: 50%;
