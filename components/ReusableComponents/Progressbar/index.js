@@ -17,7 +17,8 @@ const Progressbar = ({ progressCount, height, bgcolor, progWidth }) => {
         textAlign: 'right'
     };
     const container = {
-        width: progWidth
+        width: progWidth,
+        height: '8px'
     };
     return (
         <div style={container}>

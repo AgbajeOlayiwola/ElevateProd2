@@ -8,3 +8,12 @@
     padding: 24px 30px;
     margin-left: 10px;
 }
+.clr {
+    color: #7a7978;
+}
+.inp {
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 4rem;
+    color: #3e3e3e;
+}

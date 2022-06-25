@@ -65,7 +65,7 @@ const StepThreeCompleteProfile1 = ({
                         bgcolor="#6CCF00"
                         progressCount={progress}
                         height={14}
-                        progWidth="20%"
+                        progWidth="27%"
                     />
                 </div>
                 {/* The small card that wraps the form */}
@@ -139,30 +139,39 @@ const StepThreeCompleteProfile1 = ({
                                 <div className={styles.genderInps}>
                                     <div className={styles.male}>
                                         <FormInput
-                                            style={{ width: '30%' }}
+                                            style={{ width: '100%' }}
                                             type="radio"
                                             name="gender"
                                             value="male"
                                             {...register('bvn')}
                                         />
-                                        <label>Male</label>
+                                        <label className={styles.fmLabel}>
+                                            Male
+                                        </label>
                                     </div>
                                     <div className={styles.female}>
                                         <FormInput
-                                            style={{ width: '30%' }}
+                                            style={{ width: '100%' }}
                                             type="radio"
                                             name="gender"
                                             value="female"
                                             {...register('bvn')}
                                         />
-                                        <label>Female</label>
+                                        <label className={styles.fmLabel}>
+                                            Female
+                                        </label>
                                     </div>
                                 </div>
                             </GenderWrapper>
                         </div>
                         <LastFieldAndButton>
                             <div>
-                                <Label>Enter referral code(Optional)</Label>
+                                <Label>
+                                    Enter referral code{' '}
+                                    <span className={styles.option}>
+                                        <i>(Optional)</i>
+                                    </span>
+                                </Label>
                                 <br />
                                 <FormInput
                                     type="text"

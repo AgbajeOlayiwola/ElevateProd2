@@ -5,33 +5,23 @@
     overflow: hidden;
 }
 .accout {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
     text-align: center;
     color: #a5a5a5;
 }
-.wrap{
+.wrap {
     display: inline-flex;
     margin-left: -1rem;
     width: 100%;
     padding-bottom: 2rem;
-
 }
-.wrap input{
-    width:10%;
+.wrap input {
+    width: 10%;
 }
 .accout span {
     color: #005b82;
     font-weight: 600;
 }
 .bvn {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 48px;
     line-height: 120%;
     letter-spacing: -0.02em;
     color: #ffffff;
@@ -76,20 +66,10 @@
     margin-bottom: 1rem;
 }
 .form div label {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-
     color: #3e3e3e;
 }
 .signup {
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 700;
-    font-size: 36px;
-    line-height: 44px;
     color: #005b82;
 }
 /* omniligte section css */
@@ -115,16 +95,13 @@
     filter: none;
 }
 .choose {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-
     color: #3e3e3e;
 }
-section .input-wrapper{
+section .input-wrapper {
     display: flex;
     align-items: baseline;
+}
+.termss {
+    color: #005b82;
 }
 /* end  */

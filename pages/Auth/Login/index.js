@@ -66,7 +66,6 @@ const Login = () => {
                                 placeholder="Enter Your Name"
                                 className={styles.emailInput}
                                 {...register('email', {
-                                    required: 'Email is required',
                                     pattern: {
                                         // eslint-disable-next-line
                                         value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
