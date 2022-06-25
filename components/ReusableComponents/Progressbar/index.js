@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.css';
 
-const Progressbar = ({ progressCount, height, bgcolor }) => {
+const Progressbar = ({ progressCount, height, bgcolor, progWidth }) => {
     const Parentdiv = {
         height: height,
         width: '100%',
@@ -17,7 +17,7 @@ const Progressbar = ({ progressCount, height, bgcolor }) => {
         textAlign: 'right'
     };
     const container = {
-        width: '17%'
+        width: progWidth
     };
     return (
         <div style={container}>

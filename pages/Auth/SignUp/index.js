@@ -4,6 +4,7 @@ import styles from './style.module.css';
 import { ButtonComp, LoginWith } from '../../../components';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Signup = () => {
     const router = useRouter();
@@ -179,7 +180,10 @@ const Signup = () => {
 
                         <div>
                             <p className={styles.accout}>
-                                Do you Have An Accout? <span>Sign up</span>
+                                Do you Have An Accout?
+                                <Link href="../Auth/Login">
+                                    <span>Sign In</span>
+                                </Link>
                             </p>
                         </div>
                     </section>
@@ -331,7 +335,10 @@ const Signup = () => {
 
                         <div>
                             <p className={styles.accout}>
-                                Do you Have An Accout? <span>Sign up</span>
+                                Do you Have An Accout?
+                                <Link href="../Auth/Login">
+                                    <span>Sign In</span>
+                                </Link>
                             </p>
                         </div>
                     </section>

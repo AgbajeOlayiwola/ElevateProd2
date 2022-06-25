@@ -16,9 +16,29 @@
 }
 .male {
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #a5a5a5;
 }
 .female {
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #a5a5a5;
+}
+.genderInps {
+    display: flex;
+    justify-content: space-between;
+    width: 43%;
+    align-items: baseline;
 }

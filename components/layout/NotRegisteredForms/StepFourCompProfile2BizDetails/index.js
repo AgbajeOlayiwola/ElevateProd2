@@ -50,6 +50,7 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                         bgcolor="#6CCF00"
                         progressCount={progress}
                         height={14}
+                        progWidth="20%"
                     />
                 </CardHeadingBVN>
                 {/* The small card that wraps the form */}
