@@ -16,7 +16,7 @@ import {
     ToggleYesText,
     ToggleNoText
 } from '../ProfileSetup/styles.module';
-import RegisteredForm from '../../../components/layout/RegisteredForm';
+import RegisteredForm from '../../../components/layout/RegisteredForms/RegisteredForm';
 import StepTwoBVNAuthenticator from '../../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
 import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
 import StepFourCompProfile2BizDetails from '../../../components/layout/NotRegisteredForms/StepFourCompProfile2BizDetails';
@@ -32,6 +32,7 @@ const ProfileSetup = () => {
     const [showFourthStep, setShowFourthStep] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [progress, setProgress] = useState('25%');
+    const [switchs, setSwitch] = useState(true);
 
     // A function to handle business registration status
     const handleRegistrationStatus = () => {
@@ -63,7 +64,8 @@ const ProfileSetup = () => {
 
     // Handle the multistep to display the fifth-success step
     const handleShowSuccessStep = () => {
-        setShowFourthStep(false);
+        // alert('working');
+        setShowThirdStep(false);
         setShowSuccess(true);
     };
     const handleShowThirdStepOnly = () => {
@@ -170,21 +172,19 @@ const ProfileSetup = () => {
 
             {showThirdStep ? (
                 <StepThreeCompleteProfile1
-                    handleShowFourthStep={handleShowFourthStep}
                     handleShowThirdStepOnly={handleShowThirdStepOnly}
-                />
-            ) : (
-                ''
-            )}
-            {showFourthStep ? (
-                <StepFourCompProfile2BizDetails
                     handleShowSuccessStep={handleShowSuccessStep}
                 />
             ) : (
                 ''
             )}
-
-            {showSuccess ? <StepFiveSuccessPage /> : ''}
+            {showSuccess ? (
+                <StepFiveSuccessPage
+                    handleShowSuccessStep={handleShowSuccessStep}
+                />
+            ) : (
+                ''
+            )}
         </BodyWrapper>
     );
 };

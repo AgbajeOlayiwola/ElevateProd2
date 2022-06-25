@@ -1,14 +1,10 @@
-.Log {
-    background: #f8f8f8;
-    border: 1px solid #dbdbdb;
-    border-radius: 12px;
-    padding: 2.45rem 1.92rem 5% 1.92rem;
-    position: relative;
-    display: block;
-    transition: all 0.6s ease-in-out;
-    margin-bottom: 3.05rem;
+.cvvCode {
+    display: flex;
+    justify-content: space-between;
 }
-
+.cvvCode div {
+    width: 40%;
+}
 .notLog {
     display: none;
     transition: all 0.6s ease-in-out;
@@ -44,8 +40,10 @@
 }
 .show {
     display: block;
+    transition: all 0.5s ease-in-out;
 }
 .noShow {
     display: none;
+    transition: all 0.5s ease-in-out;
 }
 /* omnilite section css end  */

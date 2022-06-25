@@ -99,13 +99,19 @@ export const ToggleNo = styled.span`
     border-radius: 12px;
     cursor: pointer;
     background: rgba(108, 207, 0, 0.3);
+    &:hover {
+        background: rgba(108, 207, 0, 0.3);
+    }
 `;
 export const ToggleYes = styled.span`
-    width: 40%;
+    width: 50%;
     height: 50px;
     border-radius: 12px;
     background: #f8f8f8;
     cursor: pointer;
+    &:hover {
+        background: rgba(108, 207, 0, 0.3);
+    }
 `;
 export const ToggleNoText = styled.p`
     text-align: center;

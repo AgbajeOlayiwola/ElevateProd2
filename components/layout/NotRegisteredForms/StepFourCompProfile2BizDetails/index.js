@@ -39,36 +39,12 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
         console.log(data);
     };
     return (
-        <div className={styles.cover}>
-            <Card>
-                <CardHeadingBVN>
-                    <LeftHeading>Complete your Profile</LeftHeading>
-                    {/* <Imag 
-                    src="/width" 
-                    alt="lineImage" /> */}
-                    <Progressbar
-                        bgcolor="#6CCF00"
-                        progressCount={progress}
-                        height={14}
-                        progWidth="20%"
-                    />
-                </CardHeadingBVN>
+        <div>
+            <div>
                 {/* The small card that wraps the form */}
                 <form>
                     <div className={styles.dets}>
                         <SmallCardContainer>
-                            <ButtonWrapper>
-                                <ToggleNo>
-                                    <ToggleNoText>
-                                        Personal details
-                                    </ToggleNoText>
-                                </ToggleNo>
-                                <ToggleYes>
-                                    <ToggleYesText>
-                                        Business details
-                                    </ToggleYesText>
-                                </ToggleYes>
-                            </ButtonWrapper>
                             <div style={{ marginTop: '2rem' }}>
                                 <Label>Enter Business Name</Label>
                                 <br />
@@ -116,23 +92,12 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                                 {...register('bvn')}
                             />
                         </div>
-                        <ButtonComp
-                            width="100%"
-                            height="52px"
-                            text="Next"
-                            type="button"
-                            backgroundColor="#6ccf00"
-                            color="#ffffff"
-                            fontWeight="900"
-                            margin="10% 0 0 0"
-                            onClick={handleShowSuccessStep}
-                        />
                     </LastFieldAndButton>
                 </form>
                 {/* <RegistrationStatus>
                    
                 </RegistrationStatus>{' '} */}
-            </Card>
+            </div>
         </div>
     );
 };

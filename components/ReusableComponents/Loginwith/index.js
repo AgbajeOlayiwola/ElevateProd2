@@ -8,7 +8,8 @@ const LoginWith = ({
     labelII,
     placeholderI,
     placeholderII,
-    displayInput
+    displayInput,
+    bankdets
 }) => {
     console.log(displayInput);
     const {
@@ -25,26 +26,23 @@ const LoginWith = ({
         <div>
             {/* omnilite part  */}
 
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className={display ? styles.Log : styles.notLog}
-            >
-                {/* register your input into the hook by invoking the "register" function */}
-                <div>
-                    <label>{labelI}</label>
+            {/* register your input into the hook by invoking the "register" function */}
+            <div>
+                <label>{labelI}</label>
+                <br />
+                <input
+                    placeholder={placeholderI}
+                    className={styles.idInput}
+                    {...register('Name')}
+                />
+            </div>
+            {/* bank details only */}
+            <div className={styles.cvvCode}>
+                <div className={bankdets ? styles.show : styles.noShow}>
+                    <label>CVV</label>
                     <br />
                     <input
-                        placeholder={placeholderI}
-                        className={styles.idInput}
-                        {...register('Name')}
-                    />
-                </div>
-                {/* include validation with required or other standard HTML validation rules */}
-                <div className={displayInput ? styles.noShow : styles.show}>
-                    <label>{labelII}</label>
-                    <br />
-                    <input
-                        placeholder={placeholderII}
+                        placeholder={'CVV'}
                         className={styles.passwordInput}
                         type="password"
                         {...register('password', {
@@ -52,8 +50,33 @@ const LoginWith = ({
                         })}
                     />
                 </div>
-            </form>
-            {/* ominlite part end  */}
+                <div className={bankdets ? styles.show : styles.noShow}>
+                    <label>Passcode</label>
+                    <br />
+                    <input
+                        placeholder={'PASSCODE'}
+                        className={styles.passwordInput}
+                        type="password"
+                        {...register('password', {
+                            required: true
+                        })}
+                    />
+                </div>
+            </div>
+            {/* end  */}
+            {/* include validation with required or other standard HTML validation rules */}
+            <div className={displayInput ? styles.noShow : styles.show}>
+                <label>{labelII}</label>
+                <br />
+                <input
+                    placeholder={placeholderII}
+                    className={styles.passwordInput}
+                    type="password"
+                    {...register('password', {
+                        required: true
+                    })}
+                />
+            </div>
         </div>
     );
 };

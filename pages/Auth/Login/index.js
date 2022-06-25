@@ -15,7 +15,7 @@ const Login = () => {
 
     const onSubmit = (data) => {
         console.log(data);
-        router.push('#');
+        router.push('../../Onboarding/ProfileSetup');
     };
 
     console.log(watch('email')); // watch input value by passing the name of it
