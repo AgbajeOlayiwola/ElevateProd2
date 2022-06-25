@@ -5,10 +5,7 @@ import styles from './styles.module.css';
 // import {
 
 // } from '../../RegisteredForm/styles.module';
-import {
-    CardContainer,
-    RegistrationStatus
-} from '../../../../pages/Onboarding/ProfileSetup/styles.module';
+import RegistrationStatus from '../../../../pages/Onboarding/ProfileSetup/styles.module';
 import {
     CardHeadingBVN,
     LeftHeading,

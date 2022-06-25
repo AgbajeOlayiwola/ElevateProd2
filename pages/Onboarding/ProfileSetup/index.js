@@ -15,7 +15,7 @@ import {
     ToggleNo,
     ToggleYesText,
     ToggleNoText
-} from '../ProfileSetup/styles.module';
+} from './styles.module';
 import RegisteredForm from '../../../components/layout/RegisteredForms/RegisteredForm';
 import StepTwoBVNAuthenticator from '../../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
 import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
