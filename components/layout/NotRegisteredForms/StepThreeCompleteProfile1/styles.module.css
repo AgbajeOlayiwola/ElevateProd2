@@ -53,6 +53,9 @@
 .genderInps {
     display: flex;
     justify-content: space-between;
-    width: 43%;
-    align-items: baseline;
+    width: 30%;
+    align-items: center;
+}
+.fmLabel {
+    color: #a5a5a5;
 }

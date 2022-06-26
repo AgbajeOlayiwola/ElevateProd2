@@ -5,7 +5,10 @@ import styles from './styles.module.css';
 // import {
 
 // } from '../../RegisteredForm/styles.module';
-import RegistrationStatus from '../../../../pages/Onboarding/ProfileSetup/styles.module';
+import {
+    CardContainer,
+    RegistrationStatus
+} from '../../../../pages/Onboarding/ProfileSetup/styles.module';
 import {
     CardHeadingBVN,
     LeftHeading,
@@ -59,12 +62,18 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                 </SmallInstructionText>
                 <RegistrationStatus>
                     <form onSubmit={handleSubmit(sendOTP)}>
+                        <p className={styles.inp}>Input OTP</p>
                         <OtpInput />
                         <ResetOTP>
                             <p style={{ color: '#005B82', cursor: 'pointer' }}>
                                 Resend OTP
                             </p>
-                            <p style={{ cursor: 'pointer' }}>Clear</p>
+                            <p
+                                style={{ cursor: 'pointer' }}
+                                className={styles.clr}
+                            >
+                                Clear
+                            </p>
                         </ResetOTP>
 
                         <ButtonComp

@@ -188,7 +188,10 @@ const Signup = () => {
                                 />
                                 <label>
                                     I agree with Ellevate App
-                                    <span> Terms and Conditions</span>
+                                    <span className={styles.termss}>
+                                        {' '}
+                                        Terms and Conditions
+                                    </span>
                                 </label>
                             </div>
                             {/* errors will return when field validation fails  */}
@@ -202,7 +205,9 @@ const Signup = () => {
                             <p className={styles.accout}>
                                 Do you Have An Accout?
                                 <Link href="../Auth/Login">
-                                    <span>Sign In</span>
+                                    <span className={styles.termss}>
+                                        Sign In
+                                    </span>
                                 </Link>
                             </p>
                         </div>
@@ -400,7 +405,7 @@ const Signup = () => {
                                 />
                                 <label>
                                     I agree with Ellevate App
-                                    <span className={styles.label}>
+                                    <span className={styles.termss}>
                                         {' '}
                                         Terms and Conditions
                                     </span>
@@ -418,7 +423,9 @@ const Signup = () => {
                             <p className={styles.accout}>
                                 Do you Have An Accout?
                                 <Link href="../Auth/Login">
-                                    <span>Sign In</span>
+                                    <span className={styles.termss}>
+                                        Sign In
+                                    </span>
                                 </Link>
                             </p>
                         </div>

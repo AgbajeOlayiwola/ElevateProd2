@@ -3,16 +3,9 @@
     align-items: center;
 }
 .form {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-
     color: #3e3e3e;
 }
 .elevatenow {
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 36px;
@@ -30,12 +23,6 @@
 }
 .form div label {
     margin-bottom: 3%;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-
     color: #3e3e3e;
 }
 .sectionBottom {
@@ -102,11 +89,6 @@
 }
 .bottom p {
     margin-bottom: 1.406rem;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
     color: #929292;
 }
 .SMeApp {
@@ -121,8 +103,7 @@
 .disclaimer {
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
+    text-align: start;
     line-height: 22px;
     /* or 134% */
 
