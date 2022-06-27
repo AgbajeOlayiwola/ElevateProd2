@@ -6,10 +6,6 @@ import styles from './styles.module.css';
 
 // } from '../../RegisteredForm/styles.module';
 import {
-    CardContainer,
-    RegistrationStatus
-} from '../../../../pages/Onboarding/ProfileSetup/styles.module';
-import {
     CardHeadingBVN,
     LeftHeading,
     SmallInstructionText,
@@ -60,35 +56,30 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                     An OTP has been sent to your Phone number registered with
                     BVN. Please enter the OTP below to complete your profile.
                 </SmallInstructionText>
-                <RegistrationStatus>
-                    <form onSubmit={handleSubmit(sendOTP)}>
-                        <p className={styles.inp}>Input OTP</p>
-                        <OtpInput />
-                        <ResetOTP>
-                            <p style={{ color: '#005B82', cursor: 'pointer' }}>
-                                Resend OTP
-                            </p>
-                            <p
-                                style={{ cursor: 'pointer' }}
-                                className={styles.clr}
-                            >
-                                Clear
-                            </p>
-                        </ResetOTP>
+                <form onSubmit={handleSubmit(sendOTP)}>
+                    <p className={styles.inp}>Input OTP</p>
+                    <OtpInput />
+                    <ResetOTP>
+                        <p style={{ color: '#005B82', cursor: 'pointer' }}>
+                            Resend OTP
+                        </p>
+                        <p style={{ cursor: 'pointer' }} className={styles.clr}>
+                            Clear
+                        </p>
+                    </ResetOTP>
 
-                        <ButtonComp
-                            width="100%"
-                            height="52px"
-                            text="Proceed"
-                            type="button"
-                            backgroundColor="#6ccf00"
-                            color="#ffffff"
-                            fontWeight="900"
-                            margin="10% 0 0 0"
-                            onClick={handleShowThirdStep}
-                        />
-                    </form>
-                </RegistrationStatus>{' '}
+                    <ButtonComp
+                        width="100%"
+                        height="52px"
+                        text="Proceed"
+                        type="button"
+                        backgroundColor="#6ccf00"
+                        color="#ffffff"
+                        fontWeight="900"
+                        margin="10% 0 0 0"
+                        onClick={handleShowThirdStep}
+                    />
+                </form>
             </Card>
         </div>
     );
