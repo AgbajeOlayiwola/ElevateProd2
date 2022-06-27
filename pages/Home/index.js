@@ -71,7 +71,7 @@ const HomeMain = () => {
             </section>
             <section className={styles.sectionII}>
                 <div>
-                    <h3 className={styles.elevatenow}>elevate now</h3>
+                    <h3 className={styles.elevatenow}>ellevate now...</h3>
                 </div>
                 <div>
                     <form

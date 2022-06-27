@@ -22,10 +22,12 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                 {isRegistered ? (
                     <>
                         <div>
-                            <Label>
-                                Enter your RC Number/Business Registration
-                                Number
-                            </Label>
+                            <InputWrapper>
+                                <Label>
+                                    Enter your RC Number/Business Registration
+                                    Number
+                                </Label>
+                            </InputWrapper>
                             <br />
                             <FormInput
                                 name="bvn"
