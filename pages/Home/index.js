@@ -48,7 +48,7 @@ const HomeMain = () => {
                 <div className={styles.Svg}>
                     <div>
                         <HomeSvg />
-                        <p className={styles.SMeApp}>SME App</p>
+                        <p className={styles.SMeApp}>Ellevate</p>
                     </div>
                 </div>
                 <div className={styles.topLeft}></div>
