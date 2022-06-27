@@ -46,26 +46,31 @@ const HomeMain = () => {
         <div className={styles.cover}>
             <section className={styles.sectionI}>
                 <div className={styles.Svg}>
-                    <HomeSvg />
-                    <p className={styles.SMeApp}>SME App</p>
+                    <div>
+                        <HomeSvg />
+                        <p className={styles.SMeApp}>SME App</p>
+                    </div>
                 </div>
                 <div className={styles.topLeft}></div>
                 <div className={styles.topRight}></div>
                 <div className={styles.bottomleft}></div>
                 <div className={styles.bottomRight}></div>
-                <div className={styles.sectionBottom}>
-                    <div className={styles.space}>
-                        <SpaceshipSvg />
+                <div className={styles.Center}>
+                    <div className={styles.sectionBottom}>
 
-                        <p>Start</p>
-                    </div>
-                    <div className={styles.gears}>
-                        <Gearsvg />
-                        <p>Run</p>
-                    </div>
-                    <div className={styles.scale}>
-                        <Scalesvg />
-                        <p>Grow</p>
+                        <div className={styles.space}>
+                            <SpaceshipSvg />
+
+                            <p>Start</p>
+                        </div>
+                        <div className={styles.gears}>
+                            <Gearsvg />
+                            <p>Run</p>
+                        </div>
+                        <div className={styles.scale}>
+                            <Scalesvg />
+                            <p>Grow</p>
+                        </div>
                     </div>
                 </div>
             </section>
