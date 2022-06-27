@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
-
-import RegistrationStatus from '../../../../pages/Onboarding/ProfileSetup/styles.module';
 import {
     CardContainer,
     CardHeadingBVN,

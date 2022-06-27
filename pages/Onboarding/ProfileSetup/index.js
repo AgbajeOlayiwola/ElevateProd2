@@ -3,25 +3,13 @@ import { ButtonComp, Progressbar } from '../../../components';
 import lineImage from '../../../public/Assets/Svgs/Rectangle 12.svg';
 import Image from 'next/image';
 // import ProfileCard from '../../../components/ReusableComponents/ProfileCard';
-
-import {
-    BodyWrapper,
-    CardHeading,
-    LeftHeading,
-    RegistrationStatus,
-    RegStatusHeading,
-    ButtonWrapper,
-    ToggleYes,
-    ToggleNo,
-    ToggleYesText,
-    ToggleNoText
-} from '../ProfileSetup/styles.module';
 import RegisteredForm from '../../../components/layout/RegisteredForms/RegisteredForm';
 import StepTwoBVNAuthenticator from '../../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
 import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
 import StepFourCompProfile2BizDetails from '../../../components/layout/NotRegisteredForms/StepFourCompProfile2BizDetails';
 import StepFiveSuccessPage from '../../../components/layout/NotRegisteredForms/StepFiveSucceesPage';
 import Card from '../../../components/layout/NotRegisteredForms/Card';
+import styles from './styles.module.css';
 
 const ProfileSetup = () => {
     const [isRegistered, setIsRegistered] = useState(false);
@@ -77,12 +65,12 @@ const ProfileSetup = () => {
     };
 
     return (
-        <BodyWrapper>
+        <div className={styles.bodyWrapper}>
             {showFirstStep ? (
                 <Card>
                     {/* <ProfileCard width="50%" height="0"> */}
-                    <CardHeading>
-                        <LeftHeading>Profile Setup</LeftHeading>
+                    <div className={styles.cardHeading}>
+                        <h3 className={styles.LeftHeading}>Profile Setup</h3>
                         <Progressbar
                             bgcolor="#6CCF00"
                             progressCount={progress}
@@ -92,68 +80,69 @@ const ProfileSetup = () => {
                         {/* <Imag 
                     src="/width" 
                     alt="lineImage" /> */}
-                    </CardHeading>
-                    <RegistrationStatus>
-                        <RegStatusHeading>
+                    </div>
+                    <p
+                        style={{
+                            fontWeight: '400',
+                            fontSize: '16px',
+                            lineHeight: '19px',
+                            color: '#3E3E3E'
+                        }}
+                    >
+                        Is your business registered?
+                    </p>
+                    <div className={styles.ButtonWrapper}>
+                        <span
+                            className={styles.ToggleNo}
+                            onClick={switchRegistrationStatus}
+                            style={
+                                bgcolor
+                                    ? { background: '#f8f8f8' }
+                                    : { background: '#6ccf00' }
+                            }
+                        >
                             <p
-                                style={{
-                                    fontWeight: '400',
-                                    fontSize: '16px',
-                                    lineHeight: '19px',
-                                    color: '#3E3E3E'
-                                }}
+                                className={styles.ToggleNoText}
+                                style={
+                                    bgcolor
+                                        ? { color: '#a5a5a5' }
+                                        : { color: '#ffffff' }
+                                }
                             >
-                                Is your business registered?
+                                Yes
                             </p>
-                            <ButtonWrapper>
-                                <ToggleNo
-                                    onClick={switchRegistrationStatus}
-                                    style={
-                                        bgcolor
-                                            ? { background: '#f8f8f8' }
-                                            : { background: '#6ccf00' }
-                                    }
-                                >
-                                    <ToggleNoText
-                                        style={
-                                            bgcolor
-                                                ? { color: '#a5a5a5' }
-                                                : { color: '#ffffff' }
-                                        }
-                                    >
-                                        Yes
-                                    </ToggleNoText>
-                                </ToggleNo>
-                                <ToggleYes
-                                    onClick={handleRegistrationStatus}
-                                    style={
-                                        bgcolor
-                                            ? { background: '#6ccf00' }
-                                            : { background: '#f8f8f8' }
-                                    }
-                                >
-                                    <ToggleYesText
-                                        style={
-                                            bgcolor
-                                                ? { color: '#ffffff' }
-                                                : { color: '#a5a5a5' }
-                                        }
-                                    >
-                                        No
-                                    </ToggleYesText>
-                                </ToggleYes>
-                            </ButtonWrapper>
-                        </RegStatusHeading>
+                        </span>
+                        <span
+                            className={styles.ToggleYes}
+                            onClick={handleRegistrationStatus}
+                            style={
+                                bgcolor
+                                    ? { background: '#6ccf00' }
+                                    : { background: '#f8f8f8' }
+                            }
+                        >
+                            <p
+                                className={styles.ToggleYesText}
+                                style={
+                                    bgcolor
+                                        ? { color: '#ffffff' }
+                                        : { color: '#a5a5a5' }
+                                }
+                            >
+                                No
+                            </p>
+                        </span>
+                    </div>
 
-                        {/* THE FORM */}
-                        <RegisteredForm
-                            isRegistered={isRegistered}
-                            handleShowSecondStep={handleShowSecondStep}
-                        />
+                    {/* THE FORM */}
+                    <RegisteredForm
+                        isRegistered={isRegistered}
+                        handleShowSecondStep={handleShowSecondStep}
+                    />
 
-                        {/* END OF THE FORM */}
+                    {/* END OF THE FORM */}
 
-                        {/* <ButtonComp
+                    {/* <ButtonComp
                             width="100%"
                             height="52px"
                             text="Next"
@@ -164,7 +153,6 @@ const ProfileSetup = () => {
                             margin="80% 0 0 0"
                             onClick={handleShowSecondStep}
                         /> */}
-                    </RegistrationStatus>
                 </Card>
             ) : (
                 ''
@@ -194,7 +182,7 @@ const ProfileSetup = () => {
             ) : (
                 ''
             )}
-        </BodyWrapper>
+        </div>
     );
 };
 
