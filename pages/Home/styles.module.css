@@ -105,6 +105,8 @@
     font-style: normal;
     text-align: start;
     line-height: 22px;
+    font-size: 1rem;
+    font-weight: 300;
     /* or 134% */
     font-weight: 400 !important;
     color: #929292;
