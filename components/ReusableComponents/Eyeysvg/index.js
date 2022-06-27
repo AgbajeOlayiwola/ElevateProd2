@@ -13,7 +13,7 @@ const Visbility = ({ typeSet }) => {
     return (
         <>
             <span
-                class="material-symbols-outlined"
+                className="material-symbols-outlined"
                 style={{
                     marginLeft: '-46px',
                     zIndex: '10',
