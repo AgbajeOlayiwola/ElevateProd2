@@ -1,10 +1,13 @@
+.loginWithClass {
+    max-width: 25rem;
+}
 .cvvCode {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
-.cvvCode div {
+/* .cvvCode div {
     width: 40%;
-}
+} */
 .notLog {
     display: none;
     transition: all 0.6s ease-in-out;

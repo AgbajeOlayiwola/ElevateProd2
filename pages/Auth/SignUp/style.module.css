@@ -1,7 +1,7 @@
 .cover {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center;
+    justify-content: center; */
     overflow: hidden;
 }
 .accout {
@@ -61,11 +61,14 @@
 }
 .sectionII {
     width: 50%;
+    flex: 1;
     height: 100vh;
     display: flex;
     justify-content: center;
-
     overflow: scroll;
+}
+.sectionII > div {
+    max-width: 25rem;
 }
 .sectionII::-webkit-scrollbar {
     display: none;

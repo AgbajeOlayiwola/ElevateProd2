@@ -23,7 +23,7 @@ const LoginWith = ({
     };
 
     return (
-        <div>
+        <div className='loginWithClass'>
             {/* omnilite part  */}
 
             {/* register your input into the hook by invoking the "register" function */}
