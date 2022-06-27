@@ -49,7 +49,7 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                                 <br />
                                 <FormInput
                                     type="text"
-                                    placeholder="business name"
+                                    placeholder="Business Full Name"
                                     {...register('bvn')}
                                 />
                             </div>

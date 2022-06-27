@@ -84,14 +84,8 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                     />
                 </InputWrapper>
                 <ButtonComp
-                    width="100%"
-                    height="52px"
                     text="Next"
                     type="submit"
-                    backgroundColor="#6ccf00"
-                    color="#ffffff"
-                    fontWeight="900"
-                    margin="10% 0 0 0"
                     onClick={handleShowSecondStep}
                 />
             </form>

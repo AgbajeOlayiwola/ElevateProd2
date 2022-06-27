@@ -56,14 +56,8 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             <div className="errors">{errors.tin?.message}</div>
                         </InputWrapper>
                         <ButtonComp
-                            width="100%"
-                            height="52px"
                             text="Next"
                             type="submit"
-                            backgroundColor="#6ccf00"
-                            color="#ffffff"
-                            fontWeight="900"
-                            margin="20% 0 0 0"
                             onClick={handleShowSecondStep}
                         />
                     </>
@@ -127,14 +121,8 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             </div>
                         </InputWrapper>
                         <ButtonComp
-                            width="100%"
-                            height="52px"
                             text="Next"
                             type="submit"
-                            backgroundColor="#6ccf00"
-                            color="#ffffff"
-                            fontWeight="900"
-                            margin="20% 0 0 0"
                             onClick={handleShowSecondStep}
                         />
                     </>

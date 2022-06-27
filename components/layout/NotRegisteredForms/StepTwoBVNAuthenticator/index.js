@@ -67,16 +67,16 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                             Clear
                         </p>
                     </ResetOTP>
-
+                    
                     <ButtonComp
-                        width="100%"
-                        height="52px"
+                        // width="100%"
+                        // height="52px"
                         text="Proceed"
                         type="button"
-                        backgroundColor="#6ccf00"
-                        color="#ffffff"
-                        fontWeight="900"
-                        margin="10% 0 0 0"
+                        // backgroundColor="#6ccf00"
+                        // color="#ffffff"
+                        // fontWeight="900"
+                        // margin="10% 0 0 0"
                         onClick={handleShowThirdStep}
                     />
                 </form>

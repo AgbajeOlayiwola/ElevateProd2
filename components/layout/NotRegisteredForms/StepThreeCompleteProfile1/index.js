@@ -125,7 +125,7 @@ const StepThreeCompleteProfile1 = ({
                             <br />
                             <FormInput
                                 type="text"
-                                placeholder="business name"
+                                placeholder="Business Full Name"
                                 {...register('bvn')}
                             />
 
@@ -137,7 +137,7 @@ const StepThreeCompleteProfile1 = ({
                                 <div className={styles.genderInps}>
                                     <div className={styles.male}>
                                         <FormInput
-                                            style={{ width: '100%' }}
+                                            style={{ width: '15px' }}
                                             type="radio"
                                             name="gender"
                                             value="male"
@@ -149,7 +149,7 @@ const StepThreeCompleteProfile1 = ({
                                     </div>
                                     <div className={styles.female}>
                                         <FormInput
-                                            style={{ width: '100%' }}
+                                            style={{ width: '15px' }}
                                             type="radio"
                                             name="gender"
                                             value="female"
@@ -181,14 +181,8 @@ const StepThreeCompleteProfile1 = ({
                     </form>
                 )}
                 <ButtonComp
-                    width="100%"
-                    height="52px"
                     text="Next"
                     type="button"
-                    backgroundColor="#6ccf00"
-                    color="#ffffff"
-                    fontWeight="900"
-                    margin="10% 0 0 0"
                     onClick={handleShowSuccessStep}
                 />
             </Card>

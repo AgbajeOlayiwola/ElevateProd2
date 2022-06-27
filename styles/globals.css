@@ -66,6 +66,7 @@ button {
     background-color: var(--global-button-backgroundColor);
     border: var(--global-button-border);
     border-radius: var(--global-button-borderRadius);
+    margin-top: 10%;
     width: 100%;
     cursor: pointer;
     outline: none;

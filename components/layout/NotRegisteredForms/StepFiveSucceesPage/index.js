@@ -73,14 +73,8 @@ const StepFiveSuccessPage = () => {
                         <span> Deposit/Inflow Limit: N500,000</span>
                     </h6>
                     <ButtonComp
-                        width="100%"
-                        height="52px"
                         text="Proceed to dashboard"
                         type="button"
-                        backgroundColor="#6ccf00"
-                        color="#ffffff"
-                        fontWeight="800"
-                        margin="20% 0 0 0"
                         // onClick={handleShowSecondStep}
                     />
                     <p className={styles.centerP}>

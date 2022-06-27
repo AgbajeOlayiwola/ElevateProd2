@@ -87,6 +87,7 @@ export const RegStatusHeading = styled.h6`
     margin-right: auto;
 `;
 export const ButtonWrapper = styled.div`
+    border-radius: 12px;
     display: flex;
     flex-flow: row wrap;
     width: 100%;
@@ -134,7 +135,6 @@ export const ToggleYesText = styled.p`
 
 export const GenderWrapper = styled.div`
     width: 100%;    
-    displa;y: flex;
     flex-flow: row wrap;
     margin-top: 2rem;
     `;
