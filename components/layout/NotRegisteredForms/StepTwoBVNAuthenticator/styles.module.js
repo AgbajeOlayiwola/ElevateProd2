@@ -12,7 +12,7 @@ export const CardHeadingBVN = styled.div``;
 export const SmallInstructionText = styled.h6`
     height: 68px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 16px;
     line-height: 23px;
     /* or 141% */
@@ -60,4 +60,5 @@ export const ResetOTP = styled.div`
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    margin-top: 1.2rem;
 `;

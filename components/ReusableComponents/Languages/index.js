@@ -15,7 +15,13 @@ const Langauges = () => {
             </label>
             <br />
             <select
-                {...register('languages', { required: true })}
+                {...register('first_name', {
+                    required: 'Language is required',
+                    minLength: {
+                        value: 2,
+                        message: 'Min length is 2'
+                    }
+                })}
                 id="languages"
                 className={styles.selectI}
                 name="languages"
@@ -206,6 +212,7 @@ const Langauges = () => {
                 <option value="yo">Yoruba - Èdè Yorùbá</option>
                 <option value="zu">Zulu - isiZulu</option>
             </select>
+            {/* <div>error</div> */}
         </div>
     );
 };

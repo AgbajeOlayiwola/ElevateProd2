@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ButtonComp } from '../../../components';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 const Login = () => {
     const router = useRouter();
     const {
@@ -16,6 +17,11 @@ const Login = () => {
     const onSubmit = (data) => {
         console.log(data);
         router.push('../../Onboarding/ProfileSetup');
+    };
+
+    const [outType, setOutType] = useState();
+    const types = (type) => {
+        setOutType(type);
     };
 
     console.log(watch('email')); // watch input value by passing the name of it
@@ -58,7 +64,7 @@ const Login = () => {
                     >
                         <div>
                             <label>Email Address </label>
-                            {errors.email?.message}
+
                             <br />
                             <input
                                 type="email"
@@ -66,7 +72,6 @@ const Login = () => {
                                 placeholder="Enter Your Name"
                                 className={styles.emailInput}
                                 {...register('email', {
-                                    required: 'Email is required',
                                     pattern: {
                                         // eslint-disable-next-line
                                         value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -74,20 +79,34 @@ const Login = () => {
                                     }
                                 })}
                             />
+                            <div className={styles.errors}>
+                                {errors.email?.message}
+                            </div>
                         </div>
-                        <div>
+                        <div className={styles.spacing}>
                             <label>Password</label>
                             <br />
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Enter Your Password"
-                                className={styles.passwordInput}
-                                required
-                                {...register('password', {
-                                    required: 'Password is required'
-                                })}
-                            />
+                            <div className={styles.divs}>
+                                <input
+                                    name="password"
+                                    placeholder="Enter Your Password"
+                                    type={outType ? 'password' : 'text'}
+                                    className={styles.passwordInput}
+                                    required
+                                    {...register('password', {
+                                        required: 'Password is required',
+                                        minLength: {
+                                            value: 8,
+                                            message:
+                                                'Min length is 8 characters'
+                                        }
+                                    })}
+                                />
+                                <Visbility typeSet={types} />
+                            </div>
+                            <div className={styles.errors}>
+                                {errors.password?.message}
+                            </div>
                             {/* <svg
                                 className={styles.visible}
                                 width="18"
@@ -102,11 +121,15 @@ const Login = () => {
                                 />
                             </svg> */}
                         </div>
-                        <ButtonComp text="Login" type="submit" />
+                        <ButtonComp
+                            margin="1.5rem 0 0 0"
+                            text="Login"
+                            type="submit"
+                        />
                     </form>
                     <div>
                         <p className={styles.accout}>
-                            Do you Have An Accout?
+                            Dont have an account?
                             <span>
                                 <Link href="../Auth/SignUp"> Sign up</Link>
                             </span>

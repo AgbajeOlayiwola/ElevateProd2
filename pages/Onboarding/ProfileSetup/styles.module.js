@@ -16,23 +16,13 @@ export const CardHeading = styled.div`
     width: 100%;
 `;
 export const LeftHeading = styled.h3`
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 29px;
     display: flex;
     justify-content: space-evenly;
     /* identical to box height */
     color: #005b82;
 `;
+export const RegistrationStatus = styled.div``;
 export const RegStatusHeading = styled.h6`
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    color: #3e3e3e;
     margin-left: auto;
     margin-right: auto;
 `;
@@ -67,20 +57,23 @@ export const ToggleYes = styled.span`
     }
 `;
 export const ToggleNoText = styled.p`
-    text-align: center;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 22px;
-    text-align: center;
     color: #ffffff;
+    text-align: center;
 `;
 export const ToggleYesText = styled.p`
-    text-align: center;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 22px;
-    text-align: center;
     color: #a5a5a5;
+    text-align: center;
 `;
+
+export default {
+    BodyWrapper,
+    CardHeading,
+    LeftHeading,
+    RegistrationStatus,
+    RegStatusHeading,
+    ButtonWrapper,
+    ToggleYes,
+    ToggleNo,
+    ToggleYesText,
+    ToggleNoText
+};

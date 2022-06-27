@@ -15,7 +15,7 @@ import {
     ToggleNo,
     ToggleYesText,
     ToggleNoText
-} from '../../../components/ReusableComponents/styles.module.js';
+} from '../ProfileSetup/styles.module';
 import RegisteredForm from '../../../components/layout/RegisteredForms/RegisteredForm';
 import StepTwoBVNAuthenticator from '../../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
 import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
@@ -87,7 +87,7 @@ const ProfileSetup = () => {
                             bgcolor="#6CCF00"
                             progressCount={progress}
                             height={14}
-                            progWidth="20%"
+                            progWidth="27%"
                         />
                         {/* <Imag 
                     src="/width" 
@@ -95,7 +95,16 @@ const ProfileSetup = () => {
                     </CardHeading>
                     <RegistrationStatus>
                         <RegStatusHeading>
-                            Is your business registered?
+                            <p
+                                style={{
+                                    fontWeight: '400',
+                                    fontSize: '16px',
+                                    lineHeight: '19px',
+                                    color: '#3E3E3E'
+                                }}
+                            >
+                                Is your business registered?
+                            </p>
                             <ButtonWrapper>
                                 <ToggleNo
                                     onClick={switchRegistrationStatus}

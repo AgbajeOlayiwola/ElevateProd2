@@ -11,8 +11,17 @@
     --global-select-backgroundColor: #f8f8f8;
     --global-select-color: #235b7f;
     --global-inputtext-padding: 1rem 1rem;
+    /* --global-label-fontSize: 5rem; */
 }
+label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
 
+    color: #3e3e3e;
+}
 html,
 body {
     padding: 0;
@@ -46,6 +55,7 @@ input {
     /* border-color: var(--global-select-borderColor); */
     border: 1px solid #dbdbdb;
     color: var(--global-select-color);
+    position: relative;
     width: 100%;
     outline: none;
     box-sizing: border-box;
@@ -67,4 +77,20 @@ button {
     text-align: center;
 
     color: #ffffff;
+}
+p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+}
+h3 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+}
+h1 {
+    font-family: 'Inter';
 }
