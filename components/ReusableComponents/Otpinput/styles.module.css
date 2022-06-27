@@ -1,0 +1,17 @@
+.otpInps {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.otpInps input {
+    width: 22%;
+    font-size: 32px;
+    text-align: center;
+    padding: 2rem 2rem;
+    border: 1px solid #E6EBEE;
+    transition: all 0.2s ease-in-out;
+}
+.otpInps input:focus {
+    border: 1px solid #6CCF00;
+    transition: all 0.2s ease-in-out;
+}

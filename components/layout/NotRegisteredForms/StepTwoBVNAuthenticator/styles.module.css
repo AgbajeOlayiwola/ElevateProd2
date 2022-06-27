@@ -1,0 +1,19 @@
+.cover {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+.inputs {
+    width: 100%;
+    padding: 24px 30px;
+    margin-left: 10px;
+}
+.clr {
+    color: #7a7978;
+}
+.inp {
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 4rem;
+    color: #3e3e3e;
+}
