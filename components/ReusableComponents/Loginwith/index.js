@@ -51,12 +51,13 @@ const LoginWith = ({
                     />
                 </div>
                 <div className={bankdets ? styles.show : styles.noShow}>
-                    <label>Passcode</label>
+                    <label>Expiry Date</label>
                     <br />
                     <input
-                        placeholder={'PASSCODE'}
+                        placeholder={''}
                         className={styles.passwordInput}
-                        type="password"
+                        type="month"
+
                         {...register('password', {
                             required: true
                         })}

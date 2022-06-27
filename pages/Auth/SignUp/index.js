@@ -145,7 +145,7 @@ const Signup = ({ type }) => {
                                             );
                                         }}
                                     />
-                                    <label>Do you have an account?</label>
+                                    <label>Do you have an Ecobank account?</label>
                                 </div>
                             </div>
                             {/* /* "handleSubmit" will validate your inputs before invoking
@@ -293,7 +293,7 @@ const Signup = ({ type }) => {
                                                 );
                                             }}
                                         />
-                                        <label>Do you have an account?</label>
+                                        <label>Do you have an Ecobank account?</label>
                                     </div>
                                 </div>
                             </div>

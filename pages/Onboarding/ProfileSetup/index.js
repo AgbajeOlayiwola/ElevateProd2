@@ -109,7 +109,7 @@ const ProfileSetup = () => {
                                         : { color: '#ffffff' }
                                 }
                             >
-                                Yes
+                                No
                             </p>
                         </span>
                         <span
@@ -129,7 +129,7 @@ const ProfileSetup = () => {
                                         : { color: '#a5a5a5' }
                                 }
                             >
-                                No
+                                Yes
                             </p>
                         </span>
                     </div>
