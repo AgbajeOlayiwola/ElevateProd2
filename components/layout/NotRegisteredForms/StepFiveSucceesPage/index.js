@@ -75,6 +75,7 @@ const StepFiveSuccessPage = () => {
                     <ButtonComp
                         text="Proceed to dashboard"
                         type="button"
+                        margin="20% 0 0 0"
                         // onClick={handleShowSecondStep}
                     />
                     <p className={styles.centerP}>

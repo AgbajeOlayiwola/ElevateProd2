@@ -125,7 +125,9 @@ const StepThreeCompleteProfile1 = ({
                             <br />
                             <FormInput
                                 type="text"
-                                placeholder="Business Full Name"
+                                placeholder=""
+                                value="7746734324"
+                                disabled
                                 {...register('bvn')}
                             />
 
