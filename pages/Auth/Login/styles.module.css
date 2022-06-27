@@ -3,7 +3,7 @@
 }
 .sectionI {
     height: 100vh;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
+    background: linear-gradient(0deg, rgba(9, 16, 1, 0.8), rgba(9, 16, 1, 0.8)),
         url('/Assets/Images/bakingwoman.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -108,4 +108,8 @@
 }
 .spacing {
     margin-top: 1rem;
+}
+.divs {
+    display: flex;
+    align-items: center;
 }

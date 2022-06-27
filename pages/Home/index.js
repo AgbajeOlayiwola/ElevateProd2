@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     ButtonComp,
     Gearsvg,
@@ -11,10 +11,25 @@ import {
 import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import Axios from 'axios';
 
 const HomeMain = () => {
     const router = useRouter();
 
+    useEffect(() => {
+        getUser();
+    }, []);
+
+    async function getUser() {
+        try {
+            const response = await Axios.get(
+                'https://restcountries.com/v3.1/name/peru'
+            );
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+    }
     const {
         register,
         handleSubmit,

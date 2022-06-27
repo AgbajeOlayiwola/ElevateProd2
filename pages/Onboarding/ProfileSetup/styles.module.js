@@ -64,3 +64,16 @@ export const ToggleYesText = styled.p`
     color: #a5a5a5;
     text-align: center;
 `;
+
+export default {
+    BodyWrapper,
+    CardHeading,
+    LeftHeading,
+    RegistrationStatus,
+    RegStatusHeading,
+    ButtonWrapper,
+    ToggleYes,
+    ToggleNo,
+    ToggleYesText,
+    ToggleNoText
+};

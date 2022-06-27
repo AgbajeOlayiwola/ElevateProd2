@@ -55,6 +55,7 @@ input {
     /* border-color: var(--global-select-borderColor); */
     border: 1px solid #dbdbdb;
     color: var(--global-select-color);
+    position: relative;
     width: 100%;
     outline: none;
     box-sizing: border-box;

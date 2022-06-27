@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ButtonComp } from '../../../components';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 const Login = () => {
     const router = useRouter();
     const {
@@ -16,6 +17,11 @@ const Login = () => {
     const onSubmit = (data) => {
         console.log(data);
         router.push('../../Onboarding/ProfileSetup');
+    };
+
+    const [outType, setOutType] = useState();
+    const types = (type) => {
+        setOutType(type);
     };
 
     console.log(watch('email')); // watch input value by passing the name of it
@@ -80,20 +86,24 @@ const Login = () => {
                         <div className={styles.spacing}>
                             <label>Password</label>
                             <br />
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Enter Your Password"
-                                className={styles.passwordInput}
-                                required
-                                {...register('password', {
-                                    required: 'Password is required',
-                                    minLength: {
-                                        value: 8,
-                                        message: 'Min length is 8 characters'
-                                    }
-                                })}
-                            />
+                            <div className={styles.divs}>
+                                <input
+                                    name="password"
+                                    placeholder="Enter Your Password"
+                                    type={outType ? 'password' : 'text'}
+                                    className={styles.passwordInput}
+                                    required
+                                    {...register('password', {
+                                        required: 'Password is required',
+                                        minLength: {
+                                            value: 8,
+                                            message:
+                                                'Min length is 8 characters'
+                                        }
+                                    })}
+                                />
+                                <Visbility typeSet={types} />
+                            </div>
                             <div className={styles.errors}>
                                 {errors.password?.message}
                             </div>
@@ -119,7 +129,7 @@ const Login = () => {
                     </form>
                     <div>
                         <p className={styles.accout}>
-                            Do you Have An Accout?
+                            Don't have an account?
                             <span>
                                 <Link href="../Auth/SignUp"> Sign up</Link>
                             </span>
