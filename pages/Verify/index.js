@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ButtonComp, Messagesvg } from '../../components';
 import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 const Verify = () => {
     const router = useRouter();
+    const [activeBtn, setActiveBtn] = useState(true);
 
     const handleClick = () => {
-        const [activeBtn, setActiveBtn] = useState(true);
         router.push('./Auth/Login');
     };
     return (
