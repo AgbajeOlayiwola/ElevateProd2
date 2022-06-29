@@ -1,0 +1,7 @@
+.success {
+    background-color: transparent;
+    align-items: center;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+}

@@ -19,7 +19,7 @@ const Countries = () => {
                 className={styles.select}
                 {...register('countries', { required: true })}
             >
-                <option value="Afghanistan">Nigeria</option>
+                <option value="Nigerias">Nigeria</option>
                 <option value="Åland Islands">Åland Islands</option>
                 <option value="Albania">Albania</option>
                 <option value="Algeria">Algeria</option>
