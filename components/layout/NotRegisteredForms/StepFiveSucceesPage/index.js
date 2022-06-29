@@ -70,7 +70,7 @@ const StepFiveSuccessPage = () => {
 
                     <h6 className={styles.elevateSuccess}>
                         With your Ellevate Account, you have <br />
-                        <span> Deposit/Inflow Limit: N500,000</span>
+                        <span> Deposit/Inflow Limit: N1,000,000</span>
                     </h6>
                     <ButtonComp
                         text="Proceed to dashboard"
@@ -78,9 +78,6 @@ const StepFiveSuccessPage = () => {
                         margin="20% 0 0 0"
                         // onClick={handleShowSecondStep}
                     />
-                    <p className={styles.centerP}>
-                        Click to open additional business account
-                    </p>
                 </RegistrationStatus>
                 {/* </ProfileCard> */}
             </BodyWrapper>

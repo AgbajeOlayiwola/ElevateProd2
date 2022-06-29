@@ -92,6 +92,12 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                             />
                         </div>
                     </LastFieldAndButton>
+                    <ButtonComp
+                        text="Next"
+                        type="button"
+                        onClick={handleShowSuccessStep}
+                        // onClick={handleShowFourthStep}
+                    />
                 </form>
                 {/* <RegistrationStatus>
                    
