@@ -5,6 +5,7 @@ import styles from './styles.module.css';
 import Image from 'next/image';
 // import ProfileCard from '../../../components/ReusableComponents/ProfileCard';
 import Card from '../../NotRegisteredForms/Card';
+import Link from 'next/link';
 import {
     CardContainer,
     BodyWrapper,
@@ -33,7 +34,7 @@ import StepThreeCompleteProfile1 from '../StepThreeCompleteProfile1';
 import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';
 import Success from '../../../ReusableComponents/Success';
 
-const StepFiveSuccessPage = () => {
+const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [isRegistered, setIsRegistered] = useState(false);
 
@@ -73,6 +74,7 @@ const StepFiveSuccessPage = () => {
                         With your Ellevate Account, you have <br />
                         <span> Deposit/Inflow Limit: N1,000,000</span>
                     </h6>
+
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
