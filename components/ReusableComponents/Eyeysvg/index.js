@@ -3,7 +3,7 @@ import Signup from '../../../pages/Auth/SignUp';
 import styles from './styles.module.css';
 const Visbility = ({ typeSet }) => {
     const [type, setType] = useState(true);
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     const visibilityToggle = () => {
         setVisible((prev) => !prev);
         setType((prev) => !prev);
