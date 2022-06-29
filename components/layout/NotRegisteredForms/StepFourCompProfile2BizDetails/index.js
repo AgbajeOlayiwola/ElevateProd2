@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import Card from '../../NotRegisteredForms/Card';
+import Link from 'next/link';
 import {
     CardContainer,
     CardHeadingBVN,
@@ -93,14 +94,16 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                             />
                         </div>
                     </LastFieldAndButton>
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text="Next"
-                        type="button"
-                        onClick={handleShowSuccessStep}
-                        // onClick={handleShowFourthStep}
-                    />
+                    <Link href="/Succes">
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text="Next Successs"
+                            type="button"
+                            onClick={handleShowSuccessStep}
+                            // onClick={handleShowFourthStep}
+                        />
+                    </Link>
                 </form>
                 {/* <RegistrationStatus>
                    
