@@ -51,4 +51,10 @@
     display: none;
     transition: all 0.5s ease-in-out;
 }
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: -1rem;
+}
+
 /* omnilite section css end  */

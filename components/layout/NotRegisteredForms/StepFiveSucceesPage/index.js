@@ -34,6 +34,7 @@ import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';
 import Success from '../../../ReusableComponents/Success';
 
 const StepFiveSuccessPage = () => {
+    const [activeBtn, setActiveBtn] = useState(true);
     const [isRegistered, setIsRegistered] = useState(false);
 
     const handleShowThirdStepOnly = () => {
@@ -70,17 +71,16 @@ const StepFiveSuccessPage = () => {
 
                     <h6 className={styles.elevateSuccess}>
                         With your Ellevate Account, you have <br />
-                        <span> Deposit/Inflow Limit: N500,000</span>
+                        <span> Deposit/Inflow Limit: N1,000,000</span>
                     </h6>
                     <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
                         text="Proceed to dashboard"
                         type="button"
                         margin="20% 0 0 0"
                         // onClick={handleShowSecondStep}
                     />
-                    <p className={styles.centerP}>
-                        Click to open additional business account
-                    </p>
                 </RegistrationStatus>
                 {/* </ProfileCard> */}
             </BodyWrapper>

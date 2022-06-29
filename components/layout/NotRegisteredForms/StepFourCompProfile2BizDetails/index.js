@@ -37,6 +37,7 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
     const sendOTP = (data) => {
         console.log(data);
     };
+    const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div>
             <div>
@@ -92,6 +93,14 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                             />
                         </div>
                     </LastFieldAndButton>
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        text="Next"
+                        type="button"
+                        onClick={handleShowSuccessStep}
+                        // onClick={handleShowFourthStep}
+                    />
                 </form>
                 {/* <RegistrationStatus>
                    

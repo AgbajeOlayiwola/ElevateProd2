@@ -49,6 +49,7 @@ const StepThreeCompleteProfile1 = ({
     const sendOTP = (data) => {
         console.log(data);
     };
+    const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.cover}>
             <Card>
@@ -106,6 +107,7 @@ const StepThreeCompleteProfile1 = ({
                         </ToggleYesText>
                     </ToggleYes>
                 </ButtonWrapper>
+
                 {switchs ? (
                     <>
                         <StepFourCompProfile2BizDetails />
@@ -180,13 +182,16 @@ const StepThreeCompleteProfile1 = ({
                                 />
                             </div>
                         </LastFieldAndButton>
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text="Next"
+                            type="button"
+                            // onClick={handleShowSuccessStep}
+                            onClick={handleShowFourthStep}
+                        />
                     </form>
                 )}
-                <ButtonComp
-                    text="Next"
-                    type="button"
-                    onClick={handleShowSuccessStep}
-                />
             </Card>
         </div>
     );
