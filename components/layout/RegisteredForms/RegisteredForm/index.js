@@ -15,6 +15,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
         console.log(data);
     };
     const [number, setNumber] = useState('');
+    const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -129,6 +130,8 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             </div>
                         </InputWrapper>
                         <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
                             text="Next"
                             type="submit"
                             onClick={handleShowSecondStep}

@@ -6,6 +6,7 @@ const Verify = () => {
     const router = useRouter();
 
     const handleClick = () => {
+        const [activeBtn, setActiveBtn] = useState(true);
         router.push('./Auth/Login');
     };
     return (
@@ -21,7 +22,12 @@ const Verify = () => {
                     Open your email and click on the link to verify.
                 </p>
                 <div onClick={handleClick}>
-                    <ButtonComp type="submit" text="Verify" />
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        type="submit"
+                        text="Verify"
+                    />
                 </div>
             </div>
         </div>
