@@ -26,10 +26,10 @@ const Langauges = () => {
                 className={styles.selectI}
                 name="languages"
             >
-                <option value="English">ENG</option>
-                <option value="French">FRE</option>
-                <option value="Portuguese">POR</option>
-                <option value="Spanish">SPA</option>
+                <option value="English">English</option>
+                <option value="French">French</option>
+                <option value="Portuguese">Portuguese</option>
+                <option value="Spanish">Spanish</option>
             </select>
             {/* <div>error</div> */}
         </div>

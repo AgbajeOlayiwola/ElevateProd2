@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ButtonComp, Messagesvg } from '../../components';
 import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 const Verify = () => {
     const router = useRouter();
+    const [activeBtn, setActiveBtn] = useState(true);
 
     const handleClick = () => {
         router.push('./Auth/Login');
@@ -21,7 +22,12 @@ const Verify = () => {
                     Open your email and click on the link to verify.
                 </p>
                 <div onClick={handleClick}>
-                    <ButtonComp type="submit" text="Verify" />
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        type="submit"
+                        text="Verify"
+                    />
                 </div>
             </div>
         </div>

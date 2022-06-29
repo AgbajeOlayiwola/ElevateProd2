@@ -36,6 +36,7 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
     const sendOTP = (data) => {
         console.log(data);
     };
+    const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.cover}>
             <Card>
@@ -63,6 +64,8 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                     </ResetOTP>
 
                     <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
                         // width="100%"
                         // height="52px"
                         text="Proceed"
