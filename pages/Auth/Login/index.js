@@ -139,7 +139,7 @@ const Login = () => {
                         <p className={styles.accout}>
                             Dont have an account?
                             <span>
-                                <Link href="../Auth/SignUp"> Sign up</Link>
+                                <Link href="/Auth/SignUp"> Sign up</Link>
                             </span>
                         </p>
                     </div>
