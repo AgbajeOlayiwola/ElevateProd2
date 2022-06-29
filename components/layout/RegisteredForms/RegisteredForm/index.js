@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 // import { RegisteredCardWrapper } from './styles.module';
 import { useForm } from 'react-hook-form';
@@ -14,6 +14,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
     const onSubmit = async (data) => {
         console.log(data);
     };
+    const [number, setNumber] = useState('');
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -49,7 +50,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             <br />
                             <FormInput
                                 name="tin"
-                                type="text"
+                                type="number"
                                 placeholder="Your Tax Identification number"
                                 {...register('tin')}
                             />
@@ -81,6 +82,12 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                                         message: 'Min length is 10'
                                     }
                                 })}
+                                value={number}
+                                onChange={(event) => {
+                                    if (event.target.value.length == 12)
+                                        return false; //limits to 10 digit entry
+                                    setNumber(event?.target.value); //saving input to state
+                                }}
                             />
                             <div className="errors">{errors.bvn?.message}</div>
                         </InputWrapper>
@@ -107,7 +114,8 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             <br />
                             <FormInput
                                 type="date"
-                                placeholder="Your BVN"
+                                placeholder="dd-mm-yyyy"
+                                max="2002-12-31"
                                 {...register('date_of_birth', {
                                     required: 'Date of birth is required',
                                     minLength: {

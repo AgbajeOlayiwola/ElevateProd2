@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     ButtonComp,
     Gearsvg,
@@ -15,6 +15,7 @@ import Axios from 'axios';
 
 const HomeMain = () => {
     const router = useRouter();
+    const [activeBtn, setActiveBtn] = useState(true);
 
     useEffect(() => {
         getUser();
@@ -57,7 +58,6 @@ const HomeMain = () => {
                 <div className={styles.bottomRight}></div>
                 <div className={styles.Center}>
                     <div className={styles.sectionBottom}>
-
                         <div className={styles.space}>
                             <SpaceshipSvg />
 
@@ -91,7 +91,12 @@ const HomeMain = () => {
                                 possibilites with your account!
                             </p>
                         </div>
-                        <ButtonComp text="Proceed" type="submit" />
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text="Proceed"
+                            type="submit"
+                        />
                     </form>
                 </div>
             </section>

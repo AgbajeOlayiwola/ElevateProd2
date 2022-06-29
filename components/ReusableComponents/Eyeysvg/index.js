@@ -17,7 +17,7 @@ const Visbility = ({ typeSet }) => {
                 style={{
                     marginLeft: '-46px',
                     zIndex: '10',
-                    marginTop: '-11px',
+                    marginTop: '22px',
                     fontWeight: '300',
                     fontSize: '21px',
                     color: '#7A7978',

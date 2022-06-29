@@ -1,0 +1,5 @@
+.disabled {
+    background-color: #e6ebee;
+    color: #cccccc;
+    transition: all 0.3s ease-in-out;
+}

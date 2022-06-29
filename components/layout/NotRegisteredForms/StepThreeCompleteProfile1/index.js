@@ -106,6 +106,7 @@ const StepThreeCompleteProfile1 = ({
                         </ToggleYesText>
                     </ToggleYes>
                 </ButtonWrapper>
+
                 {switchs ? (
                     <>
                         <StepFourCompProfile2BizDetails />
@@ -180,13 +181,14 @@ const StepThreeCompleteProfile1 = ({
                                 />
                             </div>
                         </LastFieldAndButton>
+                        <ButtonComp
+                            text="Next"
+                            type="button"
+                            onClick={handleShowSuccessStep}
+                            // onClick={handleShowFourthStep}
+                        />
                     </form>
                 )}
-                <ButtonComp
-                    text="Next"
-                    type="button"
-                    onClick={handleShowSuccessStep}
-                />
             </Card>
         </div>
     );

@@ -46,12 +46,6 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                     src="/width" 
                     alt="lineImage" /> */}
                 </CardHeadingBVN>
-                <Progressbar
-                    bgcolor="#6CCF00"
-                    progressCount={progress}
-                    height={14}
-                    progWidth="100%"
-                />
                 <SmallInstructionText>
                     An OTP has been sent to your Phone number registered with
                     BVN. Please enter the OTP below to complete your profile.
@@ -67,7 +61,7 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                             Clear
                         </p>
                     </ResetOTP>
-                    
+
                     <ButtonComp
                         // width="100%"
                         // height="52px"

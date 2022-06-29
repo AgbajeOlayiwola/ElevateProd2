@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 const Login = () => {
+    const [activeBtn, setActiveBtn] = useState(false);
     const router = useRouter();
     const {
         register,
@@ -18,13 +19,20 @@ const Login = () => {
         console.log(data);
         router.push('../../Onboarding/ProfileSetup');
     };
-
+    const checkDataContent = (data) => {
+        if (data.password !== null) {
+            setActiveBtn(true);
+            console.log(true);
+        } else {
+            console.log(false);
+        }
+    };
     const [outType, setOutType] = useState();
     const types = (type) => {
         setOutType(type);
     };
 
-    console.log(watch('email')); // watch input value by passing the name of it
+    // console.log(data); // watch input value by passing the name of it
 
     return (
         <div className={styles.sectionCove}>
@@ -69,7 +77,7 @@ const Login = () => {
                             <input
                                 type="email"
                                 name="email"
-                                placeholder="Enter Your Name"
+                                placeholder="Enter Your Email"
                                 className={styles.emailInput}
                                 {...register('email', {
                                     pattern: {
@@ -84,7 +92,7 @@ const Login = () => {
                             </div>
                         </div>
                         <div className={styles.spacing}>
-                            <label>Password</label>
+                            <label>Password </label>
                             <br />
                             <div className={styles.divs}>
                                 <input
@@ -95,17 +103,15 @@ const Login = () => {
                                     required
                                     {...register('password', {
                                         required: 'Password is required',
-                                        minLength: {
-                                            value: 8,
-                                            message:
-                                                'Min length is 8 characters'
-                                        }
+                                        minLength: 8
                                     })}
+                                    onChange={checkDataContent}
                                 />
                                 <Visbility typeSet={types} />
                             </div>
                             <div className={styles.errors}>
-                                {errors.password?.message}
+                                {/* {errors.password?.message === 'minLength' && */}
+                                {/* 'too short'} */}
                             </div>
                             {/* <svg
                                 className={styles.visible}
@@ -122,6 +128,8 @@ const Login = () => {
                             </svg> */}
                         </div>
                         <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
                             margin="1.5rem 0 0 0"
                             text="Login"
                             type="submit"
