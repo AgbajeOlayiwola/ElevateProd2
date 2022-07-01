@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import ButtonComp from '../Button';
 import Visbility from '../Eyeysvg';
 import styles from './styles.module.css';
+import Link from 'next/link';
 
 const LoginWith = ({
     display,
@@ -30,58 +32,96 @@ const LoginWith = ({
     };
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
+    const [activeBtn, setActiveBtn] = useState(false);
+    const [active, setActive] = useState(false);
+    const [number, setNumber] = useState('');
 
     return (
-        <div className="loginWithClass">
-            {/* omnilite part  */}
+        <form>
+            <div className="loginWithClass">
+                {/* omnilite part  */}
 
-            {/* register your input into the hook by invoking the "register" function */}
-            <div>
-                <label>{labelI}</label>
-                <br />
-                <input placeholder={placeholderI} className={styles.idInput} />
-            </div>
-            {/* bank details only */}
-            <div className={bankdets ? styles.show : styles.noShow}>
-                <label>Expiry Date</label>
-                <br />
-                <input
-                    placeholder=""
-                    className={styles.passwordInput}
-                    type="month"
-                />
-            </div>
-            <div className={styles.cvvCode}>
-                <div className={bankdets ? styles.show : styles.noShow}>
-                    <label>CVV</label>
+                {/* register your input into the hook by invoking the "register" function */}
+                <div>
+                    <label>{labelI}</label>
                     <br />
                     <input
-                        placeholder="CVV"
-                        className={styles.passwordInput}
-                        maxLength="3"
-                        type="password"
+                        placeholder={placeholderI}
+                        className={styles.idInput}
                     />
                 </div>
-            </div>
-            {/* end  */}
-            {/* include validation with required or other standard HTML validation rules */}
-            <div className={displayInput ? styles.noShow : styles.show}>
-                <input
-                    placeholder={placeholderII}
-                    className={styles.passwordInput}
-                    required
-                    type={outType ? 'password' : 'text'}
-                    onChange={(e) => setCount(e.target.value.length)}
-                />
+                {/* bank details only */}
+                <div className={bankdets ? styles.shows : styles.noShow}>
+                    <label>Expiry Date</label>
+                    <br />
+                    <input
+                        placeholder=""
+                        className={styles.passwordInput}
+                        type="month"
+                    />
+                </div>
+                <div className={styles.cvvCode}>
+                    <div className={bankdets ? styles.shows : styles.noShow}>
+                        <label>CVV</label>
+                        <br />
+                        <input
+                            placeholder="CVV"
+                            className={styles.passwordInput}
+                            maxLength="3"
+                            type="password"
+                            value={number}
+                            onChange={(event) => {
+                                if (event.target.value.length == 3)
+                                    return false; //limits to 10 digit entry
+                                setNumber(event?.target.value); //saving input to state
+                            }}
+                        />
+                    </div>
+                </div>
+                {/* end  */}
+                {/* include validation with required or other standard HTML validation rules */}
+                <div className={displayInput ? styles.noShow : styles.show}>
+                    <input
+                        placeholder={placeholderII}
+                        className={styles.passwordInput}
+                        required
+                        type={outType ? 'password' : 'text'}
+                        onChange={(e) => setCount(e.target.value.length)}
+                    />
 
-                <Visbility typeSet={types} />
+                    <Visbility typeSet={types} />
+                </div>
+                {count <= 1 || count >= 8 ? null : (
+                    <p className={styles.error}>
+                        Minimum Password length is 8 Characters
+                    </p>
+                )}
             </div>
-            {count <= 1 || count >= 8 ? null : (
-                <p className={styles.error}>
-                    Minimum Password length is 8 Characters
-                </p>
-            )}
-        </div>
+
+            <div className={styles.terms}>
+                <input
+                    type="radio"
+                    className={styles.termcondition}
+                    defaultChecked={active}
+                    onClick={() => setActiveBtn(true)}
+                />
+                <label>
+                    I agree with Ellevate App
+                    <Link href="#">
+                        <span className={styles.termss}>
+                            {' '}
+                            Terms and Conditions
+                        </span>
+                    </Link>
+                </label>
+            </div>
+            <ButtonComp
+                disabled={activeBtn}
+                active={activeBtn ? 'active' : 'inactive'}
+                text="Login"
+                type="submit"
+            />
+        </form>
     );
 };
 

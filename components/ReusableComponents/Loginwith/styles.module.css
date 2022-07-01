@@ -44,7 +44,7 @@
     color: #005b82;
 }
 .show {
-    display: block;
+    display: flex;
     transition: all 0.5s ease-in-out;
 }
 .noShow {
@@ -55,6 +55,21 @@
     color: red;
     font-size: 12px;
     margin-top: -1rem;
+}
+.form div label {
+    color: #3e3e3e;
+    font-size: 16px;
+}
+.termss {
+    color: #005b82;
+    cursor: pointer;
+}
+.terms {
+    display: flex;
+    font-size: 13px;
+}
+.terms input {
+    width: 3%;
 }
 
 /* omnilite section css end  */
