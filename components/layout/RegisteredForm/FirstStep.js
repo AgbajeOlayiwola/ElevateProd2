@@ -5,7 +5,11 @@ import styles from './styles.module.css';
 const FirstStep = () => {
     return (
         <div>
-            <h1 className={styles.header}>(OTP) Authentiator</h1>
+            <h1 className={styles.header}>Phone Number (OTP) Authenticator</h1>
+            <p className={styles.p}>
+                An OTP has been sent to your Phone number registered with phone.
+                Please enter the OTP below to complete your profile.
+            </p>
             <OtpInput />
         </div>
     );

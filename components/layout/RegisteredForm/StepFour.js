@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
+import Link from 'next/link';
+import ButtonComp from '../../ReusableComponents/Button';
 
 const StepFour = () => {
     const {
@@ -15,6 +17,8 @@ const StepFour = () => {
     const types = (type) => {
         setOutType(type);
     };
+    const [activeBtn, setActiveBtn] = useState(true);
+
     return (
         <div>
             <h1 className={styles.header}>Complete Your Profile</h1>
@@ -132,6 +136,16 @@ const StepFour = () => {
                             })}
                         />
                     </div>
+                    <Link href="/Succes">
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text="Successs"
+                            type="button"
+                            // onClick={handleShowSuccessStep}
+                            // onClick={handleShowFourthStep}
+                        />
+                    </Link>
                 </form>
             </div>
         </div>

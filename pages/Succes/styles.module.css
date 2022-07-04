@@ -3,5 +3,28 @@
     align-items: center;
     opacity: 1;
     display: flex;
+    height: 100vh;
     justify-content: center;
+}
+.cover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.Success {
+    display: flex;
+    justify-content: center;
+}
+.h2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #005b82;
 }

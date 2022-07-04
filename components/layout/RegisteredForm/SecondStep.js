@@ -57,7 +57,6 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             className={styles.textInput}
                             required
                             type={outType ? 'password' : 'text'}
-                            onChange={(e) => setCount(e.target.value.length)}
                         />
                         <Visbility typeSet={types} />
                     </div>
@@ -72,7 +71,6 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             className={styles.textInput}
                             required
                             type={outType ? 'password' : 'text'}
-                            onChange={(e) => setCount(e.target.value.length)}
                         />
 
                         <Visbility typeSet={types} />

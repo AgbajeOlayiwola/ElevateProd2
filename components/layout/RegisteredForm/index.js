@@ -31,17 +31,15 @@ const ExistingMultiStep = () => {
     return (
         <Card>
             {conditionalComponent()}
-            <ButtonComp
-                disabled={activeBtn}
-                active={activeBtn ? 'active' : 'inactive'}
-                onClick={handleSubmit}
-                type="submit"
-                text={
-                    page === 0 || page === 1 || page === 2 || page === 3
-                        ? 'Next'
-                        : 'Submit'
-                }
-            />
+            {page === 3 ? null : (
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    onClick={handleSubmit}
+                    type="submit"
+                    text={page === 2 ? 'Open A New Account' : 'Next'}
+                />
+            )}
         </Card>
     );
 };

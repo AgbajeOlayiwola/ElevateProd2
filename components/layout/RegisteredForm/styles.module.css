@@ -15,6 +15,7 @@
     line-height: 29px;
     /* identical to box height */
     color: #005b82;
+    margin-bottom: 20px;
 }
 .cardHeading {
     display: flex;
@@ -22,6 +23,15 @@
     justify-content: space-between;
     align-items: baseline;
     width: 100%;
+}
+.p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 23px;
+    /* or 141% */
+    color: #005b82;
+    text-align: left;
 }
 .LeftHeading {
     display: flex;
@@ -77,6 +87,7 @@
 }
 .inps {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 .bord {
     border: 1px solid #dcdcdc;
@@ -140,8 +151,34 @@
     margin-top: 1.5rem;
 }
 .formInner {
-    border: 1px solid #3e3e3e;
+    border: 1px solid rgba(219, 219, 219, 0.6);
     padding: 2rem 1rem 2rem 1rem;
     margin-top: 3rem;
     border-radius: 12px;
+}
+.formInner div label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+    margin-bottom: 10px;
+}
+.inps label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+    margin-bottom: 10px;
+}
+.formInner div {
+    margin-bottom: 20px;
+}
+.divs {
+    display: flex;
 }
