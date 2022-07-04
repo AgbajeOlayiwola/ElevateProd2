@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import HomeMain from './Home';
+import 'react-pro-sidebar/dist/css/styles.css';
 
 export default function Home() {
     return (

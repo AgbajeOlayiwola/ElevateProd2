@@ -1,0 +1,65 @@
+.sideNav {
+    height: 100vh;
+    width: 18vw;
+    padding-top: 3.25rem;
+    background-color: white;
+}
+.ellevate {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3.94rem;
+}
+.LinkDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.parentDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 3.2rem;
+    color: #cccccc;
+}
+.parentDiv:hover {
+    background: #daf0c2;
+}
+.link {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    margin-left: 15px;
+}
+.inActive {
+    display: flex;
+    justify-content: space-between;
+    background: #daf0c2;
+    align-items: center;
+    padding-left: 3.2rem;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+    color: #407a00;
+}
+.showGreen {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    background-color: #407a00;
+}
+.DontSHowgreen {
+    display: none;
+}
+
+/* side bar start  */
+
+#header .pro-sidebar {
+    height: 100vh;
+    width: 20vw;
+}
+
+/* side bar end  */

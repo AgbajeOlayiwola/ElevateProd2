@@ -1,0 +1,38 @@
+.ButtonWrapper {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    margin-top: 1rem;
+    background: #f8f8f8;
+    border-radius: 12px;
+}
+.ToggleNo {
+    width: 50%;
+    height: 50px;
+    background: #6ccf00;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.ToggleNo:hover {
+    background: #6ccf00;
+    transition: all 0.2s ease-in-out;
+}
+.ToggleYes {
+    width: 50%;
+    height: 50px;
+    border-radius: 12px;
+    background: #f8f8f8;
+    cursor: pointer;
+}
+.ToggleYes:hover {
+    background: #6ccf00;
+    transition: all 0.2s ease-in-out;
+}
+.ToggleNoText {
+    color: #ffffff;
+    text-align: center;
+}
+.ToggleYesText {
+    color: #a5a5a5;
+    text-align: center;
+}

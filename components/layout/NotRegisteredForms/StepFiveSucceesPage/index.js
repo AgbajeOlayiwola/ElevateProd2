@@ -74,16 +74,18 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                         With your Ellevate Account, you have <br />
                         <span> Deposit/Inflow Limit: N1,000,000</span>
                     </h6>
-
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text="Proceed to dashboard"
-                        type="button"
-                        margin="20% 0 0 0"
-                        // onClick={handleShowSecondStep}
-                    />
+                    <Link href="/Dashboard">
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text="Proceed to dashboard"
+                            type="button"
+                            margin="20% 0 0 0"
+                            // onClick={handleShowSecondStep}
+                        />
+                    </Link>
                 </RegistrationStatus>
+
                 {/* </ProfileCard> */}
             </BodyWrapper>
         </Card>

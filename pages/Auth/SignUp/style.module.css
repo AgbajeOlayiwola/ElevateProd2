@@ -128,6 +128,7 @@ section .input-wrapper {
 }
 .termss {
     color: #005b82;
+    cursor: pointer;
 }
 .Log {
     background-color: #f8f8f8;

@@ -6,7 +6,7 @@
     --global-button-border: none;
     --global-button-borderRadius: 12px;
     --global-select-borderRadius: 12px;
-    --global-select-padding: 1.531rem 1.563rem;
+    --global-select-padding: 1rem 1rem;
     --global-select-borderColor: #dbdbdb;
     --global-select-backgroundColor: #f8f8f8;
     --global-select-color: #235b7f;
@@ -40,6 +40,7 @@ select {
     color: var(--global-select-color);
     cursor: pointer;
     outline: none;
+    width: 100%;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
