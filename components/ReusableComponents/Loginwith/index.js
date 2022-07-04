@@ -115,12 +115,14 @@ const LoginWith = ({
                     </Link>
                 </label>
             </div>
-            <ButtonComp
-                disabled={activeBtn}
-                active={activeBtn ? 'active' : 'inactive'}
-                text="Login"
-                type="submit"
-            />
+            <Link href="/Onboarding/ExistingProfileSetup">
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    text="Login"
+                    type="submit"
+                />
+            </Link>
         </form>
     );
 };

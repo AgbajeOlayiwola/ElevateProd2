@@ -11,3 +11,4 @@ export { default as Countries } from './ReusableComponents/Countries';
 export { default as LoginWith } from './ReusableComponents/Loginwith';
 export { default as Languages } from './ReusableComponents/Languages';
 export { default as Progressbar } from './ReusableComponents/Progressbar';
+export { default as Sidebar } from './ReusableComponents/Sidebar';
