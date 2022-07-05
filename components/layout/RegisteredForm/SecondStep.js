@@ -19,6 +19,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
     const types = (type) => {
         setOutType(type);
     };
+    const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     return (
         <>
@@ -60,6 +61,11 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                         />
                         <Visbility typeSet={types} />
                     </div>
+                    {count <= 1 || count >= 8 ? null : (
+                        <p className={styles.error}>
+                            Minimum Password length is 8 Characters
+                        </p>
+                    )}
                 </div>
 
                 <div>
@@ -75,6 +81,11 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
 
                         <Visbility typeSet={types} />
                     </div>
+                    {count <= 1 || count >= 8 ? null : (
+                        <p className={styles.error}>
+                            Minimum Password length is 8 Characters
+                        </p>
+                    )}
                 </div>
             </form>
         </>
