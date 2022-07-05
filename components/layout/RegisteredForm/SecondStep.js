@@ -19,6 +19,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
     const types = (type) => {
         setOutType(type);
     };
+    const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     return (
         <>
@@ -26,7 +27,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* include validation with required or other standard HTML validation rules */}
-                <div>
+                <div className={styles.textInput}>
                     <label>Email Address </label>
                     {errors.email?.message}
                     <br />
@@ -48,7 +49,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                     />
                 </div>
 
-                <div>
+                <div className={styles.textInput}>
                     <label>Password</label>
                     <br />
                     <div className={styles.divs}>
@@ -57,12 +58,18 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             className={styles.textInput}
                             required
                             type={outType ? 'password' : 'text'}
+                            onChange={(e) => setCount(e.target.value.length)}
                         />
                         <Visbility typeSet={types} />
                     </div>
+                    {count <= 1 || count >= 8 ? null : (
+                        <p className={styles.error}>
+                            Minimum Password length is 8 Characters
+                        </p>
+                    )}
                 </div>
 
-                <div>
+                <div className={styles.textInput}>
                     <label>Confirm Password</label>
                     <br />
                     <div className={styles.divs}>
@@ -71,10 +78,16 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             className={styles.textInput}
                             required
                             type={outType ? 'password' : 'text'}
+                            onChange={(e) => setCount(e.target.value.length)}
                         />
 
                         <Visbility typeSet={types} />
                     </div>
+                    {count <= 1 || count >= 8 ? null : (
+                        <p className={styles.error}>
+                            Minimum Password length is 8 Characters
+                        </p>
+                    )}
                 </div>
             </form>
         </>
