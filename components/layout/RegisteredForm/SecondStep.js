@@ -27,7 +27,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* include validation with required or other standard HTML validation rules */}
-                <div>
+                <div className={styles.textInput}>
                     <label>Email Address </label>
                     {errors.email?.message}
                     <br />
@@ -49,7 +49,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                     />
                 </div>
 
-                <div>
+                <div className={styles.textInput}>
                     <label>Password</label>
                     <br />
                     <div className={styles.divs}>
@@ -58,6 +58,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             className={styles.textInput}
                             required
                             type={outType ? 'password' : 'text'}
+                            onChange={(e) => setCount(e.target.value.length)}
                         />
                         <Visbility typeSet={types} />
                     </div>
@@ -68,7 +69,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                     )}
                 </div>
 
-                <div>
+                <div className={styles.textInput}>
                     <label>Confirm Password</label>
                     <br />
                     <div className={styles.divs}>
@@ -77,6 +78,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             className={styles.textInput}
                             required
                             type={outType ? 'password' : 'text'}
+                            onChange={(e) => setCount(e.target.value.length)}
                         />
 
                         <Visbility typeSet={types} />
