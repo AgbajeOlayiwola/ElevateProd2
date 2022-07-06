@@ -1,3 +1,116 @@
-.dash {
-    background: #f5f6fa;
+.card {
+    background: linear-gradient(124.52deg, #7fbb01 -34.31%, #2f2f2f 115.35%);
+    width: 44%;
+    border-radius: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px 10px 30px;
+}
+.Top {
+    display: flex;
+    justify-content: space-evenly;
+}
+.Tpwh {
+    background: white;
+    border-radius: 16px;
+    max-width: 478px;
+    width: 39%;
+    padding: 43px 16px 39px 16px;
+}
+.transP {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #102572;
+}
+.h5 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 14px;
+    /* identical to box height, or 87% */
+    margin-top: 0px;
+    text-align: center;
+    text-decoration-line: line-through;
+    margin-bottom: 0px;
+    color: #005b82;
+}
+.payp {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 99% */
+    margin-top: 0px;
+    margin-bottom: 7px;
+    color: #bcbcbc;
+}
+.svgTxt {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.svgCov {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    background: rgba(218, 240, 194, 0.62);
+    height: 45px;
+    width: 45px;
+    margin-right: 14px;
+}
+.ecop {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 99% */
+    margin-top: 0px;
+    margin-bottom: 7px;
+    color: #bcbcbc;
+}
+.payEco {
+    display: flex;
+    justify-content: space-between;
+}
+.cardMone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 54%;
+}
+.avail {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    margin-bottom: 22px;
+    color: #efffcc;
+}
+.recMak {
+    display: flex;
+    justify-content: space-between;
+}
+.rec {
+    padding: 16px;
+    background: #7fbb01;
+    border-radius: 12px;
+}
+.make {
+    padding: 16px;
+    background: #005b82;
+    border-radius: 12px;
+}
+.cardRight {
+    width: 75%;
+}
+.cardMone h1 {
+    margin-bottom: 0px;
 }

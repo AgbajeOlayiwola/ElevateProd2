@@ -3,6 +3,9 @@
     width: 20vw;
     padding-top: 3.25rem;
     background-color: white;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 .ellevate {
     display: flex;
@@ -34,7 +37,8 @@
 .inActive {
     display: flex;
     justify-content: space-between;
-    background: #daf0c2;
+
+    background: rgba(218, 240, 194, 0.37);
     align-items: center;
     padding-left: 3.2rem;
     font-style: normal;
@@ -49,7 +53,7 @@
     width: 30px;
     height: 30px;
     border-radius: 50px;
-    background-color: #407a00;
+    background-color: #f5f6fa;
 }
 .DontSHowgreen {
     display: none;

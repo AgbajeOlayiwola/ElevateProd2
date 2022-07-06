@@ -1,0 +1,9 @@
+.dash {
+    background: #f5f6fa;
+    height: 100vh;
+}
+.main {
+    width: 80vw;
+    margin-top: 35vh;
+    margin-left: 20vw;
+}

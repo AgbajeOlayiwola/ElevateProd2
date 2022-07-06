@@ -6,7 +6,7 @@ const DashLayout = ({ children }) => {
     return (
         <div className={styles.dash}>
             <Navbar />
-            {children}
+            <div className={styles.main}>{children}</div>
             <Sidebar />
         </div>
     );
