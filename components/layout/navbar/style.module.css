@@ -1,0 +1,35 @@
+.cov {
+    display: flex;
+    justify-content: flex-end;
+}
+.navigation {
+    display: flex;
+    position: absolute;
+    align-items: center;
+    width: 78vw;
+    justify-content: space-between;
+    padding: 3rem 2rem 0rem 2rem;
+}
+.imageName {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 23%;
+}
+.name {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    margin: 0px;
+    color: #102572;
+}
+.company {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+
+    color: #3e3e3e;
+}

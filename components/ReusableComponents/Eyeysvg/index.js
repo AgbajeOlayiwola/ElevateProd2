@@ -25,7 +25,7 @@ const Visbility = ({ typeSet }) => {
                 }}
                 onClick={visibilityToggle}
             >
-                {visible ? 'visibility' : 'visibility_off'}
+                {visible ? 'visibility_off' : 'visibility'}
             </span>
         </>
     );

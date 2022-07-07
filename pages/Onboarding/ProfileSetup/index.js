@@ -77,8 +77,8 @@ const ProfileSetup = () => {
                             height={14}
                             progWidth="27%"
                         />
-                        {/* <Imag 
-                    src="/width" 
+                        {/* <Imag
+                    src="/width"
                     alt="lineImage" /> */}
                     </div>
                     <p

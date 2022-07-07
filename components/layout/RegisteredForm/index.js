@@ -1,96 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ButtonComp from '../../ReusableComponents/Button';
-// import { RegisteredCardWrapper } from './styles.module';
-import { useForm } from 'react-hook-form';
-import { Label, FormInput, InputWrapper } from './styles.module';
+import Card from '../NotRegisteredForms/Card';
+import FirstStep from './FirstStep';
+import SecondStep from './SecondStep';
+import StepThree from './StepThree';
+import StepFour from './StepFour';
+import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticator';
 
-const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+const ExistingMultiStep = () => {
+    const [page, setPage] = useState(0);
+    const [activeBtn, setActiveBtn] = useState(true);
 
-    const onSubmit = async (data) => {
-        console.log(data);
+    const conditionalComponent = () => {
+        switch (page) {
+            case 0:
+                return <FirstStep />;
+            case 1:
+                return <SecondStep />;
+            case 2:
+                return <StepThree />;
+            case 3:
+                return <StepFour />;
+            default:
+                return <FirstStep />;
+        }
     };
+    function handleSubmit() {
+        setPage(page + 1);
+    }
     return (
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                {/* register your input into the hook by invoking the "register" function */}
-
-                {isRegistered ? (
-                    <>
-                        <div>
-                            <InputWrapper>
-                                <Label>
-                                    Enter your RC Number/Business Registration
-                                    Number
-                                </Label>
-                            </InputWrapper>
-                            <br />
-                            <FormInput
-                                name="bvn"
-                                type="number"
-                                placeholder="Your Business Registration number"
-                                {...register('bvn', {
-                                    required: 'BVN is required',
-                                    minLength: {
-                                        value: 10,
-                                        message: 'Min length is 10'
-                                    }
-                                })}
-                            />
-                            <div className="errors">{errors.bvn?.message}</div>
-                        </div>
-                        <InputWrapper>
-                            <Label>Enter your TIN</Label>
-                            <br />
-                            <FormInput
-                                type="text"
-                                placeholder="Your Tax Identification number"
-                                {...register('tin')}
-                            />
-                        </InputWrapper>
-                    </>
-                ) : (
-                    ''
-                )}
-                <InputWrapper>
-                    <Label>Enter your BVN</Label>
-                    <br />
-                    <FormInput
-                        type="number"
-                        placeholder="Your BVN"
-                        {...register('bvn')}
-                    />
-                </InputWrapper>
-                <InputWrapper>
-                    <label>Phone Number</label>
-                    <br />
-                    <FormInput
-                        type="number"
-                        placeholder="+234 812 345 6789"
-                        {...register('bvn')}
-                    />
-                </InputWrapper>
-                <InputWrapper>
-                    <label>Date of Birth</label>
-                    <br />
-                    <FormInput
-                        type="date"
-                        placeholder="Your BVN"
-                        {...register('bvn')}
-                    />
-                </InputWrapper>
+        <Card>
+            {conditionalComponent()}
+            {page === 3 ? null : (
                 <ButtonComp
-                    text="Next"
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    onClick={handleSubmit}
                     type="submit"
-                    onClick={handleShowSecondStep}
+                    text={page === 2 ? 'Open A New Account' : 'Next'}
                 />
-            </form>
-        </div>
+            )}
+        </Card>
     );
 };
 
-export default RegisteredForm;
+export default ExistingMultiStep;

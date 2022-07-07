@@ -102,8 +102,7 @@ const Login = () => {
                                     className={styles.passwordInput}
                                     required
                                     {...register('password', {
-                                        required: 'Password is required',
-                                        minLength: 8
+                                        required: 'Password is required'
                                     })}
                                     onChange={checkDataContent}
                                 />

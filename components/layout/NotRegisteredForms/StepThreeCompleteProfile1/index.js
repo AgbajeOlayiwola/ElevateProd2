@@ -128,7 +128,7 @@ const StepThreeCompleteProfile1 = ({
                             <FormInput
                                 type="text"
                                 placeholder=""
-                                value="7746734324"
+                                value="Agbaje Olayiwola"
                                 disabled
                                 {...register('bvn')}
                             />

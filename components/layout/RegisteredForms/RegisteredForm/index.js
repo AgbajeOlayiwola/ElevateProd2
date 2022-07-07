@@ -58,6 +58,8 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             <div className="errors">{errors.tin?.message}</div>
                         </InputWrapper>
                         <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
                             text="Next"
                             type="submit"
                             onClick={handleShowSecondStep}

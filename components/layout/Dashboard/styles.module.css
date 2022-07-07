@@ -1,0 +1,12 @@
+.dash {
+    background: #f5f6fa;
+    height: fit-content;
+}
+.main {
+    width: 78vw;
+    margin-top: 20vh;
+    margin-left: 20vw;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 1.25rem;
+}
