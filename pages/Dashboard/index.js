@@ -15,10 +15,10 @@ import useRouter from 'next/router';
 import 'slick-carousel/slick/slick-theme.css';
 
 function SampleNextArrow(props) {
-    const router = useRouter();
+    // const router = useRouter();
 
-    const route = router.pathName
-    console.log(route)
+    // const route = router.pathName
+    // console.log(route)
     const { className, style, onClick } = props;
     return (
         <div
