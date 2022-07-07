@@ -1,0 +1,98 @@
+.rp {
+    width: 500;
+}
+.cov{
+    display: flex;
+    justify-content: space-between;
+}
+.whiteboard{
+    padding: 0.5rem 0.45rem;
+    background-color: #fff;
+    width: 40%;
+    border-radius: 12px;
+}
+.whiteboard div:nth-child(1){
+    width: 60%;
+}
+.thousand{
+    font-family: 'Inter';
+        font-style: normal;
+        font-weight: 900;
+        font-size: 24px;
+        line-height: 29px;
+        /* identical to box height */
+    
+        text-decoration-line: line-through;
+    
+        color: #69940D;
+}
+.image{
+    width: 20%;
+    height: 100%;
+    background: red;
+}
+.greencard{
+        padding: 0.5rem 0.45rem;
+        background: #69940D;
+            border-radius: 12px;
+            width: 45%;
+            border-radius: 12px;
+}
+.mp {
+    width: 50%;
+}
+.avail{
+    font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 16px;
+        /* identical to box height, or 115% */
+    
+    
+        color: #3E3E3E;
+}
+.tableHead{
+    background: #F5F6FA;
+        border-radius: 16px;
+        height:50px;
+}
+.btn{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.btn div:nth-child(1){
+    padding: 1.5rem 1.2rem;
+background: #7FBB01;
+    border-radius: 12px;
+    width: 45%;
+            color: white;
+}
+.btn div:nth-child(2) {
+    padding: 1.5rem 1.2rem;
+    background: #005B82;
+        border-radius: 12px;
+    width: 45%;
+    border-radius: 12px;
+    color: white;
+}
+.whiteboard{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.table{
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+    background-color: white;
+    margin-top: 3rem;
+}
+.tables{
+    
+        width: 100%;
+}
+.cover{
+background: #F5F6FA;
+padding:1rem 2rem;
+}
