@@ -23,6 +23,7 @@
     align-items: center;
     padding-left: 3.2rem;
     color: #cccccc;
+    cursor: pointer;
 }
 .parentDiv:hover {
     background: #daf0c2;
@@ -47,6 +48,7 @@
     line-height: 19px;
     /* identical to box height */
     color: #407a00;
+    cursor: default;
 }
 .showGreen {
     display: block;
