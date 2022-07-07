@@ -3,7 +3,7 @@
     width: 20vw;
     padding-top: 3.25rem;
     background-color: white;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
 }

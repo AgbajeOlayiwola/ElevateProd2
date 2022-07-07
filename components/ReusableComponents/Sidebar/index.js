@@ -5,9 +5,10 @@ import PaymentSvg from '../PaymentSvg';
 import SettingsSvg from '../SettingsSvg';
 import SideBarHomeSvg from '../ShomeSvg';
 import MoreSvg from '../MoreSvg';
+import ElevateLogo from '../Ellevate';
 
 const Sidebar = () => {
-    const [activeh, setActiveH] = useState(false);
+    const [activeh, setActiveH] = useState(true);
     const [activep, setActiveP] = useState(false);
     const [activet, setActiveT] = useState(false);
     const [activem, setActiveM] = useState(false);
@@ -39,7 +40,7 @@ const Sidebar = () => {
     return (
         <nav className={styles.sideNav}>
             <div className={styles.ellevate}>
-                <h1>Ellevate</h1>
+                <ElevateLogo />
             </div>
             <Link href="#">
                 <div
@@ -48,7 +49,7 @@ const Sidebar = () => {
                 >
                     <div className={styles.LinkDiv}>
                         <SideBarHomeSvg fillColor={activeh} />
-                        <p className={styles.link}>Home</p>
+                        <p className={styles.link}>Dashboard</p>
                     </div>
                 </div>
             </Link>

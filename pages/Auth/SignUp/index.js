@@ -231,7 +231,7 @@ const Signup = ({ type }) => {
                                     {/* include validation with required or other standard HTML validation rules */}
                                     <div>
                                         <label>Email Address </label>
-                                        {errors.email?.message}
+
                                         <br />
 
                                         <input
@@ -248,6 +248,7 @@ const Signup = ({ type }) => {
                                                 }
                                             })}
                                         />
+                                        {errors.email?.message}
                                     </div>
 
                                     {/* include validation with required or other standard HTML validation rules */}

@@ -1,9 +1,12 @@
 .dash {
     background: #f5f6fa;
-    height: 100vh;
+    height: fit-content;
 }
 .main {
-    width: 80vw;
-    margin-top: 35vh;
+    width: 78vw;
+    margin-top: 20vh;
     margin-left: 20vw;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 1.25rem;
 }
