@@ -1,11 +1,8 @@
 .sideNav {
     height: 100vh;
-    width: 20vw;
+    width: 273px;
     padding-top: 3.25rem;
     background-color: white;
-    position: fixed;
-    left: 0;
-    top: 0;
 }
 .ellevate {
     display: flex;

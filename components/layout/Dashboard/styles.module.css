@@ -1,13 +1,10 @@
 .dash {
-    background: #f5f6fa;
-    height: fit-content;
+    width: 100%;
+    display: flex;
 }
 
 .main {
-    width: 78vw;
-    margin-top: 20vh;
-    margin-left: 20vw;
-    padding-right: 2rem;
-    padding-left: 2rem;
-    padding-bottom: 1.25rem;
+    flex: 1;
+    background-color: #f5f6fa;
+    padding: 36px 32px 46px 32px;
 }

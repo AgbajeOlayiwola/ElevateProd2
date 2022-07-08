@@ -5,9 +5,11 @@ import styles from './styles.module.css';
 const DashLayout = ({ children }) => {
     return (
         <div className={styles.dash}>
-            <Navbar />
-            <div className={styles.main}>{children}</div>
             <Sidebar />
+            <div className={styles.main}>
+                <Navbar />
+                {children}
+            </div>
         </div>
     );
 };

@@ -98,7 +98,7 @@
     color: #929292;
 }
 .SMeApp {
-    font-family: 'inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -107,7 +107,7 @@
     text-align: center;
 }
 .disclaimer {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     text-align: start;
     line-height: 22px;

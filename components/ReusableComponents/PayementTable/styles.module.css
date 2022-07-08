@@ -1,0 +1,103 @@
+.table {
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+    background-color: white;
+    margin-top: 3rem;
+}
+.tables {
+    width: 100%;
+}
+
+.tableHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tableHeader h2 {
+    color: #102572;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    line-height: 19.36px;
+}
+
+.tableFilter {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+}
+
+.tableFilter input {
+    width: 60%;
+}
+
+.tableFilter button {
+    width: 35%;
+    margin: 0px;
+    background-color: #005b82;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+.tableHead {
+    /* background: #f5f6fa; */
+    /* height: 50px; */
+    /* display: table; */
+    border-radius: 16px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.tableHead th:first-child {
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.tableHead th:last-child {
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.tableHead th {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    color: #3e3e3e;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+    padding: 20px;
+    background: #f5f6fa;
+}
+
+.table td {
+    padding: 20px;
+    color: #455a64;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17%;
+    font-family: 'Inter', sans-serif;
+}
+
+.table .bene {
+    font-size: 16px;
+    color: #102572;
+}
+
+.table .transfer {
+    color: #2f2f2f;
+}
+
+.cover {
+    background: #f5f6fa;
+    padding: 1rem 2rem;
+}

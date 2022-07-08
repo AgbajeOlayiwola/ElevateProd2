@@ -32,7 +32,7 @@
     color: #102572;
 }
 .h5 {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -175,7 +175,7 @@
     padding: 1.5rem 1.5rem 0rem 1.5rem;
 }
 .cardI div h2 {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 14px;
@@ -186,7 +186,7 @@
     color: #ffffff;
 }
 .cardI div p {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: italic;
     font-weight: 500;
     font-size: 12px;
@@ -214,7 +214,7 @@
     justify-content: space-between;
 }
 .btmItop p {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -267,7 +267,7 @@
     display: none;
 }
 .btmIIp p:nth-child(1) {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -276,7 +276,7 @@
     color: #102572;
 }
 .btmIIp p:nth-child(2) {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -285,7 +285,7 @@
     color: #455a64;
 }
 .select {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -308,7 +308,7 @@
     width: 50%;
 }
 .names p:nth-child(1) {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -317,7 +317,7 @@
     color: #102572;
 }
 .names p:nth-child(2) {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     margin-top: 0px;
@@ -337,7 +337,7 @@
     width: 35%;
 }
 .money p:nth-child(1) {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
