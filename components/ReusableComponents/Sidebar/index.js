@@ -61,8 +61,8 @@ const Sidebar = () => {
                             </Link>
                             {item.subNav && router.pathname == item.path ? (
                                 <>
-                                    {item.subNavTitles.map((subTitle, i) => {
-                                        <div>
+                                    {item.subNavTitles.map((subTitle, i) => (
+                                        <div key={i}>
                                             <p>{subTitle}</p>
                                             {item.subNav.map((item, index) => {
                                                 return item.subNavTitle ==
@@ -78,10 +78,10 @@ const Sidebar = () => {
                                                     </div>
                                                 ) : null;
                                             })}
-                                        </div>;
-                                    })}
+                                        </div>
+                                    ))}
                                 </>
-                            ) : null}
+                            ) : null } 
                             {console.log(item.subNav)}
                         </>
                     );

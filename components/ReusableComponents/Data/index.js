@@ -30,31 +30,31 @@ export const SidebarData = [
         iconActive: <PaymentSvg fillColor={true} />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />,
-        subNavTitles: ['Make Payment', 'Recieve Payment'],
+        subNavTitles: ['Receive Payment', 'Make Payment'],
         subNav: [
             {
                 title: 'Paylink',
                 path: '',
                 icon: <BiIcons.BiLinkAlt />,
-                subNavTitle: 'Make Payment'
+                subNavTitle: 'Receive Payment'
             },
             {
                 title: 'USSD',
                 path: '',
                 icon: <FiIcons.FiHash />,
-                subNavTitle: 'Make Payment'
+                subNavTitle: 'Receive Payment'
             },
             {
                 title: 'Ecobank QR',
                 path: '',
                 icon: <BiIcons.BiScan />,
-                subNavTitle: 'Make Payment'
+                subNavTitle: 'Receive Payment'
             },
             {
                 title: 'mPOS',
                 path: '',
                 icon: <HiIcons.HiOutlineCreditCard />,
-                subNavTitle: 'Make Payment'
+                subNavTitle: 'Receive Payment'
             },
             {
                 title: 'Single Transfer',
@@ -65,12 +65,14 @@ export const SidebarData = [
             {
                 title: 'Bulk Transfer',
                 path: '',
-                icon: ''
+                icon: '',
+                subNavTitle: 'Make Payment'
             },
             {
                 title: 'Bill Payment',
                 path: '',
-                icon: ''
+                icon: '',
+                subNavTitle: 'Make Payment'
             },
             {
                 title: 'FX Transfer',

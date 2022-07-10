@@ -21,10 +21,11 @@ import Piechart from '../../components/ReusableComponents/Chart/Piechart';
 import { transactionData } from '../../components/ReusableComponents/Data';
 function SampleNextArrow(props) {
     const router = useRouter();
-
     const route = router.pathname;
-    console.log(route);
+
+
     const { className, style, onClick } = props;
+
     return (
         <div
             className={className}
@@ -53,6 +54,11 @@ function SamplePrevArrow(props) {
 const Dashboard = () => {
     const [nav2, setNav2] = useState();
     const slider1 = useRef();
+    const [outType, setOutType] = useState();
+    const [balance] = useState('22,000');
+    const types = (type) => {
+        setOutType(type);
+    };
 
     const settings = {
         className: 'center',
@@ -95,8 +101,8 @@ const Dashboard = () => {
                 <div className={styles.card}>
                     <div className={styles.cardRight}>
                         <div className={styles.cardMone}>
-                            <h1>₦22,000</h1>
-                            <Visbility color="green" />
+                            <h1>{outType ? '*******' : '₦' + balance}</h1>
+                            <Visbility color="green" typeSet={types} />
                         </div>
                         <p className={styles.avail}>Available Balance</p>
 
