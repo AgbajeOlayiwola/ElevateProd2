@@ -11,14 +11,19 @@ import Invoice from '../../components/ReusableComponents/InvoiceSvg';
 import MposSvg from '../../components/ReusableComponents/mPOSSvg';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
-import useRouter from 'next/router';
+import { useRouter } from 'next/router';
 import 'slick-carousel/slick/slick-theme.css';
-
+import Levelup from '../../components/ReusableComponents/LevelUp';
+import BarChart from '../../components/ReusableComponents/Chart/BarChart';
+import Chart from '../../components/ReusableComponents/Chart';
+import LineChart from '../../components/ReusableComponents/Chart/LineChart';
+import Piechart from '../../components/ReusableComponents/Chart/Piechart';
+import { transactionData } from '../../components/ReusableComponents/Data';
 function SampleNextArrow(props) {
-    // const router = useRouter();
+    const router = useRouter();
 
-    // const route = router.pathName
-    // console.log(route)
+    const route = router.pathname;
+    console.log(route);
     const { className, style, onClick } = props;
     return (
         <div
@@ -26,27 +31,43 @@ function SampleNextArrow(props) {
             style={{
                 ...style,
                 display: 'block',
-                width: '23px',
+                width: '63px',
+                fontSize: '35px',
                 boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.31)'
             }}
             onClick={onClick}
         />
     );
 }
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={className}
+            style={{ ...style, display: 'none', background: 'green' }}
+            onClick={onClick}
+        />
+    );
+}
 
 const Dashboard = () => {
-    const [nav1, setNav1] = useState();
     const [nav2, setNav2] = useState();
     const slider1 = useRef();
-    const slider2 = useRef();
 
     const settings = {
-        nextArrow: <SampleNextArrow />
+        className: 'center',
+        centerMode: true,
+        infinite: true,
+        centerPadding: '40px 0px 0px 0px',
+        slidesToShow: 1,
+        speed: 500,
+        nextArrow: <SampleNextArrow />,
+        prevArrow: <SamplePrevArrow />
     };
-    
 
     return (
         <DashLayout>
+            <Levelup />
             <div className={styles.Top}>
                 <div className={styles.Tpwh}>
                     <p className={styles.transP}>Transaction Today</p>
@@ -57,7 +78,7 @@ const Dashboard = () => {
                             </div>
                             <div>
                                 <p className={styles.payp}>Paylink</p>
-                                <h5 className={styles.h5}>24,000,000</h5>
+                                <h5 className={styles.h5}>₦24,000,000</h5>
                             </div>
                         </div>
                         <div className={styles.svgTxt}>
@@ -66,7 +87,7 @@ const Dashboard = () => {
                             </div>
                             <div>
                                 <p className={styles.ecop}>Ecobank QR</p>
-                                <h5 className={styles.h5}>24,000,000</h5>
+                                <h5 className={styles.h5}>₦24,000,000</h5>
                             </div>
                         </div>
                     </div>
@@ -74,7 +95,7 @@ const Dashboard = () => {
                 <div className={styles.card}>
                     <div className={styles.cardRight}>
                         <div className={styles.cardMone}>
-                            <h1>#22,000</h1>
+                            <h1>₦22,000</h1>
                             <Visbility color="green" />
                         </div>
                         <p className={styles.avail}>Available Balance</p>
@@ -124,12 +145,12 @@ const Dashboard = () => {
                     <div className={styles.cards}>
                         <Slider
                             {...settings}
-                            className="mainSlider"
-                            asNavFor={nav2}
-                            ref={(slider1) => setNav2(slider1)}
-                            slidesToShow={1}
-                            swipeToSlide={true}
-                            focusOnSelect={true}
+                            // className="mainSlider"
+                            // asNavFor={nav2}
+                            // ref={(slider1) => setNav2(slider1)}
+                            // slidesToShow={1}
+                            // swipeToSlide={true}
+                            // focusOnSelect={true}
                         >
                             <div>
                                 <div className={styles.cardI}>
@@ -148,25 +169,21 @@ const Dashboard = () => {
                                     <img src="Assets/Images/beardedman.png" />
                                 </div>
                             </div>
-
                             <div>
-                                <div className={styles.cardI}>
+                                <div className={styles.cardII}>
+                                    <img src="Assets/Images/List.png" />
                                     <div>
-                                        <h2>
-                                            Explore unlimited possibilities with
-                                            Ecobank Digital
-                                        </h2>
+                                        <h2>Send an e-Invoice easily</h2>
                                         <p>
-                                            <i>
-                                                Open your Xpress account
-                                                instantly on your mobile
-                                            </i>
+                                            Lorem ipsum dolor sit amet,
+                                            consectetur adipiscing elit ...
+                                        </p>
+                                        <p>
+                                            <i>Create e-Invoice now {'>'}</i>
                                         </p>
                                     </div>
-                                    <img src="Assets/Images/beardedman.png" />
                                 </div>
                             </div>
-                            <div className={styles.cardII}></div>
                         </Slider>
                     </div>
                 </div>
@@ -175,10 +192,11 @@ const Dashboard = () => {
                     <div className={styles.btmI}>
                         <div className={styles.btmItop}>
                             <p>Cash Flow</p>
-                            <div>
-                                <p>Last 7 Days</p>
-                            </div>
+                            <select className={styles.day}>
+                                <option>Last 7 Days</option>
+                            </select>
                         </div>
+                        <LineChart />
                     </div>
                     <div className={styles.btmII}>
                         <div className={styles.btmIIp}>
@@ -188,77 +206,32 @@ const Dashboard = () => {
                         <p className={styles.select}>
                             (Select transaction to vie more)
                         </p>
-                        <div className={styles.transaction}>
-                            <div className={styles.names}>
-                                <p>James Ewang</p>
-                                <p>Transfer</p>
-                            </div>
-                            <div className={styles.money}>
-                                <p>+40,000</p>
-                                <div className={styles.greendot}></div>
-                            </div>
-                        </div>
-                        <hr className={styles.hr} />
-                        <div className={styles.transaction}>
-                            <div className={styles.names}>
-                                <p>James Ewang</p>
-                                <p>Transfer</p>
-                            </div>
-                            <div className={styles.money}>
-                                <p>-40,000</p>
-                                <div className={styles.reddot}></div>
-                            </div>
-                        </div>
 
-                        <hr className={styles.hr} />
-                        <div className={styles.transaction}>
-                            <div className={styles.names}>
-                                <p>James Ewang</p>
-                                <p>Transfer</p>
-                            </div>
-                            <div className={styles.money}>
-                                <p>-40,000</p>
-                                <div className={styles.reddot}></div>
-                            </div>
-                        </div>
-
-                        <hr className={styles.hr} />
-                        <div className={styles.transaction}>
-                            <div className={styles.names}>
-                                <p>James Ewang</p>
-                                <p>Transfer</p>
-                            </div>
-                            <div className={styles.money}>
-                                <p>-40,000</p>
-                                <div className={styles.reddot}></div>
-                            </div>
-                        </div>
-
-                        <hr className={styles.hr} />
-                        <div className={styles.transaction}>
-                            <div className={styles.names}>
-                                <p>James Ewang</p>
-                                <p>Transfer</p>
-                            </div>
-                            <div className={styles.money}>
-                                <p>-40,000</p>
-                                <div className={styles.reddot}></div>
-                            </div>
-                        </div>
-
-                        <hr className={styles.hr} />
-                        <div className={styles.transaction}>
-                            <div className={styles.names}>
-                                <p>James Ewang</p>
-                                <p>Transfer</p>
-                            </div>
-                            <div className={styles.money}>
-                                <p>-40,000</p>
-                                <div className={styles.reddot}></div>
-                            </div>
-                        </div>
+                        {transactionData.map((item, index) => {
+                            return (
+                                <>
+                                    <div className={styles.transaction}>
+                                        <div className={styles.names}>
+                                            <p>{item.name}</p>
+                                            <p>{item.transfer}</p>
+                                        </div>
+                                        <div className={styles.money}>
+                                            <p>{item.ammount}</p>
+                                            <div className={item.color}></div>
+                                        </div>
+                                    </div>
+                                    <hr className={styles.hr} />
+                                </>
+                            );
+                        })}
                     </div>
-                    <div className={styles.btmIII}></div>
+                    <div className={styles.btmIII}>
+                        <p className={styles.paylink}>Paylink Vs Others</p>
+                        <select className={styles.dayPie}>
+                            <option>Apr 4th-11th, 2022</option>
+                        </select>
+                        <Piechart />
+                    </div>
                 </div>
             </div>
         </DashLayout>

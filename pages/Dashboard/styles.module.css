@@ -7,7 +7,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 19px 30px 19px 32px;
+    padding: 19px 30px 25px 32px;
+}
+.otherTrans p {
+    margin-bottom: 18px;
+    margin-top: 15px;
 }
 .Top {
     display: flex;
@@ -19,9 +23,9 @@
     max-width: 478px;
     flex-direction: column;
     justify-content: space-between;
-
+    display: flex;
     width: 44%;
-    padding: 19px 32px 19px 32px;
+    padding: 23px 32px 56px 32px;
 }
 .transP {
     font-style: normal;
@@ -93,29 +97,33 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    /* identical to box height */
     margin-bottom: 22px;
+    margin-top: 1px;
     color: #efffcc;
 }
 .recMak {
     display: flex;
     justify-content: space-between;
+    width: 93%;
 }
 .rec {
     padding: 16px;
     background: #7fbb01;
     border-radius: 12px;
+    cursor: pointer;
 }
 .make {
     padding: 16px;
     background: #005b82;
     border-radius: 12px;
+    cursor: pointer;
 }
 .cardRight {
     width: 75%;
 }
 .cardMone h1 {
     margin-bottom: 0px;
+    margin-top: 0px;
 }
 .otherTrans {
     font-style: normal;
@@ -129,6 +137,8 @@
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
+    margin: 0px;
+    margin-top: 14px;
     text-align: center;
     line-height: 14px;
     /* identical to box height, or 99% */
@@ -139,16 +149,17 @@
     justify-content: center;
 }
 .dinCLass {
-    padding: 14px 21px 14px 21px;
+    padding: 25px 21px 19px 21px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: white;
     border-radius: 12px;
+    cursor: pointer;
     width: 23%;
     background: #ffffff;
     box-shadow: 0px 0px 20px rgba(176, 173, 173, 0.39);
-    border-radius: 8px;
+    border-radius: 16px;
 }
 .divCov {
     display: flex;
@@ -163,7 +174,37 @@
 .cards {
     /* display: flex;
     justify-content: space-between; */
-    width: 51%;
+    width: 52%;
+}
+.cardII {
+    background: #102572;
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    padding: 23px 1.5rem 19px 1.5rem;
+}
+.cardII div h2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0px;
+    color: #ffffff;
+}
+.cardII div p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    width: 201px;
+    margin-top: 10px;
+    margin-bottom: 13px;
+    line-height: 17px;
+
+    color: #ffffff;
 }
 .cardI {
     background: linear-gradient(126.25deg, #01bb8a -4.11%, #2f2f2f 115.93%);
@@ -171,7 +212,7 @@
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
-    width: 76%;
+    width: 90%;
     padding: 1.5rem 1.5rem 0rem 1.5rem;
 }
 .cardI div h2 {
@@ -212,6 +253,7 @@
 .btmItop {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 29.1px;
 }
 .btmItop p {
     font-family: 'Inter';
@@ -360,4 +402,30 @@
     box-shadow: 0px 0px 37px rgba(157, 147, 147, 0.12);
     border-radius: 8px;
     transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+.day {
+    width: 30%;
+    height: 17%;
+    padding: 7px 13px;
+    background: #f5f6fa;
+    border-radius: 8px;
+}
+.dayPie {
+    width: 69%;
+    height: 11%;
+    background: #ebf7ff;
+    box-shadow: 0px 0px 20px rgb(244 244 244 / 41%);
+    border-radius: 8px;
+    margin-bottom: 41px;
+    padding: 8px 9px;
+}
+.paylink {
+    margin-bottom: 19px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #102572;
 }

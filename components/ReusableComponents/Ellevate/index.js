@@ -50,8 +50,8 @@ const ElevateLogo = () => {
                     y2="17.976"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#828B32" />
-                    <stop offset="1" stop-color="#C4D344" />
+                    <stop stopColor="#828B32" />
+                    <stop offset="1" stopColor="#C4D344" />
                 </linearGradient>
                 <linearGradient
                     id="paint1_linear_3617_21570"
@@ -61,8 +61,8 @@ const ElevateLogo = () => {
                     y2="17.976"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#828B32" />
-                    <stop offset="1" stop-color="#C4D344" />
+                    <stop stopColor="#828B32" />
+                    <stop offset="1" stopColor="#C4D344" />
                 </linearGradient>
                 <linearGradient
                     id="paint2_linear_3617_21570"
@@ -72,8 +72,8 @@ const ElevateLogo = () => {
                     y2="17.976"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#828B32" />
-                    <stop offset="1" stop-color="#C4D344" />
+                    <stop stopColor="#828B32" />
+                    <stop offset="1" stopColor="#C4D344" />
                 </linearGradient>
                 <linearGradient
                     id="paint3_linear_3617_21570"
@@ -83,8 +83,8 @@ const ElevateLogo = () => {
                     y2="17.976"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#828B32" />
-                    <stop offset="1" stop-color="#C4D344" />
+                    <stop stopColor="#828B32" />
+                    <stop offset="1" stopColor="#C4D344" />
                 </linearGradient>
                 <linearGradient
                     id="paint4_linear_3617_21570"
@@ -94,8 +94,8 @@ const ElevateLogo = () => {
                     y2="17.976"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#828B32" />
-                    <stop offset="1" stop-color="#C4D344" />
+                    <stop stopColor="#828B32" />
+                    <stop offset="1" stopColor="#C4D344" />
                 </linearGradient>
                 <linearGradient
                     id="paint5_linear_3617_21570"
@@ -105,8 +105,8 @@ const ElevateLogo = () => {
                     y2="17.976"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#828B32" />
-                    <stop offset="1" stop-color="#C4D344" />
+                    <stop stopColor="#828B32" />
+                    <stop offset="1" stopColor="#C4D344" />
                 </linearGradient>
                 <linearGradient
                     id="paint6_linear_3617_21570"
@@ -116,8 +116,8 @@ const ElevateLogo = () => {
                     y2="17.976"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#828B32" />
-                    <stop offset="1" stop-color="#C4D344" />
+                    <stop stopColor="#828B32" />
+                    <stop offset="1" stopColor="#C4D344" />
                 </linearGradient>
                 <linearGradient
                     id="paint7_linear_3617_21570"
@@ -127,8 +127,8 @@ const ElevateLogo = () => {
                     y2="17.976"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="#828B32" />
-                    <stop offset="1" stop-color="#C4D344" />
+                    <stop stopColor="#828B32" />
+                    <stop offset="1" stopColor="#C4D344" />
                 </linearGradient>
             </defs>
         </svg>

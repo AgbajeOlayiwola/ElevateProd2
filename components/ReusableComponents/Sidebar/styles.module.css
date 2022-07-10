@@ -4,8 +4,15 @@
     padding-top: 3.25rem;
     background-color: white;
     position: fixed;
+    overflow: scroll;
     left: 0;
     top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.sideNav::-webkit-scrollbar {
+    display: none;
 }
 .ellevate {
     display: flex;
@@ -67,5 +74,32 @@
     height: 100vh;
     width: 20vw;
 }
-
+.ponter {
+    margin-left: 50px;
+}
+.mainDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 84%;
+}
 /* side bar end  */
+.subMenuLink {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 78.8px;
+    /* padding-right: 72px; */
+    align-items: center;
+    background: rgba(218, 240, 194, 0.37);
+}
+.subMenuLink p {
+    font-family: 'Inter';
+    font-style: normal;
+    width: 68%;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #7a7978;
+}

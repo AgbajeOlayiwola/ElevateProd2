@@ -1,59 +1,101 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 import PaymentSvg from '../PaymentSvg';
 import SettingsSvg from '../SettingsSvg';
 import SideBarHomeSvg from '../ShomeSvg';
 import MoreSvg from '../MoreSvg';
 import ElevateLogo from '../Ellevate';
-
+import LogoutSvg from '../LogoutSvg';
+import { SidebarData } from '../Data';
 
 const Sidebar = () => {
     const router = useRouter();
 
+    const [subNav, setSubNav] = useState(true);
+
+    const showSubnav = () => {
+        setSubNav(true);
+    };
+
+    // fillColor={router.pathname == '/Dashboard'}
+
     return (
         <nav className={styles.sideNav}>
-            <div className={styles.ellevate}>
-                <ElevateLogo />
+            <div className={styles.top}>
+                <div className={styles.ellevate}>
+                    <ElevateLogo />
+                </div>
+
+                {SidebarData.map((item, index) => {
+                    return (
+                        <>
+                            <Link href={item.path} key={index}>
+                                <div
+                                    onClick={item.subNav && showSubnav}
+                                    className={
+                                        router.pathname == item.path
+                                            ? styles.inActive
+                                            : styles.parentDiv
+                                    }
+                                >
+                                    <div className={styles.mainDiv}>
+                                        <div className={styles.LinkDiv}>
+                                            {router.pathname == item.path
+                                                ? item.iconActive
+                                                : item.icon}
+                                            <p className={styles.link}>
+                                                {item.title}
+                                            </p>
+                                        </div>
+
+                                        {item.subNav &&
+                                        router.pathname == item.path ? (
+                                            <>{item.iconOpened}</>
+                                        ) : item.subNav ? (
+                                            item.iconClosed
+                                        ) : null}
+                                    </div>
+                                </div>
+                            </Link>
+                            {item.subNav && router.pathname == item.path ? (
+                                <>
+                                    {item.subNavTitles.map((subTitle, i) => {
+                                        <div>
+                                            <p>{subTitle}</p>
+                                            {item.subNav.map((item, index) => {
+                                                return item.subNavTitle ==
+                                                    subTitle ? (
+                                                    <div
+                                                        className={
+                                                            styles.subMenuLink
+                                                        }
+                                                        key={index}
+                                                    >
+                                                        {item.icon}
+                                                        <p>{item.title}</p>
+                                                    </div>
+                                                ) : null;
+                                            })}
+                                        </div>;
+                                    })}
+                                </>
+                            ) : null}
+                            {console.log(item.subNav)}
+                        </>
+                    );
+                })}
             </div>
-            <Link href="/Dashboard">
+
+            <Link href="/Auth/Login">
                 <div
-                    className={router.pathname == "/Dashboard" ? styles.inActive : styles.parentDiv}
+                    className={styles.parentDiv}
+                    styles={{ marginTop: '48.64px' }}
                 >
                     <div className={styles.LinkDiv}>
-                        <SideBarHomeSvg fillColor={router.pathname == "/Dashboard"} />
-                        <p className={styles.link}>Dashboard</p>
-                    </div>
-                </div>
-            </Link>
-            <Link href="/Payment">
-                <div
-                    className={router.pathname == "/Payment" ? styles.inActive : styles.parentDiv}
-                >
-                    <div className={styles.LinkDiv}>
-                        <PaymentSvg fillColor={router.pathname == "/Payment"} />
-                        <p className={styles.link}>Payment</p>
-                    </div>
-                </div>
-            </Link>
-            <Link href="/Tools">
-                <div
-                    className={router.pathname == "/Tools" ? styles.inActive : styles.parentDiv}
-                >
-                    <div className={styles.LinkDiv}>
-                        <SettingsSvg fillColor={router.pathname == "/Tools"} />
-                        <p className={styles.link}>Tools</p>
-                    </div>
-                </div>
-            </Link>
-            <Link href="/More">
-                <div
-                    className={router.pathname == "/More" ? styles.inActive : styles.parentDiv}
-                >
-                    <div className={styles.LinkDiv}>
-                        <MoreSvg fillColor={router.pathname == "/More"} />
-                        <p className={styles.link}>More</p>
+                        <LogoutSvg />
+                        <p className={styles.link}>Logout</p>
                     </div>
                 </div>
             </Link>

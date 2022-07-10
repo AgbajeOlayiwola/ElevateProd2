@@ -1,14 +1,14 @@
 import React from 'react';
 import DashLayout from '../../components/layout/Dashboard';
 
-const More = () => {
+const Transaction = () => {
     return (
         <DashLayout>
             <div>
-                <p>More</p>
+                <p>Transaction</p>
             </div>
         </DashLayout>
     );
 };
 
-export default More;
+export default Transaction;
