@@ -16,6 +16,8 @@
     --global-label-color: blue;
     /* --global-label-fontSize: 5rem; */
 }
+
+/* CSS Reset */
 html,
 * {
     padding: 0;

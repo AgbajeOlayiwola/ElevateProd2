@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import DashLayout from '../../components/layout/Dashboard';
 import PaymentTable from '../../components/ReusableComponents/PayementTable';
@@ -10,12 +10,77 @@ const Payment = () => {
     const payment = useSelector((state) => state.payment1);
     console.log(payment);
 
-    const paymentData = [
+    const [formType, setFormType] = useState('paylink')
+
+    const makeData = [
         {
-            icon: '',
-            text: ''
-        }
+            icon: '../../Assets/Svgs/Vector(1).svg',
+            text: 'Single Transfer'
+        },
+        {
+            icon: '../../Assets/Svgs/Group 444.svg',
+            text: 'Bulk Transfer'
+        },
+        {
+            icon: '../../Assets/Svgs/Group 452.svg',
+            text: 'Bills Payment'
+        },
+        {
+            icon: '../../Assets/Svgs/Vector(2).svg',
+            text: 'FX Transfer'
+        },
     ];
+
+    const receiveData = [
+        {
+            icon: '../../Assets/Svgs/Vector.svg',
+            text: 'Paylink'
+        },
+        {
+            icon: '../../Assets/Svgs/naira.svg',
+            text: 'USSD only'
+        },
+        {
+            icon: '../../Assets/Svgs/Frame.svg',
+            text: 'Ecobank QR Only'
+        },
+        {
+            icon: '../../Assets/Svgs/Frame(1).svg',
+            text: 'mPOS'
+        },
+    ];
+
+    const handleFormChange = formTitle => setFormType(formTitle)
+
+    const renderForm = () => {
+        switch (formType) {
+            case 'paylink':
+                return <OverlayPage>
+                    <ReceivePaymentFirst firstTitle="Create Payment Link" buttonText="Generate Paylink" />
+                </OverlayPage>
+            case 'ussd only':
+                return <OverlayPage>
+                    <ReceivePaymentFirst firstTitle="Create USSD Payment Code" />
+                </OverlayPage>
+            case 'ecobank qr only':
+                return <OverlayPage>
+                    <ReceivePaymentFirst firstTitle="Create Ecobank QR Code" />
+                </OverlayPage>
+            case 'mpos':
+                return <OverlayPage>
+                    <ReceivePaymentFirst firstTitle="Use Mobile POS" />
+                </OverlayPage>
+            case 'single':
+                break;
+            case 'bulk':
+                break;
+            case 'bills':
+                break;
+            case 'fx':
+                break;
+            default:
+        }
+    }
 
     return (
         <DashLayout>
@@ -35,6 +100,7 @@ const Payment = () => {
                     </div>
                 </div>
             </div>
+
             <div className={styles.cov}>
                 <div className={styles.whiteboard}>
                     <p className={styles.percentage}>
@@ -57,45 +123,69 @@ const Payment = () => {
                     </div>
                 </div>
             </div>
+
             <div className={styles.cov}>
-                <PaymentType
-                    paymentType="Recieve Payments"
-                    color="#69940D"
-                    link1="../../Assets/Svgs/Vector.svg"
-                    text1="Paylink"
-                    link2="../../Assets/Svgs/naira.svg"
-                    text2="USSD only"
-                    link3="../../Assets/Svgs/Frame.svg"
-                    text3="Ecobank QR Only"
-                    link4="../../Assets/Svgs/Frame(1).svg"
-                    text4="mPOS"
-                    textColor="#005B82"
-                />
-                <PaymentType
-                    paymentType="Make Payment"
-                    color="#102572"
-                    link1="../../Assets/Svgs/Vector(1).svg"
-                    text1="Single Transfer"
-                    link2="../../Assets/Svgs/Group 444.svg"
-                    text2="Bulk Transfer"
-                    link3="../../Assets/Svgs/Group 452.svg"
-                    text3="Bills Payment"
-                    link4="../../Assets/Svgs/Vector(2).svg"
-                    text4="FX Transfer"
-                    textColor="#2F2F2F"
-                />
+                <PaymentCard title="Receive Payments" type="receive">
+                    {
+                        receiveData.map((payType, index) => <PaymentSingleBody 
+                            data={payType} 
+                            index={index} 
+                            type="receive" 
+                            handleFormChange={handleFormChange}
+                        />)
+                    }
+                </PaymentCard>
+                <PaymentCard title="Make Payments" type="make">
+                    {
+                        makeData.map((payType, index) => <PaymentSingleBody 
+                            data={payType} 
+                            index={index} 
+                            type="make" 
+                            handleFormChange={handleFormChange}
+                        />)
+                    }
+                </PaymentCard>
             </div>
+
             <PaymentTable title="All Transactions" />
 
-            <ReceivePaymentFirst
-                firstTitle="Create Payment Link"
-                buttonText="Generate Paylink"
-            />
-            <ReceivePaymentFirst firstTitle="Create USSD Payment Code" />
-            <ReceivePaymentFirst firstTitle="Create Ecobank QR Code" />
-            <ReceivePaymentFirst firstTitle="Use Mobile POS" />
+            { renderForm() }
         </DashLayout>
     );
 };
+
+const PaymentSingleBody = ({ data: { icon, text }, index, type, handleFormChange }) => {
+    return (
+        <div className={styles.paymentSingleBody} key={index} onClick={() => handleFormChange(text.toLowerCase())}>
+            <div>
+                <div className={styles.paymentSingleImg}>
+                    <img src={icon} alt="logo" />
+                </div>
+                <div className={styles.paymentSingleText}>
+                    <p className={type == 'receive' ? styles.receivePara : styles.makePara }>{text}</p>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const PaymentCard = ({ children, title, type }) => {
+    return (
+        <div className={styles.paymentTypeCont}>
+            <h2 className={type == 'receive' ? styles.receive : styles.make }>{ title }</h2>
+            <div className={styles.PaymentSingle}>
+                { children }
+            </div>
+        </div>
+    )
+}
+
+const OverlayPage = ({ children }) => {
+    return (
+        <div className='styles.overlayContainer'>
+            { children }
+        </div>
+    )
+}
 
 export default Payment;
