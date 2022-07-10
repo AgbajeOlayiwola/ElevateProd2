@@ -1,73 +1,93 @@
 import React from 'react';
+import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
 
 const PaymentTable = ({ title }) => {
+    const tableDetails = [
+        {
+            beneficiary: 'Edward Ewang',
+            type: 'Transfer',
+            amount: '+40,000',
+            bank: 'Wema Bank',
+            date: '22 Jul 2022',
+            status: 'Completed'
+        },
+        {
+            beneficiary: 'Edward Ewang',
+            type: 'Transfer',
+            amount: '+40,000',
+            bank: 'Wema Bank',
+            date: '22 Jul 2022',
+            status: 'Completed'
+        },
+        {
+            beneficiary: 'Edward Ewang',
+            type: 'Transfer',
+            amount: '+40,000',
+            bank: 'Wema Bank',
+            date: '22 Jul 2022',
+            status: 'Completed'
+        },
+        {
+            beneficiary: 'Edward Ewang',
+            type: 'Transfer',
+            amount: '+40,000',
+            bank: 'Wema Bank',
+            date: '22 Jul 2022',
+            status: 'Completed'
+        }
+    ];
     return (
         <div className={styles.table}>
             <div className={styles.tableHeader}>
                 <h2>{title}</h2>
                 <div className={styles.tableFilter}>
-                    <input type="text" placeholder="Search by Date" />
-                    {/* <select name="" id="">
-
-                    </select> */}
-                    <button>Filter</button>
+                    <div>
+                        <img src="../Assets/Svgs/search.svg" alt="" />
+                        <input type="text" placeholder="Search by Date" />
+                    </div>
+                    <select name="" id="">
+                        <option value="" defaultValue="Filter">
+                            Filter
+                        </option>
+                        <option
+                            value="Bvn"
+                            onClick={(e) => {
+                                alert(e.target.value);
+                            }}
+                        >
+                            Bvn
+                        </option>
+                    </select>
+                    {/* <button>
+                        Filter
+                        <span>
+                            <img src="../Assets/Svgs/Vector 26.svg" alt="" />
+                        </span>
+                    </button> */}
                 </div>
             </div>
-            <table>
-                <thead>
-                    <tr className={styles.tableHead}>
-                        <th>Beneficiary </th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Bank</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td className={styles.bene}>Edward Ewang</td>
-                        <td className={styles.transfer}>Transfer</td>
-                        <td className={styles.amount}>+40,000</td>
-                        <td>Wema Bank</td>
-                        <td>22 Jul 2022</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr>
-                        <td className={styles.bene}>Edward Ewang</td>
-                        <td className={styles.transfer}>Transfer</td>
-                        <td className={styles.amount}>+40,000</td>
-                        <td>Wema Bank</td>
-                        <td>22 Jul 2022</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr>
-                        <td className={styles.bene}>Edward Ewang</td>
-                        <td className={styles.transfer}>Transfer</td>
-                        <td className={styles.amount}>+40,000</td>
-                        <td>Wema Bank</td>
-                        <td>22 Jul 2022</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr>
-                        <td className={styles.bene}>Edward Ewang</td>
-                        <td className={styles.transfer}>Transfer</td>
-                        <td className={styles.amount}>+40,000</td>
-                        <td>Wema Bank</td>
-                        <td>22 Jul 2022</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr>
-                        <td className={styles.bene}>Edward Ewang</td>
-                        <td className={styles.transfer}>Transfer</td>
-                        <td className={styles.amount}>+40,000</td>
-                        <td>Wema Bank</td>
-                        <td>22 Jul 2022</td>
-                        <td>Completed</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div className={styles.TableDetailHeader}>
+                <p className={styles.beneficiary}>Beneficiary </p>
+                <p className={styles.type}>Type</p>
+                <p className={styles.amount}>Amount</p>
+                <p className={styles.bank}>Bank</p>
+                <p className={styles.date}>Date</p>
+                <p className={styles.status}>Status</p>
+            </div>
+            {tableDetails.map((item, index) => {
+                return (
+                    <TableDetail
+                        keys={index}
+                        Beneficiary={item.beneficiary}
+                        Type={item.type}
+                        Amount={item.amount}
+                        Bank={item.bank}
+                        Dates={item.date}
+                        Status={item.status}
+                    />
+                );
+            })}
         </div>
     );
 };

@@ -1,15 +1,9 @@
-.cov {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 77px;
-}
-
 .greencard {
-    padding: 32px 32px 24px 32px;
+    padding: 16px 24px 16px 24px;
     background: #69940d;
-    border-radius: 12px;
-    width: 48%;
+    border-radius: 16px;
+    width: 100%;
+    margin-top: 80px;
 }
 
 .greencard h3 {
@@ -22,8 +16,7 @@
 
 .greencardDetails {
     display: flex;
-    align-items: center;
-    margin-top: 13px;
+    /* align-items: center; */
 }
 
 .greencard p {
@@ -32,25 +25,34 @@
     line-height: 25px;
     font-family: 'Inter', sans-serif;
     color: #fff;
-    margin-left: 11px;
+    margin-top: 8px;
 }
 
 .greencard p span {
     font-weight: 700;
 }
 
+.cov {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 32px;
+}
+
 .whiteboard {
-    padding: 32px 32px 24px 32px;
+    padding: 16px 32px 16px 32px;
     background-color: #fff;
     width: 49%;
     border-radius: 16px;
+}
+
+.balance {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
-.whiteboard div:nth-child(1) {
-    width: 70%;
-}
+
 .thousand {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -59,11 +61,6 @@
     line-height: 29px;
     color: #69940d;
     margin: 0px;
-}
-.image {
-    width: 20%;
-    height: 100%;
-    background: red;
 }
 
 .avail {
@@ -76,39 +73,18 @@
     margin: 0px;
 }
 
-.btn {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 30px;
-}
-
-.btn div:nth-child(1) {
-    padding: 16px 16px;
-    background: #7fbb01;
-    border-radius: 12px;
-    width: 48%;
-    cursor: pointer;
-    color: white;
-}
-.btn div:nth-child(2) {
-    padding: 16px 16px;
-    background: #005b82;
-    border-radius: 12px;
-    width: 48%;
-    cursor: pointer;
-    border-radius: 12px;
-    color: white;
-}
-
-.btn p {
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 17px;
+.percentage {
     font-family: 'Inter', sans-serif;
-    color: #fff;
-    text-align: center;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
+    font-weight: 500;
+    font-size: 14px;
+    color: #3e3e3e;
+    line-height: 16px;
+}
+
+.percentage span {
+    color: #69940d;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 29px;
+    margin-right: 8px;
 }

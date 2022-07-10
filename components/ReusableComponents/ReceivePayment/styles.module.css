@@ -1,0 +1,82 @@
+.firstDiv {
+    width: 63%;
+    max-width: 781px;
+    background-color: white;
+    border-radius: 20px;
+    margin: 32px auto;
+    display: flex;
+    /* position: absolute; */
+    top: 50%;
+}
+
+.firstDiv > div:last-child {
+    /* height: 100%; */
+    width: 30%;
+}
+
+.firstDiv > div:last-child img {
+    height: 100%;
+    width: 100%;
+}
+
+.firstBody {
+    width: 70%;
+}
+
+.firstBody > div {
+    width: 72%;
+    margin: 32px auto;
+}
+
+.firstBody h2 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color: #005b82;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 4px;
+}
+
+.firstBody p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #bdbdbd;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 8px;
+}
+
+.formGroup {
+    margin-top: 24px;
+}
+
+.formGroup label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    font-family: 'Inter', sans-serif;
+    /* margin-bottom: 12px; */
+}
+
+.formGroup input,
+.formGroup textarea {
+    width: 100%;
+    margin-top: 12px;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    color: #3e3e3e;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    padding: 16px;
+}
+
+.formGroup textarea {
+    height: 150px;
+    outline: none;
+}
+
+.firstBody button {
+    margin-top: 32px;
+}
