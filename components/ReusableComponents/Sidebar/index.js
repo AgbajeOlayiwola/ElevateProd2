@@ -13,11 +13,11 @@ import { SidebarData } from '../Data';
 const Sidebar = () => {
     const router = useRouter();
 
-    const [subNav, setSubNav] = useState(true);
+    const [subNav, setSubNav] = useState(false);
 
     const showSubnav = () => {
         setSubNav((prev) => !prev);
-        console.log(subNav);
+        console.log('clicked');
     };
 
     // fillColor={router.pathname == '/Dashboard'}
@@ -33,7 +33,6 @@ const Sidebar = () => {
                     return (
                         <>
                             <div
-                                onClick={item.subNav && showSubnav}
                                 className={
                                     router.pathname == item.path
                                         ? styles.inActive
@@ -55,9 +54,17 @@ const Sidebar = () => {
                                         </div>
                                     </Link>
                                     {item.subNav && subNav ? (
-                                        <>{item.iconOpened}</>
+                                        <div
+                                            onClick={item.subNav && showSubnav}
+                                        >
+                                            {item.iconOpened}
+                                        </div>
                                     ) : item.subNav ? (
-                                        item.iconClosed
+                                        <div
+                                            onClick={item.subNav && showSubnav}
+                                        >
+                                            {item.iconClosed}
+                                        </div>
                                     ) : null}
                                 </div>
                             </div>

@@ -30,7 +30,7 @@
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
     background-color: white;
-    color: #7a7978;
+    color: black;
 }
 .passwordInput {
     font-family: 'Inter';
@@ -41,7 +41,7 @@
     line-height: 19px;
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
-    color: #005b82;
+    color: black;
 }
 .show {
     display: flex;
@@ -66,10 +66,19 @@
 }
 .terms {
     display: flex;
+    margin-top: 3.05rem;
+    margin-bottom: 4rem;
     font-size: 13px;
 }
 .terms input {
     width: 3%;
+}
+.Log {
+    background-color: #f8f8f8;
+    padding: 2rem;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    border-color: #dedede;
 }
 
 /* omnilite section css end  */

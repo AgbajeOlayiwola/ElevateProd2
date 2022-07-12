@@ -313,10 +313,12 @@ const Signup = ({ type }) => {
                                     )}
                                     <div>
                                         <input
-                                            type="radio"
+                                            type="checkbox"
                                             className={styles.termcondition}
                                             defaultChecked={active}
-                                            onClick={() => setActiveBtn(true)}
+                                            onClick={() =>
+                                                setActiveBtn(!activeBtn)
+                                            }
                                         />
                                         <label>
                                             I agree with Ellevate App
@@ -462,10 +464,7 @@ const Signup = ({ type }) => {
                                         </div>
                                     </div>
 
-                                    <div
-                                        onSubmit={handleSubmit(onSubmit)}
-                                        className={styles.Log}
-                                    >
+                                    <div onSubmit={handleSubmit(onSubmit)}>
                                         <LoginWith
                                             labelI={labelI}
                                             labelII={labelII}
