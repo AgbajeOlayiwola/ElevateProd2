@@ -1,6 +1,17 @@
+.sectionII {
+    width: 50%;
+}
+.sectionI {
+    width: 48%;
+}
+.cove {
+    display: flex;
+    justify-content: space-between;
+}
+
 .card {
     background: linear-gradient(124.52deg, #7fbb01 -34.31%, #2f2f2f 115.35%);
-    width: 52%;
+
     max-width: 677px;
     border-radius: 16px;
     color: white;
@@ -24,7 +35,6 @@
     flex-direction: column;
     justify-content: space-between;
     display: flex;
-    width: 44%;
     padding: 23px 32px 56px 32px;
 }
 .transP {
@@ -104,7 +114,7 @@
 .recMak {
     display: flex;
     justify-content: space-between;
-    width: 93%;
+    width: 100%;
 }
 .rec {
     padding: 16px;
@@ -156,25 +166,24 @@
     background-color: white;
     border-radius: 12px;
     cursor: pointer;
+    height: 105.01px;
     width: 23%;
     background: #ffffff;
     box-shadow: 0px 0px 20px rgba(176, 173, 173, 0.39);
     border-radius: 16px;
 }
-.divCov {
-    display: flex;
-    justify-content: space-between;
-    width: 44%;
-}
+
 .divCover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 32px;
 }
 .cards {
     /* display: flex;
     justify-content: space-between; */
-    width: 52%;
+    margin-top: 24px;
+    margin-bottom: 24px;
 }
 .cardII {
     background: #102572;
@@ -182,7 +191,7 @@
 
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 96%;
     padding: 23px 1.5rem 19px 1.5rem;
 }
 .cardII div h2 {
@@ -212,7 +221,7 @@
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 96%;
     padding: 1.5rem 1.5rem 0rem 1.5rem;
 }
 .cardI div h2 {
@@ -239,10 +248,9 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: 1.99rem;
+    margin-top: 24px;
 }
 .btmI {
-    width: 44%;
     height: 352px;
     max-width: 478px;
     background: #ffffff;
@@ -283,7 +291,7 @@
     color: #005b82;
 }
 .btmII {
-    width: 30%;
+    width: 58%;
     max-width: 378px;
     height: 352px;
     background: #ffffff;
@@ -296,7 +304,7 @@
     display: none;
 }
 .btmIII {
-    width: 18%;
+    width: 38%;
     max-width: 279px;
     height: 352px;
     background: #ffffff;

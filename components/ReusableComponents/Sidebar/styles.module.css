@@ -91,6 +91,11 @@
     /* padding-right: 72px; */
     align-items: center;
     background: rgba(218, 240, 194, 0.37);
+    color: #7a7978;
+    cursor: pointer;
+}
+.subMenuLink:hover {
+    background: #daf0c2;
 }
 .subMenuLink p {
     font-family: 'Inter';
@@ -102,4 +107,23 @@
     /* identical to box height */
 
     color: #7a7978;
+}
+.icon {
+    font-size: 20px;
+}
+.mainSubNav {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(218, 240, 194, 0.37);
+    padding: 0% 76px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #808c13;
 }

@@ -5,6 +5,7 @@ import SideBarHomeSvg from '../ShomeSvg';
 
 const SideBarCont = ({ name, link }) => {
     const [activeh, setActiveH] = useState(false);
+
     return (
         <Link href={link}>
             <div

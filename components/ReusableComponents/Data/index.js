@@ -1,7 +1,8 @@
 import MoreSvg from '../MoreSvg';
 import PaymentSvg from '../PaymentSvg';
-import SettingsSvg from '../SettingsSvg';
-import SideBarHomeSvg from '../ShomeSvg';
+import NairaSvg from '../NairaSvg';
+import BulkTransfer from '../BulkTransfSvg';
+import StarSharp from '../StarSharpSvg';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
@@ -41,7 +42,7 @@ export const SidebarData = [
             {
                 title: 'USSD',
                 path: '',
-                icon: <FiIcons.FiHash />,
+                icon: <StarSharp />,
                 subNavTitle: 'Receive Payment'
             },
             {
@@ -65,13 +66,13 @@ export const SidebarData = [
             {
                 title: 'Bulk Transfer',
                 path: '',
-                icon: '',
+                icon: <BulkTransfer />,
                 subNavTitle: 'Make Payment'
             },
             {
                 title: 'Bill Payment',
                 path: '',
-                icon: '',
+                icon: <NairaSvg />,
                 subNavTitle: 'Make Payment'
             },
             {
@@ -105,12 +106,12 @@ export const SidebarData = [
             {
                 title: 'Inventory',
                 path: '',
-                icon: ''
+                icon: <BulkTransfer />
             },
             {
                 title: 'e invoice',
                 path: '',
-                icon: ''
+                icon: <NairaSvg />
             },
             {
                 title: 'Others',

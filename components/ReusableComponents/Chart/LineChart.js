@@ -7,19 +7,18 @@ const LineChart = () => {
         labels: ['Sun', 'Mon', 'Tue', 'Thr', 'Fri', 'Sat'],
         datasets: [
             {
-                label: 'Expense',
                 data: [250, 200, 250, 200, 250, 200],
                 fill: true,
                 backgroundColor: 'rgba(75,192,192,0.1)',
                 borderColor: 'rgba(75,192,192,1)',
-                tension: 0.4
+                tension: 0.6
             },
             {
-                label: 'Income',
+                label: false,
                 data: [150, 100, 150, 100, 150, 100],
                 fill: false,
                 borderColor: '#742774',
-                tension: 0.4
+                tension: 0.6
             }
         ]
     });

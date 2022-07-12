@@ -16,7 +16,8 @@ const Sidebar = () => {
     const [subNav, setSubNav] = useState(true);
 
     const showSubnav = () => {
-        setSubNav(true);
+        setSubNav((prev) => !prev);
+        console.log(subNav);
     };
 
     // fillColor={router.pathname == '/Dashboard'}
@@ -31,17 +32,20 @@ const Sidebar = () => {
                 {SidebarData.map((item, index) => {
                     return (
                         <>
-                            <Link href={item.path} key={index}>
-                                <div
-                                    onClick={item.subNav && showSubnav}
-                                    className={
-                                        router.pathname == item.path
-                                            ? styles.inActive
-                                            : styles.parentDiv
-                                    }
-                                >
-                                    <div className={styles.mainDiv}>
-                                        <div className={styles.LinkDiv}>
+                            <div
+                                onClick={item.subNav && showSubnav}
+                                className={
+                                    router.pathname == item.path
+                                        ? styles.inActive
+                                        : styles.parentDiv
+                                }
+                            >
+                                <div className={styles.mainDiv}>
+                                    <Link href={item.path} key={index}>
+                                        <div
+                                            className={styles.LinkDiv}
+                                            onClick={showSubnav}
+                                        >
                                             {router.pathname == item.path
                                                 ? item.iconActive
                                                 : item.icon}
@@ -49,21 +53,38 @@ const Sidebar = () => {
                                                 {item.title}
                                             </p>
                                         </div>
-
-                                        {item.subNav &&
-                                        router.pathname == item.path ? (
-                                            <>{item.iconOpened}</>
-                                        ) : item.subNav ? (
-                                            item.iconClosed
-                                        ) : null}
-                                    </div>
+                                    </Link>
+                                    {item.subNav && subNav ? (
+                                        <>{item.iconOpened}</>
+                                    ) : item.subNav ? (
+                                        item.iconClosed
+                                    ) : null}
                                 </div>
-                            </Link>
-                            {item.subNav && router.pathname == item.path ? (
+                            </div>
+                            {!item.subNavTitles ? (
+                                item.subNav && subNav ? (
+                                    item.subNav.map((item, index) => {
+                                        return (
+                                            <div
+                                                className={styles.subMenuLink}
+                                                key={index}
+                                            >
+                                                <span className={styles.icon}>
+                                                    {item.icon}
+                                                </span>
+                                                <p>{item.title}</p>
+                                            </div>
+                                        );
+                                    })
+                                ) : null
+                            ) : item.subNavTitles && subNav ? (
                                 <>
                                     {item.subNavTitles.map((subTitle, i) => (
                                         <div key={i}>
-                                            <p>{subTitle}</p>
+                                            <div className={styles.mainSubNav}>
+                                                <p>{subTitle}</p>
+                                                <>{item.iconOpened}</>
+                                            </div>
                                             {item.subNav.map((item, index) => {
                                                 return item.subNavTitle ==
                                                     subTitle ? (
@@ -73,7 +94,13 @@ const Sidebar = () => {
                                                         }
                                                         key={index}
                                                     >
-                                                        {item.icon}
+                                                        <span
+                                                            className={
+                                                                styles.icon
+                                                            }
+                                                        >
+                                                            {item.icon}
+                                                        </span>
                                                         <p>{item.title}</p>
                                                     </div>
                                                 ) : null;
@@ -81,8 +108,7 @@ const Sidebar = () => {
                                         </div>
                                     ))}
                                 </>
-                            ) : null } 
-                            {console.log(item.subNav)}
+                            ) : null}
                         </>
                     );
                 })}

@@ -13,7 +13,7 @@ const DounutComp = ({ data, options }) => {
                 backgroundColor: ['#8FBF00', 'white'],
                 borderWidth: 0,
                 borderJoinStyle: 'bevel',
-                weight: 0.2
+                weight: 0.1
             }
         ]
     });

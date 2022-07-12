@@ -23,7 +23,6 @@ function SampleNextArrow(props) {
     const router = useRouter();
     const route = router.pathname;
 
-
     const { className, style, onClick } = props;
 
     return (
@@ -74,55 +73,36 @@ const Dashboard = () => {
     return (
         <DashLayout>
             <Levelup />
-            <div className={styles.Top}>
-                <div className={styles.Tpwh}>
-                    <p className={styles.transP}>Transaction Today</p>
-                    <div className={styles.payEco}>
-                        <div className={styles.svgTxt}>
-                            <div className={styles.svgCov}>
-                                <Paylink />
+            <div className={styles.cove}>
+                <section className={styles.sectionI}>
+                    <div className={styles.Tpwh}>
+                        <p className={styles.transP}>Transaction Today</p>
+                        <div className={styles.payEco}>
+                            <div className={styles.svgTxt}>
+                                <div className={styles.svgCov}>
+                                    <Paylink />
+                                </div>
+                                <div>
+                                    <p className={styles.payp}>Paylink</p>
+                                    <h5 className={styles.h5}>₦24,000,000</h5>
+                                </div>
                             </div>
-                            <div>
-                                <p className={styles.payp}>Paylink</p>
-                                <h5 className={styles.h5}>₦24,000,000</h5>
-                            </div>
-                        </div>
-                        <div className={styles.svgTxt}>
-                            <div className={styles.svgCov}>
-                                <EcobankQRSvg />
-                            </div>
-                            <div>
-                                <p className={styles.ecop}>Ecobank QR</p>
-                                <h5 className={styles.h5}>₦24,000,000</h5>
+                            <div className={styles.svgTxt}>
+                                <div className={styles.svgCov}>
+                                    <EcobankQRSvg />
+                                </div>
+                                <div>
+                                    <p className={styles.ecop}>Ecobank QR</p>
+                                    <h5 className={styles.h5}>₦24,000,000</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className={styles.card}>
-                    <div className={styles.cardRight}>
-                        <div className={styles.cardMone}>
-                            <h1>{outType ? '*******' : '₦' + balance}</h1>
-                            <Visbility color="green" typeSet={types} />
-                        </div>
-                        <p className={styles.avail}>Available Balance</p>
 
-                        <div className={styles.recMak}>
-                            <div className={styles.rec}>Receive Payment</div>
-                            <div className={styles.make}>Make Payment</div>
-                        </div>
+                    <div className={styles.otherTrans}>
+                        <p>Other Transaction</p>
                     </div>
-                    <div>
-                        <img src="/Assets/Images/bagmoney.png" />
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <div className={styles.otherTrans}>
-                    <p>Other Transaction</p>
-                </div>
-                <div className={styles.divCover}>
-                    <div className={styles.divCov}>
+                    <div className={styles.divCover}>
                         <div className={styles.dinCLass}>
                             <div className={styles.svg}>
                                 <PhoneSvg />
@@ -148,6 +128,45 @@ const Dashboard = () => {
                             <p className={styles.name}>mPOS</p>
                         </div>
                     </div>
+                    <div className={styles.btmI}>
+                        <div className={styles.btmItop}>
+                            <p>Cash Flow</p>
+                            <select className={styles.day}>
+                                <option>Last 7 Days</option>
+                            </select>
+                        </div>
+                        <LineChart />
+                    </div>
+                </section>
+                <section className={styles.sectionII}>
+                    <div>
+                        <div className={styles.card}>
+                            <div className={styles.cardRight}>
+                                <div className={styles.cardMone}>
+                                    <h1>
+                                        {outType ? '*******' : '₦' + balance}
+                                    </h1>
+                                    <Visbility color="green" typeSet={types} />
+                                </div>
+                                <p className={styles.avail}>
+                                    Available Balance
+                                </p>
+
+                                <div className={styles.recMak}>
+                                    <div className={styles.rec}>
+                                        Receive Payment
+                                    </div>
+                                    <div className={styles.make}>
+                                        Make Payment
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <img src="/Assets/Images/bagmoney.png" />
+                            </div>
+                        </div>
+                    </div>
+
                     <div className={styles.cards}>
                         <Slider
                             {...settings}
@@ -192,53 +211,46 @@ const Dashboard = () => {
                             </div>
                         </Slider>
                     </div>
-                </div>
-                {/* bottom  */}
-                <div className={styles.btm}>
-                    <div className={styles.btmI}>
-                        <div className={styles.btmItop}>
-                            <p>Cash Flow</p>
-                            <select className={styles.day}>
-                                <option>Last 7 Days</option>
-                            </select>
-                        </div>
-                        <LineChart />
-                    </div>
-                    <div className={styles.btmII}>
-                        <div className={styles.btmIIp}>
-                            <p>Recent Transactions</p>
-                            <p>View All</p>
-                        </div>
-                        <p className={styles.select}>
-                            (Select transaction to vie more)
-                        </p>
+                    {/* bottom  */}
+                    <div className={styles.btm}>
+                        <div className={styles.btmII}>
+                            <div className={styles.btmIIp}>
+                                <p>Recent Transactions</p>
+                                <p>View All</p>
+                            </div>
+                            <p className={styles.select}>
+                                (Select transaction to vie more)
+                            </p>
 
-                        {transactionData.map((item, index) => {
-                            return (
-                                <>
-                                    <div className={styles.transaction}>
-                                        <div className={styles.names}>
-                                            <p>{item.name}</p>
-                                            <p>{item.transfer}</p>
+                            {transactionData.map((item, index) => {
+                                return (
+                                    <>
+                                        <div className={styles.transaction}>
+                                            <div className={styles.names}>
+                                                <p>{item.name}</p>
+                                                <p>{item.transfer}</p>
+                                            </div>
+                                            <div className={styles.money}>
+                                                <p>{item.ammount}</p>
+                                                <div
+                                                    className={item.color}
+                                                ></div>
+                                            </div>
                                         </div>
-                                        <div className={styles.money}>
-                                            <p>{item.ammount}</p>
-                                            <div className={item.color}></div>
-                                        </div>
-                                    </div>
-                                    <hr className={styles.hr} />
-                                </>
-                            );
-                        })}
+                                        <hr className={styles.hr} />
+                                    </>
+                                );
+                            })}
+                        </div>
+                        <div className={styles.btmIII}>
+                            <p className={styles.paylink}>Paylink Vs Others</p>
+                            <select className={styles.dayPie}>
+                                <option>Apr 4th-11th, 2022</option>
+                            </select>
+                            <Piechart />
+                        </div>
                     </div>
-                    <div className={styles.btmIII}>
-                        <p className={styles.paylink}>Paylink Vs Others</p>
-                        <select className={styles.dayPie}>
-                            <option>Apr 4th-11th, 2022</option>
-                        </select>
-                        <Piechart />
-                    </div>
-                </div>
+                </section>
             </div>
         </DashLayout>
     );
