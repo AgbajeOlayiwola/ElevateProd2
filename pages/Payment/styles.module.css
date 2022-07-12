@@ -46,6 +46,21 @@
     border-radius: 16px;
 }
 
+.chart {
+    width: 100%;
+    display: flex;
+    height: 14px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    margin-top: 16px;
+    background-color: #c4d344;
+}
+
+.chartdetails {
+    display: flex;
+    margin-top: 8px;
+}
+
 .balance {
     display: flex;
     justify-content: space-between;
@@ -90,7 +105,7 @@
 }
 
 .receive {
-    color: #69940D;
+    color: #69940d;
     font-size: 14px;
     font-weight: 700;
     font-family: 'Inter', sans-serif;
@@ -139,7 +154,7 @@
     line-height: 14px;
     display: block;
     margin-top: 16px;
-    color: #2F2F2F;
+    color: #2f2f2f;
     cursor: pointer;
 }
 
@@ -151,7 +166,7 @@
     line-height: 14px;
     display: block;
     margin-top: 16px;
-    color: #005B82;
+    color: #005b82;
     cursor: pointer;
 }
 
@@ -168,12 +183,38 @@
     margin: auto;
 }
 
-.overlayContainer {
+.NFCScanner {
+    width: 40%;
+    max-width: 496px;
+    background: #fefefe;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    margin: auto;
     position: absolute;
-    width: 100vw;
-    height: 100vh;
-    /* top: 0;
-    left: 0; */
-    /* background-color: #F5F6FA; */
-    background-color: red;
+    top: 20%;
+    left: 30%;
+    padding: 48px;
+}
+
+.NFCScanner h2 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 161%;
+    font-family: 'Inter', sans-serif;
+    color: #3e3e3e;
+    margin-bottom: 32px;
+}
+
+.NFCScanner p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 23px;
+    font-family: 'Inter', sans-serif;
+    color: #3e3e3e;
+    margin-bottom: 32px;
+}
+
+.NFCScanner button {
+    margin-top: 0px;
 }

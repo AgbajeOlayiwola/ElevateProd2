@@ -3,8 +3,14 @@
     display: flex;
 }
 
-.main {
+.mainOverlay {
     flex: 1;
     background-color: #f5f6fa;
     padding: 36px 32px 46px 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
 }
