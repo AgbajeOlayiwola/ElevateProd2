@@ -9,6 +9,8 @@ import MoreSvg from '../MoreSvg';
 import ElevateLogo from '../Ellevate';
 import LogoutSvg from '../LogoutSvg';
 import { SidebarData } from '../Data';
+import SideBarDrop from './sidebarcont';
+import Dropdownicon from './dropdownicon';
 
 const Sidebar = () => {
     const router = useRouter();
@@ -53,69 +55,9 @@ const Sidebar = () => {
                                             </p>
                                         </div>
                                     </Link>
-                                    {item.subNav && subNav ? (
-                                        <div
-                                            onClick={item.subNav && showSubnav}
-                                        >
-                                            {item.iconOpened}
-                                        </div>
-                                    ) : item.subNav ? (
-                                        <div
-                                            onClick={item.subNav && showSubnav}
-                                        >
-                                            {item.iconClosed}
-                                        </div>
-                                    ) : null}
                                 </div>
                             </div>
-                            {!item.subNavTitles ? (
-                                item.subNav && subNav ? (
-                                    item.subNav.map((item, index) => {
-                                        return (
-                                            <div
-                                                className={styles.subMenuLink}
-                                                key={index}
-                                            >
-                                                <span className={styles.icon}>
-                                                    {item.icon}
-                                                </span>
-                                                <p>{item.title}</p>
-                                            </div>
-                                        );
-                                    })
-                                ) : null
-                            ) : item.subNavTitles && subNav ? (
-                                <>
-                                    {item.subNavTitles.map((subTitle, i) => (
-                                        <div key={i}>
-                                            <div className={styles.mainSubNav}>
-                                                <p>{subTitle}</p>
-                                                <>{item.iconOpened}</>
-                                            </div>
-                                            {item.subNav.map((item, index) => {
-                                                return item.subNavTitle ==
-                                                    subTitle ? (
-                                                    <div
-                                                        className={
-                                                            styles.subMenuLink
-                                                        }
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={
-                                                                styles.icon
-                                                            }
-                                                        >
-                                                            {item.icon}
-                                                        </span>
-                                                        <p>{item.title}</p>
-                                                    </div>
-                                                ) : null;
-                                            })}
-                                        </div>
-                                    ))}
-                                </>
-                            ) : null}
+                            <SideBarDrop item={item} />
                         </>
                     );
                 })}

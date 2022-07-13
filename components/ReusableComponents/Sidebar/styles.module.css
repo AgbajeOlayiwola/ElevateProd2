@@ -31,6 +31,10 @@
     padding-left: 3.2rem;
     color: #cccccc;
     cursor: pointer;
+    margin-top: 33px;
+}
+.parentDiv :nth-child(3) {
+    margin-top: 6px;
 }
 .parentDiv:hover {
     background: #daf0c2;
@@ -126,4 +130,9 @@
     /* identical to box height */
 
     color: #808c13;
+}
+.dropBtn {
+    text-align: end;
+    margin-top: -34px;
+    margin-right: 65px;
 }
