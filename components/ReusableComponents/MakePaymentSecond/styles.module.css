@@ -8,6 +8,7 @@
     position: absolute;
     top: 5%;
     left: 20%;
+    z-index: 5;
 }
 
 .PaymentSecondCont {
@@ -131,4 +132,14 @@
     height: 60px;
     font-size: 30px;
     text-align: center;
+}
+
+.transactionpin input[type='number']::-webkit-inner-spin-button,
+.transactionpin input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0px;
+}
+
+.transactionpin input[type='number'] {
+    -moz-appearance: textfield;
 }

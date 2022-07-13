@@ -8,6 +8,7 @@
     position: absolute;
     top: 5%;
     left: 20%;
+    z-index: 5;
 }
 
 .firstDiv > div:last-child {
@@ -47,7 +48,7 @@
 }
 
 .error {
-    color: red;
+    color: red !important;
 }
 
 .firstBody p {

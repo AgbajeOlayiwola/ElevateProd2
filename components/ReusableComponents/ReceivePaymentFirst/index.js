@@ -1,16 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-
-const schema = yup.object().shape({
-    accountName: yup.string().required(),
-    amount: yup.number().positive().required(),
-    payer: yup.string().required(),
-    description: yup.string().required()
-});
 
 const ReceivePaymentFirst = ({
     firstTitle,
@@ -19,10 +10,8 @@ const ReceivePaymentFirst = ({
     action
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
-    // const [name, setName] = useState('');
-    // const [amount, setAmount] = useState('');
-    // const [payer, setPayer] = useState('');
     const [description, setDescription] = useState('');
+    const [amount, setAmount] = useState('');
 
     const myref = useRef();
     useEffect(() => {
@@ -33,9 +22,7 @@ const ReceivePaymentFirst = ({
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm({
-        resolver: yupResolver(schema)
-    });
+    } = useForm();
 
     return (
         <div className={styles.firstDiv} ref={myref}>
@@ -49,75 +36,72 @@ const ReceivePaymentFirst = ({
                         <div className={styles.formGroup}>
                             <label>Account to Credit</label>
                             <input
-                                {...register('accountName')}
+                                {...register('accountName', {
+                                    required: 'Please enter your Acount Name',
+                                    pattern: /^[A-Za-z]+$/i
+                                })}
                                 type="text"
-                                name="accountName"
-                                placeholder="Marvelous Solutions "
-                                // ref={register}
-                                // value={name}
-                                // onClick={(e) => {
-                                //     setName(e?.target.value);
-                                // }}
+                                placeholder="Marvelous Solutions"
                             />
-                            {errors ? (
-                                <p className={styles.error}>
-                                    {errors.accountName?.message}
-                                </p>
-                            ) : null}
+                            <p className={styles.error}>
+                                {errors?.accountName?.message}
+                            </p>
                         </div>
                         <div className={styles.formGroup}>
                             <label>Enter Amount</label>
                             <input
-                                {...register('amount')}
+                                {...register('amount', {
+                                    required: 'Please enter Amount'
+                                })}
                                 type="number("
                                 name="amount"
-                                placeholder="# 5,000,000,000.00"
                                 // value={amount}
-                                // ref={register}
+                                placeholder="# 5,000,000,000.00"
+                                // onChange={(e)=>{
+
+                                //     setAmount(Intl.NumberFormat().format(e.target.value))
+                                // }}
                             />
-                            {errors ? (
-                                <p className={styles.error}>
-                                    {errors.amount?.message}
-                                </p>
-                            ) : null}
+                            <p className={styles.error}>
+                                {errors?.amount?.message}
+                            </p>
                         </div>
                         <div className={styles.formGroup}>
                             <label>Name of Payment</label>
                             <input
-                                {...register('payer')}
+                                {...register('payer', {
+                                    required: "Please enter Payer's name"
+                                })}
                                 type="text"
                                 name="payer"
                                 placeholder="Name of Payment"
-                                // value={payer}
-                                // ref={register}
                             />
-                            {errors ? (
-                                <p className={styles.error}>
-                                    {errors.payer?.message}
-                                </p>
-                            ) : null}
+                            <p className={styles.error}>
+                                {errors?.payer?.message}
+                            </p>
                         </div>
                         <div className={styles.formGroup}>
                             <label>Description</label>
                             <textarea
-                                {...register('description')}
+                                {...register('description', {
+                                    required: 'Please enter Description'
+                                })}
                                 name="description"
                                 id=""
                                 placeholder="Enter note to be displayed to customer."
                                 value={description}
                                 onChange={(e) => {
                                     setDescription(e.target.value);
-                                    if (e?.target.value.length > 0) {
+                                    if (e?.target.value.length === 0) {
+                                        setActiveBtn(true);
+                                    } else if (e?.target.value.length > 0) {
                                         setActiveBtn(true);
                                     }
                                 }}
-                                // ref={register}
                             ></textarea>
-                            {errors ? (
-                                <p className={styles.error}>
-                                    {errors.description?.message}
-                                </p>
-                            ) : null}
+                            <p className={styles.error}>
+                                {errors?.description?.message}
+                            </p>
                         </div>
                         <ButtonComp
                             disabled={activeBtn}

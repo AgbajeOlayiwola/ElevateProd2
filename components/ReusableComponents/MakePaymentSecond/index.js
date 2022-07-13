@@ -54,15 +54,41 @@ const MakePaymentSecond = ({ transferaction }) => {
                 <h4>Enter Transaction Pin</h4>
                 <form onSubmit={handleSubmit(transferaction)}>
                     <div className={styles.transactionpin}>
-                        <input type="text" name="otp1" {...register('otp1')} />
-                        <input type="text" name="otp2" {...register('otp2')} />
-                        <input type="text" name="otp3" {...register('otp3')} />
                         <input
-                            type="text"
+                            type="number"
+                            inputMode="numeric"
+                            maxlength="1"
+                            autoComplete="one-time-code"
+                            name="otp1"
+                            {...register('otp1')}
+                        />
+                        <input
+                            type="number"
+                            inputMode="numeric"
+                            maxlength="1"
+                            autoComplete="one-time-code"
+                            name="otp2"
+                            {...register('otp2')}
+                        />
+                        <input
+                            type="number"
+                            inputMode="numeric"
+                            maxlength="1"
+                            autoComplete="one-time-code"
+                            name="otp3"
+                            {...register('otp3')}
+                        />
+                        <input
+                            type="number"
+                            inputMode="numeric"
+                            maxlength="1"
+                            autoComplete="one-time-code"
                             name="otp4"
                             {...register('otp4')}
                             onChange={(e) => {
-                                if (e?.target.value.length > 0) {
+                                if (e?.target.value.length === 0) {
+                                    setActiveBtn(false);
+                                } else if (e?.target.value.length > 0) {
                                     setActiveBtn(true);
                                 }
                             }}

@@ -8,6 +8,7 @@
     position: absolute;
     top: 5%;
     left: 20%;
+    z-index: 5;
 }
 
 .error {
@@ -60,19 +61,29 @@
     color: #3e3e3e;
 }
 
+.firstBody input[type='number']::-webkit-inner-spin-button,
+.firstBody input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0px;
+}
+
+.firstBody input[type='number'] {
+    -moz-appearance: textfield;
+}
+
 .firstBody input[type='text'] {
     width: 100%;
     padding: 16px;
     background: #f8f8f8;
     border: 1px solid #dbdbdb;
     border-radius: 12px;
-    color: #bdbdbd;
+    color: #3e3e3e;
 }
 
-.firstBody input[type='text']::placeholder {
+.firstBody input::placeholder {
     font-size: 14px;
     font-family: 'Inter', sans-serif;
-    color: #bdbdbd;
+    color: #3e3e3e;
     font-weight: 400;
 }
 

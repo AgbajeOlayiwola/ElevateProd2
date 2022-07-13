@@ -25,11 +25,14 @@ const Payment = () => {
     const ChartDiv = styled.div`
         width: ${(props) => props.width};
         background-color: ${(props) => props.bg};
-        border-radius: 0px 8px 8px 0px;
+        border-radius: 8px 8px 8px 8px;
         height: 100%;
+        margin-left: -14px;
+        z-index: ${(props) => props.zIndex};
     `;
     const ChartContent = styled.div`
         width: ${(props) => props.width};
+        margin-left: -14px;
 
         p {
             color: ${(props) => props.color};
@@ -95,6 +98,12 @@ const Payment = () => {
         setOverlay(true);
     };
     const handleClose = () => {
+        setOverlay(false);
+        setFormType('');
+        setCount(0);
+    };
+
+    const buttonHandleClose = () => {
         if (formType === 'mpos') {
             setCount(count + 1);
         } else {
@@ -124,7 +133,7 @@ const Payment = () => {
                         return (
                             <ReceivePaymentSecond
                                 title="Payment Link Generated"
-                                action={handleClose}
+                                action={buttonHandleClose}
                                 buttonText="Share Paylink"
                                 type="Paylinks"
                             />
@@ -149,7 +158,7 @@ const Payment = () => {
                         return (
                             <ReceivePaymentSecond
                                 title=" USSD "
-                                action={handleClose}
+                                action={buttonHandleClose}
                                 buttonText="Share USSD Code"
                                 type="USSD Code"
                             />
@@ -173,7 +182,7 @@ const Payment = () => {
                         return (
                             <ReceivePaymentSecond
                                 title="Create Ecobank QR Code"
-                                action={handleClose}
+                                action={buttonHandleClose}
                                 buttonText="Share Paylink"
                                 type=" Ecobank QR Codes"
                             />
@@ -197,7 +206,7 @@ const Payment = () => {
                         return (
                             <ReceivePaymentSecond
                                 title="Confirm mPOS Payment Details"
-                                action={handleClose}
+                                action={buttonHandleClose}
                                 buttonText="Activate NFC Scanner"
                             />
                         );
@@ -384,10 +393,22 @@ const Payment = () => {
                         successfully today.
                     </p>
                     <div className={styles.chart}>
-                        <ChartDiv width={qr} bg="#3CE312"></ChartDiv>
-                        <ChartDiv width={paylink} bg="#69940D"></ChartDiv>
-                        <ChartDiv width={ussd} bg="#6CCF00"></ChartDiv>
-                        <ChartDiv width={mPOS} bg="#C4D344"></ChartDiv>
+                        <ChartDiv width={qr} bg="#3CE312" zIndex="4"></ChartDiv>
+                        <ChartDiv
+                            width={paylink}
+                            bg="#69940D"
+                            zIndex="3"
+                        ></ChartDiv>
+                        <ChartDiv
+                            width={ussd}
+                            bg="#6CCF00"
+                            zIndex="2"
+                        ></ChartDiv>
+                        <ChartDiv
+                            width={mPOS}
+                            bg="#C4D344"
+                            zIndex="1"
+                        ></ChartDiv>
                     </div>
                     <div className={styles.chartdetails}>
                         <ChartContent width={qr} color="#3CE312">

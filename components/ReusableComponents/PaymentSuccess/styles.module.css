@@ -36,6 +36,7 @@
     position: absolute;
     top: 5%;
     left: 20%;
+    z-index: 5;
 }
 
 .reminder {
