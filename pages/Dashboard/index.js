@@ -19,6 +19,8 @@ import Chart from '../../components/ReusableComponents/Chart';
 import LineChart from '../../components/ReusableComponents/Chart/LineChart';
 import Piechart from '../../components/ReusableComponents/Chart/Piechart';
 import { transactionData } from '../../components/ReusableComponents/Data';
+import MakePaymentBtn from '../../components/ReusableComponents/MakePayment';
+import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymnet';
 function SampleNextArrow(props) {
     const router = useRouter();
     const route = router.pathname;
@@ -153,12 +155,8 @@ const Dashboard = () => {
                                 </p>
 
                                 <div className={styles.recMak}>
-                                    <div className={styles.rec}>
-                                        Receive Payment
-                                    </div>
-                                    <div className={styles.make}>
-                                        Make Payment
-                                    </div>
+                                    <RecievePaymentBtn />
+                                    <MakePaymentBtn />
                                 </div>
                             </div>
                             <div>

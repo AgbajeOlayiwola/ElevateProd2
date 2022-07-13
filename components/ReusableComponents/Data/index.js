@@ -166,3 +166,49 @@ export const transactionData = [
         color: 'styles.greendot'
     }
 ];
+
+export const RecievePayment = [
+    {
+        title: 'Paylink',
+        path: '#',
+        icon: <BiIcons.BiLinkAlt />
+    },
+    {
+        title: 'USSD only',
+        path: '#',
+        icon: <StarSharp />
+    },
+    {
+        title: 'Ecobank QR only',
+        path: '#',
+        icon: <BiIcons.BiScan />
+    },
+    {
+        title: 'mPOS',
+        path: '#',
+        icon: <HiIcons.HiOutlineCreditCard />
+    }
+];
+
+export const MakePayment = [
+    {
+        title: 'Single Transfer',
+        path: '#',
+        icon: <BiIcons.BiTransfer />
+    },
+    {
+        title: 'Bulk Transfer',
+        path: '#',
+        icon: <BulkTransfer />
+    },
+    {
+        title: 'Bills Payment',
+        path: '#',
+        icon: <NairaSvg />
+    },
+    {
+        title: 'FX Transfer',
+        path: '#',
+        icon: <FaIcons.FaHandHoldingUsd />
+    }
+];
