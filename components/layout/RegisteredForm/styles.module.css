@@ -7,6 +7,19 @@
 
     color: #3e3e3e;
 }
+.resendFlex {
+    display: flex;
+    justify-content: space-between;
+}
+.clr {
+    color: #7a7978;
+    margin: 0px;
+    width: fit-content;
+    /* height: fit-content; */
+    background-color: white;
+    height: 0;
+    font-weight: 500;
+}
 .header {
     font-family: 'Inter', sans-serif;
     font-style: normal;

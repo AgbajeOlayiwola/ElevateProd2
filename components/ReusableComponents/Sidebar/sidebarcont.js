@@ -24,7 +24,7 @@ const SideBarDrop = ({ item }) => {
                     </div>
                 ) : null}
             </div>
-            <div>
+            <div className={styles.drops}>
                 {!item.subNavTitles ? (
                     item.subNav && subNav ? (
                         item.subNav.map((item, index) => {

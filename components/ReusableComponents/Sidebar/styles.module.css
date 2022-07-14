@@ -14,6 +14,15 @@
 .sideNav::-webkit-scrollbar {
     display: none;
 }
+.track div:nth-child(3) .parentDiv {
+    margin-top: 13px;
+}
+.track div:nth-child(3) .inActive {
+    margin-top: 13px;
+}
+.drops {
+    margin-top: 13px;
+}
 .ellevate {
     display: flex;
     justify-content: center;
@@ -121,7 +130,7 @@
     justify-content: space-between;
     align-items: center;
     background: rgba(218, 240, 194, 0.37);
-    padding: 0% 76px;
+    padding: 0% 50px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
