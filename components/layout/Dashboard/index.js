@@ -54,6 +54,14 @@ const DashLayout = ({ children }) => {
             <div className={styles.main}>{children}</div>
             <Sidebar />
         </div>
+        // <div className={styles.dash}>
+        //     <Sidebar />
+        //     <DashCont>
+        //         <div style={overlay ? mainOverlay : null}></div>
+        //         <Navbar />
+        //         {children}
+        //     </DashCont>
+        // </div>
     );
 };
 

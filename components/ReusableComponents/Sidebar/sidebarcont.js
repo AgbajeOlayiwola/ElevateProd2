@@ -40,8 +40,8 @@ const SideBarDrop = ({ item }) => {
                     ) : null
                 ) : item.subNavTitles && subNav ? (
                     <>
-                        {item.subNavTitles.map((subTitle, i) => (
-                            <div key={i}>
+                        {item.subNavTitles.map((subTitle, index) => (
+                            <div key={index}>
                                 <div className={styles.mainSubNav}>
                                     <p>{subTitle}</p>
                                     <>{item.iconOpened}</>
