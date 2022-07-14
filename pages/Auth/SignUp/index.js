@@ -127,6 +127,9 @@ const Signup = ({ type }) => {
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
         setConfPassword(e.target.value);
+        if (password != confPassword) {
+            setPasswordMatch('Passwords do not match');
+        }
     };
     const handlePwd = (e) => {
         setCount(e.target.value.length);
