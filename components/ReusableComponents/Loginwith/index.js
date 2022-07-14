@@ -38,7 +38,7 @@ const LoginWith = ({
 
     return (
         <form>
-            <div className="loginWithClass">
+            <div className={styles.Log}>
                 {/* omnilite part  */}
 
                 {/* register your input into the hook by invoking the "register" function */}
@@ -100,10 +100,10 @@ const LoginWith = ({
 
             <div className={styles.terms}>
                 <input
-                    type="radio"
+                    type="checkbox"
                     className={styles.termcondition}
                     defaultChecked={active}
-                    onClick={() => setActiveBtn(true)}
+                    onClick={() => setActiveBtn(!activeBtn)}
                 />
                 <label>
                     I agree with Ellevate App
@@ -115,6 +115,7 @@ const LoginWith = ({
                     </Link>
                 </label>
             </div>
+
             <Link href="/Onboarding/ExistingProfileSetup">
                 <ButtonComp
                     disabled={activeBtn}

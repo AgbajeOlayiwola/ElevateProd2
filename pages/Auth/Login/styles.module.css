@@ -26,7 +26,7 @@
     align-items: center;
 }
 .bvn {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 48px;
@@ -39,7 +39,7 @@
     color: #6ccf00;
 }
 .welc h2 {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 36px;
@@ -58,7 +58,7 @@
     color: #8c8c8c;
 }
 .form div label {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -86,7 +86,7 @@
 }
 
 .accout {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;

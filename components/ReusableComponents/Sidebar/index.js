@@ -1,71 +1,77 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import PaymentSvg from '../PaymentSvg';
 import SettingsSvg from '../SettingsSvg';
 import SideBarHomeSvg from '../ShomeSvg';
 import MoreSvg from '../MoreSvg';
+import ElevateLogo from '../Ellevate';
+import LogoutSvg from '../LogoutSvg';
+import { SidebarData } from '../Data';
+import SideBarDrop from './sidebarcont';
+import Dropdownicon from './dropdownicon';
 
 const Sidebar = () => {
-    const [activeh, setActiveH] = useState(false);
-    const [activep, setActiveP] = useState(false);
-    const [activet, setActiveT] = useState(false);
-    const [activem, setActiveM] = useState(false);
+    const router = useRouter();
+
+    const [subNav, setSubNav] = useState(false);
+
+    const showSubnav = () => {
+        setSubNav((prev) => !prev);
+        console.log('clicked');
+    };
+
+    // fillColor={router.pathname == '/Dashboard'}
+
     return (
         <nav className={styles.sideNav}>
-            <div className={styles.ellevate}>
-                <h1>Ellevate</h1>
+            <div className={styles.top}>
+                <div className={styles.ellevate}>
+                    <ElevateLogo />
+                </div>
+
+                {SidebarData.map((item, index) => {
+                    return (
+                        <>
+                            <div
+                                className={
+                                    router.pathname == item.path
+                                        ? styles.inActive
+                                        : styles.parentDiv
+                                }
+                            >
+                                <div className={styles.mainDiv}>
+                                    <Link href={item.path} key={index}>
+                                        <div
+                                            className={styles.LinkDiv}
+                                            onClick={showSubnav}
+                                        >
+                                            {router.pathname == item.path
+                                                ? item.iconActive
+                                                : item.icon}
+                                            <p className={styles.link}>
+                                                {item.title}
+                                            </p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                            <SideBarDrop item={item} />
+                        </>
+                    );
+                })}
             </div>
-            <Link href="#">
+
+            <Link href="/Auth/Login">
                 <div
-                    onClick={() => setActiveH(true)}
-                    className={activeh ? styles.inActive : styles.parentDiv}
+                    className={styles.parentDiv}
+                    styles={{ marginTop: '48.64px' }}
                 >
                     <div className={styles.LinkDiv}>
-                        <SideBarHomeSvg fillColor={activeh} />
-                        <p className={styles.link}>Home</p>
+                        <LogoutSvg />
+                        <p className={styles.link}>Logout</p>
                     </div>
-                    <div
-                        className={
-                            activeh ? styles.showGreen : styles.DontSHowgreen
-                        }
-                    ></div>
-                </div>
-            </Link>
-            <Link href="#">
-                <div
-                    onClick={() => setActiveP(true)}
-                    className={activep ? styles.inActive : styles.parentDiv}
-                >
-                    <div className={styles.LinkDiv}>
-                        <PaymentSvg fillColor={activep} />
-                        <p className={styles.link}>Payment</p>
-                    </div>
-                    <div className={styles.green}></div>
-                </div>
-            </Link>
-            <Link href="#">
-                <div
-                    onClick={() => setActiveT(true)}
-                    className={activet ? styles.inActive : styles.parentDiv}
-                >
-                    <div className={styles.LinkDiv}>
-                        <SettingsSvg fillColor={activet} />
-                        <p className={styles.link}>Tools</p>
-                    </div>
-                    <div className={styles.green}></div>
-                </div>
-            </Link>
-            <Link href="#">
-                <div
-                    onClick={() => setActiveM(true)}
-                    className={activem ? styles.inActive : styles.parentDiv}
-                >
-                    <div className={styles.LinkDiv}>
-                        <MoreSvg fillColor={activeh} />
-                        <p className={styles.link}>More</p>
-                    </div>
-                    <div className={styles.green}></div>
                 </div>
             </Link>
         </nav>

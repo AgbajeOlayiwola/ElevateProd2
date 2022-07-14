@@ -1,0 +1,248 @@
+.firstDiv {
+    width: 63%;
+    max-width: 781px;
+    background-color: white;
+    border-radius: 20px;
+    margin: 32px auto;
+    display: flex;
+    position: absolute;
+    top: 5%;
+    left: 20%;
+    z-index: 10;
+}
+
+.error {
+    color: red !important;
+}
+
+.firstDiv > div:last-child {
+    /* height: 100%; */
+    width: 30%;
+}
+
+.firstDiv > div:last-child .greenImg {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.closebtn {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    cursor: pointer;
+}
+
+.firstBody {
+    width: 70%;
+}
+
+.firstBody > div {
+    width: 72%;
+    margin: 32px auto;
+}
+
+.firstBody h2 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 30px;
+    color: #005b82;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 32px;
+}
+
+.firstBody label {
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 12px;
+    display: block;
+    color: #3e3e3e;
+}
+
+.firstBody input[type='number']::-webkit-inner-spin-button,
+.firstBody input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0px;
+}
+
+.firstBody input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+.firstBody input[type='text'] {
+    width: 100%;
+    padding: 16px;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    color: #3e3e3e;
+}
+
+.firstBody input::placeholder {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: #3e3e3e;
+    font-weight: 400;
+}
+
+.accountDetails {
+    margin-top: 24px;
+}
+
+.accountDetailsBody {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    width: 100%;
+    padding: 16px;
+}
+
+.accountDetailsBodys {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    width: 100%;
+    padding: 16px;
+    margin-top: 24px;
+}
+
+.accountDetailsBodys:first-child {
+    margin-top: 12px;
+}
+
+.accountDetailSingle {
+    display: flex;
+    margin-top: 16px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.accountDetailSingleInput {
+    width: 57%;
+}
+
+.accountDetailsBody input[type='text'],
+.accountDetailsBodys input[type='text'] {
+    background-color: #ffffff;
+}
+
+.accountDetailSingleSelect {
+    width: 40%;
+}
+
+.accountDetailSingleSelect select {
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    background-image: url(../../../public/Assets/Svgs/arrow-down.svg);
+    color: #3e3e3e;
+}
+
+.narration {
+    margin-top: 24px;
+}
+
+.repeat {
+    display: flex;
+    align-items: center;
+    margin-top: 32px;
+}
+
+.repeat input[type='checkbox'] {
+    width: unset;
+    border: 1px solid #005b82;
+    border-radius: 24px;
+}
+
+.repeat p {
+    font-size: 12px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    line-height: 17px;
+    color: #2f2f2f;
+    margin-left: 24px;
+}
+
+.same {
+    font-size: 14px;
+}
+
+.schedule {
+    margin-top: 32px;
+    color: #cccccc;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.schedule span {
+    font-weight: 700;
+}
+
+.destinationCountry {
+    display: flex;
+    justify-content: space-between;
+}
+
+.destinationCountry div {
+    width: 49%;
+}
+
+.destinationCountry select {
+    background-color: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    background-image: url(../../../public/Assets/Svgs/arrow-down.svg);
+    color: #3e3e3e;
+}
+
+.EnterAmount {
+    display: flex;
+    margin-top: 24px;
+    justify-content: space-between;
+}
+
+.EnterAmount div {
+    width: 49%;
+}
+
+.EnterAmount select {
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    background-image: url(../../../public/Assets/Svgs/arrow-down.svg);
+    color: #3e3e3e;
+}
+
+.billerType,
+.billerCategory {
+    width: 100%;
+}
+.billerCategory {
+    margin-top: 16px;
+}
+
+.billerType label,
+.billerCategory label {
+    margin-bottom: 0px;
+}
+
+.billerType select,
+.billerCategory select {
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    background-image: url(../../../public/Assets/Svgs/arrow-down.svg);
+    color: #3e3e3e;
+    margin-top: 8px;
+}
+
+.billerType input {
+    margin-top: 8px;
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    color: #bdbdbd;
+}

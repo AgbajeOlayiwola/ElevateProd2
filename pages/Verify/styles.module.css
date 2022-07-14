@@ -14,7 +14,7 @@
     padding: 4.92rem 4.8rem;
 }
 .verifyEmail {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -23,7 +23,7 @@
     color: #005b82;
 }
 .hi {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;

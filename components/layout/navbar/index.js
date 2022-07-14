@@ -5,28 +5,26 @@ import NotificationsSvg from '../../ReusableComponents/NotificationSvg';
 
 const Navbar = () => {
     return (
-        <nav className={styles.navigation}>
-            <div className={styles.imageName}>
-                <div>
-                    <img
-                        src="/Assets/Images/UserImage.png"
-                        width="50"
-                        height="50"
-                    />
-                </div>
-                <div>
+        <div className={styles.cov}>
+            <nav className={styles.navigation}>
+                <div className={styles.imageName}>
                     <div>
-                        <h3 className={styles.name}>Welcome, Bayo</h3>
+                        <img
+                            src="/Assets/Images/UserImage.png"
+                            width="50"
+                            height="50"
+                        />
                     </div>
-                    <div>
+                    <div className={styles.userName}>
+                        <h3 className={styles.name}>Welcome Bayo,</h3>
                         <p className={styles.company}>Marvelous Solutions</p>
                     </div>
                 </div>
-            </div>
-            <div>
-                <NotificationsSvg />
-            </div>
-        </nav>
+                <div className={styles.notification}>
+                    <NotificationsSvg />
+                </div>
+            </nav>
+        </div>
     );
 };
 

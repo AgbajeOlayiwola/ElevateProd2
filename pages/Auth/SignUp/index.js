@@ -231,7 +231,7 @@ const Signup = ({ type }) => {
                                     {/* include validation with required or other standard HTML validation rules */}
                                     <div>
                                         <label>Email Address </label>
-                                        {errors.email?.message}
+
                                         <br />
 
                                         <input
@@ -248,6 +248,7 @@ const Signup = ({ type }) => {
                                                 }
                                             })}
                                         />
+                                        {errors.email?.message}
                                     </div>
 
                                     {/* include validation with required or other standard HTML validation rules */}
@@ -312,10 +313,12 @@ const Signup = ({ type }) => {
                                     )}
                                     <div>
                                         <input
-                                            type="radio"
+                                            type="checkbox"
                                             className={styles.termcondition}
                                             defaultChecked={active}
-                                            onClick={() => setActiveBtn(true)}
+                                            onClick={() =>
+                                                setActiveBtn(!activeBtn)
+                                            }
                                         />
                                         <label>
                                             I agree with Ellevate App
@@ -461,10 +464,7 @@ const Signup = ({ type }) => {
                                         </div>
                                     </div>
 
-                                    <div
-                                        onSubmit={handleSubmit(onSubmit)}
-                                        className={styles.Log}
-                                    >
+                                    <div onSubmit={handleSubmit(onSubmit)}>
                                         <LoginWith
                                             labelI={labelI}
                                             labelII={labelII}

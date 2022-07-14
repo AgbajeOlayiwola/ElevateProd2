@@ -1,3 +1,439 @@
-.dash {
+.sectionII {
+    width: 50%;
+}
+.sectionI {
+    width: 48%;
+}
+.cove {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    background: linear-gradient(124.52deg, #7fbb01 -34.31%, #2f2f2f 115.35%);
+    position: relative;
+    max-width: 677px;
+    border-radius: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 19px 30px 25px 32px;
+}
+.otherTrans p {
+    margin-bottom: 18px;
+    margin-top: 15px;
+}
+.Top {
+    display: flex;
+    justify-content: space-between;
+}
+.Tpwh {
+    background: white;
+    border-radius: 16px;
+    max-width: 478px;
+    flex-direction: column;
+    justify-content: space-between;
+    display: flex;
+    padding: 23px 32px 56px 32px;
+}
+.transP {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin-bottom: 23px;
+    color: #102572;
+}
+.h5 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 14px;
+    /* identical to box height, or 87% */
+    margin-top: 0px;
+    text-align: center;
+    margin-bottom: 0px;
+    color: #005b82;
+}
+.payp {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 99% */
+    margin-top: 0px;
+    margin-bottom: 7px;
+    color: #bcbcbc;
+}
+.svgTxt {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.svgCov {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    background: rgba(218, 240, 194, 0.62);
+    height: 45px;
+    width: 45px;
+    margin-right: 14px;
+}
+.ecop {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 99% */
+    margin-top: 0px;
+    margin-bottom: 7px;
+    color: #bcbcbc;
+}
+.payEco {
+    display: flex;
+    justify-content: space-between;
+}
+.cardMone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 54%;
+}
+.avail {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 0px;
+    margin-top: 1px;
+    color: #efffcc;
+}
+.recMak {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.rec {
+    padding: 16px;
+    background: #7fbb01;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.make {
+    padding: 16px;
+    background: #005b82;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.cardRight {
+    width: 75%;
+}
+.cardMone h1 {
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.otherTrans {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #102572;
+}
+.name {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    margin: 0px;
+    margin-top: 14px;
+    text-align: center;
+    line-height: 14px;
+    /* identical to box height, or 99% */
+    color: #005b82;
+}
+.svg {
+    display: flex;
+    justify-content: center;
+}
+.dinCLass {
+    padding: 25px 21px 19px 21px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    height: 105.01px;
+    width: 23%;
+    background: #ffffff;
+    box-shadow: 0px 0px 20px rgba(176, 173, 173, 0.39);
+    border-radius: 16px;
+}
+
+.divCover {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+.cards {
+    /* display: flex;
+    justify-content: space-between; */
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+.cardII {
+    background: #102572;
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: space-between;
+    width: 96%;
+    padding: 23px 1.5rem 19px 1.5rem;
+}
+.cardII div h2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0px;
+    color: #ffffff;
+}
+.cardII div p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    width: 201px;
+    margin-top: 10px;
+    margin-bottom: 13px;
+    line-height: 17px;
+
+    color: #ffffff;
+}
+.cardI {
+    background: linear-gradient(126.25deg, #01bb8a -4.11%, #2f2f2f 115.93%);
+    box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    width: 96%;
+    padding: 1.5rem 1.5rem 0rem 1.5rem;
+}
+.cardI div h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    width: 100%;
+    max-width: 340.29px;
+
+    color: #ffffff;
+}
+.cardI div p {
+    font-family: 'Inter', sans-serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+
+    color: #ffffff;
+}
+.btm {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 24px;
+}
+.btmI {
+    height: 352px;
+    max-width: 478px;
+    background: #ffffff;
+    box-shadow: 4px 14px 34px -11px #ededed;
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem 1.5rem 1.25rem;
+}
+.btmItop {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 29.1px;
+}
+.btmItop p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #102572;
+}
+.btmItop div {
     background: #f5f6fa;
+    border-radius: 8px;
+    padding: 0.2rem 0.5rem;
+    overflow: scroll;
+}
+.btmI::-webkit-scrollbar {
+    display: none;
+}
+.btmItop div p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height, or 99% */
+
+    color: #005b82;
+}
+.btmII {
+    width: 58%;
+    max-width: 378px;
+    height: 352px;
+    background: #ffffff;
+    box-shadow: 4px 14px 34px -11px #ededed;
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem 1.5rem 1.25rem;
+    overflow: scroll;
+}
+.btmII::-webkit-scrollbar {
+    display: none;
+}
+.btmIII {
+    width: 38%;
+    max-width: 279px;
+    height: 352px;
+    background: #ffffff;
+    box-shadow: 4px 14px 34px -11px #ededed;
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem 1.5rem 1.25rem;
+    overflow: scroll;
+}
+.btmIII::-webkit-scrollbar {
+    display: none;
+}
+.btmIIp p:nth-child(1) {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #102572;
+}
+.btmIIp p:nth-child(2) {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #455a64;
+}
+.select {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #455a64;
+}
+.btmIIp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.names {
+    width: 50%;
+}
+.names p:nth-child(1) {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    margin-bottom: 0px;
+    color: #102572;
+}
+.names p:nth-child(2) {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 0px;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+
+    color: #2f2f2f;
+}
+.hr {
+    border: 1px solid #f5f5f5;
+}
+.money {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 35%;
+}
+.money p:nth-child(1) {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+    color: #2f2f2f;
+}
+.greendot {
+    width: 9px;
+    height: 9px;
+    background: #6ccf00;
+    box-shadow: 0px 0px 37px rgba(157, 147, 147, 0.12);
+    border-radius: 8px;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+.reddot {
+    width: 9px;
+    height: 9px;
+    background: #cf0000;
+    box-shadow: 0px 0px 37px rgba(157, 147, 147, 0.12);
+    border-radius: 8px;
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+.day {
+    width: 30%;
+    height: 17%;
+    padding: 7px 13px;
+    background: #f5f6fa;
+    border-radius: 8px;
+}
+.dayPie {
+    width: 69%;
+    height: 11%;
+    background: #ebf7ff;
+    box-shadow: 0px 0px 20px rgb(244 244 244 / 41%);
+    border-radius: 8px;
+    margin-bottom: 41px;
+    padding: 8px 9px;
+}
+.paylink {
+    margin-bottom: 19px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #102572;
 }

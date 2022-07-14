@@ -1,5 +1,5 @@
 .form div label {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -8,7 +8,7 @@
     color: #3e3e3e;
 }
 .header {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -157,7 +157,7 @@
     border-radius: 12px;
 }
 .formInner div label {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -167,7 +167,7 @@
     margin-bottom: 10px;
 }
 .inps label {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;

@@ -1,8 +1,18 @@
 .sideNav {
     height: 100vh;
-    width: 18vw;
+    width: 273px;
     padding-top: 3.25rem;
     background-color: white;
+    position: fixed;
+    overflow: scroll;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.sideNav::-webkit-scrollbar {
+    display: none;
 }
 .ellevate {
     display: flex;
@@ -20,6 +30,11 @@
     align-items: center;
     padding-left: 3.2rem;
     color: #cccccc;
+    cursor: pointer;
+    margin-top: 33px;
+}
+.parentDiv :nth-child(3) {
+    margin-top: 1px;
 }
 .parentDiv:hover {
     background: #daf0c2;
@@ -34,7 +49,8 @@
 .inActive {
     display: flex;
     justify-content: space-between;
-    background: #daf0c2;
+    margin-top: 33px;
+    background: rgba(218, 240, 194, 0.37);
     align-items: center;
     padding-left: 3.2rem;
     font-style: normal;
@@ -43,13 +59,14 @@
     line-height: 19px;
     /* identical to box height */
     color: #407a00;
+    cursor: default;
 }
 .showGreen {
     display: block;
     width: 30px;
     height: 30px;
     border-radius: 50px;
-    background-color: #407a00;
+    background-color: #f5f6fa;
 }
 .DontSHowgreen {
     display: none;
@@ -61,5 +78,62 @@
     height: 100vh;
     width: 20vw;
 }
-
+.ponter {
+    margin-left: 50px;
+}
+.mainDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 84%;
+}
 /* side bar end  */
+.subMenuLink {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 78.8px;
+    /* padding-right: 72px; */
+    align-items: center;
+    background: rgba(218, 240, 194, 0.37);
+    color: #7a7978;
+    cursor: pointer;
+}
+.subMenuLink:hover {
+    background: #daf0c2;
+}
+.subMenuLink p {
+    font-family: 'Inter';
+    font-style: normal;
+    width: 68%;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #7a7978;
+}
+.icon {
+    font-size: 20px;
+}
+.mainSubNav {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(218, 240, 194, 0.37);
+    padding: 0% 76px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #808c13;
+}
+.dropBtn {
+    text-align: end;
+    margin-top: -34px;
+    margin-right: 65px;
+    color: #cccccc;
+}
