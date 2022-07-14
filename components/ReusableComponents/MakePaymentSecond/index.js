@@ -58,7 +58,7 @@ const MakePaymentSecond = ({ transferaction, overlay }) => {
                             <input
                                 type="number"
                                 inputMode="numeric"
-                                maxlength="1"
+                                maxLength="1"
                                 autoComplete="one-time-code"
                                 name="otp1"
                                 {...register('otp1')}
@@ -66,7 +66,7 @@ const MakePaymentSecond = ({ transferaction, overlay }) => {
                             <input
                                 type="number"
                                 inputMode="numeric"
-                                maxlength="1"
+                                maxLength="1"
                                 autoComplete="one-time-code"
                                 name="otp2"
                                 {...register('otp2')}
@@ -74,7 +74,7 @@ const MakePaymentSecond = ({ transferaction, overlay }) => {
                             <input
                                 type="number"
                                 inputMode="numeric"
-                                maxlength="1"
+                                maxLength="1"
                                 autoComplete="one-time-code"
                                 name="otp3"
                                 {...register('otp3')}
@@ -82,7 +82,7 @@ const MakePaymentSecond = ({ transferaction, overlay }) => {
                             <input
                                 type="number"
                                 inputMode="numeric"
-                                maxlength="1"
+                                maxLength="1"
                                 autoComplete="one-time-code"
                                 name="otp4"
                                 {...register('otp4')}
