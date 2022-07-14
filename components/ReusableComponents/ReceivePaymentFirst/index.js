@@ -38,7 +38,10 @@ const ReceivePaymentFirst = ({
                             <input
                                 {...register('accountName', {
                                     required: 'Please enter your Acount Name',
-                                    pattern: /^[A-Za-z]+$/i
+                                    pattern: {
+                                        value: /^[A-Za-z ]+$/i,
+                                        message: 'Only Alphabelts allowed'
+                                    }
                                 })}
                                 type="text"
                                 placeholder="Marvelous Solutions"
@@ -51,16 +54,24 @@ const ReceivePaymentFirst = ({
                             <label>Enter Amount</label>
                             <input
                                 {...register('amount', {
-                                    required: 'Please enter Amount'
+                                    required: 'Please enter Amount',
+                                    pattern: {
+                                        value: /^[0-9]/i,
+                                        message: 'Amount can only be number '
+                                    }
                                 })}
+                                value={amount}
                                 type="number("
                                 name="amount"
-                                // value={amount}
                                 placeholder="# 5,000,000,000.00"
-                                // onChange={(e)=>{
-
-                                //     setAmount(Intl.NumberFormat().format(e.target.value))
-                                // }}
+                                onChange={(e) => {
+                                    setAmount(
+                                        Intl.NumberFormat('en', {
+                                            style: 'currency',
+                                            currency: 'NGN'
+                                        }).format(e.target.value)
+                                    );
+                                }}
                             />
                             <p className={styles.error}>
                                 {errors?.amount?.message}
@@ -70,7 +81,11 @@ const ReceivePaymentFirst = ({
                             <label>Name of Payment</label>
                             <input
                                 {...register('payer', {
-                                    required: "Please enter Payer's name"
+                                    required: "Please enter Payer's name",
+                                    pattern: {
+                                        value: /^[A-Za-z ]+$/i,
+                                        message: 'Only Alphabelts allowed'
+                                    }
                                 })}
                                 type="text"
                                 name="payer"
@@ -84,7 +99,11 @@ const ReceivePaymentFirst = ({
                             <label>Description</label>
                             <textarea
                                 {...register('description', {
-                                    required: 'Please enter Description'
+                                    required: 'Please enter Description',
+                                    pattern: {
+                                        value: /^[A-Za-z ]+$/i,
+                                        message: 'Only Alphabelts allowed'
+                                    }
                                 })}
                                 name="description"
                                 id=""

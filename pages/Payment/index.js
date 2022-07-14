@@ -254,6 +254,7 @@ const Payment = () => {
                                     setOverlay(false);
                                     setFormType('');
                                 }}
+                                title="Single Transfer Payment"
                             />
                         );
                 }
@@ -289,6 +290,7 @@ const Payment = () => {
                                     setOverlay(false);
                                     setFormType('');
                                 }}
+                                title="Bulk Payment"
                             />
                         );
                 }
@@ -324,6 +326,7 @@ const Payment = () => {
                                     setOverlay(false);
                                     setFormType('');
                                 }}
+                                title="Bill Payment"
                             />
                         );
                 }
@@ -359,6 +362,8 @@ const Payment = () => {
                                     setOverlay(false);
                                     setFormType('');
                                 }}
+                                country="Nigeria"
+                                title="Foreign Transfer Payments"
                             />
                         );
                 }

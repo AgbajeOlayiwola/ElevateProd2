@@ -1,28 +1,7 @@
 import React, { useState } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-
-const schema = yup.object().shape({
-    beneficiaries: yup.string().required('Beneficiary is required'),
-    accountNumber: yup
-        .number('Account Number is Should be a Number')
-        .typeError('Account Number is required')
-        .required(),
-    amount: yup
-        .number('Amount is Should be a Number')
-        .typeError('Amount is required')
-        .required('Amount is required'),
-    narration: yup.string().required('Narration is required'),
-    bankName: yup.string().required('Bank Name is required'),
-    transferType: yup.string().required('Transfer Type is required'),
-    destinationCountry: yup
-        .string()
-        .required('Destination Country is required'),
-    accountDebit: yup.string().required('Account details is required')
-});
 
 const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
@@ -30,9 +9,7 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm({
-        resolver: yupResolver(schema)
-    });
+    } = useForm();
     return (
         <div>
             <form onSubmit={handleSubmit(action)}>
@@ -41,7 +18,9 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                     <div>
                         <label>Destination Country</label>
                         <select
-                            {...register('destinationCountry')}
+                            {...register('destinationCountry', {
+                                required: 'Destination Country is Required'
+                            })}
                             name="destinationCountry"
                         >
                             <option value="">Nigeria</option>
@@ -54,7 +33,9 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                     <div>
                         <label>Transfer Type</label>
                         <select
-                            {...register('transferType')}
+                            {...register('transferType', {
+                                required: 'Transfer Type is required'
+                            })}
                             name="transferType"
                         >
                             <option value="">others </option>
@@ -72,7 +53,13 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                     <div className={styles.accountDetailsBody}>
                         <label>Beneficiaries</label>
                         <input
-                            {...register('beneficiaries')}
+                            {...register('beneficiaries', {
+                                required: 'Beneficiary is required',
+                                pattern: {
+                                    value: /^[A-Za-z ]+$/i,
+                                    message: 'Only Alphabelts allowed'
+                                }
+                            })}
                             name="beneficiaries"
                             type="text"
                             placeholder="Enter Beneficiary"
@@ -84,7 +71,14 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                             <div className={styles.accountDetailSingleInput}>
                                 <label> Account Number</label>
                                 <input
-                                    {...register('accountNumber')}
+                                    {...register('accountNumber', {
+                                        required: 'Account Nmber is required',
+                                        pattern: {
+                                            value: /^[0-9]/i,
+                                            message:
+                                                'Account Number can only be number '
+                                        }
+                                    })}
                                     name="accountNumber"
                                     type="text"
                                     placeholder="Enter account number here"
@@ -96,7 +90,9 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                             <div className={styles.accountDetailSingleSelect}>
                                 <label>Bank</label>
                                 <select
-                                    {...register('bankName')}
+                                    {...register('bankName', {
+                                        required: 'Bank Name is required'
+                                    })}
                                     name="bankName"
                                 >
                                     <option value="">Select Bank</option>
@@ -113,7 +109,13 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                     <div>
                         <label>Enter Amount</label>
                         <input
-                            {...register('amount')}
+                            {...register('amount', {
+                                required: 'Amount is required',
+                                pattern: {
+                                    value: /^[0-9]/i,
+                                    message: 'Amount can only be number '
+                                }
+                            })}
                             name="amount"
                             type="text"
                             placeholder="5,000,000,000.00"
@@ -125,7 +127,9 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                     <div>
                         <label>Account to Debit</label>
                         <select
-                            {...register('accountDebit')}
+                            {...register('accountDebit', {
+                                required: 'Account to Debit is required'
+                            })}
                             name="accountDebit"
                         >
                             <option value="">Marvelous Solutions</option>
@@ -141,7 +145,13 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                 <div className={styles.narration}>
                     <label>Transfer Narration</label>
                     <input
-                        {...register('narration')}
+                        {...register('narration', {
+                            required: 'Please enter your Narration',
+                            pattern: {
+                                value: /^[A-Za-z ]+$/i,
+                                message: 'Only Alphabelts allowed'
+                            }
+                        })}
                         name="narration"
                         type="text"
                         placeholder="5,000,000,000.00"

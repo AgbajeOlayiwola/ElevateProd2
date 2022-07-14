@@ -43,7 +43,6 @@ const Dashboard = () => {
     const settings = {
         nextArrow: <SampleNextArrow />
     };
-    
 
     return (
         <DashLayout>
@@ -126,7 +125,7 @@ const Dashboard = () => {
                             {...settings}
                             className="mainSlider"
                             asNavFor={nav2}
-                            ref={(slider1) => setNav2(slider1)}
+                            // ref={(slider1) => setNav2(slider1)}
                             slidesToShow={1}
                             swipeToSlide={true}
                             focusOnSelect={true}

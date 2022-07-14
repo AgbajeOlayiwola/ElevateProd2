@@ -9,7 +9,7 @@ import {
 import Link from 'next/link';
 import ButtonComp from '../Button';
 
-const PaymentSuccess = ({ action }) => {
+const PaymentSuccess = ({ action, country, title }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.successcont}>
@@ -32,6 +32,18 @@ const PaymentSuccess = ({ action }) => {
                         <span> Babatunde James </span>
                         on <span> June 12, 2022 by 12:02pm</span>
                     </h6>
+
+                    {title === 'Foreign Transfer Payments' ? (
+                        <h6 className={styles.elevateSuccess}>
+                            <span>Country: </span> {country}
+                        </h6>
+                    ) : title === 'Bill Payment' ? (
+                        <p>
+                            Recharge details have been shared to your email and
+                            your provided phone number.
+                        </p>
+                    ) : null}
+
                     <div className={styles.reminder}>
                         <p>Set Reminder</p>
                     </div>

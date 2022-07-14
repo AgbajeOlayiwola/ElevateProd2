@@ -1,33 +1,7 @@
 import React, { useState } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-
-const schema = yup.object().shape({
-    accountNumber1: yup
-        .number()
-        .positive()
-        .required()
-        .typeError('Account Number is required'),
-    accountNumber2: yup
-        .number()
-        .positive()
-        .required()
-        .typeError('Account Number is required'),
-    accountNumber3: yup
-        .number()
-        .positive()
-        .required()
-        .typeError('Account Number is required'),
-    amount: yup.number().positive().required().typeError('Amount is required'),
-    method: yup.string().required('Method is required'),
-    bankName1: yup.string().required('Bank Name is required'),
-    bankName2: yup.string().required('Bank Name is required'),
-    bankName3: yup.string().required('Bank Name is required'),
-    accountDebit: yup.string().required('Account details is required')
-});
 
 const BulkTransfer = ({ action, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
@@ -35,9 +9,7 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm({
-        resolver: yupResolver(schema)
-    });
+    } = useForm();
     return (
         <div>
             <form onSubmit={handleSubmit(action)}>
@@ -45,7 +17,12 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                 <div className={styles.destinationCountry}>
                     <div>
                         <label>Select Method</label>
-                        <select {...register('method')} name="method">
+                        <select
+                            {...register('method', {
+                                required: 'Method is required'
+                            })}
+                            name="method"
+                        >
                             <option value="">Input Accounts</option>
                             <option value="Transfer">Transfer</option>
                         </select>
@@ -56,7 +33,9 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                     <div>
                         <label>Account to Debit</label>
                         <select
-                            {...register('accountDebit')}
+                            {...register('accountDebit', {
+                                required: 'Account to Debit is required'
+                            })}
                             name="accountDebit"
                         >
                             <option value="">Marvelous Solutions</option>
@@ -82,7 +61,15 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                             <div className={styles.accountDetailSingleInput}>
                                 <label> Account Number 1</label>
                                 <input
-                                    {...register('accountNumber1')}
+                                    {...register('accountNumber1', {
+                                        required:
+                                            'Account Number 1 is required',
+                                        pattern: {
+                                            value: /^[0-9]/i,
+                                            message:
+                                                'Account Number can only be number '
+                                        }
+                                    })}
                                     name="accountNumber1"
                                     type="number"
                                     placeholder="Enter account number here"
@@ -94,7 +81,9 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                             <div className={styles.accountDetailSingleSelect}>
                                 <label>Bank</label>
                                 <select
-                                    {...register('bankName1')}
+                                    {...register('bankName1', {
+                                        required: 'Bank name is required'
+                                    })}
                                     name="bankName1"
                                 >
                                     <option value="">Select Bank</option>
@@ -111,7 +100,15 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                             <div className={styles.accountDetailSingleInput}>
                                 <label> Account Number 2</label>
                                 <input
-                                    {...register('accountNumber2')}
+                                    {...register('accountNumber2', {
+                                        required:
+                                            'Account Number 2 is required',
+                                        pattern: {
+                                            value: /^[0-9]/i,
+                                            message:
+                                                'Account Number can only be number '
+                                        }
+                                    })}
                                     name="accountNumber2"
                                     type="number"
                                     placeholder="Enter account number here"
@@ -123,7 +120,9 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                             <div className={styles.accountDetailSingleSelect}>
                                 <label>Bank</label>
                                 <select
-                                    {...register('bankName2')}
+                                    {...register('bankName2', {
+                                        required: 'Bank name is required'
+                                    })}
                                     name="bankName2"
                                 >
                                     <option value="">Select Bank</option>
@@ -140,9 +139,17 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                             <div className={styles.accountDetailSingleInput}>
                                 <label> Account Number 3</label>
                                 <input
-                                    {...register('accountNumber3')}
+                                    {...register('accountNumber3', {
+                                        required:
+                                            'Account Number 3 is required',
+                                        pattern: {
+                                            value: /^[0-9]/i,
+                                            message:
+                                                'Account Number can only be number '
+                                        }
+                                    })}
                                     name="accountNumber3"
-                                    type="text"
+                                    type="number"
                                     placeholder="Enter account number here"
                                 />
                                 <p className={styles.error}>
@@ -152,7 +159,9 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                             <div className={styles.accountDetailSingleSelect}>
                                 <label>Bank</label>
                                 <select
-                                    {...register('bankName3')}
+                                    {...register('bankName3', {
+                                        required: 'Bank name is required'
+                                    })}
                                     name="bankName3"
                                 >
                                     <option value="">Select Bank</option>
@@ -168,7 +177,13 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                 <div className={styles.narration}>
                     <label>Enter Amount</label>
                     <input
-                        {...register('amount')}
+                        {...register('amount', {
+                            required: 'Amount  is required',
+                            pattern: {
+                                value: /^[0-9]/i,
+                                message: 'Amount can only be number '
+                            }
+                        })}
                         name="amount"
                         type="number"
                         placeholder="# 5,000,000,000.00"

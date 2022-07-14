@@ -1,24 +1,7 @@
 import React, { useState } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-
-const schema = yup.object().shape({
-    accountName: yup.string().required('Account Name is required'),
-    beneficiaries: yup.string().required('Beneficiary is required'),
-    accountNumber: yup
-        .number('Account Number is Should be a Number')
-        .typeError('Account Number is required')
-        .required(),
-    amount: yup
-        .number('Amount is Should be a Number')
-        .typeError('Amount is required')
-        .required('Amount is required'),
-    narration: yup.string().required('Narration is required'),
-    bankName: yup.string().required('Bank Name is required')
-});
 
 const SingleTransfer = ({ action, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
@@ -26,10 +9,7 @@ const SingleTransfer = ({ action, firstTitle, buttonText }) => {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm({
-        mode: onchange,
-        resolver: yupResolver(schema)
-    });
+    } = useForm();
     return (
         <div>
             <form onSubmit={handleSubmit(action)}>
@@ -37,10 +17,15 @@ const SingleTransfer = ({ action, firstTitle, buttonText }) => {
                 <div>
                     <label>Account to Debit</label>
                     <input
-                        {...register('accountName')}
+                        {...register('accountName', {
+                            required: 'Please enter your Acount Name',
+                            pattern: {
+                                value: /^[A-Za-z ]+$/i,
+                                message: 'Only Alphabelts allowed'
+                            }
+                        })}
                         type="text"
                         placeholder="Account to Debit"
-                        name="accountName"
                     />
                     <p className={styles.error}>
                         {errors?.accountName?.message}
@@ -51,10 +36,15 @@ const SingleTransfer = ({ action, firstTitle, buttonText }) => {
                     <div className={styles.accountDetailsBody}>
                         <label>Beneficiaries</label>
                         <input
-                            {...register('beneficiaries')}
+                            {...register('beneficiaries', {
+                                required: 'Please enter Beneficiary',
+                                pattern: {
+                                    value: /^[A-Za-z ]+$/i,
+                                    message: 'Only Alphabelts allowed'
+                                }
+                            })}
                             type="text"
                             placeholder="Enter Beneficiary"
-                            name="beneficiaries"
                         />
                         <p className={styles.error}>
                             {errors?.beneficiaries?.message}
@@ -63,10 +53,16 @@ const SingleTransfer = ({ action, firstTitle, buttonText }) => {
                             <div className={styles.accountDetailSingleInput}>
                                 <label> Account Number</label>
                                 <input
-                                    {...register('accountNumber')}
+                                    {...register('accountNumber', {
+                                        required: 'Please enter  Acount Number',
+                                        pattern: {
+                                            value: /^[0-9 ]/i,
+                                            message:
+                                                'Account Number must be a number'
+                                        }
+                                    })}
                                     type="number"
                                     placeholder="Enter account number here"
-                                    name="accountNumber"
                                 />
                                 <p className={styles.error}>
                                     {errors?.accountNumber?.message}
@@ -75,7 +71,9 @@ const SingleTransfer = ({ action, firstTitle, buttonText }) => {
                             <div className={styles.accountDetailSingleSelect}>
                                 <label>Bank</label>
                                 <select
-                                    {...register('bankName')}
+                                    {...register('bankName', {
+                                        required: 'Choose a bank'
+                                    })}
                                     name="bankName"
                                 >
                                     <option value="">Select Bank</option>
@@ -93,17 +91,28 @@ const SingleTransfer = ({ action, firstTitle, buttonText }) => {
                 <div className={styles.narration}>
                     <label>Enter Amount</label>
                     <input
-                        {...register('amount')}
+                        {...register('amount', {
+                            required: 'Please enter Amount',
+                            pattern: {
+                                value: /^[0-9]/i,
+                                message: 'Amount can only be number '
+                            }
+                        })}
                         type="number"
                         placeholder="5,000,000,000.00"
-                        name="amount"
                     />
                 </div>
                 <p className={styles.error}>{errors?.amount?.message}</p>
                 <div className={styles.narration}>
                     <label>Transfer Narration</label>
                     <input
-                        {...register('narration')}
+                        {...register('narration', {
+                            required: 'Please enter your Narration',
+                            pattern: {
+                                value: /^[A-Za-z ]+$/i,
+                                message: 'Only Alphabelts allowed'
+                            }
+                        })}
                         type="text"
                         placeholder="5,000,000,000.00"
                         onChange={(e) => {

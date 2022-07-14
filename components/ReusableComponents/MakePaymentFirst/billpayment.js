@@ -1,21 +1,7 @@
 import React, { useState } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-
-const schema = yup.object().shape({
-    paymentType: yup.string().required('Payment Type is required'),
-    billerType: yup.string().required('Biller Type is required'),
-    billerCategory: yup.string().required('Biller Category is required'),
-    billerDetail: yup
-        .number('Biller plan is Should be a Number')
-        .typeError('Biller plan is required')
-        .required('Biller plan is required'),
-    billerPlan: yup.string().required('Biller Plan is required'),
-    accountDebit: yup.string().required('Account details is required')
-});
 
 const BillPayment = ({ action, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
@@ -23,9 +9,7 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
         register,
         handleSubmit,
         formState: { errors }
-    } = useForm({
-        resolver: yupResolver(schema)
-    });
+    } = useForm();
     return (
         <div>
             <form onSubmit={handleSubmit(action)}>
@@ -33,7 +17,12 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                 <div className={styles.destinationCountry}>
                     <div>
                         <label>Payment Type</label>
-                        <select {...register('paymentType')} name="paymentType">
+                        <select
+                            {...register('paymentType', {
+                                required: 'Payment type is required'
+                            })}
+                            name="paymentType"
+                        >
                             <option value="">Single Transfer</option>
                             <option value="Bulk Transfer">Bulk Transfer</option>
                         </select>
@@ -44,7 +33,9 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                     <div>
                         <label>Account to Debit</label>
                         <select
-                            {...register('accountDebit')}
+                            {...register('accountDebit', {
+                                required: 'Account to debit is required'
+                            })}
                             name="accountDebit"
                         >
                             <option value="">Marvelous Solutions</option>
@@ -63,7 +54,9 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                         <div className={styles.billerType}>
                             <label>Choose Biller Type</label>
                             <select
-                                {...register('billerType')}
+                                {...register('billerType', {
+                                    required: 'Biller type is required'
+                                })}
                                 name="billerType"
                             >
                                 <option value="">Select Biller</option>
@@ -76,7 +69,9 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                         <div className={styles.billerCategory}>
                             <label>Choose Category</label>
                             <select
-                                {...register('billerCategory')}
+                                {...register('billerCategory', {
+                                    required: 'Biller Category is required'
+                                })}
                                 name="billerCategory"
                             >
                                 <option value="">Select Category</option>
@@ -98,7 +93,14 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                                 Ref. number (i.e. smartcard no, meter no, etc)
                             </label>
                             <input
-                                {...register('billerDetail')}
+                                {...register('billerDetail', {
+                                    required: 'Biller Detail is required',
+                                    pattern: {
+                                        value: /^[0-9]/i,
+                                        message:
+                                            'Biller Detail can only be number '
+                                    }
+                                })}
                                 name="billerDetail"
                                 type="number"
                                 placeholder="Enter account number here"
@@ -110,7 +112,9 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                         <div className={styles.billerCategory}>
                             <label>Choose your Plan</label>
                             <select
-                                {...register('billerPlan')}
+                                {...register('billerPlan', {
+                                    required: 'Biller plan is required'
+                                })}
                                 onChange={(e) => {
                                     if (e?.target.value.length === 0) {
                                         setActiveBtn(false);
