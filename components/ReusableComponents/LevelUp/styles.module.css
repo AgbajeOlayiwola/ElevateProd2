@@ -30,7 +30,7 @@
     font-size: 12px;
     line-height: 15px;
     /* identical to box height */
-
+    margin-bottom: 8px;
     color: #102572;
 }
 
@@ -41,6 +41,6 @@
     font-size: 13px;
     line-height: 18px;
     /* identical to box height, or 138% */
-
+    margin-bottom: 21px;
     color: #3e3e3e;
 }

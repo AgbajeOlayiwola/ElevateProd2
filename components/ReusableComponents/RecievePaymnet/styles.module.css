@@ -1,6 +1,7 @@
 .rec {
     width: 45%;
     max-width: 154px;
+    font-size: 14px;
 }
 .comp {
     display: flex;
@@ -24,6 +25,8 @@
 }
 .comp p:nth-child(2) {
     margin-left: 13.16px;
+    margin-top: 14.6px;
+    margin-bottom: 14.6px;
 }
 .dontshow {
     display: none;
@@ -31,10 +34,10 @@
 .dat {
     display: block;
     position: absolute;
-    top: 186px;
+    top: 153px;
     left: 31px;
     z-index: 1;
-    padding: 31px 28px;
+    padding: 31px 20px;
     background: #ffffff;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;

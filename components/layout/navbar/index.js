@@ -15,18 +15,12 @@ const Navbar = () => {
                             height="50"
                         />
                     </div>
-                    <div>
-                        <div>
-                            <h3 className={styles.name}>Welcome, Bayo</h3>
-                        </div>
-                        <div>
-                            <p className={styles.company}>
-                                Marvelous Solutions
-                            </p>
-                        </div>
+                    <div className={styles.userName}>
+                        <h3 className={styles.name}>Welcome Bayo,</h3>
+                        <p className={styles.company}>Marvelous Solutions</p>
                     </div>
                 </div>
-                <div>
+                <div className={styles.notification}>
                     <NotificationsSvg />
                 </div>
             </nav>

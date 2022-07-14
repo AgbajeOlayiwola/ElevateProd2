@@ -2,6 +2,7 @@
     background-color: #005b82;
     width: 45%;
     max-width: 154px;
+    font-size: 14px;
 }
 .comp {
     display: flex;
@@ -28,11 +29,13 @@
 }
 .comp p:nth-child(2) {
     margin-left: 13.16px;
+    margin-top: 14.6px;
+    margin-bottom: 14.6px;
 }
 .dat {
     display: block;
     position: absolute;
-    top: 186px;
+    top: 153px;
     left: 217px;
     z-index: 1;
     padding: 31px 28px;

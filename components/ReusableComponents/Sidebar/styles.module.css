@@ -1,6 +1,6 @@
 .sideNav {
     height: 100vh;
-    width: 20vw;
+    width: 273px;
     padding-top: 3.25rem;
     background-color: white;
     position: fixed;
@@ -49,7 +49,7 @@
 .inActive {
     display: flex;
     justify-content: space-between;
-
+    margin-top: 33px;
     background: rgba(218, 240, 194, 0.37);
     align-items: center;
     padding-left: 3.2rem;

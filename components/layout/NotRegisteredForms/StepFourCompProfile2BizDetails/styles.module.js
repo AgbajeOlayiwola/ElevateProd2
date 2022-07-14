@@ -36,7 +36,7 @@ export const SmallInstructionText = styled.h6`
 `;
 
 export const LeftHeading = styled.h3`
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -84,7 +84,7 @@ export const ResetOTP = styled.div`
 
 // THE SWITCH STYLE
 export const RegStatusHeading = styled.h6`
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
