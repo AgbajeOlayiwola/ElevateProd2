@@ -187,7 +187,6 @@ const Payment = () => {
                         return (
                             <ReceivePaymentSecond
                                 overlay={overlay}
-                                overlay={overlay}
                                 title="Create Ecobank QR Code"
                                 action={buttonHandleClose}
                                 buttonText="Share Paylink"
