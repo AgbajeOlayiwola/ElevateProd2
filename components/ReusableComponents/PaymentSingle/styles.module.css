@@ -1,0 +1,31 @@
+.PaymentSingle {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+.paymentSingleBody {
+    background: #ffffff;
+    box-shadow: 0px 0px 26px #ededed;
+    border-radius: 16px;
+    min-width: 100px;
+    width: 20%;
+    height: 105px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.paymentSingleBody .paymentSingleImg {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 50%;
+    margin: 0px auto;
+}
+
+.paymentSingleText {
+    width: 80%;
+    margin: auto;
+}

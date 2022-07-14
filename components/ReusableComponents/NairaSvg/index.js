@@ -16,20 +16,20 @@ const NairaSvg = () => {
             <path
                 d="M3.5 9.80122V5.97018C3.49997 5.88876 3.5324 5.80964 3.5922 5.74524C3.652 5.68084 3.73577 5.63481 3.83037 5.61439C3.92497 5.59396 4.02503 5.6003 4.11484 5.63239C4.20465 5.66449 4.27912 5.72053 4.32656 5.79171L6.87344 9.61155C6.92087 9.68274 6.99535 9.73878 7.08516 9.77087C7.17497 9.80297 7.27503 9.8093 7.36963 9.78888C7.46423 9.76845 7.548 9.72243 7.6078 9.65803C7.6676 9.59363 7.70003 9.51451 7.7 9.43309V5.60205"
                 stroke="#7A7978"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M2.80078 7.00073H8.40078"
                 stroke="#7A7978"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
             <path
                 d="M2.80078 8.40063H8.40078"
                 stroke="#7A7978"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
             />
         </svg>
     );

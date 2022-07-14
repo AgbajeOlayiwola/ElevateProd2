@@ -1,0 +1,123 @@
+.table {
+    padding: 32px 32px 0px 32px;
+    box-shadow: 4px 14px 34px -11px #ededed;
+    border-radius: 16px;
+    background-color: white;
+    margin-top: 32px;
+}
+.tables {
+    width: 100%;
+}
+
+.tableHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.tableHeader h2 {
+    color: #102572;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    line-height: 19.36px;
+}
+
+.tableFilter {
+    display: flex;
+    /* width: 40%; */
+    justify-content: space-between;
+}
+
+.tableFilter div {
+    width: 239px !important;
+    border-radius: 16px;
+    border: 1px solid #dae1ff;
+    display: flex;
+    background-color: transparent;
+}
+
+.tableFilter div img {
+    margin-left: 16px;
+    width: 10px;
+}
+
+.tableFilter input {
+    border: none;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.tableFilter input::placeholder {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    line-height: 17px;
+    color: #bfbfbf;
+}
+
+.tableFilter select {
+    width: 103px;
+    margin: 0px;
+    background-color: #005b82;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    padding: 8px 16px;
+    margin-left: 16px;
+    color: white;
+    border: none;
+    background-image: url(../../../public/Assets/Svgs/Vector\ 26.svg);
+    background-position-x: 74%;
+    background-position-y: 55%;
+}
+
+.tableFilter button span {
+    margin-left: 16px;
+}
+
+.TableDetailHeader {
+    display: flex;
+    width: 100%;
+    background: #f5f6fa;
+    border-radius: 16px;
+    padding: 16px 0px 16px 24px;
+}
+
+.TableDetailHeader p {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #3e3e3e;
+    line-height: 17px;
+    text-align: left;
+}
+
+.beneficiary {
+    width: 25%;
+}
+
+.type {
+    width: 15%;
+}
+
+.amount {
+    width: 15%;
+}
+
+.bank {
+    width: 15%;
+}
+
+.date {
+    width: 15%;
+}
+
+.status {
+    width: 15%;
+}
