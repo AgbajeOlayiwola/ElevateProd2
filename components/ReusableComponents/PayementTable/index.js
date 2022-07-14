@@ -78,7 +78,7 @@ const PaymentTable = ({ title }) => {
             {tableDetails.map((item, index) => {
                 return (
                     <TableDetail
-                        keys={index}
+                        key={index}
                         Beneficiary={item.beneficiary}
                         Type={item.type}
                         Amount={item.amount}

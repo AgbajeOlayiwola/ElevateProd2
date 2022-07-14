@@ -34,7 +34,7 @@
     margin-top: 33px;
 }
 .parentDiv :nth-child(3) {
-    margin-top: 6px;
+    margin-top: 1px;
 }
 .parentDiv:hover {
     background: #daf0c2;
@@ -49,6 +49,7 @@
 .inActive {
     display: flex;
     justify-content: space-between;
+    margin-top: 33px;
     background: rgba(218, 240, 194, 0.37);
     align-items: center;
     padding-left: 3.2rem;
@@ -134,4 +135,5 @@
     text-align: end;
     margin-top: -34px;
     margin-right: 65px;
+    color: #cccccc;
 }

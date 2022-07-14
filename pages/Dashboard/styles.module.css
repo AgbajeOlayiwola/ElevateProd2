@@ -11,7 +11,7 @@
 
 .card {
     background: linear-gradient(124.52deg, #7fbb01 -34.31%, #2f2f2f 115.35%);
-
+    position: relative;
     max-width: 677px;
     border-radius: 16px;
     color: white;
@@ -107,7 +107,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    margin-bottom: 22px;
+    margin-bottom: 0px;
     margin-top: 1px;
     color: #efffcc;
 }

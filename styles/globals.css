@@ -31,7 +31,9 @@ html,
         sans-serif;
     scroll-behavior: smooth;
 }
-
+body {
+    margin: 0px;
+}
 a {
     color: inherit;
     text-decoration: none;

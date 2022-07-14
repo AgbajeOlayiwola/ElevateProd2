@@ -120,6 +120,7 @@ const Payment = () => {
                     case 0:
                         return (
                             <ReceivePaymentFirst
+                                overlay={overlay}
                                 firstTitle="Create Payment Link"
                                 buttonText="Generate Paylink"
                                 closeAction={handleClose}
@@ -132,6 +133,7 @@ const Payment = () => {
                     case 1:
                         return (
                             <ReceivePaymentSecond
+                                overlay={overlay}
                                 title="Payment Link Generated"
                                 action={buttonHandleClose}
                                 buttonText="Share Paylink"
@@ -145,6 +147,7 @@ const Payment = () => {
                     case 0:
                         return (
                             <ReceivePaymentFirst
+                                overlay={overlay}
                                 firstTitle="Create USSD Payment Code"
                                 buttonText="Generate Paylink"
                                 closeAction={handleClose}
@@ -157,6 +160,7 @@ const Payment = () => {
                     case 1:
                         return (
                             <ReceivePaymentSecond
+                                overlay={overlay}
                                 title=" USSD "
                                 action={buttonHandleClose}
                                 buttonText="Share USSD Code"
@@ -169,6 +173,7 @@ const Payment = () => {
                     case 0:
                         return (
                             <ReceivePaymentFirst
+                                overlay={overlay}
                                 firstTitle="Create Ecobank QR Code"
                                 buttonText="Generate Paylink"
                                 closeAction={handleClose}
@@ -181,6 +186,8 @@ const Payment = () => {
                     case 1:
                         return (
                             <ReceivePaymentSecond
+                                overlay={overlay}
+                                overlay={overlay}
                                 title="Create Ecobank QR Code"
                                 action={buttonHandleClose}
                                 buttonText="Share Paylink"
@@ -193,6 +200,7 @@ const Payment = () => {
                     case 0:
                         return (
                             <ReceivePaymentFirst
+                                overlay={overlay}
                                 firstTitle="Use Mobile POS"
                                 buttonText="Generate Paylink"
                                 closeAction={handleClose}
@@ -205,6 +213,7 @@ const Payment = () => {
                     case 1:
                         return (
                             <ReceivePaymentSecond
+                                overlay={overlay}
                                 title="Confirm mPOS Payment Details"
                                 action={buttonHandleClose}
                                 buttonText="Activate NFC Scanner"
@@ -228,6 +237,7 @@ const Payment = () => {
                     case 0:
                         return (
                             <MakePaymentFirst
+                                overlay={overlay}
                                 firstTitle="Single Transfer Payment"
                                 closeAction={handleClose}
                                 buttonText="Send Now"
@@ -240,6 +250,7 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentSecond
+                                overlay={overlay}
                                 transferaction={(data) => {
                                     console.log(data);
                                     setCount(count + 1);
@@ -249,6 +260,7 @@ const Payment = () => {
                     case 2:
                         return (
                             <PaymentSuccess
+                                overlay={overlay}
                                 action={() => {
                                     setCount(0);
                                     setOverlay(false);
@@ -264,6 +276,7 @@ const Payment = () => {
                     case 0:
                         return (
                             <MakePaymentFirst
+                                overlay={overlay}
                                 firstTitle="Bulk Payments"
                                 closeAction={handleClose}
                                 buttonText="Send Now"
@@ -285,6 +298,7 @@ const Payment = () => {
                     case 2:
                         return (
                             <PaymentSuccess
+                                overlay={overlay}
                                 action={() => {
                                     setCount(0);
                                     setOverlay(false);
@@ -300,6 +314,7 @@ const Payment = () => {
                     case 0:
                         return (
                             <MakePaymentFirst
+                                overlay={overlay}
                                 firstTitle="Bill Payment"
                                 closeAction={handleClose}
                                 buttonText="Send Now"
@@ -321,6 +336,7 @@ const Payment = () => {
                     case 2:
                         return (
                             <PaymentSuccess
+                                overlay={overlay}
                                 action={() => {
                                     setCount(0);
                                     setOverlay(false);
@@ -336,6 +352,7 @@ const Payment = () => {
                     case 0:
                         return (
                             <MakePaymentFirst
+                                overlay={overlay}
                                 firstTitle="Foreign Transfer Payments"
                                 closeAction={handleClose}
                                 buttonText="Send Now"
@@ -357,6 +374,7 @@ const Payment = () => {
                     case 2:
                         return (
                             <PaymentSuccess
+                                overlay={overlay}
                                 action={() => {
                                     setCount(0);
                                     setOverlay(false);
@@ -373,7 +391,7 @@ const Payment = () => {
     };
 
     return (
-        <DashLayout overlay={overlay}>
+        <DashLayout>
             <div className={styles.greencard}>
                 <div className={styles.greencardDetails}>
                     <div>
@@ -437,7 +455,7 @@ const Payment = () => {
                 <div className={styles.whiteboard}>
                     <div className={styles.balance}>
                         <div>
-                            <p className={styles.thousand}> #22,049.94</p>
+                            <p className={styles.thousand}> ₦22,049.94</p>
                             <p className={styles.avail}>Available Balance</p>
                         </div>
                         <div className="">
@@ -455,7 +473,7 @@ const Payment = () => {
                     {paymentData.receive.map((payType, index) => (
                         <PaymentSingleBody
                             data={payType}
-                            index={index}
+                            key={index}
                             type="receive"
                             handleFormChange={handleFormChange}
                         />
@@ -465,7 +483,7 @@ const Payment = () => {
                     {paymentData.make.map((payType, index) => (
                         <PaymentSingleBody
                             data={payType}
-                            index={index}
+                            key={index}
                             type="make"
                             handleFormChange={handleFormChange}
                         />
