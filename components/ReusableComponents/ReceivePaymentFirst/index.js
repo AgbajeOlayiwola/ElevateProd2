@@ -9,11 +9,10 @@ const ReceivePaymentFirst = ({
     closeAction,
     action,
     overlay
-    
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState('');
+    // const [amount, setAmount] = useState('');
 
     const myref = useRef();
     useEffect(() => {
@@ -27,7 +26,7 @@ const ReceivePaymentFirst = ({
     } = useForm();
 
     return (
-        <div className={overlay?styles.mainOverlay:styles.noshow}>
+        <div className={overlay ? styles.mainOverlay : styles.noshow}>
             <div className={styles.firstDiv} ref={myref}>
                 <div className={styles.firstBody}>
                     <div>
@@ -65,18 +64,18 @@ const ReceivePaymentFirst = ({
                                                 'Amount can only be number '
                                         }
                                     })}
-                                    value={amount}
+                                    // value={amount}
                                     type="number("
                                     name="amount"
                                     placeholder="# 5,000,000,000.00"
-                                    onChange={(e) => {
-                                        setAmount(
-                                            Intl.NumberFormat('en', {
-                                                style: 'currency',
-                                                currency: 'NGN'
-                                            }).format(e.target.value)
-                                        );
-                                    }}
+                                    // onChange={(e) => {
+                                    //     setAmount(
+                                    //         Intl.NumberFormat('en', {
+                                    //             style: 'currency',
+                                    //             currency: 'NGN'
+                                    //         }).format(e.target.value)
+                                    //     );
+                                    // }}
                                 />
                                 <p className={styles.error}>
                                     {errors?.amount?.message}

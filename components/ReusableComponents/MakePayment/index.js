@@ -15,7 +15,7 @@ const MakePaymentBtn = () => {
             <div className={showDrop ? styles.dat : styles.dontshow}>
                 {MakePayment.map((item, index) => {
                     return (
-                        <div className={styles.comp}>
+                        <div className={styles.comp} key={index}>
                             <p>{item.icon}</p>
                             <p>{item.title}</p>
                         </div>

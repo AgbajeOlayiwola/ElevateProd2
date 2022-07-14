@@ -33,7 +33,7 @@ const Sidebar = () => {
 
                 {SidebarData.map((item, index) => {
                     return (
-                        <>
+                        <div key={index}>
                             <div
                                 className={
                                     router.pathname == item.path
@@ -58,7 +58,7 @@ const Sidebar = () => {
                                 </div>
                             </div>
                             <SideBarDrop item={item} />
-                        </>
+                        </div>
                     );
                 })}
             </div>

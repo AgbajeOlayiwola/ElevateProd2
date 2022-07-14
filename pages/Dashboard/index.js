@@ -222,7 +222,7 @@ const Dashboard = () => {
 
                             {transactionData.map((item, index) => {
                                 return (
-                                    <>
+                                    <div key={index}>
                                         <div className={styles.transaction}>
                                             <div className={styles.names}>
                                                 <p>{item.name}</p>
@@ -236,7 +236,7 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                         <hr className={styles.hr} />
-                                    </>
+                                    </div>
                                 );
                             })}
                         </div>

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 
-const ReceivePaymentSecond = ({ title, action, buttonText, type }) => {
+const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
     return (
-        <>
+        <div className={overlay ? styles.mainOverlay : styles.noshow}>
             <div className={styles.secondBody}>
                 <div className={styles.secondCont}>
                     <h2>{title}</h2>
@@ -215,7 +215,7 @@ const ReceivePaymentSecond = ({ title, action, buttonText, type }) => {
                     )}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
