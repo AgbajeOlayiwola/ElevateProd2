@@ -85,7 +85,7 @@ const LoginWith = ({
                         placeholder={placeholderII}
                         className={styles.passwordInput}
                         required
-                        type={outType ? 'password' : 'text'}
+                        type={outType ? 'text' : 'password'}
                         onChange={(e) => setCount(e.target.value.length)}
                     />
 

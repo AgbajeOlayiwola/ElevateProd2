@@ -30,39 +30,40 @@ const Sidebar = () => {
                 <div className={styles.ellevate}>
                     <ElevateLogo />
                 </div>
-
-                {SidebarData.map((item, index) => {
-                    return (
-                        <div key={index}>
-                            <div
-                                className={
-                                    router.pathname == item.path
-                                        ? styles.inActive
-                                        : styles.parentDiv
-                                }
-                            >
-                                <div className={styles.mainDiv}>
-                                    <Link href={item.path} key={index}>
-                                        <div
-                                            className={styles.LinkDiv}
-                                            onClick={showSubnav}
-                                        >
-                                            {router.pathname == item.path
-                                                ? item.iconActive
-                                                : item.icon}
-                                            <p className={styles.link}>
-                                                {item.title}
-                                            </p>
-                                        </div>
-                                    </Link>
+                <div className={styles.track}>
+                    {' '}
+                    {SidebarData.map((item, index) => {
+                        return (
+                            <div key={index}>
+                                <div
+                                    className={
+                                        router.pathname == item.path
+                                            ? styles.inActive
+                                            : styles.parentDiv
+                                    }
+                                >
+                                    <div className={styles.mainDiv}>
+                                        <Link href={item.path} key={index}>
+                                            <div
+                                                className={styles.LinkDiv}
+                                                onClick={showSubnav}
+                                            >
+                                                {router.pathname == item.path
+                                                    ? item.iconActive
+                                                    : item.icon}
+                                                <p className={styles.link}>
+                                                    {item.title}
+                                                </p>
+                                            </div>
+                                        </Link>
+                                    </div>
                                 </div>
+                                <SideBarDrop item={item} />
                             </div>
-                            <SideBarDrop item={item} />
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
-
             <Link href="/Auth/Login">
                 <div
                     className={styles.parentDiv}

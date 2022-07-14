@@ -58,9 +58,13 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                         <p style={{ color: '#005B82', cursor: 'pointer' }}>
                             Resend OTP
                         </p>
-                        <p style={{ cursor: 'pointer' }} className={styles.clr}>
+                        <button
+                            style={{ cursor: 'pointer' }}
+                            className={styles.clr}
+                            type="reset"
+                        >
                             Clear
-                        </p>
+                        </button>
                     </ResetOTP>
 
                     <ButtonComp

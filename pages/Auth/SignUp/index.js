@@ -10,6 +10,8 @@ import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 const Signup = ({ type }) => {
     const router = useRouter();
     const [message, setMessage] = useState();
+    const [password, setPassword] = useState('');
+    const [confPassword, setConfPassword] = useState('');
     // button active states
     const [activeBtn, setActiveBtn] = useState(false);
     //button active states
@@ -95,6 +97,7 @@ const Signup = ({ type }) => {
         setCard(true);
         setAcct(false);
     };
+    const [passwordMatch, setPasswordMatch] = useState('');
 
     // display Lofg in with end
     const types = (type) => {
@@ -108,7 +111,11 @@ const Signup = ({ type }) => {
     } = useForm();
     const onSubmit = ({ data }) => {
         console.log(data);
-        router.push('../Verify');
+        if (password == confPassword) {
+            router.push('../Verify');
+        } else {
+            setPasswordMatch('Passwords do not match');
+        }
     };
 
     const [bgcolor, setBgcolor] = useState(false);
@@ -117,6 +124,15 @@ const Signup = ({ type }) => {
         setIsRegistered(false);
         setBgcolor((prevState) => !prevState);
     };
+    const handlePaswword = (e) => {
+        setCount(e.target.value.length);
+        setConfPassword(e.target.value);
+    };
+    const handlePwd = (e) => {
+        setCount(e.target.value.length);
+        setPassword(e.target.value);
+    };
+    console.log(confPassword);
     return (
         <>
             <div className={styles.cover}>
@@ -263,14 +279,10 @@ const Signup = ({ type }) => {
                                                 required
                                                 type={
                                                     outType
-                                                        ? 'password'
-                                                        : 'text'
+                                                        ? 'text'
+                                                        : 'password'
                                                 }
-                                                onChange={(e) =>
-                                                    setCount(
-                                                        e.target.value.length
-                                                    )
-                                                }
+                                                onChange={handlePwd}
                                             />
 
                                             <Visbility typeSet={types} />
@@ -294,18 +306,20 @@ const Signup = ({ type }) => {
                                                 required
                                                 type={
                                                     outType
-                                                        ? 'password'
-                                                        : 'text'
+                                                        ? 'text'
+                                                        : 'password'
                                                 }
-                                                onChange={(e) =>
-                                                    setCount(
-                                                        e.target.value.length
-                                                    )
-                                                }
+                                                onChange={handlePaswword}
                                             />
                                             <Visbility typeSet={types} />
                                         </div>
                                     </div>
+
+                                    {password == confPassword ? null : (
+                                        <p className={styles.error}>
+                                            {passwordMatch}
+                                        </p>
+                                    )}
 
                                     {/* errors will return when field validation fails  */}
                                     {errors.exampleRequired && (

@@ -13,6 +13,21 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
         formState: { errors }
     } = useForm();
 
+    const [password, setPassword] = useState('');
+    const [confPassword, setConfPassword] = useState('');
+    const [passwordMatch, setPasswordMatch] = useState('');
+    const handlePaswword = (e) => {
+        setCount(e.target.value.length);
+        setConfPassword(e.target.value);
+        if (password != confPassword) {
+            setPasswordMatch('Passwords do not match');
+        }
+    };
+    const handlePwd = (e) => {
+        setCount(e.target.value.length);
+        setPassword(e.target.value);
+    };
+
     const onSubmit = async (data) => {
         console.log(data);
     };
@@ -58,7 +73,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             className={styles.textInput}
                             required
                             type={outType ? 'password' : 'text'}
-                            onChange={(e) => setCount(e.target.value.length)}
+                            onChange={handlePwd}
                         />
                         <Visbility typeSet={types} />
                     </div>
@@ -78,15 +93,13 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                             className={styles.textInput}
                             required
                             type={outType ? 'password' : 'text'}
-                            onChange={(e) => setCount(e.target.value.length)}
+                            onChange={handlePaswword}
                         />
 
                         <Visbility typeSet={types} />
                     </div>
-                    {count <= 1 || count >= 8 ? null : (
-                        <p className={styles.error}>
-                            Minimum Password length is 8 Characters
-                        </p>
+                    {password == confPassword ? null : (
+                        <p className={styles.error}>{passwordMatch}</p>
                     )}
                 </div>
             </form>
