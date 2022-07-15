@@ -38,6 +38,7 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
     const sendOTP = (data) => {
         console.log(data);
     };
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div>
@@ -62,6 +63,12 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                                     type="number"
                                     placeholder="+234 8999 4048 44"
                                     {...register('bvn')}
+                                    value={phoneNumber}
+                                    onChange={(event) => {
+                                        if (event.target.value.length == 15)
+                                            return false; //limits to 10 digit entry
+                                        setPhoneNumber(event?.target.value); //saving input to state
+                                    }}
                                 />
                             </div>
                             <div style={{ marginTop: '2rem', width: '100%' }}>
