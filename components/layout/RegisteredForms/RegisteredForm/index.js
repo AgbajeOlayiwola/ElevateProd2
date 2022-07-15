@@ -15,6 +15,7 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
         console.log(data);
     };
     const [number, setNumber] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div>
@@ -107,6 +108,12 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                                         message: 'Min length is 9'
                                     }
                                 })}
+                                value={phoneNumber}
+                                onChange={(event) => {
+                                    if (event.target.value.length == 15)
+                                        return false; //limits to 10 digit entry
+                                    setPhoneNumber(event?.target.value); //saving input to state
+                                }}
                             />
                             <div className="errors">
                                 {errors.phone_number?.message}
