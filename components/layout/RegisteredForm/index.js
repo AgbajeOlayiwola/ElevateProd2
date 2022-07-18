@@ -37,12 +37,9 @@ const ExistingMultiStep = () => {
                 <div className={page === 2 ? styles.btns : null}>
                     {page === 2 ? (
                         <Link href="/Succes/Success">
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Confirm"
-                                type="button"
-                            />
+                            <button text="Confirm" type="button">
+                                Confirm
+                            </button>
                         </Link>
                     ) : null}
 
