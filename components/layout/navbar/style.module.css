@@ -82,3 +82,28 @@
 
     color: #3e3e3e;
 }
+.rightNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+}
+.srch {
+    padding-left: 77px;
+    background-color: rgba(201, 201, 201, 0.13);
+    background-image: url('/Assets/Svgs/Srch.svg');
+    background-position: 8%;
+    background-repeat: no-repeat;
+    padding-left: 65px;
+    border: none;
+
+    border-radius: 8px;
+}
+
+.rightNav form {
+    width: 80%;
+}
+.rightNav div {
+    width: 10%;
+    margin-left: 77px;
+}
