@@ -96,7 +96,7 @@ const Payment = () => {
             },
             {
                 icon: <MposSvg2 />,
-                text: 'mPOS'
+                text: 'Phone POS'
             },
             {
                 icon: <Ussd />,
@@ -210,7 +210,7 @@ const Payment = () => {
                             />
                         );
                 }
-            case 'mpos':
+            case 'phone pos':
                 switch (count) {
                     case 0:
                         return (
@@ -480,7 +480,7 @@ const Payment = () => {
                             <h4>{ussd}</h4>
                         </ChartContent>
                         <ChartContent width={mPOS} color="#C4D344">
-                            <p>mPOS</p>
+                            <p>Phone POS</p>
                             <h4>{mPOS}</h4>
                         </ChartContent>
                     </div>
