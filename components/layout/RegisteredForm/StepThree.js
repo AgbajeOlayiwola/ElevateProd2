@@ -149,14 +149,6 @@ const StepThree = () => {
                         value="Male"
                     />
                 </div>
-                <Link href="/Succes/Success">
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text="Confirm"
-                        type="button"
-                    />
-                </Link>
             </div>
         </div>
     );

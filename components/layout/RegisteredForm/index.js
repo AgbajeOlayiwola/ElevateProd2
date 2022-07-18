@@ -5,6 +5,8 @@ import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
 import StepThree from './StepThree';
 import StepFour from './StepFour';
+import Link from 'next/link';
+import styles from './styles.module.css';
 import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticator';
 
 const ExistingMultiStep = () => {
@@ -32,13 +34,26 @@ const ExistingMultiStep = () => {
         <Card>
             {conditionalComponent()}
             {page === 3 ? null : (
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    onClick={handleSubmit}
-                    type="submit"
-                    text={page === 2 ? 'Open A New Account' : 'Next'}
-                />
+                <div className={page === 2 ? styles.btns : null}>
+                    {page === 2 ? (
+                        <Link href="/Succes/Success">
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Confirm"
+                                type="button"
+                            />
+                        </Link>
+                    ) : null}
+
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        onClick={handleSubmit}
+                        type="submit"
+                        text={page === 2 ? 'Create Account' : 'Next'}
+                    />
+                </div>
             )}
         </Card>
     );
