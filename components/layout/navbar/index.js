@@ -20,8 +20,17 @@ const Navbar = () => {
                         <p className={styles.company}>Marvelous Solutions</p>
                     </div>
                 </div>
-                <div className={styles.notification}>
-                    <NotificationsSvg />
+                <div className={styles.rightNav}>
+                    <form>
+                        <input
+                            className={styles.srch}
+                            type="text"
+                            placeholder="Search ellevate"
+                        />
+                    </form>
+                    <div className={styles.notification}>
+                        <NotificationsSvg />
+                    </div>
                 </div>
             </nav>
         </div>

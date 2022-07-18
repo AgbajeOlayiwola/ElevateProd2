@@ -16,6 +16,8 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
     };
     const [number, setNumber] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [tinumber, setTinumber] = useState('');
+    const [rcnumber, setRcnumber] = useState('');
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div>
@@ -42,6 +44,12 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                                         message: 'Min length is 10'
                                     }
                                 })}
+                                value={rcnumber}
+                                onChange={(event) => {
+                                    if (event.target.value.length == 15)
+                                        return false; //limits to 10 digit entry
+                                    setRcnumber(event?.target.value); //saving input to state
+                                }}
                             />
                             <div className="errors">
                                 {errors.rc_number?.message}
@@ -55,6 +63,12 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                                 type="number"
                                 placeholder="Your Tax Identification number"
                                 {...register('tin')}
+                                value={tinumber}
+                                onChange={(event) => {
+                                    if (event.target.value.length == 9)
+                                        return false; //limits to 10 digit entry
+                                    setTinumber(event?.target.value); //saving input to state
+                                }}
                             />
                             <div className="errors">{errors.tin?.message}</div>
                         </InputWrapper>
