@@ -126,6 +126,19 @@ const Login = () => {
                                 />
                             </svg> */}
                         </div>
+                        <div className={styles.remForg}>
+                            <div>
+                                <input type="checkbox" />
+                                <p>Remember me</p>
+                            </div>
+                            <div>
+                                <Link href="../Auth/ForgotPassword">
+                                    <p className={styles.forget}>
+                                        Forgot Password
+                                    </p>
+                                </Link>
+                            </div>
+                        </div>
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
