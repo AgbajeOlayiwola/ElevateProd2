@@ -51,8 +51,8 @@
     justify-content: center;
     /* display: flex; */
 
-    background: linear-gradient(0deg, rgba(9, 16, 1, 0.8), rgba(9, 16, 1, 0.8)),
-        url(/Assets/Images/signupimage.png);
+    background: linear-gradient(0deg, rgba(9, 16, 1, 0.5), rgba(9, 16, 1, 0.5)),
+        url('/Assets/Images/signupimage.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;

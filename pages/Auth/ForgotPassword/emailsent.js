@@ -25,13 +25,6 @@ const EmailSent = () => {
                     text="Close"
                 />
             </Link>
-
-            <div className={styles.last}>
-                <p>
-                    Did not receive the email? Check your spam filter or{' '}
-                    <span>try another email address</span>
-                </p>
-            </div>
         </div>
     );
 };

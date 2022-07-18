@@ -22,6 +22,10 @@ const ExistingMultiStep = () => {
     function handleSubmit() {
         setPage(page + 1);
     }
+    function handleClick() {
+        setPage(page - 1);
+        console.log('back');
+    }
     return (
         <div className={styles.cov}>
             <Card>
@@ -35,6 +39,16 @@ const ExistingMultiStep = () => {
                         text="Reset"
                     />
                 )}
+                {page === 1 ? (
+                    <div className={styles.last}>
+                        <p>
+                            Did not receive the email? Check your spam filter or{' '}
+                            <span onClick={handleClick}>
+                                try another email address
+                            </span>
+                        </p>
+                    </div>
+                ) : null}
             </Card>
         </div>
     );
