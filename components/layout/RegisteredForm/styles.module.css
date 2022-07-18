@@ -203,3 +203,10 @@
     font-size: 12px;
     margin-top: -1rem;
 }
+.btns {
+    display: flex;
+    justify-content: space-between;
+}
+.btns button {
+    width: 47%;
+}

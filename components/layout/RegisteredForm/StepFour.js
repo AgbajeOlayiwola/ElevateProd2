@@ -140,7 +140,7 @@ const StepFour = () => {
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            text="Successs"
+                            text="Success"
                             type="button"
                             // onClick={handleShowSuccessStep}
                             // onClick={handleShowFourthStep}

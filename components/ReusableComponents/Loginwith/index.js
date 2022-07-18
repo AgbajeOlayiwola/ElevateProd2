@@ -32,7 +32,7 @@ const LoginWith = ({
     };
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
-    const [activeBtn, setActiveBtn] = useState(false);
+    const [activeBtn, setActiveBtn] = useState(true);
     const [active, setActive] = useState(false);
     const [number, setNumber] = useState('');
 
@@ -98,7 +98,7 @@ const LoginWith = ({
                 )}
             </div>
 
-            <div className={styles.terms}>
+            {/* <div className={styles.terms}>
                 <input
                     type="checkbox"
                     className={styles.termcondition}
@@ -114,7 +114,7 @@ const LoginWith = ({
                         </span>
                     </Link>
                 </label>
-            </div>
+            </div> */}
 
             <Link href="/Onboarding/ExistingProfileSetup">
                 <ButtonComp
