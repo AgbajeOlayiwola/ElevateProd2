@@ -93,6 +93,7 @@
 }
 .last span {
     color: #005b82;
+    cursor: pointer;
 }
 .create div:nth-child(1) {
     font-family: 'Inter';
@@ -128,4 +129,9 @@
 .formCre div:nth-child(2) {
     margin-top: 24px;
     margin-bottom: 30px;
+}
+.errors {
+    color: red;
+    font-size: 12px;
+    margin-top: -1rem;
 }

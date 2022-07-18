@@ -36,10 +36,6 @@ const Signup = ({ type }) => {
     const [statusCheck, setStatusCheck] = useState(false);
     const [outType, setOutType] = useState();
 
-    const pwdCount = (e) => {
-        console.log('hghj');
-    };
-
     const handleDisplay = () => {
         setDisplayLogUI((prevState) => !prevState);
         setActive((prevState) => !prevState);

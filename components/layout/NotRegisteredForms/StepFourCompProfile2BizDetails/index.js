@@ -105,7 +105,7 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            text="Next Successs"
+                            text="Next"
                             type="button"
                             onClick={handleShowSuccessStep}
                             // onClick={handleShowFourthStep}
