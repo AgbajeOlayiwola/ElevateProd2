@@ -2,6 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
+import Image from 'next/image';
+import Overlay from '../Overlay';
+import CloseButton from '../CloseButtonSvg';
 
 const ReceivePaymentFirst = ({
     firstTitle,
@@ -26,13 +29,15 @@ const ReceivePaymentFirst = ({
     } = useForm();
 
     return (
-        <div className={overlay ? styles.mainOverlay : styles.noshow}>
+        <Overlay overlay={overlay}>
             <div className={styles.firstDiv} ref={myref}>
                 <div className={styles.firstBody}>
                     <div>
                         <h2>{firstTitle}</h2>
                         {firstTitle === 'Create Payment Link' ? (
-                            <p>(Accepts Card Payment without POS)</p>
+                            <p className={styles.accept}>
+                                (Accepts Card Payment without POS)
+                            </p>
                         ) : null}
                         <form onSubmit={handleSubmit(action)}>
                             <div className={styles.formGroup}>
@@ -139,20 +144,23 @@ const ReceivePaymentFirst = ({
                     </div>
                 </div>
                 <div>
+                    {/* <Image
+                        src="/Assets/Images/Group 33664.png"
+                        width="100%"
+                        height="100%"
+                    /> */}
                     <img
                         src="../../Assets/Images/Group 33664.png"
                         alt=""
                         className={styles.greenImg}
                     />
-                    <img
-                        src="../../Assets/Svgs/closebtn.svg"
-                        alt=""
-                        className={styles.closebtn}
-                        onClick={closeAction}
+                    <CloseButton
+                        action={closeAction}
+                        classes={styles.closebtn}
                     />
                 </div>
             </div>
-        </div>
+        </Overlay>
     );
 };
 

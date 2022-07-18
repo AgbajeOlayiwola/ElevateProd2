@@ -9,6 +9,18 @@ import ReceivePaymentFirst from '../../components/ReusableComponents/ReceivePaym
 import ReceivePaymentSecond from '../../components/ReusableComponents/ReceivePaymentSecond';
 import styles from './styles.module.css';
 import styled from 'styled-components';
+import Image from 'next/image';
+import Overlay from '../../components/ReusableComponents/Overlay';
+import SchedulePayment from '../../components/ReusableComponents/Schedulepayment';
+import Visbility from '../../components/ReusableComponents/Eyeysvg';
+import SingleTrans from '../../components/ReusableComponents/SingleTransSvg';
+import BulkTransfer2 from '../../components/ReusableComponents/BulkTransfSvg/bulktrans';
+import BillTransfer from '../../components/ReusableComponents/BillTransSvg';
+import FxTrans from '../../components/ReusableComponents/FxtransSvg';
+import Paylink2 from '../../components/ReusableComponents/PaylinkSvg/paylink';
+import Ussd from '../../components/ReusableComponents/UssdSvg';
+import MposSvg2 from '../../components/ReusableComponents/mPOSSvg/Mpos';
+import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
 
 const Payment = () => {
     // const payment = useSelector((state) => state.payment1);
@@ -21,6 +33,8 @@ const Payment = () => {
     const [paylink, setPaylink] = useState('35%');
     const [ussd, setUssd] = useState('25%');
     const [mPOS, setMpos] = useState('30%');
+    const [outType, setOutType] = useState();
+    const [balance] = useState('22,049.94');
 
     const ChartDiv = styled.div`
         width: ${(props) => props.width};
@@ -33,6 +47,7 @@ const Payment = () => {
     const ChartContent = styled.div`
         width: ${(props) => props.width};
         margin-left: -14px;
+        text-align: center;
 
         p {
             color: ${(props) => props.color};
@@ -57,38 +72,39 @@ const Payment = () => {
     const paymentData = {
         make: [
             {
-                icon: '../../Assets/Svgs/Vector(1).svg',
-                text: 'Single Transfer'
-            },
-            {
-                icon: '../../Assets/Svgs/Group 444.svg',
-                text: 'Bulk Transfer'
-            },
-            {
-                icon: '../../Assets/Svgs/Group 452.svg',
+                icon: <BillTransfer />,
                 text: 'Bills Payment'
             },
             {
-                icon: '../../Assets/Svgs/Vector(2).svg',
+                icon: <SingleTrans />,
+                text: 'Single Transfer'
+            },
+            {
+                icon: <BulkTransfer2 />,
+                text: 'Bulk Transfer'
+            },
+
+            {
+                icon: <FxTrans />,
                 text: 'FX Transfer '
             }
         ],
         receive: [
             {
-                icon: '../../Assets/Svgs/Vector.svg',
-                text: 'Paylink'
-            },
-            {
-                icon: '../../Assets/Svgs/naira.svg',
-                text: 'USSD only'
-            },
-            {
-                icon: '../../Assets/Svgs/Frame.svg',
+                icon: <EcobankQRSvg />,
                 text: 'Ecobank QR Only'
             },
             {
-                icon: '../../Assets/Svgs/Frame(1).svg',
-                text: 'mPOS'
+                icon: <MposSvg2 />,
+                text: 'Phone POS'
+            },
+            {
+                icon: <Ussd />,
+                text: 'USSD only'
+            },
+            {
+                icon: <Paylink2 />,
+                text: 'Paylink'
             }
         ]
     };
@@ -149,7 +165,7 @@ const Payment = () => {
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Create USSD Payment Code"
-                                buttonText="Generate Paylink"
+                                buttonText="Share USSD code"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     console.log(data);
@@ -175,7 +191,7 @@ const Payment = () => {
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Create Ecobank QR Code"
-                                buttonText="Generate Paylink"
+                                buttonText="Share Ecobank QR Codes"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     console.log(data);
@@ -187,21 +203,21 @@ const Payment = () => {
                         return (
                             <ReceivePaymentSecond
                                 overlay={overlay}
-                                title="Create Ecobank QR Code"
+                                title=" Ecobank QR Code"
                                 action={buttonHandleClose}
-                                buttonText="Share Paylink"
+                                buttonText="Share Ecobank QR Code"
                                 type=" Ecobank QR Codes"
                             />
                         );
                 }
-            case 'mpos':
+            case 'phone pos':
                 switch (count) {
                     case 0:
                         return (
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Use Mobile POS"
-                                buttonText="Generate Paylink"
+                                buttonText="Activate NFC Scanner"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     console.log(data);
@@ -220,14 +236,26 @@ const Payment = () => {
                         );
                     case 2:
                         return (
-                            <div className={styles.NFCScanner}>
-                                <h2>Complete Transaction on Mobile Phone</h2>
-                                <p>
-                                    Note that this will be completed on your
-                                    mobile phone which is serving as your POS.
-                                </p>
-                                <button>Activate NFC Scanner</button>
-                            </div>
+                            // <Overlay overlay={overlay}>
+                            //     <div className={styles.NFCScanner}>
+                            //         <h2>
+                            //             Complete Transaction on Mobile Phone
+                            //         </h2>
+                            //         <p>
+                            //             Note that this will be completed on your
+                            //             mobile phone which is serving as your
+                            //             POS.
+                            //         </p>
+                            //         <button
+                            //             onClick={() => {
+                            //                 buttonHandleClose;
+                            //             }}
+                            //         >
+                            //             Activate NFC Scanner
+                            //         </button>
+                            //     </div>
+                            // </Overlay>
+                            <SchedulePayment />
                         );
                 }
 
@@ -388,13 +416,19 @@ const Payment = () => {
             default:
         }
     };
-
+    const types = (type) => {
+        setOutType(type);
+    };
     return (
         <DashLayout>
             <div className={styles.greencard}>
                 <div className={styles.greencardDetails}>
                     <div>
-                        <img src="../Assets/Images/clock.png" alt="Clock" />
+                        <Image
+                            src="/Assets/Images/clock.png"
+                            width="100%"
+                            height="100%"
+                        />
                     </div>
                     <div>
                         <h3>Introducing Scheduled Payments</h3>
@@ -446,7 +480,7 @@ const Payment = () => {
                             <h4>{ussd}</h4>
                         </ChartContent>
                         <ChartContent width={mPOS} color="#C4D344">
-                            <p>mPOS</p>
+                            <p>Phone POS</p>
                             <h4>{mPOS}</h4>
                         </ChartContent>
                     </div>
@@ -454,13 +488,19 @@ const Payment = () => {
                 <div className={styles.whiteboard}>
                     <div className={styles.balance}>
                         <div>
-                            <p className={styles.thousand}> ₦22,049.94</p>
+                            <div className={styles.visibility}>
+                                <p className={styles.thousand}>
+                                    {outType ? '*******' : '₦' + balance}
+                                </p>
+                                <Visbility color="green" typeSet={types} />
+                            </div>
                             <p className={styles.avail}>Available Balance</p>
                         </div>
                         <div className="">
-                            <img
-                                src="../Assets/Images/bagmoney.png"
-                                alt="Money"
+                            <Image
+                                src="/Assets/Images/bagmoney.png "
+                                width="100%"
+                                height="100%"
                             />
                         </div>
                     </div>
@@ -490,7 +530,7 @@ const Payment = () => {
                 </PaymentCard>
             </div>
 
-            <PaymentTable title="All Transactions" />
+            <PaymentTable title="Payment History" />
 
             {renderForm()}
         </DashLayout>
@@ -510,9 +550,7 @@ const PaymentSingleBody = ({
             onClick={() => handleFormChange(text.toLowerCase())}
         >
             <div>
-                <div className={styles.paymentSingleImg}>
-                    <img src={icon} alt="logo" />
-                </div>
+                <div className={styles.paymentSingleImg}>{icon}</div>
                 <div className={styles.paymentSingleText}>
                     <p
                         className={

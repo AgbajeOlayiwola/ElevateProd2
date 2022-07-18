@@ -1,27 +1,13 @@
 import React, { useState } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
-const schema = yup.object().shape({
-    otp1: yup.number().positive().required(),
-    otp2: yup.number().positive().required(),
-    otp3: yup.number().positive().required(),
-    otp4: yup.number().positive().required()
-});
+import OtpInput from '../OtpInput';
+import Overlay from '../Overlay';
 
-const MakePaymentSecond = ({ transferaction, overlay }) => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm({
-        resolver: yupResolver(schema)
-    });
+const MakePaymentSecond = ({ overlay }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     return (
-        <div className={overlay ? styles.mainOverlay : styles.noshow}>
+        <Overlay overlay={overlay}>
             <div className={styles.PaymentSecond}>
                 <div className={styles.PaymentSecondCont}>
                     <h2>Confirm Transaction</h2>
@@ -53,53 +39,20 @@ const MakePaymentSecond = ({ transferaction, overlay }) => {
                         </div>
                     </div>
                     <h4>Enter Transaction Pin</h4>
-                    <form onSubmit={handleSubmit(transferaction)}>
-                        <div className={styles.transactionpin}>
-                            <input
-                                type="number"
-                                inputMode="numeric"
-                                maxLength="1"
-                                autoComplete="one-time-code"
-                                name="otp1"
-                                {...register('otp1')}
-                            />
-                            <input
-                                type="number"
-                                inputMode="numeric"
-                                maxLength="1"
-                                autoComplete="one-time-code"
-                                name="otp2"
-                                {...register('otp2')}
-                            />
-                            <input
-                                type="number"
-                                inputMode="numeric"
-                                maxLength="1"
-                                autoComplete="one-time-code"
-                                name="otp3"
-                                {...register('otp3')}
-                            />
-                            <input
-                                type="number"
-                                inputMode="numeric"
-                                maxLength="1"
-                                autoComplete="one-time-code"
-                                name="otp4"
-                                {...register('otp4')}
-                                onChange={(e) => {
-                                    if (e?.target.value.length === 0) {
-                                        setActiveBtn(false);
-                                    } else if (e?.target.value.length > 0) {
-                                        setActiveBtn(true);
-                                    }
-                                }}
-                            />
-                        </div>
-                        {errors ? (
-                            <p className={styles.error}>
-                                {errors.otp1?.message}
+                    <form>
+                        <OtpInput />
+                        <div className={styles.resendFlex}>
+                            <p style={{ color: '#005B82', cursor: 'pointer' }}>
+                                Resend OTP
                             </p>
-                        ) : null}
+                            <button
+                                style={{ cursor: 'pointer' }}
+                                className={styles.clr}
+                                type="reset"
+                            >
+                                Clear
+                            </button>
+                        </div>
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
@@ -109,7 +62,7 @@ const MakePaymentSecond = ({ transferaction, overlay }) => {
                     </form>
                 </div>
             </div>
-        </div>
+        </Overlay>
     );
 };
 

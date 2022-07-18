@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Overlay from '../Overlay';
 import styles from './styles.module.css';
 
 const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
@@ -8,7 +9,7 @@ const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
         window.scrollTo(0, 0);
     }, []);
     return (
-        <div className={overlay ? styles.mainOverlay : styles.noshow}>
+        <Overlay overlay={overlay}>
             <div className={styles.secondBody}>
                 <div className={styles.secondCont}>
                     <h2>{title}</h2>
@@ -215,7 +216,7 @@ const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
                     )}
                 </div>
             </div>
-        </div>
+        </Overlay>
     );
 };
 
