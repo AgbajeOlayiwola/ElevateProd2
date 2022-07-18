@@ -11,21 +11,6 @@
     z-index: 10;
 }
 
-.noshow {
-    display: none;
-}
-.mainOverlay {
-    display: block;
-    flex: 1;
-    background-color: rgba(245, 246, 250, 0.8);
-    padding: 36px 32px 46px 32px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
 .PaymentSecondCont {
     width: 67%;
     margin: 64px auto;
@@ -138,23 +123,17 @@
     justify-content: space-between;
 }
 
-.transactionpin input {
-    width: 23%;
-    background: #ffffff;
-    border: 1px solid #e6ebee;
-    border-radius: 12px;
-    padding: 0px;
-    height: 60px;
-    font-size: 30px;
-    text-align: center;
+.resendFlex {
+    display: flex;
+    justify-content: space-between;
 }
 
-.transactionpin input[type='number']::-webkit-inner-spin-button,
-.transactionpin input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
+.clr {
+    color: #7a7978;
     margin: 0px;
-}
-
-.transactionpin input[type='number'] {
-    -moz-appearance: textfield;
+    width: fit-content;
+    /* height: fit-content; */
+    background-color: white;
+    height: 0;
+    font-weight: 500;
 }

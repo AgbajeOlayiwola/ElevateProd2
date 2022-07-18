@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Paylink = () => {
+const SingleTrans = () => {
     return (
         <svg
             width="28"
@@ -20,4 +20,4 @@ const Paylink = () => {
     );
 };
 
-export default Paylink;
+export default SingleTrans;

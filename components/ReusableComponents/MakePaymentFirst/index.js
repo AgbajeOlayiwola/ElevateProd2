@@ -4,6 +4,8 @@ import BulkTransfer from './bulktransfer';
 import ForeignTransfer from './foreigntransfer';
 import BillPayment from './billpayment';
 import SingleTransfer from './singletransfer';
+import Overlay from '../Overlay';
+import CloseButton from '../CloseButtonSvg';
 
 const MakePaymentFirst = ({
     firstTitle,
@@ -19,7 +21,7 @@ const MakePaymentFirst = ({
     }, []);
 
     return (
-        <div className={overlay ? styles.mainOverlay : styles.noshow}>
+        <Overlay overlay={overlay}>
             <div className={styles.firstDiv} ref={myref}>
                 <div className={styles.firstBody}>
                     {firstTitle === 'Single Transfer Payment' ? (
@@ -54,6 +56,10 @@ const MakePaymentFirst = ({
                         alt=""
                         className={styles.greenImg}
                     />
+                    <CloseButton
+                        action={closeAction}
+                        classes={styles.closebtn}
+                    />
                     <img
                         src="../../Assets/Svgs/closebtn.svg"
                         alt=""
@@ -62,7 +68,7 @@ const MakePaymentFirst = ({
                     />
                 </div>
             </div>
-        </div>
+        </Overlay>
     );
 };
 

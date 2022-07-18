@@ -8,11 +8,12 @@ import {
 } from './styles.module';
 import Link from 'next/link';
 import ButtonComp from '../Button';
+import Overlay from '../Overlay';
 
 const PaymentSuccess = ({ action, country, title, overlay }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
-        <div className={overlay ? styles.mainOverlay : styles.noshow}>
+        <Overlay>
             <div className={styles.successcont}>
                 <BodyWrapper>
                     <div
@@ -60,7 +61,7 @@ const PaymentSuccess = ({ action, country, title, overlay }) => {
                     </RegistrationStatus>
                 </BodyWrapper>
             </div>
-        </div>
+        </Overlay>
     );
 };
 
