@@ -10,20 +10,7 @@
     left: 33%;
     z-index: 10;
 }
-.noshow {
-    display: none;
-}
-.mainOverlay {
-    display: block;
-    flex: 1;
-    background-color: rgba(245, 246, 250, 0.8);
-    padding: 36px 32px 46px 32px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
+
 .firstDiv > div:last-child {
     /* height: 100%; */
     width: 30%;
@@ -61,10 +48,13 @@
 }
 
 .error {
-    color: red !important;
+    color: red;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
 
-.firstBody p {
+.firstBody .accept {
     font-weight: 500;
     font-size: 16px;
     line-height: 19px;
