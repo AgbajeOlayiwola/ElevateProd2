@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
-import OtpInput from '../OtpInput';
+import OtpInput from '../Otpinput';
 import Overlay from '../Overlay';
 
 const MakePaymentSecond = ({ overlay }) => {
