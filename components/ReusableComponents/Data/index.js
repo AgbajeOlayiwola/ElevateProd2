@@ -17,6 +17,7 @@ export const SidebarData = [
     {
         title: 'Dashboard',
         path: '/Dashboard',
+
         icon: <MdIcons.MdDashboard />,
         iconActive: <MdIcons.MdDashboard />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
@@ -27,6 +28,7 @@ export const SidebarData = [
         // <MdIcons.MdOutlinePayments />
         title: 'Payment',
         path: '/Payment',
+        modal: 'show',
         icon: <PaymentSvg fillColor={false} />,
         iconActive: <PaymentSvg fillColor={true} />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
@@ -169,28 +171,33 @@ export const transactionData = [
 
 export const RecievePayment = [
     {
-        title: 'Paylink',
-        path: '#',
-        icon: <BiIcons.BiLinkAlt />
-    },
-    {
-        title: 'USSD only',
-        path: '#',
-        icon: <StarSharp />
-    },
-    {
-        title: 'Ecobank QR only',
+        title: 'By Ecobank Pay (QR)',
         path: '#',
         icon: <BiIcons.BiScan />
     },
     {
-        title: 'mPOS',
+        title: 'By Phone POS',
         path: '#',
         icon: <HiIcons.HiOutlineCreditCard />
+    },
+    {
+        title: 'By USSD',
+        path: '#',
+        icon: <StarSharp />
+    },
+    {
+        title: 'Paylink',
+        path: '#',
+        icon: <BiIcons.BiLinkAlt />
     }
 ];
 
 export const MakePayment = [
+    {
+        title: 'Bills Payment',
+        path: '#',
+        icon: <NairaSvg />
+    },
     {
         title: 'Single Transfer',
         path: '#',
@@ -201,14 +208,20 @@ export const MakePayment = [
         path: '#',
         icon: <BulkTransfer />
     },
-    {
-        title: 'Bills Payment',
-        path: '#',
-        icon: <NairaSvg />
-    },
+
     {
         title: 'FX Transfer',
         path: '#',
         icon: <FaIcons.FaHandHoldingUsd />
+    }
+];
+export const OtherAccounts = [
+    {
+        ammount: '₦22,094',
+        account: 'Personal Savings Account'
+    },
+    {
+        ammount: '₦22,094',
+        account: 'Ecobank Omnilite Account'
     }
 ];

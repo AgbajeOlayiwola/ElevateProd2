@@ -100,7 +100,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 54%;
+    width: 43%;
 }
 .avail {
     font-style: normal;
@@ -291,7 +291,7 @@
     color: #005b82;
 }
 .btmII {
-    width: 58%;
+    width: 51%;
     max-width: 378px;
     height: 352px;
     background: #ffffff;
@@ -303,8 +303,9 @@
 .btmII::-webkit-scrollbar {
     display: none;
 }
+
 .btmIII {
-    width: 38%;
+    width: 43%;
     max-width: 279px;
     height: 352px;
     background: #ffffff;
@@ -436,4 +437,25 @@
     line-height: 19px;
 
     color: #102572;
+}
+.othAccount p:nth-child(1) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #7fbb01;
+
+    opacity: 0.94;
+}
+.othAccount p:nth-child(2) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #2f2f2f;
 }

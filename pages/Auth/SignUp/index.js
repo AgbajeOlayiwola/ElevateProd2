@@ -13,7 +13,7 @@ const Signup = ({ type }) => {
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
     // button active states
-    const [activeBtn, setActiveBtn] = useState(true);
+    const [activeBtn, setActiveBtn] = useState(false);
     //button active states
     // business ui
     const [business, setBusiness] = useState(true);
@@ -324,7 +324,25 @@ const Signup = ({ type }) => {
                                     {errors.exampleRequired && (
                                         <span>This field is required</span>
                                     )}
-                                    <div></div>
+                                    <div>
+                                        <input
+                                            type="checkbox"
+                                            className={styles.termcondition}
+                                            defaultChecked={active}
+                                            onClick={() =>
+                                                setActiveBtn(!activeBtn)
+                                            }
+                                        />
+                                        <label>
+                                            I agree with Ellevate App
+                                            <Link href="#">
+                                                <span className={styles.termss}>
+                                                    {' '}
+                                                    Terms and Conditions
+                                                </span>
+                                            </Link>
+                                        </label>
+                                    </div>
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={

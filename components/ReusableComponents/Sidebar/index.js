@@ -43,7 +43,11 @@ const Sidebar = () => {
                                     }
                                 >
                                     <div className={styles.mainDiv}>
-                                        <Link href={item.path} key={index}>
+                                        <Link
+                                            href={item.path}
+                                            key={index}
+                                            scroll={false}
+                                        >
                                             <div
                                                 className={styles.LinkDiv}
                                                 onClick={showSubnav}

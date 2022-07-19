@@ -8,7 +8,7 @@ const QrSvg = () => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
     >
-        <g clip-path="url(#clip0_4044_18630)">
+        <g clipPath="url(#clip0_4044_18630)">
             <path
                 d="M4.41797 8.56934V7.486C4.41797 6.91137 4.64669 6.36027 5.05383 5.95394C5.46096 5.54761 6.01316 5.31934 6.58893 5.31934H8.75989"
                 stroke="#6CCF00"
