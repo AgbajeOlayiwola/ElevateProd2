@@ -18,7 +18,10 @@ import BarChart from '../../components/ReusableComponents/Chart/BarChart';
 import Chart from '../../components/ReusableComponents/Chart';
 import LineChart from '../../components/ReusableComponents/Chart/LineChart';
 import Piechart from '../../components/ReusableComponents/Chart/Piechart';
-import { transactionData } from '../../components/ReusableComponents/Data';
+import {
+    OtherAccounts,
+    transactionData
+} from '../../components/ReusableComponents/Data';
 import MakePaymentBtn from '../../components/ReusableComponents/MakePayment';
 import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymnet';
 function SampleNextArrow(props) {
@@ -127,7 +130,7 @@ const Dashboard = () => {
                             <div className={styles.svg}>
                                 <MposSvg />
                             </div>
-                            <p className={styles.name}>mPOS</p>
+                            <p className={styles.name}>Logistics</p>
                         </div>
                     </div>
                     <div className={styles.btmI}>
@@ -164,7 +167,54 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
+                    {/* bottom  */}
+                    <div className={styles.btm}>
+                        <div className={styles.btmII}>
+                            <div className={styles.btmIIp}>
+                                <p>Recent Transactions</p>
+                                <p>View All</p>
+                            </div>
+                            <p className={styles.select}>
+                                (Select transaction to vie more)
+                            </p>
 
+                            {transactionData.map((item, index) => {
+                                return (
+                                    <div key={index}>
+                                        <div className={styles.transaction}>
+                                            <div className={styles.names}>
+                                                <p>{item.name}</p>
+                                                <p>{item.transfer}</p>
+                                            </div>
+                                            <div className={styles.money}>
+                                                <p>{item.ammount}</p>
+                                                <div
+                                                    className={item.color}
+                                                ></div>
+                                            </div>
+                                        </div>
+                                        <hr className={styles.hr} />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className={styles.btmIII}>
+                            <p className={styles.paylink}>Other Accounts</p>
+                            {/* <Piechart />
+                             */}
+                            {OtherAccounts.map((item, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className={styles.othAccount}
+                                    >
+                                        <p>{item.ammount}</p>
+                                        <p>{item.account}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
                     <div className={styles.cards}>
                         <Slider
                             {...settings}
@@ -208,45 +258,6 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </Slider>
-                    </div>
-                    {/* bottom  */}
-                    <div className={styles.btm}>
-                        <div className={styles.btmII}>
-                            <div className={styles.btmIIp}>
-                                <p>Recent Transactions</p>
-                                <p>View All</p>
-                            </div>
-                            <p className={styles.select}>
-                                (Select transaction to vie more)
-                            </p>
-
-                            {transactionData.map((item, index) => {
-                                return (
-                                    <div key={index}>
-                                        <div className={styles.transaction}>
-                                            <div className={styles.names}>
-                                                <p>{item.name}</p>
-                                                <p>{item.transfer}</p>
-                                            </div>
-                                            <div className={styles.money}>
-                                                <p>{item.ammount}</p>
-                                                <div
-                                                    className={item.color}
-                                                ></div>
-                                            </div>
-                                        </div>
-                                        <hr className={styles.hr} />
-                                    </div>
-                                );
-                            })}
-                        </div>
-                        <div className={styles.btmIII}>
-                            <p className={styles.paylink}>Paylink Vs Others</p>
-                            <select className={styles.dayPie}>
-                                <option>Apr 4th-11th, 2022</option>
-                            </select>
-                            <Piechart />
-                        </div>
                     </div>
                 </section>
             </div>

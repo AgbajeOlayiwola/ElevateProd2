@@ -4,12 +4,14 @@ import { SidebarData } from '../Data';
 import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 import Dropdownicon from './dropdownicon';
+import Innersubnav from './innersubnav.js';
 
 const SideBarDrop = ({ item }) => {
     const [subNav, setSubNav] = useState(false);
+    const [innersubNav, setInnerSubNav] = useState(false);
     const showSubnav = ({ item }) => {
         setSubNav((prev) => !prev);
-        console.log('clicked');
+        // console.log('clicked');
     };
     return (
         <>
@@ -25,44 +27,7 @@ const SideBarDrop = ({ item }) => {
                 ) : null}
             </div>
             <div className={styles.drops}>
-                {!item.subNavTitles ? (
-                    item.subNav && subNav ? (
-                        item.subNav.map((item, index) => {
-                            return (
-                                <div className={styles.subMenuLink} key={index}>
-                                    <span className={styles.icon}>
-                                        {item.icon}
-                                    </span>
-                                    <p>{item.title}</p>
-                                </div>
-                            );
-                        })
-                    ) : null
-                ) : item.subNavTitles && subNav ? (
-                    <>
-                        {item.subNavTitles.map((subTitle, index) => (
-                            <div key={index}>
-                                <div className={styles.mainSubNav}>
-                                    <p>{subTitle}</p>
-                                    <>{item.iconOpened}</>
-                                </div>
-                                {item.subNav.map((item, index) => {
-                                    return item.subNavTitle == subTitle ? (
-                                        <div
-                                            className={styles.subMenuLink}
-                                            key={index}
-                                        >
-                                            <span className={styles.icon}>
-                                                {item.icon}
-                                            </span>
-                                            <p>{item.title}</p>
-                                        </div>
-                                    ) : null;
-                                })}
-                            </div>
-                        ))}
-                    </>
-                ) : null}
+                <Innersubnav item={item} subNav={subNav} />
             </div>
         </>
     );
