@@ -83,13 +83,13 @@ const StepThree = () => {
                     </p>
                 </span>
             </div> */}
-            <p>
+            {/* <p>
                 Contine with your personal account or open a new business
                 account
-            </p>
+            </p> */}
             <div className={styles.formInner}>
                 <div>
-                    <label>Name </label>
+                    <label>Email </label>
                     <br />
 
                     <input
@@ -97,7 +97,7 @@ const StepThree = () => {
                         className={styles.textInput}
                         required
                         disabled
-                        value="Agbaje Olayiwola"
+                        value="Agbajeolaiwola@gmail.com"
                     />
                 </div>
 
@@ -137,17 +137,34 @@ const StepThree = () => {
                         value="08111062865"
                     />
                 </div>
-                <div>
-                    <label>Gender </label>
+                <div className={styles.genBtm} style={{ marginBottom: '0px' }}>
+                    <p>Your Gender </p>
                     <br />
 
-                    <input
-                        placeholder="Male"
-                        className={styles.textInput}
-                        required
-                        disabled
-                        value="Male"
-                    />
+                    <div
+                        className={styles.genders}
+                        style={{ marginBottom: '0px' }}
+                    >
+                        <div className={styles.genderPart}>
+                            <input
+                                className={styles.radioInput}
+                                required
+                                disabled
+                                checked
+                                type="radio"
+                            />
+                            <label>Male</label>
+                        </div>
+                        <div className={styles.genderPart}>
+                            <input
+                                className={styles.radioInput}
+                                required
+                                disabled
+                                type="radio"
+                            />
+                            <label>Female</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

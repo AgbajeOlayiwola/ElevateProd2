@@ -34,22 +34,31 @@ const ExistingMultiStep = () => {
         <Card>
             {conditionalComponent()}
             {page === 3 ? null : (
-                <div className={page === 2 ? styles.btns : null}>
+                <div>
                     {page === 2 ? (
                         <Link href="/Succes/Success">
-                            <button text="Confirm" type="button">
-                                Confirm
-                            </button>
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                // onClick={handleSubmit}
+                                type="submit"
+                                text={'Continue with the personal account'}
+                            />
                         </Link>
+                    ) : (
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            onClick={handleSubmit}
+                            type="submit"
+                            text={page === 2 ? 'Create Account' : 'Next'}
+                        />
+                    )}
+                    {page === 2 ? (
+                        <p onClick={handleSubmit} className={styles.open}>
+                            Tap to open a <span>New Business Account</span>
+                        </p>
                     ) : null}
-
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        onClick={handleSubmit}
-                        type="submit"
-                        text={page === 2 ? 'Create Account' : 'Next'}
-                    />
                 </div>
             )}
         </Card>

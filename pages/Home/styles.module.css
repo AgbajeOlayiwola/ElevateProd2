@@ -55,28 +55,28 @@
     backdrop-filter: blur(4px);
 }
 .topLeft {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 30%), rgba(0, 0, 0, 30%)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 50%), rgba(0, 0, 0, 50%)),
         url('/Assets/Images/WomanWithMac.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
 }
 .topRight {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 30%), rgba(0, 0, 0, 30%)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 50%), rgba(0, 0, 0, 50%)),
         url('/Assets/Images/Clothe.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
 }
 .bottomleft {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 30%), rgba(0, 0, 0, 30%)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 50%), rgba(0, 0, 0, 50%)),
         url('/Assets/Images/Barber.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
 }
 .bottomRight {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 30%), rgba(0, 0, 0, 30%)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 50%), rgba(0, 0, 0, 50%)),
         url('/Assets/Images/Equipment.png');
     background-repeat: no-repeat;
     background-size: cover;

@@ -79,14 +79,47 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                                     <option>Perishable business</option>
                                 </SelectInput>
                             </div>
-                            <div style={{ marginTop: '2rem' }}>
-                                <Label>Enter Business Address</Label>
-                                <br />
-                                <FormInput
-                                    type="text"
-                                    placeholder="Your address here"
-                                    {...register('bvn')}
-                                />
+
+                            <p className={styles.ent}>Enter Business Address</p>
+                            <div className={styles.busAdd}>
+                                <div className={styles.inps}>
+                                    <label>Street Name </label>
+                                    {errors.email?.message}
+                                    <br />
+
+                                    <select className={styles.busInp}>
+                                        <option>Enter Street Name</option>
+                                    </select>
+                                </div>
+                                <div className={styles.inps}>
+                                    <label>Select Your Local Government </label>
+                                    {errors.email?.message}
+                                    <br />
+
+                                    <select className={styles.busInp}>
+                                        <option>
+                                            Select Your Local Goernment
+                                        </option>
+                                    </select>
+                                </div>
+                                <div className={styles.inps}>
+                                    <label>City </label>
+                                    {errors.email?.message}
+                                    <br />
+
+                                    <select className={styles.busInp}>
+                                        <option>Enter City</option>
+                                    </select>
+                                </div>
+                                <div className={styles.inps}>
+                                    <label>State </label>
+                                    {errors.email?.message}
+                                    <br />
+
+                                    <select className={styles.busInp}>
+                                        <option>Enter State</option>
+                                    </select>
+                                </div>
                             </div>
                         </SmallCardContainer>
                     </div>
@@ -99,6 +132,22 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                                 placeholder="Enter code"
                                 {...register('bvn')}
                             />
+                        </div>
+
+                        <p className={styles.ent}>Your Signature</p>
+                        <div className={styles.busAdd}>
+                            <div className={styles.inps}>
+                                <label className={styles.signa}>
+                                    Kindly scan your signature or sign
+                                    electronically
+                                </label>
+                                {errors.email?.message}
+                                <br />
+                                <input
+                                    className={styles.inputFile}
+                                    type="file"
+                                />
+                            </div>
                         </div>
                     </LastFieldAndButton>
                     <Link href="/Succes">

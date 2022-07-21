@@ -76,42 +76,44 @@ const StepFour = () => {
                                 <option>Search Your Business Type</option>
                             </select>
                         </div>
-                        <div className={styles.inps}>
-                            <label>Enter Your Business Address </label>
-                            {errors.email?.message}
-                            <br />
+                        <p className={styles.ent}>Enter Business Address</p>
+                        <div className={styles.busAdd}>
+                            <div className={styles.inps}>
+                                <label>Street Name </label>
+                                {errors.email?.message}
+                                <br />
 
-                            <input
-                                placeholder="Enter Your Business Address"
-                                className={styles.textInput}
-                                required
-                                {...register('email', {
-                                    required: 'Business Address is Required',
-                                    pattern: {
-                                        // eslint-disable-next-line
-                                        value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                        message: 'Invalid email address'
-                                    }
-                                })}
-                            />
-                        </div>
-                        <div className={styles.inps}>
-                            <label>Select Your Local Government </label>
-                            {errors.email?.message}
-                            <br />
+                                <select className={styles.busInp}>
+                                    <option>Enter Street Name</option>
+                                </select>
+                            </div>
+                            <div className={styles.inps}>
+                                <label>Select Your Local Government </label>
+                                {errors.email?.message}
+                                <br />
 
-                            <select>
-                                <option>Select Your Local Goernment</option>
-                            </select>
-                        </div>
-                        <div className={styles.inps}>
-                            <label>Select Your State </label>
-                            {errors.email?.message}
-                            <br />
+                                <select className={styles.busInp}>
+                                    <option>Select Your Local Goernment</option>
+                                </select>
+                            </div>
+                            <div className={styles.inps}>
+                                <label>City </label>
+                                {errors.email?.message}
+                                <br />
 
-                            <select>
-                                <option>Search Your State</option>
-                            </select>
+                                <select className={styles.busInp}>
+                                    <option>Enter City</option>
+                                </select>
+                            </div>
+                            <div className={styles.inps}>
+                                <label>State </label>
+                                {errors.email?.message}
+                                <br />
+
+                                <select className={styles.busInp}>
+                                    <option>Enter State</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -136,11 +138,20 @@ const StepFour = () => {
                             })}
                         />
                     </div>
+                    <div>
+                        <div className={styles.terms}>
+                            <input type="checkbox" />
+                            <label>
+                                I agree with Ellevate App{' '}
+                                <span>Terms and Conditions</span>
+                            </label>
+                        </div>
+                    </div>
                     <Link href="/Succes">
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            text="Success"
+                            text="update Profile"
                             type="button"
                             // onClick={handleShowSuccessStep}
                             // onClick={handleShowFourthStep}

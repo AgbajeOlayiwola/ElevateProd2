@@ -64,6 +64,7 @@ export const Label = styled.label`
 `;
 export const FormInput = styled.input`
     margin-top: 0.5rem;
+    margin-bottom: 16px;
 `;
 export const InputWrapper = styled.div`
     margin-top: 1.4rem;
