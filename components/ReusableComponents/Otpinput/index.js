@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.css';
 
 // Number of input fields that make up SSN
 const numOfFields = 4;
 
 const useSSNFields = () => {
-    const [ssnValues, setValue] = React.useState({
+    const [ssnValues, setValue] = useState({
         ssn1: '',
         ssn2: '',
         ssn3: '',

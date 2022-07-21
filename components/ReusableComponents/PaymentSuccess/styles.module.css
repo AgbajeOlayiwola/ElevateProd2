@@ -32,7 +32,7 @@
     border: 1px solid rgba(219, 219, 219, 0.6);
     border-radius: 20px;
     margin: 32px auto;
-    display: flex;
+    /* display: flex; */
     position: absolute;
     top: 5%;
     left: 33%;

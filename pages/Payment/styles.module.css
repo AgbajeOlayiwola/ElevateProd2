@@ -40,6 +40,7 @@
 .visibility span {
     margin-left: 8px;
     margin-top: 0px;
+    z-index: 1 !important;
 }
 
 .cov {

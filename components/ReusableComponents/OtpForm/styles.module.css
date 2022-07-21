@@ -1,0 +1,52 @@
+.otpForms {
+    width: 65%;
+    margin: 84px auto;
+}
+
+.otpForms h2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    color: #005b82;
+}
+
+.otpForms .text {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+    color: #005b82;
+    margin: 46px 0px;
+}
+
+.otpGroup {
+    width: 100%;
+}
+
+.otpGroup h4 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+}
+
+.resendFlex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.clr {
+    color: #7a7978;
+    margin: 0px;
+    width: fit-content;
+    /* height: fit-content; */
+    background-color: white;
+    height: 0;
+    font-weight: 500;
+}

@@ -1,0 +1,97 @@
+.manageBeneHeader {
+    display: flex;
+    width: 100%;
+}
+
+.manageBeneHeader .profileButton {
+    width: 126px;
+    background-color: #f5f6fa;
+    border-radius: 12px;
+    margin-left: 16px;
+    padding: 12px 42px;
+    cursor: pointer;
+}
+
+.profileButton p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #cccccc;
+    margin: 0px !important;
+}
+
+.manageBeneHeader .profileButton:first-child {
+    margin-left: 0px;
+}
+
+.manageBeneHeader .active {
+    width: 150px;
+    background-color: #69940d;
+    border-radius: 12px;
+    margin-left: 16px;
+    padding: 12px 42px;
+    cursor: pointer;
+}
+
+.manageBeneHeader .active:first-child {
+    margin-left: 0px;
+}
+
+.active p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #ffffff;
+    margin: 0px !important;
+}
+
+.manageBeneBody div {
+    width: 100%;
+}
+
+.manageBeneSingle {
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin-top: 16px;
+}
+
+.manageBeneSingle h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #102572;
+}
+
+.manageBeneSingle p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    margin: 0px;
+    color: #8b8b8b;
+}
+
+.searchCont {
+    display: flex;
+    border: 1px solid #c9c9c9;
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding-left: 24px;
+    margin-top: 24px;
+}
+
+.searchCont input {
+    border: none;
+    width: 90%;
+    background-color: transparent;
+}

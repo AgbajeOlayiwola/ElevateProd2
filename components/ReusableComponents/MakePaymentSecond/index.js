@@ -4,8 +4,8 @@ import styles from './styles.module.css';
 import OtpInput from '../Otpinput';
 import Overlay from '../Overlay';
 
-const MakePaymentSecond = ({ overlay }) => {
-    const [activeBtn, setActiveBtn] = useState(false);
+const MakePaymentSecond = ({ overlay, transferAction }) => {
+    const [activeBtn, setActiveBtn] = useState(true);
     return (
         <Overlay overlay={overlay}>
             <div className={styles.PaymentSecond}>
@@ -58,6 +58,7 @@ const MakePaymentSecond = ({ overlay }) => {
                             active={activeBtn ? 'active' : 'inactive'}
                             text="Make Transfer"
                             type="submit"
+                            onClick={transferAction}
                         />
                     </form>
                 </div>

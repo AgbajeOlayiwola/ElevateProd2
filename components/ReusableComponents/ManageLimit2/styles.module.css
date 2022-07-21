@@ -1,0 +1,187 @@
+.title {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0px;
+    color: #3e3e3e;
+    margin-bottom: 8px;
+}
+
+.details {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 32px;
+}
+
+.formGroup {
+    margin-top: 16px;
+}
+
+.formGroup:first-child {
+    margin-top: 0px;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.formGroup input {
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #bdbdbd;
+}
+
+.formGroup input::placeholder {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #bdbdbd;
+}
+
+.mandate select {
+    background-color: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    background-image: url(../../../public/Assets/Svgs/arrow-down.svg);
+    color: #7a7978;
+    /* margin-bottom: 32px; */
+}
+
+.right {
+    padding: 24px;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    width: 100%;
+}
+
+.right p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #7a7978;
+    margin-bottom: 8px;
+}
+
+.right div {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    position: relative;
+    margin-top: 24px;
+}
+
+.right div:first-child {
+    margin-top: 0px;
+}
+
+.right div input {
+    width: 17px;
+    height: 15px;
+    border: 2.25px solid #005b82;
+    border-radius: 4px;
+    appearance: none;
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+    background-color: transparent;
+}
+
+.right div span {
+    position: absolute;
+    left: 16px;
+    width: 100%;
+    display: none;
+}
+
+.right div input:checked ~ span {
+    display: block;
+}
+
+.right div p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #2f2f2f;
+    margin-bottom: 0px;
+    margin-left: 24px;
+}
+
+.limitSingle > div {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 32px;
+}
+
+.limitSingle p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+}
+
+.limitSingle span {
+    font-style: italic;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: #929292;
+}
+
+.limitSingle select {
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    background-image: url(../../../public/Assets/Svgs/arrow-down.svg);
+    color: #7a7978;
+    /* margin-bottom: 32px; */
+}
+
+.limitSingle label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.error {
+    color: red !important;
+    font-size: 12px !important;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin-top: 10px;
+}
