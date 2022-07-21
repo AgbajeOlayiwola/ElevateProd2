@@ -1,0 +1,39 @@
+.noshow {
+    display: none;
+}
+.mainOverlay {
+    display: block;
+    background-color: rgba(245, 246, 250, 0.8);
+    padding: 36px 32px 46px 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1500px;
+    z-index: 5;
+}
+
+.header {
+    position: relative;
+    width: 100%;
+}
+
+.body {
+    width: 70%;
+    margin: 84px auto;
+}
+.body h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #005b82;
+}
+
+.closeBtn {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    cursor: pointer;
+}
