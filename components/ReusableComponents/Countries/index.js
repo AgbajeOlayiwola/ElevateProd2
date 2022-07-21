@@ -20,7 +20,7 @@ const Countries = () => {
             console.error(error);
         }
     }
-    console.log(countrys);
+    // console.log(countrys);
     const {
         register,
         handleSubmit,
@@ -38,7 +38,7 @@ const Countries = () => {
                 {...register('countries', { required: true })}
             >
                 {countrys.map((item, index) => {
-                    console.log(item.nme);
+                    // console.log(item.nme);
                     return (
                         <option key={item.id} value={item.name}>
                             {item.name}

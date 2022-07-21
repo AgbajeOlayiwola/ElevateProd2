@@ -26,7 +26,7 @@ const Langauges = () => {
             console.error(error);
         }
     }
-    console.log(languages);
+    // console.log(languages);
     return (
         <div className={styles.select2}>
             <label className={styles.label} htmlFor="languages">
@@ -46,7 +46,11 @@ const Langauges = () => {
                 name="languages"
             >
                 {languages.map((item, index) => {
-                    return <option value={item.name}>{item.name}</option>;
+                    return (
+                        <option value={item.name} key={index}>
+                            {item.name}
+                        </option>
+                    );
                 })}
             </select>
             {/* <div>error</div> */}
