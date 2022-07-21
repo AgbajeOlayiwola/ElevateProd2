@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import Overlay from '../Overlay';
 import CloseButton from '../CloseButtonSvg';
+// import axios from 'axios';
 
 const ReceivePaymentFirst = ({
     firstTitle,
@@ -21,12 +22,22 @@ const ReceivePaymentFirst = ({
     useEffect(() => {
         myref.current.scrollTo(0, 0);
         window.scrollTo(0, 0);
+        // const fetchCountryApi =  () => {
+        //     const countriesApi = await axios(
+        //         'https://ellevate-app.herokuapp.com/countries'
+        //     );
+        //     const countriesData = await countriesApi.json();
+        //     setAmount(countriesData);
+        //     console.log(countriesData);
+        //     fetchCountryApi();
+        // };
     }, []);
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
+    // console.log(amount);
 
     return (
         <Overlay overlay={overlay}>
@@ -120,9 +131,9 @@ const ReceivePaymentFirst = ({
                                     value={description}
                                     onChange={(e) => {
                                         setDescription(e.target.value);
-                                        if (e?.target.value.length === 0) {
-                                            setActiveBtn(true);
-                                        } else if (e?.target.value.length > 0) {
+                                        if (e.target.value.length === 0) {
+                                            setActiveBtn(false);
+                                        } else if (e.target.value.length > 0) {
                                             setActiveBtn(true);
                                         }
                                     }}

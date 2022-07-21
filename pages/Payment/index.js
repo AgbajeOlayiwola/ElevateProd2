@@ -230,32 +230,30 @@ const Payment = () => {
                             <ReceivePaymentSecond
                                 overlay={overlay}
                                 title="Confirm mPOS Payment Details"
-                                action={buttonHandleClose}
+                                action={() => {
+                                    setCount(count + 1);
+                                }}
                                 buttonText="Activate NFC Scanner"
                             />
                         );
                     case 2:
                         return (
-                            // <Overlay overlay={overlay}>
-                            //     <div className={styles.NFCScanner}>
-                            //         <h2>
-                            //             Complete Transaction on Mobile Phone
-                            //         </h2>
-                            //         <p>
-                            //             Note that this will be completed on your
-                            //             mobile phone which is serving as your
-                            //             POS.
-                            //         </p>
-                            //         <button
-                            //             onClick={() => {
-                            //                 buttonHandleClose;
-                            //             }}
-                            //         >
-                            //             Activate NFC Scanner
-                            //         </button>
-                            //     </div>
-                            // </Overlay>
-                            <SchedulePayment />
+                            <Overlay overlay={overlay}>
+                                <div className={styles.NFCScanner}>
+                                    <h2>
+                                        Complete Transaction on Mobile Phone
+                                    </h2>
+                                    <p>
+                                        Note that this will be completed on your
+                                        mobile phone which is serving as your
+                                        POS.
+                                    </p>
+                                    <button onClick={buttonHandleClose}>
+                                        Activate NFC Scanner
+                                    </button>
+                                </div>
+                            </Overlay>
+                            // <SchedulePayment />
                         );
                 }
 
