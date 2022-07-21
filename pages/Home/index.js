@@ -17,20 +17,6 @@ const HomeMain = () => {
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
 
-    useEffect(() => {
-        getUser();
-    }, []);
-
-    async function getUser() {
-        try {
-            const response = await Axios.get(
-                'https://restcountries.com/v3.1/name/peru'
-            );
-            console.log(response);
-        } catch (error) {
-            console.error(error);
-        }
-    }
     const {
         register,
         handleSubmit,
