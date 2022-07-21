@@ -164,3 +164,12 @@
 
     color: #3e3e3e;
 }
+.expCvv{
+display:flex;
+justify-content: space-between;
+}
+.cvvCode{
+    width:30%
+
+}
+.exp{width:50%;}

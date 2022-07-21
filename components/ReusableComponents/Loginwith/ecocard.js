@@ -21,31 +21,35 @@ const Ecocard = () => {
                         type="number"
                     />
                 </div>
-                <div className={styles.shows}>
-                    <label>Expiry Date</label>
-                    <br />
-                    <input
-                        placeholder=""
-                        className={styles.passwordInput}
-                        type="month"
-                    />
-                </div>
-                <div className={styles.cvvCode}>
-                    <div className={styles.shows}>
-                        <label>CVV</label>
-                        <br />
-                        <input
-                            placeholder="CVV"
-                            className={styles.passwordInput}
-                            maxLength="3"
-                            type="password"
-                            value={number}
-                            onChange={(event) => {
-                                if (event.target.value.length == 3)
-                                    return false; //limits to 10 digit entry
-                                setNumber(event?.target.value); //saving input to state
-                            }}
-                        />
+                <div className={styles.expCvv}>
+                    <div className={styles.exp}>
+                        <div className={styles.shows}>
+                            <label>Expiry Date</label>
+                            <br />
+                            <input
+                                placeholder=""
+                                className={styles.passwordInput}
+                                type="month"
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.cvvCode}>
+                        <div className={styles.shows}>
+                            <label>CVV</label>
+                            <br />
+                            <input
+                                placeholder="CVV"
+                                className={styles.passwordInput}
+                                maxLength="3"
+                                type="password"
+                                value={number}
+                                onChange={(event) => {
+                                    if (event.target.value.length == 3)
+                                        return false; //limits to 10 digit entry
+                                    setNumber(event?.target.value); //saving input to state
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
