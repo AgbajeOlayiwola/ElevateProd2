@@ -51,7 +51,7 @@
     justify-content: center;
     /* display: flex; */
 
-    background: linear-gradient(0deg, rgba(9, 16, 1, 0.3), rgba(9, 16, 1, 0.3)),
+    background: linear-gradient(0deg, rgba(9, 16, 1, 0.5), rgba(9, 16, 1, 0.5)),
         url('/Assets/Images/signupimage.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -68,7 +68,8 @@
     overflow: scroll;
 }
 .sectionII > div {
-    max-width: 25rem;
+    max-width: 26rem;
+    width: 25rem;
 }
 /* .sectionII::-webkit-scrollbar {
     display: none;

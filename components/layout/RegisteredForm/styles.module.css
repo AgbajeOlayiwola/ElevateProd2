@@ -7,9 +7,67 @@
 
     color: #3e3e3e;
 }
+.busAdd {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 24px;
+}
 .resendFlex {
     display: flex;
     justify-content: space-between;
+}
+.busInp {
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+}
+.open {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    /* identical to box height, or 161% */
+
+    text-align: center;
+    cursor: pointer;
+    color: #a5a5a5;
+}
+.genderPart {
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+}
+.genderPart input {
+    margin-right: 8px;
+}
+.radioInput {
+    width: 30%;
+}
+.genBtm {
+    margin-bottom: 0px;
+}
+.genders {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 45%;
+    height: fit-content;
+    margin-bottom: 0px;
+}
+.open span {
+    color: #005b82;
+}
+.ent {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #3e3e3e;
 }
 .clr {
     color: #7a7978;
@@ -168,6 +226,31 @@
     padding: 2rem 1rem 2rem 1rem;
     margin-top: 3rem;
     border-radius: 12px;
+    opacity: 0.7;
+}
+.terms {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    /* identical to box height */
+
+    color: #2f2f2f;
+}
+.terms input {
+    width: 10%;
+}
+.terms label span {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 19px;
+    /* identical to box height */
+
+    color: #005b82;
 }
 .formInner div label {
     font-family: 'Inter', sans-serif;
@@ -191,6 +274,7 @@
 }
 .textInput {
     margin-bottom: 14px;
+    margin-top: 8px;
 }
 .formInner div {
     margin-bottom: 20px;

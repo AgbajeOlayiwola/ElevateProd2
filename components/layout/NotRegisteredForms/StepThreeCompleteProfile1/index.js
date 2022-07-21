@@ -122,6 +122,17 @@ const StepThreeCompleteProfile1 = ({
                             style={{ marginTop: '2rem' }}
                         >
                             <Label className={styles.label}>
+                                Enter Account Number
+                            </Label>
+                            <br />
+                            <FormInput
+                                type="number"
+                                placeholder="123456787"
+                                value=""
+                                disabled
+                                {...register('bvn')}
+                            />
+                            <Label className={styles.label}>
                                 Enter your Full Name
                             </Label>
                             <br />
