@@ -13,7 +13,7 @@ const Signup = ({ type }) => {
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
     // button active states
-    const [activeBtn, setActiveBtn] = useState(false);
+    const [activeBtn, setActiveBtn] = useState(true);
     //button active states
     // business ui
     const [business, setBusiness] = useState(true);
