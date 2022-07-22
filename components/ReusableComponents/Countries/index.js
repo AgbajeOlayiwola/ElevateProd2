@@ -5,22 +5,22 @@ import Axios from 'axios';
 import { connect } from 'react-redux';
 
 const Countries = (props) => {
-    const [countrys, setCountry] = useState(props.countries);
+    const [countrys, setCountry] = useState([]);
 
-    // useEffect(() => {
-    //     getUser();
-    // }, []);
+    useEffect(() => {
+        getUser();
+    }, []);
 
-    // async function getUser() {
-    //     try {
-    //         const response = await Axios.get(
-    //             'https://ellevate-app.herokuapp.com/countries'
-    //         );
-    //         setCountry(response.data.data);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
+    async function getUser() {
+        try {
+            const response = await Axios.get(
+                'https://ellevate-app.herokuapp.com/countries'
+            );
+            setCountry(response.data.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
     console.log(countrys);
     const {
         register,
@@ -30,7 +30,7 @@ const Countries = (props) => {
     } = useForm();
     return (
         <div>
-            {/* <label className={styles.label} htmlFor="country">
+            <label className={styles.label} htmlFor="country">
                 Choose Your Country Where you Run Busines
             </label>
             <br />
@@ -46,7 +46,7 @@ const Countries = (props) => {
                         </option>
                     );
                 })}
-            </select> */}
+            </select>
         </div>
     );
 };
