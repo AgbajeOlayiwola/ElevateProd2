@@ -29,9 +29,10 @@ const ManageLimit = ({ overlay, title, action, btnAction }) => {
                 <div className={styles.signCont} ref={myref}>
                     <p>Please see below signatories to the account</p>
                     <div className={styles.signWrapper}>
-                        {signData.map((item) => {
+                        {signData.map((item, index) => {
                             return (
                                 <SignSingle
+                                    key={index}
                                     mail={item.email}
                                     fname={item.name}
                                 />

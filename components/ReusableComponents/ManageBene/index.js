@@ -116,6 +116,7 @@ const ManageBene = ({ overlay, title, action, btnAction }) => {
                             {bene.transfer.map((item, index) => {
                                 return (
                                     <ManageBeneSingle
+                                        key={index}
                                         beneAccount={item.account}
                                         beneName={item.name}
                                         icon={item.icon}
@@ -134,6 +135,7 @@ const ManageBene = ({ overlay, title, action, btnAction }) => {
                             {bene.bills.map((item, index) => {
                                 return (
                                     <ManageBeneSingle
+                                        key={index}
                                         beneAccount={item.account}
                                         beneName={item.name}
                                         icon={item.icon}
@@ -158,6 +160,7 @@ const ManageBene = ({ overlay, title, action, btnAction }) => {
                             {bene.others.map((item, index) => {
                                 return (
                                     <ManageBeneSingle
+                                        key={index}
                                         beneAccount={item.account}
                                         beneName={item.name}
                                         icon={item.icon}
