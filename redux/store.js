@@ -24,14 +24,15 @@ import rootReducer from './reducers/rootReducer';
 
 const initialState = {};
 
-const middleware = [thunk];
+export const middleware = [thunk];
 
-export const store = createStore(
+const store = createStore(
     rootReducer,
     initialState,
     composeWithDevTools(applyMiddleware(...middleware))
 );
 
-const makeStore = () => store;
+// const makeStore = () => store;
 
-export const wrapper = createWrapper(makeStore);
+// export const wrapper = createWrapper(makeStore);
+export default store;

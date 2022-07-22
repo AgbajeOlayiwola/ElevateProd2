@@ -62,28 +62,30 @@ const HomeMain = () => {
             </section>
             <section className={styles.sectionII}>
                 <div>
-                    <h3 className={styles.elevatenow}>ellevate now...</h3>
-                </div>
-                <div>
-                    <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className={styles.form}
-                    >
-                        <Languages />
-                        <Countries />
-                        <div className={styles.disclaimer}>
-                            <p>
-                                Get onboard and have access to unlimited
-                                possibilites with your account!
-                            </p>
-                        </div>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="Proceed"
-                            type="submit"
-                        />
-                    </form>
+                    <div>
+                        <h3 className={styles.elevatenow}>ellevate now...</h3>
+                    </div>
+                    <div>
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            className={styles.form}
+                        >
+                            <Languages />
+                            <Countries />
+                            <div className={styles.disclaimer}>
+                                <p>
+                                    Get onboard and have access to unlimited
+                                    possibilites with your account!
+                                </p>
+                            </div>
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Proceed"
+                                type="submit"
+                            />
+                        </form>
+                    </div>
                 </div>
             </section>
         </div>
