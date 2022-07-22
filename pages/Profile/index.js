@@ -380,6 +380,7 @@ const Profile = () => {
                                     {profileData.account.map((item, index) => {
                                         return (
                                             <ProfileSingle
+                                                key={index}
                                                 profileText={item.text}
                                                 icon={item.icon}
                                                 index={index}
@@ -397,6 +398,7 @@ const Profile = () => {
                                     {profileData.security.map((item, index) => {
                                         return (
                                             <ProfileSingle
+                                                key={index}
                                                 profileText={item.text}
                                                 icon={item.icon}
                                                 index={index}
@@ -419,6 +421,7 @@ const Profile = () => {
                                     {profileData.others.map((item, index) => {
                                         return (
                                             <ProfileSingle
+                                                key={index}
                                                 profileText={item.text}
                                                 icon={item.icon}
                                                 index={index}

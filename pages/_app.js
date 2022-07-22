@@ -2,7 +2,9 @@ import { Layout } from '../components';
 import '../styles/globals.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { wrapper, store } from '../redux/store';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import countryReducer from '../redux/reducers/country.reducer';
 
 function MyApp({ Component, pageProps, router }) {
     const pageVariants = {
@@ -27,6 +29,7 @@ function MyApp({ Component, pageProps, router }) {
         variants: pageVariants
     };
 
+    const store = createStore(countryReducer);
     return (
         <Layout>
             <AnimatePresence exitBeforeEnter>

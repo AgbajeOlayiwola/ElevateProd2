@@ -1,3 +1,3 @@
-const PATH = 'https://ellevate.com/';
+const PATH = 'https://ellevate-app.herokuapp.com/';
 
 export { PATH };
