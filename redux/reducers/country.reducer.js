@@ -8,8 +8,8 @@ const initState = {
     ]
 };
 
-const CountryReducer = (state = initState, action) => {
+const countryReducer = (state = initState, action) => {
     return state;
 };
 
-export default CountryReducer;
+export default countryReducer;

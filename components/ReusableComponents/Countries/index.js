@@ -52,10 +52,10 @@ const Countries = (props) => {
 };
 
 //state mapper
-const mapStateToProps = (state) => {
-    return {
-        countries: state.countries
-    };
-};
+// const mapStateToProps = (state) => {
+//     return {
+//         countries: state.countries
+//     };
+// };
 
-export default connect(mapStateToProps)(Countries);
+export default Countries;

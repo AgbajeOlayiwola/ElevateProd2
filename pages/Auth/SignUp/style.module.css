@@ -49,9 +49,10 @@
     height: 100vh;
     /* flex-direction: column; */
     justify-content: center;
+    align-items: center;
     /* display: flex; */
 
-    background: linear-gradient(0deg, rgba(9, 16, 1, 0.5), rgba(9, 16, 1, 0.5)),
+    background: linear-gradient(0deg, rgba(9, 16, 1, 0.7), rgba(9, 16, 1, 0.7)),
         url('/Assets/Images/signupimage.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -65,6 +66,7 @@
     height: 100vh;
     display: flex;
     justify-content: center;
+    align-items: center;
     overflow: scroll;
 }
 .sectionII > div {
@@ -80,7 +82,7 @@
 }
 .form div label {
     color: #3e3e3e;
-    font-size: 16px;
+    font-size: 14px;
 }
 .signup {
     font-weight: 700;

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 const Login = () => {
-    const [activeBtn, setActiveBtn] = useState(false);
+    const [activeBtn, setActiveBtn] = useState(true);
     const router = useRouter();
     const {
         register,
@@ -16,11 +16,11 @@ const Login = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        // console.log(data.email);
         router.push('../../Onboarding/ProfileSetup');
     };
     const checkDataContent = (data) => {
-        if (data.password !== null) {
+        if (data.password !== null && data.email !== null) {
             setActiveBtn(true);
             console.log(true);
         } else {
@@ -86,6 +86,7 @@ const Login = () => {
                                         message: 'Invalid email address'
                                     }
                                 })}
+                                onChange={checkDataContent}
                             />
                             <div className={styles.errors}>
                                 {errors.email?.message}

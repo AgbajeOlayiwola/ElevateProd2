@@ -1,7 +1,8 @@
 .cover {
     display: flex;
     justify-content: center;
-    height: 100vh;
+    align-items: center;
+    height: 80vh;
     width: 100%;
 }
 

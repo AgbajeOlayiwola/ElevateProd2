@@ -23,7 +23,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
 
     color: #3e3e3e;
@@ -32,7 +32,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
@@ -43,7 +43,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     background-color: white;
     line-height: 19px;
     margin-top: 0.5rem;
@@ -65,7 +65,7 @@
 }
 .form div label {
     color: #3e3e3e;
-    font-size: 16px;
+    font-size: 14px;
 }
 .termss {
     color: #005b82;
@@ -101,7 +101,7 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
 
     color: #3e3e3e;
@@ -113,13 +113,13 @@
     padding: 28% 18% 25% 16%;
     border-radius: 12px;
     cursor: pointer;
-    border: 1px solid #dbdbdb;
+    border: none;
 }
 .name {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 15px;
     text-align: center;
 
@@ -159,7 +159,7 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
 
     color: #3e3e3e;

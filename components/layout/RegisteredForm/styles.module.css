@@ -2,7 +2,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
 
     color: #3e3e3e;
@@ -98,7 +98,7 @@
 .p {
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 23px;
     /* or 141% */
     color: #005b82;
@@ -193,7 +193,7 @@
 .innerToggleNoText {
     text-align: center;
     font-style: normal;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 22px;
     text-align: center;
     color: #407a00;
@@ -203,7 +203,7 @@
     text-align: center;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 22px;
     color: #a5a5a5;
 }
@@ -232,7 +232,7 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
     /* identical to box height */
 
@@ -245,7 +245,7 @@
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     line-height: 19px;
     /* identical to box height */
@@ -256,7 +256,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
 
     color: #3e3e3e;
@@ -266,7 +266,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
 
     color: #3e3e3e;

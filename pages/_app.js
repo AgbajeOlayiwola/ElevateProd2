@@ -1,10 +1,8 @@
 import { Layout } from '../components';
 import '../styles/globals.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import { wrapper, store } from '../redux/store';
-import { createStore } from 'redux';
+import store from '../redux/store';
 import { Provider } from 'react-redux';
-import countryReducer from '../redux/reducers/country.reducer';
 
 function MyApp({ Component, pageProps, router }) {
     const pageVariants = {
@@ -28,19 +26,17 @@ function MyApp({ Component, pageProps, router }) {
         exit: 'pageExit',
         variants: pageVariants
     };
-
-    const store = createStore(countryReducer);
     return (
+        // <Provider store={store}>
         <Layout>
             <AnimatePresence exitBeforeEnter>
-                <Provider store={store}>
-                    {/* <motion.div key={router.route} {...pageMotionProps}> */}
+                <motion.div key={router.route} {...pageMotionProps}>
                     <Component {...pageProps} />
-                    {/* </motion.div> */}
-                </Provider>
+                </motion.div>
             </AnimatePresence>
         </Layout>
+        /* </Provider> */
     );
 }
 
-export default wrapper.withRedux(MyApp);
+export default MyApp;
