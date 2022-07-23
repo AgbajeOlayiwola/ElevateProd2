@@ -14,10 +14,12 @@ const Countriess = () => {
 
     useEffect(() => {
         dispatch(loadCountryAsync());
-        setCountry(countries);
-    }, []);
+        if (countries !== null) {
+            setCountry(countries);
+        }
+    }, [countries]);
 
-    console.log(countrys);
+    // console.log(countries);
     const {
         register,
         handleSubmit,
@@ -32,7 +34,7 @@ const Countriess = () => {
             <br />
             <select
                 className={styles.select}
-                {...register('countries', { required: true })}
+                {...register('countriess', { required: true })}
             >
                 {countrys.map((item, index) => {
                     // console.log(item.nme);

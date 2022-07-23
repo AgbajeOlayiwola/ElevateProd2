@@ -22,10 +22,12 @@ const Langauges = () => {
 
     useEffect(() => {
         dispatch(loadLanguageAsync());
-        setLanguages(language);
-    }, []);
+        if (language !== null) {
+            setLanguages(language);
+        }
+    }, [language]);
 
-    console.log(languages);
+    // console.log(languages);
     const {
         register,
         handleSubmit,

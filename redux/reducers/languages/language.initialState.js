@@ -1,5 +1,5 @@
 export default {
     isLoading: false,
-    language: Array,
+    language: null,
     errorMessage: null
 };
