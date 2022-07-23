@@ -89,6 +89,7 @@ export const SidebarData = [
         title: 'Transactions',
         path: '/Transactions',
         icon: <CgIcons.CgMoreO />,
+        iconActive: <CgIcons.CgMoreO />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
     },
@@ -97,6 +98,7 @@ export const SidebarData = [
         title: 'Tools',
         path: '/Tools',
         icon: <FiIcons.FiSettings />,
+        iconActive: <FiIcons.FiSettings />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />,
         subNav: [

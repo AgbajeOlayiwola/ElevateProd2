@@ -2,25 +2,21 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import Axios from 'axios';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadCountryAsync } from '../../../redux/reducers/countries/country.thunks';
 
-const Countries = (props) => {
+const Countriess = () => {
     const [countrys, setCountry] = useState([]);
+    const dispatch = useDispatch();
+    const { isLoading, countries, errorMessage } = useSelector(
+        (state) => state.countryReducer
+    );
 
     useEffect(() => {
-        getUser();
+        dispatch(loadCountryAsync());
+        setCountry(countries);
     }, []);
 
-    async function getUser() {
-        try {
-            const response = await Axios.get(
-                'https://ellevate-app.herokuapp.com/countries'
-            );
-            setCountry(response.data.data);
-        } catch (error) {
-            console.error(error);
-        }
-    }
     console.log(countrys);
     const {
         register,
@@ -51,11 +47,4 @@ const Countries = (props) => {
     );
 };
 
-//state mapper
-// const mapStateToProps = (state) => {
-//     return {
-//         countries: state.countries
-//     };
-// };
-
-export default Countries;
+export default Countriess;

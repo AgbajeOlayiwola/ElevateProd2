@@ -2,7 +2,7 @@
     height: 100vh;
     width: 273px;
     padding-top: 3.25rem;
-    background: #407a00;
+    background: #ffffff;
     position: fixed;
     overflow: scroll;
     left: 0;
@@ -38,7 +38,7 @@
     justify-content: space-between;
     align-items: center;
     padding-left: 3.2rem;
-    color: #ffffff;
+    color: #cccccc;
     cursor: pointer;
     margin-top: 33px;
 }
@@ -46,8 +46,8 @@
     margin-top: 1px;
 }
 .parentDiv:hover {
-    background: rgba(218, 240, 194, 0.37);
-    color: #ffffff;
+    background: #daf0c2;
+    color: #407a00;
 }
 .link {
     font-weight: 700;
@@ -60,7 +60,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: 33px;
-    color: #ffffff;
+    color: #407a00;
     background: rgba(218, 240, 194, 0.37);
     align-items: center;
     padding-left: 3.2rem;
@@ -105,7 +105,7 @@
     /* padding-right: 72px; */
     align-items: center;
     background: rgba(218, 240, 194, 0.37);
-    color: #ffffff;
+    color: #407a00;
     cursor: pointer;
 }
 .subMenuLink:hover {
@@ -120,7 +120,7 @@
     line-height: 17px;
     /* identical to box height */
 
-    color: #ffffff;
+    color: #7a7978;
 }
 .icon {
     font-size: 20px;
@@ -139,7 +139,7 @@
     line-height: 17px;
     /* identical to box height */
 
-    color: #ffffff;
+    color: #808c13;
 }
 .dropBtn {
     text-align: end;

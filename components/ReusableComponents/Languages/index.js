@@ -2,7 +2,30 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import Axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadLanguageAsync } from '../../../redux/reducers/languages/language.thunnks';
+
 const Langauges = () => {
+    // const {
+    //     register,
+    //     handleSubmit,
+    //     watch,
+    //     formState: { errors }
+    // } = useForm();
+
+    const [languages, setLanguages] = useState([]);
+
+    const dispatch = useDispatch();
+    const { isLoading, language, errorMessage } = useSelector(
+        (state) => state.languages
+    );
+
+    useEffect(() => {
+        dispatch(loadLanguageAsync());
+        setLanguages(language);
+    }, []);
+
+    console.log(languages);
     const {
         register,
         handleSubmit,
@@ -10,22 +33,6 @@ const Langauges = () => {
         formState: { errors }
     } = useForm();
 
-    const [languages, setLanguages] = useState([]);
-
-    useEffect(() => {
-        getUser();
-    }, []);
-
-    async function getUser() {
-        try {
-            const response = await Axios.get(
-                'https://ellevate-app.herokuapp.com/languages'
-            );
-            setLanguages(response.data.data);
-        } catch (error) {
-            console.error(error);
-        }
-    }
     // console.log(languages);
     return (
         <div className={styles.select2}>
