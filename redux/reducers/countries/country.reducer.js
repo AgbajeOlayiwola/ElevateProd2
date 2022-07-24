@@ -1,23 +1,28 @@
-import actionType from './country.actionType';
-import initialState from './country.initialState';
+import { country } from '../../types/actionTypes';
+
+const initialState = {
+    isLoading: false,
+    countries: null,
+    errorMessage: null
+};
 
 const countryReducer = (state = initialState, { type, payload }) => {
     // console.log(payload);÷ss
     switch (type) {
-        case actionType.COUNTRY_LOAD_START:
+        case country.COUNTRY_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
                 countries: null,
                 errorMessage: null
             };
-        case actionType.COUNTRY_LOAD_SUCCESS:
+        case country.COUNTRY_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 countries: payload
             };
-        case actionType.COUNTRY_LOAD_ERROR:
+        case country.COUNTRY_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,

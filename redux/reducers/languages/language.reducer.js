@@ -1,23 +1,28 @@
-import actionType from './language.actionType';
-import initialState from './language.initialState';
+import { languages } from '../../types/actionTypes';
+
+const initialState = {
+    isLoading: false,
+    language: null,
+    errorMessage: null
+};
 
 const languageReducer = (state = initialState, { type, payload }) => {
     // console.log(payload);÷ss
     switch (type) {
-        case actionType.LANGUAGE_LOAD_START:
+        case languages.LANGUAGE_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
                 language: null,
                 errorMessage: null
             };
-        case actionType.LANGUAGE_LOAD_SUCCESS:
+        case languages.LANGUAGE_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 language: payload
             };
-        case actionType.LANGUAGE_LOAD_ERROR:
+        case languages.LANGUAGE_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,

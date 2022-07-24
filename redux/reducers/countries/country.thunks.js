@@ -1,11 +1,13 @@
 import CountryService from '../../services/countries.services';
-import actions from './country.action';
+import {
+    countryLoadSuccess,
+    countryLoadError,
+    countryLoadStart
+} from '../../actions/actions';
 
 export const loadCountryAsync = () => (dispatch) => {
-    dispatch(actions.countryLoadStart());
+    dispatch(countryLoadStart());
     CountryService.getAllCountries()
-        .then((response) =>
-            dispatch(actions.countryLoadSuccess(response.data.data))
-        )
-        .catch((error) => dispatch(actions.countryLoadError(error.message)));
+        .then((response) => dispatch(countryLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(countryLoadError(error.message)));
 };
