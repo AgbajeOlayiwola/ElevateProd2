@@ -1,4 +1,4 @@
-import LanguageService from '../../services/language.services';
+// import LanguageService from '../../services/language.services';
 import {
     languageLoadStart,
     languageLoadSuccess,
@@ -7,7 +7,7 @@ import {
 
 export const loadLanguageAsync = () => (dispatch) => {
     dispatch(languageLoadStart());
-    LanguageService.getAllLanguages()
-        .then((response) => dispatch(languageLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(languageLoadError(error.message)));
+    // LanguageService.getAllLanguages()
+    //     .then((response) => dispatch(languageLoadSuccess(response.data.data)))
+    //     .catch((error) => dispatch(languageLoadError(error.message)));
 };

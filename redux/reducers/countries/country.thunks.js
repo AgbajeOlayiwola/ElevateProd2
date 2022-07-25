@@ -7,7 +7,7 @@ import {
 
 export const loadCountryAsync = () => (dispatch) => {
     dispatch(countryLoadStart());
-    CountryService.getAllCountries()
-        .then((response) => dispatch(countryLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(countryLoadError(error.message)));
+    // CountryService.getAllCountries()
+    //     .then((response) => dispatch(countryLoadSuccess(response.data.data)))
+    //     .catch((error) => dispatch(countryLoadError(error.message)));
 };

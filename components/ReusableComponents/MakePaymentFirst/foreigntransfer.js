@@ -3,7 +3,7 @@ import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import { loadCountryAsync } from '../../../redux/reducers/countries/country.thunks';
-import { loadbankAsync } from '../../../redux/reducers/banks/banks.thunks';
+import { loadbankAsync } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
@@ -20,7 +20,7 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
         }
     }, [countries]);
     useEffect(() => {
-        dispatch(loadbankAsync());
+        dispatch(loadbankAsync('ENG'));
         if (banks !== null) {
             setBank(banks);
         }
