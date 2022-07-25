@@ -21,6 +21,7 @@ import Paylink2 from '../../components/ReusableComponents/PaylinkSvg/paylink';
 import Ussd from '../../components/ReusableComponents/UssdSvg';
 import MposSvg2 from '../../components/ReusableComponents/mPOSSvg/Mpos';
 import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
+import axios from 'axios';
 
 const Payment = () => {
     // const payment = useSelector((state) => state.payment1);
@@ -35,6 +36,7 @@ const Payment = () => {
     const [mPOS, setMpos] = useState('30%');
     const [outType, setOutType] = useState();
     const [balance] = useState('22,049.94');
+    const [paymentDetail, setPaymentDetail] = useState({});
 
     const ChartDiv = styled.div`
         width: ${(props) => props.width};
@@ -267,7 +269,24 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 action={(data) => {
-                                    console.log(data);
+                                    setPaymentDetail(data);
+                                    // try {
+                                    //     const token =
+                                    //         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoib0lCeVVGMXMiLCJ0b2tlblR5cGUiOiJBQ0NFU1MifSwiaWF0IjoxNjU4NzMzNDUwLCJleHAiOjE2NTg4MTk4NTB9.m5m_Hv2XL_Lk_4NjlUhTIxrZM2I4NVVOxS6MMk4yZH8';
+                                    //     const authAxios = axios.create({
+                                    //         baseURL:
+                                    //             'https://ellevate-app.herokuapp.com',
+                                    //         headers: {
+                                    //             Authorization: `Bearer ${token}`
+                                    //         }
+                                    //     });
+                                    //     const response = await authAxios.post(
+                                    //         '/transfer/inter-bank-transfer',
+                                    //         JSON.stringify(data)
+                                    //     );
+                                    // } catch (error) {
+                                    //     console.log(error.message);
+                                    // }
                                     setCount(count + 1);
                                 }}
                             />
@@ -276,8 +295,11 @@ const Payment = () => {
                         return (
                             <MakePaymentSecond
                                 overlay={overlay}
-                                transferaction={(data) => {
-                                    console.log(data);
+                                amount={paymentDetail.amount}
+                                sender={paymentDetail.accountName}
+                                recieverName={paymentDetail.beneficiaries}
+                                recieverBank={paymentDetail.bankName}
+                                transferaction={() => {
                                     setCount(count + 1);
                                 }}
                             />

@@ -1,10 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
+import { loadbillerCategoryAsync } from '../../../redux/reducers/billerCategory/billerCategory.thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const BillPayment = ({ action, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
+    const [billerCategories, setBillerCategories] = useState([]);
+    const dispatch = useDispatch();
+    const { billerCategory } = useSelector(
+        (state) => state.billerCategoryReducer
+    );
+    useEffect(() => {
+        dispatch(loadbillerCategoryAsync());
+        if (billerCategory !== null) {
+            setBillerCategories(billerCategory);
+        }
+    }, [billerCategory]);
     const {
         register,
         handleSubmit,
@@ -60,7 +73,13 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                                 name="billerType"
                             >
                                 <option value="">Select Biller</option>
-                                <option value="Biller Type">Biller Type</option>
+                                {billerCategories?.map((item) => {
+                                    return (
+                                        <option value={item.categoryName}>
+                                            {item.categoryName}
+                                        </option>
+                                    );
+                                })}
                             </select>
                         </div>
                         <p className={styles.error}>
