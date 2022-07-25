@@ -2,7 +2,8 @@ import {
     country,
     languages,
     banks,
-    billerCategory
+    billerCategory,
+    billerType
 } from '../types/actionTypes';
 
 import axios from '../helper/apiClient';
@@ -61,31 +62,48 @@ export const billerCategoryLoadStart = () => ({
     type: billerCategory.BILLERCATEGORY_LOAD_START
 });
 
-export const billerCategoryLoadSuccess = (countries) => ({
+export const billerCategoryLoadSuccess = (biller) => ({
     type: billerCategory.BILLERCATEGORY_LOAD_SUCCESS,
-    payload: countries
+    payload: biller
 });
 
 export const billerCategoryLoadError = (errorMessage) => ({
     type: billerCategory.BILLERCATEGORY_LOAD_ERROR,
     payload: errorMessage
 });
+
+export const loadbillerCategoryAsync = (code) => (dispatch) => {
+    dispatch(billerCategoryLoadStart());
+    axios
+        .get(`${apiRoutes.getBillerCategories}?affiliateCode=${code}`)
+        .then((response) =>
+            dispatch(billerCategoryLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(billerCategoryLoadError(error.message)));
+};
 //billerCategory actions end
 
 //country actions
-// export const bankLoadStart = () => ({
-//     type: banks.BANK_LOAD_START
-// });
+export const billerTypeLoadStart = () => ({
+    type: billerType.BILLERTYPE_LOAD_START
+});
 
-// export const bankLoadSuccess = (countries) => ({
-//     type: banks.BANK_LOAD_SUCCESS,
-//     payload: countries
-// });
+export const billerTypeLoadSuccess = (billers) => ({
+    type: billerType.BILLERTYPE_LOAD_SUCCESS,
+    payload: billers
+});
 
-// export const bankLoadError = (errorMessage) => ({
-//     type: banks.BANK_LOAD_ERROR,
-//     payload: errorMessage
-// });
+export const billerTypeLoadError = (errorMessage) => ({
+    type: billerType.BILLERTYPE_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadbillerTypeAsync = (code, category) => (dispatch) => {
+    dispatch(billerTypeLoadStart());
+    axios
+        .get(`${apiRoutes.getBillerType}${code}?category=${category}`)
+        .then((response) => dispatch(billerTypeLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(billerTypeLoadError(error.message)));
+};
 //country actions end
 
 //languages action

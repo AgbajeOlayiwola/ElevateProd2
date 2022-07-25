@@ -1,27 +1,27 @@
-import { billerCategory } from '../../types/actionTypes';
+import { billerType } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    billerCategory: null,
+    billerType: null,
     errorMessage: null
 };
 
 const billerCategoryReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case billerCategory.BILLERCATEGORY_LOAD_START:
+        case billerType.BILLETYPEY_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
-                billerCategory: null,
+                billerType: null,
                 errorMessage: null
             };
-        case billerCategory.BILLERCATEGORY_LOAD_SUCCESS:
+        case billerType.BILLERTYPE_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                billerCategory: payload
+                billerType: payload
             };
-        case billerCategory.BILLERCATEGORY_LOAD_ERROR:
+        case billerType.BILLERTYPE_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,

@@ -22,11 +22,11 @@ export const billerCategory = {
 //biller category action types end
 
 //banks action types
-// export const banks = {
-//     BANK_LOAD_START: 'BANK_LOAD_START',
-//     BANK_LOAD_SUCCESS: 'BANK_LOAD_SUCCESS',
-//     BANK_LOAD_ERROR: 'BANK_LOAD_ERROR'
-// };
+export const billerType = {
+    BILLERTYPE_LOAD_START: 'BILLERTYPE_LOAD_START',
+    BILLERTYPE_LOAD_SUCCESS: 'BILLERTYPE_LOAD_SUCCESS',
+    BILLERTYPE_LOAD_ERROR: 'BILLERTYPE_LOAD_ERROR'
+};
 //banks action types end
 
 //language action types

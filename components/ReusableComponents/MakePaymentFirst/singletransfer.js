@@ -16,7 +16,7 @@ const SingleTransfer = ({ action, firstTitle, buttonText }) => {
         if (banks !== null) {
             setBank(banks);
         }
-    }, []);
+    }, [banks]);
     const {
         register,
         handleSubmit,

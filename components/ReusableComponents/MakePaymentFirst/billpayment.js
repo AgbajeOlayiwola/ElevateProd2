@@ -2,22 +2,26 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadbillerCategoryAsync } from '../../../redux/reducers/billerCategory/billerCategory.thunks';
+import { loadbillerCategoryAsync } from '../../../redux/actions/actions';
+import { loadbillerTypeAsync } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const BillPayment = ({ action, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [billerCategories, setBillerCategories] = useState([]);
+    const [billerTypes, setBillerTypes] = useState([]);
     const dispatch = useDispatch();
     const { billerCategory } = useSelector(
         (state) => state.billerCategoryReducer
     );
+    const { billerType } = useSelector((state) => state.billerTypeReducer);
     useEffect(() => {
-        dispatch(loadbillerCategoryAsync());
+        dispatch(loadbillerCategoryAsync('ENG'));
         if (billerCategory !== null) {
             setBillerCategories(billerCategory);
         }
     }, [billerCategory]);
+    useEffect(() => {}, [billerTypes, billerType]);
     const {
         register,
         handleSubmit,
@@ -70,12 +74,26 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                                 {...register('billerType', {
                                     required: 'Biller type is required'
                                 })}
+                                onChange={(e) => {
+                                    dispatch(
+                                        loadbillerTypeAsync(
+                                            'ENG',
+                                            e.target.value
+                                        )
+                                    );
+                                    if (billerType !== null) {
+                                        setBillerTypes(billerType);
+                                    }
+                                }}
                                 name="billerType"
                             >
                                 <option value="">Select Biller</option>
-                                {billerCategories?.map((item) => {
+                                {billerCategories?.map((item, index) => {
                                     return (
-                                        <option value={item.categoryName}>
+                                        <option
+                                            value={item.categoryName}
+                                            key={index}
+                                        >
                                             {item.categoryName}
                                         </option>
                                     );
@@ -94,9 +112,16 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                                 name="billerCategory"
                             >
                                 <option value="">Select Category</option>
-                                <option value="Biller Category">
-                                    Select Category
-                                </option>
+                                {billerTypes?.map((item, index) => {
+                                    return (
+                                        <option
+                                            value={item.billerName}
+                                            key={index}
+                                        >
+                                            {item.billerName}
+                                        </option>
+                                    );
+                                })}
                             </select>
                         </div>
                         <p className={styles.error}>

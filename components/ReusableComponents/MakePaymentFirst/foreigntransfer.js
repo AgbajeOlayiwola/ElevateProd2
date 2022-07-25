@@ -18,20 +18,19 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
         if (countries !== null) {
             setCountry(countries);
         }
-    }, []);
+    }, [countries]);
     useEffect(() => {
         dispatch(loadbankAsync('ENG'));
         if (banks !== null) {
             setBank(banks);
         }
-    }, []);
+    }, [banks]);
     const [activeBtn, setActiveBtn] = useState(false);
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
-    console.log(bank);
     return (
         <div>
             <form onSubmit={handleSubmit(action)}>
