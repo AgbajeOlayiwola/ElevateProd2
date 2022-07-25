@@ -4,10 +4,10 @@
     width: 100%;
 }
 .otpInps input {
-    width: 22%;
+    width: 15%;
     font-size: 32px;
     text-align: center;
-    padding: 2rem 2rem;
+    padding: 1.8rem 1.1rem;
     border: 1px solid #E6EBEE;
     transition: all 0.2s ease-in-out;
 }

@@ -11,7 +11,7 @@ import { createUserAction } from '../../../redux/actions/actions';
 
 const Signup = ({ type }) => {
     const router = useRouter();
-    const [pname, setPname] = useState('');
+    const [pName, setPname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfPassword] = useState('');
@@ -49,18 +49,13 @@ const Signup = ({ type }) => {
         setEmail(data.email);
 
         const postData = {
-            pname,
+            pName,
             email,
             password,
-            confirmPassword
+            confirmPassword,
+            affiliateCode: 'ENG'
         };
-        dispatch(createUserAction(postData));
-        console.log(postData);
-        // if (password == confPassword) {
-        //     router.push('../Verify');
-        // } else {
-        //     setPasswordMatch('Passwords do not match');
-        // }
+        dispatch(createUserAction(postData), router.push('../Verify'));
     };
 
     const [bgcolor, setBgcolor] = useState(false);
@@ -274,14 +269,7 @@ const Signup = ({ type }) => {
                                     </p>
 
                                     <div onSubmit={handleSubmit(onSubmit)}>
-                                        <LoginWith
-                                            labelI={labelI}
-                                            labelII={labelII}
-                                            placeholderI={placeholderI}
-                                            placeholderII={placeholderII}
-                                            displayInput={inputFields}
-                                            bankdets={bankDets}
-                                        />
+                                        <LoginWith />
                                     </div>
                                 </>
                             )}

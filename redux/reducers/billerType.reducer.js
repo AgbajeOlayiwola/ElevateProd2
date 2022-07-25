@@ -1,28 +1,27 @@
-import { languages } from '../../types/actionTypes';
+import { billerType } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    language: null,
+    billerType: null,
     errorMessage: null
 };
 
-const languageReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+const billerCategoryReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case languages.LANGUAGE_LOAD_START:
+        case billerType.BILLETYPEY_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
-                language: null,
+                billerType: null,
                 errorMessage: null
             };
-        case languages.LANGUAGE_LOAD_SUCCESS:
+        case billerType.BILLERTYPE_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                language: payload
+                billerType: payload
             };
-        case languages.LANGUAGE_LOAD_ERROR:
+        case billerType.BILLERTYPE_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -34,4 +33,4 @@ const languageReducer = (state = initialState, { type, payload }) => {
     }
 };
 
-export default languageReducer;
+export default billerCategoryReducer;

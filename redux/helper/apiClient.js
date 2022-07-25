@@ -1,14 +1,12 @@
 import axios from 'axios';
 
-const apiClient = () => {
-    const { REACT_APP_API_URL } = process.env;
+const axiosInstance = axios.create({
+    baseURL: "https://ellevate-app.herokuapp.com/",
+    responseType: 'json',
+    // headers: {
+    //     headerType: 'example header type',
+    //     Authorization: `Bearer ${token}`
+    // }
+});
 
-    const axiosInstance = axios.create({
-        baseURL: REACT_APP_API_URL,
-        responseType: 'json'
-    });
-
-    return axiosInstance;
-};
-
-export default apiClient;
+export default axiosInstance;

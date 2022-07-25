@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadCountryAsync } from '../../../redux/reducers/countries/country.thunks';
+import { loadCountryAsync } from '../../../redux/actions/actions';
 
 const Countriess = () => {
     const [countrys, setCountry] = useState([]);
@@ -43,7 +43,7 @@ const Countriess = () => {
                 {countrys.map((item, index) => {
                     // console.log(item.nme);
                     return (
-                        <option key={item.id} value={item.name}>
+                        <option key={index} value={item.name}>
                             {item.name}
                         </option>
                     );

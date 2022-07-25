@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { ButtonComp } from '../../../../components';
 import styles from './styles.module.css';
-// import lineImage from '../../../public/Assets/Svgs/Rectangle 12.svg';
 import Image from 'next/image';
-// import ProfileCard from '../../../components/ReusableComponents/ProfileCard';
 import Card from '../../NotRegisteredForms/Card';
 import Link from 'next/link';
 import {
@@ -21,17 +19,6 @@ import {
     SuccessMainHeading,
     H6Wrapper
 } from './styles.module';
-// import {
-
-// } from '../StepFiveSucceesPage/styles.module'.
-// import RegisteredForm from '../../../components/layout/RegisteredForm';
-// import StepTwoBVNAuthenticator from '../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
-// import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
-// import StepFourCompProfile2BizDetails from '../../components/layout/NotRegisteredForms/StepFourCompProfile2BizDetails';
-import RegisteredForm from '../../RegisteredForms/RegisteredForm';
-import StepTwoBVNAuthenticator from '../StepTwoBVNAuthenticator';
-import StepThreeCompleteProfile1 from '../StepThreeCompleteProfile1';
-import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';
 import Success from '../../../ReusableComponents/Success';
 
 const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {

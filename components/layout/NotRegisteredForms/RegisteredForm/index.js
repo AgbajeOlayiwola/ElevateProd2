@@ -3,8 +3,33 @@ import ButtonComp from '../../../ReusableComponents/Button';
 // import { RegisteredCardWrapper } from './styles.module';
 import { useForm } from 'react-hook-form';
 import { Label, FormInput, InputWrapper } from './styles.module';
+import Progressbar from '../../../ReusableComponents/Progressbar';
+import styles from './styles.module.css';
 
-const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
+const RegisteredForm = () => {
+    const [progress, setProgress] = useState('25%');
+    const [switchs, setSwitch] = useState(true);
+    const [isRegistered, setIsRegistered] = useState(false);
+    const [bgcolor, setBgcolor] = useState(false);
+    const [number, setNumber] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [tinumber, setTinumber] = useState('');
+    const [rcnumber, setRcnumber] = useState('');
+    const [activeBtn, setActiveBtn] = useState(true);
+
+    const handleShowSecondStep = () => {
+        setShowSecondStep(true);
+        setShowFirstStep(false);
+    };
+    const handleRegistrationStatus = () => {
+        setIsRegistered(true);
+        setBgcolor((prevState) => !prevState);
+    };
+    const switchRegistrationStatus = () => {
+        setIsRegistered(false);
+        setBgcolor((prevState) => !prevState);
+    };
+
     const {
         register,
         handleSubmit,
@@ -14,16 +39,75 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
     const onSubmit = async (data) => {
         console.log(data);
     };
-    const [number, setNumber] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [tinumber, setTinumber] = useState('');
-    const [rcnumber, setRcnumber] = useState('');
-    const [activeBtn, setActiveBtn] = useState(true);
+
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* register your input into the hook by invoking the "register" function */}
-
+                <div className={styles.cardHeading}>
+                    <h3 className={styles.LeftHeading}>Profile Setup</h3>
+                    <Progressbar
+                        bgcolor="#6CCF00"
+                        progressCount={progress}
+                        height={14}
+                        progWidth="27%"
+                    />
+                    {/* <Imag
+                    src="/width"
+                    alt="lineImage" /> */}
+                </div>
+                <p
+                    style={{
+                        fontWeight: '400',
+                        fontSize: '16px',
+                        lineHeight: '19px',
+                        color: '#3E3E3E'
+                    }}
+                >
+                    Is your business registered?
+                </p>
+                <div className={styles.ButtonWrapper}>
+                    <span
+                        className={styles.ToggleNo}
+                        onClick={switchRegistrationStatus}
+                        style={
+                            bgcolor
+                                ? { background: '#f8f8f8' }
+                                : { background: '#6ccf00' }
+                        }
+                    >
+                        <p
+                            className={styles.ToggleNoText}
+                            style={
+                                bgcolor
+                                    ? { color: '#a5a5a5' }
+                                    : { color: '#ffffff' }
+                            }
+                        >
+                            No
+                        </p>
+                    </span>
+                    <span
+                        className={styles.ToggleYes}
+                        onClick={handleRegistrationStatus}
+                        style={
+                            bgcolor
+                                ? { background: '#6ccf00' }
+                                : { background: '#f8f8f8' }
+                        }
+                    >
+                        <p
+                            className={styles.ToggleYesText}
+                            style={
+                                bgcolor
+                                    ? { color: '#ffffff' }
+                                    : { color: '#a5a5a5' }
+                            }
+                        >
+                            Yes
+                        </p>
+                    </span>
+                </div>
                 {isRegistered ? (
                     <>
                         <div>
@@ -139,13 +223,6 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="Next"
-                            type="submit"
-                            onClick={handleShowSecondStep}
-                        />
                     </>
                 ) : (
                     ''
@@ -219,13 +296,6 @@ const RegisteredForm = ({ handleShowSecondStep, isRegistered }) => {
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="Next"
-                            type="submit"
-                            onClick={handleShowSecondStep}
-                        />
                     </>
                 ) : (
                     ''
