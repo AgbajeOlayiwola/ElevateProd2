@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadbankAsync } from '../../../redux/reducers/banks/banks.thunks';
+import { loadbankAsync } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const SingleTransfer = ({ action, firstTitle, buttonText }) => {
@@ -12,11 +12,11 @@ const SingleTransfer = ({ action, firstTitle, buttonText }) => {
     const { banks } = useSelector((state) => state.banksReducer);
 
     useEffect(() => {
-        dispatch(loadbankAsync());
+        dispatch(loadbankAsync('ENG'));
         if (banks !== null) {
             setBank(banks);
         }
-    }, [banks]);
+    }, []);
     const {
         register,
         handleSubmit,
@@ -88,7 +88,7 @@ const SingleTransfer = ({ action, firstTitle, buttonText }) => {
                                     })}
                                     name="bankName"
                                 >
-                                    <option value="GTB">Select Bank</option>
+                                    <option value="">Select Bank</option>
                                     {bank?.map((bank, index) => {
                                         return (
                                             <option

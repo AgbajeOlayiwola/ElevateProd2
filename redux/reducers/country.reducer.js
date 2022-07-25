@@ -1,4 +1,4 @@
-import { country } from '../../types/actionTypes';
+import { country } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,

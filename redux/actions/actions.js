@@ -5,8 +5,8 @@ import {
     billerCategory
 } from '../types/actionTypes';
 
-import axios from "../helper/apiClient";
-import apiRoutes from "../helper/apiRoutes";
+import axios from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
 
 //country actions
 export const countryLoadStart = () => ({
@@ -22,6 +22,14 @@ export const countryLoadError = (errorMessage) => ({
     type: country.COUNTRY_LOAD_ERROR,
     payload: errorMessage
 });
+
+export const loadCountryAsync = () => (dispatch) => {
+    dispatch(countryLoadStart());
+    axios
+        .get(`${apiRoutes.getCountries}`)
+        .then((response) => dispatch(countryLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(countryLoadError(error.message)));
+};
 //country actions end
 
 //banks actions
@@ -41,7 +49,8 @@ export const bankLoadError = (errorMessage) => ({
 
 export const loadbankAsync = (code) => (dispatch) => {
     dispatch(bankLoadStart());
-    axios.get( `${apiRoutes.getBanks}?affiliateCode=${code}` )
+    axios
+        .get(`${apiRoutes.getBanks}?affiliateCode=${code}`)
         .then((response) => dispatch(bankLoadSuccess(response.data.data)))
         .catch((error) => dispatch(bankLoadError(error.message)));
 };

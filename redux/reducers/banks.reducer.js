@@ -1,4 +1,4 @@
-import { banks } from '../../types/actionTypes';
+import { banks } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,

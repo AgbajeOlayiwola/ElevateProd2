@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadCountryAsync } from '../../../redux/reducers/countries/country.thunks';
+import { loadCountryAsync } from '../../../redux/actions/actions';
 import { loadbankAsync } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -18,13 +18,13 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
         if (countries !== null) {
             setCountry(countries);
         }
-    }, [countries]);
+    }, []);
     useEffect(() => {
         dispatch(loadbankAsync('ENG'));
         if (banks !== null) {
             setBank(banks);
         }
-    }, [banks]);
+    }, []);
     const [activeBtn, setActiveBtn] = useState(false);
     const {
         register,

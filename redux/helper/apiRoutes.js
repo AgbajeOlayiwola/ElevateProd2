@@ -1,7 +1,8 @@
 // Payments
-const getBanks = '/banks'
-
+const getBanks = '/banks';
+const getCountries = '/countries';
 
 export default {
-    getBanks
-}
+    getBanks,
+    getCountries
+};
