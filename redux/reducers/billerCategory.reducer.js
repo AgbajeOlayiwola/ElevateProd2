@@ -1,28 +1,27 @@
-import { country } from '../types/actionTypes';
+import { billerCategory } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    countries: null,
+    billerCategory: null,
     errorMessage: null
 };
 
-const countryReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+const billerCategoryReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case country.COUNTRY_LOAD_START:
+        case billerCategory.BILLERCATEGORY_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
-                countries: null,
+                billerCategory: null,
                 errorMessage: null
             };
-        case country.COUNTRY_LOAD_SUCCESS:
+        case billerCategory.BILLERCATEGORY_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                countries: payload
+                billerCategory: payload
             };
-        case country.COUNTRY_LOAD_ERROR:
+        case billerCategory.BILLERCATEGORY_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -34,4 +33,4 @@ const countryReducer = (state = initialState, { type, payload }) => {
     }
 };
 
-export default countryReducer;
+export default billerCategoryReducer;

@@ -4,7 +4,14 @@ import styles from './styles.module.css';
 import OtpInput from '../Otpinput';
 import Overlay from '../Overlay';
 
-const MakePaymentSecond = ({ overlay, transferAction }) => {
+const MakePaymentSecond = ({
+    overlay,
+    transferAction,
+    amount,
+    sender,
+    recieverName,
+    recieverBank
+}) => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <Overlay overlay={overlay}>
@@ -14,24 +21,24 @@ const MakePaymentSecond = ({ overlay, transferAction }) => {
                     <p>Enter your transaction pin to continue.</p>
                     <div className={styles.transactionamount}>
                         <p>Amount</p>
-                        <h3>N5,000,000.00</h3>
+                        <h3>N{amount}</h3>
                     </div>
                     <div className={styles.transactiondetails}>
                         <div className={styles.transactionsingles}>
                             <p className={styles.transactionTitle}>To</p>
-                            <h3>Babatunde James</h3>
+                            <h3>{recieverName}</h3>
                         </div>
                         <div className={styles.transactionsingle}>
                             <p className={styles.transactionTitle}>
                                 Beneficiary Bank
                             </p>
                             <h3>
-                                <span></span> Ecobank Plc
+                                <span></span> {recieverBank}
                             </h3>
                         </div>
                         <div className={styles.transactionsingle}>
                             <p className={styles.transactionTitle}>From</p>
-                            <h3>Marvelous Limited</h3>
+                            <h3>{sender}</h3>
                         </div>
                         <div className={styles.transactionsingle}>
                             <p className={styles.transactionTitle}>Charges</p>

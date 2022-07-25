@@ -39,8 +39,6 @@
   },
   "devDependencies": {
     "eslint": "8.17.0",
-    "eslint-config-next": "12.1.6",
-    "great-prettier-config": "^3.0.0",
-    "prettier": "great-prettier-config"
+    "eslint-config-next": "12.1.6"
   }
 }

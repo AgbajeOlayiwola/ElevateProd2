@@ -52,7 +52,7 @@ const StepThreeCompleteProfile1 = ({
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.cover}>
-            <Card>
+            <div>
                 <div className={styles.prog}>
                     <CardHeadingBVN>
                         <LeftHeading>Complete your Profile</LeftHeading>
@@ -203,7 +203,7 @@ const StepThreeCompleteProfile1 = ({
                         />
                     </form>
                 )}
-            </Card>
+            </div>
         </div>
     );
 };

@@ -1,9 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
+import { loadCountryAsync } from '../../../redux/actions/actions';
+import { loadbankAsync } from '../../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
+    const [countrys, setCountry] = useState([]);
+    const [bank, setBank] = useState([]);
+    const dispatch = useDispatch();
+    const { countries } = useSelector((state) => state.countryReducer);
+    const { banks } = useSelector((state) => state.banksReducer);
+
+    useEffect(() => {
+        dispatch(loadCountryAsync());
+        if (countries !== null) {
+            setCountry(countries);
+        }
+    }, [countries]);
+    useEffect(() => {
+        dispatch(loadbankAsync('ENG'));
+        if (banks !== null) {
+            setBank(banks);
+        }
+    }, [banks]);
     const [activeBtn, setActiveBtn] = useState(false);
     const {
         register,
@@ -23,8 +44,14 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                             })}
                             name="destinationCountry"
                         >
-                            <option value="">Nigeria</option>
-                            <option value="Nigeria">Nigeria</option>
+                            <option value="">Destination Country</option>
+                            {countrys?.map((item) => {
+                                return (
+                                    <option value={item.name} key={item.id}>
+                                        {item.name}
+                                    </option>
+                                );
+                            })}
                         </select>
                         <p className={styles.error}>
                             {errors?.destinationCountry?.message}
@@ -96,7 +123,16 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                                     name="bankName"
                                 >
                                     <option value="">Select Bank</option>
-                                    <option value="GTB">GTB</option>
+                                    {bank?.map((bank, index) => {
+                                        return (
+                                            <option
+                                                value={bank.institutionName}
+                                                key={index}
+                                            >
+                                                {bank.institutionName}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                                 <p className={styles.error}>
                                     {errors?.bankName?.message}

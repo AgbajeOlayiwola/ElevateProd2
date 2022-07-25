@@ -1,28 +1,28 @@
-import { country } from '../types/actionTypes';
+import { languages } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    countries: null,
+    language: null,
     errorMessage: null
 };
 
-const countryReducer = (state = initialState, { type, payload }) => {
+const languageReducer = (state = initialState, { type, payload }) => {
     // console.log(payload);÷ss
     switch (type) {
-        case country.COUNTRY_LOAD_START:
+        case languages.LANGUAGE_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
-                countries: null,
+                language: null,
                 errorMessage: null
             };
-        case country.COUNTRY_LOAD_SUCCESS:
+        case languages.LANGUAGE_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                countries: payload
+                language: payload
             };
-        case country.COUNTRY_LOAD_ERROR:
+        case languages.LANGUAGE_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -34,4 +34,4 @@ const countryReducer = (state = initialState, { type, payload }) => {
     }
 };
 
-export default countryReducer;
+export default languageReducer;

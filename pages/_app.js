@@ -1,8 +1,9 @@
 import { Layout } from '../components';
 import '../styles/globals.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import store from '../redux/store';
+import { wrapper, store } from '../redux/store';
 import { Provider } from 'react-redux';
+import configureStore from '../redux/store';
 
 function MyApp({ Component, pageProps, router }) {
     const pageVariants = {
@@ -26,17 +27,19 @@ function MyApp({ Component, pageProps, router }) {
         exit: 'pageExit',
         variants: pageVariants
     };
+
+    // const store = configureStore();
     return (
-        // <Provider store={store}>
         <Layout>
             <AnimatePresence exitBeforeEnter>
                 <motion.div key={router.route} {...pageMotionProps}>
-                    <Component {...pageProps} />
+                    <Provider store={store}>
+                        <Component {...pageProps} />
+                    </Provider>
                 </motion.div>
             </AnimatePresence>
         </Layout>
-        /* </Provider> */
     );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

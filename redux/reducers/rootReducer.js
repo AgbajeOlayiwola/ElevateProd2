@@ -1,12 +1,18 @@
 import { combineReducers } from 'redux';
-import { authReducer } from './auth.reducer';
 import { paymentReducer } from './payment.reducer';
 import countryReducer from './country.reducer';
+import languageReducer from './language.reducer';
+import banksReducer from './banks.reducer';
+import billerCategoryReducer from './billerCategory.reducer';
+import billerTypeReducer from './billerType.reducer';
 
 const rootReducer = combineReducers({
-    authReducer: authReducer,
     paymentReducer: paymentReducer,
-    countryReducer: countryReducer
+    countryReducer: countryReducer,
+    languages: languageReducer,
+    banksReducer: banksReducer,
+    billerCategoryReducer: billerCategoryReducer,
+    billerTypeReducer: billerTypeReducer
 });
 
 export default rootReducer;

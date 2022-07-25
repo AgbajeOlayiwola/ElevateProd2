@@ -1,28 +1,28 @@
-import { country } from '../types/actionTypes';
+import { banks } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    countries: null,
+    banks: null,
     errorMessage: null
 };
 
-const countryReducer = (state = initialState, { type, payload }) => {
+const banksReducer = (state = initialState, { type, payload }) => {
     // console.log(payload);÷ss
     switch (type) {
-        case country.COUNTRY_LOAD_START:
+        case banks.BANK_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
-                countries: null,
+                banks: null,
                 errorMessage: null
             };
-        case country.COUNTRY_LOAD_SUCCESS:
+        case banks.BANK_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                countries: payload
+                banks: payload
             };
-        case country.COUNTRY_LOAD_ERROR:
+        case banks.BANK_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -34,4 +34,4 @@ const countryReducer = (state = initialState, { type, payload }) => {
     }
 };
 
-export default countryReducer;
+export default banksReducer;

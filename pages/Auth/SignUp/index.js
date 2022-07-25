@@ -5,78 +5,33 @@ import { ButtonComp, LoginWith } from '../../../components';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
+import { createUserAction } from '../../../redux/actions/actions';
 
 const Signup = ({ type }) => {
     const router = useRouter();
-    const [message, setMessage] = useState();
+    const [pName, setPname] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confPassword, setConfPassword] = useState('');
-    // button active states
+    const [confirmPassword, setConfPassword] = useState('');
     const [activeBtn, setActiveBtn] = useState(true);
-    //button active states
-    // business ui
     const [business, setBusiness] = useState(true);
     const [count, setCount] = useState([]);
-
-    // display Login with
-    const [displayLogUi, setDisplayLogUI] = useState(true);
-    const [labelI, setLabelI] = useState('Enter Your OmniLite Login ID');
-    const [labelII, setLabelII] = useState('Enter Your OmniLite Password');
-    const [placeholderI, setPlaceholderI] = useState('Login ID');
-    const [placeholderII, setPlaceholderII] = useState('Password');
-    const [inputFields, setInputFields] = useState(false);
-    const [bankDets, setBankDets] = useState(false);
-    const [active, setActive] = useState(false);
-
-    const [omnilit, setOmnilite] = useState(true);
-    const [ecobank, setEcobank] = useState(false);
-    const [acct, setAcct] = useState(false);
-    const [card, setCard] = useState(false);
-    const [statusCheck, setStatusCheck] = useState(false);
     const [outType, setOutType] = useState();
-
-    const handleDisplay = () => {
-        setDisplayLogUI((prevState) => !prevState);
-        setActive((prevState) => !prevState);
-        setLabelI('Enter Your OmniLite Login ID');
-        setLabelII('Enter Your OmniLite Password');
-        setPlaceholderI('Login ID');
-        setPlaceholderII('Password');
-        setInputFields(false);
-        setBankDets(false);
-    };
-    const handleEco = () => {
-        setDisplayLogUI((prevState) => !prevState);
-        setActive((prevState) => !prevState);
-        setLabelI('Enter Your Ecobank Online ID');
-        setLabelII('Enter Your Ecobank Password');
-        setPlaceholderI('Ecobank Online ID');
-        setPlaceholderII('Ecobank Password');
-        setInputFields(false);
-        setBankDets(false);
-    };
-    const handleAcct = () => {
-        setDisplayLogUI((prevState) => !prevState);
-        setActive((prevState) => !prevState);
-        setLabelI('Enter Your Account Number');
-        setLabelII('Enter Your Account Password');
-        setPlaceholderI('Account Number');
-        setPlaceholderII('Password');
-        setInputFields(true);
-        setBankDets(false);
-    };
-    const handleBankCard = () => {
-        setDisplayLogUI((prevState) => !prevState);
-        setActive((prevState) => !prevState);
-        setLabelI('Enter Your Bank Card Number');
-        setLabelII('Enter Name On Card');
-        setPlaceholderI('Bank Card Number');
-        setPlaceholderII('Name On Card');
-        setInputFields(false);
-        setBankDets(true);
-    };
+    const dispatch = useDispatch();
     const [passwordMatch, setPasswordMatch] = useState('');
+    const handlePaswword = (e) => {
+        setCount(e.target.value.length);
+        setConfPassword(e.target.value);
+        if (password != confirmPassword) {
+            setPasswordMatch('Passwords do not match');
+        }
+    };
+    const handlePwd = (e) => {
+        setCount(e.target.value.length);
+        setPassword(e.target.value);
+    };
 
     // display Lofg in with end
     const types = (type) => {
@@ -88,33 +43,24 @@ const Signup = ({ type }) => {
         watch,
         formState: { errors }
     } = useForm();
-    const onSubmit = ({ data }) => {
-        console.log(data);
-        if (password == confPassword) {
-            router.push('../Verify');
-        } else {
-            setPasswordMatch('Passwords do not match');
-        }
+
+    const onSubmit = (data) => {
+        setPname(data.name);
+        setEmail(data.email);
+
+        const postData = {
+            pName,
+            email,
+            password,
+            confirmPassword,
+            affiliateCode: 'ENG'
+        };
+        dispatch(createUserAction(postData), router.push('../Verify'));
     };
 
     const [bgcolor, setBgcolor] = useState(false);
 
-    const switchRegistrationStatus = () => {
-        setIsRegistered(false);
-        setBgcolor((prevState) => !prevState);
-    };
-    const handlePaswword = (e) => {
-        setCount(e.target.value.length);
-        setConfPassword(e.target.value);
-        if (password != confPassword) {
-            setPasswordMatch('Passwords do not match');
-        }
-    };
-    const handlePwd = (e) => {
-        setCount(e.target.value.length);
-        setPassword(e.target.value);
-    };
-    console.log(confPassword);
+    // console.log(confPassword);
     return (
         <>
             <div className={styles.cover}>
@@ -222,7 +168,7 @@ const Signup = ({ type }) => {
                                         <input
                                             placeholder="Enter Your Name"
                                             className={styles.textInput}
-                                            {...register('Name')}
+                                            {...register('name')}
                                         />
                                     </div>
 
@@ -297,7 +243,7 @@ const Signup = ({ type }) => {
                                         </div>
                                     </div>
 
-                                    {password == confPassword ? null : (
+                                    {password == confirmPassword ? null : (
                                         <p className={styles.error}>
                                             {passwordMatch}
                                         </p>
@@ -323,14 +269,7 @@ const Signup = ({ type }) => {
                                     </p>
 
                                     <div onSubmit={handleSubmit(onSubmit)}>
-                                        <LoginWith
-                                            labelI={labelI}
-                                            labelII={labelII}
-                                            placeholderI={placeholderI}
-                                            placeholderII={placeholderII}
-                                            displayInput={inputFields}
-                                            bankdets={bankDets}
-                                        />
+                                        <LoginWith />
                                     </div>
                                 </>
                             )}

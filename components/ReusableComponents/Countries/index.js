@@ -2,26 +2,28 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import Axios from 'axios';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadCountryAsync } from '../../../redux/actions/actions';
 
-const Countries = (props) => {
+const Countriess = () => {
     const [countrys, setCountry] = useState([]);
+    const dispatch = useDispatch();
+    const { isLoading, countries, errorMessage } = useSelector(
+        (state) => state.countryReducer
+    );
 
     useEffect(() => {
-        getUser();
-    }, []);
-
-    async function getUser() {
-        try {
-            const response = await Axios.get(
-                'https://ellevate-app.herokuapp.com/countries'
-            );
-            setCountry(response.data.data);
-        } catch (error) {
-            console.error(error);
+        dispatch(loadCountryAsync());
+        if (countries !== null) {
+            setCountry(countries);
         }
-    }
-    console.log(countrys);
+    }, []);
+    useEffect(() => {
+        if (countries !== null) {
+            setCountry(countries);
+        }
+    }, [countries]);
+    // console.log(countries);
     const {
         register,
         handleSubmit,
@@ -36,12 +38,12 @@ const Countries = (props) => {
             <br />
             <select
                 className={styles.select}
-                {...register('countries', { required: true })}
+                {...register('countriess', { required: true })}
             >
                 {countrys.map((item, index) => {
                     // console.log(item.nme);
                     return (
-                        <option key={item.id} value={item.name}>
+                        <option key={index} value={item.name}>
                             {item.name}
                         </option>
                     );
@@ -51,11 +53,4 @@ const Countries = (props) => {
     );
 };
 
-//state mapper
-// const mapStateToProps = (state) => {
-//     return {
-//         countries: state.countries
-//     };
-// };
-
-export default Countries;
+export default Countriess;

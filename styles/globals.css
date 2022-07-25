@@ -55,7 +55,7 @@ select {
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
-    background-image: url('/Assets/Images/dropdownSvg.svg');
+    background-image: url('/Assets/Svgs/dropdownSvg.svg');
     background-repeat: no-repeat;
     background-position-x: 94%;
     background-position-y: 50%;
