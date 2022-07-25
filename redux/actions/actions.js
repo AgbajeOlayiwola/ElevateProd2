@@ -1,4 +1,5 @@
 import { country, languages } from '../types/actionTypes';
+import Services from '../services/services';
 
 //country actions
 export const countryLoadStart = () => ({
@@ -33,3 +34,17 @@ export const languageLoadError = (errorMessage) => ({
 });
 
 //languagex action end
+
+//add user
+export const createUserAction = (postData) => {
+    return (dispatch) => {
+        Services.createAccount(postData)
+            .then((response) => {
+                console.log('data from action', response.data);
+            })
+            .catch((e) => {
+                console.log(e.message);
+            });
+    };
+};
+//add user end

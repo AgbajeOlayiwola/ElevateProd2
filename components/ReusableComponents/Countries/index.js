@@ -17,8 +17,12 @@ const Countriess = () => {
         if (countries !== null) {
             setCountry(countries);
         }
+    }, []);
+    useEffect(() => {
+        if (countries !== null) {
+            setCountry(countries);
+        }
     }, [countries]);
-
     // console.log(countries);
     const {
         register,
