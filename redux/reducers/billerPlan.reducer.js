@@ -1,27 +1,27 @@
-import { billerType } from '../types/actionTypes';
+import { billerPlan } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    billerType: null,
+    billerPlan: null,
     errorMessage: null
 };
 
-const billerTypeReducer = (state = initialState, { type, payload }) => {
+const billerPlanReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case billerType.BILLERTYPE_LOAD_START:
+        case billerPlan.BILLERPLAN_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
-                billerType: null,
+                billerPlan: null,
                 errorMessage: null
             };
-        case billerType.BILLERTYPE_LOAD_SUCCESS:
+        case billerPlan.BILLERPLAN_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                billerType: payload
+                billerPlan: payload
             };
-        case billerType.BILLERTYPE_LOAD_ERROR:
+        case billerPlan.BILLERPLAN_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -33,4 +33,4 @@ const billerTypeReducer = (state = initialState, { type, payload }) => {
     }
 };
 
-export default billerTypeReducer;
+export default billerPlanReducer;

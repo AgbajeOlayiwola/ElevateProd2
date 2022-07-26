@@ -374,6 +374,7 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentSecond
+                                title="Bill Payment"
                                 transferaction={(data) => {
                                     console.log(data);
                                     setCount(count + 1);

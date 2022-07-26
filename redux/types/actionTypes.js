@@ -28,6 +28,13 @@ export const billerType = {
     BILLERTYPE_LOAD_ERROR: 'BILLERTYPE_LOAD_ERROR'
 };
 //banks action types end
+//banks action types
+export const billerPlan = {
+    BILLERPLAN_LOAD_START: 'BILLERPLAN_LOAD_START',
+    BILLERPLAN_LOAD_SUCCESS: 'BILLERPLAN_LOAD_SUCCESS',
+    BILLERPLAN_LOAD_ERROR: 'BILLERPLAN_LOAD_ERROR'
+};
+//banks action types end
 
 //language action types
 

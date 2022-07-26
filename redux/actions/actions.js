@@ -3,7 +3,8 @@ import {
     languages,
     banks,
     billerCategory,
-    billerType
+    billerType,
+    billerPlan
 } from '../types/actionTypes';
 
 import axios from '../helper/apiClient';
@@ -103,6 +104,29 @@ export const loadbillerTypeAsync = (code, category) => (dispatch) => {
         .get(`${apiRoutes.getBillerType}${code}?category=${category}`)
         .then((response) => dispatch(billerTypeLoadSuccess(response.data.data)))
         .catch((error) => dispatch(billerTypeLoadError(error.message)));
+};
+//country actions end
+
+//country actions
+export const billerPlanLoadStart = () => ({
+    type: billerPlan.BILLERPLAN_LOAD_START
+});
+
+export const billerPlanLoadSuccess = (billers) => ({
+    type: billerPlan.BILLERPLAN_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const billerPlanLoadError = (errorMessage) => ({
+    type: billerPlan.BILLERPLAN_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadbillerPlanAsync = (code) => (dispatch) => {
+    dispatch(billerPlanLoadStart());
+    axios
+        .get(`${apiRoutes.getBillerPlan}${code}`)
+        .then((response) => dispatch(billerPlanLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(billerPlanLoadError(error.message)));
 };
 //country actions end
 

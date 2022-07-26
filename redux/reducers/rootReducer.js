@@ -5,6 +5,7 @@ import languageReducer from './languages/language.reducer';
 import banksReducer from './banks.reducer';
 import billerCategoryReducer from './billerCategory.reducer';
 import billerTypeReducer from './billerType.reducer';
+import billerPlanReducer from './billerPlan.reducer';
 
 const rootReducer = combineReducers({
     paymentReducer: paymentReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     languages: languageReducer,
     banksReducer: banksReducer,
     billerCategoryReducer: billerCategoryReducer,
+    billerPlanReducer: billerPlanReducer,
     billerTypeReducer: billerTypeReducer
 });
 
