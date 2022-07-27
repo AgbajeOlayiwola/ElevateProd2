@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { createUserAction } from '../../../redux/actions/actions';
 import { useSelector } from 'react-redux';
-
 const Signup = ({ type }) => {
     const router = useRouter();
     const [error, setError] = useState('');
@@ -23,8 +22,8 @@ const Signup = ({ type }) => {
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
 
-    const { isLoading, user, errorMessage } = useSelector(
-        (state) => state.auth
+    const { isLoading, registered, errorMessage } = useSelector(
+        (state) => state.registered
     );
 
     const [passwordMatch, setPasswordMatch] = useState('');
