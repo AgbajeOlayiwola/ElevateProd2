@@ -8,9 +8,11 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { createUserAction } from '../../../redux/actions/actions';
+import { useSelector } from 'react-redux';
 
 const Signup = ({ type }) => {
     const router = useRouter();
+    const [error, setError] = useState('');
     const [pName, setPname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,6 +22,11 @@ const Signup = ({ type }) => {
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
+
+    const { isLoading, user, errorMessages } = useSelector(
+        (state) => state.auth
+    );
+
     const [passwordMatch, setPasswordMatch] = useState('');
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
@@ -32,7 +39,12 @@ const Signup = ({ type }) => {
         setCount(e.target.value.length);
         setPassword(e.target.value);
     };
-
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
+    };
+    const userName = (e) => {
+        setPname(e.target.value);
+    };
     // display Lofg in with end
     const types = (type) => {
         setOutType(type);
@@ -45,9 +57,6 @@ const Signup = ({ type }) => {
     } = useForm();
 
     const onSubmit = (data) => {
-        setPname(data.name);
-        setEmail(data.email);
-
         const postData = {
             pName,
             email,
@@ -55,7 +64,13 @@ const Signup = ({ type }) => {
             confirmPassword,
             affiliateCode: 'ENG'
         };
-        dispatch(createUserAction(postData), router.push('../Verify'));
+        console.log(errorMessages);
+        dispatch(createUserAction(postData));
+        if (localStorage.getItem('user') === undefined) {
+            setError('An Error Occured');
+        } else {
+            router.push('../../Verify');
+        }
     };
 
     const [bgcolor, setBgcolor] = useState(false);
@@ -161,14 +176,17 @@ const Signup = ({ type }) => {
                                     onSubmit={handleSubmit(onSubmit)}
                                     className={styles.form}
                                 >
+                                    <div className={styles.error}>{error}</div>
                                     {/* register your input into the hook by invoking the "register" function */}
                                     <div>
                                         <label>Preffered Name</label>
                                         <br />
+
                                         <input
                                             placeholder="Enter Your Name"
                                             className={styles.textInput}
                                             {...register('name')}
+                                            onChange={userName}
                                         />
                                     </div>
 
@@ -191,6 +209,7 @@ const Signup = ({ type }) => {
                                                         'Invalid email address'
                                                 }
                                             })}
+                                            onChange={handleEmail}
                                         />
                                         {errors.email?.message}
                                     </div>

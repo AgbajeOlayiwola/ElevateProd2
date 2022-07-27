@@ -1,25 +1,46 @@
 import React, { useState } from 'react';
 import Card from './Card/index';
 import ButtonComp from '../../ReusableComponents/Button';
-import RegisteredForm from './RegisteredForm';
+import RegisteredForm from '../RegisteredForms/RegisteredForm';
 import StepTwoBVNAuthenticator from './StepTwoBVNAuthenticator';
 import StepThreeCompleteProfile1 from './StepThreeCompleteProfile1';
 import Link from 'next/link';
 
 const ProfileSetups = () => {
     const [page, setPage] = useState(0);
+    const [formData, setFormData] = useState([]);
     const [activeBtn, setActiveBtn] = useState(true);
 
     const conditionalComponent = () => {
         switch (page) {
             case 0:
-                return <RegisteredForm />;
+                return (
+                    <RegisteredForm
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                );
             case 1:
-                return <StepTwoBVNAuthenticator />;
+                return (
+                    <StepTwoBVNAuthenticator
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                );
             case 2:
-                return <StepThreeCompleteProfile1 />;
+                return (
+                    <StepThreeCompleteProfile1
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                );
             default:
-                return <RegisteredForm />;
+                return (
+                    <RegisteredForm
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                );
         }
     };
     function handleSubmit() {

@@ -3,9 +3,10 @@ import {
     languages,
     banks,
     billerCategory,
-    billerType
+    billerType,
+    login
 } from '../types/actionTypes';
-
+import Services from '../services/services';
 import axios from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
 
@@ -132,15 +133,47 @@ export const loadLanguageAsync = () => (dispatch) => {
 //languagex action end
 
 //add user
+export const userRegisterStart = () => ({
+    type: login.REGISTER_SUCCESS
+});
+export const userRegisterError = (errorMessage) => ({
+    type: login.REGISTER_FAIL,
+    payload: errorMessage
+});
 export const createUserAction = (postData) => {
     return (dispatch) => {
-        Services.createAccount(postData)
+        axios
+            .post(`${apiRoutes.register}`, postData)
             .then((response) => {
                 console.log('data from action', response.data);
             })
             .catch((e) => {
-                console.log(e.message);
+                dispatch(userRegisterError(e.errorMessage));
             });
     };
 };
 //add user end
+
+//login User
+export const userLoadStart = () => ({
+    type: login.LOGIN_SUCCESS
+});
+export const userLoadError = (errorMessages) => ({
+    type: login.LOGIN_FAIL,
+    payload: errorMessages
+});
+
+export const loginUserAction = (loginData) => {
+    return (dispatch) => {
+        axios
+            .post(`${apiRoutes.login}`, loginData)
+            .then((response) => {
+                localStorage.setItem('user', JSON.stringify(response.data));
+                console.log(localStorage);
+            })
+            .catch((e) => {
+                dispatch(userLoadError(e.errorMessages));
+            });
+    };
+};
+//end login user

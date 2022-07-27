@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-import { Navbar, Sidebar } from '../../components';
+import React, { useState, useRef, useEffect } from 'react';
 import DashLayout from '../../components/layout/Dashboard';
 import Paylink from '../../components/ReusableComponents/PaylinkSvg';
 import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
@@ -24,12 +23,10 @@ import {
 } from '../../components/ReusableComponents/Data';
 import MakePaymentBtn from '../../components/ReusableComponents/MakePayment';
 import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymnet';
+import { useSelector } from 'react-redux';
+import withAuth from '../../components/HOC/withAuth.js';
 function SampleNextArrow(props) {
-    const router = useRouter();
-    const route = router.pathname;
-
     const { className, style, onClick } = props;
-
     return (
         <div
             className={className}
@@ -60,10 +57,24 @@ const Dashboard = () => {
     const slider1 = useRef();
     const [outType, setOutType] = useState();
     const [balance] = useState('22,000');
+    const router = useRouter();
+    const [loaded, setLoaded] = useState(false);
+    const route = router.pathname;
+
     const types = (type) => {
         setOutType(type);
     };
+    const [items, setItems] = useState([]);
 
+    useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('user'));
+
+        if (!items) {
+            router.push('../Auth/Login');
+        } else {
+            setLoaded(true);
+        }
+    });
     const settings = {
         className: 'center',
         centerMode: true,
@@ -265,4 +276,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);
