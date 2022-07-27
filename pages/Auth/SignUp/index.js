@@ -23,7 +23,7 @@ const Signup = ({ type }) => {
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
 
-    const { isLoading, user, errorMessages } = useSelector(
+    const { isLoading, user, errorMessage } = useSelector(
         (state) => state.auth
     );
 
@@ -64,9 +64,9 @@ const Signup = ({ type }) => {
             confirmPassword,
             affiliateCode: 'ENG'
         };
-        console.log(errorMessages);
+        console.log(errorMessage);
         dispatch(createUserAction(postData));
-        if (localStorage.getItem('user') === undefined) {
+        if (errorMessage === null) {
             setError('An Error Occured');
         } else {
             router.push('../../Verify');
