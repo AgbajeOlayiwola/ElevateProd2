@@ -10,6 +10,8 @@ import airtimeReducer from './airtime.reducer';
 import billsReducer from './bills.reducer';
 import internalBankReducer from './internalBank.reducer';
 import interBankReducer from './interBank.reducer';
+import authReducer from './auth.reducer';
+import registerReducer from './register.reducer';
 
 const rootReducer = combineReducers({
     paymentReducer: paymentReducer,
@@ -22,7 +24,10 @@ const rootReducer = combineReducers({
     airtimeReducer: airtimeReducer,
     billsReducer: billsReducer,
     internalBankReducer: internalBankReducer,
-    interBankReducer: interBankReducer
+    interBankReducer: interBankReducer,
+    billerTypeReducer: billerTypeReducer,
+    auth: authReducer,
+    registered: registerReducer
 });
 
 export default rootReducer;

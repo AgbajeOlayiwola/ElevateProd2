@@ -9,6 +9,10 @@ const airtime = '/payments/airtime-topup';
 const bills = '/payments/bill-payment';
 const internalBank = '/transfer/internal-transfer';
 const interBank = '/transfer/inter-bank-transfer';
+const register = '/auth/register';
+const login = '/auth/login';
+const newProfileSetup = '/auth/profile-setup';
+const profile = '/auth/profile';
 
 export default {
     getBanks,
@@ -20,5 +24,10 @@ export default {
     airtime,
     bills,
     internalBank,
-    interBank
+    interBank,
+    getLanguages,
+    register,
+    login,
+    newProfileSetup,
+    profile
 };

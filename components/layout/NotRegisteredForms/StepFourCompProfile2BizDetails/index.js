@@ -35,9 +35,9 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
         formState: { errors }
     } = useForm();
 
-    const sendOTP = (data) => {
-        console.log(data);
-    };
+    // const sendOTP = (data) => {
+    //     console.log(data);
+    // };
     const [phoneNumber, setPhoneNumber] = useState('');
     const [activeBtn, setActiveBtn] = useState(true);
     return (

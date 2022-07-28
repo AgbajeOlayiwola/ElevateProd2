@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './style.module.css';
 import { ButtonComp, LoginWith } from '../../../components';
@@ -8,9 +8,10 @@ import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { createUserAction } from '../../../redux/actions/actions';
-
+import { useSelector } from 'react-redux';
 const Signup = ({ type }) => {
     const router = useRouter();
+    const [error, setError] = useState('');
     const [pName, setPname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,6 +21,11 @@ const Signup = ({ type }) => {
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
+
+    const { isLoading, registered, errorMessage } = useSelector(
+        (state) => state.registered
+    );
+
     const [passwordMatch, setPasswordMatch] = useState('');
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
@@ -32,7 +38,12 @@ const Signup = ({ type }) => {
         setCount(e.target.value.length);
         setPassword(e.target.value);
     };
-
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
+    };
+    const userName = (e) => {
+        setPname(e.target.value);
+    };
     // display Lofg in with end
     const types = (type) => {
         setOutType(type);
@@ -43,19 +54,29 @@ const Signup = ({ type }) => {
         watch,
         formState: { errors }
     } = useForm();
+    // useEffect(() => {
+    //     onSubmit();
+    // }[errorMessage]);
 
     const onSubmit = (data) => {
-        setPname(data.name);
-        setEmail(data.email);
-
-        const postData = {
-            pName,
-            email,
-            password,
-            confirmPassword,
-            affiliateCode: 'ENG'
-        };
-        dispatch(createUserAction(postData), router.push('../Verify'));
+        if (password === confirmPassword) {
+            const postData = {
+                pName,
+                email,
+                password,
+                confirmPassword,
+                affiliateCode: 'ENG'
+            };
+            console.log(errorMessage);
+            dispatch(createUserAction(postData));
+            if (errorMessage !== 'Account created successfully!') {
+                setError(errorMessage);
+            } else {
+                router.push('../Verify');
+            }
+        } else {
+            passwordMatch;
+        }
     };
 
     const [bgcolor, setBgcolor] = useState(false);
@@ -161,14 +182,18 @@ const Signup = ({ type }) => {
                                     onSubmit={handleSubmit(onSubmit)}
                                     className={styles.form}
                                 >
+                                    <div className={styles.error}>{error}</div>
                                     {/* register your input into the hook by invoking the "register" function */}
                                     <div>
                                         <label>Preffered Name</label>
                                         <br />
+
                                         <input
                                             placeholder="Enter Your Name"
                                             className={styles.textInput}
                                             {...register('name')}
+                                            onChange={userName}
+                                            required
                                         />
                                     </div>
 
@@ -191,6 +216,7 @@ const Signup = ({ type }) => {
                                                         'Invalid email address'
                                                 }
                                             })}
+                                            onChange={handleEmail}
                                         />
                                         {errors.email?.message}
                                     </div>

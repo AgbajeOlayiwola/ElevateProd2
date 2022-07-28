@@ -17,6 +17,13 @@ const Sidebar = () => {
 
     const [subNav, setSubNav] = useState(false);
 
+    const handleLogOut = () => {
+        localStorage.clear();
+        if (!localStorage.getItem('user')) {
+            router.replace('../Auth/SignUp');
+        }
+    };
+
     const showSubnav = () => {
         setSubNav((prev) => !prev);
         console.log('clicked');
@@ -68,17 +75,16 @@ const Sidebar = () => {
                     })}
                 </div>
             </div>
-            <Link href="/Auth/Login">
-                <div
-                    className={styles.parentDiv}
-                    styles={{ marginTop: '48.64px' }}
-                >
-                    <div className={styles.LinkDiv}>
-                        <LogoutSvg />
-                        <p className={styles.link}>Logout</p>
-                    </div>
+            <div
+                onClick={handleLogOut}
+                className={styles.parentDiv}
+                styles={{ marginTop: '48.64px' }}
+            >
+                <div className={styles.LinkDiv}>
+                    <LogoutSvg />
+                    <p className={styles.link}>Logout</p>
                 </div>
-            </Link>
+            </div>
         </nav>
     );
 };
