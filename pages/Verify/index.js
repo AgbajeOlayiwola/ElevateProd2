@@ -26,7 +26,7 @@ const Verify = () => {
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
                         type="submit"
-                        text="Verify"
+                        text="Go To Login Page"
                     />
                 </div>
             </div>

@@ -5,28 +5,47 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
+import { useDispatch } from 'react-redux';
+import { loginUserAction } from '../../../redux/actions/actions';
+import { useSelector } from 'react-redux';
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
+    const [error, setError] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
     const router = useRouter();
+    const { isLoading, user, errorMessages } = useSelector(
+        (state) => state.auth
+    );
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
-
-    const onSubmit = (data) => {
-        // console.log(data.email);
-        router.push('../../Onboarding/ProfileSetup');
+    const handlePwd = (e) => {
+        setPassword(e.target.value);
     };
-    const checkDataContent = (data) => {
-        if (data.password !== null && data.email !== null) {
-            setActiveBtn(true);
-            console.log(true);
+
+    const checkDataContent = (e) => {
+        setEmail(e.target.value);
+    };
+    const onSubmit = (data) => {
+        const loginData = {
+            email,
+            password
+        };
+
+        console.log(errorMessages);
+        dispatch(loginUserAction(loginData));
+        if (errorMessages !== 'Login successful') {
+            setError(errorMessages);
         } else {
-            console.log(false);
+            router.push('../../Onboarding/ProfileSetup');
         }
     };
+
     const [outType, setOutType] = useState();
     const types = (type) => {
         setOutType(type);
@@ -66,6 +85,7 @@ const Login = () => {
                             Login.
                         </p>
                     </div>
+                    <h2 className={styles.error}>{error}</h2>
                     <form
                         onSubmit={handleSubmit(onSubmit)}
                         className={styles.form}
@@ -105,7 +125,7 @@ const Login = () => {
                                     {...register('password', {
                                         required: 'Password is required'
                                     })}
-                                    onChange={checkDataContent}
+                                    onChange={handlePwd}
                                 />
                                 <Visbility typeSet={types} />
                             </div>

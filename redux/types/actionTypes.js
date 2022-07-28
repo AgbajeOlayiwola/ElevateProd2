@@ -46,3 +46,15 @@ export const makePayment = {
     FOREIGN_TRANSFER: 'FOREIGN_TRANSFER',
     BILL_PAYMENT: 'BILL_PAYMENT'
 };
+//auth action types
+export const login = {
+    REGISTER_SUCCESS: 'REGISTER_SUCCESS',
+    REGISTER_FAIL: 'REGISTER_FAIL',
+    LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+    LOGIN_ERROR: 'LOGIN_ERROE',
+    SET_MESSAGE: 'SET_MESSAGE',
+    CLEAR_MESSAGE: 'CLEAR_MESSAGE',
+    LOGIN_FAIL: 'LOGIN_FAIL',
+    LOGOUT: 'LOGOUT'
+};
+//end auth action types

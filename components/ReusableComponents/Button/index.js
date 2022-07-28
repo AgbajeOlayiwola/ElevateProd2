@@ -15,7 +15,7 @@ const ButtonComp = ({
     active,
     disabled
 }) => {
-    console.log(disabled);
+    // console.log(disabled);
 
     return (
         <>

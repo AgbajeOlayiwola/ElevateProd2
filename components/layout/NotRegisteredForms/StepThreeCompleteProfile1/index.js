@@ -46,9 +46,9 @@ const StepThreeCompleteProfile1 = ({
         formState: { errors }
     } = useForm();
 
-    const sendOTP = (data) => {
-        console.log(data);
-    };
+    // const sendOTP = (data) => {
+    //     console.log(data);
+    // };
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.cover}>
