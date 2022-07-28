@@ -63,7 +63,6 @@ export const bills = {
     BILLS_LOAD_SUCCESS: 'BILLS_LOAD_SUCCESS',
     BILLS_LOAD_ERROR: 'BILLS_LOAD_ERROR'
 };
-<<<<<<< HEAD
 
 //Bills action type ends
 
@@ -85,7 +84,6 @@ export const interBank = {
 };
 
 //Inter action type ends
-=======
 //auth action types
 export const login = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',
@@ -98,4 +96,3 @@ export const login = {
     LOGOUT: 'LOGOUT'
 };
 //end auth action types
->>>>>>> f21270a01ddb88307e4492b5fd706f7a6fa3dfcd
