@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './style.module.css';
 import { ButtonComp, LoginWith } from '../../../components';
@@ -54,21 +54,28 @@ const Signup = ({ type }) => {
         watch,
         formState: { errors }
     } = useForm();
+    // useEffect(() => {
+    //     onSubmit();
+    // }[errorMessage]);
 
     const onSubmit = (data) => {
-        const postData = {
-            pName,
-            email,
-            password,
-            confirmPassword,
-            affiliateCode: 'ENG'
-        };
-        console.log(errorMessage);
-        dispatch(createUserAction(postData));
-        if (errorMessage === null) {
-            setError('An Error Occured');
+        if (password === confirmPassword) {
+            const postData = {
+                pName,
+                email,
+                password,
+                confirmPassword,
+                affiliateCode: 'ENG'
+            };
+            console.log(errorMessage);
+            dispatch(createUserAction(postData));
+            if (errorMessage !== 'Account created successfully!') {
+                setError(errorMessage);
+            } else {
+                router.push('../Verify');
+            }
         } else {
-            router.push('../../Verify');
+            passwordMatch;
         }
     };
 
@@ -186,6 +193,7 @@ const Signup = ({ type }) => {
                                             className={styles.textInput}
                                             {...register('name')}
                                             onChange={userName}
+                                            required
                                         />
                                     </div>
 

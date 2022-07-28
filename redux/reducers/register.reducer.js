@@ -3,7 +3,7 @@ import { login } from '../types/actionTypes';
 const initialState = {
     user: [],
     loggedInUser: null,
-    errorMessage: null
+    errorMessage: 'false'
 };
 
 const registerReducer = (state = initialState, { type, payload }) => {
@@ -12,7 +12,7 @@ const registerReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 user: payload,
-                errorMessage: null
+                errorMessage: payload
             };
         case login.REGISTER_FAIL:
             return {

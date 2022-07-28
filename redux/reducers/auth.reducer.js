@@ -3,7 +3,7 @@ import { login } from '../types/actionTypes';
 const initialState = {
     user: [],
     loggedInUser: null,
-    errorMessages: null
+    errorMessages: 'false'
 };
 
 const authReducer = (state = initialState, { type, payload }) => {
@@ -12,7 +12,7 @@ const authReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 user: payload,
-                errorMessage: null
+                errorMessages: payload
             };
         case login.LOGIN_FAIL:
             return {

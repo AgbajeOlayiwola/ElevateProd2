@@ -133,8 +133,9 @@ export const loadLanguageAsync = () => (dispatch) => {
 //languagex action end
 
 //add user
-export const userRegisterStart = () => ({
-    type: login.REGISTER_SUCCESS
+export const userRegisterStart = (errorMessage) => ({
+    type: login.REGISTER_SUCCESS,
+    payload: errorMessage
 });
 export const userRegisterError = (errorMessage) => ({
     type: login.REGISTER_FAIL,
@@ -146,17 +147,19 @@ export const createUserAction = (postData) => {
             .post(`${apiRoutes.register}`, postData)
             .then((response) => {
                 console.log('data from action', response.data);
+                dispatch(userRegisterStart(response.data.message));
             })
-            .catch((e) => {
-                dispatch(userRegisterError(e.errorMessage));
+            .catch((error) => {
+                dispatch(userRegisterError(error.response.data.error));
             });
     };
 };
 //add user end
 
 //login User
-export const userLoadStart = () => ({
-    type: login.LOGIN_SUCCESS
+export const userLoadStart = (errorMessages) => ({
+    type: login.LOGIN_SUCCESS,
+    payload: errorMessages
 });
 export const userLoadError = (errorMessages) => ({
     type: login.LOGIN_FAIL,
@@ -169,10 +172,11 @@ export const loginUserAction = (loginData) => {
             .post(`${apiRoutes.login}`, loginData)
             .then((response) => {
                 localStorage.setItem('user', JSON.stringify(response.data));
-                console.log(localStorage);
+                // console.log(localStorage);
+                dispatch(userLoadStart(response.data.message));
             })
-            .catch((e) => {
-                dispatch(userLoadError(e.errorMessages));
+            .catch((error) => {
+                dispatch(userLoadError(error.response.data.error));
             });
     };
 };

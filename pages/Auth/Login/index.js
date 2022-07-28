@@ -39,8 +39,8 @@ const Login = () => {
 
         console.log(errorMessages);
         dispatch(loginUserAction(loginData));
-        if (errorMessages === null) {
-            setError('An Error Occured');
+        if (errorMessages !== 'Login successful') {
+            setError(errorMessages);
         } else {
             router.push('../../Onboarding/ProfileSetup');
         }

@@ -28,13 +28,13 @@ const Card = ({ children, className, ...restProps }) => {
         let newTop =
             (parseInt(scrollTop, 10) / parseInt(scrollHeight, 10)) *
             offsetHeight;
-        console.log(
-            newTop,
-            scrollBoxHeight,
-            scrollTop,
-            scrollHeight,
-            offsetHeight
-        );
+        // console.log(
+        //     newTop,
+        //     scrollBoxHeight,
+        //     scrollTop,
+        //     scrollHeight,
+        //     offsetHeight
+        // );
 
         console.log(offsetHeight - scrollBoxHeight);
         // newTop = newTop + parseInt(scrollTop, 10);
