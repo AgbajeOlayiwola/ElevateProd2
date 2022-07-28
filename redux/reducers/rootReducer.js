@@ -5,6 +5,11 @@ import languageReducer from './language.reducer';
 import banksReducer from './banks.reducer';
 import billerCategoryReducer from './billerCategory.reducer';
 import billerTypeReducer from './billerType.reducer';
+import billerPlanReducer from './billerPlan.reducer';
+import airtimeReducer from './airtime.reducer';
+import billsReducer from './bills.reducer';
+import internalBankReducer from './internalBank.reducer';
+import interBankReducer from './interBank.reducer';
 import authReducer from './auth.reducer';
 import registerReducer from './register.reducer';
 
@@ -14,6 +19,12 @@ const rootReducer = combineReducers({
     languages: languageReducer,
     banksReducer: banksReducer,
     billerCategoryReducer: billerCategoryReducer,
+    billerPlanReducer: billerPlanReducer,
+    billerTypeReducer: billerTypeReducer,
+    airtimeReducer: airtimeReducer,
+    billsReducer: billsReducer,
+    internalBankReducer: internalBankReducer,
+    interBankReducer: interBankReducer,
     billerTypeReducer: billerTypeReducer,
     auth: authReducer,
     registered: registerReducer

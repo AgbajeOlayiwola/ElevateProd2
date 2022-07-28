@@ -4,6 +4,11 @@ import {
     banks,
     billerCategory,
     billerType,
+    billerPlan,
+    airtime,
+    bills,
+    internalBank,
+    interBank,
     login
 } from '../types/actionTypes';
 import Services from '../services/services';
@@ -30,7 +35,9 @@ export const loadCountryAsync = () => (dispatch) => {
     axios
         .get(`${apiRoutes.getCountries}`)
         .then((response) => dispatch(countryLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(countryLoadError(error.message)));
+        .catch((error) =>
+            dispatch(countryLoadError(error.response.data.message))
+        );
 };
 //country actions end
 
@@ -107,6 +114,29 @@ export const loadbillerTypeAsync = (code, category) => (dispatch) => {
 };
 //country actions end
 
+//country actions
+export const billerPlanLoadStart = () => ({
+    type: billerPlan.BILLERPLAN_LOAD_START
+});
+
+export const billerPlanLoadSuccess = (billers) => ({
+    type: billerPlan.BILLERPLAN_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const billerPlanLoadError = (errorMessage) => ({
+    type: billerPlan.BILLERPLAN_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadbillerPlanAsync = (code) => (dispatch) => {
+    dispatch(billerPlanLoadStart());
+    axios
+        .get(`${apiRoutes.getBillerPlan}${code}`)
+        .then((response) => dispatch(billerPlanLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(billerPlanLoadError(error.message)));
+};
+//country actions end
+
 //languages action
 
 export const languageLoadStart = () => ({
@@ -131,6 +161,104 @@ export const loadLanguageAsync = () => (dispatch) => {
 };
 
 //languagex action end
+
+//airtime action
+export const airtimeLoadStart = () => ({
+    type: airtime.AIRTIME_LOAD_START
+});
+
+export const airtimeLoadSuccess = (airtimes) => ({
+    type: airtime.AIRTIME_LOAD_SUCCESS,
+    payload: airtimes
+});
+
+export const airtimeLoadError = (errorMessageAirtime) => ({
+    type: airtime.AIRTIME_LOAD_ERROR,
+    payload: errorMessageAirtime
+});
+export const postAirtimeAsync = (data) => (dispatch) => {
+    dispatch(airtimeLoadStart());
+    axios
+        .post(`${apiRoutes.airtime}`, data)
+        .then((response) => dispatch(airtimeLoadSuccess(response.data)))
+        .catch((error) => dispatch(airtimeLoadError(error.message)));
+};
+
+//airtime action end
+
+//bills action
+export const billsLoadStart = () => ({
+    type: bills.BILLS_LOAD_START
+});
+
+export const billsLoadSuccess = (bill) => ({
+    type: bills.BILLS_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const billsLoadError = (errorMessageBills) => ({
+    type: bills.BILLS_LOAD_ERROR,
+    payload: errorMessageBills
+});
+export const postBillsAsync = (data) => (dispatch) => {
+    dispatch(billsLoadStart());
+    axios
+        .post(`${apiRoutes.bills}`, data)
+        .then((response) => dispatch(billsLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(billsLoadError(error.response.data.error)));
+};
+
+//bills action end
+
+//internalBank action
+export const internalBankLoadStart = () => ({
+    type: internalBank.INTERNALBANK_LOAD_START
+});
+
+export const internalBankLoadSuccess = (bill) => ({
+    type: internalBank.INTERNALBANK_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const internalBankLoadError = (internalBankerror) => ({
+    type: internalBank.INTERNALBANK_LOAD_ERROR,
+    payload: internalBankerror
+});
+export const postInternalBank = (data) => (dispatch) => {
+    dispatch(internalBankLoadStart());
+    axios
+        .post(`${apiRoutes.internalBank}`, data)
+        .then((response) =>
+            dispatch(internalBankLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(internalBankLoadError(error.message)));
+};
+
+//internalBank action end
+
+//interBank action
+export const interBankLoadStart = () => ({
+    type: interBank.INTERBANK_LOAD_START
+});
+
+export const interBankLoadSuccess = (bill) => ({
+    type: interBank.INTERBANK_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const interBankLoadError = (interBankerror) => ({
+    type: interBank.INTERBANK_LOAD_ERROR,
+    payload: interBankerror
+});
+export const postInterBank = (data) => (dispatch) => {
+    dispatch(interBankLoadStart());
+    axios
+        .post(`${apiRoutes.interBank}`, data)
+        .then((response) => dispatch(interBankLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(interBankLoadError(error.message)));
+};
+
+//interBank action end
 
 //add user
 export const userRegisterStart = (errorMessage) => ({

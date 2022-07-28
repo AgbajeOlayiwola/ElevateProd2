@@ -20,5 +20,4 @@ export const store = createStore(
 // assigning store to next wrapper
 const makeStore = () => store;
 
-// console.log(store.getState())
 export const wrapper = createWrapper(makeStore);

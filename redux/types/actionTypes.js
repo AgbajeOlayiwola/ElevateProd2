@@ -28,6 +28,13 @@ export const billerType = {
     BILLERTYPE_LOAD_ERROR: 'BILLERTYPE_LOAD_ERROR'
 };
 //banks action types end
+//banks action types
+export const billerPlan = {
+    BILLERPLAN_LOAD_START: 'BILLERPLAN_LOAD_START',
+    BILLERPLAN_LOAD_SUCCESS: 'BILLERPLAN_LOAD_SUCCESS',
+    BILLERPLAN_LOAD_ERROR: 'BILLERPLAN_LOAD_ERROR'
+};
+//banks action types end
 
 //language action types
 
@@ -39,13 +46,44 @@ export const languages = {
 
 //language action type ends
 
-//userDetail action Types
-export const makePayment = {
-    SINGLE_TRANSFER: 'SINGLE_TRANSFER',
-    BULK_TRANSFER: 'BULK_TRANSFER',
-    FOREIGN_TRANSFER: 'FOREIGN_TRANSFER',
-    BILL_PAYMENT: 'BILL_PAYMENT'
+//Airtime action types
+
+export const airtime = {
+    AIRTIME_LOAD_START: 'AIRTIME_LOAD_START',
+    AIRTIME_LOAD_SUCCESS: 'AIRTIME_LOAD_SUCCESS',
+    AIRTIME_LOAD_ERROR: 'AIRTIME_LOAD_ERROR'
 };
+
+//Airtime action type ends
+
+//Bills action types
+
+export const bills = {
+    BILLS_LOAD_START: 'BILLS_LOAD_START',
+    BILLS_LOAD_SUCCESS: 'BILLS_LOAD_SUCCESS',
+    BILLS_LOAD_ERROR: 'BILLS_LOAD_ERROR'
+};
+
+//Bills action type ends
+
+//Internal action types
+
+export const internalBank = {
+    INTERNALBANK_LOAD_START: 'INTERNALBANK_LOAD_START',
+    INTERNALBANK_LOAD_SUCCESS: 'INTERNALBANK_LOAD_SUCCESS',
+    INTERNALBANK_LOAD_ERROR: 'INTERNALBANK_LOAD_ERROR'
+};
+
+//Internal action type ends
+//Inter action types
+
+export const interBank = {
+    INTERBANK_LOAD_START: 'INTERBANK_LOAD_START',
+    INTERBANK_LOAD_SUCCESS: 'INTERBANK_LOAD_SUCCESS',
+    INTERBANK_LOAD_ERROR: 'INTERBANK_LOAD_ERROR'
+};
+
+//Inter action type ends
 //auth action types
 export const login = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',

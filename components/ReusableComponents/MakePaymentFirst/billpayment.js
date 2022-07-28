@@ -4,29 +4,56 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import { loadbillerCategoryAsync } from '../../../redux/actions/actions';
 import { loadbillerTypeAsync } from '../../../redux/actions/actions';
+import { loadbillerPlanAsync } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const BillPayment = ({ action, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [billerCategories, setBillerCategories] = useState([]);
     const [billerTypes, setBillerTypes] = useState([]);
+    const [billerPlans, setBillerPlans] = useState([]);
+    const [billerId, setBillerId] = useState('');
+
     const dispatch = useDispatch();
     const { billerCategory } = useSelector(
         (state) => state.billerCategoryReducer
     );
     const { billerType } = useSelector((state) => state.billerTypeReducer);
+    const { billerPlan } = useSelector((state) => state.billerPlanReducer);
     useEffect(() => {
         dispatch(loadbillerCategoryAsync('ENG'));
+    }, []);
+    useEffect(() => {
         if (billerCategory !== null) {
             setBillerCategories(billerCategory);
         }
     }, [billerCategory]);
-    useEffect(() => {}, [billerTypes, billerType]);
+    useEffect(() => {}, [billerType]);
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
+    const loadbillerType = (e) => {
+        dispatch(loadbillerTypeAsync('ENG', e.target.value));
+        setBillerId(e.target.value);
+        setBillerTypes([]);
+        setBillerPlans([]);
+    };
+    useEffect(() => {
+        if (billerType !== null) {
+            setBillerTypes(billerType);
+        }
+    }, [billerType]);
+    const loadPlans = (e) => {
+        dispatch(loadbillerPlanAsync(e.target.value));
+    };
+    useEffect(() => {}, [billerId]);
+    useEffect(() => {
+        if (billerPlan !== null) {
+            setBillerPlans(billerPlan.billerProductInfo);
+        }
+    }, [billerPlan]);
     return (
         <div>
             <form onSubmit={handleSubmit(action)}>
@@ -74,17 +101,7 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                                 {...register('billerType', {
                                     required: 'Biller type is required'
                                 })}
-                                onChange={(e) => {
-                                    dispatch(
-                                        loadbillerTypeAsync(
-                                            'ENG',
-                                            e.target.value
-                                        )
-                                    );
-                                    if (billerType !== null) {
-                                        setBillerTypes(billerType);
-                                    }
-                                }}
+                                onChange={loadbillerType}
                                 name="billerType"
                             >
                                 <option value="">Select Biller</option>
@@ -110,12 +127,13 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                                     required: 'Biller Category is required'
                                 })}
                                 name="billerCategory"
+                                onChange={loadPlans}
                             >
                                 <option value="">Select Category</option>
                                 {billerTypes?.map((item, index) => {
                                     return (
                                         <option
-                                            value={item.billerName}
+                                            value={item.billerCode}
                                             key={index}
                                         >
                                             {item.billerName}
@@ -129,53 +147,111 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                         </p>
                     </div>
                 </div>
-                <div className={styles.accountDetails}>
-                    <label>Please choose Biller Details</label>
-                    <div className={styles.accountDetailsBody}>
-                        <div className={styles.billerType}>
-                            <label>
-                                Ref. number (i.e. smartcard no, meter no, etc)
-                            </label>
-                            <input
-                                {...register('billerDetail', {
-                                    required: 'Biller Detail is required',
-                                    pattern: {
-                                        value: /^[0-9]/i,
-                                        message:
-                                            'Biller Detail can only be number '
-                                    }
-                                })}
-                                name="billerDetail"
-                                type="number"
-                                placeholder="Enter account number here"
-                            />
+                {billerId && (
+                    <div className={styles.accountDetails}>
+                        <label>Please choose Biller Details</label>
+                        <div className={styles.accountDetailsBody}>
+                            {billerId === 'AIRTIME' ? (
+                                <>
+                                    <div className={styles.billerType}>
+                                        <label>Phone Number</label>
+                                        <input
+                                            {...register('phoneNumber', {
+                                                required:
+                                                    'Phone Number is required',
+                                                pattern: {
+                                                    value: /^[0-9]/i,
+                                                    message:
+                                                        'Phone Number can only be number '
+                                                }
+                                            })}
+                                            name="phoneNumber"
+                                            type="number"
+                                            placeholder="Enter Phone Number"
+                                        />
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors?.billerDetail?.message}
+                                    </p>
+                                </>
+                            ) : (
+                                <>
+                                    <div className={styles.billerType}>
+                                        <label>
+                                            Ref. number (i.e. smartcard no,
+                                            meter no, etc)
+                                        </label>
+                                        <input
+                                            {...register('billerDetail', {
+                                                required:
+                                                    'Biller Detail is required',
+                                                pattern: {
+                                                    value: /^[0-9A-Za-z]/i,
+                                                    message:
+                                                        'Biller Detail can only be number '
+                                                }
+                                            })}
+                                            name="billerDetail"
+                                            type="text"
+                                            placeholder="Enter Ref No. here"
+                                        />
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors?.billerDetail?.message}
+                                    </p>
+                                    <div className={styles.billerCategory}>
+                                        <label>Choose your Plan</label>
+                                        <select
+                                            {...register('billerPlan', {
+                                                required:
+                                                    'Biller plan is required'
+                                            })}
+                                            name="billerPlan"
+                                        >
+                                            <option value="">
+                                                Select Plan
+                                            </option>
+                                            {billerPlans?.map((item, index) => {
+                                                return (
+                                                    <option
+                                                        value={item.productName}
+                                                        key={index}
+                                                    >
+                                                        {item.productName}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors?.billerPlan?.message}
+                                    </p>
+                                </>
+                            )}
                         </div>
-                        <p className={styles.error}>
-                            {errors?.billerDetail?.message}
-                        </p>
-                        <div className={styles.billerCategory}>
-                            <label>Choose your Plan</label>
-                            <select
-                                {...register('billerPlan', {
-                                    required: 'Biller plan is required'
-                                })}
-                                onChange={(e) => {
-                                    if (e?.target.value.length === 0) {
-                                        setActiveBtn(false);
-                                    } else if (e?.target.value.length > 0) {
-                                        setActiveBtn(true);
-                                    }
-                                }}
-                                name="billerPlan"
-                            >
-                                <option value="">Select Plan</option>
-                                <option value="Biller Plan">Biller Plan</option>
-                            </select>
-                        </div>
-                        <p className={styles.error}>
-                            {errors?.billerPlan?.message}
-                        </p>
                     </div>
+                )}
+                <div className={styles.billerAmount}>
+                    <label>Enter Amount</label>
+                    <input
+                        {...register('amount', {
+                            required: 'Amount is required',
+                            pattern: {
+                                value: /^[0-9]/i,
+                                message: 'Amount can only be number '
+                            }
+                        })}
+                        name="amount"
+                        type="number"
+                        placeholder="5000"
+                        onChange={(e) => {
+                            if (e?.target.value.length === 0) {
+                                setActiveBtn(false);
+                            } else if (e?.target.value.length > 0) {
+                                setActiveBtn(true);
+                            }
+                        }}
+                    />
                 </div>
                 <div className={styles.repeat}>
                     <input type="checkbox" />

@@ -54,6 +54,65 @@
     margin-bottom: 32px;
 }
 
+.choose {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin: 0px;
+}
+
+.transferHead {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 12px 0px 24px;
+}
+
+.transferHead .transferHeadSingle {
+    background: #f5f6fa;
+    border-radius: 12px;
+    width: 48%;
+    text-align: center;
+    cursor: pointer;
+    transition: all 1s ease;
+}
+
+.transferHeadSingle p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #cccccc;
+}
+
+.transferHead .transferActive {
+    background: #69940d;
+    border-radius: 12px;
+    width: 48%;
+    text-align: center;
+    cursor: pointer;
+    transition: all 1s ease;
+}
+
+.transferActive p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.displayNone {
+    display: none;
+}
+
 .firstBody label {
     font-size: 14px;
     line-height: 17px;
@@ -62,6 +121,10 @@
     margin-bottom: 12px;
     display: block;
     color: #3e3e3e;
+}
+
+.billerAmount {
+    margin-top: 16px;
 }
 
 .firstBody input[type='number']::-webkit-inner-spin-button,

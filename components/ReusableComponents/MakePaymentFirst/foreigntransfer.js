@@ -15,12 +15,16 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
 
     useEffect(() => {
         dispatch(loadCountryAsync());
+    }, []);
+    useEffect(() => {
         if (countries !== null) {
             setCountry(countries);
         }
     }, [countries]);
     useEffect(() => {
         dispatch(loadbankAsync('ENG'));
+    }, []);
+    useEffect(() => {
         if (banks !== null) {
             setBank(banks);
         }

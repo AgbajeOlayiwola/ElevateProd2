@@ -1,0 +1,77 @@
+.elevateSuccess {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    text-align: center;
+    color: #8f8f8f;
+    width: 60%;
+    margin: 8px auto 0px;
+}
+
+.elevateSuccess span {
+    font-weight: 700;
+}
+
+.centerP {
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    text-align: center;
+    color: #a5a5a5;
+    cursor: pointer;
+}
+
+.successcont {
+    width: 48%;
+    max-width: 600px;
+    background: #fefefe;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    border-radius: 20px;
+    margin: 32px auto;
+    /* display: flex; */
+    position: absolute;
+    top: 5%;
+    left: 33%;
+    z-index: 10;
+}
+.noshow {
+    display: none;
+}
+.mainOverlay {
+    display: block;
+    flex: 1;
+    background-color: rgba(245, 246, 250, 0.8);
+    padding: 36px 32px 46px 32px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.reminder {
+    width: 37%;
+    margin: 64px auto 10px;
+    background: rgba(105, 187, 1, 0.15);
+    border-radius: 12px;
+}
+
+.reminder p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 24px 16px;
+    color: #8fbf00;
+}
+
+.successcont button {
+    width: 66%;
+    margin: 64px auto;
+    display: block;
+}

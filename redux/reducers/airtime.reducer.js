@@ -1,27 +1,27 @@
-import { billerType } from '../types/actionTypes';
+import { airtime } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    billerType: null,
+    airtime: [],
     errorMessage: null
 };
 
-const billerTypeReducer = (state = initialState, { type, payload }) => {
+const airtimeReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case billerType.BILLERTYPE_LOAD_START:
+        case airtime.AIRTIME_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
-                billerType: null,
+                airtime: null,
                 errorMessage: null
             };
-        case billerType.BILLERTYPE_LOAD_SUCCESS:
+        case airtime.AIRTIME_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                billerType: payload
+                airtime: payload
             };
-        case billerType.BILLERTYPE_LOAD_ERROR:
+        case airtime.AIRTIME_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -33,4 +33,4 @@ const billerTypeReducer = (state = initialState, { type, payload }) => {
     }
 };
 
-export default billerTypeReducer;
+export default airtimeReducer;
