@@ -11,12 +11,14 @@ const MakePaymentSecond = ({
     sender,
     recieverName,
     recieverBank,
-    title
+    title,
+    refNuber,
+    number
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <Overlay overlay={overlay}>
-            {title === 'Bill Payment' ? (
+            {title === 'Bills Payment' ? (
                 <div className={styles.PaymentSecond}>
                     <div className={styles.PaymentSecondCont}>
                         <h2>Confirm Transaction</h2>
@@ -34,51 +36,68 @@ const MakePaymentSecond = ({
                             </div>
                             <div className={styles.transactionsingle}>
                                 <p className={styles.transactionTitle}>
-                                    Beneficiary Bank
+                                    Platform
                                 </p>
                                 <h3>
                                     <span></span> {recieverBank}
                                 </h3>
                             </div>
-                            <div className={styles.transactionsingle}>
-                                <p className={styles.transactionTitle}>From</p>
-                                <h3>{sender}</h3>
-                            </div>
+                            {recieverName === 'Utilities' ? (
+                                <>
+                                    <div className={styles.transactionsingle}>
+                                        <p className={styles.transactionTitle}>
+                                            Meter Type
+                                        </p>
+                                        <h3>{sender}</h3>
+                                    </div>
+                                    <div className={styles.transactionsingle}>
+                                        <p className={styles.transactionTitle}>
+                                            Reference Number
+                                        </p>
+                                        <h3>{refNuber}</h3>
+                                    </div>
+                                </>
+                            ) : null}
+
                             <div className={styles.transactionsingle}>
                                 <p className={styles.transactionTitle}>
                                     Charges
                                 </p>
                                 <h3>N50.50</h3>
                             </div>
+                            <div className={styles.transactionsingle}>
+                                <p className={styles.transactionTitle}>
+                                    Number
+                                </p>
+                                <h3>{number}</h3>
+                            </div>
                         </div>
                         <h4>Enter Transaction Pin</h4>
-                        <form>
-                            <OtpInput />
-                            <div className={styles.resendFlex}>
-                                <p
-                                    style={{
-                                        color: '#005B82',
-                                        cursor: 'pointer'
-                                    }}
-                                >
-                                    Resend OTP
-                                </p>
-                                <button
-                                    style={{ cursor: 'pointer' }}
-                                    className={styles.clr}
-                                    type="reset"
-                                >
-                                    Clear
-                                </button>
-                            </div>
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Make Transfer"
-                                type="submit"
-                                onClick={transferAction}
-                            />
-                        </form>
+                        <OtpInput />
+                        <div className={styles.resendFlex}>
+                            <p
+                                style={{
+                                    color: '#005B82',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Resend OTP
+                            </p>
+                            <button
+                                style={{ cursor: 'pointer' }}
+                                className={styles.clr}
+                                type="reset"
+                            >
+                                Clear
+                            </button>
+                        </div>
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text="Make Transfer"
+                            type="submit"
+                            onClick={transferAction}
+                        />
                     </div>
                 </div>
             ) : (
@@ -115,33 +134,31 @@ const MakePaymentSecond = ({
                             </div>
                         </div>
                         <h4>Enter Transaction Pin</h4>
-                        <form>
-                            <OtpInput />
-                            <div className={styles.resendFlex}>
-                                <p
-                                    style={{
-                                        color: '#005B82',
-                                        cursor: 'pointer'
-                                    }}
-                                >
-                                    Resend OTP
-                                </p>
-                                <button
-                                    style={{ cursor: 'pointer' }}
-                                    className={styles.clr}
-                                    type="reset"
-                                >
-                                    Clear
-                                </button>
-                            </div>
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Make Transfer"
-                                type="submit"
-                                onClick={transferAction}
-                            />
-                        </form>
+                        <OtpInput />
+                        <div className={styles.resendFlex}>
+                            <p
+                                style={{
+                                    color: '#005B82',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Resend OTP
+                            </p>
+                            <button
+                                style={{ cursor: 'pointer' }}
+                                className={styles.clr}
+                                type="reset"
+                            >
+                                Clear
+                            </button>
+                        </div>
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text="Make Transfer"
+                            type="submit"
+                            onClick={transferAction}
+                        />
                     </div>
                 </div>
             )}

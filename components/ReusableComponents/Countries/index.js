@@ -17,8 +17,12 @@ const Countriess = () => {
         if (countries !== null) {
             setCountry(countries);
         }
+    }, []);
+    useEffect(() => {
+        if (countries !== null) {
+            setCountry(countries);
+        }
     }, [countries]);
-
     // console.log(countries);
     const {
         register,
@@ -39,7 +43,7 @@ const Countriess = () => {
                 {countrys.map((item, index) => {
                     // console.log(item.nme);
                     return (
-                        <option key={item.id} value={item.name}>
+                        <option key={index} value={item.name}>
                             {item.name}
                         </option>
                     );

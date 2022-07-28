@@ -39,7 +39,7 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.cover}>
-            <Card>
+            <div>
                 {/* <ProfileCard width="50%" height="0"> */}
                 <CardHeadingBVN>
                     <LeftHeading>BVN (OTP) Authenticator</LeftHeading>
@@ -66,22 +66,8 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                             Clear
                         </button>
                     </ResetOTP>
-
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        // width="100%"
-                        // height="52px"
-                        text="Proceed"
-                        type="button"
-                        // backgroundColor="#6ccf00"
-                        // color="#ffffff"
-                        // fontWeight="900"
-                        // margin="10% 0 0 0"
-                        onClick={handleShowThirdStep}
-                    />
                 </form>
-            </Card>
+            </div>
         </div>
     );
 };

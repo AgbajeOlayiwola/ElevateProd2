@@ -10,7 +10,7 @@ import Link from 'next/link';
 import ButtonComp from '../Button';
 import Overlay from '../Overlay';
 
-const PaymentSuccess = ({
+const PaymentError = ({
     action,
     country,
     title,
@@ -20,7 +20,8 @@ const PaymentSuccess = ({
     body,
     paymentType,
     amount,
-    number
+    number,
+    errorPass
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -31,7 +32,7 @@ const PaymentSuccess = ({
     return (
         <Overlay overlay={overlay}>
             <div className={styles.successcont} ref={myref}>
-                {type === 'profile' ? (
+                {/* {type === 'profile' ? (
                     <BodyWrapper>
                         <div
                             style={{
@@ -73,10 +74,12 @@ const PaymentSuccess = ({
                             <SuccessMainHeading>
                                 Transfer Successful
                             </SuccessMainHeading>
-                            <h6 className={styles.elevateSuccess}>
-                                Your recharge of <span>{amount} </span> for
-                                Airtime on June 12, 2022 by 12:02pm
-                            </h6>
+                            {paymentType === 'AIRTIME' ? (
+                                <h6 className={styles.elevateSuccess}>
+                                    Your recharge of <span>{amount} </span> for
+                                    Airtime on June 12, 2022 by 12:02pm
+                                </h6>
+                            ) : null}
 
                             {title === 'Foreign Transfer Payments' ? (
                                 <h6 className={styles.elevateSuccess}>
@@ -101,10 +104,11 @@ const PaymentSuccess = ({
                             />
                         </RegistrationStatus>
                     </BodyWrapper>
-                )}
+                )} */}
+                <h2>{errorPass}</h2>
             </div>
         </Overlay>
     );
 };
 
-export default PaymentSuccess;
+export default PaymentError;

@@ -1,28 +1,27 @@
-import { languages } from '../../types/actionTypes';
+import { airtime } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    language: null,
+    airtime: [],
     errorMessage: null
 };
 
-const languageReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+const airtimeReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case languages.LANGUAGE_LOAD_START:
+        case airtime.AIRTIME_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
-                language: null,
+                airtime: null,
                 errorMessage: null
             };
-        case languages.LANGUAGE_LOAD_SUCCESS:
+        case airtime.AIRTIME_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                language: payload
+                airtime: payload
             };
-        case languages.LANGUAGE_LOAD_ERROR:
+        case airtime.AIRTIME_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -34,4 +33,4 @@ const languageReducer = (state = initialState, { type, payload }) => {
     }
 };
 
-export default languageReducer;
+export default airtimeReducer;

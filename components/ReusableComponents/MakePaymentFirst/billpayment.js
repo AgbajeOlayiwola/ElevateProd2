@@ -147,58 +147,27 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                         </p>
                     </div>
                 </div>
-                <div className={styles.accountDetails}>
-                    <label>Please choose Biller Details</label>
-                    <div className={styles.accountDetailsBody}>
-                        <div className={styles.billerType}>
-                            <label>
-                                Ref. number (i.e. smartcard no, meter no, etc)
-                            </label>
-                            <input
-                                {...register('billerDetail', {
-                                    required: 'Biller Detail is required',
-                                    pattern: {
-                                        value: /^[0-9]/i,
-                                        message:
-                                            'Biller Detail can only be number '
-                                    }
-                                })}
-                                name="billerDetail"
-                                type="number"
-                                placeholder="Enter account number here"
-                            />
-                        </div>
-                        <p className={styles.error}>
-                            {errors?.billerDetail?.message}
-                        </p>
-                        {billerId &&
-                            (billerId === 'AIRTIME' ? (
+                {billerId && (
+                    <div className={styles.accountDetails}>
+                        <label>Please choose Biller Details</label>
+                        <div className={styles.accountDetailsBody}>
+                            {billerId === 'AIRTIME' ? (
                                 <>
                                     <div className={styles.billerType}>
-                                        <label>Enter Amount</label>
+                                        <label>Phone Number</label>
                                         <input
-                                            {...register('amount', {
-                                                required: 'Amount is required',
+                                            {...register('phoneNumber', {
+                                                required:
+                                                    'Phone Number is required',
                                                 pattern: {
                                                     value: /^[0-9]/i,
                                                     message:
-                                                        'Amount can only be number '
+                                                        'Phone Number can only be number '
                                                 }
                                             })}
-                                            name="amount"
+                                            name="phoneNumber"
                                             type="number"
-                                            placeholder="5000"
-                                            onChange={(e) => {
-                                                if (
-                                                    e?.target.value.length === 0
-                                                ) {
-                                                    setActiveBtn(false);
-                                                } else if (
-                                                    e?.target.value.length > 0
-                                                ) {
-                                                    setActiveBtn(true);
-                                                }
-                                            }}
+                                            placeholder="Enter Phone Number"
                                         />
                                     </div>
                                     <p className={styles.error}>
@@ -207,6 +176,29 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                                 </>
                             ) : (
                                 <>
+                                    <div className={styles.billerType}>
+                                        <label>
+                                            Ref. number (i.e. smartcard no,
+                                            meter no, etc)
+                                        </label>
+                                        <input
+                                            {...register('billerDetail', {
+                                                required:
+                                                    'Biller Detail is required',
+                                                pattern: {
+                                                    value: /^[0-9A-Za-z]/i,
+                                                    message:
+                                                        'Biller Detail can only be number '
+                                                }
+                                            })}
+                                            name="billerDetail"
+                                            type="text"
+                                            placeholder="Enter Ref No. here"
+                                        />
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors?.billerDetail?.message}
+                                    </p>
                                     <div className={styles.billerCategory}>
                                         <label>Choose your Plan</label>
                                         <select
@@ -214,17 +206,6 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                                                 required:
                                                     'Biller plan is required'
                                             })}
-                                            onChange={(e) => {
-                                                if (
-                                                    e?.target.value.length === 0
-                                                ) {
-                                                    setActiveBtn(false);
-                                                } else if (
-                                                    e?.target.value.length > 0
-                                                ) {
-                                                    setActiveBtn(true);
-                                                }
-                                            }}
                                             name="billerPlan"
                                         >
                                             <option value="">
@@ -246,8 +227,31 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                                         {errors?.billerPlan?.message}
                                     </p>
                                 </>
-                            ))}
+                            )}
+                        </div>
                     </div>
+                )}
+                <div className={styles.billerAmount}>
+                    <label>Enter Amount</label>
+                    <input
+                        {...register('amount', {
+                            required: 'Amount is required',
+                            pattern: {
+                                value: /^[0-9]/i,
+                                message: 'Amount can only be number '
+                            }
+                        })}
+                        name="amount"
+                        type="number"
+                        placeholder="5000"
+                        onChange={(e) => {
+                            if (e?.target.value.length === 0) {
+                                setActiveBtn(false);
+                            } else if (e?.target.value.length > 0) {
+                                setActiveBtn(true);
+                            }
+                        }}
+                    />
                 </div>
                 <div className={styles.repeat}>
                     <input type="checkbox" />

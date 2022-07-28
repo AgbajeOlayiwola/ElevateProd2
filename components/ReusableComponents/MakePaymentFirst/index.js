@@ -12,6 +12,8 @@ const MakePaymentFirst = ({
     closeAction,
     buttonText,
     action,
+    selfaction,
+    othersaction,
     overlay
 }) => {
     const myref = useRef();
@@ -26,7 +28,8 @@ const MakePaymentFirst = ({
                 <div className={styles.firstBody}>
                     {firstTitle === 'Single Transfer Payment' ? (
                         <SingleTransfer
-                            action={action}
+                            selfaction={selfaction}
+                            othersaction={othersaction}
                             firstTitle="Single Transfer Payment"
                             buttonText={buttonText}
                         />
