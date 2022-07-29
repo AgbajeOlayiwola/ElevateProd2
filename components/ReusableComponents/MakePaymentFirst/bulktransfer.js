@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
+import { loadbankAsync } from '../../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const BulkTransfer = ({ action, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
+    const [bank, setBank] = useState([]);
+    const dispatch = useDispatch();
+    const { banks } = useSelector((state) => state.banksReducer);
+
+    useEffect(() => {
+        dispatch(loadbankAsync('ENG'));
+    }, []);
+    useEffect(() => {
+        if (banks !== null) {
+            setBank(banks);
+        }
+    }, [banks]);
     const {
         register,
         handleSubmit,
@@ -87,7 +101,16 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                                     name="bankName1"
                                 >
                                     <option value="">Select Bank</option>
-                                    <option value="GTB">GTB</option>
+                                    {banks?.map((item, index) => {
+                                        return (
+                                            <option
+                                                value={item.institutionId}
+                                                key={index}
+                                            >
+                                                {item.institutionName}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                                 <p className={styles.error}>
                                     {errors?.bankName1?.message}
@@ -126,7 +149,16 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                                     name="bankName2"
                                 >
                                     <option value="">Select Bank</option>
-                                    <option value="FCMB">FCMB</option>
+                                    {banks?.map((item, index) => {
+                                        return (
+                                            <option
+                                                value={item.institutionId}
+                                                key={index}
+                                            >
+                                                {item.institutionName}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                                 <p className={styles.error}>
                                     {errors?.bankName2?.message}
@@ -165,7 +197,16 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                                     name="bankName3"
                                 >
                                     <option value="">Select Bank</option>
-                                    <option value="JAIZ">JAIZ</option>
+                                    {banks?.map((item, index) => {
+                                        return (
+                                            <option
+                                                value={item.institutionId}
+                                                key={index}
+                                            >
+                                                {item.institutionName}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                                 <p className={styles.error}>
                                     {errors?.bankName3?.message}

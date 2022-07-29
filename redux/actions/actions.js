@@ -9,6 +9,9 @@ import {
     bills,
     internalBank,
     interBank,
+    interBankEnquiry,
+    balanceEnquiry,
+    transactionHistory,
     login
 } from '../types/actionTypes';
 import Services from '../services/services';
@@ -259,6 +262,84 @@ export const postInterBank = (data) => (dispatch) => {
 };
 
 //interBank action end
+
+//interBankEnquiry action
+export const interBankEnquiryLoadStart = () => ({
+    type: interBankEnquiry.INTERBANKENQUIRY_LOAD_START
+});
+
+export const interBankEnquiryLoadSuccess = (bill) => ({
+    type: interBankEnquiry.INTERBANKENQUIRY_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const interBankEnquiryLoadError = (interBankEnquiryerror) => ({
+    type: interBankEnquiry.INTERBANKENQUIRY_LOAD_ERROR,
+    payload: interBankEnquiryerror
+});
+export const postInterBankEnquiry = (data) => (dispatch) => {
+    dispatch(interBankEnquiryLoadStart());
+    axios
+        .post(`${apiRoutes.interBankEnquiry}`, data)
+        .then((response) =>
+            dispatch(interBankEnquiryLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(interBankEnquiryLoadError(error.message)));
+};
+
+//interBankEnquiry action end
+
+//balanceEnquiry action
+export const balanceEnquiryLoadStart = () => ({
+    type: balanceEnquiry.BALANCEENQUIRY_LOAD_START
+});
+
+export const balanceEnquiryLoadSuccess = (bill) => ({
+    type: balanceEnquiry.BALANCEENQUIRY_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
+    type: balanceEnquiry.BALANCEENQUIRY_LOAD_ERROR,
+    payload: balanceEnquiryerror
+});
+export const getBalanceEnquiry = () => (dispatch) => {
+    dispatch(balanceEnquiryLoadStart());
+    axios
+        .get(`${apiRoutes.balanceEnquiry}`)
+        .then((response) =>
+            dispatch(balanceEnquiryLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(balanceEnquiryLoadError(error.message)));
+};
+
+//balanceEnquiry action end
+
+//transactionHistory action
+export const transactionHistoryLoadStart = () => ({
+    type: transactionHistory.TRANSACTIONHISTORY_LOAD_START
+});
+
+export const transactionHistoryLoadSuccess = (bill) => ({
+    type: transactionHistory.TRANSACTIONHISTORY_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const transactionHistoryLoadError = (transactionHistoryerror) => ({
+    type: transactionHistory.TRANSACTIONHISTORY_LOAD_ERROR,
+    payload: transactionHistoryerror
+});
+export const getTransactionHistory = () => (dispatch) => {
+    dispatch(balanceEnquiryLoadStart());
+    axios
+        .get(`${apiRoutes.transactionHistory}`)
+        .then((response) =>
+            dispatch(transactionHistoryLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(transactionHistoryLoadError(error.message)));
+};
+
+//transactionHistory action end
 
 //add user
 export const userRegisterStart = (errorMessage) => ({
