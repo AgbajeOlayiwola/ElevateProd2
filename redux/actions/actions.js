@@ -316,13 +316,13 @@ export const loginUserAction = (loginData) => {
 
 const getConfig = () => {
     try {
-        let token = localStorage.getItem('token');
+        let token = JSON.parse(localStorage.getItem('token'));
         console.log(token);
         return {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: token }
         };
     } catch (error) {
-        console.log('getConfig error', error);
+        console.log('get config error', error);
     }
 };
 
