@@ -8,6 +8,15 @@ import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch } from 'react-redux';
 import { loginUserAction } from '../../../redux/actions/actions';
 import { useSelector } from 'react-redux';
+// import UseForce from '../../../redux/helper/useForce';
+//create your forceUpdate hook
+function useForceUpdate() {
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue((value) => value + 1); // update state to force render
+    // An function that increment 👆🏻 the previous state like here
+    // is better than directly setting `value + 1`
+}
+
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [error, setError] = useState('');
@@ -15,9 +24,8 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const router = useRouter();
-    const { isLoading, user, errorMessages } = useSelector(
-        (state) => state.auth
-    );
+
+    const forceUpdate = useForceUpdate();
     const {
         register,
         handleSubmit,
@@ -36,15 +44,17 @@ const Login = () => {
             email,
             password
         };
-
-        console.log(errorMessages);
         dispatch(loginUserAction(loginData));
+        forceUpdate();
         if (errorMessages !== 'Login successful') {
             setError(errorMessages);
         } else {
             router.push('../../Onboarding/ProfileSetup');
         }
     };
+    const { isLoading, user, errorMessages } = useSelector(
+        (state) => state.auth
+    );
 
     const [outType, setOutType] = useState();
     const types = (type) => {

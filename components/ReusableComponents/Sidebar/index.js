@@ -20,7 +20,7 @@ const Sidebar = () => {
     const handleLogOut = () => {
         localStorage.clear();
         if (!localStorage.getItem('user')) {
-            router.replace('../Auth/SignUp');
+            router.replace('../Auth/Login');
         }
     };
 

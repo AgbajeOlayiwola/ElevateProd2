@@ -1,14 +1,32 @@
 import React, { useState } from 'react';
 import Card from './Card/index';
 import ButtonComp from '../../ReusableComponents/Button';
-import RegisteredForm from '../RegisteredForms/RegisteredForm';
+import RegisteredForm from './RegisteredForm';
 import StepTwoBVNAuthenticator from './StepTwoBVNAuthenticator';
 import StepThreeCompleteProfile1 from './StepThreeCompleteProfile1';
+import styles from './styles.module.css';
 import Link from 'next/link';
-
+import { useDispatch } from 'react-redux';
+import { createProfileSetup } from '../../../redux/actions/actions';
 const ProfileSetups = () => {
     const [page, setPage] = useState(0);
-    const [formData, setFormData] = useState([]);
+    const [formData, setFormData] = useState({
+        type: 'UNREGISTERED BUSINESS',
+        rcnumber: '',
+        tinNumber: '',
+        bvNumber: '',
+        phoneNumber: '',
+        dateOfBirth: '',
+        bvnOtp: '',
+        gender: '',
+        bussinessName: '',
+        bussinesPhone: '',
+        BusinessType: '',
+        streetName: '',
+        localGoverment: '',
+        city: '',
+        state: ''
+    });
     const [activeBtn, setActiveBtn] = useState(true);
 
     const conditionalComponent = () => {
@@ -43,9 +61,25 @@ const ProfileSetups = () => {
                 );
         }
     };
+    const dispatch = useDispatch();
     function handleSubmit() {
         setPage(page + 1);
+        // console.log('firstAPi');
+        const profileData = {
+            type: formData.type,
+            registrationNumber: formData.rcnumber,
+            tin: formData.tinNumber,
+            bvn: formData.bvNumber,
+            phoneNumber: formData.phoneNumber,
+            dob: formData.dateOfBirth
+        };
+        dispatch(createProfileSetup(profileData));
     }
+
+    const handleSubmitII = () => {
+        setPage(page + 1);
+        console.log('secondAPi');
+    };
     return (
         <Card>
             {conditionalComponent()}
@@ -53,7 +87,7 @@ const ProfileSetups = () => {
                 <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
-                    onClick={handleSubmit}
+                    onClick={page === 0 ? handleSubmit : handleSubmitII}
                     type="submit"
                     text={page === 2 ? 'Next' : 'Next'}
                 />
