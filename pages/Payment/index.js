@@ -85,6 +85,7 @@ const Payment = () => {
             font-weight: 500;
             font-family: 'Inter', sans-serif;
             line-height: 16px;
+            margin: 0px;
         }
         h4 {
             font-size: 14px;
@@ -92,6 +93,7 @@ const Payment = () => {
             font-family: 'Inter', sans-serif;
             line-height: 16px;
             color: #3e3e3e;
+            margin: 0px;
         }
     `;
 
@@ -423,6 +425,8 @@ const Payment = () => {
                                     setFormType('');
                                 }}
                                 title="Single Transfer Payment"
+                                amount={paymentDetails.amount}
+                                beneName={paymentDetails.accountNumber}
                             />
                         );
                 }
@@ -438,7 +442,8 @@ const Payment = () => {
                                 buttonText="Send Now"
                                 action={(data) => {
                                     setPaymentDetails(data);
-                                    console.log(data);
+                                    if (paymentDetails.accountNumber3)
+                                        console.log(data);
                                     setCount(count + 1);
                                 }}
                             />
@@ -446,9 +451,55 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentSecond
+                                amount={paymentDetails.amount}
+                                recieverName={paymentDetails.accountNumber}
+                                sender={paymentDetails.accountName}
+                                recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
-                                transferAction={(data) => {
-                                    console.log(data);
+                                transferAction={() => {
+                                    const paymentData = {
+                                        senderAccountNo: '1823020500',
+                                        senderAccountType: 'A',
+                                        senderName: 'Aderohunmu Matthew',
+                                        senderPhone: '2348039219191',
+                                        destinations: [
+                                            {
+                                                destinationBankCode:
+                                                    'ZENITH-ACC',
+                                                beneficiaryAccountNo:
+                                                    '2252999745',
+                                                beneficiaryName:
+                                                    'CHIJIOKE NWANKWO',
+                                                narration: 'salary',
+                                                amount: paymentDetails.amount,
+                                                ccy: 'NGN'
+                                            },
+                                            {
+                                                destinationBankCode:
+                                                    'ZENITH-ACC',
+                                                beneficiaryAccountNo:
+                                                    '2252999740',
+                                                beneficiaryName:
+                                                    'CHIJIOKE NWANKWO',
+                                                narration: 'salary',
+                                                amount: paymentDetails.amount,
+                                                ccy: 'NGN'
+                                            }
+                                        ]
+                                    };
+                                    if (
+                                        paymentDetails.accountNumber3 !== '' &&
+                                        paymentDetails.bankName3 !== ''
+                                    ) {
+                                        paymentData.destinations.push({
+                                            destinationBankCode: 'ZENITH-ACC',
+                                            beneficiaryAccountNo: '2252999740',
+                                            beneficiaryName: 'CHIJIOKE NWANKWO',
+                                            narration: 'salary',
+                                            amount: paymentDetails.amount,
+                                            ccy: 'NGN'
+                                        });
+                                    }
                                     setCount(count + 1);
                                 }}
                             />
@@ -544,11 +595,13 @@ const Payment = () => {
                                         }
                                         if (airtime !== null) {
                                             console.log(airtime);
+                                            setCount(count + 1);
                                         } else if (
                                             errorMessageAirtime !== null
                                         ) {
                                             console.log(errorMessageAirtime);
                                             setError(errorMessageAirtime);
+                                            setCount(count + 1);
                                         }
                                     } else {
                                         dispatch(
@@ -599,13 +652,13 @@ const Payment = () => {
                                         if (errorMessageBills !== null) {
                                             console.log(errorMessageBills);
                                             setError(errorMessageBills);
+                                            setCount(count + 1);
                                         }
                                         if (bills !== null) {
                                             console.log(bills);
+                                            setCount(count + 1);
                                         }
                                     }
-
-                                    setCount(count + 1);
                                 }}
                             />
                         );

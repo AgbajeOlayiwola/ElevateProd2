@@ -37,8 +37,9 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                             })}
                             name="method"
                         >
-                            <option value="">Input Accounts</option>
-                            <option value="Transfer">Transfer</option>
+                            <option value="">Select Method</option>
+                            <option value="Input">Input Accounts</option>
+                            <option value="Upload">Upload File(Excel)</option>
                         </select>
                         <p className={styles.error}>
                             {errors?.method?.message}

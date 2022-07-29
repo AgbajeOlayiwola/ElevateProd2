@@ -20,6 +20,8 @@ const SingleTransfer = ({
 
     useEffect(() => {
         dispatch(loadbankAsync('ENG'));
+    }, []);
+    useEffect(() => {
         if (banks !== null) {
             setBank(banks);
         }
