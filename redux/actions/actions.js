@@ -11,7 +11,6 @@ import {
     interBank,
     login
 } from '../types/actionTypes';
-import Services from '../services/services';
 import axios from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
 
@@ -278,7 +277,7 @@ export const createUserAction = (postData) => {
                 dispatch(userRegisterStart(response.data.message));
             })
             .catch((error) => {
-                dispatch(userRegisterError(error.response.data.error));
+                dispatch(userRegisterError(error.response.data.message));
             });
     };
 };
@@ -299,13 +298,50 @@ export const loginUserAction = (loginData) => {
         axios
             .post(`${apiRoutes.login}`, loginData)
             .then((response) => {
+                console.log(response.data);
                 localStorage.setItem('user', JSON.stringify(response.data));
-                // console.log(localStorage);
+                localStorage.setItem(
+                    'token',
+                    JSON.stringify(response.data.data.token)
+                );
+
                 dispatch(userLoadStart(response.data.message));
             })
             .catch((error) => {
-                dispatch(userLoadError(error.response.data.error));
+                console.log(error);
+                dispatch(userLoadError(error.response.data.message));
             });
     };
 };
+
+const getConfig = () => {
+    try {
+        let token = localStorage.getItem('token');
+        console.log(token);
+        return {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+    } catch (error) {
+        console.log('getConfig error', error);
+    }
+};
+
 //end login user
+
+//profile setup action start
+
+export const createProfileSetup = (profileData) => {
+    return (dispatch) => {
+        const config = getConfig();
+        axios
+            .post(`${apiRoutes.profileSetupBus}`, profileData, config)
+            .then((response) => {
+                console.log('data from profile', response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+};
+
+// profile setuo action end

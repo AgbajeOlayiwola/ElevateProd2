@@ -116,7 +116,7 @@ const StepThreeCompleteProfile1 = ({
                     //     {/* <RegistrationStatus>
 
                     // </RegistrationStatus>{' '} */}
-                    <form>
+                    <>
                         <div
                             className={styles.dets}
                             style={{ marginTop: '2rem' }}
@@ -201,7 +201,7 @@ const StepThreeCompleteProfile1 = ({
                             // onClick={handleShowSuccessStep}
                             onClick={handleShowFourthStep}
                         />
-                    </form>
+                    </>
                 )}
             </div>
         </div>
