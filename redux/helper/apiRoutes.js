@@ -16,6 +16,7 @@ const register = '/auth/register';
 const login = '/auth/login';
 const newProfileSetup = '/auth/profile-setup';
 const profile = '/auth/profile';
+const profileSetupBus = '/auth/profile-setup';
 
 export default {
     getBanks,
@@ -35,5 +36,6 @@ export default {
     login,
     newProfileSetup,
     transactionHistory,
-    profile
+    profile,
+    profileSetupBus
 };

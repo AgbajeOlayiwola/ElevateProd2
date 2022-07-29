@@ -51,22 +51,20 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                     An OTP has been sent to your Phone number registered with
                     BVN. Please enter the OTP below to complete your profile.
                 </SmallInstructionText>
-                <form onSubmit={handleSubmit(sendOTP)}>
-                    <p className={styles.inp}>Input OTP</p>
-                    <OtpInput />
-                    <ResetOTP>
-                        <p style={{ color: '#005B82', cursor: 'pointer' }}>
-                            Resend OTP
-                        </p>
-                        <button
-                            style={{ cursor: 'pointer' }}
-                            className={styles.clr}
-                            type="reset"
-                        >
-                            Clear
-                        </button>
-                    </ResetOTP>
-                </form>
+                <p className={styles.inp}>Input OTP</p>
+                <OtpInput />
+                <ResetOTP>
+                    <p style={{ color: '#005B82', cursor: 'pointer' }}>
+                        Resend OTP
+                    </p>
+                    <button
+                        style={{ cursor: 'pointer' }}
+                        className={styles.clr}
+                        type="reset"
+                    >
+                        Clear
+                    </button>
+                </ResetOTP>
             </div>
         </div>
     );
