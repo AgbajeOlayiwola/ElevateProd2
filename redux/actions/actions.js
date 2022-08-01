@@ -9,10 +9,18 @@ import {
     bills,
     internalBank,
     interBank,
-    login
+    interBankEnquiry,
+    balanceEnquiry,
+    transactionHistory,
+    login,
+    otp,
+    compProfile,
+    setupProfile,
+    completeProfile
 } from '../types/actionTypes';
 import axios from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
+import axiosInstance from '../helper/apiClient';
 
 //country actions
 export const countryLoadStart = () => ({
@@ -259,6 +267,84 @@ export const postInterBank = (data) => (dispatch) => {
 
 //interBank action end
 
+//interBankEnquiry action
+export const interBankEnquiryLoadStart = () => ({
+    type: interBankEnquiry.INTERBANKENQUIRY_LOAD_START
+});
+
+export const interBankEnquiryLoadSuccess = (bill) => ({
+    type: interBankEnquiry.INTERBANKENQUIRY_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const interBankEnquiryLoadError = (interBankEnquiryerror) => ({
+    type: interBankEnquiry.INTERBANKENQUIRY_LOAD_ERROR,
+    payload: interBankEnquiryerror
+});
+export const postInterBankEnquiry = (data) => (dispatch) => {
+    dispatch(interBankEnquiryLoadStart());
+    axios
+        .post(`${apiRoutes.interBankEnquiry}`, data)
+        .then((response) =>
+            dispatch(interBankEnquiryLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(interBankEnquiryLoadError(error.message)));
+};
+
+//interBankEnquiry action end
+
+//balanceEnquiry action
+export const balanceEnquiryLoadStart = () => ({
+    type: balanceEnquiry.BALANCEENQUIRY_LOAD_START
+});
+
+export const balanceEnquiryLoadSuccess = (bill) => ({
+    type: balanceEnquiry.BALANCEENQUIRY_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
+    type: balanceEnquiry.BALANCEENQUIRY_LOAD_ERROR,
+    payload: balanceEnquiryerror
+});
+export const getBalanceEnquiry = () => (dispatch) => {
+    dispatch(balanceEnquiryLoadStart());
+    axios
+        .get(`${apiRoutes.balanceEnquiry}`)
+        .then((response) =>
+            dispatch(balanceEnquiryLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(balanceEnquiryLoadError(error.message)));
+};
+
+//balanceEnquiry action end
+
+//transactionHistory action
+export const transactionHistoryLoadStart = () => ({
+    type: transactionHistory.TRANSACTIONHISTORY_LOAD_START
+});
+
+export const transactionHistoryLoadSuccess = (bill) => ({
+    type: transactionHistory.TRANSACTIONHISTORY_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const transactionHistoryLoadError = (transactionHistoryerror) => ({
+    type: transactionHistory.TRANSACTIONHISTORY_LOAD_ERROR,
+    payload: transactionHistoryerror
+});
+export const getTransactionHistory = () => (dispatch) => {
+    dispatch(balanceEnquiryLoadStart());
+    axios
+        .get(`${apiRoutes.transactionHistory}`)
+        .then((response) =>
+            dispatch(transactionHistoryLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(transactionHistoryLoadError(error.message)));
+};
+
+//transactionHistory action end
+
 //add user
 export const userRegisterStart = (errorMessage) => ({
     type: login.REGISTER_SUCCESS,
@@ -314,29 +400,106 @@ export const loginUserAction = (loginData) => {
     };
 };
 
-const getConfig = () => {
-    try {
-        let token = localStorage.getItem('token');
-        console.log(token);
-        return {
-            headers: { Authorization: `Bearer ${token}` }
-        };
-    } catch (error) {
-        console.log('getConfig error', error);
-    }
-};
+// const getConfig = () => {
+//     try {
+//         let token = JSON.parse(localStorage.getItem('token'));
+//         console.log(token);
+//         return {
+//             headers: { Authorization: token }
+//         };
+//     } catch (error) {
+//         console.log('get config error', error);
+//     }
+// };
 
 //end login user
 
 //profile setup action start
-
+export const setupProfileStart = (errorMessages) => ({
+    type: setupProfile.PROFILESETUP_LOAD_START,
+    payload: errorMessages
+});
+export const setupProfileSucces = (profileSetup) => ({
+    type: setupProfile.PROFILESETUP_LOAD_SUCCESS,
+    payload: profileSetup
+});
+export const setupProfileError = (errorMessages) => ({
+    type: setupProfile.PROFILESETUP_LOAD_ERROR,
+    payload: errorMessages
+});
 export const createProfileSetup = (profileData) => {
-    return (dispatch) => {
-        const config = getConfig();
-        axios
-            .post(`${apiRoutes.profileSetupBus}`, profileData, config)
+    return async (dispatch) => {
+        await axiosInstance
+            .post(`${apiRoutes.profileSetupBus}`, profileData)
             .then((response) => {
+                dispatch(setupProfileSucces(response.data));
                 console.log('data from profile', response.data);
+            })
+            .catch((error) => {
+                console.log(
+                    'profile seytup dispatch',
+                    error.response.data.message
+                );
+                dispatch(
+                    setupProfileError('error check the fields and try again')
+                );
+            });
+    };
+};
+
+// profile setuo action end
+//BVN Otp
+export const otpLoadStart = (errorMessages) => ({
+    type: otp.OTP_LOAD_START,
+    payload: errorMessages
+});
+export const otpLoadSuccess = (otpActData) => ({
+    type: otp.OTP_LOAD_SUCCESS,
+    payload: otpActData
+});
+export const otpLoadError = (otpErrorMessage) => ({
+    type: otp.OTP_LOAD_ERROR,
+    payload: otpErrorMessage
+});
+export const verifyOtp = (otpData) => {
+    return async (dispatch) => {
+        await axiosInstance
+            .post(`${apiRoutes.verifyOtp}`, otpData)
+            .then((response) => {
+                dispatch(otpLoadSuccess(response.data));
+                console.log('otp', otpData);
+                console.log('data from otp', response.data);
+            })
+            .catch((error) => {
+                console.log('profile otp dispatch', error);
+                dispatch(otpLoadError('error otp does not match'));
+            });
+    };
+};
+
+//BVN OTP End
+
+//Complete Profile Action
+export const profileLoadStart = (errorMessages) => ({
+    type: compProfile.PROFILE_LOAD_START,
+    payload: errorMessages
+});
+export const profileLoadSuccess = (profile) => ({
+    type: compProfile.PROFILE_LOAD_SUCCESS,
+    payload: profile
+});
+export const profileLoadError = (errorMessages) => ({
+    type: login.PROFILE_LOAD_ERROR,
+    payload: errorMessages
+});
+
+export const CompProfile = () => {
+    return (dispatch) => {
+        dispatch(profileLoadStart());
+        axiosInstance
+            .get(`${apiRoutes.authProfile}`)
+            .then((response) => {
+                dispatch(profileLoadSuccess(response.data));
             })
             .catch((error) => {
                 console.log(error);
@@ -344,4 +507,39 @@ export const createProfileSetup = (profileData) => {
     };
 };
 
-// profile setuo action end
+//Commplete Profile End
+
+//Complete Profile post
+export const completeProfileLoadStart = (errorMessages) => ({
+    type: completeProfile.COMP_PROFILE_LOAD_START,
+    payload: errorMessages
+});
+export const completeProfileLoadSuccess = (compBusprofile) => ({
+    type: completeProfile.COMP_PROFILE_LOAD_SUCCESS,
+    payload: compBusprofile
+});
+export const completeProfileLoadError = (errorMessage) => ({
+    type: completeProfile.COMP_PROFILE_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const CompleteBusinessProfile = (completeProfileData) => {
+    return (dispatch) => {
+        // dispatch(completeProfileLoadStart());
+        axiosInstance
+            .patch(`${apiRoutes.completesBusinessProfile}`, completeProfileData)
+            .then((response) => {
+                console.log('complete business profiler', response.data);
+                dispatch(completeProfileLoadSuccess(response.data));
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch(
+                    completeProfileLoadError(
+                        'error check the fields and try again'
+                    )
+                );
+            });
+    };
+};
+//Complete Profile Post End
