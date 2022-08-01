@@ -26,7 +26,9 @@ import {
     postInterBank,
     postBillsAsync,
     loadbillerPlanAsync,
-    postInternalBank
+    postInternalBank,
+    postInterBankEnquiry,
+    getBalanceEnquiry
 } from '../../redux/actions/actions';
 // import PaymentError from '../../components/ReusableComponents/PaymentError';
 
@@ -43,6 +45,12 @@ const Payment = () => {
     const { interBank, errorMessageInterBank } = useSelector(
         (state) => state.interBankReducer
     );
+    const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
+        (state) => state.interBankEnquiryReducer
+    );
+    const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
+        (state) => state.balanceEnquiryReducer
+    );
     const { billerPlan } = useSelector((state) => state.billerPlanReducer);
 
     const dispatch = useDispatch();
@@ -55,6 +63,7 @@ const Payment = () => {
     const [mPOS, setMpos] = useState('30%');
     const [outType, setOutType] = useState();
     const [paymentDetails, setPaymentDetails] = useState({});
+    const [interEnquiry, setInterEnquiry] = useState({});
     const [balance] = useState('22,049.94');
     const [error, setError] = useState({});
 
@@ -76,6 +85,7 @@ const Payment = () => {
             font-weight: 500;
             font-family: 'Inter', sans-serif;
             line-height: 16px;
+            margin: 0px;
         }
         h4 {
             font-size: 14px;
@@ -83,8 +93,27 @@ const Payment = () => {
             font-family: 'Inter', sans-serif;
             line-height: 16px;
             color: #3e3e3e;
+            margin: 0px;
         }
     `;
+
+    useEffect(() => {
+        dispatch(getBalanceEnquiry());
+    }, []);
+
+    useEffect(() => {
+        if (balanceEnquiry !== null) {
+            // setBillerCategories(balanceEnquiry);
+            console.log(balanceEnquiry[0]);
+        }
+    }, [balanceEnquiry]);
+
+    useEffect(() => {
+        if (interBankEnquiry !== null) {
+            setInterEnquiry(interBankEnquiry);
+        }
+    }, [interBankEnquiry]);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [count]);
@@ -294,6 +323,12 @@ const Payment = () => {
                                     setCount(count + 1);
                                 }}
                                 othersaction={(data) => {
+                                    const enquiry = {
+                                        destinationBankCode: data.bankName,
+                                        beneficiaryAccountNo: data.accountNumber
+                                    };
+                                    dispatch(postInterBankEnquiry(enquiry));
+
                                     console.log(data);
                                     setPaymentDetails(data);
                                     setCount(count + 1);
@@ -306,48 +341,77 @@ const Payment = () => {
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountNumber}
                                 sender={paymentDetails.accountName}
+                                recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
                                 transferAction={() => {
-                                    if (paymentDetails.self === 'self') {
-                                        const paymentData = {
-                                            debitAccountNo: '4262004003',
-                                            debitAccountType: 'A',
-                                            creditAccountNo:
-                                                paymentDetails.accountNumber,
-                                            creditAccountType: 'A',
-                                            amount: paymentDetails.amount,
-                                            ccy: 'NGN'
-                                        };
-                                        dispatch(postInternalBank(paymentData));
-                                        if (internalBank !== null) {
-                                            console.log(internalBank);
-                                        }
-                                    } else if (
-                                        paymentDetails.others === 'Others'
-                                    ) {
-                                        const paymentData = {
-                                            destinationBankCode: 'string',
-                                            senderAccountNo: 'string',
-                                            senderAccountType: 'string',
-                                            senderName: 'string',
-                                            senderPhone: 'string',
-                                            senderAddress: 'string',
-                                            senderID: 'string',
-                                            senderIDType: 'string',
-                                            beneficiaryAccountNo: 'string',
-                                            beneficiaryName: 'string',
-                                            beneficiaryID: 'string',
-                                            beneficiaryPhone: 'string',
-                                            narration: 'string',
-                                            amount: 'string',
-                                            ccy: 'string'
-                                        };
-                                        dispatch(postInterBank(paymentData));
-                                        if (interBank !== null) {
-                                            console.log(interBank);
+                                    // if (paymentDetails.self === 'self') {
+                                    // const paymentData = {
+                                    //     debitAccountNo: '4262004003',
+                                    //     debitAccountType: 'A',
+                                    //     creditAccountNo:
+                                    //         paymentDetails.accountNumber,
+                                    //     creditAccountType: 'A',
+                                    //     amount: paymentDetails.amount,
+                                    //     ccy: 'NGN'
+                                    // };
+                                    // dispatch(postInternalBank(paymentData));
+                                    // if (internalBank !== null) {
+                                    //     console.log(internalBank);
+                                    // }
+                                    // } else
+                                    if (paymentDetails.others === 'others') {
+                                        if (
+                                            paymentDetails.bankName ===
+                                            'Ecobank'
+                                        ) {
+                                            const paymentData = {
+                                                debitAccountNo: '4262004003',
+                                                debitAccountType: 'A',
+                                                creditAccountNo:
+                                                    paymentDetails.accountNumber,
+                                                creditAccountType: 'A',
+                                                amount: paymentDetails.amount,
+                                                ccy: 'NGN'
+                                            };
+                                            dispatch(
+                                                postInternalBank(paymentData)
+                                            );
+                                            if (internalBank !== null) {
+                                                console.log(internalBank);
+                                                setCount(count + 1);
+                                            } else {
+                                                setCount(count + 1);
+                                            }
+                                        } else {
+                                            console.log(interBankEnquiry);
+                                            const paymentData = {
+                                                destinationBankCode:
+                                                    paymentDetails.bankName,
+                                                senderAccountNo: '1823020500',
+                                                senderAccountType: 'A',
+                                                senderName:
+                                                    'Aderohunmu Matthew',
+                                                senderPhone: '2348039219191',
+                                                beneficiaryAccountNo:
+                                                    interEnquiry.accountNo,
+                                                beneficiaryName:
+                                                    interEnquiry.accountName,
+                                                narration:
+                                                    paymentDetails.narration,
+                                                amount: paymentDetails.amount,
+                                                ccy: 'NGN'
+                                            };
+                                            dispatch(
+                                                postInterBank(paymentData)
+                                            );
+                                            if (interBank !== null) {
+                                                console.log(interBank);
+                                                setCount(count + 1);
+                                            } else {
+                                                setCount(count + 1);
+                                            }
                                         }
                                     }
-                                    setCount(count + 1);
                                 }}
                             />
                         );
@@ -361,6 +425,8 @@ const Payment = () => {
                                     setFormType('');
                                 }}
                                 title="Single Transfer Payment"
+                                amount={paymentDetails.amount}
+                                beneName={paymentDetails.accountNumber}
                             />
                         );
                 }
@@ -375,7 +441,9 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 action={(data) => {
-                                    console.log(data);
+                                    setPaymentDetails(data);
+                                    if (paymentDetails.accountNumber3)
+                                        console.log(data);
                                     setCount(count + 1);
                                 }}
                             />
@@ -383,9 +451,55 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentSecond
+                                amount={paymentDetails.amount}
+                                recieverName={paymentDetails.accountNumber}
+                                sender={paymentDetails.accountName}
+                                recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
-                                transferAction={(data) => {
-                                    console.log(data);
+                                transferAction={() => {
+                                    const paymentData = {
+                                        senderAccountNo: '1823020500',
+                                        senderAccountType: 'A',
+                                        senderName: 'Aderohunmu Matthew',
+                                        senderPhone: '2348039219191',
+                                        destinations: [
+                                            {
+                                                destinationBankCode:
+                                                    'ZENITH-ACC',
+                                                beneficiaryAccountNo:
+                                                    '2252999745',
+                                                beneficiaryName:
+                                                    'CHIJIOKE NWANKWO',
+                                                narration: 'salary',
+                                                amount: paymentDetails.amount,
+                                                ccy: 'NGN'
+                                            },
+                                            {
+                                                destinationBankCode:
+                                                    'ZENITH-ACC',
+                                                beneficiaryAccountNo:
+                                                    '2252999740',
+                                                beneficiaryName:
+                                                    'CHIJIOKE NWANKWO',
+                                                narration: 'salary',
+                                                amount: paymentDetails.amount,
+                                                ccy: 'NGN'
+                                            }
+                                        ]
+                                    };
+                                    if (
+                                        paymentDetails.accountNumber3 !== '' &&
+                                        paymentDetails.bankName3 !== ''
+                                    ) {
+                                        paymentData.destinations.push({
+                                            destinationBankCode: 'ZENITH-ACC',
+                                            beneficiaryAccountNo: '2252999740',
+                                            beneficiaryName: 'CHIJIOKE NWANKWO',
+                                            narration: 'salary',
+                                            amount: paymentDetails.amount,
+                                            ccy: 'NGN'
+                                        });
+                                    }
                                     setCount(count + 1);
                                 }}
                             />
@@ -481,11 +595,13 @@ const Payment = () => {
                                         }
                                         if (airtime !== null) {
                                             console.log(airtime);
+                                            setCount(count + 1);
                                         } else if (
                                             errorMessageAirtime !== null
                                         ) {
                                             console.log(errorMessageAirtime);
                                             setError(errorMessageAirtime);
+                                            setCount(count + 1);
                                         }
                                     } else {
                                         dispatch(
@@ -536,13 +652,13 @@ const Payment = () => {
                                         if (errorMessageBills !== null) {
                                             console.log(errorMessageBills);
                                             setError(errorMessageBills);
+                                            setCount(count + 1);
                                         }
                                         if (bills !== null) {
                                             console.log(bills);
+                                            setCount(count + 1);
                                         }
                                     }
-
-                                    setCount(count + 1);
                                 }}
                             />
                         );

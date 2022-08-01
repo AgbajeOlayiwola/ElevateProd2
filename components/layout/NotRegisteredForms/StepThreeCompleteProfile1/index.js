@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import {
@@ -25,20 +25,36 @@ import styles from './styles.module.css';
 import Card from '../../NotRegisteredForms/Card';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';
-
-const StepThreeCompleteProfile1 = ({
-    handleShowSuccessStep,
-    handleShowThirdStepOnly,
-    showPersonalDetails
-}) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { CompProfile } from '../../../../redux/actions/actions';
+const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
     const [progress, setProgress] = useState('75%');
     const [switchs, setSwitchs] = useState();
     const [bgcolor, setBgcolor] = useState(false);
+
+    const [profileCont, setProfileCont] = useState([]);
 
     const handleShowFourthStep = () => {
         setSwitchs((prev) => !prev);
         setBgcolor((prevState) => !prevState);
     };
+    const dispatch = useDispatch();
+    const { isLoading, profile, errorMessage } = useSelector(
+        (state) => state.profile
+    );
+
+    useEffect(() => {
+        dispatch(CompProfile());
+    }, []);
+    useEffect(() => {
+        if (profile !== null) {
+            setProfileCont(profile.data);
+        }
+    }, [profile]);
+    // console.log(co
+
+    // console.log(profileCont);
+
     const {
         register,
         handleSubmit,
@@ -110,97 +126,77 @@ const StepThreeCompleteProfile1 = ({
 
                 {switchs ? (
                     <>
-                        <StepFourCompProfile2BizDetails />
+                        <StepFourCompProfile2BizDetails
+                            formData={formData}
+                            setFormData={setFormData}
+                        />
                     </>
                 ) : (
-                    //     {/* <RegistrationStatus>
-
-                    // </RegistrationStatus>{' '} */}
                     <>
-                        <div
-                            className={styles.dets}
-                            style={{ marginTop: '2rem' }}
-                        >
-                            <Label className={styles.label}>
-                                Enter Account Number
-                            </Label>
-                            <br />
-                            <FormInput
-                                type="number"
-                                placeholder="123456787"
-                                value=""
-                                disabled
-                                {...register('bvn')}
-                            />
-                            <Label className={styles.label}>
-                                Enter your Full Name
-                            </Label>
-                            <br />
-                            <FormInput
-                                type="text"
-                                placeholder=""
-                                value="Agbaje Olayiwola"
-                                disabled
-                                {...register('bvn')}
-                            />
-
-                            <GenderWrapper>
+                        <>
+                            <div
+                                className={styles.dets}
+                                style={{ marginTop: '2rem' }}
+                            >
                                 <Label className={styles.label}>
-                                    Select your Gender
-                                </Label>
-                                <br />
-                                <div className={styles.genderInps}>
-                                    <div className={styles.male}>
-                                        <FormInput
-                                            style={{ width: '15px' }}
-                                            type="radio"
-                                            name="gender"
-                                            value="male"
-                                            {...register('bvn')}
-                                        />
-                                        <label className={styles.fmLabel}>
-                                            Male
-                                        </label>
-                                    </div>
-                                    <div className={styles.female}>
-                                        <FormInput
-                                            style={{ width: '15px' }}
-                                            type="radio"
-                                            name="gender"
-                                            value="female"
-                                            {...register('bvn')}
-                                        />
-                                        <label className={styles.fmLabel}>
-                                            Female
-                                        </label>
-                                    </div>
-                                </div>
-                            </GenderWrapper>
-                        </div>
-                        <LastFieldAndButton>
-                            <div>
-                                <Label>
-                                    Enter referral code{' '}
-                                    <span className={styles.option}>
-                                        <i>(Optional)</i>
-                                    </span>
+                                    Enter your Full Name
                                 </Label>
                                 <br />
                                 <FormInput
                                     type="text"
-                                    placeholder="Enter code"
+                                    placeholder=""
+                                    value={profileCont.pName}
+                                    disabled
                                     {...register('bvn')}
                                 />
+
+                                <GenderWrapper>
+                                    <Label className={styles.label}>
+                                        Select your Gender
+                                    </Label>
+                                    <br />
+                                    <div className={styles.genderInps}>
+                                        <div className={styles.male}>
+                                            <FormInput
+                                                style={{
+                                                    width: '15px'
+                                                }}
+                                                type="radio"
+                                                name="gender"
+                                                value="male"
+                                                {...register('bvn')}
+                                            />
+                                            <label className={styles.fmLabel}>
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div className={styles.female}>
+                                            <FormInput
+                                                style={{
+                                                    width: '15px'
+                                                }}
+                                                type="radio"
+                                                name="gender"
+                                                value="female"
+                                                {...register('bvn')}
+                                            />
+                                            <label className={styles.fmLabel}>
+                                                Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </GenderWrapper>
                             </div>
-                        </LastFieldAndButton>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="Next"
-                            type="button"
-                            // onClick={handleShowSuccessStep}
-                            onClick={handleShowFourthStep}
-                        />
+
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Next"
+                                type="button"
+                                // onClick={handleShowSuccessStep}
+                                onClick={handleShowFourthStep}
+                            />
+                        </>
                     </>
                 )}
             </div>

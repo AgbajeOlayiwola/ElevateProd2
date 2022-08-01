@@ -20,7 +20,9 @@ const PaymentSuccess = ({
     body,
     paymentType,
     amount,
-    number
+    number,
+    beneName,
+    isLoading
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -31,76 +33,116 @@ const PaymentSuccess = ({
     return (
         <Overlay overlay={overlay}>
             <div className={styles.successcont} ref={myref}>
-                {type === 'profile' ? (
-                    <BodyWrapper>
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'center'
-                            }}
-                        >
-                            <Success />
-                        </div>
-
-                        <RegistrationStatus>
-                            <SuccessMainHeading>{heading}</SuccessMainHeading>
-
-                            <h6 className={styles.elevateSuccess}>{body}</h6>
-
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Close"
-                                type="button"
-                                onClick={action}
-                            />
-                        </RegistrationStatus>
-                    </BodyWrapper>
+                {isLoading ? (
+                    <div className={styles.PaymentSecondCont}>
+                        <h2>Loading...</h2>
+                    </div>
                 ) : (
-                    <BodyWrapper>
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'center'
-                            }}
-                        >
-                            <Success />
-                        </div>
+                    <>
+                        {type === 'profile' ? (
+                            <BodyWrapper>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        justifyContent: 'center'
+                                    }}
+                                >
+                                    <Success />
+                                </div>
 
-                        <RegistrationStatus>
-                            <SuccessMainHeading>
-                                Transfer Successful
-                            </SuccessMainHeading>
-                            <h6 className={styles.elevateSuccess}>
-                                Your recharge of <span>{amount} </span> for
-                                Airtime on June 12, 2022 by 12:02pm
-                            </h6>
+                                <RegistrationStatus>
+                                    <SuccessMainHeading>
+                                        {heading}
+                                    </SuccessMainHeading>
 
-                            {title === 'Foreign Transfer Payments' ? (
-                                <h6 className={styles.elevateSuccess}>
-                                    <span>Country: </span> {country}
-                                </h6>
-                            ) : title === 'Bill Payment' ? (
-                                <p>
-                                    Recharge details have been shared to your
-                                    email and your provided phone number.
-                                </p>
-                            ) : null}
+                                    <h6 className={styles.elevateSuccess}>
+                                        {body}
+                                    </h6>
 
-                            <div className={styles.reminder}>
-                                <p>Set Reminder</p>
-                            </div>
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Return to Payments"
-                                type="button"
-                                onClick={action}
-                            />
-                        </RegistrationStatus>
-                    </BodyWrapper>
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Close"
+                                        type="button"
+                                        onClick={action}
+                                    />
+                                </RegistrationStatus>
+                            </BodyWrapper>
+                        ) : (
+                            <BodyWrapper>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        justifyContent: 'center'
+                                    }}
+                                >
+                                    <Success />
+                                </div>
+
+                                <RegistrationStatus>
+                                    <SuccessMainHeading>
+                                        Transfer Successful
+                                    </SuccessMainHeading>
+                                    {title === 'Bill payment' ? (
+                                        <h6 className={styles.elevateSuccess}>
+                                            Your recharge of{' '}
+                                            <span>{amount} </span> for Airtime
+                                            on June 12, 2022 by 12:02pm
+                                        </h6>
+                                    ) : title ===
+                                      'Foreign Transfer Payments' ? (
+                                        <h6 className={styles.elevateSuccess}>
+                                            <span>{amount} </span> will be
+                                            transferred to{' '}
+                                            <span>{beneName}</span> on June 12,
+                                            2022 by 12:02pm
+                                        </h6>
+                                    ) : title === 'Bulk Payment' ? (
+                                        <h6 className={styles.elevateSuccess}>
+                                            {amount} was transferred to 3
+                                            Accounts on June 12, 2022 by 12:02pm
+                                        </h6>
+                                    ) : title === 'Single Transfer Payment' ? (
+                                        <h6 className={styles.elevateSuccess}>
+                                            <span>₦{amount}</span> will be
+                                            transferred to
+                                            <span> {beneName}</span> on June 12,
+                                            2022 by 12:02pm
+                                        </h6>
+                                    ) : null}
+
+                                    {title === 'Foreign Transfer Payments' ? (
+                                        <h6 className={styles.elevateSuccess}>
+                                            <span>Country: </span> {country}
+                                        </h6>
+                                    ) : title === 'Bill Payment' ? (
+                                        <p>
+                                            Recharge details have been shared to
+                                            your email and your provided phone
+                                            number.
+                                        </p>
+                                    ) : null}
+
+                                    <div className={styles.reminder}>
+                                        <p>Set Reminder</p>
+                                    </div>
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Return to Payments"
+                                        type="button"
+                                        onClick={action}
+                                    />
+                                </RegistrationStatus>
+                            </BodyWrapper>
+                        )}{' '}
+                    </>
                 )}
             </div>
         </Overlay>

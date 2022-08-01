@@ -14,19 +14,17 @@ const Verify = () => {
             <div className={styles.body}>
                 <Messagesvg />
                 <div>
-                    <h3 className={styles.verifyEmail}>Verify your Email</h3>
+                    <h3 className={styles.verifyEmail}>
+                        Your email address has been verfied!
+                    </h3>
                 </div>
 
-                <p className={styles.hi}>
-                    Hi Lanre! By proceeding, we will verify your email address.
-                    Open your email and click on the link to verify.
-                </p>
                 <div onClick={handleClick}>
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
                         type="submit"
-                        text="Go To Login Page"
+                        text="Continue To Login"
                     />
                 </div>
             </div>

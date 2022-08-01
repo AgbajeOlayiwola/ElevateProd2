@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import styles from './styles.module.css';
+import { useDispatch } from 'react-redux';
 // import {
 
 // } from '../../RegisteredForm/styles.module';
@@ -17,22 +18,26 @@ import {
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import Card from '../../NotRegisteredForms/Card';
 import OtpInput from '../../../ReusableComponents/Otpinput';
+import { verifyOtp } from '../../../../redux/actions/actions';
 
-const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
+const StepTwoBVNAuthenticator = ({
+    handleShowThirdStep,
+    setFormData,
+    formData
+}) => {
     const [progress, setProgress] = useState('50%');
     const [otps, setOtp] = useState([]);
     const handleChange = (otps) => {
         setOtp();
         console.log(otps);
     };
-
+    const dispatch = useDispatch();
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
-
     const sendOTP = (data) => {
         console.log(data);
     };
@@ -52,7 +57,7 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                     BVN. Please enter the OTP below to complete your profile.
                 </SmallInstructionText>
                 <p className={styles.inp}>Input OTP</p>
-                <OtpInput />
+                <OtpInput formData={formData} setFormData={setFormData} />
                 <ResetOTP>
                     <p style={{ color: '#005B82', cursor: 'pointer' }}>
                         Resend OTP

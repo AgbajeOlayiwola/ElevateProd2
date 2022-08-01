@@ -30,15 +30,15 @@ function MyApp({ Component, pageProps, router }) {
 
     // const store = configureStore();
     return (
-        <Layout>
-            <AnimatePresence exitBeforeEnter>
-                <motion.div key={router.route} {...pageMotionProps}>
-                    <Provider store={store}>
-                        <Component {...pageProps} />
-                    </Provider>
-                </motion.div>
-            </AnimatePresence>
-        </Layout>
+        // <Layout>
+        //     <AnimatePresence exitBeforeEnter>
+        //         <motion.div key={router.route} {...pageMotionProps}>
+        <Provider store={store}>
+            <Component {...pageProps} />
+        </Provider>
+        //         </motion.div>
+        //     </AnimatePresence>
+        // </Layout>
     );
 }
 

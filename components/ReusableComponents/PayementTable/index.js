@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTransactionHistory } from '../../../redux/actions/actions';
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
 
 const PaymentTable = ({ title }) => {
+    const { transactionHistory, errorMessageTransactionHistory } = useSelector(
+        (state) => state.transactionHistoryReducer
+    );
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getTransactionHistory());
+    }, []);
+
+    useEffect(() => {
+        if (transactionHistory !== null) {
+            // setBillerCategories(transactionHistory);
+            console.log(transactionHistory[0]);
+        }
+    }, [transactionHistory]);
     const tableDetails = [
         {
             beneficiary: 'Edward Ewang',

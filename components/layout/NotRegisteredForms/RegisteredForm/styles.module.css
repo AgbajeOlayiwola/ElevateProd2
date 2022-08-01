@@ -58,3 +58,16 @@
     color: #a5a5a5;
     text-align: center;
 }
+.phone{
+    display: flex;
+    margin-top: 8px;
+}
+.phone input:nth-child(1){
+    width: 20%;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;;
+}
+.phone input:nth-child(2){
+border-top-left-radius: 0px;
+border-bottom-left-radius: 0px;
+}
