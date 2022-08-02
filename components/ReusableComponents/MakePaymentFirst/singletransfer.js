@@ -20,6 +20,8 @@ const SingleTransfer = ({
 
     useEffect(() => {
         dispatch(loadbankAsync('ENG'));
+    }, []);
+    useEffect(() => {
         if (banks !== null) {
             setBank(banks);
         }
@@ -87,21 +89,6 @@ const SingleTransfer = ({
                     <div className={styles.accountDetails}>
                         <label>Account Details to Credit</label>
                         <div className={styles.accountDetailsBody}>
-                            <label>Beneficiaries</label>
-                            <input
-                                {...register('beneficiaries', {
-                                    required: 'Please enter Beneficiary',
-                                    pattern: {
-                                        value: /^[A-Za-z ]+$/i,
-                                        message: 'Only Alphabelts allowed'
-                                    }
-                                })}
-                                type="text"
-                                placeholder="Enter Beneficiary"
-                            />
-                            <p className={styles.error}>
-                                {errors?.beneficiaries?.message}
-                            </p>
                             <div className={styles.accountDetailSingle}>
                                 <div
                                     className={styles.accountDetailSingleInput}
@@ -135,6 +122,7 @@ const SingleTransfer = ({
                                         name="bankName"
                                     >
                                         <option value="">Select Bank</option>
+                                        <option value="Ecobank">Ecobank</option>
                                         {bank?.map((bank, index) => {
                                             return (
                                                 <option

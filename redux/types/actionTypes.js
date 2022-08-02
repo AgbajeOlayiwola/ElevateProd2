@@ -84,6 +84,36 @@ export const interBank = {
 };
 
 //Inter action type ends
+
+//Inter action types
+
+export const interBankEnquiry = {
+    INTERBANKENQUIRY_LOAD_START: 'INTERBANKENQUIRY_LOAD_START',
+    INTERBANKENQUIRY_LOAD_SUCCESS: 'INTERBANKENQUIRY_LOAD_SUCCESS',
+    INTERBANKENQUIRY_LOAD_ERROR: 'INTERBANKENQUIRY_LOAD_ERROR'
+};
+
+//Inter action type ends
+
+//balanceEnquiry action types
+
+export const balanceEnquiry = {
+    BALANCEENQUIRY_LOAD_START: 'BALANCEENQUIRY_LOAD_START',
+    BALANCEENQUIRY_LOAD_SUCCESS: 'BALANCEENQUIRY_LOAD_SUCCESS',
+    BALANCEENQUIRY_LOAD_ERROR: 'BALANCEENQUIRY_LOAD_ERROR'
+};
+
+//balanceENquiry action type ends
+
+//transactionHistory action types
+
+export const transactionHistory = {
+    TRANSACTIONHISTORY_LOAD_START: 'TRANSACTIONHISTORY_LOAD_START',
+    TRANSACTIONHISTORY_LOAD_SUCCESS: 'TRANSACTIONHISTORY_LOAD_SUCCESS',
+    TRANSACTIONHISTORY_LOAD_ERROR: 'TRANSACTIONHISTORY_LOAD_ERROR'
+};
+
+//transactionHistory action type ends
 //auth action types
 export const login = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',
@@ -96,3 +126,35 @@ export const login = {
     LOGOUT: 'LOGOUT'
 };
 //end auth action types
+//profile setup
+
+export const setupProfile = {
+    PROFILESETUP_LOAD_START: 'PROFILE_SETUPLOAD_START',
+    PROFILESETUP_LOAD_SUCCESS: 'PROFILESETUP_LOAD_SUCCESS',
+    PROFILESETUP_LOAD_ERROR: 'PROFILESETUP_LOAD_ERROR'
+};
+//profile setup end
+//complete profile action type start
+
+export const compProfile = {
+    PROFILE_LOAD_START: 'PROFILE_LOAD_START',
+    PROFILE_LOAD_SUCCESS: 'PROFILE_LOAD_SUCCESS',
+    PROFILE_LOAD_ERROR: 'PROFILE_LOAD_ERROR'
+};
+
+//complete profile action type end
+
+//ot action type start
+
+export const otp = {
+    OTP_LOAD_START: 'OTP_LOAD_START',
+    OTP_LOAD_SUCCESS: 'OTP_LOAD_SUCCESS',
+    OTP_LOAD_ERROR: 'OTP_LOAD_ERROR'
+};
+//otp action type end
+
+export const completeProfile = {
+    COMP_PROFILE_LOAD_START: 'COMP_PROFILE_LOAD_START',
+    COMP_PROFILE_LOAD_SUCCESS: 'COMP_PROFILE_LOAD_SUCCESS',
+    COMP_PROFILE_LOAD_ERROR: 'COMP_PROFILE_LOAD_ERROR'
+};

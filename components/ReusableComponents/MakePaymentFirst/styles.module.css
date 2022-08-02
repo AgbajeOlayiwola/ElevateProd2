@@ -131,9 +131,11 @@
 .firstBody input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0px;
+    background-color: #ffffff;
 }
 
 .firstBody input[type='number'] {
+    background-color: #ffffff;
     -moz-appearance: textfield;
 }
 

@@ -12,6 +12,7 @@ const Countriess = () => {
         (state) => state.countryReducer
     );
 
+    console.log(countries);
     useEffect(() => {
         dispatch(loadCountryAsync());
         if (countries !== null) {
@@ -33,7 +34,7 @@ const Countriess = () => {
     return (
         <div>
             <label className={styles.label} htmlFor="country">
-                Choose Your Country Where you Run Busines
+                Choose The Country Where you Run Busines
             </label>
             <br />
             <select
