@@ -68,12 +68,12 @@ const Signup = ({ type }) => {
                 confirmPassword: encrypt(confirmPassword),
                 affiliateCode: 'ENG'
             };
-            console.log(errorMessage);
+            console.log(password);
             dispatch(createUserAction(postData));
             if (errorMessage !== 'Account created successfully!') {
                 setError(errorMessage);
             } else {
-                router.push('../Verify');
+                router.push('../Verify/Loading');
             }
         } else {
             passwordMatch;

@@ -36,3 +36,7 @@
     margin: 0 auto;
     margin-bottom: 1.5rem;
 }
+.email{
+    display: flex;
+    justify-content: center;
+}

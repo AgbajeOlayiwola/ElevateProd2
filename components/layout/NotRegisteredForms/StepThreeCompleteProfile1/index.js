@@ -53,7 +53,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
     }, [profile]);
     // console.log(co
 
-    // console.log(profileCont);
+    console.log(profileCont);
 
     const {
         register,
@@ -145,7 +145,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
                                 <FormInput
                                     type="text"
                                     placeholder=""
-                                    value={profileCont.pName}
+                                    value={profileCont.fullName}
                                     disabled
                                     {...register('bvn')}
                                 />
@@ -165,6 +165,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
                                                 name="gender"
                                                 value="male"
                                                 {...register('bvn')}
+                                                checked={false}
                                             />
                                             <label className={styles.fmLabel}>
                                                 Male
