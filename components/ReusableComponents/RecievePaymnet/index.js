@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RecievePayment } from '../Data';
 import styles from './styles.module.css';
-
+import Link from 'next/link';
 const RecievePaymentBtn = () => {
     const [showDrop, setShowDrop] = useState(false);
     return (
@@ -17,7 +17,14 @@ const RecievePaymentBtn = () => {
                     return (
                         <div className={styles.comp} key={index}>
                             <p>{item.icon}</p>
-                            <p>{item.title}</p>
+                            <Link
+                                href={{
+                                    pathname: './Payment',
+                                    query: { id: item.path }
+                                }}
+                            >
+                                {item.title}
+                            </Link>
                         </div>
                     );
                 })}

@@ -1,59 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTransactionHistory } from '../../../redux/actions/actions';
+import { getTransactionElevate } from '../../../redux/actions/actions';
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
 
 const PaymentTable = ({ title }) => {
-    const { transactionHistory, errorMessageTransactionHistory } = useSelector(
-        (state) => state.transactionHistoryReducer
+    const { transactionElevate, errorMessageTransactionElevate } = useSelector(
+        (state) => state.transactionElevateReducer
     );
+    const [tableDetails, setTableDetails] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getTransactionHistory());
+        dispatch(getTransactionElevate());
     }, []);
 
     useEffect(() => {
-        if (transactionHistory !== null) {
-            // setBillerCategories(transactionHistory);
-            console.log(transactionHistory[0]);
+        if (transactionElevate !== null) {
+            setTableDetails(transactionElevate);
         }
-    }, [transactionHistory]);
-    const tableDetails = [
-        {
-            beneficiary: 'Edward Ewang',
-            type: 'Transfer',
-            amount: '+40,000',
-            bank: 'Wema Bank',
-            date: '22 Jul 2022',
-            status: 'Completed'
-        },
-        {
-            beneficiary: 'Edward Ewang',
-            type: 'Transfer',
-            amount: '+40,000',
-            bank: 'Wema Bank',
-            date: '22 Jul 2022',
-            status: 'Completed'
-        },
-        {
-            beneficiary: 'Edward Ewang',
-            type: 'Transfer',
-            amount: '+40,000',
-            bank: 'Wema Bank',
-            date: '22 Jul 2022',
-            status: 'Completed'
-        },
-        {
-            beneficiary: 'Edward Ewang',
-            type: 'Transfer',
-            amount: '+40,000',
-            bank: 'Wema Bank',
-            date: '22 Jul 2022',
-            status: 'Completed'
-        }
-    ];
+    }, [transactionElevate]);
     return (
         <div className={styles.table}>
             <div className={styles.tableHeader}>
@@ -61,7 +28,13 @@ const PaymentTable = ({ title }) => {
                 <div className={styles.tableFilter}>
                     <div>
                         <img src="../Assets/Svgs/search.svg" alt="" />
-                        <input type="text" placeholder="Search by Date" />
+                        <input
+                            type="text"
+                            placeholder="Search by Type"
+                            onChange={(e) => {
+                                setSearchValue(e.target.value);
+                            }}
+                        />
                     </div>
                     <select name="" id="">
                         <option value="" defaultValue="Filter">
@@ -92,19 +65,33 @@ const PaymentTable = ({ title }) => {
                 <p className={styles.date}>Date</p>
                 <p className={styles.status}>Status</p>
             </div>
-            {tableDetails.map((item, index) => {
-                return (
-                    <TableDetail
-                        key={index}
-                        Beneficiary={item.beneficiary}
-                        Type={item.type}
-                        Amount={item.amount}
-                        Bank={item.bank}
-                        Dates={item.date}
-                        Status={item.status}
-                    />
-                );
-            })}
+            {tableDetails === null
+                ? 'No transaction available'
+                : tableDetails
+                      ?.filter((item) => {
+                          if (searchValue === '') {
+                              return item;
+                          } else if (
+                              item.type
+                                  .toLowerCase()
+                                  .includes(searchValue.toLowerCase())
+                          ) {
+                              return item;
+                          }
+                      })
+                      ?.map((items, index) => {
+                          return (
+                              <TableDetail
+                                  key={index}
+                                  Beneficiary={items.beneficiaryName}
+                                  Type={items.type}
+                                  Amount={items.amount}
+                                  Bank={items.destinationBank}
+                                  Dates={items.tranDate}
+                                  Status="Completed"
+                              />
+                          );
+                      })}
         </div>
     );
 };

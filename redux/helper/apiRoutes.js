@@ -10,8 +10,14 @@ const bills = '/payments/bill-payment';
 const internalBank = '/transfer/internal-transfer';
 const interBank = '/transfer/inter-bank-transfer';
 const interBankEnquiry = '/transfer/inter-bank-enquiry';
-const balanceEnquiry = '/payments/balance-inquiry';
-const transactionHistory = '/payments/transaction-history';
+const balanceEnquiry = '/account/balance-inquiry';
+const transactionHistory = '/account/transaction';
+const transactionElevate = '/account/transaction/ellevate';
+const bulkTransfer = '/transfer/bulk-transfer';
+const verifyBank = '/transfer/international/validate-bank';
+const verifyCurrency = '/transfer/international/currency';
+const internationalTransfer = '/transfer/international';
+const beneficiaries = '/account/beneficiaries';
 const register = '/auth/register';
 const login = '/auth/login';
 const newProfileSetup = '/auth/profile-setup';
@@ -41,7 +47,13 @@ export default {
     login,
     newProfileSetup,
     transactionHistory,
+    transactionElevate,
+    verifyBank,
+    verifyCurrency,
+    internationalTransfer,
     profile,
+    bulkTransfer,
+    beneficiaries,
     profileSetupBus,
     verifyOtp,
     authProfile,

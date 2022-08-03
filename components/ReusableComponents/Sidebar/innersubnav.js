@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
+import Link from 'next/link';
 
 const Innersubnav = ({ item, subNav }) => {
     const [innersubNav, setInnerSubNav] = useState(false);
@@ -57,7 +58,16 @@ const Innersubnav = ({ item, subNav }) => {
                                         <span className={styles.icon}>
                                             {item.icon}
                                         </span>
-                                        <p>{item.title}</p>
+                                        <p>
+                                            <Link
+                                                href={{
+                                                    pathname: './Payment',
+                                                    query: { id: item.path }
+                                                }}
+                                            >
+                                                {item.title}
+                                            </Link>
+                                        </p>
                                     </div>
                                 ) : null;
                             })}

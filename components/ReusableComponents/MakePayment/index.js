@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 import { MakePayment } from '../Data';
+import Link from 'next/link';
 
 const MakePaymentBtn = () => {
     const [showDrop, setShowDrop] = useState(false);
@@ -17,7 +18,14 @@ const MakePaymentBtn = () => {
                     return (
                         <div className={styles.comp} key={index}>
                             <p>{item.icon}</p>
-                            <p>{item.title}</p>
+                            <Link
+                                href={{
+                                    pathname: './Payment',
+                                    query: { id: item.path }
+                                }}
+                            >
+                                {item.title}
+                            </Link>
                         </div>
                     );
                 })}

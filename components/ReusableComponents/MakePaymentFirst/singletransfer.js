@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadbankAsync } from '../../../redux/actions/actions';
+import {
+    loadbank,
+    postBeneficiariesData
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Beneficiary from '../Beneficiary';
 
 const SingleTransfer = ({
     selfaction,
@@ -19,7 +23,7 @@ const SingleTransfer = ({
     const { banks } = useSelector((state) => state.banksReducer);
 
     useEffect(() => {
-        dispatch(loadbankAsync('ENG'));
+        dispatch(loadbank('ENG'));
     }, []);
     useEffect(() => {
         if (banks !== null) {
@@ -141,8 +145,20 @@ const SingleTransfer = ({
                                     )}
                                 </div>
                             </div>
+                            <div className={styles.beneficiaryCheck}>
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        name="bene"
+                                        id=""
+                                        {...register('bene')}
+                                    />
+                                </div>
+                                <p>Save to Beneficiary</p>
+                            </div>
                         </div>
                     </div>
+                    <Beneficiary />
                     <div className={styles.narration}>
                         <label>Enter Amount</label>
                         <input

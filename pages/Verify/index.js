@@ -20,7 +20,7 @@ const Verify = () => {
         if (token) {
             axios
                 .get(
-                    `http://ellevate-app.herokuapp.com/verification/email/${token}`
+                    `https://ellevate-app.herokuapp.com/verification/email/${token}`
                 )
                 .then((response) => {
                     console.log(response.data.message);
