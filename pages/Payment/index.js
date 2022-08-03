@@ -160,7 +160,7 @@ const Payment = () => {
             setFormType({ id }.id.toLowerCase());
             setOverlay(true);
         }
-    }, []);
+    }, [id]);
 
     const handleFormChange = (formTitle) => {
         setFormType(formTitle);

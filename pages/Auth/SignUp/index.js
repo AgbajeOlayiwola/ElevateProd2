@@ -231,7 +231,16 @@ const Signup = ({ type }) => {
                                             <input
                                                 placeholder="Password"
                                                 className={styles.textInput}
-                                                required
+                                                {...register('password', {
+                                                    required:
+                                                        'Please enter Password',
+                                                    pattern: {
+                                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/i,
+                                                        message:
+                                                            'Password must contain at least one alphabelt,number and special character'
+                                                    }
+                                                })}
+                                                name="password"
                                                 type={
                                                     outType
                                                         ? 'text'
@@ -248,6 +257,9 @@ const Signup = ({ type }) => {
                                                 Characters
                                             </p>
                                         )}
+                                        <p className={styles.error}>
+                                            {errors?.password?.message}
+                                        </p>
                                     </div>
 
                                     {/* include validation with required or other standard HTML validation rules */}
