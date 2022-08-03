@@ -22,7 +22,9 @@ const PaymentSuccess = ({
     amount,
     number,
     beneName,
-    isLoading
+    isLoading,
+    statusbar,
+    error
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -32,13 +34,9 @@ const PaymentSuccess = ({
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <Overlay overlay={overlay}>
-            <div className={styles.successcont} ref={myref}>
-                {isLoading ? (
-                    <div className={styles.PaymentSecondCont}>
-                        <h2>Loading...</h2>
-                    </div>
-                ) : (
-                    <>
+            <div ref={myref} className={styles.successcont}>
+                {statusbar === 'success' ? (
+                    <div>
                         {type === 'profile' ? (
                             <BodyWrapper>
                                 <div
@@ -141,9 +139,11 @@ const PaymentSuccess = ({
                                     />
                                 </RegistrationStatus>
                             </BodyWrapper>
-                        )}{' '}
-                    </>
-                )}
+                        )}
+                    </div>
+                ) : statusbar === 'error' ? (
+                    <div>{error}</div>
+                ) : null}
             </div>
         </Overlay>
     );

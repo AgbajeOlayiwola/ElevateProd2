@@ -24,10 +24,10 @@ const Signup = ({ type }) => {
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
 
-    const { isLoading, registered, errorMessage } = useSelector(
+    const { isLoading, user, errorMessage } = useSelector(
         (state) => state.registered
     );
-
+    console.log(user);
     const [passwordMatch, setPasswordMatch] = useState('');
     const handlePaswword = (e) => {
         setCount(e.target.value.length);

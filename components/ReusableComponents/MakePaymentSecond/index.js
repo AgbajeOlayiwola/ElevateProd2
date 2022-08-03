@@ -13,7 +13,8 @@ const MakePaymentSecond = ({
     recieverBank,
     title,
     refNuber,
-    number
+    number,
+    isLoading
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
@@ -152,13 +153,17 @@ const MakePaymentSecond = ({
                                 Clear
                             </button>
                         </div>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="Make Transfer"
-                            type="submit"
-                            onClick={transferAction}
-                        />
+                        {isLoading ? (
+                            <h2>Loading...</h2>
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Make Transfer"
+                                type="submit"
+                                onClick={transferAction}
+                            />
+                        )}
                     </div>
                 </div>
             )}

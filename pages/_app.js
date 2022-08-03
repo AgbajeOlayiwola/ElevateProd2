@@ -6,39 +6,37 @@ import { Provider } from 'react-redux';
 import configureStore from '../redux/store';
 
 function MyApp({ Component, pageProps, router }) {
-    const pageVariants = {
-        pageInitial: {
-            backgroundColor: 'black',
-            opacity: 0
-        },
-        pageAnimate: {
-            backgroundColor: 'transparent',
-            filter: ``,
-            opacity: 1
-        },
-        pageExit: {
-            backgroundColor: 'none',
-            opacity: 0
-        }
+    const variants = {
+        hidden: { opacity: 0, x: 200, y: 0 },
+        enter: { opacity: 1, x: 0, y: 0 },
+        exit: { opacity: 0, x: 0, y: -200 }
     };
-    const pageMotionProps = {
-        initial: 'pageInitial',
-        animate: 'pageAnimate',
-        exit: 'pageExit',
-        variants: pageVariants
-    };
+    // const pageMotionProps = {
+    //     initial: 'pageInitial',
+    //     animate: 'pageAnimate',
+    //     exit: 'pageExit',
+    //     variants: pageVariants
+    // };
 
     // const store = configureStore();
     return (
-        // <Layout>
-        //     <AnimatePresence exitBeforeEnter>
-        //         <motion.div key={router.route} {...pageMotionProps}>
-        <Provider store={store}>
-            <Component {...pageProps} />
-        </Provider>
-        //         </motion.div>
-        //     </AnimatePresence>
-        // </Layout>
+        <Layout>
+            <AnimatePresence exitBeforeEnter>
+                <motion.div
+                    key={router.route}
+                    variants={variants} // Pass the variant object into Framer Motion
+                    initial="hidden" // Set the initial state to variants.hidden
+                    animate="enter" // Animated state to variants.enter
+                    exit="exit" // Exit state (used later) to variants.exit
+                    transition={{ type: 'linear' }} // Set the transition to linear
+                    className=""
+                >
+                    <Provider store={store}>
+                        <Component {...pageProps} />
+                    </Provider>
+                </motion.div>
+            </AnimatePresence>
+        </Layout>
     );
 }
 

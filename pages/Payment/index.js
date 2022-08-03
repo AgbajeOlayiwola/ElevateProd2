@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DashLayout from '../../components/layout/Dashboard';
 import MakePaymentFirst from '../../components/ReusableComponents/MakePaymentFirst';
@@ -8,31 +8,36 @@ import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess';
 import ReceivePaymentFirst from '../../components/ReusableComponents/ReceivePaymentFirst';
 import ReceivePaymentSecond from '../../components/ReusableComponents/ReceivePaymentSecond';
 import styles from './styles.module.css';
-import styled from 'styled-components';
 import Image from 'next/image';
 import Overlay from '../../components/ReusableComponents/Overlay';
 import SchedulePayment from '../../components/ReusableComponents/Schedulepayment';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
-import SingleTrans from '../../components/ReusableComponents/SingleTransSvg';
-import BulkTransfer2 from '../../components/ReusableComponents/BulkTransfSvg/bulktrans';
-import BillTransfer from '../../components/ReusableComponents/BillTransSvg';
-import FxTrans from '../../components/ReusableComponents/FxtransSvg';
-import Paylink2 from '../../components/ReusableComponents/PaylinkSvg/paylink';
-import Ussd from '../../components/ReusableComponents/UssdSvg';
-import MposSvg2 from '../../components/ReusableComponents/mPOSSvg/Mpos';
-import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
 import {
-    postAirtimeAsync,
+    postAirtime,
     postInterBank,
-    postBillsAsync,
-    loadbillerPlanAsync,
+    postBills,
+    loadbillerPlan,
     postInternalBank,
     postInterBankEnquiry,
-    getBalanceEnquiry
+    getBalanceEnquiry,
+    getBulkTransfer,
+    getInternationalTransfer,
+    getVerifyCurrency,
+    getverifyBank,
+    postBeneficiariesData,
+    loadbank
 } from '../../redux/actions/actions';
+import ChartDiv from './chartDivStyled';
+import ChartContent from './chartContentStyled';
+import PaymentSingleBody from '../../components/ReusableComponents/PaymentSingleBody';
+import PaymentCard from '../../components/ReusableComponents/PaymentCard';
 // import PaymentError from '../../components/ReusableComponents/PaymentError';
+import { useRouter } from 'next/router';
+import { PaymentData } from '../../components/ReusableComponents/Data';
 
 const Payment = () => {
+    const router = useRouter();
+
     const { airtime, errorMessageAirtime } = useSelector(
         (state) => state.airtimeReducer
     );
@@ -51,11 +56,28 @@ const Payment = () => {
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
     );
+    const { bulkTransfer, errorMessagebulkTransfer } = useSelector(
+        (state) => state.bulkTransferReducer
+    );
+    const { internationalTransfer, errorMessageinternationalTransfer } =
+        useSelector((state) => state.internationalTransferReducer);
+    const { verifyBank, errorMessageverifyBank } = useSelector(
+        (state) => state.verifyBankReducer
+    );
+    const { verifyCurrency, errorMessageverifyCurrency } = useSelector(
+        (state) => state.verifyCurrencyReducer
+    );
     const { billerPlan } = useSelector((state) => state.billerPlanReducer);
+
+    const { postBeneficiaries } = useSelector(
+        (state) => state.postBeneficiariesReducer
+    );
+    const { banks } = useSelector((state) => state.banksReducer);
 
     const dispatch = useDispatch();
     const [formType, setFormType] = useState('');
     const [overlay, setOverlay] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [count, setCount] = useState(0);
     const [qr, setqr] = useState('10%');
     const [paylink, setPaylink] = useState('35%');
@@ -64,47 +86,42 @@ const Payment = () => {
     const [outType, setOutType] = useState();
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
-    const [balance] = useState('22,049.94');
-    const [error, setError] = useState({});
-
-    const ChartDiv = styled.div`
-        width: ${(props) => props.width};
-        background-color: ${(props) => props.bg};
-        border-radius: 8px 8px 8px 8px;
-        height: 100%;
-        margin-left: -14px;
-        z-index: ${(props) => props.zIndex};
-    `;
-    const ChartContent = styled.div`
-        width: ${(props) => props.width};
-        margin-left: -14px;
-        text-align: center;
-        p {
-            color: ${(props) => props.color};
-            font-size: 14px;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
-            line-height: 16px;
-            margin: 0px;
-        }
-        h4 {
-            font-size: 14px;
-            font-weight: 500;
-            font-family: 'Inter', sans-serif;
-            line-height: 16px;
-            color: #3e3e3e;
-            margin: 0px;
-        }
-    `;
+    const [balance, setBalance] = useState('000000.00');
+    const [error, setError] = useState('');
+    const [status, setStatus] = useState('');
+    const [senderDetails, setSenderDetails] = useState({});
+    const [bank, setBank] = useState({});
+    const [, updateState] = useState();
+    const forceUpdate = useCallback(() => {
+        updateState({}), [];
+        alert('Hello');
+    });
 
     useEffect(() => {
         dispatch(getBalanceEnquiry());
     }, []);
+    // useEffect(() => {
+    //     dispatch(loadbank('ENG'));
+    // }, []);
+    // useEffect(() => {
+    //     if (banks !== null) {
+    //         setBank(banks);
+    //     }
+    // }, [banks]);
+    useEffect(() => {}, [interBank, errorMessageInterBank]);
 
     useEffect(() => {
         if (balanceEnquiry !== null) {
-            // setBillerCategories(balanceEnquiry);
-            console.log(balanceEnquiry[0]);
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'NGN',
+                currencyDisplay: 'narrowSymbol'
+            });
+            const formattedAmount = formatter.format(
+                balanceEnquiry[0].availableBalance
+            );
+            setBalance(formattedAmount);
+            setSenderDetails(balanceEnquiry[0]);
         }
     }, [balanceEnquiry]);
 
@@ -113,6 +130,21 @@ const Payment = () => {
             setInterEnquiry(interBankEnquiry);
         }
     }, [interBankEnquiry]);
+    // useEffect(() => {
+    //     if (interBankEnquiry !== null) {
+    //         setInterEnquiry(interBankEnquiry);
+    //     }
+    // }, [interBankEnquiry]);
+    // useEffect(() => {
+    //     if (interBankEnquiry !== null) {
+    //         setInterEnquiry(interBankEnquiry);
+    //     }
+    // }, [interBankEnquiry]);
+    // useEffect(() => {
+    //     if (interBankEnquiry !== null) {
+    //         setInterEnquiry(interBankEnquiry);
+    //     }
+    // }, [interBankEnquiry]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -120,45 +152,15 @@ const Payment = () => {
 
     useEffect(() => {}, [paymentDetails]);
 
-    const paymentData = {
-        make: [
-            {
-                icon: <BillTransfer />,
-                text: 'Bills Payment'
-            },
-            {
-                icon: <SingleTrans />,
-                text: 'Single Transfer'
-            },
-            {
-                icon: <BulkTransfer2 />,
-                text: 'Bulk Transfer'
-            },
-
-            {
-                icon: <FxTrans />,
-                text: 'FX Transfer '
-            }
-        ],
-        receive: [
-            {
-                icon: <EcobankQRSvg />,
-                text: 'Ecobank QR Only'
-            },
-            {
-                icon: <MposSvg2 />,
-                text: 'Phone POS'
-            },
-            {
-                icon: <Ussd />,
-                text: 'USSD only'
-            },
-            {
-                icon: <Paylink2 />,
-                text: 'Paylink'
-            }
-        ]
-    };
+    useEffect(() => {
+        const {
+            query: { id }
+        } = router;
+        if ({ id }.id !== undefined) {
+            setFormType({ id }.id.toLowerCase());
+            setOverlay(true);
+        }
+    }, []);
 
     const handleFormChange = (formTitle) => {
         setFormType(formTitle);
@@ -323,11 +325,14 @@ const Payment = () => {
                                     setCount(count + 1);
                                 }}
                                 othersaction={(data) => {
-                                    const enquiry = {
-                                        destinationBankCode: data.bankName,
-                                        beneficiaryAccountNo: data.accountNumber
-                                    };
-                                    dispatch(postInterBankEnquiry(enquiry));
+                                    if (data.bankName !== 'Ecobank') {
+                                        const enquiry = {
+                                            destinationBankCode: data.bankName,
+                                            beneficiaryAccountNo:
+                                                data.accountNumber
+                                        };
+                                        dispatch(postInterBankEnquiry(enquiry));
+                                    }
 
                                     console.log(data);
                                     setPaymentDetails(data);
@@ -338,6 +343,7 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentSecond
+                                isLoading={isLoading}
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountNumber}
                                 sender={paymentDetails.accountName}
@@ -360,18 +366,44 @@ const Payment = () => {
                                     // }
                                     // } else
                                     if (paymentDetails.others === 'others') {
+                                        setIsLoading(true);
+                                        if (paymentDetails.bene === true) {
+                                            const newBene = {
+                                                name: interEnquiry.accountName,
+                                                accountNumber:
+                                                    interEnquiry.accountNo,
+                                                bankName:
+                                                    // bank.filter(
+                                                    //     (item) => {
+                                                    //         if (
+                                                    //             item.institutionId ===
+                                                    //             paymentDetails.bankName
+                                                    //         ) {
+                                                    //             return item.institutionName;
+                                                    //         }
+                                                    //     }
+                                                    // )
+                                                    'Zenith Bank',
+                                                bankCode:
+                                                    paymentDetails.bankName
+                                            };
+                                            dispatch(
+                                                postBeneficiariesData(newBene)
+                                            );
+                                        }
                                         if (
                                             paymentDetails.bankName ===
                                             'Ecobank'
                                         ) {
                                             const paymentData = {
-                                                debitAccountNo: '4262004003',
+                                                debitAccountNo:
+                                                    senderDetails.accountNo,
                                                 debitAccountType: 'A',
                                                 creditAccountNo:
                                                     paymentDetails.accountNumber,
                                                 creditAccountType: 'A',
                                                 amount: paymentDetails.amount,
-                                                ccy: 'NGN'
+                                                ccy: senderDetails.ccy
                                             };
                                             dispatch(
                                                 postInternalBank(paymentData)
@@ -383,11 +415,13 @@ const Payment = () => {
                                                 setCount(count + 1);
                                             }
                                         } else {
-                                            console.log(interBankEnquiry);
+                                            console.log(interEnquiry);
+
                                             const paymentData = {
                                                 destinationBankCode:
                                                     paymentDetails.bankName,
-                                                senderAccountNo: '1823020500',
+                                                senderAccountNo:
+                                                    senderDetails.accountNo,
                                                 senderAccountType: 'A',
                                                 senderName:
                                                     'Aderohunmu Matthew',
@@ -399,17 +433,53 @@ const Payment = () => {
                                                 narration:
                                                     paymentDetails.narration,
                                                 amount: paymentDetails.amount,
-                                                ccy: 'NGN'
+                                                ccy: senderDetails.ccy
                                             };
                                             dispatch(
                                                 postInterBank(paymentData)
                                             );
-                                            if (interBank !== null) {
-                                                console.log(interBank);
-                                                setCount(count + 1);
-                                            } else {
-                                                setCount(count + 1);
-                                            }
+                                            setTimeout(() => {
+                                                forceUpdate();
+
+                                                if (interBank !== null) {
+                                                    if (
+                                                        interBank.message ===
+                                                        'SUCCESS'
+                                                    ) {
+                                                        console.log(interBank);
+                                                        setCount(
+                                                            (count) => count + 1
+                                                        );
+                                                        setIsLoading(false);
+                                                        setStatus('success');
+                                                    } else if (
+                                                        interBank.message !==
+                                                        'SUCCESS'
+                                                    ) {
+                                                        setCount(
+                                                            (count) => count + 1
+                                                        );
+                                                        setIsLoading(false);
+                                                        setError(
+                                                            interBank.message
+                                                        );
+                                                        setStatus(error);
+                                                    }
+                                                } else if (
+                                                    errorMessageInterBank !==
+                                                    null
+                                                ) {
+                                                    setCount(
+                                                        (count) => count + 1
+                                                    );
+                                                    setIsLoading(false);
+                                                    setStatus(error);
+                                                    setError(
+                                                        errorMessageInterBank
+                                                    );
+                                                }
+                                            }, 3000);
+                                            console.log(errorMessageInterBank);
                                         }
                                     }
                                 }}
@@ -418,6 +488,8 @@ const Payment = () => {
                     case 2:
                         return (
                             <PaymentSuccess
+                                statusbar={status}
+                                error={error}
                                 overlay={overlay}
                                 action={() => {
                                     setCount(0);
@@ -441,9 +513,37 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 action={(data) => {
+                                    // const enquiry1 = {
+                                    //     destinationBankCode: data.bankName1,
+                                    //     beneficiaryAccountNo:
+                                    //         data.accountNumber1
+                                    // };
+                                    // dispatch(postInterBankEnquiry(enquiry1));
+                                    // const enquiry2 = {
+                                    //     destinationBankCode: data.bankName2,
+                                    //     beneficiaryAccountNo:
+                                    //         data.accountNumber2
+                                    // };
+                                    // dispatch(postInterBankEnquiry(enquiry1));
+                                    // if (
+                                    //     paymentDetails.accountNumber3 !== '' &&
+                                    //     paymentDetails.bankName3 !== ''
+                                    // ) {
+                                    //     const enquiry3 = {
+                                    //         destinationBankCode: data.bankName3,
+                                    //         beneficiaryAccountNo:
+                                    //             data.accountNumber3
+                                    //     };
+                                    //     dispatch(
+                                    //         postInterBankEnquiry(enquiry3)
+                                    //     );
+                                    // }
+                                    // dispatch(postInterBankEnquiry(enquiry1));
+                                    // dispatch(postInterBankEnquiry(enquiry2));
+
                                     setPaymentDetails(data);
-                                    if (paymentDetails.accountNumber3)
-                                        console.log(data);
+
+                                    console.log(data);
                                     setCount(count + 1);
                                 }}
                             />
@@ -471,7 +571,8 @@ const Payment = () => {
                                                 beneficiaryName:
                                                     'CHIJIOKE NWANKWO',
                                                 narration: 'salary',
-                                                amount: paymentDetails.amount,
+                                                // amount: paymentDetails.amount,
+                                                amount: '120.00',
                                                 ccy: 'NGN'
                                             },
                                             {
@@ -482,7 +583,7 @@ const Payment = () => {
                                                 beneficiaryName:
                                                     'CHIJIOKE NWANKWO',
                                                 narration: 'salary',
-                                                amount: paymentDetails.amount,
+                                                amount: '100.00',
                                                 ccy: 'NGN'
                                             }
                                         ]
@@ -496,10 +597,11 @@ const Payment = () => {
                                             beneficiaryAccountNo: '2252999740',
                                             beneficiaryName: 'CHIJIOKE NWANKWO',
                                             narration: 'salary',
-                                            amount: paymentDetails.amount,
+                                            amount: '110.00',
                                             ccy: 'NGN'
                                         });
                                     }
+                                    dispatch(getBulkTransfer(paymentData));
                                     setCount(count + 1);
                                 }}
                             />
@@ -514,6 +616,7 @@ const Payment = () => {
                                     setFormType('');
                                 }}
                                 title="Bulk Payment"
+                                amount={paymentDetails.amount}
                             />
                         );
                 }
@@ -550,7 +653,7 @@ const Payment = () => {
                                         paymentDetails.billerType === 'AIRTIME'
                                     ) {
                                         dispatch(
-                                            loadbillerPlanAsync(
+                                            loadbillerPlan(
                                                 paymentDetails.billerCategory
                                             )
                                         );
@@ -589,9 +692,7 @@ const Payment = () => {
                                                     }
                                                 ]
                                             };
-                                            dispatch(
-                                                postAirtimeAsync(billerData)
-                                            );
+                                            dispatch(postAirtime(billerData));
                                         }
                                         if (airtime !== null) {
                                             console.log(airtime);
@@ -605,7 +706,7 @@ const Payment = () => {
                                         }
                                     } else {
                                         dispatch(
-                                            loadbillerPlanAsync(
+                                            loadbillerPlan(
                                                 paymentDetails.billerCategory
                                             )
                                         );
@@ -645,9 +746,7 @@ const Payment = () => {
                                                     }
                                                 ]
                                             };
-                                            dispatch(
-                                                postBillsAsync(billerData)
-                                            );
+                                            dispatch(postBills(billerData));
                                         }
                                         if (errorMessageBills !== null) {
                                             console.log(errorMessageBills);
@@ -806,7 +905,7 @@ const Payment = () => {
                         <div>
                             <div className={styles.visibility}>
                                 <p className={styles.thousand}>
-                                    {outType ? '*******' : '₦' + balance}
+                                    {outType ? '*******' : balance}
                                 </p>
                                 <Visbility color="green" typeSet={types} />
                             </div>
@@ -825,7 +924,7 @@ const Payment = () => {
 
             <div className={styles.cov}>
                 <PaymentCard title="Receive Payments" type="receive">
-                    {paymentData.receive.map((payType, index) => (
+                    {PaymentData.receive.map((payType, index) => (
                         <PaymentSingleBody
                             data={payType}
                             key={index}
@@ -835,7 +934,7 @@ const Payment = () => {
                     ))}
                 </PaymentCard>
                 <PaymentCard title="Make Payments" type="make">
-                    {paymentData.make.map((payType, index) => (
+                    {PaymentData.make.map((payType, index) => (
                         <PaymentSingleBody
                             data={payType}
                             key={index}
@@ -850,47 +949,6 @@ const Payment = () => {
 
             {renderForm()}
         </DashLayout>
-    );
-};
-
-const PaymentSingleBody = ({
-    data: { icon, text },
-    index,
-    type,
-    handleFormChange
-}) => {
-    return (
-        <div
-            className={styles.paymentSingleBody}
-            key={index}
-            onClick={() => handleFormChange(text.toLowerCase())}
-        >
-            <div>
-                <div className={styles.paymentSingleImg}>{icon}</div>
-                <div className={styles.paymentSingleText}>
-                    <p
-                        className={
-                            type == 'receive'
-                                ? styles.receivePara
-                                : styles.makePara
-                        }
-                    >
-                        {text}
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const PaymentCard = ({ children, title, type }) => {
-    return (
-        <div className={styles.paymentTypeCont}>
-            <h2 className={type == 'receive' ? styles.receive : styles.make}>
-                {title}
-            </h2>
-            <div className={styles.PaymentSingle}>{children}</div>
-        </div>
     );
 };
 

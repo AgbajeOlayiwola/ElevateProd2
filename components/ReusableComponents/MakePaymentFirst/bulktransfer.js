@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadbankAsync } from '../../../redux/actions/actions';
+import { loadbank } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const BulkTransfer = ({ action, firstTitle, buttonText }) => {
@@ -12,7 +12,7 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
     const { banks } = useSelector((state) => state.banksReducer);
 
     useEffect(() => {
-        dispatch(loadbankAsync('ENG'));
+        dispatch(loadbank('ENG'));
     }, []);
     useEffect(() => {
         if (banks !== null) {

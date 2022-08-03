@@ -114,6 +114,77 @@ export const transactionHistory = {
 };
 
 //transactionHistory action type ends
+
+//transactionElevate action types
+
+export const transactionElevate = {
+    TRANSACTIONELEVATE_LOAD_START: 'TRANSACTIONELEVATE_LOAD_START',
+    TRANSACTIONELEVATE_LOAD_SUCCESS: 'TRANSACTIONELEVATE_LOAD_SUCCESS',
+    TRANSACTIONELEVATE_LOAD_ERROR: 'TRANSACTIONELEVATE_LOAD_ERROR'
+};
+
+//transactionElevate action type ends
+
+//getBeneficiaries action types
+
+export const getBeneficiaries = {
+    GETBENEFICIARIES_LOAD_START: 'GETBENEFICIARIES_LOAD_START',
+    GETBENEFICIARIES_LOAD_SUCCESS: 'GETBENEFICIARIES_LOAD_SUCCESS',
+    GETBENEFICIARIES_LOAD_ERROR: 'GETBENEFICIARIES_LOAD_ERROR'
+};
+
+//getBeneficiaries action type ends
+
+//postBeneficiaries action types
+
+export const postBeneficiaries = {
+    POSTBENEFICIARIES_LOAD_START: 'POSTBENEFICIARIES_LOAD_START',
+    POSTBENEFICIARIES_LOAD_SUCCESS: 'POSTBENEFICIARIES_LOAD_SUCCESS',
+    POSTBENEFICIARIES_LOAD_ERROR: 'POSTBENEFICIARIES_LOAD_ERROR'
+};
+
+//postBeneficiaries action type ends
+
+//transactionHistory action types
+
+export const bulkTransfer = {
+    BULKTRANSFER_LOAD_START: 'BULKTRANSFER_LOAD_START',
+    BULKTRANSFER_LOAD_SUCCESS: 'BULKTRANSFER_LOAD_SUCCESS',
+    BULKTRANSFER_LOAD_ERROR: 'BULKTRANSFER_LOAD_ERROR'
+};
+
+//transactionHistory action type ends
+
+//verifyBank action types
+
+export const verifyBank = {
+    VERIFYBANK_LOAD_START: 'VERIFYBANK_LOAD_START',
+    VERIFYBANK_LOAD_SUCCESS: 'VERIFYBANK_LOAD_SUCCESS',
+    VERIFYBANK_LOAD_ERROR: 'VERIFYBANK_LOAD_ERROR'
+};
+
+//verifyBank action type ends
+
+//VerifyCurrency action types
+
+export const verifyCurrency = {
+    VERIFYCURRENCY_LOAD_START: 'VERIFYCURRENCY_LOAD_START',
+    VERIFYCURRENCY_LOAD_SUCCESS: 'VERIFYCURRENCY_LOAD_SUCCESS',
+    VERIFYCURRENCY_LOAD_ERROR: 'VERIFYCURRENCY_LOAD_ERROR'
+};
+
+//VerifyCurrency action type ends
+
+//transactionHistory action types
+
+export const internationalTransfer = {
+    INTERNATIONALTRANSFER_LOAD_START: 'INTERNATIONALTRANSFER_LOAD_START',
+    INTERNATIONALTRANSFER_LOAD_SUCCESS: 'INTERNATIONALTRANSFER_LOAD_SUCCESS',
+    INTERNATIONALTRANSFER_LOAD_ERROR: 'INTERNATIONALTRANSFER_LOAD_ERROR'
+};
+
+//transactionHistory action type ends
+
 //auth action types
 export const login = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',

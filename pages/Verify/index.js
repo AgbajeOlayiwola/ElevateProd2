@@ -8,11 +8,11 @@ const Verify = () => {
     // const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
     const [res, setRes] = useState('');
-
+    const { query, isReady, push } = useRouter();
     const handleClick = () => {
-        router.push('./Auth/Login');
+        push('./Auth/Login');
     };
-    const { query, isReady } = useRouter();
+
     useEffect(() => {
         var token = query['token'];
         console.log('hello', token);
@@ -20,7 +20,7 @@ const Verify = () => {
         if (token) {
             axios
                 .get(
-                    `http://ellevate-app.herokuapp.com/verification/email/${token}`
+                    `https://ellevate-app.herokuapp.com/verification/email/${token}`
                 )
                 .then((response) => {
                     console.log(response.data.message);
@@ -34,7 +34,7 @@ const Verify = () => {
 
     return (
         <>
-            {res == 'Email verified successfully' ? (
+            {res === 'Email verified successfully' ? (
                 <div className={styles.verifyCov}>
                     <div className={styles.body}>
                         <Messagesvg />

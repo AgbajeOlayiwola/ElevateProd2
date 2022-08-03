@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ButtonComp } from '../../../../components';
 import styles from './styles.module.css';
 import Image from 'next/image';
@@ -20,17 +20,23 @@ import {
     H6Wrapper
 } from './styles.module';
 import Success from '../../../ReusableComponents/Success';
+import apiRoutes from '../../../../redux/helper/apiRoutes';
+import axiosInstance from '../../../../redux/helper/apiClient';
 
 const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
-    const [isRegistered, setIsRegistered] = useState(false);
-
-    const handleShowThirdStepOnly = () => {
-        setShowThirdStep(true);
-        setShowFourthStep(false);
-        setShowSecondStep(false);
-    };
-
+    const [accountDone, setAccountDone] = useState('');
+    useEffect(() => {
+        axiosInstance
+            .get(`${apiRoutes.accountStatus}`)
+            .then((response) => {
+                console.log('Accoutn Status', response);
+                setAccountDone(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error.response.data.data.message);
+            });
+    }, []);
     return (
         <Card>
             <BodyWrapper>
@@ -54,7 +60,9 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                     </SuccessMainHeading>
                     <H6Wrapper style={{ textAlign: 'center' }}>
                         Your account number is:{' '}
-                        <span style={{ color: '#005b82' }}>232222829</span>
+                        <span style={{ color: '#005b82' }}>
+                            {accountDone.accountNumber}
+                        </span>
                     </H6Wrapper>
 
                     <h6 className={styles.elevateSuccess}>

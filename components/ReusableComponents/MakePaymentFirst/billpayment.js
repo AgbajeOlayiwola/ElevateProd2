@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadbillerCategoryAsync } from '../../../redux/actions/actions';
-import { loadbillerTypeAsync } from '../../../redux/actions/actions';
-import { loadbillerPlanAsync } from '../../../redux/actions/actions';
+import { loadbillerCategory } from '../../../redux/actions/actions';
+import { loadbillerType } from '../../../redux/actions/actions';
+import { loadbillerPlan } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const BillPayment = ({ action, firstTitle, buttonText }) => {
@@ -21,7 +21,7 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
     const { billerType } = useSelector((state) => state.billerTypeReducer);
     const { billerPlan } = useSelector((state) => state.billerPlanReducer);
     useEffect(() => {
-        dispatch(loadbillerCategoryAsync('ENG'));
+        dispatch(loadbillerCategory('ENG'));
     }, []);
     useEffect(() => {
         if (billerCategory !== null) {
@@ -35,7 +35,7 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
         formState: { errors }
     } = useForm();
     const loadbillerType = (e) => {
-        dispatch(loadbillerTypeAsync('ENG', e.target.value));
+        dispatch(loadbillerType('ENG', e.target.value));
         setBillerId(e.target.value);
         setBillerTypes([]);
         setBillerPlans([]);
@@ -46,7 +46,7 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
         }
     }, [billerType]);
     const loadPlans = (e) => {
-        dispatch(loadbillerPlanAsync(e.target.value));
+        dispatch(loadbillerPlan(e.target.value));
     };
     useEffect(() => {}, [billerId]);
     useEffect(() => {

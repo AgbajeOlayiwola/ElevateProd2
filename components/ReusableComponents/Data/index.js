@@ -12,6 +12,14 @@ import * as CgIcons from 'react-icons/cg';
 import * as FiIcons from 'react-icons/fi';
 import * as BiIcons from 'react-icons/bi';
 import * as HiIcons from 'react-icons/hi';
+import SingleTrans from '../SingleTransSvg';
+import BulkTransfer2 from '../BulkTransfSvg/bulktrans';
+import BillTransfer from '../BillTransSvg';
+import FxTrans from '../FxtransSvg';
+import Paylink2 from '../PaylinkSvg/paylink';
+import Ussd from '../UssdSvg';
+import MposSvg2 from '../mPOSSvg/Mpos';
+import EcobankQRSvg from '../EcobankQRSvg';
 
 export const SidebarData = [
     {
@@ -37,49 +45,49 @@ export const SidebarData = [
         subNav: [
             {
                 title: 'Paylink',
-                path: '',
+                path: 'Paylink',
                 icon: <BiIcons.BiLinkAlt />,
                 subNavTitle: 'Receive Payment'
             },
             {
                 title: 'USSD',
-                path: '',
+                path: 'USSD only',
                 icon: <StarSharp />,
                 subNavTitle: 'Receive Payment'
             },
             {
                 title: 'Ecobank QR',
-                path: '',
+                path: 'Ecobank QR Only',
                 icon: <BiIcons.BiScan />,
                 subNavTitle: 'Receive Payment'
             },
             {
                 title: 'mPOS',
-                path: '',
+                path: 'Phone Pos',
                 icon: <HiIcons.HiOutlineCreditCard />,
                 subNavTitle: 'Receive Payment'
             },
             {
                 title: 'Single Transfer',
-                path: '',
+                path: 'Single Transfer',
                 icon: <BiIcons.BiTransfer />,
                 subNavTitle: 'Make Payment'
             },
             {
                 title: 'Bulk Transfer',
-                path: '',
+                path: 'Bulk Transfer',
                 icon: <BulkTransfer />,
                 subNavTitle: 'Make Payment'
             },
             {
                 title: 'Bill Payment',
-                path: '',
+                path: 'Bills Payment',
                 icon: <NairaSvg />,
                 subNavTitle: 'Make Payment'
             },
             {
                 title: 'FX Transfer',
-                path: '',
+                path: 'FX Transfer ',
                 icon: <FaIcons.FaHandHoldingUsd />,
                 subNavTitle: 'Make Payment'
             }
@@ -174,22 +182,22 @@ export const transactionData = [
 export const RecievePayment = [
     {
         title: 'By Ecobank Pay (QR)',
-        path: '#',
+        path: 'Ecobank QR only',
         icon: <BiIcons.BiScan />
     },
     {
         title: 'By Phone POS',
-        path: '#',
+        path: 'Phone POS',
         icon: <HiIcons.HiOutlineCreditCard />
     },
     {
-        title: 'By USSD',
-        path: '#',
+        title: 'USSD',
+        path: 'USSD only',
         icon: <StarSharp />
     },
     {
         title: 'Paylink',
-        path: '#',
+        path: 'Paylink',
         icon: <BiIcons.BiLinkAlt />
     }
 ];
@@ -197,23 +205,23 @@ export const RecievePayment = [
 export const MakePayment = [
     {
         title: 'Bills Payment',
-        path: '#',
+        path: 'Bills Payment',
         icon: <NairaSvg />
     },
     {
         title: 'Single Transfer',
-        path: '#',
+        path: 'Single Transfer',
         icon: <BiIcons.BiTransfer />
     },
     {
         title: 'Bulk Transfer',
-        path: '#',
+        path: 'Bulk Transfer',
         icon: <BulkTransfer />
     },
 
     {
         title: 'FX Transfer',
-        path: '#',
+        path: 'FX Transfer ',
         icon: <FaIcons.FaHandHoldingUsd />
     }
 ];
@@ -227,3 +235,43 @@ export const OtherAccounts = [
         account: 'Ecobank Omnilite Account'
     }
 ];
+
+export const PaymentData = {
+    make: [
+        {
+            icon: <BillTransfer />,
+            text: 'Bills Payment'
+        },
+        {
+            icon: <SingleTrans />,
+            text: 'Single Transfer'
+        },
+        {
+            icon: <BulkTransfer2 />,
+            text: 'Bulk Transfer'
+        },
+
+        {
+            icon: <FxTrans />,
+            text: 'FX Transfer '
+        }
+    ],
+    receive: [
+        {
+            icon: <EcobankQRSvg />,
+            text: 'Ecobank QR Only'
+        },
+        {
+            icon: <MposSvg2 />,
+            text: 'Phone POS'
+        },
+        {
+            icon: <Ussd />,
+            text: 'USSD only'
+        },
+        {
+            icon: <Paylink2 />,
+            text: 'Paylink'
+        }
+    ]
+};
