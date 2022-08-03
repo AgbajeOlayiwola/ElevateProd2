@@ -16,7 +16,7 @@ const TableDetail = ({
                 <p className={styles.bene}>{Beneficiary} </p>
                 <p className={styles.transfer}>{Type}</p>
                 <p className={styles.amount}>{Amount}</p>
-                <p className={styles.bank}>{Bank}</p>
+                <p className={styles.bank}>{Bank === null ? 'Null' : Bank}</p>
                 <p className={styles.date}>{Dates}</p>
                 <p className={styles.status}>{Status}</p>
             </div>

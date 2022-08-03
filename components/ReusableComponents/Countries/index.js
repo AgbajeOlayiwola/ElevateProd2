@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadCountryAsync } from '../../../redux/actions/actions';
+import { loadCountry } from '../../../redux/actions/actions';
 
 const Countriess = () => {
     const [countrys, setCountry] = useState([]);
@@ -13,7 +13,7 @@ const Countriess = () => {
     );
 
     useEffect(() => {
-        dispatch(loadCountryAsync());
+        dispatch(loadCountry());
         if (countries !== null) {
             setCountry(countries);
         }

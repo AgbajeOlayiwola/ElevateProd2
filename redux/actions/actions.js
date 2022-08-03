@@ -12,6 +12,13 @@ import {
     interBankEnquiry,
     balanceEnquiry,
     transactionHistory,
+    transactionElevate,
+    postBeneficiaries,
+    getBeneficiaries,
+    bulkTransfer,
+    internationalTransfer,
+    verifyBank,
+    verifyCurrency,
     login
 } from '../types/actionTypes';
 import axios from '../helper/apiClient';
@@ -32,7 +39,7 @@ export const countryLoadError = (errorMessage) => ({
     payload: errorMessage
 });
 
-export const loadCountryAsync = () => (dispatch) => {
+export const loadCountry = () => (dispatch) => {
     dispatch(countryLoadStart());
     axios
         .get(`${apiRoutes.getCountries}`)
@@ -58,7 +65,7 @@ export const bankLoadError = (errorMessage) => ({
     payload: errorMessage
 });
 
-export const loadbankAsync = (code) => (dispatch) => {
+export const loadbank = (code) => (dispatch) => {
     dispatch(bankLoadStart());
     axios
         .get(`${apiRoutes.getBanks}?affiliateCode=${code}`)
@@ -82,7 +89,7 @@ export const billerCategoryLoadError = (errorMessage) => ({
     payload: errorMessage
 });
 
-export const loadbillerCategoryAsync = (code) => (dispatch) => {
+export const loadbillerCategory = (code) => (dispatch) => {
     dispatch(billerCategoryLoadStart());
     axios
         .get(`${apiRoutes.getBillerCategories}?affiliateCode=${code}`)
@@ -107,7 +114,7 @@ export const billerTypeLoadError = (errorMessage) => ({
     type: billerType.BILLERTYPE_LOAD_ERROR,
     payload: errorMessage
 });
-export const loadbillerTypeAsync = (code, category) => (dispatch) => {
+export const loadbillerType = (code, category) => (dispatch) => {
     dispatch(billerTypeLoadStart());
     axios
         .get(`${apiRoutes.getBillerType}${code}?category=${category}`)
@@ -130,7 +137,7 @@ export const billerPlanLoadError = (errorMessage) => ({
     type: billerPlan.BILLERPLAN_LOAD_ERROR,
     payload: errorMessage
 });
-export const loadbillerPlanAsync = (code) => (dispatch) => {
+export const loadbillerPlan = (code) => (dispatch) => {
     dispatch(billerPlanLoadStart());
     axios
         .get(`${apiRoutes.getBillerPlan}${code}`)
@@ -178,7 +185,7 @@ export const airtimeLoadError = (errorMessageAirtime) => ({
     type: airtime.AIRTIME_LOAD_ERROR,
     payload: errorMessageAirtime
 });
-export const postAirtimeAsync = (data) => (dispatch) => {
+export const postAirtime = (data) => (dispatch) => {
     dispatch(airtimeLoadStart());
     axios
         .post(`${apiRoutes.airtime}`, data)
@@ -202,7 +209,7 @@ export const billsLoadError = (errorMessageBills) => ({
     type: bills.BILLS_LOAD_ERROR,
     payload: errorMessageBills
 });
-export const postBillsAsync = (data) => (dispatch) => {
+export const postBills = (data) => (dispatch) => {
     dispatch(billsLoadStart());
     axios
         .post(`${apiRoutes.bills}`, data)
@@ -256,7 +263,7 @@ export const postInterBank = (data) => (dispatch) => {
     dispatch(interBankLoadStart());
     axios
         .post(`${apiRoutes.interBank}`, data)
-        .then((response) => dispatch(interBankLoadSuccess(response.data.data)))
+        .then((response) => dispatch(interBankLoadSuccess(response.data)))
         .catch((error) => dispatch(interBankLoadError(error.message)));
 };
 
@@ -329,7 +336,7 @@ export const transactionHistoryLoadError = (transactionHistoryerror) => ({
     payload: transactionHistoryerror
 });
 export const getTransactionHistory = () => (dispatch) => {
-    dispatch(balanceEnquiryLoadStart());
+    dispatch(transactionHistoryLoadStart());
     axios
         .get(`${apiRoutes.transactionHistory}`)
         .then((response) =>
@@ -339,6 +346,188 @@ export const getTransactionHistory = () => (dispatch) => {
 };
 
 //transactionHistory action end
+
+//transactionElevate action
+export const transactionElevateLoadStart = () => ({
+    type: transactionElevate.TRANSACTIONELEVATE_LOAD_START
+});
+
+export const transactionElevateLoadSuccess = (bill) => ({
+    type: transactionElevate.TRANSACTIONELEVATE_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const transactionElevateLoadError = (transactionElevateerror) => ({
+    type: transactionElevate.TRANSACTIONELEVATE_LOAD_ERROR,
+    payload: transactionElevateerror
+});
+export const getTransactionElevate = () => (dispatch) => {
+    dispatch(transactionElevateLoadStart());
+    axios
+        .get(`${apiRoutes.transactionElevate}`)
+        .then((response) =>
+            dispatch(transactionElevateLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(transactionElevateLoadError(error.message)));
+};
+
+//transactionElevate action end
+
+//transactionHistory action
+export const bulkTransferLoadStart = () => ({
+    type: bulkTransfer.BULKTRANSFER_LOAD_START
+});
+
+export const bulkTransferLoadSuccess = (bill) => ({
+    type: bulkTransfer.BULKTRANSFER_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const bulkTransferLoadError = (bulkTransfererror) => ({
+    type: bulkTransfer.BULKTRANSFER_LOAD_ERROR,
+    payload: bulkTransfererror
+});
+export const getBulkTransfer = (data) => (dispatch) => {
+    dispatch(bulkTransferLoadStart());
+    axios
+        .post(`${apiRoutes.bulkTransfer}`, data)
+        .then((response) =>
+            dispatch(bulkTransferLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(bulkTransferLoadError(error.message)));
+};
+
+//transactionHistory action end
+
+//internationalTransfer action
+export const internationalTransferLoadStart = () => ({
+    type: internationalTransfer.INTERNATIONALTRANSFER_LOAD_START
+});
+
+export const internationalTransferLoadSuccess = (bill) => ({
+    type: internationalTransfer.INTERNATIONALTRANSFER_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const internationalTransferLoadError = (internationalTransfererror) => ({
+    type: internationalTransfer.INTERNATIONALTRANSFER_LOAD_ERROR,
+    payload: internationalTransfererror
+});
+export const getInternationalTransfer = (data) => (dispatch) => {
+    dispatch(internationalTransferLoadStart());
+    axios
+        .post(`${apiRoutes.internationalTransfer}`, data)
+        .then((response) =>
+            dispatch(internationalTransferLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(internationalTransferLoadError(error.message))
+        );
+};
+
+//internationalTransfer action end
+
+//verifyBank action
+export const verifyBankLoadStart = () => ({
+    type: verifyBank.VERIFYBANK_LOAD_START
+});
+
+export const verifyBankLoadSuccess = (bill) => ({
+    type: verifyBank.VERIFYBANK_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const verifyBankLoadError = (verifyBankerror) => ({
+    type: verifyBank.VERIFYBANK_LOAD_ERROR,
+    payload: verifyBankerror
+});
+export const getverifyBank = (data) => (dispatch) => {
+    dispatch(verifyBankLoadStart());
+    axios
+        .post(`${apiRoutes.verifyBank}`, data)
+        .then((response) => dispatch(verifyBankLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(verifyBankLoadError(error.message)));
+};
+
+//verifyBank action end
+
+//verifyCurrency action
+export const verifyCurrencyLoadStart = () => ({
+    type: verifyCurrency.VERIFYCURRENCY_LOAD_START
+});
+
+export const verifyCurrencyLoadSuccess = (bill) => ({
+    type: verifyCurrency.VERIFYCURRENCY_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const verifyCurrencyLoadError = (verifyCurrencyerror) => ({
+    type: verifyCurrency.VERIFYCURRENCY_LOAD_ERROR,
+    payload: verifyCurrencyerror
+});
+export const getVerifyCurrency = (data) => (dispatch) => {
+    dispatch(verifyCurrencyLoadStart());
+    axios
+        .post(`${apiRoutes.verifyCurrency}`, data)
+        .then((response) =>
+            dispatch(verifyCurrencyLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(verifyCurrencyLoadError(error.message)));
+};
+
+//verifyCurrency action end
+
+//getBeneficiaries action
+export const getBeneficiariesLoadStart = () => ({
+    type: getBeneficiaries.GETBENEFICIARIES_LOAD_START
+});
+
+export const getBeneficiariesLoadSuccess = (bill) => ({
+    type: getBeneficiaries.GETBENEFICIARIES_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const getBeneficiariesLoadError = (getBeneficiarieserror) => ({
+    type: getBeneficiaries.GETBENEFICIARIES_LOAD_ERROR,
+    payload: getBeneficiarieserror
+});
+export const getBeneficiariesData = () => (dispatch) => {
+    dispatch(getBeneficiariesLoadStart());
+    axios
+        .get(`${apiRoutes.beneficiaries}`)
+        .then((response) =>
+            dispatch(getBeneficiariesLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(getBeneficiariesLoadError(error.message)));
+};
+
+//getBeneficiaries action end
+
+//postBeneficiaries action
+export const postBeneficiariesLoadStart = () => ({
+    type: postBeneficiaries.POSTBENEFICIARIES_LOAD_START
+});
+
+export const postBeneficiariesLoadSuccess = (bill) => ({
+    type: postBeneficiaries.POSTBENEFICIARIES_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const postBeneficiariesLoadError = (postBeneficiarieserror) => ({
+    type: postBeneficiaries.POSTBENEFICIARIES_LOAD_ERROR,
+    payload: postBeneficiarieserror
+});
+export const postBeneficiariesData = (data) => (dispatch) => {
+    dispatch(postBeneficiariesLoadStart());
+    axios
+        .post(`${apiRoutes.beneficiaries}`, data)
+        .then((response) =>
+            dispatch(postBeneficiariesLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(postBeneficiariesLoadError(error.message)));
+};
+
+//postBeneficiaries action end
 
 //add user
 export const userRegisterStart = (errorMessage) => ({
@@ -395,17 +584,17 @@ export const loginUserAction = (loginData) => {
     };
 };
 
-const getConfig = () => {
-    try {
-        let token = localStorage.getItem('token');
-        console.log(token);
-        return {
-            headers: { Authorization: `Bearer ${token}` }
-        };
-    } catch (error) {
-        console.log('getConfig error', error);
-    }
-};
+// const getConfig = () => {
+//     try {
+//         let token = localStorage.getItem('token');
+//         console.log(token);
+//         return {
+//             headers: { Authorization: `Bearer ${token}` }
+//         };
+//     } catch (error) {
+//         console.log('getConfig error', error);
+//     }
+// };
 
 //end login user
 

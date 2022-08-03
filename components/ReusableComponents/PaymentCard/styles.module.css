@@ -1,0 +1,29 @@
+.receive {
+    color: #69940d;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    line-height: 17px;
+}
+
+.make {
+    color: #102572;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    line-height: 17px;
+}
+
+.paymentTypeCont {
+    padding: 24px 32px;
+    background-color: #fff;
+    width: 49%;
+    border-radius: 16px;
+}
+
+.PaymentSingle {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 16px;
+}

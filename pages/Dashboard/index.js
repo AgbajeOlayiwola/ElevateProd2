@@ -17,14 +17,15 @@ import BarChart from '../../components/ReusableComponents/Chart/BarChart';
 import Chart from '../../components/ReusableComponents/Chart';
 import LineChart from '../../components/ReusableComponents/Chart/LineChart';
 import Piechart from '../../components/ReusableComponents/Chart/Piechart';
-import {
-    OtherAccounts,
-    transactionData
-} from '../../components/ReusableComponents/Data';
+import { OtherAccounts } from '../../components/ReusableComponents/Data';
 import MakePaymentBtn from '../../components/ReusableComponents/MakePayment';
 import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymnet';
-import { useSelector } from 'react-redux';
 import withAuth from '../../components/HOC/withAuth.js';
+import {
+    getBalanceEnquiry,
+    getTransactionElevate
+} from '../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -53,10 +54,32 @@ function SamplePrevArrow(props) {
 }
 
 const Dashboard = () => {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getBalanceEnquiry());
+    }, []);
+
+    const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
+        (state) => state.balanceEnquiryReducer
+    );
+    const { transactionElevate, errorMessageTransactionElevate } = useSelector(
+        (state) => state.transactionElevateReducer
+    );
+    const [transactionData, setTransactionData] = useState([]);
+    useEffect(() => {
+        dispatch(getTransactionElevate());
+    }, []);
+
+    useEffect(() => {
+        if (transactionElevate !== null) {
+            setTransactionData(transactionElevate);
+        }
+    }, [transactionElevate]);
+    console.log(transactionData);
     const [nav2, setNav2] = useState();
     const slider1 = useRef();
     const [outType, setOutType] = useState();
-    const [balance] = useState('22,000');
+    const [balance, setBalance] = useState('000,000.00');
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
     const route = router.pathname;
@@ -65,6 +88,19 @@ const Dashboard = () => {
         setOutType(type);
     };
     const [items, setItems] = useState([]);
+    useEffect(() => {
+        if (balanceEnquiry !== null) {
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'NGN',
+                currencyDisplay: 'narrowSymbol'
+            });
+            const formattedAmount = formatter.format(
+                balanceEnquiry[0].availableBalance
+            );
+            setBalance(formattedAmount);
+        }
+    }, [balanceEnquiry]);
 
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem('user'));
@@ -159,9 +195,7 @@ const Dashboard = () => {
                         <div className={styles.card}>
                             <div className={styles.cardRight}>
                                 <div className={styles.cardMone}>
-                                    <h1>
-                                        {outType ? '*******' : '₦' + balance}
-                                    </h1>
+                                    <h1>{outType ? '*******' : balance}</h1>
                                     <Visbility color="green" typeSet={types} />
                                 </div>
                                 <p className={styles.avail}>
@@ -186,7 +220,7 @@ const Dashboard = () => {
                                 <p>View All</p>
                             </div>
                             <p className={styles.select}>
-                                (Select transaction to vie more)
+                                (Select transaction to view more)
                             </p>
 
                             {transactionData.map((item, index) => {
@@ -194,11 +228,11 @@ const Dashboard = () => {
                                     <div key={index}>
                                         <div className={styles.transaction}>
                                             <div className={styles.names}>
-                                                <p>{item.name}</p>
-                                                <p>{item.transfer}</p>
+                                                <p>{item.beneficiaryName}</p>
+                                                <p>{item.type}</p>
                                             </div>
                                             <div className={styles.money}>
-                                                <p>{item.ammount}</p>
+                                                <p>{item.amount}</p>
                                                 <div
                                                     className={item.color}
                                                 ></div>

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadCountryAsync } from '../../../redux/actions/actions';
-import { loadbankAsync } from '../../../redux/actions/actions';
+import { loadCountry } from '../../../redux/actions/actions';
+import { loadbank } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Beneficiary from '../Beneficiary';
 
 const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
     const [countrys, setCountry] = useState([]);
@@ -14,7 +15,7 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
     const { banks } = useSelector((state) => state.banksReducer);
 
     useEffect(() => {
-        dispatch(loadCountryAsync());
+        dispatch(loadCountry());
     }, []);
     useEffect(() => {
         if (countries !== null) {
@@ -22,7 +23,7 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
         }
     }, [countries]);
     useEffect(() => {
-        dispatch(loadbankAsync('ENG'));
+        dispatch(loadbank('ENG'));
     }, []);
     useEffect(() => {
         if (banks !== null) {
@@ -145,6 +146,7 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                         </div>
                     </div>
                 </div>
+                <Beneficiary />
                 <div className={styles.EnterAmount}>
                     <div>
                         <label>Enter Amount</label>

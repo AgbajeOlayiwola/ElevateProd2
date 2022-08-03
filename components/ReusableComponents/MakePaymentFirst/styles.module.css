@@ -314,3 +314,35 @@
     border-radius: 12px;
     color: #bdbdbd;
 }
+
+.beneficiaryCheck {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.beneficiaryCheck div {
+    width: 16px;
+    height: 16px;
+    padding: 0px;
+}
+
+.beneficiaryCheck div input {
+    height: 100%;
+    /* appearance: none; */
+    padding: 0px;
+    border: 1px solid #005b82;
+    border-radius: 4px;
+}
+
+.beneficiaryCheck p {
+    width: 80%;
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin-left: 24px;
+}
