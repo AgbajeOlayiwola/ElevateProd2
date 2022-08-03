@@ -68,7 +68,7 @@ const StepFourCompProfile2BizDetails = ({
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         if (!errorMessage) {
-            router.push('/Succes');
+            router.push('/Verify/Account/loading');
         }
     };
     return (

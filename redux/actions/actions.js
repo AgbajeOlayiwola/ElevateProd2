@@ -346,9 +346,9 @@ export const getTransactionHistory = () => (dispatch) => {
 //transactionHistory action end
 
 //add user
-export const userRegisterStart = (errorMessage) => ({
+export const userRegisterStart = (user) => ({
     type: login.REGISTER_SUCCESS,
-    payload: errorMessage
+    payload: user
 });
 export const userRegisterError = (errorMessage) => ({
     type: login.REGISTER_FAIL,

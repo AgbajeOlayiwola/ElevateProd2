@@ -21,6 +21,8 @@ const verifyOtp = '/verification/verify/otp';
 const authProfile = '/auth/profile';
 const account = '/auth/account';
 const completesBusinessProfile = '/business';
+const createAccount = '/account';
+const accountStatus = '/account/status';
 export default {
     getBanks,
     getCountries,
@@ -44,5 +46,7 @@ export default {
     verifyOtp,
     authProfile,
     account,
-    completesBusinessProfile
+    completesBusinessProfile,
+    createAccount,
+    accountStatus
 };
