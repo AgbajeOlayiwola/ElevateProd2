@@ -42,7 +42,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
     const { isLoading, profile, errorMessage } = useSelector(
         (state) => state.profile
     );
-
+    const [checker, setChecker] = useState();
+    const [gender, setGender] = useState('');
     useEffect(() => {
         dispatch(CompProfile());
     }, []);
@@ -50,10 +51,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
         if (profile !== null) {
             setProfileCont(profile.data);
         }
+        setGender(profileCont.gender);
     }, [profile]);
     // console.log(co
 
-    console.log(profileCont);
+    if (gender === 'm') console.log(profileCont);
 
     const {
         register,
@@ -165,7 +167,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
                                                 name="gender"
                                                 value="male"
                                                 {...register('bvn')}
-                                                checked={false}
+                                                checked={
+                                                    gender === 'm'
+                                                        ? true
+                                                        : false
+                                                }
                                             />
                                             <label className={styles.fmLabel}>
                                                 Male
@@ -180,6 +186,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
                                                 name="gender"
                                                 value="female"
                                                 {...register('bvn')}
+                                                checked={
+                                                    gender === 'f'
+                                                        ? true
+                                                        : false
+                                                }
                                             />
                                             <label className={styles.fmLabel}>
                                                 Female
