@@ -8,6 +8,7 @@ import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch } from 'react-redux';
 import { loginUserAction } from '../../../redux/actions/actions';
 import { useSelector } from 'react-redux';
+import { encrypt } from '../../../redux/helper/hash';
 // import UseForce from '../../../redux/helper/useForce';
 //create your forceUpdate hook
 function useForceUpdate() {
@@ -24,6 +25,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const router = useRouter();
+    // const hashed = hash();
 
     const forceUpdate = useForceUpdate();
     const {
@@ -39,10 +41,12 @@ const Login = () => {
     const checkDataContent = (e) => {
         setEmail(e.target.value);
     };
+
+    console.log(encrypt('password'));
     const onSubmit = (data) => {
         const loginData = {
             email,
-            password
+            password: encrypt(password)
         };
         dispatch(loginUserAction(loginData));
         forceUpdate();

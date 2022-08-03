@@ -11,4 +11,4 @@ const ProfileSetup = () => {
     );
 };
 
-export default ProfileSetup;
+export default withAuth(ProfileSetup);

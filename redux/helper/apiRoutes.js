@@ -23,7 +23,10 @@ const login = '/auth/login';
 const newProfileSetup = '/auth/profile-setup';
 const profile = '/auth/profile';
 const profileSetupBus = '/auth/profile-setup';
-
+const verifyOtp = '/verification/verify/otp';
+const authProfile = '/auth/profile';
+const account = '/auth/account';
+const completesBusinessProfile = '/business';
 export default {
     getBanks,
     getCountries,
@@ -49,5 +52,9 @@ export default {
     profile,
     bulkTransfer,
     beneficiaries,
-    profileSetupBus
+    profileSetupBus,
+    verifyOtp,
+    authProfile,
+    account,
+    completesBusinessProfile
 };

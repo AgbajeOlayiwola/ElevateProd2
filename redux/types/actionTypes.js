@@ -197,3 +197,35 @@ export const login = {
     LOGOUT: 'LOGOUT'
 };
 //end auth action types
+//profile setup
+
+export const setupProfile = {
+    PROFILESETUP_LOAD_START: 'PROFILE_SETUPLOAD_START',
+    PROFILESETUP_LOAD_SUCCESS: 'PROFILESETUP_LOAD_SUCCESS',
+    PROFILESETUP_LOAD_ERROR: 'PROFILESETUP_LOAD_ERROR'
+};
+//profile setup end
+//complete profile action type start
+
+export const compProfile = {
+    PROFILE_LOAD_START: 'PROFILE_LOAD_START',
+    PROFILE_LOAD_SUCCESS: 'PROFILE_LOAD_SUCCESS',
+    PROFILE_LOAD_ERROR: 'PROFILE_LOAD_ERROR'
+};
+
+//complete profile action type end
+
+//ot action type start
+
+export const otp = {
+    OTP_LOAD_START: 'OTP_LOAD_START',
+    OTP_LOAD_SUCCESS: 'OTP_LOAD_SUCCESS',
+    OTP_LOAD_ERROR: 'OTP_LOAD_ERROR'
+};
+//otp action type end
+
+export const completeProfile = {
+    COMP_PROFILE_LOAD_START: 'COMP_PROFILE_LOAD_START',
+    COMP_PROFILE_LOAD_SUCCESS: 'COMP_PROFILE_LOAD_SUCCESS',
+    COMP_PROFILE_LOAD_ERROR: 'COMP_PROFILE_LOAD_ERROR'
+};

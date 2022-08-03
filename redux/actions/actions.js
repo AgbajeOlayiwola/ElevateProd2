@@ -19,10 +19,15 @@ import {
     internationalTransfer,
     verifyBank,
     verifyCurrency,
-    login
+    login,
+    otp,
+    compProfile,
+    setupProfile,
+    completeProfile
 } from '../types/actionTypes';
 import axios from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
+import axiosInstance from '../helper/apiClient';
 
 //country actions
 export const countryLoadStart = () => ({
@@ -593,20 +598,104 @@ export const loginUserAction = (loginData) => {
 //         };
 //     } catch (error) {
 //         console.log('getConfig error', error);
+//         let token = JSON.parse(localStorage.getItem('token'));
+//         console.log(token);
+//         return {
+//             headers: { Authorization: token }
+//         };
+//     } catch (error) {
+//         console.log('get config error', error);
 //     }
 // };
 
 //end login user
 
 //profile setup action start
-
+export const setupProfileStart = (errorMessages) => ({
+    type: setupProfile.PROFILESETUP_LOAD_START,
+    payload: errorMessages
+});
+export const setupProfileSucces = (profileSetup) => ({
+    type: setupProfile.PROFILESETUP_LOAD_SUCCESS,
+    payload: profileSetup
+});
+export const setupProfileError = (errorMessages) => ({
+    type: setupProfile.PROFILESETUP_LOAD_ERROR,
+    payload: errorMessages
+});
 export const createProfileSetup = (profileData) => {
-    return (dispatch) => {
-        const config = getConfig();
-        axios
-            .post(`${apiRoutes.profileSetupBus}`, profileData, config)
+    return async (dispatch) => {
+        await axiosInstance
+            .post(`${apiRoutes.profileSetupBus}`, profileData)
             .then((response) => {
+                dispatch(setupProfileSucces(response.data));
                 console.log('data from profile', response.data);
+            })
+            .catch((error) => {
+                console.log(
+                    'profile seytup dispatch',
+                    error.response.data.message
+                );
+                dispatch(
+                    setupProfileError('error check the fields and try again')
+                );
+            });
+    };
+};
+
+// profile setuo action end
+//BVN Otp
+export const otpLoadStart = (errorMessages) => ({
+    type: otp.OTP_LOAD_START,
+    payload: errorMessages
+});
+export const otpLoadSuccess = (otpActData) => ({
+    type: otp.OTP_LOAD_SUCCESS,
+    payload: otpActData
+});
+export const otpLoadError = (otpErrorMessage) => ({
+    type: otp.OTP_LOAD_ERROR,
+    payload: otpErrorMessage
+});
+export const verifyOtp = (otpData) => {
+    return async (dispatch) => {
+        await axiosInstance
+            .post(`${apiRoutes.verifyOtp}`, otpData)
+            .then((response) => {
+                dispatch(otpLoadSuccess(response.data));
+                console.log('otp', otpData);
+                console.log('data from otp', response.data);
+            })
+            .catch((error) => {
+                console.log('profile otp dispatch', error);
+                dispatch(otpLoadError('error otp does not match'));
+            });
+    };
+};
+
+//BVN OTP End
+
+//Complete Profile Action
+export const profileLoadStart = (errorMessages) => ({
+    type: compProfile.PROFILE_LOAD_START,
+    payload: errorMessages
+});
+export const profileLoadSuccess = (profile) => ({
+    type: compProfile.PROFILE_LOAD_SUCCESS,
+    payload: profile
+});
+export const profileLoadError = (errorMessages) => ({
+    type: login.PROFILE_LOAD_ERROR,
+    payload: errorMessages
+});
+
+export const CompProfile = () => {
+    return (dispatch) => {
+        dispatch(profileLoadStart());
+        axiosInstance
+            .get(`${apiRoutes.authProfile}`)
+            .then((response) => {
+                dispatch(profileLoadSuccess(response.data));
             })
             .catch((error) => {
                 console.log(error);
@@ -614,4 +703,39 @@ export const createProfileSetup = (profileData) => {
     };
 };
 
-// profile setuo action end
+//Commplete Profile End
+
+//Complete Profile post
+export const completeProfileLoadStart = (errorMessages) => ({
+    type: completeProfile.COMP_PROFILE_LOAD_START,
+    payload: errorMessages
+});
+export const completeProfileLoadSuccess = (compBusprofile) => ({
+    type: completeProfile.COMP_PROFILE_LOAD_SUCCESS,
+    payload: compBusprofile
+});
+export const completeProfileLoadError = (errorMessage) => ({
+    type: completeProfile.COMP_PROFILE_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const CompleteBusinessProfile = (completeProfileData) => {
+    return (dispatch) => {
+        // dispatch(completeProfileLoadStart());
+        axiosInstance
+            .patch(`${apiRoutes.completesBusinessProfile}`, completeProfileData)
+            .then((response) => {
+                console.log('complete business profiler', response.data);
+                dispatch(completeProfileLoadSuccess(response.data));
+            })
+            .catch((error) => {
+                console.log(error);
+                dispatch(
+                    completeProfileLoadError(
+                        'error check the fields and try again'
+                    )
+                );
+            });
+    };
+};
+//Complete Profile Post End

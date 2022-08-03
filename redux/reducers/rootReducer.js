@@ -21,7 +21,10 @@ import postBeneficiariesReducer from './postBeneficiary.reducer';
 import getBeneficiariesReducer from './getBeneficiaries.reducer';
 import authReducer from './auth.reducer';
 import registerReducer from './register.reducer';
-
+import profileReducer from './completeprofile.reducer';
+import otpReducer from './otp.reducer';
+import profileSetupReducer from './profilesetup.reducer';
+import completeBusinessprofileReducer from './completeBusinessProfile.reducer';
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
     languages: languageReducer,
@@ -45,7 +48,11 @@ const rootReducer = combineReducers({
     getBeneficiariesReducer: getBeneficiariesReducer,
     postBeneficiariesReducer: postBeneficiariesReducer,
     auth: authReducer,
-    registered: registerReducer
+    registered: registerReducer,
+    profile: profileReducer,
+    otp: otpReducer,
+    profileSetup: profileSetupReducer,
+    completeBusProfile: completeBusinessprofileReducer
 });
 
 export default rootReducer;

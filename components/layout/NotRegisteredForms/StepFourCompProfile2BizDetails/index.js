@@ -26,8 +26,16 @@ import {
 } from './styles.module';
 import styles from './styles.module.css';
 import Progressbar from '../../../ReusableComponents/Progressbar';
-const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { CompleteBusinessProfile } from '../../../../redux/actions/actions';
+import { useRouter } from 'next/router';
+const StepFourCompProfile2BizDetails = ({
+    handleShowSuccessStep,
+    formData,
+    setFormData
+}) => {
     const [progress, setProgress] = useState('75%');
+    const dispatch = useDispatch();
     const {
         register,
         handleSubmit,
@@ -38,8 +46,31 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
     // const sendOTP = (data) => {
     //     console.log(data);
     // };
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
+    const { isLoading, compBusprofile, errorMessage } = useSelector(
+        (state) => state.completeBusProfile
+    );
+
+    const handleSubmitIII = () => {
+        const commpleteProfileData = {
+            businessName: formData.bussinessName,
+            businessType: formData.businessType,
+            referralCode: formData.refferalCode,
+            countryCode: '+234',
+            phoneNumber: formData.bussinessName,
+            businessAddress: formData.streetName,
+            state: formData.state,
+            city: formData.city,
+            lga: formData.localGoverment
+        };
+        console.log(errorMessage);
+        dispatch(CompleteBusinessProfile(commpleteProfileData));
+
+        if (!errorMessage) {
+            router.push('/Succes');
+        }
+    };
     return (
         <div>
             <div>
@@ -52,7 +83,14 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                             <FormInput
                                 type="text"
                                 placeholder="Business Full Name"
-                                {...register('bvn')}
+                                {...register('busnessName')}
+                                value={formData.businessName}
+                                onChange={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        bussinessName: event.target.value
+                                    });
+                                }}
                             />
                         </div>
                         <div style={{ marginTop: '2rem' }}>
@@ -60,22 +98,35 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                             <br />
                             <FormInput
                                 type="number"
-                                placeholder="+234 8999 4048 44"
-                                {...register('bvn')}
-                                value={phoneNumber}
+                                placeholder="8999 4048 44"
+                                {...register('phoneNumber')}
+                                value={formData.bussinesPhone}
                                 onChange={(event) => {
-                                    if (event.target.value.length == 15)
-                                        return false; //limits to 10 digit entry
-                                    setPhoneNumber(event?.target.value); //saving input to state
+                                    setFormData({
+                                        ...formData,
+                                        bussinesPhone: event.target.value
+                                    });
                                 }}
                             />
                         </div>
                         <div style={{ marginTop: '2rem', width: '100%' }}>
                             <Label>Select Business Type</Label>
                             <br />
-                            <SelectInput>
-                                <option>Retail business</option>
-                                <option>Perishable business</option>
+                            <SelectInput
+                                onChange={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        businessType: event.target.value
+                                    });
+                                }}
+                            >
+                                <option value=""></option>
+                                <option value="Retail business">
+                                    Retail business
+                                </option>
+                                <option value="Perishable business">
+                                    Perishable business
+                                </option>
                             </SelectInput>
                         </div>
 
@@ -86,36 +137,87 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                                 {errors.email?.message}
                                 <br />
 
-                                <select className={styles.busInp}>
-                                    <option>Enter Street Name</option>
-                                </select>
+                                <FormInput
+                                    type="text"
+                                    placeholder="Street Name"
+                                    {...register('streetName')}
+                                    value={formData.streetName}
+                                    onChange={(event) => {
+                                        setFormData({
+                                            ...formData,
+                                            streetName: event.target.value
+                                        });
+                                        //     if (event.target.value.length == 15)
+                                        //         return false; //limits to 10 digit entry
+                                        //     setPhoneNumber(event?.target.value); //saving input to state
+                                        // }}
+                                    }}
+                                />
                             </div>
                             <div className={styles.inps}>
                                 <label>Select Your Local Government </label>
                                 {errors.email?.message}
                                 <br />
 
-                                <select className={styles.busInp}>
-                                    <option>Select Your Local Goernment</option>
-                                </select>
+                                <FormInput
+                                    type="text"
+                                    placeholder="Local Governmenr"
+                                    {...register('localGoverment')}
+                                    value={formData.localGoverment}
+                                    onChange={(event) => {
+                                        setFormData({
+                                            ...formData,
+                                            localGoverment: event.target.value
+                                        });
+                                        //     if (event.target.value.length == 15)
+                                        //         return false; //limits to 10 digit entry
+                                        //     setPhoneNumber(event?.target.value); //saving input to state
+                                        // }}
+                                    }}
+                                />
                             </div>
                             <div className={styles.inps}>
                                 <label>City </label>
                                 {errors.email?.message}
                                 <br />
 
-                                <select className={styles.busInp}>
-                                    <option>Enter City</option>
-                                </select>
+                                <FormInput
+                                    type="type"
+                                    placeholder="City"
+                                    {...register('city')}
+                                    value={formData.city}
+                                    onChange={(event) => {
+                                        setFormData({
+                                            ...formData,
+                                            city: event.target.value
+                                        });
+                                        //     if (event.target.value.length == 15)
+                                        //         return false; //limits to 10 digit entry
+                                        //     setPhoneNumber(event?.target.value); //saving input to state
+                                        // }}
+                                    }}
+                                />
                             </div>
                             <div className={styles.inps}>
                                 <label>State </label>
                                 {errors.email?.message}
                                 <br />
-
-                                <select className={styles.busInp}>
-                                    <option>Enter State</option>
-                                </select>
+                                <FormInput
+                                    type="text"
+                                    placeholder="State"
+                                    {...register('State')}
+                                    value={formData.state}
+                                    onChange={(event) => {
+                                        setFormData({
+                                            ...formData,
+                                            state: event.target.value
+                                        });
+                                        //     if (event.target.value.length == 15)
+                                        //         return false; //limits to 10 digit entry
+                                        //     setPhoneNumber(event?.target.value); //saving input to state
+                                        // }}
+                                    }}
+                                />
                             </div>
                         </div>
                     </SmallCardContainer>
@@ -144,16 +246,16 @@ const StepFourCompProfile2BizDetails = ({ handleShowSuccessStep }) => {
                         </div>
                     </div>
                 </LastFieldAndButton>
-                <Link href="/Succes">
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text="Next"
-                        type="button"
-                        onClick={handleShowSuccessStep}
-                        // onClick={handleShowFourthStep}
-                    />
-                </Link>
+                {/* <Link href="/Succes"> */}
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    text="Next"
+                    type="button"
+                    onClick={handleSubmitIII}
+                    // onClick={handleShowFourthStep}
+                />
+                {/* </Link> */}
                 {/* <RegistrationStatus>
                    
                 </RegistrationStatus>{' '} */}

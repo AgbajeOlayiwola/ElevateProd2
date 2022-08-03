@@ -1,0 +1,115 @@
+.cover{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.coverGrey{
+    width: 51%;
+    max-width: 540px;
+max-height: 750.11px;
+background: #F8F8F8;
+border-radius: 12px;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 32px;
+}
+.veri{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 135.52%;
+    /* identical to box height, or 33px */
+    color: #005B82;
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+.Hi{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 31px;
+/* or 204% */
+color: #3E3E3E;
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+}
+.veriBtn{
+    background: #6CCF00;
+border-radius: 12px;
+font-family: 'Inter';
+font-style: normal;
+font-weight: 800;
+font-size: 14px;
+line-height: 17px;
+text-align: center;
+color: #FFFFFF;
+padding: 21px, 90px;
+}
+.elle{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 26px;
+/* or 170% */
+color: #3E3E3E;
+width: 180px;
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+}
+.allen{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 20px;
+/* or 163% */
+color: #3E3E3E;
+width: 180px;
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+}
+.coverGreyInner{
+    align-items: flex-start;
+    padding: 32px;
+    gap: 10px;
+    margin-top: 32px;;
+    width: 476px;
+    height: 491.88px;
+    padding: 32px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+}
+.thx{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 26px;
+/* or 170% */
+margin-bottom: 0px;
+color: #3E3E3E;
+/* Inside auto layout */
+width: 115px;
+flex: none;
+order: 1;
+flex-grow: 0;
+margin-top: 48px;
+}

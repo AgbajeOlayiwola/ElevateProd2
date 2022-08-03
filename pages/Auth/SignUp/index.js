@@ -9,6 +9,8 @@ import { useDispatch } from 'react-redux';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { createUserAction } from '../../../redux/actions/actions';
 import { useSelector } from 'react-redux';
+import { encrypt } from '../../../redux/helper/hash';
+
 const Signup = ({ type }) => {
     const router = useRouter();
     const [error, setError] = useState('');
@@ -57,22 +59,21 @@ const Signup = ({ type }) => {
     // useEffect(() => {
     //     onSubmit();
     // }[errorMessage]);
-
     const onSubmit = (data) => {
         if (password === confirmPassword) {
             const postData = {
                 pName,
                 email,
-                password,
-                confirmPassword,
+                password: encrypt(password),
+                confirmPassword: encrypt(confirmPassword),
                 affiliateCode: 'ENG'
             };
-            console.log(errorMessage);
+            console.log(password);
             dispatch(createUserAction(postData));
             if (errorMessage !== 'Account created successfully!') {
                 setError(errorMessage);
             } else {
-                router.push('../Verify');
+                router.push('../Verify/Loading');
             }
         } else {
             passwordMatch;
