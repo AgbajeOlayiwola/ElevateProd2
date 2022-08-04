@@ -29,6 +29,7 @@ const account = '/auth/account';
 const completesBusinessProfile = '/business';
 const createAccount = '/account';
 const accountStatus = '/account/status';
+const verifyStatus = '/verification/document/status';
 export default {
     getBanks,
     getCountries,
@@ -60,5 +61,6 @@ export default {
     account,
     completesBusinessProfile,
     createAccount,
-    accountStatus
+    accountStatus,
+    verifyStatus
 };

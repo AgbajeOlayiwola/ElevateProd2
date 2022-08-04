@@ -59,8 +59,10 @@ const Payment = () => {
     const { bulkTransfer, errorMessagebulkTransfer } = useSelector(
         (state) => state.bulkTransferReducer
     );
-    const { internationalTransfer, errorMessageinternationalTransfer } =
-        useSelector((state) => state.internationalTransferReducer);
+    const {
+        internationalTransfer,
+        errorMessageinternationalTransfer
+    } = useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
@@ -160,7 +162,7 @@ const Payment = () => {
             setFormType({ id }.id.toLowerCase());
             setOverlay(true);
         }
-    }, [id]);
+    });
 
     const handleFormChange = (formTitle) => {
         setFormType(formTitle);
@@ -663,8 +665,10 @@ const Payment = () => {
                                             );
                                             const billerData = {
                                                 amount: paymentDetails.amount,
-                                                ccy: billerPlan
-                                                    .billerProductInfo[0].ccy,
+                                                ccy:
+                                                    billerPlan
+                                                        .billerProductInfo[0]
+                                                        .ccy,
                                                 billerCode:
                                                     billerPlan.billerDetail
                                                         .billerCode,
@@ -713,8 +717,10 @@ const Payment = () => {
                                         if (billerPlan !== null) {
                                             const billerData = {
                                                 amount: paymentDetails.amount,
-                                                ccy: billerPlan
-                                                    .billerProductInfo[0].ccy,
+                                                ccy:
+                                                    billerPlan
+                                                        .billerProductInfo[0]
+                                                        .ccy,
                                                 billerCode:
                                                     billerPlan.billerDetail
                                                         .billerCode,
