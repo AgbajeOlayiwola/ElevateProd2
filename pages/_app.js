@@ -1,9 +1,8 @@
 import { Layout } from '../components';
 import '../styles/globals.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import { wrapper, store } from '../redux/store';
+import { wrapper, store } from '../store';
 import { Provider } from 'react-redux';
-import configureStore from '../redux/store';
 
 function MyApp({ Component, pageProps, router }) {
     const variants = {
