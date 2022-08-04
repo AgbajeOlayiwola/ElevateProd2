@@ -662,7 +662,7 @@ export const verifyOtp = (otpData) => {
         await axiosInstance
             .get(`${apiRoutes.verifyStatus}`)
             .then((response) => {
-                console.log(response.data.statusCode);
+                console.log(response.data);
                 if (response.data.statusCode === 200) {
                     axiosInstance
                         .post(`${apiRoutes.verifyOtp}`, otpData)

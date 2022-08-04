@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createWrapper } from 'next-redux-wrapper';
-import rootReducer from './reducers/rootReducer';
+import rootReducer from '/redux/reducers/rootReducer';
 
 // initial states here
 const initalState = {};
