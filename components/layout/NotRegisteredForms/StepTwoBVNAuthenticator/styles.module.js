@@ -13,7 +13,7 @@ export const SmallInstructionText = styled.h6`
     height: 68px;
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 23px;
     /* or 141% */
     color: #005b82;
@@ -21,7 +21,7 @@ export const SmallInstructionText = styled.h6`
 `;
 
 export const LeftHeading = styled.h3`
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -45,7 +45,7 @@ export const RegisteredCardWrapper = styled.div`
 export const Label = styled.label`
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
     color: #3e3e3e;
 `;

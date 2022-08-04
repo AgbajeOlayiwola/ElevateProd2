@@ -1,0 +1,10 @@
+.prsForm{
+width: 100%;
+display: flex;
+justify-content: center;
+}
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: -1rem;
+}

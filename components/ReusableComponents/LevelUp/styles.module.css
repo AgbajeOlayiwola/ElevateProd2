@@ -1,0 +1,50 @@
+.cove {
+    display: flex;
+    width: 100%;
+}
+.left {
+    width: 10%;
+    height: 115px;
+    border-radius: 16px;
+    margin-right: 30px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.left div{
+    width: 100%;
+}
+.perc {
+    position: absolute;
+    margin: 0px;
+    color: #005b82;
+}
+.level {
+    padding: 21px 32px;
+    background-color: white;
+    border-radius: 16px;
+    margin-bottom: 25px;
+    flex: 1;
+}
+.Levelup {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+    margin-bottom: 8px;
+    color: #102572;
+}
+
+.YourBus {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 18px;
+    /* identical to box height, or 138% */
+    margin-bottom: 21px;
+    color: #3e3e3e;
+}

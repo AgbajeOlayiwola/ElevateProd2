@@ -12,39 +12,46 @@
     display: none;
     transition: all 0.6s ease-in-out;
 }
+.cover {
+    background-color: #f8f8f8;
+    padding: 2rem;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    border-color: #dedede;
+}
 .form div label {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
 
     color: #3e3e3e;
 }
 .idInput {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
     background-color: white;
-    color: #7a7978;
+    color: black;
 }
 .passwordInput {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     background-color: white;
     line-height: 19px;
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
-    color: #005b82;
+    color: black;
 }
 .show {
-    display: block;
+    display: flex;
     transition: all 0.5s ease-in-out;
 }
 .noShow {
@@ -56,5 +63,114 @@
     font-size: 12px;
     margin-top: -1rem;
 }
+.form div label {
+    color: #3e3e3e;
+    font-size: 14px;
+}
+.termss {
+    color: #005b82;
+    cursor: pointer;
+}
+.terms {
+    display: flex;
+    margin-top: 3.05rem;
+    margin-bottom: 4rem;
+    font-size: 13px;
+}
+.terms input {
+    width: 3%;
+}
+.Log {
+    background-color: #f8f8f8;
+    padding: 2rem;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    border-color: #dedede;
+}
 
 /* omnilite section css end  */
+.omnisets {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 1%;
+    padding-bottom: 10%;
+    text-align: center;
+}
+.cover div label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+}
+.active {
+    background: #6ccf00;
+    transition: all 0.3s ease-in-out;
+    filter: none;
+    padding: 28% 18% 25% 16%;
+    border-radius: 12px;
+    cursor: pointer;
+    border: none;
+}
+.name {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    text-align: center;
+
+    color: #7a7978;
+}
+.activeName {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #005b82;
+}
+.btn {
+    margin-top: 64px;
+}
+/* .active svg {
+    fill: blue;
+} */
+.notActive {
+    padding: 28% 18% 25% 16%;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    transition: all 0.3s ease-in-out;
+    filter: grayscale(100%);
+}
+.cov {
+    width: 22%;
+}
+.choose {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+}
+.expCvv {
+    display: flex;
+    justify-content: space-between;
+}
+.cvvCode {
+    width: 30%;
+}
+.exp {
+    width: 50%;
+}

@@ -27,7 +27,7 @@ export const SmallInstructionText = styled.h6`
     height: 68px;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 23px;
     /* or 141% */
     color: #005b82;
@@ -36,7 +36,7 @@ export const SmallInstructionText = styled.h6`
 `;
 
 export const LeftHeading = styled.h3`
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -60,7 +60,7 @@ export const RegisteredCardWrapper = styled.div`
 export const Label = styled.label`
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
     color: #3e3e3e;
 `;
@@ -84,10 +84,10 @@ export const ResetOTP = styled.div`
 
 // THE SWITCH STYLE
 export const RegStatusHeading = styled.h6`
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
     color: #3e3e3e;
     margin-left: auto;
@@ -123,7 +123,7 @@ export const ToggleYes = styled.span`
 export const ToggleNoText = styled.p`
     text-align: center;
     font-style: normal;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 22px;
     text-align: center;
     color: #407a00;
@@ -133,7 +133,7 @@ export const ToggleYesText = styled.p`
     text-align: center;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 22px;
     text-align: center;
     color: #a5a5a5;

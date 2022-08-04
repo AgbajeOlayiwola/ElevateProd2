@@ -5,28 +5,61 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
+import { useDispatch } from 'react-redux';
+import { loginUserAction } from '../../../redux/actions/actions';
+import { useSelector } from 'react-redux';
+import { encrypt } from '../../../redux/helper/hash';
+// import UseForce from '../../../redux/helper/useForce';
+//create your forceUpdate hook
+function useForceUpdate() {
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue((value) => value + 1); // update state to force render
+    // An function that increment 👆🏻 the previous state like here
+    // is better than directly setting `value + 1`
+}
+
 const Login = () => {
-    const [activeBtn, setActiveBtn] = useState(false);
+    const [activeBtn, setActiveBtn] = useState(true);
+    const [error, setError] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
     const router = useRouter();
+    // const hashed = hash();
+
+    const forceUpdate = useForceUpdate();
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
-
-    const onSubmit = (data) => {
-        console.log(data);
-        router.push('../../Onboarding/ProfileSetup');
+    const handlePwd = (e) => {
+        setPassword(e.target.value);
     };
-    const checkDataContent = (data) => {
-        if (data.password !== null) {
-            setActiveBtn(true);
-            console.log(true);
+
+    const checkDataContent = (e) => {
+        setEmail(e.target.value);
+    };
+
+    console.log(encrypt('password'));
+    const onSubmit = (data) => {
+        const loginData = {
+            email,
+            password: encrypt(password)
+        };
+        dispatch(loginUserAction(loginData));
+        forceUpdate();
+        if (errorMessages !== 'Login successful') {
+            setError(errorMessages);
         } else {
-            console.log(false);
+            router.push('../../Onboarding/ProfileSetup');
         }
     };
+    const { isLoading, user, errorMessages } = useSelector(
+        (state) => state.auth
+    );
+
     const [outType, setOutType] = useState();
     const types = (type) => {
         setOutType(type);
@@ -66,6 +99,7 @@ const Login = () => {
                             Login.
                         </p>
                     </div>
+                    <h2 className={styles.error}>{error}</h2>
                     <form
                         onSubmit={handleSubmit(onSubmit)}
                         className={styles.form}
@@ -86,6 +120,7 @@ const Login = () => {
                                         message: 'Invalid email address'
                                     }
                                 })}
+                                onChange={checkDataContent}
                             />
                             <div className={styles.errors}>
                                 {errors.email?.message}
@@ -102,10 +137,9 @@ const Login = () => {
                                     className={styles.passwordInput}
                                     required
                                     {...register('password', {
-                                        required: 'Password is required',
-                                        minLength: 8
+                                        required: 'Password is required'
                                     })}
-                                    onChange={checkDataContent}
+                                    onChange={handlePwd}
                                 />
                                 <Visbility typeSet={types} />
                             </div>
@@ -126,6 +160,19 @@ const Login = () => {
                                     fill="#7A7978"
                                 />
                             </svg> */}
+                        </div>
+                        <div className={styles.remForg}>
+                            <div>
+                                <input type="checkbox" />
+                                <p>Remember me</p>
+                            </div>
+                            <div>
+                                <Link href="../Auth/ForgotPassword">
+                                    <p className={styles.forget}>
+                                        Forgot Password
+                                    </p>
+                                </Link>
+                            </div>
                         </div>
                         <ButtonComp
                             disabled={activeBtn}

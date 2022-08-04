@@ -1,0 +1,43 @@
+.TableDetailBody {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 24px 0px 58px 24px;
+}
+
+.TableDetailBody p {
+    color: #455a64;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17%;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+}
+.TableDetailBody .bene {
+    font-size: 16px;
+    color: #102572;
+    width: 25%;
+}
+
+.TableDetailBody .transfer {
+    color: #2f2f2f;
+    width: 15%;
+}
+
+.TableDetailBody .amount {
+    font-weight: 700;
+    color: #455a64;
+    width: 15%;
+}
+
+.bank {
+    width: 15%;
+}
+
+.date {
+    width: 15%;
+}
+
+.status {
+    width: 15%;
+}

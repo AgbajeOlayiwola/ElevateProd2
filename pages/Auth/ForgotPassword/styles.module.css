@@ -1,0 +1,137 @@
+.cov {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.back {
+    display: flex;
+    align-items: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+    color: #005b82;
+    margin-bottom: 14px;
+}
+.back p {
+    margin-left: 12px;
+    margin-top: 16px;
+}
+.emailP {
+    margin-bottom: 48px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+
+    color: #3e3e3e;
+}
+.form label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #3e3e3e;
+}
+.form input {
+    margin-bottom: 45px;
+    margin-top: 8px;
+}
+.emailSent div:nth-child(1) {
+    text-align: center;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 19px;
+    margin-bottom: 8px;
+
+    color: #005b82;
+}
+.emailSent div:nth-child(2) p {
+    width: 54%;
+    margin-top: 8px;
+    max-width: 313px;
+}
+.emailSent div:nth-child(2) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    display: flex;
+    justify-content: center;
+
+    /* or 161% */
+    margin-bottom: 32px;
+    text-align: center;
+
+    color: #a5a5a5;
+}
+.last {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    /* or 161% */
+    margin-top: 32px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    color: #a5a5a5;
+    margin: 0px auto;
+}
+.last {
+    max-width: 325px;
+}
+.last span {
+    color: #005b82;
+    cursor: pointer;
+}
+.create div:nth-child(1) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+    margin-bottom: 14px;
+    color: #005b82;
+}
+.create div:nth-child(2) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 48px;
+    color: #3e3e3e;
+}
+.formCre div label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+}
+.formCre div input {
+    margin-top: 8px;
+}
+.formCre div:nth-child(2) {
+    margin-top: 24px;
+    margin-bottom: 30px;
+}
+.errors {
+    color: red;
+    font-size: 12px;
+    margin-top: -1rem;
+}

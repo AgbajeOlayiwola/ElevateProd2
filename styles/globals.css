@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;700&display=swap');
 :root {
     --global-button-padding: 1.2rem 0rem 1.2rem 0rem;
     /* --global-button-padding: 1.2rem 12.568rem 1.2rem 12.568rem; */
@@ -6,7 +7,7 @@
     --global-button-border: none;
     --global-button-borderRadius: 12px;
     --global-select-borderRadius: 12px;
-    --global-select-padding: 1.531rem 1.563rem;
+    --global-select-padding: 1rem 1rem;
     --global-select-borderColor: #dbdbdb;
     --global-select-backgroundColor: #f8f8f8;
     --global-select-color: #235b7f;
@@ -15,15 +16,24 @@
     --global-label-color: blue;
     /* --global-label-fontSize: 5rem; */
 }
-html,
+
+/* CSS Reset */
 body {
-    padding: 0;
     margin: 0;
+    padding: 0;
+}
+html,
+* {
+    /* padding: 0;
+    margin: 0; */
     font-family: inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
         Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
         sans-serif;
+    scroll-behavior: smooth;
 }
-
+body {
+    margin: 0px;
+}
 a {
     color: inherit;
     text-decoration: none;
@@ -40,10 +50,12 @@ select {
     color: var(--global-select-color);
     cursor: pointer;
     outline: none;
+    font-size: 14px;
+    width: 100%;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-image: url('/Assets/Svgs/dropdownSvg.svg');
     background-repeat: no-repeat;
     background-position-x: 94%;
     background-position-y: 50%;
@@ -57,6 +69,7 @@ input {
     color: var(--global-select-color);
     position: relative;
     width: 100%;
+    font-size: 14px;
     outline: none;
     box-sizing: border-box;
 }
@@ -75,7 +88,7 @@ button {
     width: 100%;
     cursor: pointer;
     outline: none;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 800;
     font-size: 16px;

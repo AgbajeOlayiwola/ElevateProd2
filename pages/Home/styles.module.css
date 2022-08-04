@@ -1,6 +1,5 @@
 .cover {
     display: flex;
-    align-items: center;
 }
 .form {
     color: #3e3e3e;
@@ -46,6 +45,7 @@
     width: 50%;
     height: 100vh;
     display: grid;
+    align-items: center;
     grid-template-columns: 50% 50%;
     position: relative;
 }
@@ -55,32 +55,40 @@
     backdrop-filter: blur(4px);
 }
 .topLeft {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 70%), rgba(0, 0, 0, 70%)),
         url('/Assets/Images/WomanWithMac.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
+    width: 100%;
+    height: 100%;
 }
 .topRight {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 70%), rgba(0, 0, 0, 70%)),
         url('/Assets/Images/Clothe.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
+    width: 100%;
+    height: 100%;
 }
 .bottomleft {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 70%), rgba(0, 0, 0, 70%)),
         url('/Assets/Images/Barber.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
+    width: 100%;
+    height: 100%;
 }
 .bottomRight {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 80%), rgba(0, 0, 0, 80%)),
+    background: linear-gradient(0deg, rgba(0, 0, 0, 70%), rgba(0, 0, 0, 70%)),
         url('/Assets/Images/Equipment.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
+    width: 100%;
+    height: 100%;
 }
 .sectionII {
     padding-left: 7.625rem;
@@ -88,6 +96,9 @@
     width: 50%;
     height: 100vh;
     overflow: scroll;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 .bottom {
     margin-top: 3rem;
@@ -98,7 +109,7 @@
     color: #929292;
 }
 .SMeApp {
-    font-family: 'inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -107,7 +118,7 @@
     text-align: center;
 }
 .disclaimer {
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     text-align: start;
     line-height: 22px;
@@ -132,6 +143,17 @@
 }
 .sectionBottom div p {
     margin-bottom: 0rem;
+}
+.select {
+    font-size: 14px;
+    font-weight: 300;
+    width: 100%;
+    margin-top: 0.844rem;
+    margin-bottom: 3rem;
+    padding: 1.753rem 1.753rem;
+}
+.select {
+    width: 100%;
 }
 @keyframes spaceshow {
     0% {

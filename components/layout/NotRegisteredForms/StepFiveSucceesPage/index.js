@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ButtonComp } from '../../../../components';
 import styles from './styles.module.css';
-// import lineImage from '../../../public/Assets/Svgs/Rectangle 12.svg';
 import Image from 'next/image';
-// import ProfileCard from '../../../components/ReusableComponents/ProfileCard';
 import Card from '../../NotRegisteredForms/Card';
 import Link from 'next/link';
 import {
@@ -21,29 +19,24 @@ import {
     SuccessMainHeading,
     H6Wrapper
 } from './styles.module';
-// import {
-
-// } from '../StepFiveSucceesPage/styles.module'.
-// import RegisteredForm from '../../../components/layout/RegisteredForm';
-// import StepTwoBVNAuthenticator from '../../components/layout/NotRegisteredForms/StepTwoBVNAuthenticator';
-// import StepThreeCompleteProfile1 from '../../../components/layout/NotRegisteredForms/StepThreeCompleteProfile1';
-// import StepFourCompProfile2BizDetails from '../../components/layout/NotRegisteredForms/StepFourCompProfile2BizDetails';
-import RegisteredForm from '../../RegisteredForms/RegisteredForm';
-import StepTwoBVNAuthenticator from '../StepTwoBVNAuthenticator';
-import StepThreeCompleteProfile1 from '../StepThreeCompleteProfile1';
-import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';
 import Success from '../../../ReusableComponents/Success';
+import apiRoutes from '../../../../redux/helper/apiRoutes';
+import axiosInstance from '../../../../redux/helper/apiClient';
 
 const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
-    const [isRegistered, setIsRegistered] = useState(false);
-
-    const handleShowThirdStepOnly = () => {
-        setShowThirdStep(true);
-        setShowFourthStep(false);
-        setShowSecondStep(false);
-    };
-
+    const [accountDone, setAccountDone] = useState('');
+    useEffect(() => {
+        axiosInstance
+            .get(`${apiRoutes.accountStatus}`)
+            .then((response) => {
+                console.log('Accoutn Status', response);
+                setAccountDone(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error.response.data.data.message);
+            });
+    }, []);
     return (
         <Card>
             <BodyWrapper>
@@ -67,23 +60,27 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                     </SuccessMainHeading>
                     <H6Wrapper style={{ textAlign: 'center' }}>
                         Your account number is:{' '}
-                        <span style={{ color: '#005b82' }}>232222829</span>
+                        <span style={{ color: '#005b82' }}>
+                            {accountDone.accountNumber}
+                        </span>
                     </H6Wrapper>
 
                     <h6 className={styles.elevateSuccess}>
                         With your Ellevate Account, you have <br />
                         <span> Deposit/Inflow Limit: N1,000,000</span>
                     </h6>
-
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text="Proceed to dashboard"
-                        type="button"
-                        margin="20% 0 0 0"
-                        // onClick={handleShowSecondStep}
-                    />
+                    <Link href="/Dashboard">
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text="Proceed to dashboard"
+                            type="button"
+                            margin="20% 0 0 0"
+                            // onClick={handleShowSecondStep}
+                        />
+                    </Link>
                 </RegistrationStatus>
+
                 {/* </ProfileCard> */}
             </BodyWrapper>
         </Card>

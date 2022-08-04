@@ -1,7 +1,7 @@
 .cover {
     display: flex;
     justify-content: center;
-    height: 100vh;
+    align-items: center;
     width: 100%;
 }
 
@@ -10,4 +10,47 @@
     padding: 2rem;
     border-radius: 12px;
     margin-top: 2rem;
+}
+.busAdd {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 24px;
+}
+.busInp {
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    margin-top: 8px;
+}
+.inputFile::-webkit-file-upload-button {
+    visibility: hidden;
+}
+.signa {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #7a7978;
+}
+.inputFile {
+    margin-top: 8px;
+}
+.inputFile::before {
+    content: 'Click to upload';
+    /* background: #e8e8e8; */
+    border-radius: 12px;
+    /* color: #e8e8e8; */
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    -webkit-user-select: none;
+    color: #7a7978;
 }

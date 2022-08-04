@@ -20,7 +20,7 @@ export const CardHeading = styled.div`
     margin-top: 76px;
 `;
 export const LeftHeading = styled.h3`
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -35,7 +35,7 @@ export const RegistrationStatus = styled.div`
     margin-top: 10%;
 `;
 export const RegStatusHeading = styled.h6`
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -95,7 +95,7 @@ export const SuccessMainHeading = styled.h3`
     margin-top: 4%;
 `;
 export const H6Wrapper = styled.h6`
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;

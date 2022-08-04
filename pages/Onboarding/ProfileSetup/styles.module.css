@@ -1,58 +1,6 @@
-.bodyWrapper {
-    width: 100vh;
+.Cover {
     display: flex;
     justify-content: center;
-    width: 100%;
-    padding: 2rem 3rem;
-}
-.cardHeading {
-    display: flex;
-    flex-flow: wrap;
-    justify-content: space-between;
-    align-items: baseline;
-    width: 100%;
-}
-.LeftHeading {
-    display: flex;
-    justify-content: space-evenly;
-    /* identical to box height */
-    color: #005b82;
-}
-.ButtonWrapper {
-    display: flex;
-    flex-flow: row wrap;
-    width: 100%;
-    margin-top: 1rem;
-    background: #f8f8f8;
-    border-radius: 12px;
-}
-.ToggleNo {
-    width: 50%;
-    height: 50px;
-    background: #6ccf00;
-    border-radius: 12px;
-    cursor: pointer;
-}
-.ToggleNo:hover {
-    background: #6ccf00;
-    transition: all 0.2s ease-in-out;
-}
-.ToggleYes {
-    width: 50%;
-    height: 50px;
-    border-radius: 12px;
-    background: #f8f8f8;
-    cursor: pointer;
-}
-.ToggleYes:hover {
-    background: #6ccf00;
-    transition: all 0.2s ease-in-out;
-}
-.ToggleNoText {
-    color: #ffffff;
-    text-align: center;
-}
-.ToggleYesText {
-    color: #a5a5a5;
-    text-align: center;
+    height: 100vh;
+    align-items: center;
 }

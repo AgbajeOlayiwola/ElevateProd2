@@ -1,0 +1,296 @@
+.form div label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+}
+.busAdd {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 24px;
+}
+.resendFlex {
+    display: flex;
+    justify-content: space-between;
+}
+.busInp {
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+}
+.open {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    /* identical to box height, or 161% */
+
+    text-align: center;
+    cursor: pointer;
+    color: #a5a5a5;
+}
+.genderPart {
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+}
+.genderPart input {
+    margin-right: 8px;
+}
+.radioInput {
+    width: 30%;
+}
+.genBtm {
+    margin-bottom: 0px;
+}
+.genders {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 45%;
+    height: fit-content;
+    margin-bottom: 0px;
+}
+.open span {
+    color: #005b82;
+}
+.ent {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #3e3e3e;
+}
+.clr {
+    color: #7a7978;
+    margin: 0px;
+    width: fit-content;
+    /* height: fit-content; */
+    background-color: white;
+    height: 0;
+    font-weight: 500;
+}
+.header {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+    color: #005b82;
+    margin-bottom: 20px;
+}
+.cardHeading {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    width: 100%;
+}
+.p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    /* or 141% */
+    color: #005b82;
+    text-align: left;
+}
+.LeftHeading {
+    display: flex;
+    justify-content: space-evenly;
+    /* identical to box height */
+    color: #005b82;
+}
+.ButtonWrapper {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    margin-top: 1rem;
+    background: #f8f8f8;
+    border-radius: 12px;
+}
+.ToggleNo {
+    width: 50%;
+    height: 50px;
+    background: #6ccf00;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.ToggleNo:hover {
+    background: #6ccf00;
+    transition: all 0.2s ease-in-out;
+}
+.ToggleYes {
+    width: 50%;
+    height: 50px;
+    border-radius: 12px;
+    background: #f8f8f8;
+    cursor: pointer;
+}
+.ToggleYes:hover {
+    background: #6ccf00;
+    transition: all 0.2s ease-in-out;
+}
+.ToggleNoText {
+    color: #ffffff;
+    text-align: center;
+}
+.ToggleYesText {
+    color: #a5a5a5;
+    text-align: center;
+}
+.innerButtonWrapper {
+    border-radius: 12px;
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    margin-top: 2rem;
+    background: #f8f8f8;
+}
+.inps {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.bord {
+    border: 1px solid #dcdcdc;
+    padding: 0rem 2rem 3rem 2rem;
+    border-radius: 20px;
+}
+.innerToggleNo {
+    width: 50%;
+    height: 50px;
+    border-radius: 12px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    background: rgba(108, 207, 0, 0.3);
+}
+.innerToggleNo:hover {
+    background: rgba(108, 207, 0, 0.3);
+}
+.innerToggleYes {
+    width: 50%;
+    height: 50px;
+    border-radius: 12px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.innerToggleYes:hover {
+    background: rgba(108, 207, 0, 0.3);
+}
+.innerToggleNoText {
+    text-align: center;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    color: #407a00;
+    font-weight: 700;
+}
+.innerToggleYesText {
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    color: #a5a5a5;
+}
+
+.innerGenderWrapper {
+    width: 100%;
+    flex-flow: row wrap;
+    margin-top: 2rem;
+}
+
+.innerLastFieldAndButton {
+    width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1.5rem;
+}
+.formInner {
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    padding: 2rem 1rem 2rem 1rem;
+    margin-top: 3rem;
+    border-radius: 12px;
+    opacity: 0.7;
+}
+.terms {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    /* identical to box height */
+
+    color: #2f2f2f;
+}
+.terms input {
+    width: 10%;
+}
+.terms label span {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 19px;
+    /* identical to box height */
+
+    color: #005b82;
+}
+.formInner div label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+    margin-bottom: 10px;
+}
+.inps label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #3e3e3e;
+    margin-bottom: 10px;
+}
+.textInput {
+    margin-bottom: 14px;
+    margin-top: 8px;
+}
+.formInner div {
+    margin-bottom: 20px;
+}
+.divs {
+    display: flex;
+}
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: -1rem;
+}
+.btns {
+    display: flex;
+    justify-content: space-between;
+}
+.btns button {
+    width: 47%;
+}

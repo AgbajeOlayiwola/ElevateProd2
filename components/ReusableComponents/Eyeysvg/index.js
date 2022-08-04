@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Signup from '../../../pages/Auth/SignUp';
 import styles from './styles.module.css';
-const Visbility = ({ typeSet }) => {
+const Visbility = ({ typeSet, color }) => {
     const [type, setType] = useState(true);
     const [visible, setVisible] = useState(false);
     const visibilityToggle = () => {
@@ -14,18 +14,19 @@ const Visbility = ({ typeSet }) => {
         <>
             <span
                 className="material-symbols-outlined"
+                id={color !== 'green' ? styles.notGreen : styles.green}
                 style={{
                     marginLeft: '-46px',
                     zIndex: '10',
-                    marginTop: '22px',
+
                     fontWeight: '300',
                     fontSize: '21px',
-                    color: '#7A7978',
+
                     cursor: 'pointer'
                 }}
                 onClick={visibilityToggle}
             >
-                {visible ? 'visibility' : 'visibility_off'}
+                {visible ? 'visibility_off' : 'visibility'}
             </span>
         </>
     );

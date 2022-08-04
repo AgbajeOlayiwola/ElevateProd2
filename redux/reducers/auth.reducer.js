@@ -1,19 +1,26 @@
-import AuthTypes from '../types/auth.types';
+import { login } from '../types/actionTypes';
 
 const initialState = {
-    createAccount: null
+    user: [],
+    loggedInUser: null,
+    errorMessages: 'false'
 };
 
-export const authReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case AuthTypes.CREATE_ACCOUNT:
-            // console.log(action.payload);
+const authReducer = (state = initialState, { type, payload }) => {
+    switch (type) {
+        case login.LOGIN_SUCCESS:
             return {
                 ...state,
-                createAccount: action.payload
+                user: payload,
+                errorMessages: payload
             };
-
+        case login.LOGIN_FAIL:
+            return {
+                ...state,
+                errorMessages: payload
+            };
         default:
             return state;
     }
 };
+export default authReducer;

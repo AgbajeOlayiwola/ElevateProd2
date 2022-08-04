@@ -12,36 +12,42 @@ import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import Axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadCountry } from '../../redux/actions/actions';
 
 const HomeMain = () => {
     const router = useRouter();
-    const [activeBtn, setActiveBtn] = useState(true);
+    const [countrys, setCountry] = useState([]);
+    const dispatch = useDispatch();
+    const { isLoading, countries, errorMessage } = useSelector(
+        (state) => state.countryReducer
+    );
 
     useEffect(() => {
-        getUser();
-    }, []);
-
-    async function getUser() {
-        try {
-            const response = await Axios.get(
-                'https://restcountries.com/v3.1/name/peru'
-            );
-            console.log(response);
-        } catch (error) {
-            console.error(error);
+        dispatch(loadCountry());
+        if (countries !== null) {
+            setCountry(countries);
         }
-    }
+    }, []);
+    useEffect(() => {
+        if (countries !== null) {
+            setCountry(countries);
+        }
+    }, [countries]);
+    const [activeBtn, setActiveBtn] = useState(true);
+
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
-    const onSubmit = ({ data }) => {
+    const onSubmit = (data) => {
         console.log(data);
+        window.localStorage.setItem('country', JSON.stringify(data));
         router.push('./Auth/SignUp');
     };
-    console.log(watch('example')); // watch input value by passing the name of it
+    // console.log(watch('example')); // watch input value by passing the name of it
 
     return (
         <div className={styles.cover}>
@@ -76,28 +82,62 @@ const HomeMain = () => {
             </section>
             <section className={styles.sectionII}>
                 <div>
-                    <h3 className={styles.elevatenow}>ellevate now...</h3>
-                </div>
-                <div>
-                    <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className={styles.form}
-                    >
-                        <Languages />
-                        <Countries />
-                        <div className={styles.disclaimer}>
-                            <p>
-                                Get onboard and have access to unlimited
-                                possibilites with your account!
-                            </p>
-                        </div>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="Proceed"
-                            type="submit"
-                        />
-                    </form>
+                    <div>
+                        <h3 className={styles.elevatenow}>ellevate now...</h3>
+                    </div>
+                    <div>
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            className={styles.form}
+                        >
+                            <Languages />
+                            <div>
+                                <label
+                                    className={styles.label}
+                                    htmlFor="country"
+                                >
+                                    Choose The Country Where you Run Busines
+                                </label>
+                                <br />
+                                <select
+                                    className={styles.select}
+                                    {...register('countriess', {
+                                        required:
+                                            'Destination Country is Required'
+                                    })}
+                                    name="countriess"
+                                >
+                                    <option value="">Choose Country</option>
+                                    {countrys.map((item, index) => {
+                                        // console.log(item.nme);
+                                        return (
+                                            <option
+                                                key={index}
+                                                value={item.name}
+                                            >
+                                                {item.name}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                                <p className={styles.error}>
+                                    {errors?.countriess?.message}
+                                </p>
+                            </div>
+                            <div className={styles.disclaimer}>
+                                <p>
+                                    Get onboard and have access to unlimited
+                                    possibilites with your account!
+                                </p>
+                            </div>
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Proceed"
+                                type="submit"
+                            />
+                        </form>
+                    </div>
                 </div>
             </section>
         </div>

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import styles from './styles.module.css';
+import { useDispatch } from 'react-redux';
 // import {
 
 // } from '../../RegisteredForm/styles.module';
@@ -17,29 +18,33 @@ import {
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import Card from '../../NotRegisteredForms/Card';
 import OtpInput from '../../../ReusableComponents/Otpinput';
+import { verifyOtp } from '../../../../redux/actions/actions';
 
-const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
+const StepTwoBVNAuthenticator = ({
+    handleShowThirdStep,
+    setFormData,
+    formData
+}) => {
     const [progress, setProgress] = useState('50%');
     const [otps, setOtp] = useState([]);
     const handleChange = (otps) => {
         setOtp();
         console.log(otps);
     };
-
+    const dispatch = useDispatch();
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
-
     const sendOTP = (data) => {
         console.log(data);
     };
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.cover}>
-            <Card>
+            <div>
                 {/* <ProfileCard width="50%" height="0"> */}
                 <CardHeadingBVN>
                     <LeftHeading>BVN (OTP) Authenticator</LeftHeading>
@@ -51,33 +56,21 @@ const StepTwoBVNAuthenticator = ({ handleShowThirdStep }) => {
                     An OTP has been sent to your Phone number registered with
                     BVN. Please enter the OTP below to complete your profile.
                 </SmallInstructionText>
-                <form onSubmit={handleSubmit(sendOTP)}>
-                    <p className={styles.inp}>Input OTP</p>
-                    <OtpInput />
-                    <ResetOTP>
-                        <p style={{ color: '#005B82', cursor: 'pointer' }}>
-                            Resend OTP
-                        </p>
-                        <p style={{ cursor: 'pointer' }} className={styles.clr}>
-                            Clear
-                        </p>
-                    </ResetOTP>
-
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        // width="100%"
-                        // height="52px"
-                        text="Proceed"
-                        type="button"
-                        // backgroundColor="#6ccf00"
-                        // color="#ffffff"
-                        // fontWeight="900"
-                        // margin="10% 0 0 0"
-                        onClick={handleShowThirdStep}
-                    />
-                </form>
-            </Card>
+                <p className={styles.inp}>Input OTP</p>
+                <OtpInput formData={formData} setFormData={setFormData} />
+                <ResetOTP>
+                    <p style={{ color: '#005B82', cursor: 'pointer' }}>
+                        Resend OTP
+                    </p>
+                    <button
+                        style={{ cursor: 'pointer' }}
+                        className={styles.clr}
+                        type="reset"
+                    >
+                        Clear
+                    </button>
+                </ResetOTP>
+            </div>
         </div>
     );
 };

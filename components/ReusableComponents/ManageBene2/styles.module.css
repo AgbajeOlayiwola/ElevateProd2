@@ -1,0 +1,59 @@
+.formGroup {
+    margin-bottom: 16px;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.formBody {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    width: 100%;
+    padding: 16px;
+}
+
+.beneBody select {
+    background-color: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    background-image: url(../../../public/Assets/Svgs/arrow-down.svg);
+    color: #7a7978;
+}
+
+.formGroup input {
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    font-family: 'Inter' sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #bdbdbd;
+}
+
+.formGroup input::placeholder {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #bdbdbd;
+}
+
+.error {
+    color: red !important;
+    font-size: 12px !important;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin-top: 10px;
+}
