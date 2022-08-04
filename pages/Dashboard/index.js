@@ -20,7 +20,7 @@ import Piechart from '../../components/ReusableComponents/Chart/Piechart';
 import { OtherAccounts } from '../../components/ReusableComponents/Data';
 import MakePaymentBtn from '../../components/ReusableComponents/MakePayment';
 import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymnet';
-import withAuth from '../../components/HOC/withAuth.js';
+// import withAuth from '../../components/HOC/withAuth.js';
 import {
     getBalanceEnquiry,
     getTransactionElevate
@@ -102,15 +102,15 @@ const Dashboard = () => {
         }
     }, [balanceEnquiry]);
 
-    useEffect(() => {
-        const items = JSON.parse(localStorage.getItem('user'));
+    // useEffect(() => {
+    //     const items = JSON.parse(localStorage.getItem('user'));
 
-        if (!items) {
-            router.push('../Auth/Login');
-        } else {
-            setLoaded(true);
-        }
-    });
+    //     if (!items) {
+    //         router.push('../Auth/Login');
+    //     } else {
+    //         setLoaded(true);
+    //     }
+    // });
     const settings = {
         className: 'center',
         centerMode: true,
@@ -310,4 +310,5 @@ const Dashboard = () => {
     );
 };
 
-export default withAuth(Dashboard);
+// export default withAuth(Dashboard);
+export default Dashboard;

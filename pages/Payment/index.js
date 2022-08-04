@@ -89,6 +89,7 @@ const Payment = () => {
     const [balance, setBalance] = useState('000000.00');
     const [error, setError] = useState('');
     const [status, setStatus] = useState('');
+    const [link, setLink] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
     const [bank, setBank] = useState({});
     const [, updateState] = useState();
@@ -156,12 +157,15 @@ const Payment = () => {
         const {
             query: { id }
         } = router;
-        if ({ id }.id !== undefined) {
-            setFormType({ id }.id.toLowerCase());
+        setLink({ id }.id);
+    });
+
+    useEffect(() => {
+        if (link !== undefined) {
+            setFormType(link.toLowerCase());
             setOverlay(true);
         }
-    }, [id]);
-
+    }, [link]);
     const handleFormChange = (formTitle) => {
         setFormType(formTitle);
         setOverlay(true);

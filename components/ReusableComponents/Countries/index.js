@@ -12,7 +12,6 @@ const Countriess = () => {
         (state) => state.countryReducer
     );
 
-    console.log(countries);
     useEffect(() => {
         dispatch(loadCountry());
         if (countries !== null) {
@@ -40,7 +39,10 @@ const Countriess = () => {
             <select
                 className={styles.select}
                 {...register('countriess', { required: true })}
+                name="countriess"
+                required
             >
+                <option value="">Choose Country</option>
                 {countrys.map((item, index) => {
                     // console.log(item.nme);
                     return (
@@ -50,6 +52,7 @@ const Countriess = () => {
                     );
                 })}
             </select>
+            <p className={styles.error}>{errors?.countriess?.message}</p>
         </div>
     );
 };

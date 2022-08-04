@@ -144,6 +144,17 @@
 .sectionBottom div p {
     margin-bottom: 0rem;
 }
+.select {
+    font-size: 14px;
+    font-weight: 300;
+    width: 100%;
+    margin-top: 0.844rem;
+    margin-bottom: 3rem;
+    padding: 1.753rem 1.753rem;
+}
+.select {
+    width: 100%;
+}
 @keyframes spaceshow {
     0% {
         opacity: 0;

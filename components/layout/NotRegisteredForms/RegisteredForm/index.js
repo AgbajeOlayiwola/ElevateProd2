@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 // import { RegisteredCardWrapper } from './styles.module';
 import { useForm } from 'react-hook-form';
 import { Label, FormInput, InputWrapper } from './styles.module';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import styles from './styles.module.css';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { loadCountry } from '../../../../redux/actions/actions';
 
 const RegisteredForm = ({ formData, setFormData }) => {
     const [progress, setProgress] = useState('25%');
     const [switchs, setSwitch] = useState(true);
     const [isRegistered, setIsRegistered] = useState(false);
     const [bgcolor, setBgcolor] = useState(false);
+    // const dispatch = useDispatch();
+    // const { countries } = useSelector((state) => state.countryReducer);
+
+    // useEffect(() => {
+    //     dispatch(loadCountry());
+    // }, []);
+    // useEffect(() => {
+    //     if (countries !== null) {
+    //         setCountry(countries);
+    //     }
+    // }, [countries]);
 
     const handleShowSecondStep = () => {
         setShowSecondStep(true);

@@ -7,8 +7,15 @@ import StepThreeCompleteProfile1 from './StepThreeCompleteProfile1';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { createProfileSetup, verifyOtp } from '../../../redux/actions/actions';
+import {
+    createProfileSetup,
+    verifyOtp,
+    loadCountry
+} from '../../../redux/actions/actions';
 const ProfileSetups = () => {
+    const dispatch = useDispatch();
+    const { countries } = useSelector((state) => state.countryReducer);
+
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
         type: 'UNREGISTERED BUSINESS',
@@ -16,7 +23,7 @@ const ProfileSetups = () => {
         tinNumber: '',
         bvNumber: '',
         phoneNumber: '',
-        countryCode: '+234',
+        countryCode: '',
         dateOfBirth: '',
         bvnOtp: '',
         gender: '',
@@ -30,6 +37,23 @@ const ProfileSetups = () => {
         custCategory: 'Individual',
         referralCode: ''
     });
+    const countryName = localStorage.getItem('country');
+    const countryNames = JSON.parse(countryName);
+    useEffect(() => {
+        dispatch(loadCountry());
+    }, []);
+    useEffect(() => {
+        if (countries !== null) {
+            countries.filter((item) => {
+                if (item.name === countryNames.countriess) {
+                    setFormData({
+                        ...formData,
+                        countryCode: item.countryCode
+                    });
+                }
+            });
+        }
+    }, [countries]);
     const [activeBtn, setActiveBtn] = useState(true);
     const { isLoading, profile, errorMessages } = useSelector(
         (state) => state.profileSetup
@@ -68,7 +92,6 @@ const ProfileSetups = () => {
                 );
         }
     };
-    const dispatch = useDispatch();
     // useEffect(() => {
     //     console.log(errorMessages, otpErrorMessages);
     // }, []);
