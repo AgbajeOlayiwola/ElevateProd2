@@ -59,10 +59,8 @@ const Payment = () => {
     const { bulkTransfer, errorMessagebulkTransfer } = useSelector(
         (state) => state.bulkTransferReducer
     );
-    const {
-        internationalTransfer,
-        errorMessageinternationalTransfer
-    } = useSelector((state) => state.internationalTransferReducer);
+    const { internationalTransfer, errorMessageinternationalTransfer } =
+        useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
@@ -91,6 +89,7 @@ const Payment = () => {
     const [balance, setBalance] = useState('000000.00');
     const [error, setError] = useState('');
     const [status, setStatus] = useState('');
+    const [link, setLink] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
     const [bank, setBank] = useState({});
     const [, updateState] = useState();
@@ -158,12 +157,15 @@ const Payment = () => {
         const {
             query: { id }
         } = router;
-        if ({ id }.id !== undefined) {
-            setFormType({ id }.id.toLowerCase());
-            setOverlay(true);
-        }
+        setLink({ id }.id);
     });
 
+    useEffect(() => {
+        if (link !== undefined) {
+            setFormType(link.toLowerCase());
+            setOverlay(true);
+        }
+    }, [link]);
     const handleFormChange = (formTitle) => {
         setFormType(formTitle);
         setOverlay(true);
@@ -665,10 +667,8 @@ const Payment = () => {
                                             );
                                             const billerData = {
                                                 amount: paymentDetails.amount,
-                                                ccy:
-                                                    billerPlan
-                                                        .billerProductInfo[0]
-                                                        .ccy,
+                                                ccy: billerPlan
+                                                    .billerProductInfo[0].ccy,
                                                 billerCode:
                                                     billerPlan.billerDetail
                                                         .billerCode,
@@ -717,10 +717,8 @@ const Payment = () => {
                                         if (billerPlan !== null) {
                                             const billerData = {
                                                 amount: paymentDetails.amount,
-                                                ccy:
-                                                    billerPlan
-                                                        .billerProductInfo[0]
-                                                        .ccy,
+                                                ccy: billerPlan
+                                                    .billerProductInfo[0].ccy,
                                                 billerCode:
                                                     billerPlan.billerDetail
                                                         .billerCode,

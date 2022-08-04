@@ -44,7 +44,7 @@
 
 // export default DashLayout;
 import React from 'react';
-import withAuth from '../../HOC/withAuth';
+// import withAuth from '../../HOC/withAuth';
 import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
 
@@ -66,4 +66,5 @@ const DashLayout = ({ children }) => {
     );
 };
 
-export default withAuth(DashLayout);
+// export default withAuth(DashLayout);
+export default DashLayout;
