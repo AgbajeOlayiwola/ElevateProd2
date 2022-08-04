@@ -27,6 +27,7 @@ const Signup = ({ type }) => {
     const { isLoading, user, errorMessage } = useSelector(
         (state) => state.registered
     );
+
     console.log(user);
     const [passwordMatch, setPasswordMatch] = useState('');
     const handlePaswword = (e) => {

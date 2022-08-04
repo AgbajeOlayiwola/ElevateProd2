@@ -657,13 +657,20 @@ export const otpLoadError = (otpErrorMessage) => ({
     type: otp.OTP_LOAD_ERROR,
     payload: otpErrorMessage
 });
+export const bvnNinError = (bvnError) => ({
+    type: otp.BVN_NIN_LOAD_ERROR,
+    payload: bvnError
+});
 export const verifyOtp = (otpData) => {
     return async (dispatch) => {
         await axiosInstance
             .get(`${apiRoutes.verifyStatus}`)
             .then((response) => {
                 console.log(response.data);
-                if (response.data.statusCode === 200) {
+                if (
+                    response.data.data[0].status === 'SUCCESS' &&
+                    response.data.data[1].status === 'SUCCESS'
+                ) {
                     axiosInstance
                         .post(`${apiRoutes.verifyOtp}`, otpData)
                         .then((response) => {
@@ -673,8 +680,11 @@ export const verifyOtp = (otpData) => {
                         })
                         .catch((error) => {
                             console.log('profile otp dispatch', error);
-                            dispatch(otpLoadError('error otp does not match'));
+                            dispatch(bvnNinError('error otp does not match'));
                         });
+                } else {
+                    console.log('error');
+                    dispatch(bvnNinError('BVN or NIN Incorrect'));
                 }
             })
             .catch((error) => {

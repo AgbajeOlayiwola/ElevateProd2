@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import styles from './styles.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 // import {
 
 // } from '../../RegisteredForm/styles.module';
@@ -19,6 +20,7 @@ import Progressbar from '../../../ReusableComponents/Progressbar';
 import Card from '../../NotRegisteredForms/Card';
 import OtpInput from '../../../ReusableComponents/Otpinput';
 import { verifyOtp } from '../../../../redux/actions/actions';
+import { otp } from '../../../../redux/types/actionTypes';
 
 const StepTwoBVNAuthenticator = ({
     handleShowThirdStep,
@@ -41,6 +43,7 @@ const StepTwoBVNAuthenticator = ({
     const sendOTP = (data) => {
         console.log(data);
     };
+
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.cover}>
