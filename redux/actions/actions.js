@@ -660,15 +660,25 @@ export const otpLoadError = (otpErrorMessage) => ({
 export const verifyOtp = (otpData) => {
     return async (dispatch) => {
         await axiosInstance
-            .post(`${apiRoutes.verifyOtp}`, otpData)
+            .get(`${apiRoutes.verifyStatus}`)
             .then((response) => {
-                dispatch(otpLoadSuccess(response.data));
-                console.log('otp', otpData);
-                console.log('data from otp', response.data);
+                console.log(response.data.statusCode);
+                if (response.data.statusCode === 200) {
+                    axiosInstance
+                        .post(`${apiRoutes.verifyOtp}`, otpData)
+                        .then((response) => {
+                            dispatch(otpLoadSuccess(response.data));
+                            console.log('otp', otpData);
+                            console.log('data from otp', response.data);
+                        })
+                        .catch((error) => {
+                            console.log('profile otp dispatch', error);
+                            dispatch(otpLoadError('error otp does not match'));
+                        });
+                }
             })
             .catch((error) => {
-                console.log('profile otp dispatch', error);
-                dispatch(otpLoadError('error otp does not match'));
+                console.log('profile Bvn dispatch', error);
             });
     };
 };
