@@ -98,12 +98,13 @@ const Signup = ({ type }) => {
                 affiliateCode: 'ENG'
             };
             console.log(password);
-            dispatch(createUserAction(postData));
-            if (errorMessage !== 'Account created successfully!') {
-                setError(errorMessage);
-            } else {
-                router.push('../Verify/Loading');
-            }
+            dispatch(createUserAction(postData)).then(() => {
+                if (errorMessage !== 'Account created successfully!') {
+                    setError(errorMessage);
+                } else {
+                    router.push('../Verify/Loading');
+                }
+            });
         } else {
             passwordMatch;
         }
