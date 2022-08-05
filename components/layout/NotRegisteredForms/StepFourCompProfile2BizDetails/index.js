@@ -108,18 +108,60 @@ const StepFourCompProfile2BizDetails = ({
                         <div style={{ marginTop: '2rem' }}>
                             <Label>Enter Business Phone number</Label>
                             <br />
-                            <FormInput
-                                type="number"
-                                placeholder="8999 4048 44"
-                                {...register('phoneNumber')}
-                                value={formData.bussinesPhone}
-                                onChange={(event) => {
-                                    setFormData({
-                                        ...formData,
-                                        bussinesPhone: event.target.value
-                                    });
-                                }}
-                            />
+                            <div className={styles.phone}>
+                                <div className={styles.phoneHeader}>
+                                    <span>
+                                        <img src={formData.flag} alt="" />
+                                    </span>
+                                    <p>{formData.baseCurrency}</p>
+                                    {/* <input
+                                    type="number"
+                                    placeholder="+234"
+                                    {...register('phone_number', {
+                                        required: 'phone number is required',
+                                        minLength: {
+                                            value: 9,
+                                            message: 'Min length is 9'
+                                        }
+                                    })}
+                                    value={formData.countryCode}
+                                    onChange={(event) => {
+                                        setFormData({
+                                            ...formData,
+                                            countryCode: event.target.value
+                                        });
+                                        if (event.target.value.length == 15)
+                                          return false; //limits to 10 digit entry
+                                        setPhoneNumber(event?.target.value); //saving input to state
+                                    }}
+                                /> */}
+                                </div>
+                                <div className={styles.phoneDetails}>
+                                    <p> +{formData.countryCode}</p>
+                                    <input
+                                        type="number"
+                                        placeholder="0812 345 6789"
+                                        {...register('countryCode_number', {
+                                            required:
+                                                'Country Code is required',
+                                            minLength: {
+                                                value: 9,
+                                                message: 'Min length is 9'
+                                            }
+                                        })}
+                                        value={formData.phoneNumber}
+                                        onChange={(event) => {
+                                            setFormData({
+                                                ...formData,
+                                                phoneNumber: event.target.value
+                                            });
+                                            //if (event.target.value.length == 15)
+                                            //  return false; //limits to 10 digit entry
+                                            //setPhoneNumber(event?.target.value); //saving input to state
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <div style={{ marginTop: '2rem', width: '100%' }}>
                             <Label>Select Business Type</Label>
@@ -132,7 +174,8 @@ const StepFourCompProfile2BizDetails = ({
                                     });
                                 }}
                             >
-                                <option value=""></option>
+                                <option value="">Select Business</option>
+
                                 <option value="Retail business">
                                     Retail business
                                 </option>
