@@ -30,7 +30,6 @@ const Signup = ({ type }) => {
         (state) => state.registered
     );
 
-    console.log(user);
     const [passwordMatch, setPasswordMatch] = useState('');
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
@@ -97,17 +96,24 @@ const Signup = ({ type }) => {
                 confirmPassword: encrypt(confirmPassword),
                 affiliateCode: 'ENG'
             };
-            console.log(password);
+            // console.log(password);\
+            console.log(errorMessage);
             dispatch(createUserAction(postData));
-            if (errorMessage !== 'Account created successfully!') {
-                setError(errorMessage);
-            } else {
-                router.push('../Verify/Loading');
-            }
         } else {
             passwordMatch;
         }
     };
+    const sentSIgnUp = () => {
+        console.log(errorMessage);
+        if (errorMessage !== 'Account created successfully!') {
+            setError(errorMessage);
+        } else {
+            router.push('../Verify/Loading');
+        }
+    };
+    useEffect(() => {
+        sentSIgnUp();
+    }, [errorMessage]);
 
     const [bgcolor, setBgcolor] = useState(false);
 

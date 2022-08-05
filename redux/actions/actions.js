@@ -666,7 +666,7 @@ export const verifyOtp = (otpData) => {
         await axiosInstance
             .get(`${apiRoutes.verifyStatus}`)
             .then((response) => {
-                console.log(response.data);
+                console.log(response.data.data[0].status.reason);
                 if (
                     response.data.data[0].status === 'SUCCESS' &&
                     response.data.data[1].status === 'SUCCESS'
@@ -684,11 +684,19 @@ export const verifyOtp = (otpData) => {
                         });
                 } else {
                     console.log('error');
-                    dispatch(bvnNinError('BVN or NIN Incorrect'));
+                    dispatch(
+                        bvnNinError(
+                            response.data.data[0].status.reason,
+                            response.data.data[1].status.reason
+                        )
+                    );
                 }
             })
             .catch((error) => {
-                console.log('profile Bvn dispatch', error);
+                console.log(
+                    'profile Bvn dispatch',
+                    error.response.data.data[0].status.reason
+                );
             });
     };
 };
