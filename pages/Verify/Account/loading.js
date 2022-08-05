@@ -14,7 +14,7 @@ const AccountLoading = () => {
 
     setTimeout(() => {
         setTimeInterval(timeInterval + 1);
-    }, 10000);
+    }, 250000);
 
     useEffect(() => {
         setTimeout(() => {
@@ -33,7 +33,7 @@ const AccountLoading = () => {
                     console.log(error.response.data.message);
                     setAccountInfo(error.response.data.message);
                 });
-        }, 10000);
+        }, 250000);
     }, [timeInterval]);
 
     return (
