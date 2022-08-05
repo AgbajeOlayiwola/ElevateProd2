@@ -24,6 +24,8 @@ const ProfileSetups = () => {
         bvNumber: '',
         phoneNumber: '',
         countryCode: '',
+        flag: '',
+        baseCurrency: '',
         dateOfBirth: '',
         bvnOtp: '',
         gender: '',
@@ -45,10 +47,12 @@ const ProfileSetups = () => {
     useEffect(() => {
         if (countries !== null) {
             countries.filter((item) => {
-                if (item.name === countryNames.countriess) {
+                if (item.name === countryNames.name) {
                     setFormData({
                         ...formData,
-                        countryCode: item.countryCode
+                        countryCode: item.countryCode,
+                        flag: item.flags.svg,
+                        baseCurrency: item.baseCurrency
                     });
                 }
             });

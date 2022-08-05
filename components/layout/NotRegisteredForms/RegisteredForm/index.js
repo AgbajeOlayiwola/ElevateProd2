@@ -48,6 +48,7 @@ const RegisteredForm = ({ formData, setFormData }) => {
         formData.phoneNumber,
         formData.dateOfBirth
     );
+    console.log(formData.flag);
     const {
         register,
         handleSubmit,
@@ -214,48 +215,57 @@ const RegisteredForm = ({ formData, setFormData }) => {
                         <label>Phone Number</label>
                         <br />
                         <div className={styles.phone}>
-                            <input
-                                type="number"
-                                placeholder="+234"
-                                {...register('phone_number', {
-                                    required: 'phone number is required',
-                                    minLength: {
-                                        value: 9,
-                                        message: 'Min length is 9'
-                                    }
-                                })}
-                                value={formData.countryCode}
-                                onChange={(event) => {
-                                    setFormData({
-                                        ...formData,
-                                        countryCode: event.target.value
-                                    });
-                                    // if (event.target.value.length == 15)
-                                    //   return false; //limits to 10 digit entry
-                                    //setPhoneNumber(event?.target.value); //saving input to state
-                                }}
-                            />
-                            <input
-                                type="number"
-                                placeholder="+234 812 345 6789"
-                                {...register('countryCode_number', {
-                                    required: 'Country Code is required',
-                                    minLength: {
-                                        value: 9,
-                                        message: 'Min length is 9'
-                                    }
-                                })}
-                                value={formData.phoneNumber}
-                                onChange={(event) => {
-                                    setFormData({
-                                        ...formData,
-                                        phoneNumber: event.target.value
-                                    });
-                                    //if (event.target.value.length == 15)
-                                    //  return false; //limits to 10 digit entry
-                                    //setPhoneNumber(event?.target.value); //saving input to state
-                                }}
-                            />
+                            <div className={styles.phoneHeader}>
+                                <span>
+                                    <img src={formData.flag} alt="" />
+                                </span>
+                                <p>{formData.baseCurrency}</p>
+                                {/* <input
+                                    type="number"
+                                    placeholder="+234"
+                                    {...register('phone_number', {
+                                        required: 'phone number is required',
+                                        minLength: {
+                                            value: 9,
+                                            message: 'Min length is 9'
+                                        }
+                                    })}
+                                    value={formData.countryCode}
+                                    onChange={(event) => {
+                                        setFormData({
+                                            ...formData,
+                                            countryCode: event.target.value
+                                        });
+                                        if (event.target.value.length == 15)
+                                          return false; //limits to 10 digit entry
+                                        setPhoneNumber(event?.target.value); //saving input to state
+                                    }}
+                                /> */}
+                            </div>
+                            <div className={styles.phoneDetails}>
+                                <p> +{formData.countryCode}</p>
+                                <input
+                                    type="number"
+                                    placeholder="0812 345 6789"
+                                    {...register('countryCode_number', {
+                                        required: 'Country Code is required',
+                                        minLength: {
+                                            value: 9,
+                                            message: 'Min length is 9'
+                                        }
+                                    })}
+                                    value={formData.phoneNumber}
+                                    onChange={(event) => {
+                                        setFormData({
+                                            ...formData,
+                                            phoneNumber: event.target.value
+                                        });
+                                        //if (event.target.value.length == 15)
+                                        //  return false; //limits to 10 digit entry
+                                        //setPhoneNumber(event?.target.value); //saving input to state
+                                    }}
+                                />
+                            </div>
                         </div>
                         <div className="errors">
                             {errors.phone_number?.message}
@@ -325,51 +335,60 @@ const RegisteredForm = ({ formData, setFormData }) => {
                         <label>Phone Number</label>
                         <br />
                         <div className={styles.phone}>
-                            <input
-                                type="number"
-                                placeholder="+234"
-                                {...register('phone_number', {
-                                    required: 'Phone number is required',
-                                    minLength: {
-                                        value: 9,
-                                        message: 'Min length is 9'
-                                    }
-                                })}
-                                value={formData.countryCode}
-                                onChange={(event) => {
-                                    setFormData({
-                                        ...formData,
-                                        countryCode: event.target.value
-                                    });
-                                    // if (event.target.value.length == 15)
-                                    //   return false; //limits to 10 digit entry
-                                    //setPhoneNumber(event?.target.value); //saving input to state
-                                }}
-                            />
-                            <input
-                                type="number"
-                                placeholder="+234 812 345 6789"
-                                {...register('countryCode_number', {
-                                    required: 'Country COde is Required',
-                                    minLength: {
-                                        value: 9,
-                                        message: 'Min length is 9'
-                                    }
-                                })}
-                                value={formData.phoneNumber}
-                                onChange={(event) => {
-                                    setFormData({
-                                        ...formData,
-                                        phoneNumber: event.target.value
-                                    });
-                                    //if (event.target.value.length == 15)
-                                    //  return false; //limits to 10 digit entry
-                                    //setPhoneNumber(event?.target.value); //saving input to state
-                                }}
-                            />
-                            <div className="errors">
-                                {errors.phone_number?.message}
+                            <div className={styles.phoneHeader}>
+                                <span>
+                                    <img src={formData.flag} alt="" />
+                                </span>
+                                <p>{formData.baseCurrency}</p>
+                                {/* <input
+                                    type="number"
+                                    placeholder="+234"
+                                    {...register('phone_number', {
+                                        required: 'phone number is required',
+                                        minLength: {
+                                            value: 9,
+                                            message: 'Min length is 9'
+                                        }
+                                    })}
+                                    value={formData.countryCode}
+                                    onChange={(event) => {
+                                        setFormData({
+                                            ...formData,
+                                            countryCode: event.target.value
+                                        });
+                                        if (event.target.value.length == 15)
+                                          return false; //limits to 10 digit entry
+                                        setPhoneNumber(event?.target.value); //saving input to state
+                                    }}
+                                /> */}
                             </div>
+                            <div className={styles.phoneDetails}>
+                                <p> +{formData.countryCode}</p>
+                                <input
+                                    type="number"
+                                    placeholder="0812 345 6789"
+                                    {...register('countryCode_number', {
+                                        required: 'Country Code is required',
+                                        minLength: {
+                                            value: 9,
+                                            message: 'Min length is 9'
+                                        }
+                                    })}
+                                    value={formData.phoneNumber}
+                                    onChange={(event) => {
+                                        setFormData({
+                                            ...formData,
+                                            phoneNumber: event.target.value
+                                        });
+                                        //if (event.target.value.length == 15)
+                                        //  return false; //limits to 10 digit entry
+                                        //setPhoneNumber(event?.target.value); //saving input to state
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div className="errors">
+                            {errors.phone_number?.message}
                         </div>
                     </InputWrapper>
                     <InputWrapper>
