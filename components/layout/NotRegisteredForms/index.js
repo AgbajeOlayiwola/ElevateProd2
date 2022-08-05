@@ -15,6 +15,7 @@ import {
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
+    // 22422561587
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ const ProfileSetups = () => {
         bussinessName: '',
         businessType: '',
         streetName: '',
-        localGoverment: '',
+        localGoverment: 'lga',
         city: '',
         state: '',
         custCategory: 'Individual',
@@ -58,7 +59,9 @@ const ProfileSetups = () => {
     const { isLoading, profile, errorMessages } = useSelector(
         (state) => state.profileSetup
     );
-    const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
+    const { Loading, otp, otpErrorMessage, bvnError } = useSelector(
+        (state) => state.otp
+    );
     const [error, setError] = useState([]);
     const conditionalComponent = () => {
         switch (page) {
@@ -95,6 +98,7 @@ const ProfileSetups = () => {
     // useEffect(() => {
     //     console.log(errorMessages, otpErrorMessages);
     // }, []);
+    const [errorM, setErrorM] = useState('');
 
     function handleSubmit() {
         // console.log('firstAPi');
@@ -121,14 +125,18 @@ const ProfileSetups = () => {
             otp: '123456'
         };
         dispatch(verifyOtp(otpData));
-        console.log('secondAPi');
+        console.log('bnv', bvnError);
         setError(otpErrorMessage);
-        if (!otpErrorMessage) {
+        if (bvnError === 'BVN or NIN Incorrect') {
+            setPage(page - 1);
+            setErrorM('BVN or Phone Number Incorrect');
+        } else if (!otpErrorMessage) {
             setPage(page + 1);
         }
     };
     return (
         <Card>
+            {page === 0 ? <p className={styles.error}>{errorM}</p> : <></>}
             <div className={styles.error}>{error}</div>
             {conditionalComponent()}
 

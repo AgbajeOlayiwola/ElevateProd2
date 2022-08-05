@@ -25,6 +25,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const router = useRouter();
+
     // const hashed = hash();
 
     const forceUpdate = useForceUpdate();
@@ -64,7 +65,7 @@ const Login = () => {
     const types = (type) => {
         setOutType(type);
     };
-
+    console.log(user);
     // console.log(data); // watch input value by passing the name of it
 
     return (
@@ -95,8 +96,8 @@ const Login = () => {
                     <div className={styles.welc}>
                         <h2>Welcome Back!</h2>
                         <p>
-                            Marvelous Solutions, kindly enter your details to
-                            Login.
+                            {/* Marvellous Solutions,  */}
+                            Kindly enter your details to Login.
                         </p>
                     </div>
                     <h2 className={styles.error}>{error}</h2>
