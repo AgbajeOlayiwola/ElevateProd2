@@ -220,7 +220,8 @@ export const compProfile = {
 export const otp = {
     OTP_LOAD_START: 'OTP_LOAD_START',
     OTP_LOAD_SUCCESS: 'OTP_LOAD_SUCCESS',
-    OTP_LOAD_ERROR: 'OTP_LOAD_ERROR'
+    OTP_LOAD_ERROR: 'OTP_LOAD_ERROR',
+    BVN_NIN_LOAD_ERROR: 'BVN_NIN_LOAD_ERROR'
 };
 //otp action type end
 
