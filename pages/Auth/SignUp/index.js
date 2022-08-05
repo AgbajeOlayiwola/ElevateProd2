@@ -10,10 +10,12 @@ import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { createUserAction } from '../../../redux/actions/actions';
 import { useSelector } from 'react-redux';
 import { encrypt } from '../../../redux/helper/hash';
+import validator from 'validator';
 
 const Signup = ({ type }) => {
     const router = useRouter();
     const [error, setError] = useState('');
+    const [errorMessages, setErrorMessages] = useState('');
     const [pName, setPname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -27,6 +29,7 @@ const Signup = ({ type }) => {
     const { isLoading, user, errorMessage } = useSelector(
         (state) => state.registered
     );
+
     console.log(user);
     const [passwordMatch, setPasswordMatch] = useState('');
     const handlePaswword = (e) => {
@@ -38,7 +41,33 @@ const Signup = ({ type }) => {
     };
     const handlePwd = (e) => {
         setCount(e.target.value.length);
+        if (
+            validator.isStrongPassword(e.target.value, {
+                minLength: 8,
+                minLowercase: 1,
+                minUppercase: 1,
+                minNumbers: 1,
+                minSymbols: 1
+            })
+        ) {
+            setErrorMessages(' Strong');
+        } else if (
+            validator.isStrongPassword(e.target.value, {
+                minLength: 8,
+                minLowercase: 1,
+                minUppercase: 0,
+                minNumbers: 1,
+                minSymbols: 0
+            })
+        ) {
+            setErrorMessages('Medium');
+        } else {
+            setErrorMessages('Weak');
+        }
         setPassword(e.target.value);
+        if (e.target.value === '') {
+            setErrorMessages('');
+        }
     };
     const handleEmail = (e) => {
         setEmail(e.target.value);
@@ -231,15 +260,6 @@ const Signup = ({ type }) => {
                                             <input
                                                 placeholder="Password"
                                                 className={styles.textInput}
-                                                {...register('password', {
-                                                    required:
-                                                        'Please enter Password',
-                                                    pattern: {
-                                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/i,
-                                                        message:
-                                                            'Password must contain at least one alphabelt,number and special character'
-                                                    }
-                                                })}
                                                 name="password"
                                                 type={
                                                     outType
@@ -251,15 +271,26 @@ const Signup = ({ type }) => {
 
                                             <Visbility typeSet={types} />
                                         </div>
-                                        {count <= 1 || count >= 8 ? null : (
-                                            <p className={styles.error}>
-                                                Minimum Password length is 8
-                                                Characters
-                                            </p>
+                                        {errorMessages === '' ? null : (
+                                            <div className={styles.errorCont}>
+                                                <div
+                                                    className={
+                                                        errorMessages ===
+                                                        'Strong'
+                                                            ? styles.strong
+                                                            : errorMessages ===
+                                                              'Medium'
+                                                            ? styles.medium
+                                                            : errorMessages ===
+                                                              'Weak'
+                                                            ? styles.errors
+                                                            : styles.strong
+                                                    }
+                                                >
+                                                    <p>{errorMessages}</p>
+                                                </div>
+                                            </div>
                                         )}
-                                        <p className={styles.error}>
-                                            {errors?.password?.message}
-                                        </p>
                                     </div>
 
                                     {/* include validation with required or other standard HTML validation rules */}

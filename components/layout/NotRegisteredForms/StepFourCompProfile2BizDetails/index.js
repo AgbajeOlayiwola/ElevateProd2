@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import Card from '../../NotRegisteredForms/Card';
@@ -29,6 +29,7 @@ import Progressbar from '../../../ReusableComponents/Progressbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { CompleteBusinessProfile } from '../../../../redux/actions/actions';
 import { useRouter } from 'next/router';
+import { location } from '../../../ReusableComponents/Data';
 const StepFourCompProfile2BizDetails = ({
     handleShowSuccessStep,
     formData,
@@ -48,6 +49,8 @@ const StepFourCompProfile2BizDetails = ({
     // };
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
+    const [localState, setLocalState] = useState('');
+    const [localGovernment, setLocalGovernment] = useState('');
     const { isLoading, compBusprofile, errorMessage } = useSelector(
         (state) => state.completeBusProfile
     );
@@ -71,6 +74,15 @@ const StepFourCompProfile2BizDetails = ({
             router.push('/Verify/Account/loading');
         }
     };
+
+    useEffect(() => {
+        location.filter((item) => {
+            if (item.state === localState) {
+                setLocalGovernment(item.localGoverment);
+            }
+        });
+    }, [localState]);
+
     return (
         <div>
             <div>
@@ -155,15 +167,44 @@ const StepFourCompProfile2BizDetails = ({
                                 />
                             </div>
                             <div className={styles.inps}>
+                                <label>State </label>
+                                {errors.email?.message}
+                                <br />
+                                <SelectInput
+                                    name="State"
+                                    id=""
+                                    {...register('State')}
+                                    value={formData.state}
+                                    onChange={(event) => {
+                                        setLocalState(event.target.value);
+                                        setFormData({
+                                            ...formData,
+                                            state: event.target.value
+                                        });
+                                    }}
+                                >
+                                    <option value="">Select State</option>
+                                    {location.map((item, index) => {
+                                        return (
+                                            <option
+                                                value={item.state}
+                                                key={index}
+                                            >
+                                                {item.state}
+                                            </option>
+                                        );
+                                    })}
+                                </SelectInput>
+                            </div>
+                            <div className={styles.inps}>
                                 <label>Select Your Local Government </label>
                                 {errors.email?.message}
                                 <br />
 
-                                <FormInput
-                                    type="text"
-                                    placeholder="Local Governmenr"
+                                <SelectInput
+                                    name="localGovernment"
+                                    id=""
                                     {...register('localGoverment')}
-                                    value={formData.localGoverment}
                                     onChange={(event) => {
                                         setFormData({
                                             ...formData,
@@ -174,7 +215,25 @@ const StepFourCompProfile2BizDetails = ({
                                         //     setPhoneNumber(event?.target.value); //saving input to state
                                         // }}
                                     }}
-                                />
+                                >
+                                    <option value="">
+                                        Select Local Government
+                                    </option>
+                                    {localGovernment
+                                        ? localGovernment?.map(
+                                              (item, index) => {
+                                                  return (
+                                                      <option
+                                                          value={item}
+                                                          key={index}
+                                                      >
+                                                          {item}
+                                                      </option>
+                                                  );
+                                              }
+                                          )
+                                        : null}
+                                </SelectInput>
                             </div>
                             <div className={styles.inps}>
                                 <label>City </label>
@@ -190,27 +249,6 @@ const StepFourCompProfile2BizDetails = ({
                                         setFormData({
                                             ...formData,
                                             city: event.target.value
-                                        });
-                                        //     if (event.target.value.length == 15)
-                                        //         return false; //limits to 10 digit entry
-                                        //     setPhoneNumber(event?.target.value); //saving input to state
-                                        // }}
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.inps}>
-                                <label>State </label>
-                                {errors.email?.message}
-                                <br />
-                                <FormInput
-                                    type="text"
-                                    placeholder="State"
-                                    {...register('State')}
-                                    value={formData.state}
-                                    onChange={(event) => {
-                                        setFormData({
-                                            ...formData,
-                                            state: event.target.value
                                         });
                                         //     if (event.target.value.length == 15)
                                         //         return false; //limits to 10 digit entry

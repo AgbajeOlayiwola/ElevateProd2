@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 const Failed = () => {
     const router = useRouter();
     const restart = () => {
-        router.push('../../Onboarding/ProfileSetup');
+        router.reload(window.location.pathname);
     };
     return (
         <div className={styles.cover}>

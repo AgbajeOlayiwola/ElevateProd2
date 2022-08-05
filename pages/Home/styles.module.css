@@ -149,11 +149,17 @@
     font-weight: 300;
     width: 100%;
     margin-top: 0.844rem;
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
     padding: 1.753rem 1.753rem;
 }
 .select {
     width: 100%;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 1rem;
 }
 @keyframes spaceshow {
     0% {
