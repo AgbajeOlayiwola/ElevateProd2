@@ -3,7 +3,7 @@ import { otp } from '../types/actionTypes';
 const initialState = {
     Loading: false,
     otp: null,
-    otpErrorMessage: 'error',
+    otpErrorMessage: '...',
     bvnError: null
 };
 
