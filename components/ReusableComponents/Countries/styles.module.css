@@ -1,11 +1,90 @@
-.select {
-    font-size: 14px;
-    font-weight: 300;
+.selectCont {
+    position: relative;
     width: 100%;
-    margin-top: 0.844rem;
-    margin-bottom: 3rem;
-    padding: 1.753rem 1.753rem;
+    margin-top: 8px;
 }
-.select {
+
+.selectCountry {
     width: 100%;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.selectCountry div {
+    display: flex;
+    width: 100%;
+}
+
+.selectCountry div .flags {
+    width: 42px;
+    height: 15px;
+}
+
+.selectCountry div img {
+    width: 100%;
+    /* height: 15px; */
+}
+
+.selectCountry div p {
+    display: flex;
+    margin-left: 12px;
+    text-transform: uppercase;
+}
+
+.selectCountry p {
+    margin: 0px;
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 19px;
+    color: #235b7f;
+}
+
+.selectOption {
+    height: 50vh;
+    overflow-y: scroll;
+    width: 100%;
+    position: absolute;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    margin: 0px;
+    padding: 0px;
+    /* top: 0; */
+}
+
+.selectOption li {
+    list-style-type: none;
+    display: flex;
+    cursor: pointer;
+    padding: 12px 24px;
+}
+
+.selectOption img {
+    width: 10%;
+}
+
+.selectOption li p {
+    margin: 0px;
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 19px;
+    color: #235b7f;
+    margin-left: 12px;
+    text-transform: uppercase;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 1rem;
 }

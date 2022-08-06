@@ -22,6 +22,7 @@ const Signup = ({ type }) => {
     const [confirmPassword, setConfPassword] = useState('');
     const [activeBtn, setActiveBtn] = useState(true);
     const [business, setBusiness] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
@@ -96,7 +97,7 @@ const Signup = ({ type }) => {
                 confirmPassword: encrypt(confirmPassword),
                 affiliateCode: 'ENG'
             };
-            // console.log(password);\
+            setLoading(true);
             console.log(errorMessage);
             dispatch(createUserAction(postData));
         } else {
@@ -104,9 +105,9 @@ const Signup = ({ type }) => {
         }
     };
     const sentSIgnUp = () => {
-        console.log(errorMessage);
         if (errorMessage !== 'Account created successfully!') {
             setError(errorMessage);
+            setLoading(false);
         } else {
             router.push('../Verify/Loading');
         }
@@ -329,14 +330,20 @@ const Signup = ({ type }) => {
                                     {errors.exampleRequired && (
                                         <span>This field is required</span>
                                     )}
-                                    <ButtonComp
-                                        disabled={activeBtn}
-                                        active={
-                                            activeBtn ? 'active' : 'inactive'
-                                        }
-                                        text="Proceed"
-                                        type="submit"
-                                    />
+                                    {loading ? (
+                                        <h2>Loading...</h2>
+                                    ) : (
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            text="Proceed"
+                                            type="submit"
+                                        />
+                                    )}
                                 </form>
                             ) : (
                                 <>

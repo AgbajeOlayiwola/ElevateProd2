@@ -21,6 +21,7 @@ const HomeMain = () => {
     const [countrys, setCountry] = useState([]);
     const [countryState, setCountryState] = useState(false);
     const [selectCountry, setSelectCountry] = useState('');
+    const [error, setError] = useState('');
     const dispatch = useDispatch();
     const { isLoading, countries, errorMessage } = useSelector(
         (state) => state.countryReducer
@@ -47,8 +48,15 @@ const HomeMain = () => {
     } = useForm();
     const onSubmit = (data) => {
         console.log(data);
-        window.localStorage.setItem('country', JSON.stringify(selectCountry));
-        router.push('./Auth/SignUp');
+        if (selectCountry === '') {
+            setError('Choose a country');
+        } else {
+            window.localStorage.setItem(
+                'country',
+                JSON.stringify(selectCountry)
+            );
+            router.push('./Auth/SignUp');
+        }
     };
     // console.log(watch('example')); // watch input value by passing the name of it
 
@@ -102,105 +110,18 @@ const HomeMain = () => {
                                     Choose The Country Where you Run Busines
                                 </label>
                                 <br />
-                                <div className={styles.selectCont}>
-                                    <div
-                                        className={styles.selectCountry}
-                                        onClick={() => {
-                                            setCountryState(!countryState);
-                                        }}
-                                    >
-                                        {selectCountry ? (
-                                            <div>
-                                                <div className={styles.flags}>
-                                                    <img
-                                                        src={
-                                                            selectCountry.flags ===
-                                                            undefined
-                                                                ? null
-                                                                : selectCountry
-                                                                      .flags.svg
-                                                        }
-                                                        alt=""
-                                                    />
-                                                </div>
-
-                                                <p>{selectCountry.name}</p>
-                                            </div>
-                                        ) : (
-                                            <>
-                                                <p>Choose Country</p>
-                                                <Image
-                                                    src="/../../Assets/Svgs/arrow-down.svg"
-                                                    width="50%"
-                                                    height="10%"
-                                                />
-                                            </>
-                                        )}
-                                    </div>
-                                    {countryState && (
-                                        <ul className={styles.selectOption}>
-                                            {countrys.map((item, index) => {
-                                                return (
-                                                    <li
-                                                        key={index}
-                                                        onClick={(e) => {
-                                                            setSelectCountry(
-                                                                item
-                                                            );
-                                                            setCountryState(
-                                                                false
-                                                            );
-                                                        }}
-                                                    >
-                                                        <img
-                                                            src={
-                                                                item.flags ===
-                                                                undefined
-                                                                    ? null
-                                                                    : item.flags
-                                                                          .svg
-                                                            }
-                                                            alt=""
-                                                        />
-                                                        <p>{item.name}</p>
-                                                    </li>
-                                                );
-                                            })}
-                                        </ul>
-                                    )}
-                                </div>
-
-                                {/* <select
-                                    className={styles.select}
-                                    {...register('countriess', {
-                                        required:
-                                            'Destination Country is Required'
-                                    })}
-                                    name="countriess"
-                                >
-                                    <option value="">Choose Country</option>
-                                    {countrys.map((item, index) => {
-                                        console.log(item.nme);
-                                        return (
-                                        <StyledOption
-                                            key={index}
-                                            value={item.name}
-                                        >
-                                            <span>
-                                                <img
-                                                    src="../../Assets/Images/bluemoney.png"
-                                                    alt=""
-                                                />
-                                            </span>{' '}
-                                            {item.name}
-                                        </StyledOption>
-                                        );
-                                    })}
-                                </select>
-
-                                <p className={styles.error}>
-                                    {errors?.countriess?.message}
-                                </p> */}
+                                <Countries
+                                    displayCountry={() => {
+                                        setCountryState(!countryState);
+                                    }}
+                                    selectCountry={selectCountry}
+                                    countryState={countryState}
+                                    countrys={countrys}
+                                    setCountryState={setCountryState}
+                                    setError={setError}
+                                    setSelectCountry={setSelectCountry}
+                                    error={error}
+                                />
                             </div>
                             <div className={styles.disclaimer}>
                                 <p>

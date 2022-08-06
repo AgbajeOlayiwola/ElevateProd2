@@ -5,21 +5,13 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUserAction } from '../../../redux/actions/actions';
-import { useSelector } from 'react-redux';
 import { encrypt } from '../../../redux/helper/hash';
-// import UseForce from '../../../redux/helper/useForce';
-//create your forceUpdate hook
-function useForceUpdate() {
-    const [value, setValue] = useState(0); // integer state
-    return () => setValue((value) => value + 1); // update state to force render
-    // An function that increment 👆🏻 the previous state like here
-    // is better than directly setting `value + 1`
-}
 
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -30,7 +22,6 @@ const Login = () => {
     );
     // const hashed = hash();
 
-    const forceUpdate = useForceUpdate();
     const {
         register,
         handleSubmit,
@@ -52,17 +43,17 @@ const Login = () => {
             password: encrypt(password)
         };
         dispatch(loginUserAction(loginData));
-        forceUpdate();
     };
-    const sentSIgnUp = () => {
+    const sentLogin = () => {
         if (errorMessages !== 'Login successful') {
             setError(errorMessages);
+            setLoading(false);
         } else {
             router.push('../../Onboarding/ProfileSetup');
         }
     };
     useEffect(() => {
-        sentSIgnUp();
+        sentLogin();
     }, [errorMessages]);
 
     const [outType, setOutType] = useState();
@@ -179,13 +170,17 @@ const Login = () => {
                                 </Link>
                             </div>
                         </div>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            margin="1.5rem 0 0 0"
-                            text="Login"
-                            type="submit"
-                        />
+                        {loading ? (
+                            <h2>Loading...</h2>
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                margin="1.5rem 0 0 0"
+                                text="Login"
+                                type="submit"
+                            />
+                        )}
                     </form>
                     <div>
                         <p className={styles.accout}>
