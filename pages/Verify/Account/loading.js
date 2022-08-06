@@ -14,7 +14,7 @@ const AccountLoading = () => {
 
     setTimeout(() => {
         setTimeInterval(timeInterval + 1);
-    }, 250000);
+    }, 10000);
 
     useEffect(() => {
         setTimeout(() => {
@@ -33,7 +33,7 @@ const AccountLoading = () => {
                     console.log(error.response.data.message);
                     setAccountInfo(error.response.data.message);
                 });
-        }, 250000);
+        }, 10000);
     }, [timeInterval]);
 
     return (
@@ -41,12 +41,12 @@ const AccountLoading = () => {
             {accountInfo ===
             'Your Transaction Request is Successful and Approved' ? (
                 <div className={styles.cover}>
-                    <StepFiveSuccessPage />
+                    <FailedModal text={accountInfo} />
                 </div>
             ) : accountInfo === 'failed' ||
               accountInfo ===
                   'You already have an account with us. Please contact us for more information' ? (
-                <FailedModal text={accountInfo} />
+                <StepFiveSuccessPage />
             ) : (
                 <div className={styles.cover}>
                     <div className={styles.covInn}>

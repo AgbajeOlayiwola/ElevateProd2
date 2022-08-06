@@ -63,7 +63,7 @@ const ProfileSetups = () => {
     const { isLoading, profile, errorMessages } = useSelector(
         (state) => state.profileSetup
     );
-    const { Loading, otp, otpErrorMessage, bvnError } = useSelector(
+    const { Loading, otp, otpErrorMessage, bvnError, bvnErrorI } = useSelector(
         (state) => state.otp
     );
     const [error, setError] = useState([]);
@@ -103,6 +103,7 @@ const ProfileSetups = () => {
     //     console.log(errorMessages, otpErrorMessages);
     // }, []);
     const [errorM, setErrorM] = useState('');
+    const [errorI, setErrorI] = useState('');
 
     function handleSubmit() {
         // console.log('firstAPi');
@@ -116,12 +117,25 @@ const ProfileSetups = () => {
             countryCode: formData.countryCode,
             dob: formData.dateOfBirth
         };
+
+        dispatch(createProfileSetup(profileData));
+        console.log('lol');
         setError(errorMessages);
         if (!errorMessages) {
             setPage(page + 1);
+        } else {
+            console.log('moved');
         }
-        dispatch(createProfileSetup(profileData));
     }
+    useEffect(() => {
+        setError(errorMessages);
+        //change to no error messages boss
+        if (!errorMessages) {
+            setPage(page + 1);
+        } else {
+            console.log('moved');
+        }
+    }, [errorMessages]);
 
     const handleSubmitII = () => {
         const otpData = {
@@ -129,18 +143,36 @@ const ProfileSetups = () => {
             otp: '123456'
         };
         dispatch(verifyOtp(otpData));
-        console.log('bnv', bvnError);
+        console.log('bnv', bvnError, bvnErrorI);
         setError(otpErrorMessage);
-        if (bvnError === 'BVN or NIN Incorrect') {
+        if (bvnError) {
             setPage(page - 1);
-            setErrorM('BVN or Phone Number Incorrect');
+            setErrorM(bvnError);
+            setErrorI(bvnErrorI);
         } else if (!otpErrorMessage) {
             setPage(page + 1);
         }
     };
+
+    useEffect(() => {
+        if (bvnError) {
+            setPage(page - 1);
+            setErrorM(bvnError);
+            setErrorI(bvnErrorI);
+        } else if (!otpErrorMessage) {
+            setPage(page + 1);
+        }
+    }, [otpErrorMessage, bvnError]);
     return (
         <Card>
-            {page === 0 ? <p className={styles.error}>{errorM}</p> : <></>}
+            {page === 0 ? (
+                <>
+                    <p className={styles.error}>{errorM}</p> <br />
+                    <p className={styles.error}>{errorI}</p>
+                </>
+            ) : (
+                <></>
+            )}
             <div className={styles.error}>{error}</div>
             {conditionalComponent()}
 

@@ -4,7 +4,8 @@ const initialState = {
     Loading: false,
     otp: null,
     otpErrorMessage: '...',
-    bvnError: null
+    bvnError: null,
+    bvnErrorI: null
 };
 
 const otpReducer = (state = initialState, { type, payload }) => {
@@ -30,6 +31,11 @@ const otpReducer = (state = initialState, { type, payload }) => {
                 otp: null,
                 otpErrorMessage: null,
                 bvnError: payload
+            };
+        case otp.BVN_NIN_LOAD_ERRORI:
+            return {
+                ...state,
+                bvnErrorI: payload
             };
         default:
             return state;

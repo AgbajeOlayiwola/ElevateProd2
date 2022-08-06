@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ButtonComp } from '../../../components';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
@@ -25,7 +25,9 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const router = useRouter();
-
+    const { isLoading, user, errorMessages } = useSelector(
+        (state) => state.auth
+    );
     // const hashed = hash();
 
     const forceUpdate = useForceUpdate();
@@ -51,15 +53,17 @@ const Login = () => {
         };
         dispatch(loginUserAction(loginData));
         forceUpdate();
+    };
+    const sentSIgnUp = () => {
         if (errorMessages !== 'Login successful') {
             setError(errorMessages);
         } else {
             router.push('../../Onboarding/ProfileSetup');
         }
     };
-    const { isLoading, user, errorMessages } = useSelector(
-        (state) => state.auth
-    );
+    useEffect(() => {
+        sentSIgnUp();
+    }, [errorMessages]);
 
     const [outType, setOutType] = useState();
     const types = (type) => {
