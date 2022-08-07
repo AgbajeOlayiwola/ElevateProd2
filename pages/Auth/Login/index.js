@@ -8,6 +8,7 @@ import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserAction } from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
+import Loader from '../../../components/ReusableComponents/Loader';
 
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -171,7 +172,7 @@ const Login = () => {
                             </div>
                         </div>
                         {loading ? (
-                            <h2>Loading...</h2>
+                            <Loader />
                         ) : (
                             <ButtonComp
                                 disabled={activeBtn}

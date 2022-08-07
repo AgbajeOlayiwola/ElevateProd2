@@ -18,7 +18,14 @@ const ExistingMultiStep = () => {
             case 0:
                 return <FirstStep />;
             case 1:
-                return <SecondStep />;
+                return (
+                    <SecondStep
+                        onSubmit={(e) => {
+                            setPage(page + 1);
+                            console.log(e);
+                        }}
+                    />
+                );
             case 2:
                 return <StepThree />;
             case 3:
@@ -27,8 +34,9 @@ const ExistingMultiStep = () => {
                 return <FirstStep />;
         }
     };
-    function handleSubmit() {
+    function handleSubmit(data) {
         setPage(page + 1);
+        console.log(data);
     }
     return (
         <Card>

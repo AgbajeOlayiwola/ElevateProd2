@@ -185,6 +185,46 @@ export const internationalTransfer = {
 
 //transactionHistory action type ends
 
+//omnilite action types
+
+export const omnilite = {
+    OMNILITE_LOAD_START: 'OMNILITE_LOAD_START',
+    OMNILITE_LOAD_SUCCESS: 'OMNILITE_LOAD_SUCCESS',
+    OMNILITE_LOAD_ERROR: 'OMNILITE_LOAD_ERROR'
+};
+
+//omnilite action type ends
+
+//ecobankOnline action types
+
+export const ecobankOnline = {
+    ECOBANKONLINE_LOAD_START: 'ECOBANKONLINE_LOAD_START',
+    ECOBANKONLINE_LOAD_SUCCESS: 'ECOBANKONLINE_LOAD_SUCCESS',
+    ECOBANKONLINE_LOAD_ERROR: 'ECOBANKONLINE_LOAD_ERROR'
+};
+
+//ecobankOnline action type ends
+
+//accountNumber action types
+
+export const accountNumber = {
+    ACCOUNTNUMBER_LOAD_START: 'ACCOUNTNUMBER_LOAD_START',
+    ACCOUNTNUMBER_LOAD_SUCCESS: 'ACCOUNTNUMBER_LOAD_SUCCESS',
+    ACCOUNTNUMBER_LOAD_ERROR: 'ACCOUNTNUMBER_LOAD_ERROR'
+};
+
+//accountNumber action type ends
+
+//accountNumber action types
+
+export const existingUserProfile = {
+    EXISTINGUSERPROFILE_LOAD_START: 'EXISTINGUSERPROFILE_LOAD_START',
+    EXISTINGUSERPROFILE_LOAD_SUCCESS: 'EXISTINGUSERPROFILE_LOAD_SUCCESS',
+    EXISTINGUSERPROFILE_LOAD_ERROR: 'EXISTINGUSERPROFILE_LOAD_ERROR'
+};
+
+//accountNumber action type ends
+
 //auth action types
 export const login = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',
