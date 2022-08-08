@@ -125,7 +125,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
                             }
                         })}
                         readOnly
-                        value={accountDetails.data.meta.email}
+                        value={accountDetails.data.meta.email.toLowerCase()}
                     />
                 </div>
 

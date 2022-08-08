@@ -130,6 +130,7 @@ const StepFour = ({ title }) => {
                         'accountNumber',
                         JSON.stringify(response2)
                     );
+                    router.push('/Dashboard');
                 } catch (error) {
                     console.log(error.message);
                 }
