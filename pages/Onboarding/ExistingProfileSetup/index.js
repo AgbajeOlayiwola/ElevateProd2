@@ -10,4 +10,4 @@ const ExistingProfileSetup = () => {
     );
 };
 
-export default withAuth(ExistingProfileSetup);
+export default ExistingProfileSetup;

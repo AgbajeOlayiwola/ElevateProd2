@@ -829,11 +829,16 @@ export const bvnNinErrorI = (bvnErrorI) => ({
     type: otp.BVN_NIN_LOAD_ERRORI,
     payload: bvnErrorI
 });
+export const bvnNinData = (bvnNin) => ({
+    bvnNin: otp.BVN_NIN_LOAD_SUCCESS,
+    payload: bvnNin
+});
 export const verifyOtp = (otpData) => {
     return async (dispatch) => {
         await axiosInstance
             .get(`${apiRoutes.verifyStatus}`)
             .then((response) => {
+                dispatch(bvnNinData(response.data));
                 console.log(response.data.data[0].reason);
                 if (
                     response.data.data[0].status === 'SUCCESS' &&
