@@ -145,24 +145,24 @@ const ProfileSetups = () => {
         dispatch(verifyOtp(otpData));
         console.log('bnv', bvnError, bvnErrorI);
         setError(otpErrorMessage);
-        if (bvnError) {
-            setPage(page - 1);
-            setErrorM(bvnError);
-            setErrorI(bvnErrorI);
-        } else if (!otpErrorMessage) {
-            setPage(page + 1);
-        }
+        // if (bvnError) {
+        //     setPage(page - 1);
+        //     setErrorM(bvnError);
+        //     setErrorI(bvnErrorI);
+        // } else if (!otpErrorMessage) {
+        setPage(page + 1);
+        // }
     };
 
-    useEffect(() => {
-        if (bvnError) {
-            setPage(page - 1);
-            setErrorM(bvnError);
-            setErrorI(bvnErrorI);
-        } else if (!otpErrorMessage) {
-            setPage(page + 1);
-        }
-    }, [otpErrorMessage, bvnError]);
+    // useEffect(() => {
+    // if (bvnError) {
+    //     setPage(page - 1);
+    //     setErrorM(bvnError);
+    //     setErrorI(bvnErrorI);
+    // } else if (!otpErrorMessage) {
+    // setPage(page + 1);
+    // }
+    // }, [otpErrorMessage, bvnError]);
     return (
         <Card>
             {page === 0 ? (

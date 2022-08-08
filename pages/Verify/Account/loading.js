@@ -6,11 +6,28 @@ import FailedModal from '../../../components/ReusableComponents/FailedModal';
 import axiosInstance from '../../../redux/helper/apiClient';
 import apiRoutes from '../../../redux/helper/apiRoutes';
 import styles from './styles.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { CompProfile } from '../../../redux/actions/actions';
 
 const AccountLoading = () => {
     const [accountInfo, setAccountInfo] = useState('');
     const router = useRouter();
     const [timeInterval, setTimeInterval] = useState(0);
+
+    const { isLoading, profile, errorMessage } = useSelector(
+        (state) => state.profile
+    );
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(CompProfile());
+    }, []);
+
+    console.log(profile);
+    setTimeout(() => {
+        setTimeInterval(timeInterval + 1);
+    }, 10000);
 
     setTimeout(() => {
         setTimeInterval(timeInterval + 1);
@@ -23,6 +40,8 @@ const AccountLoading = () => {
                 affiliateCode: 'ENG',
                 ccy: 'NGN'
             };
+            // https://160.119.246.165/unifiedapis-v2/services/createdigitalaccount
+            axiosInstance.post(``);
             axiosInstance
                 .post(`${apiRoutes.createAccount}`, accountData)
                 .then((response) => {
@@ -40,13 +59,13 @@ const AccountLoading = () => {
         <>
             {accountInfo ===
             'Your Transaction Request is Successful and Approved' ? (
-                <div className={styles.cover}>
-                    <FailedModal text={accountInfo} />
-                </div>
+                <StepFiveSuccessPage />
             ) : accountInfo === 'failed' ||
               accountInfo ===
                   'You already have an account with us. Please contact us for more information' ? (
-                <StepFiveSuccessPage />
+                <div className={styles.cover}>
+                    <FailedModal text={accountInfo} />
+                </div>
             ) : (
                 <div className={styles.cover}>
                     <div className={styles.covInn}>
