@@ -125,7 +125,7 @@ const StepFour = ({ title }) => {
             setTimeout(() => {
                 dispatch(accountStatusData(createAccount.data.userId));
                 console.log('Hello');
-            }, 240000);
+            }, 40000);
         } else if (accountStatus.message === 'SUCCESS') {
             window.localStorage.setItem(
                 'accountNumber',
