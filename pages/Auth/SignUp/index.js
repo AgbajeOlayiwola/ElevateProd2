@@ -5,12 +5,12 @@ import { ButtonComp, LoginWith } from '../../../components';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { createUserAction } from '../../../redux/actions/actions';
-import { useSelector } from 'react-redux';
 import { encrypt } from '../../../redux/helper/hash';
 import validator from 'validator';
+import Loader from '../../../components/ReusableComponents/Loader';
 
 const Signup = ({ type }) => {
     const router = useRouter();
@@ -331,7 +331,7 @@ const Signup = ({ type }) => {
                                         <span>This field is required</span>
                                     )}
                                     {loading ? (
-                                        <h2>Loading...</h2>
+                                        <Loader />
                                     ) : (
                                         <ButtonComp
                                             disabled={activeBtn}
@@ -351,9 +351,7 @@ const Signup = ({ type }) => {
                                         Choose Preferred Login Option
                                     </p>
 
-                                    <div onSubmit={handleSubmit(onSubmit)}>
-                                        <LoginWith />
-                                    </div>
+                                    <LoginWith />
                                 </>
                             )}
 
