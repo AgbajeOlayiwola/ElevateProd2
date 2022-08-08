@@ -67,7 +67,7 @@ const StepFour = ({ title }) => {
         profileTest();
     }, [errorMessage, existingUserProfile]);
 
-    const onSubmit = async (data) => {
+    const onSubmit = (data) => {
         setLoading(true);
         console.log(accountDetails1);
 
@@ -102,43 +102,57 @@ const StepFour = ({ title }) => {
             flexCustId: '',
             accountClass: 'GHSABP'
         };
-        try {
-            const response = await axios.post(
-                'https://160.119.246.165/unifiedapis-v2/services/createdigitalaccount',
-                userData
-            );
-            if (response) {
-                const userDetail1 = {
-                    hostHeaderInfo: {
-                        sourceCode: 'ECOBANKMOBILE',
-                        requestId: 'b5e750e6af4c1945cd54447b9d4fa3a4',
-                        affiliateCode: 'ENG',
-                        requestToken:
-                            '7a07359d2d6ea5136cfd38a4dc303fcd81b6bacd9ac0661f99a43122cfc2166da0f1ce1dd5f6e23db1f2da2bb3e65658e1fc73acec09df3e280a027990bc7d63',
-                        requestType: 'JSON',
-                        ipAddress: '10.182.99.157',
-                        sourceChannelId: 'MOBILE'
-                    },
-                    trackRef: response.reference
-                };
-                try {
-                    const response2 = await axios.post(
-                        'https://160.119.246.165/unifiedapis-v2/services/getdigitalaccount',
-                        userDetail1
-                    );
-                    window.localStorage.setItem(
-                        'accountNumber',
-                        JSON.stringify(response2)
-                    );
-                    router.push('/Dashboard');
-                } catch (error) {
-                    console.log(error.message);
-                }
-            }
-        } catch (error) {
-            console.log(error.message);
+        const userDetail1 = {
+            hostHeaderInfo: {
+                sourceCode: 'ECOBANKMOBILE',
+                requestId: 'b5e750e6af4c1945cd54447b9d4fa3a4',
+                affiliateCode: 'ENG',
+                requestToken:
+                    '7a07359d2d6ea5136cfd38a4dc303fcd81b6bacd9ac0661f99a43122cfc2166da0f1ce1dd5f6e23db1f2da2bb3e65658e1fc73acec09df3e280a027990bc7d63',
+                requestType: 'JSON',
+                ipAddress: '10.182.99.157',
+                sourceChannelId: 'MOBILE'
+            },
+            trackRef: response.reference
+        };
+        dispatch(createAccountData(userData));
+
+        window.localStorage.setItem('accountNumber', JSON.stringify(response2));
+        router.push('/Dashboard');
+    };
+
+    const newAccountTest = () => {
+        console.log(createAccount);
+        if (errorData) {
+            setError(errorData);
+            console.log(errorData);
+            setLoading(false);
+        } else if (createAccount) {
+            dispatch(accountStatusData(createAccount.reference));
         }
     };
+    useEffect(() => {
+        newAccountTest();
+    }, [errorData, createAccount]);
+
+    const newAccountTest1 = () => {
+        console.log(createAccount);
+        if (errorMessages) {
+            setError(errorMessages);
+            console.log(errorMessages);
+            setLoading(false);
+        } else if (accountStatus) {
+            window.localStorage.setItem(
+                'accountNumber',
+                JSON.stringify(response2)
+            );
+            router.push('/Dashboard');
+        }
+    };
+    useEffect(() => {
+        newAccountTest1();
+    }, [errorMessages, accountStatus]);
+
     const accountTest = () => {
         if (errorMessage) {
             setError(errorMessage);
@@ -176,6 +190,7 @@ const StepFour = ({ title }) => {
                         {error ? <p className={styles.error}>{error}</p> : null}
                         <div className={styles.bord}>
                             <div className={styles.inps}>
+                                {errors.businessName?.message}
                                 <label>Enter Business Name</label>
 
                                 <br />
