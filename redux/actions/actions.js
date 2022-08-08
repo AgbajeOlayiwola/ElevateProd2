@@ -27,6 +27,8 @@ import {
     accountNumber,
     existingUserProfile,
     ecobankOnline,
+    createAccount,
+    accountStatus,
     completeProfile
 } from '../types/actionTypes';
 import axios from '../helper/apiClient';
@@ -639,6 +641,58 @@ export const existingUserProfileData = (data) => (dispatch) => {
         )
         .catch((error) =>
             dispatch(existingUserProfileLoadError(error.response.data.message))
+        );
+};
+
+//accountNumber action end
+
+//createAccount action
+export const createAccountLoadStart = () => ({
+    type: createAccount.CREATEACCOUNT_LOAD_START
+});
+
+export const createAccountLoadSuccess = (bill) => ({
+    type: createAccount.CREATEACCOUNT_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const createAccountLoadError = (errorData) => ({
+    type: createAccount.CREATEACCOUNT_LOAD_ERROR,
+    payload: errorData
+});
+export const createAccountData = (data) => (dispatch) => {
+    dispatch(createAccountLoadStart());
+    axios
+        .post(`${apiRoutes.createAccount}`, data)
+        .then((response) => dispatch(createAccountLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(createAccountLoadError(error.response.data.message))
+        );
+};
+
+//accountNumber action end
+
+//accountStatus action
+export const accountStatusLoadStart = () => ({
+    type: accountStatus.ACCOUNTSTATUS_LOAD_START
+});
+
+export const accountStatusLoadSuccess = (bill) => ({
+    type: accountStatus.ACCOUNTSTATUS_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const accountStatusLoadError = (errorMessages) => ({
+    type: accountStatus.ACCOUNTSTATUS_LOAD_ERROR,
+    payload: errorMessages
+});
+export const accountStatusData = () => (dispatch) => {
+    dispatch(accountStatusLoadStart());
+    axios
+        .get(`${apiRoutes.accountStatus}`)
+        .then((response) => dispatch(accountStatusLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(accountStatusLoadError(error.response.data.message))
         );
 };
 
