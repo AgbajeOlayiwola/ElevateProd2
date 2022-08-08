@@ -49,11 +49,19 @@ const Countriess = ({
                                 <li
                                     key={index}
                                     onClick={() => {
-                                        setSelectCountry(item);
-                                        setCountryState(false);
-                                        if (error !== '') {
-                                            setError('');
+                                        if (item.name !== 'Nigeria') {
+                                            setError(
+                                                'This App is only available in Nigeria'
+                                            );
+                                            setCountryState(false);
+                                        } else {
+                                            setSelectCountry(item);
+
+                                            setCountryState(false);
                                         }
+                                        // if (error !== '') {
+                                        //     setError('');
+                                        // }
                                     }}
                                 >
                                     <img
@@ -101,7 +109,7 @@ const Countriess = ({
                                 </select>
 
                                 */}
-            {error ? <p className={styles.error}>{error}</p> : null}
+            {/* {error ? <p className={styles.error}>{error}</p> : null} */}
         </>
     );
 };
