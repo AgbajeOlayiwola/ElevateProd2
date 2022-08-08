@@ -4,6 +4,8 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 
 const StepThree = () => {
+    const account = localStorage.getItem('meta');
+    const accountDetails = JSON.parse(account);
     const [isRegistered, setIsRegistered] = useState(false);
     const [bgcolor, setBgcolor] = useState(false);
 
@@ -96,8 +98,8 @@ const StepThree = () => {
                         placeholder="Enter Your Email"
                         className={styles.textInput}
                         required
-                        disabled
-                        value="Agbajeolaiwola@gmail.com"
+                        readOnly
+                        value={accountDetails.email}
                     />
                 </div>
 
@@ -109,20 +111,20 @@ const StepThree = () => {
                         placeholder="Account Numberl"
                         className={styles.textInput}
                         required
-                        disabled
-                        value="0294251395"
+                        readOnly
+                        value={accountDetails.accountNumber}
                     />
                 </div>
                 <div>
-                    <label>Email </label>
+                    <label>Full Name </label>
                     <br />
 
                     <input
                         placeholder="Enter Your Email"
                         className={styles.textInput}
                         required
-                        disabled
-                        value="Agbajeolaiwola@gmail.com"
+                        readOnly
+                        value={accountDetails.fullName}
                     />
                 </div>
                 <div>
@@ -133,8 +135,8 @@ const StepThree = () => {
                         placeholder="Tel"
                         className={styles.textInput}
                         required
-                        disabled
-                        value="08111062865"
+                        readOnly
+                        value={accountDetails.phoneNumber}
                     />
                 </div>
                 <div className={styles.genBtm} style={{ marginBottom: '0px' }}>
@@ -150,8 +152,9 @@ const StepThree = () => {
                                 className={styles.radioInput}
                                 required
                                 disabled
-                                checked
+                                //    {accountDetails.data.gender === "m" ?checked}
                                 type="radio"
+                                checked
                             />
                             <label>Male</label>
                         </div>

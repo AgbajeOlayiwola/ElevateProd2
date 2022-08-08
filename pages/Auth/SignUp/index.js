@@ -5,12 +5,12 @@ import { ButtonComp, LoginWith } from '../../../components';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { createUserAction } from '../../../redux/actions/actions';
-import { useSelector } from 'react-redux';
 import { encrypt } from '../../../redux/helper/hash';
 import validator from 'validator';
+import Loader from '../../../components/ReusableComponents/Loader';
 
 const Signup = ({ type }) => {
     const router = useRouter();
@@ -22,6 +22,7 @@ const Signup = ({ type }) => {
     const [confirmPassword, setConfPassword] = useState('');
     const [activeBtn, setActiveBtn] = useState(true);
     const [business, setBusiness] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
@@ -30,7 +31,6 @@ const Signup = ({ type }) => {
         (state) => state.registered
     );
 
-    console.log(user);
     const [passwordMatch, setPasswordMatch] = useState('');
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
@@ -97,17 +97,24 @@ const Signup = ({ type }) => {
                 confirmPassword: encrypt(confirmPassword),
                 affiliateCode: 'ENG'
             };
-            console.log(password);
+            setLoading(true);
+            console.log(errorMessage);
             dispatch(createUserAction(postData));
-            if (errorMessage !== 'Account created successfully!') {
-                setError(errorMessage);
-            } else {
-                router.push('../Verify/Loading');
-            }
         } else {
             passwordMatch;
         }
     };
+    const sentSIgnUp = () => {
+        if (errorMessage !== 'Account created successfully!') {
+            setError(errorMessage);
+            setLoading(false);
+        } else {
+            router.push('../Verify/Loading');
+        }
+    };
+    useEffect(() => {
+        sentSIgnUp();
+    }, [errorMessage]);
 
     const [bgcolor, setBgcolor] = useState(false);
 
@@ -323,14 +330,20 @@ const Signup = ({ type }) => {
                                     {errors.exampleRequired && (
                                         <span>This field is required</span>
                                     )}
-                                    <ButtonComp
-                                        disabled={activeBtn}
-                                        active={
-                                            activeBtn ? 'active' : 'inactive'
-                                        }
-                                        text="Proceed"
-                                        type="submit"
-                                    />
+                                    {loading ? (
+                                        <Loader />
+                                    ) : (
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            text="Proceed"
+                                            type="submit"
+                                        />
+                                    )}
                                 </form>
                             ) : (
                                 <>
@@ -338,9 +351,7 @@ const Signup = ({ type }) => {
                                         Choose Preferred Login Option
                                     </p>
 
-                                    <div onSubmit={handleSubmit(onSubmit)}>
-                                        <LoginWith />
-                                    </div>
+                                    <LoginWith />
                                 </>
                             )}
 

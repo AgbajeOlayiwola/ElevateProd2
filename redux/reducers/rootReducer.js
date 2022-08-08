@@ -25,6 +25,11 @@ import profileReducer from './completeprofile.reducer';
 import otpReducer from './otp.reducer';
 import profileSetupReducer from './profilesetup.reducer';
 import completeBusinessprofileReducer from './completeBusinessProfile.reducer';
+import omniliteReducer from './omnilite.reducer';
+import accountNumberReducer from './accountNumber.reducer';
+import existingUserProfileReducer from './exixtingUserProfile.reducer';
+import ecobankOnlineReducer from './ecobankOnline.reducer';
+
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
     languages: languageReducer,
@@ -52,6 +57,10 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     otp: otpReducer,
     profileSetup: profileSetupReducer,
+    omniliteReducer: omniliteReducer,
+    accountNumberReducer: accountNumberReducer,
+    existingUserProfileReducer: existingUserProfileReducer,
+    ecobankOnlineReducer: ecobankOnlineReducer,
     completeBusProfile: completeBusinessprofileReducer
 });
 

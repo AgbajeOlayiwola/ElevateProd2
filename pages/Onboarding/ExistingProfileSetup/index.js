@@ -1,4 +1,5 @@
 import React from 'react';
+import withAuth from '../../../components/HOC/withAuth';
 import ExistingMultiStep from '../../../components/layout/RegisteredForm';
 import styles from './styles.module.css';
 const ExistingProfileSetup = () => {
@@ -9,4 +10,4 @@ const ExistingProfileSetup = () => {
     );
 };
 
-export default ExistingProfileSetup;
+export default withAuth(ExistingProfileSetup);

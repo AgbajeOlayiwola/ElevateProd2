@@ -23,6 +23,10 @@ import {
     otp,
     compProfile,
     setupProfile,
+    omnilite,
+    accountNumber,
+    existingUserProfile,
+    ecobankOnline,
     completeProfile
 } from '../types/actionTypes';
 import axios from '../helper/apiClient';
@@ -534,6 +538,112 @@ export const postBeneficiariesData = (data) => (dispatch) => {
 
 //postBeneficiaries action end
 
+//omnilite action
+export const omniliteLoadStart = () => ({
+    type: omnilite.OMNILITE_LOAD_START
+});
+
+export const omniliteLoadSuccess = (bill) => ({
+    type: omnilite.OMNILITE_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const omniliteLoadError = (errorMessage) => ({
+    type: omnilite.OMNILITE_LOAD_ERROR,
+    payload: errorMessage
+});
+export const omniliteData = (data) => (dispatch) => {
+    dispatch(omniliteLoadStart());
+    axios
+        .post(`${apiRoutes.omnilite}`, data)
+        .then((response) => dispatch(omniliteLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(omniliteLoadError(error.response.data.message))
+        );
+};
+
+//omnilite action end
+
+//ecobankOnline action
+export const ecobankOnlineLoadStart = () => ({
+    type: ecobankOnline.ECOBANKONLINE_LOAD_START
+});
+
+export const ecobankOnlineLoadSuccess = (bill) => ({
+    type: ecobankOnline.ECOBANKONLINE_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const ecobankOnlineLoadError = (errorMessage) => ({
+    type: ecobankOnline.ECOBANKONLINE_LOAD_ERROR,
+    payload: errorMessage
+});
+export const ecobankOnlineData = (data) => (dispatch) => {
+    dispatch(ecobankOnlineLoadStart());
+    axios
+        .post(`${apiRoutes.ecobankOnline}`, data)
+        .then((response) => dispatch(ecobankOnlineLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(ecobankOnlineLoadError(error.response.data.message))
+        );
+};
+
+//ecobankOnline action end
+
+//accountNumber action
+export const accountNumberLoadStart = () => ({
+    type: accountNumber.ACCOUNTNUMBER_LOAD_START
+});
+
+export const accountNumberLoadSuccess = (bill) => ({
+    type: accountNumber.ACCOUNTNUMBER_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const accountNumberLoadError = (errorMessages) => ({
+    type: accountNumber.ACCOUNTNUMBER_LOAD_ERROR,
+    payload: errorMessages
+});
+export const accountNumberData = (data) => (dispatch) => {
+    dispatch(accountNumberLoadStart());
+    axios
+        .post(`${apiRoutes.accountNumber}`, data)
+        .then((response) => dispatch(accountNumberLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(accountNumberLoadError(error.response.data.message))
+        );
+};
+
+//accountNumber action end
+
+//existingUserProfile action
+export const existingUserProfileLoadStart = () => ({
+    type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_START
+});
+
+export const existingUserProfileLoadSuccess = (bill) => ({
+    type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const existingUserProfileLoadError = (errorMessage) => ({
+    type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_ERROR,
+    payload: errorMessage
+});
+export const existingUserProfileData = (data) => (dispatch) => {
+    dispatch(existingUserProfileLoadStart());
+    axios
+        .post(`${apiRoutes.existingUserProfile}`, data)
+        .then((response) =>
+            dispatch(existingUserProfileLoadSuccess(response.data))
+        )
+        .catch((error) =>
+            dispatch(existingUserProfileLoadError(error.response.data.message))
+        );
+};
+
+//accountNumber action end
+
 //add user
 export const userRegisterStart = (user) => ({
     type: login.REGISTER_SUCCESS,
@@ -661,12 +771,16 @@ export const bvnNinError = (bvnError) => ({
     type: otp.BVN_NIN_LOAD_ERROR,
     payload: bvnError
 });
+export const bvnNinErrorI = (bvnErrorI) => ({
+    type: otp.BVN_NIN_LOAD_ERRORI,
+    payload: bvnErrorI
+});
 export const verifyOtp = (otpData) => {
     return async (dispatch) => {
         await axiosInstance
             .get(`${apiRoutes.verifyStatus}`)
             .then((response) => {
-                console.log(response.data);
+                console.log(response.data.data[0].reason);
                 if (
                     response.data.data[0].status === 'SUCCESS' &&
                     response.data.data[1].status === 'SUCCESS'
@@ -683,12 +797,12 @@ export const verifyOtp = (otpData) => {
                             dispatch(bvnNinError('error otp does not match'));
                         });
                 } else {
-                    console.log('error');
-                    dispatch(bvnNinError('BVN or NIN Incorrect'));
+                    dispatch(bvnNinError(response.data.data[0].reason));
+                    dispatch(bvnNinErrorI(response.data.data[1].reason));
                 }
             })
             .catch((error) => {
-                console.log('profile Bvn dispatch', error);
+                console.log('profile Bvn dispatch', error.response);
             });
     };
 };
