@@ -686,10 +686,10 @@ export const accountStatusLoadError = (errorMessages) => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_ERROR,
     payload: errorMessages
 });
-export const accountStatusData = () => (dispatch) => {
+export const accountStatusData = (data) => (dispatch) => {
     dispatch(accountStatusLoadStart());
     axios
-        .get(`${apiRoutes.accountStatus}`)
+        .get(`${apiRoutes.accountStatus}/${data}`)
         .then((response) => dispatch(accountStatusLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(accountStatusLoadError(error.response.data.message))
