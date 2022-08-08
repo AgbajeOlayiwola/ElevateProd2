@@ -65,6 +65,9 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
         if (e.target.value === '') {
             setErrorMessages('');
         }
+        let meta = accountDetails.data.meta;
+        meta = { ...meta, password: e.target.value };
+        window.localStorage.setItem('meta', JSON.stringify(meta));
     };
 
     // const onSubmit = (data) => {
@@ -122,7 +125,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
                             }
                         })}
                         readOnly
-                        value={accountDetails.data.email}
+                        value={accountDetails.data.meta.email}
                     />
                 </div>
 
@@ -136,7 +139,6 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
                             required
                             type={outType ? 'text' : 'password'}
                             onChange={handlePwd}
-                            {...register('password')}
                         />
                         <Visbility typeSet={types} />
                     </div>

@@ -33,7 +33,7 @@ const verifyStatus = '/verification/document/status';
 const omnilite = '/auth/register/omnilite';
 const ecobankOnline = '/auth/register/ecobank-online';
 const accountNumber = '/auth/register/account-number';
-const existingUserProfile = '/auth/existing-user/profile-setup';
+const existingUserProfile = '/auth/existing-user/profile-setup/personal';
 export default {
     getBanks,
     getCountries,

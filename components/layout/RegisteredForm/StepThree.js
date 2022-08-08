@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 
 const StepThree = () => {
-    const account = localStorage.getItem('account');
+    const account = localStorage.getItem('meta');
     const accountDetails = JSON.parse(account);
     const [isRegistered, setIsRegistered] = useState(false);
     const [bgcolor, setBgcolor] = useState(false);
@@ -99,7 +99,7 @@ const StepThree = () => {
                         className={styles.textInput}
                         required
                         readOnly
-                        value={accountDetails.data.email}
+                        value={accountDetails.email}
                     />
                 </div>
 
@@ -112,7 +112,7 @@ const StepThree = () => {
                         className={styles.textInput}
                         required
                         readOnly
-                        value={accountDetails.data.accounts[0].accountNumber}
+                        value={accountDetails.accountNumber}
                     />
                 </div>
                 <div>
@@ -124,11 +124,7 @@ const StepThree = () => {
                         className={styles.textInput}
                         required
                         readOnly
-                        value={
-                            accountDetails.data.firstName +
-                            ' ' +
-                            accountDetails.data.lastName
-                        }
+                        value={accountDetails.fullName}
                     />
                 </div>
                 <div>
@@ -140,7 +136,7 @@ const StepThree = () => {
                         className={styles.textInput}
                         required
                         readOnly
-                        value={accountDetails.data.phone}
+                        value={accountDetails.phoneNumber}
                     />
                 </div>
                 <div className={styles.genBtm} style={{ marginBottom: '0px' }}>

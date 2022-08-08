@@ -11,6 +11,7 @@ import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticat
 
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
+    const [pageType, setPageType] = useState('');
     const [activeBtn, setActiveBtn] = useState(true);
 
     const conditionalComponent = () => {
@@ -22,21 +23,23 @@ const ExistingMultiStep = () => {
                     <SecondStep
                         onSubmit={(e) => {
                             setPage(page + 1);
-                            console.log(e);
                         }}
                     />
                 );
             case 2:
                 return <StepThree />;
             case 3:
-                return <StepFour />;
+                return <StepFour title={pageType} />;
             default:
                 return <FirstStep />;
         }
     };
-    function handleSubmit(data) {
+    function handleSubmit() {
         setPage(page + 1);
-        console.log(data);
+    }
+    function handleSubmitNew() {
+        setPage(page + 1);
+        setPageType('New');
     }
     return (
         <Card>
@@ -44,24 +47,31 @@ const ExistingMultiStep = () => {
             {page === 3 ? null : (
                 <div>
                     {page === 2 ? (
-                        <Link href="/Succes/Success">
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                // onClick={handleSubmit}
-                                type="submit"
-                                text={'Continue with the personal account'}
-                            />
-                        </Link>
-                    ) : (
+                        // <Link href="/Succes/Success">
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            onClick={handleSubmitNew}
+                            type="submit"
+                            text={'Continue with the personal account'}
+                        />
+                    ) : page === 0 ? (
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
                             onClick={handleSubmit}
                             type="submit"
-                            text={page === 2 ? 'Create Account' : 'Next'}
+                            text="Next"
                         />
-                    )}
+                    ) : // </Link>
+                    // <ButtonComp
+                    //     disabled={activeBtn}
+                    //     active={activeBtn ? 'active' : 'inactive'}
+                    //     onClick={handleSubmit}
+                    //     type="submit"
+                    //     text={page === 2 ? 'Create Account' : 'Next'}
+                    // />
+                    null}
                     {page === 2 ? (
                         <p onClick={handleSubmit} className={styles.open}>
                             Tap to open a <span>New Business Account</span>

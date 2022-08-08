@@ -49,7 +49,7 @@ const Omnilite = () => {
         if (errorMessage) {
             setError(errorMessage);
             setLoading(false);
-        } else if (omnilite.message === 'SUCCESS') {
+        } else if (omnilite.message === 'Success') {
             window.localStorage.setItem('account', JSON.stringify(omnilite));
             router.push('/Onboarding/ExistingProfileSetup');
             // const accountDetails = {
