@@ -16,30 +16,25 @@ const Verify = () => {
     };
     const [timeInterval, setTimeInterval] = useState(0);
 
-    setTimeout(() => {
-        setTimeInterval(timeInterval + 1);
-    }, 1000);
     useEffect(() => {
         var token = query['token'];
         console.log('hello', token);
         if (!isReady) return;
         if (token) {
-            setTimeout(() => {
-                axios
-                    .get(
-                        `https://ellevate-app.herokuapp.com/verification/email/${token}`
-                    )
-                    .then((response) => {
-                        console.log(response.data.message);
-                        setRes(response.data.message);
-                    })
-                    .catch((error) => {
-                        console.log(error.response.data.statusCode);
-                        setResErros(error.response.data.statusCode);
-                    });
-            }, 1000);
+            axios
+                .get(
+                    `https://ellevate-app.herokuapp.com/verification/email/${token}`
+                )
+                .then((response) => {
+                    console.log(response.data.message);
+                    setRes(response.data.message);
+                })
+                .catch((error) => {
+                    console.log(error.response.data.statusCode);
+                    setResErros(error.response.data.statusCode);
+                });
         }
-    }, [isReady, timeInterval]);
+    }, [isReady]);
 
     return (
         <>
