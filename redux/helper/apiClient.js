@@ -3,11 +3,11 @@ import axios from 'axios';
 let loginToken = '';
 let token;
 if (typeof window !== 'undefined') {
-    loginToken = window.localStorage.getItem('user');
+    loginToken = window.localStorage.getItem('token');
     if (loginToken === null) {
         token = '';
     } else {
-        token = JSON.parse(loginToken).data.token;
+        token = JSON.parse(loginToken);
     }
 }
 

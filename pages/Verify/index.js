@@ -18,7 +18,7 @@ const Verify = () => {
 
     setTimeout(() => {
         setTimeInterval(timeInterval + 1);
-    }, 10000);
+    }, 1000);
     useEffect(() => {
         var token = query['token'];
         console.log('hello', token);
@@ -37,7 +37,7 @@ const Verify = () => {
                         console.log(error.response.data.statusCode);
                         setResErros(error.response.data.statusCode);
                     });
-            }, 10000);
+            }, 1000);
         }
     }, [isReady, timeInterval]);
 

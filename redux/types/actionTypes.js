@@ -225,6 +225,26 @@ export const existingUserProfile = {
 
 //accountNumber action type ends
 
+//accountNumber action types
+
+export const createAccount = {
+    CREATEACCOUNT_LOAD_START: 'CREATEACCOUNT_LOAD_START',
+    CREATEACCOUNT_LOAD_SUCCESS: 'CREATEACCOUNT_LOAD_SUCCESS',
+    CREATEACCOUNT_LOAD_ERROR: 'CREATEACCOUNT_LOAD_ERROR'
+};
+
+//accountNumber action type ends
+
+//accountNumber action types
+
+export const accountStatus = {
+    ACCOUNTSTATUS_LOAD_START: 'ACCOUNTSTATUS_LOAD_START',
+    ACCOUNTSTATUS_LOAD_SUCCESS: 'ACCOUNTSTATUS_LOAD_SUCCESS',
+    ACCOUNTSTATUS_LOAD_ERROR: 'ACCOUNTSTATUS_LOAD_ERROR'
+};
+
+//accountNumber action type ends
+
 //auth action types
 export const login = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',
