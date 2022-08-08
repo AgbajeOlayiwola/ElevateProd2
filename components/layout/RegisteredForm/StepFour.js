@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
@@ -70,21 +70,12 @@ const StepFour = ({ title }) => {
     const onSubmit = (data) => {
         setLoading(true);
         console.log(accountDetails1);
-
         const userData = {
-            hostHeaderInfo: {
-                sourceCode: 'ECOBANKMOBILE',
-                affiliateCode: 'ENG',
-                requestId: 'testing534267809',
-                requestType: 'JSON',
-                ipAddress: '10.182.199.171',
-                sourceChannelId: 'MOBILE'
-            },
-            affCode: 'ENG',
+            affiliateCode: 'ENG',
             firstName: accountDetails1.data.userInfo.firstName,
             middleName: 'Sam',
             lastName: accountDetails1.data.userInfo.lastName,
-            dob: accountDetails1.data.userInfo.dob,
+            dob: '1998-08-10',
             id_type: 'IDCD',
             idNo: '1234TTZN14',
             idIssuingDate: '2022-06-27',
@@ -92,7 +83,7 @@ const StepFour = ({ title }) => {
             phoneNumber: accountDetails1.data.userInfo.phoneNumber,
             email: accountDetails1.data.userInfo.email,
             gender: 'MALE',
-            address1: 'IKORODU LAGOS',
+            address1: 'AKure',
             address2: 'IKORODU',
             countryCode: 'NG',
             custType: 'I',
@@ -100,35 +91,24 @@ const StepFour = ({ title }) => {
             brnCode: 'A01',
             ccy: 'NGN',
             flexCustId: '',
-            accountClass: 'GHSABP'
-        };
-        const userDetail1 = {
-            hostHeaderInfo: {
-                sourceCode: 'ECOBANKMOBILE',
-                requestId: 'b5e750e6af4c1945cd54447b9d4fa3a4',
-                affiliateCode: 'ENG',
-                requestToken:
-                    '7a07359d2d6ea5136cfd38a4dc303fcd81b6bacd9ac0661f99a43122cfc2166da0f1ce1dd5f6e23db1f2da2bb3e65658e1fc73acec09df3e280a027990bc7d63',
-                requestType: 'JSON',
-                ipAddress: '10.182.99.157',
-                sourceChannelId: 'MOBILE'
-            },
-            trackRef: response.reference
+            accountClass: 'GHSABP',
+            password: accountDetails.password
         };
         dispatch(createAccountData(userData));
-
-        window.localStorage.setItem('accountNumber', JSON.stringify(response2));
-        router.push('/Dashboard');
+        // window.localStorage.setItem('accountNumber', JSON.stringify(response2));
+        // router.push('/Dashboard');
     };
 
     const newAccountTest = () => {
         console.log(createAccount);
+
         if (errorData) {
             setError(errorData);
             console.log(errorData);
             setLoading(false);
-        } else if (createAccount) {
-            dispatch(accountStatusData(createAccount.reference));
+        } else if (createAccount.statusCode === 200) {
+            console.log(createAccount);
+            dispatch(accountStatusData(createAccount.data.userId));
         }
     };
     useEffect(() => {
@@ -136,15 +116,20 @@ const StepFour = ({ title }) => {
     }, [errorData, createAccount]);
 
     const newAccountTest1 = () => {
-        console.log(createAccount);
+        console.log(accountStatus);
         if (errorMessages) {
             setError(errorMessages);
             console.log(errorMessages);
             setLoading(false);
-        } else if (accountStatus) {
+        } else if (accountStatus.message === 'Try Again') {
+            setTimeout(() => {
+                dispatch(accountStatusData(createAccount.data.userId));
+                console.log('Hello');
+            }, 40000);
+        } else if (accountStatus.message === 'SUCCESS') {
             window.localStorage.setItem(
                 'accountNumber',
-                JSON.stringify(response2)
+                JSON.stringify(accountStatus)
             );
             router.push('/Dashboard');
         }
@@ -153,21 +138,21 @@ const StepFour = ({ title }) => {
         newAccountTest1();
     }, [errorMessages, accountStatus]);
 
-    const accountTest = () => {
-        if (errorMessage) {
-            setError(errorMessage);
-            console.log(errorMessage);
-            setLoading(false);
-        } else if (
-            existingUserProfile.message === 'User account created succesfully'
-        ) {
-            setLoading(false);
-            router.push('/Dashboard');
-        }
-    };
-    useEffect(() => {
-        accountTest();
-    }, [errorMessage, existingUserProfile]);
+    // const accountTest = () => {
+    //     if (errorMessage) {
+    //         setError(errorMessage);
+    //         console.log(errorMessage);
+    //         setLoading(false);
+    //     } else if (
+    //         existingUserProfile.message === 'User account created succesfully'
+    //     ) {
+    //         setLoading(false);
+    //         router.push('/Dashboard');
+    //     }
+    // };
+    // useEffect(() => {
+    //     accountTest();
+    // }, [errorMessage, existingUserProfile]);
     const types = (type) => {
         setOutType(type);
     };
@@ -181,8 +166,13 @@ const StepFour = ({ title }) => {
             }
         });
     }, [localState]);
+    const myref = useRef();
+    useEffect(() => {
+        myref.current.scrollTo(0, 0);
+        window.scrollTo(0, 0);
+    }, []);
     return (
-        <div>
+        <div ref={myref}>
             <h1 className={styles.header}>Complete Your Profile</h1>
             {title === 'New' ? (
                 <div>
@@ -320,16 +310,15 @@ const StepFour = ({ title }) => {
                                 </div>
                                 <div className={styles.inps}>
                                     <label>City </label>
-                                    {errors.email?.message}
+                                    {errors.city?.message}
                                     <br />
 
                                     <input
-                                        placeholder="Enter Business Name"
+                                        placeholder="Enter City"
                                         className={styles.textInput}
                                         required
-                                        {...register('businessName', {
-                                            required:
-                                                'Business Name is Required'
+                                        {...register('city', {
+                                            required: 'City is Required'
                                             // pattern: {
                                             //     // eslint-disable-next-line
                                             //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -391,7 +380,7 @@ const StepFour = ({ title }) => {
                         <div className={styles.bord}>
                             <div className={styles.inps}>
                                 <label>
-                                    Enter RC Number/Business Registration Number{' '}
+                                    Enter RC Number/Business Registration Number
                                 </label>
 
                                 <br />
@@ -400,7 +389,7 @@ const StepFour = ({ title }) => {
                                     placeholder="Enter RC Number"
                                     className={styles.textInput}
                                     required
-                                    {...register('email', {
+                                    {...register('rcNumber', {
                                         required: 'Rc Number is Required'
                                         // pattern: {
                                         //     // eslint-disable-next-line
@@ -408,6 +397,7 @@ const StepFour = ({ title }) => {
                                         //     message: 'Invalid email address'
                                         // }
                                     })}
+                                    type="text"
                                 />
                             </div>
                             <div className={styles.inps}>
@@ -542,14 +532,18 @@ const StepFour = ({ title }) => {
                                 </label>
                             </div>
                         </div>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="update Profile"
-                            type="submit"
-                            // onClick={handleShowSuccessStep}
-                            // onClick={handleShowFourthStep}
-                        />
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Update Profile"
+                                type="submit"
+                                // onClick={handleShowSuccessStep}
+                                // onClick={handleShowFourthStep}
+                            />
+                        )}
                     </form>
                 </div>
             )}

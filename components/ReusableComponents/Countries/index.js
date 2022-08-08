@@ -18,27 +18,30 @@ const Countriess = ({
                 <div className={styles.selectCountry} onClick={displayCountry}>
                     {selectCountry ? (
                         <div>
-                            <div className={styles.flags}>
-                                <img
-                                    src={
-                                        selectCountry.flags === undefined
-                                            ? null
-                                            : selectCountry.flags.svg
-                                    }
-                                    alt=""
-                                />
+                            <div>
+                                <div className={styles.flags}>
+                                    <img
+                                        src={
+                                            selectCountry.flags === undefined
+                                                ? null
+                                                : selectCountry.flags.svg
+                                        }
+                                        alt=""
+                                    />
+                                </div>
+
+                                <p>{selectCountry.name}</p>
                             </div>
 
-                            <p>{selectCountry.name}</p>
+                            <Image
+                                src="/../../Assets/Svgs/arrow-down.svg"
+                                width="20%"
+                                height="10%"
+                            />
                         </div>
                     ) : (
                         <>
                             <p>Choose Country</p>
-                            <Image
-                                src="/../../Assets/Svgs/arrow-down.svg"
-                                width="50%"
-                                height="10%"
-                            />
                         </>
                     )}
                 </div>
