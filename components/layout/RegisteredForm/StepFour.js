@@ -435,34 +435,6 @@ const StepFour = ({ title }) => {
                                         <option>Enter Street Name</option>
                                     </select>
                                 </div>
-                                <select className={styles.busInp}>
-                                    <option value="">
-                                        Select Local Government
-                                    </option>
-                                    {localGovernment
-                                        ? localGovernment?.map(
-                                              (item, index) => {
-                                                  return (
-                                                      <option
-                                                          value={item}
-                                                          key={index}
-                                                      >
-                                                          {item}
-                                                      </option>
-                                                  );
-                                              }
-                                          )
-                                        : null}
-                                </select>
-                                <div className={styles.inps}>
-                                    <label>City </label>
-
-                                    <br />
-
-                                    <select className={styles.busInp}>
-                                        <option>Enter City</option>
-                                    </select>
-                                </div>
                                 <div className={styles.inps}>
                                     <label>State </label>
 
@@ -485,6 +457,40 @@ const StepFour = ({ title }) => {
                                                 </option>
                                             );
                                         })}
+                                    </select>
+                                </div>
+                                <div className={styles.inps}>
+                                    <label>Select Your Local Government </label>
+                                    {errors.email?.message}
+                                    <br />
+
+                                    <select className={styles.busInp}>
+                                        <option value="">
+                                            Select Local Government
+                                        </option>
+                                        {localGovernment
+                                            ? localGovernment?.map(
+                                                  (item, index) => {
+                                                      return (
+                                                          <option
+                                                              value={item}
+                                                              key={index}
+                                                          >
+                                                              {item}
+                                                          </option>
+                                                      );
+                                                  }
+                                              )
+                                            : null}
+                                    </select>
+                                </div>
+                                <div className={styles.inps}>
+                                    <label>City </label>
+
+                                    <br />
+
+                                    <select className={styles.busInp}>
+                                        <option>Enter City</option>
                                     </select>
                                 </div>
                             </div>
