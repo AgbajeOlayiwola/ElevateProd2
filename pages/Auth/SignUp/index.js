@@ -357,7 +357,7 @@ const Signup = ({ type }) => {
 
                             <div>
                                 <p className={styles.accout}>
-                                    Do you Have An Accout?
+                                    Already Registered
                                     <Link href="../Auth/Login">
                                         <span className={styles.termss}>
                                             {' '}

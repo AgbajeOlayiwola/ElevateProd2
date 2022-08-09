@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Label, FormInput, InputWrapper } from './styles.module';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import styles from './styles.module.css';
+import { useRouter } from 'next/router';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { loadCountry } from '../../../../redux/actions/actions';
 
@@ -24,6 +25,8 @@ const RegisteredForm = ({ formData, setFormData }) => {
     //         setCountry(countries);
     //     }
     // }, [countries]);
+
+    const router = useRouter();
 
     const handleShowSecondStep = () => {
         setShowSecondStep(true);

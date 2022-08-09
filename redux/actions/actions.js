@@ -31,9 +31,8 @@ import {
     accountStatus,
     completeProfile
 } from '../types/actionTypes';
-import axios from '../helper/apiClient';
-import apiRoutes from '../helper/apiRoutes';
 import axiosInstance from '../helper/apiClient';
+import apiRoutes from '../helper/apiRoutes';
 
 //country actions
 export const countryLoadStart = () => ({
@@ -52,7 +51,7 @@ export const countryLoadError = (errorMessage) => ({
 
 export const loadCountry = () => (dispatch) => {
     dispatch(countryLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getCountries}`)
         .then((response) => dispatch(countryLoadSuccess(response.data.data)))
         .catch((error) =>
@@ -78,7 +77,7 @@ export const bankLoadError = (errorMessage) => ({
 
 export const loadbank = (code) => (dispatch) => {
     dispatch(bankLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getBanks}?affiliateCode=${code}`)
         .then((response) => dispatch(bankLoadSuccess(response.data.data)))
         .catch((error) => dispatch(bankLoadError(error.message)));
@@ -102,7 +101,7 @@ export const billerCategoryLoadError = (errorMessage) => ({
 
 export const loadbillerCategory = (code) => (dispatch) => {
     dispatch(billerCategoryLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getBillerCategories}?affiliateCode=${code}`)
         .then((response) =>
             dispatch(billerCategoryLoadSuccess(response.data.data))
@@ -127,7 +126,7 @@ export const billerTypeLoadError = (errorMessage) => ({
 });
 export const loadbillerType = (code, category) => (dispatch) => {
     dispatch(billerTypeLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getBillerType}${code}?category=${category}`)
         .then((response) => dispatch(billerTypeLoadSuccess(response.data.data)))
         .catch((error) => dispatch(billerTypeLoadError(error.message)));
@@ -150,7 +149,7 @@ export const billerPlanLoadError = (errorMessage) => ({
 });
 export const loadbillerPlan = (code) => (dispatch) => {
     dispatch(billerPlanLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getBillerPlan}${code}`)
         .then((response) => dispatch(billerPlanLoadSuccess(response.data.data)))
         .catch((error) => dispatch(billerPlanLoadError(error.message)));
@@ -174,7 +173,7 @@ export const languageLoadError = (errorMessage) => ({
 });
 export const loadLanguageAsync = () => (dispatch) => {
     dispatch(languageLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getLanguages}`)
         .then((response) => dispatch(languageLoadSuccess(response.data.data)))
         .catch((error) => dispatch(languageLoadError(error.message)));
@@ -198,7 +197,7 @@ export const airtimeLoadError = (errorMessageAirtime) => ({
 });
 export const postAirtime = (data) => (dispatch) => {
     dispatch(airtimeLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.airtime}`, data)
         .then((response) => dispatch(airtimeLoadSuccess(response.data)))
         .catch((error) => dispatch(airtimeLoadError(error.message)));
@@ -222,7 +221,7 @@ export const billsLoadError = (errorMessageBills) => ({
 });
 export const postBills = (data) => (dispatch) => {
     dispatch(billsLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.bills}`, data)
         .then((response) => dispatch(billsLoadSuccess(response.data.data)))
         .catch((error) => dispatch(billsLoadError(error.response.data.error)));
@@ -246,7 +245,7 @@ export const internalBankLoadError = (internalBankerror) => ({
 });
 export const postInternalBank = (data) => (dispatch) => {
     dispatch(internalBankLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.internalBank}`, data)
         .then((response) =>
             dispatch(internalBankLoadSuccess(response.data.data))
@@ -272,7 +271,7 @@ export const interBankLoadError = (interBankerror) => ({
 });
 export const postInterBank = (data) => (dispatch) => {
     dispatch(interBankLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.interBank}`, data)
         .then((response) => dispatch(interBankLoadSuccess(response.data)))
         .catch((error) => dispatch(interBankLoadError(error.message)));
@@ -296,7 +295,7 @@ export const interBankEnquiryLoadError = (interBankEnquiryerror) => ({
 });
 export const postInterBankEnquiry = (data) => (dispatch) => {
     dispatch(interBankEnquiryLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.interBankEnquiry}`, data)
         .then((response) =>
             dispatch(interBankEnquiryLoadSuccess(response.data.data))
@@ -322,7 +321,7 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
 });
 export const getBalanceEnquiry = () => (dispatch) => {
     dispatch(balanceEnquiryLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.balanceEnquiry}`)
         .then((response) =>
             dispatch(balanceEnquiryLoadSuccess(response.data.data))
@@ -348,7 +347,7 @@ export const transactionHistoryLoadError = (transactionHistoryerror) => ({
 });
 export const getTransactionHistory = () => (dispatch) => {
     dispatch(transactionHistoryLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.transactionHistory}`)
         .then((response) =>
             dispatch(transactionHistoryLoadSuccess(response.data.data))
@@ -374,7 +373,7 @@ export const transactionElevateLoadError = (transactionElevateerror) => ({
 });
 export const getTransactionElevate = () => (dispatch) => {
     dispatch(transactionElevateLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.transactionElevate}`)
         .then((response) =>
             dispatch(transactionElevateLoadSuccess(response.data.data))
@@ -400,7 +399,7 @@ export const bulkTransferLoadError = (bulkTransfererror) => ({
 });
 export const getBulkTransfer = (data) => (dispatch) => {
     dispatch(bulkTransferLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.bulkTransfer}`, data)
         .then((response) =>
             dispatch(bulkTransferLoadSuccess(response.data.data))
@@ -426,7 +425,7 @@ export const internationalTransferLoadError = (internationalTransfererror) => ({
 });
 export const getInternationalTransfer = (data) => (dispatch) => {
     dispatch(internationalTransferLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.internationalTransfer}`, data)
         .then((response) =>
             dispatch(internationalTransferLoadSuccess(response.data.data))
@@ -454,7 +453,7 @@ export const verifyBankLoadError = (verifyBankerror) => ({
 });
 export const getverifyBank = (data) => (dispatch) => {
     dispatch(verifyBankLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.verifyBank}`, data)
         .then((response) => dispatch(verifyBankLoadSuccess(response.data.data)))
         .catch((error) => dispatch(verifyBankLoadError(error.message)));
@@ -478,7 +477,7 @@ export const verifyCurrencyLoadError = (verifyCurrencyerror) => ({
 });
 export const getVerifyCurrency = (data) => (dispatch) => {
     dispatch(verifyCurrencyLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.verifyCurrency}`, data)
         .then((response) =>
             dispatch(verifyCurrencyLoadSuccess(response.data.data))
@@ -504,7 +503,7 @@ export const getBeneficiariesLoadError = (getBeneficiarieserror) => ({
 });
 export const getBeneficiariesData = () => (dispatch) => {
     dispatch(getBeneficiariesLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.beneficiaries}`)
         .then((response) =>
             dispatch(getBeneficiariesLoadSuccess(response.data.data))
@@ -530,7 +529,7 @@ export const postBeneficiariesLoadError = (postBeneficiarieserror) => ({
 });
 export const postBeneficiariesData = (data) => (dispatch) => {
     dispatch(postBeneficiariesLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.beneficiaries}`, data)
         .then((response) =>
             dispatch(postBeneficiariesLoadSuccess(response.data.data))
@@ -556,7 +555,7 @@ export const omniliteLoadError = (errorMessage) => ({
 });
 export const omniliteData = (data) => (dispatch) => {
     dispatch(omniliteLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.omnilite}`, data)
         .then((response) => dispatch(omniliteLoadSuccess(response.data)))
         .catch((error) =>
@@ -582,7 +581,7 @@ export const ecobankOnlineLoadError = (errorMessage) => ({
 });
 export const ecobankOnlineData = (data) => (dispatch) => {
     dispatch(ecobankOnlineLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.ecobankOnline}`, data)
         .then((response) => dispatch(ecobankOnlineLoadSuccess(response.data)))
         .catch((error) =>
@@ -608,7 +607,7 @@ export const accountNumberLoadError = (errorMessages) => ({
 });
 export const accountNumberData = (data) => (dispatch) => {
     dispatch(accountNumberLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.accountNumber}`, data)
         .then((response) => dispatch(accountNumberLoadSuccess(response.data)))
         .catch((error) =>
@@ -634,7 +633,7 @@ export const existingUserProfileLoadError = (errorMessage) => ({
 });
 export const existingUserProfileData = (data) => (dispatch) => {
     dispatch(existingUserProfileLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.existingUserProfile}`, data)
         .then((response) =>
             dispatch(existingUserProfileLoadSuccess(response.data))
@@ -662,7 +661,7 @@ export const createAccountLoadError = (errorData) => ({
 });
 export const createAccountData = (data) => (dispatch) => {
     dispatch(createAccountLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.createAccount}`, data)
         .then((response) => dispatch(createAccountLoadSuccess(response.data)))
         .catch((error) =>
@@ -688,7 +687,7 @@ export const accountStatusLoadError = (errorMessages) => ({
 });
 export const accountStatusData = () => (dispatch) => {
     dispatch(accountStatusLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.accountStatus}`)
         .then((response) => dispatch(accountStatusLoadSuccess(response.data)))
         .catch((error) =>
@@ -709,7 +708,7 @@ export const userRegisterError = (errorMessage) => ({
 });
 export const createUserAction = (postData) => {
     return (dispatch) => {
-        axios
+        axiosInstance
             .post(`${apiRoutes.register}`, postData)
             .then((response) => {
                 console.log('data from action', response.data);
@@ -734,7 +733,7 @@ export const userLoadError = (errorMessages) => ({
 
 export const loginUserAction = (loginData) => {
     return (dispatch) => {
-        axios
+        axiosInstance
             .post(`${apiRoutes.login}`, loginData)
             .then((response) => {
                 console.log(response.data);
@@ -830,7 +829,7 @@ export const bvnNinErrorI = (bvnErrorI) => ({
     payload: bvnErrorI
 });
 export const bvnNinData = (bvnNin) => ({
-    bvnNin: otp.BVN_NIN_LOAD_SUCCESS,
+    type: otp.BVN_NIN_LOAD_SUCCESS,
     payload: bvnNin
 });
 export const verifyOtp = (otpData) => {
@@ -841,7 +840,7 @@ export const verifyOtp = (otpData) => {
                 dispatch(bvnNinData(response.data));
                 console.log(response.data.data[0].reason);
                 if (
-                    response.data.data[0].status === 'SUCCESS' &&
+                    response.data.data[0].status === 'SUCCESS' ||
                     response.data.data[1].status === 'SUCCESS'
                 ) {
                     axiosInstance
@@ -853,7 +852,7 @@ export const verifyOtp = (otpData) => {
                         })
                         .catch((error) => {
                             console.log('profile otp dispatch', error);
-                            dispatch(bvnNinError('error otp does not match'));
+                            dispatch(bvnNinError(error.response.message));
                         });
                 } else {
                     dispatch(bvnNinError(response.data.data[0].reason));
@@ -861,7 +860,7 @@ export const verifyOtp = (otpData) => {
                 }
             })
             .catch((error) => {
-                console.log('profile Bvn dispatch', error.response);
+                console.log('profile Bvn dispatch', error);
             });
     };
 };

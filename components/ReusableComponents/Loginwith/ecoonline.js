@@ -77,10 +77,10 @@ const Ecoonline = () => {
             {error ? <p className={styles.error}>{error}</p> : null}
             <div className={styles.cover}>
                 <div>
-                    <label>Enter Your Ecoonline ID</label>
+                    <label>Enter Your Eco bank ID</label>
                     <br />
                     <input
-                        placeholder="Ecoonline Username"
+                        placeholder="Enter ecobank ID"
                         type="text"
                         className={styles.idInput}
                         {...register('username', {

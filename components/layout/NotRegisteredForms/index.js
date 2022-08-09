@@ -12,10 +12,14 @@ import {
     verifyOtp,
     loadCountry
 } from '../../../redux/actions/actions';
+import { Router, useRouter } from 'next/router';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
     // 22422561587
+    const router = useRouter();
+    // Router.reload();
+    // router.replace(router.asPath);
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
@@ -145,24 +149,24 @@ const ProfileSetups = () => {
         dispatch(verifyOtp(otpData));
         console.log('bnv', bvnError, bvnErrorI);
         setError(otpErrorMessage);
-        // if (bvnError) {
-        //     setPage(page - 1);
-        //     setErrorM(bvnError);
-        //     setErrorI(bvnErrorI);
-        // } else if (!otpErrorMessage) {
-        setPage(page + 1);
-        // }
+        if (bvnError) {
+            setPage(page - 1);
+            setErrorM(bvnError);
+            setErrorI(bvnErrorI);
+        } else if (!otpErrorMessage) {
+            setPage(page + 1);
+        }
     };
 
-    // useEffect(() => {
-    // if (bvnError) {
-    //     setPage(page - 1);
-    //     setErrorM(bvnError);
-    //     setErrorI(bvnErrorI);
-    // } else if (!otpErrorMessage) {
-    // setPage(page + 1);
-    // }
-    // }, [otpErrorMessage, bvnError]);
+    useEffect(() => {
+        if (bvnError) {
+            setPage(page - 1);
+            setErrorM(bvnError);
+            setErrorI(bvnErrorI);
+        } else if (!otpErrorMessage) {
+            setPage(page + 1);
+        }
+    }, [otpErrorMessage, bvnError]);
     return (
         <Card>
             {page === 0 ? (
