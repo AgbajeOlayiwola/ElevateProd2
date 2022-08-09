@@ -51,7 +51,17 @@ const Omnilite = () => {
             setError(errorMessage);
             setLoading(false);
         } else if (omnilite.message === 'Success') {
-            window.localStorage.setItem('account', JSON.stringify(omnilite));
+            const data = {
+                email: omnilite.data.userInfo.email,
+                accountNumber: omnilite.data.meta.accountNumber,
+                fullName: omnilite.data.meta.fullName,
+                phoneNumber: omnilite.data.meta.phoneNumber
+            };
+            window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            window.localStorage.setItem(
+                'account',
+                JSON.stringify(omnilite.data.meta)
+            );
             router.push('/Onboarding/ExistingProfileSetup');
             // const accountDetails = {
             //     accountNo: omnilite.data.accounts[0].accountNumber

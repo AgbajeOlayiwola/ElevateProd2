@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Progressbar from '../../ReusableComponents/Progressbar';
 
 const StepThree = () => {
-    const account = localStorage.getItem('meta');
+    const account = localStorage.getItem('displayAccount');
     const accountDetails = JSON.parse(account);
     const [isRegistered, setIsRegistered] = useState(false);
     const [progress, setProgress] = useState('50%');
