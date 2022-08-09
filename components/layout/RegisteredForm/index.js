@@ -74,8 +74,12 @@ const ExistingMultiStep = () => {
                     null}
                     {page === 2 ? (
                         <p onClick={handleSubmit} className={styles.open}>
-                            Create a new aaccount{' '}
-                            <span>In Your Business Name</span>
+                            Continue with this account or{' '}
+                            <span>
+                                {' '}
+                                create a new a new account in your registered
+                                business name
+                            </span>
                         </p>
                     ) : null}
                 </div>

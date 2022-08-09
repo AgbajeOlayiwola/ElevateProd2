@@ -117,6 +117,8 @@ const Dashboard = () => {
         infinite: true,
         centerPadding: '40px 0px 0px 0px',
         slidesToShow: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
         speed: 500,
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />,
