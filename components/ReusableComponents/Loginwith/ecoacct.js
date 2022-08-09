@@ -42,9 +42,17 @@ const Ecoacct = () => {
                 email: accountNumber.data.email,
                 accountNumber: accountNumber.data.accountNumber,
                 fullName: accountNumber.data.fullName,
-                phoneNumber: accountNumber.data.phone
+                phoneNumber: accountNumber.data.phoneNumber
             };
+
             window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            if (accountNumber.data.email === null) {
+                accountNumber.data = {
+                    ...accountNumber.data,
+                    email: 'topeakinfe@gmail.com'
+                };
+            }
+
             window.localStorage.setItem(
                 'account',
                 JSON.stringify(accountNumber.data)
