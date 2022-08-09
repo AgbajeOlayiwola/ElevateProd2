@@ -12,10 +12,14 @@ import {
     verifyOtp,
     loadCountry
 } from '../../../redux/actions/actions';
+import { Router, useRouter } from 'next/router';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
     // 22422561587
+    const router = useRouter();
+    // Router.reload();
+    // router.replace(router.asPath);
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({

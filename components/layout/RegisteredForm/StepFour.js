@@ -20,8 +20,6 @@ const StepFour = ({ title }) => {
     const router = useRouter();
     const account = localStorage.getItem('meta');
     const accountDetails = JSON.parse(account);
-    const account1 = localStorage.getItem('account');
-    const accountDetails1 = JSON.parse(account1);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -52,7 +50,6 @@ const StepFour = ({ title }) => {
         // };
         dispatch(existingUserProfileData(accountDetails));
     };
-
     const profileTest = () => {
         if (errorMessage) {
             setError(errorMessage);
@@ -68,22 +65,25 @@ const StepFour = ({ title }) => {
     useEffect(() => {
         profileTest();
     }, [errorMessage, existingUserProfile]);
-
     const onSubmit = (data) => {
         setLoading(true);
-        console.log(accountDetails1);
+        const name = accountDetails.fullName.split(' ');
+
         const userData = {
             affiliateCode: 'ENG',
-            firstName: accountDetails1.data.userInfo.firstName,
-            middleName: 'Sam',
-            lastName: accountDetails1.data.userInfo.lastName,
+            firstName: name[0],
+            middleName: name[2] === undefined ? 'I' : name[2],
+            lastName: name[1],
             dob: '1998-08-10',
             id_type: 'IDCD',
             idNo: '1234TTZN14',
             idIssuingDate: '2022-06-27',
             idExpiryDate: '2029-06-05',
-            phoneNumber: accountDetails1.data.userInfo.phoneNumber,
-            email: accountDetails1.data.userInfo.email,
+            phoneNumber:
+                accountDetails.phoneNumber === undefined
+                    ? accountDetails.phone
+                    : accountDetails.phoneNumber,
+            email: 'topeakinfe@gmail.com',
             gender: 'MALE',
             address1: 'AKure',
             address2: 'IKORODU',

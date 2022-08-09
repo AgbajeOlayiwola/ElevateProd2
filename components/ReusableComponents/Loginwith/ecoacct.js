@@ -38,6 +38,17 @@ const Ecoacct = () => {
             setLoading(false);
         } else if (accountNumber.message === 'SUCCESS') {
             router.push('/Onboarding/ExistingProfileSetup');
+            const data = {
+                email: accountNumber.data.email,
+                accountNumber: accountNumber.data.accountNumber,
+                fullName: accountNumber.data.fullName,
+                phoneNumber: accountNumber.data.phone
+            };
+            window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            window.localStorage.setItem(
+                'account',
+                JSON.stringify(accountNumber.data)
+            );
         }
     };
     useEffect(() => {

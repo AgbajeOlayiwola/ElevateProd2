@@ -1,7 +1,7 @@
 import axios from 'axios';
+var loginToken = '';
+var token;
 
-let loginToken = '';
-let token;
 if (typeof window !== 'undefined') {
     loginToken = window.localStorage.getItem('token');
     if (loginToken === null) {

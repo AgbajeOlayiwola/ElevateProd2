@@ -188,13 +188,13 @@ const StepFourCompProfile2BizDetails = ({
                         <p className={styles.ent}>Enter Business Address</p>
                         <div className={styles.busAdd}>
                             <div className={styles.inps}>
-                                <label>Street Name </label>
+                                <label>Address</label>
                                 {errors.email?.message}
                                 <br />
 
                                 <FormInput
                                     type="text"
-                                    placeholder="Street Name"
+                                    placeholder="Address"
                                     {...register('streetName')}
                                     value={formData.streetName}
                                     onChange={(event) => {
