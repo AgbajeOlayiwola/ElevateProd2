@@ -20,7 +20,7 @@ const Loading = () => {
                     </svg>
                 </div>
                 <p className={styles.kindly}>
-                    An Email Containing the Verification Link Has Benn Sent To
+                    An Email Containing the Verification Link Has Been Sent To
                     Your Mail
                     {/* Kindly wait while the system fetches your account number,
                     this will take a moment. */}

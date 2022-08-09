@@ -9,6 +9,7 @@ import validator from 'validator';
 import { existingUserProfileData } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
+import Progressbar from '../../ReusableComponents/Progressbar';
 
 const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
     const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
     const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
     const [activeBtn, setActiveBtn] = useState(true);
+    const [progress, setProgress] = useState('25%');
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
     const [passwordMatch, setPasswordMatch] = useState('');
@@ -103,7 +105,18 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
     const [outType, setOutType] = useState();
     return (
         <>
-            <h1 className={styles.header}>Profile Setup</h1>
+            <div className={styles.cardHeading}>
+                <h3 className={styles.LeftHeading}>Profile Setup</h3>
+                <Progressbar
+                    bgcolor="#6CCF00"
+                    progressCount={progress}
+                    height={14}
+                    progWidth="27%"
+                />
+                {/* <Imag
+                    src="/width"
+                    alt="lineImage" /> */}
+            </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* include validation with required or other standard HTML validation rules */}
@@ -130,7 +143,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
                 </div>
 
                 <div className={styles.textInput}>
-                    <label>Password</label>
+                    <label>Create Password</label>
                     <br />
                     <div className={styles.divs}>
                         <input

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Progressbar from '../../ReusableComponents/Progressbar';
 
 const StepFour = ({ title }) => {
     const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const StepFour = ({ title }) => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [progress, setProgress] = useState('100%');
     const { existingUserProfile, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
@@ -156,7 +158,7 @@ const StepFour = ({ title }) => {
     const types = (type) => {
         setOutType(type);
     };
-    const [activeBtn, setActiveBtn] = useState(true);
+    const [activeBtn, setActiveBtn] = useState(false);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
     useEffect(() => {
@@ -173,7 +175,18 @@ const StepFour = ({ title }) => {
     }, []);
     return (
         <div ref={myref}>
-            <h1 className={styles.header}>Complete Your Profile</h1>
+            <div className={styles.cardHeading}>
+                <h3 className={styles.LeftHeading}>Complete your Profile</h3>
+                <Progressbar
+                    bgcolor="#6CCF00"
+                    progressCount={progress}
+                    height={14}
+                    progWidth="27%"
+                />
+                {/* <Imag
+                    src="/width"
+                    alt="lineImage" /> */}
+            </div>
             {title === 'New' ? (
                 <div>
                     <form onSubmit={handleSubmit(onSubmitNew)}>
@@ -241,16 +254,16 @@ const StepFour = ({ title }) => {
                             <p className={styles.ent}>Enter Business Address</p>
                             <div className={styles.busAdd}>
                                 <div className={styles.inps}>
-                                    <label>Street Name </label>
+                                    <label>Address </label>
                                     {errors.streetName?.message}
                                     <br />
 
                                     <input
-                                        placeholder="Enter Street Name"
+                                        placeholder="Enter Address"
                                         className={styles.textInput}
                                         required
                                         {...register('streetName', {
-                                            required: 'Street Name is Required'
+                                            required: 'Address is Required'
                                             // pattern: {
                                             //     // eslint-disable-next-line
                                             //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -316,7 +329,6 @@ const StepFour = ({ title }) => {
                                     <input
                                         placeholder="Enter City"
                                         className={styles.textInput}
-                                        required
                                         {...register('city', {
                                             required: 'City is Required'
                                             // pattern: {
@@ -325,6 +337,15 @@ const StepFour = ({ title }) => {
                                             //     message: 'Invalid email address'
                                             // }
                                         })}
+                                        onChange={(e) => {
+                                            if (e.target.value.length === 0) {
+                                                setActiveBtn(false);
+                                            } else if (
+                                                e.target.value.length > 0
+                                            ) {
+                                                setActiveBtn(true);
+                                            }
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -433,13 +454,15 @@ const StepFour = ({ title }) => {
                             <p className={styles.ent}>Enter Business Address</p>
                             <div className={styles.busAdd}>
                                 <div className={styles.inps}>
-                                    <label>Street Name </label>
+                                    <label>Address </label>
 
                                     <br />
 
-                                    <select className={styles.busInp}>
-                                        <option>Enter Street Name</option>
-                                    </select>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Address"
+                                        className={styles.textInput}
+                                    />
                                 </div>
                                 <div className={styles.inps}>
                                     <label>State </label>
@@ -495,9 +518,20 @@ const StepFour = ({ title }) => {
 
                                     <br />
 
-                                    <select className={styles.busInp}>
-                                        <option>Enter City</option>
-                                    </select>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter City"
+                                        className={styles.textInput}
+                                        onChange={(e) => {
+                                            if (e.target.value.length === 0) {
+                                                setActiveBtn(false);
+                                            } else if (
+                                                e.target.value.length > 0
+                                            ) {
+                                                setActiveBtn(true);
+                                            }
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -527,7 +561,7 @@ const StepFour = ({ title }) => {
                             <div className={styles.terms}>
                                 <input type="checkbox" />
                                 <label>
-                                    I agree with Ellevate App{' '}
+                                    I agree with Ellevate App
                                     <span>Terms and Conditions</span>
                                 </label>
                             </div>
