@@ -162,7 +162,7 @@
 }
 .bord {
     border: 1px solid #dcdcdc;
-    padding: 0rem 2rem 3rem 2rem;
+    padding: 24px 2rem 3rem 2rem;
     border-radius: 20px;
 }
 .innerToggleNo {
@@ -268,13 +268,33 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 19px;
-
     color: #3e3e3e;
     margin-bottom: 10px;
+}
+
+.inps select {
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    background-image: url(../../../public/Assets/Svgs/arrow-down.svg);
+    color: #3e3e3e;
+    margin-top: 8px;
+    cursor: pointer;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position-x: 94%;
+    background-position-y: 50%;
+    margin-bottom: 14px;
 }
 .textInput {
     margin-bottom: 14px;
     margin-top: 8px;
+    background-color: #ffffff;
 }
 .formInner div {
     margin-bottom: 20px;

@@ -10,6 +10,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Loader from '../Loader';
+import Visbility from '../Eyeysvg';
 // import { encrypt } from '../../../redux/helper/hash';
 
 const Omnilite = () => {
@@ -50,7 +51,17 @@ const Omnilite = () => {
             setError(errorMessage);
             setLoading(false);
         } else if (omnilite.message === 'Success') {
-            window.localStorage.setItem('account', JSON.stringify(omnilite));
+            const data = {
+                email: omnilite.data.userInfo.email,
+                accountNumber: omnilite.data.meta.accountNumber,
+                fullName: omnilite.data.meta.fullName,
+                phoneNumber: omnilite.data.meta.phoneNumber
+            };
+            window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            window.localStorage.setItem(
+                'account',
+                JSON.stringify(omnilite.data.meta)
+            );
             router.push('/Onboarding/ExistingProfileSetup');
             // const accountDetails = {
             //     accountNo: omnilite.data.accounts[0].accountNumber
@@ -78,6 +89,9 @@ const Omnilite = () => {
     // useEffect(() => {
     //     accountTest();
     // }, [accountNumber, errorMessages]);
+    const types = (type) => {
+        setOutType(type);
+    };
     return (
         <form onSubmit={handleSubmit(omniliteSubmit)}>
             {error ? <p className={styles.error}>{error}</p> : null}
@@ -99,15 +113,18 @@ const Omnilite = () => {
                 <div>
                     <label>Enter Your Omnilite Password</label>
                     <br />
-                    <input
-                        placeholder="Omnilite Password"
-                        className={styles.idInput}
-                        {...register('password', {
-                            required: 'Password is Required'
-                        })}
-                        name="password"
-                        type="password"
-                    />
+                    <div className={styles.passwordEye}>
+                        <input
+                            placeholder="Omnilite Password"
+                            className={styles.idInput}
+                            {...register('password', {
+                                required: 'Password is Required'
+                            })}
+                            name="password"
+                            type={outType ? 'text' : 'password'}
+                        />
+                        <Visbility typeSet={types} />
+                    </div>
                 </div>
                 <p className={styles.error}>{errors?.password?.message}</p>
             </div>

@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Loader from '../Loader';
 import { encrypt } from '../../../redux/helper/hash';
+import Visbility from '../Eyeysvg';
 
 const Ecoonline = () => {
     const router = useRouter();
@@ -25,6 +26,9 @@ const Ecoonline = () => {
     const { accountNumber, errorMessages } = useSelector(
         (state) => state.accountNumberReducer
     );
+    const types = (type) => {
+        setOutType(type);
+    };
     const {
         register,
         handleSubmit,
@@ -77,31 +81,34 @@ const Ecoonline = () => {
             {error ? <p className={styles.error}>{error}</p> : null}
             <div className={styles.cover}>
                 <div>
-                    <label>Enter Your Eco bank ID</label>
+                    <label>Enter Your Ecobank ID</label>
                     <br />
                     <input
-                        placeholder="Enter ecobank ID"
+                        placeholder="Ecobank Online"
                         type="text"
                         className={styles.idInput}
                         {...register('username', {
-                            required: 'Username is Required'
+                            required: 'Ecobank ID is Required'
                         })}
                         name="username"
                     />
                 </div>
                 <p className={styles.error}>{errors?.username?.message}</p>
                 <div>
-                    <label>Enter Your Ecoonline Password</label>
+                    <label>Enter Your Ecobank Password</label>
                     <br />
-                    <input
-                        placeholder="Ecoonline Password"
-                        className={styles.idInput}
-                        {...register('password', {
-                            required: 'Password is Required'
-                        })}
-                        name="password"
-                        type="password"
-                    />
+                    <div className={styles.passwordEye}>
+                        <input
+                            placeholder="Ecobank Password"
+                            className={styles.idInput}
+                            {...register('password', {
+                                required: 'Ecobank Password is Required'
+                            })}
+                            name="password"
+                            type={outType ? 'text' : 'password'}
+                        />
+                        <Visbility typeSet={types} />
+                    </div>
                 </div>
                 <p className={styles.error}>{errors?.password?.message}</p>
             </div>

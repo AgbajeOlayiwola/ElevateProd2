@@ -1,10 +1,14 @@
 /* Select style */
 .selectI {
-    font-size: 14px;
-    font-weight: 300;
     width: 100%;
     padding: 1.753rem 1.753rem;
     margin-top: 0.844rem;
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    background-image: url(/Assets/Svgs/dropdownSvg.svg);
 }
 
 .select2 {

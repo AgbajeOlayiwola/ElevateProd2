@@ -174,3 +174,7 @@
 .exp {
     width: 50%;
 }
+
+.passwordEye {
+    display: flex;
+}

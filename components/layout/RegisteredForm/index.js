@@ -53,7 +53,7 @@ const ExistingMultiStep = () => {
                             active={activeBtn ? 'active' : 'inactive'}
                             onClick={handleSubmitNew}
                             type="submit"
-                            text={'Continue with the personal account'}
+                            text={'Continue with this account'}
                         />
                     ) : page === 0 ? (
                         <ButtonComp

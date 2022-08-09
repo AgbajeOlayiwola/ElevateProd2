@@ -20,7 +20,16 @@ const HomeMain = () => {
     const router = useRouter();
     const [countrys, setCountry] = useState([]);
     const [countryState, setCountryState] = useState(false);
-    const [selectCountry, setSelectCountry] = useState('');
+    const [selectCountry, setSelectCountry] = useState({
+        affiliateCode: 'ENG',
+        baseCurrency: 'NGN',
+        countryCode: '234',
+        flags: {
+            svg: 'https://flagcdn.com/ng.svg',
+            png: 'https://flagcdn.com/w320/ng.png'
+        },
+        name: 'Nigeria'
+    });
     const [error, setError] = useState('');
     const dispatch = useDispatch();
     const { isLoading, countries, errorMessage } = useSelector(
@@ -110,9 +119,13 @@ const HomeMain = () => {
                                     Choose The Country Where you Run Busines
                                 </label>
                                 <br />
+                                {error ? (
+                                    <p className={styles.error}>{error}</p>
+                                ) : null}
                                 <Countries
                                     displayCountry={() => {
                                         setCountryState(!countryState);
+                                        setError('');
                                     }}
                                     selectCountry={selectCountry}
                                     countryState={countryState}

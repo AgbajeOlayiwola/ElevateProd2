@@ -18,27 +18,30 @@ const Countriess = ({
                 <div className={styles.selectCountry} onClick={displayCountry}>
                     {selectCountry ? (
                         <div>
-                            <div className={styles.flags}>
-                                <img
-                                    src={
-                                        selectCountry.flags === undefined
-                                            ? null
-                                            : selectCountry.flags.svg
-                                    }
-                                    alt=""
-                                />
+                            <div>
+                                <div className={styles.flags}>
+                                    <img
+                                        src={
+                                            selectCountry.flags === undefined
+                                                ? null
+                                                : selectCountry.flags.svg
+                                        }
+                                        alt=""
+                                    />
+                                </div>
+
+                                <p>{selectCountry.name}</p>
                             </div>
 
-                            <p>{selectCountry.name}</p>
+                            <Image
+                                src="/../../Assets/Svgs/dropdownSvg.svg"
+                                width="10%"
+                                height="10%"
+                            />
                         </div>
                     ) : (
                         <>
                             <p>Choose Country</p>
-                            <Image
-                                src="/../../Assets/Svgs/arrow-down.svg"
-                                width="50%"
-                                height="10%"
-                            />
                         </>
                     )}
                 </div>
@@ -49,11 +52,19 @@ const Countriess = ({
                                 <li
                                     key={index}
                                     onClick={() => {
-                                        setSelectCountry(item);
-                                        setCountryState(false);
-                                        if (error !== '') {
-                                            setError('');
+                                        if (item.name !== 'Nigeria') {
+                                            setError(
+                                                'This App is only available in Nigeria'
+                                            );
+                                            setCountryState(false);
+                                        } else {
+                                            setSelectCountry(item);
+
+                                            setCountryState(false);
                                         }
+                                        // if (error !== '') {
+                                        //     setError('');
+                                        // }
                                     }}
                                 >
                                     <img
@@ -101,7 +112,7 @@ const Countriess = ({
                                 </select>
 
                                 */}
-            {error ? <p className={styles.error}>{error}</p> : null}
+            {/* {error ? <p className={styles.error}>{error}</p> : null} */}
         </>
     );
 };

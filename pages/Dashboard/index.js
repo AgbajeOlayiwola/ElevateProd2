@@ -121,7 +121,10 @@ const Dashboard = () => {
         autoplaySpeed: 2000,
         speed: 500,
         nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />
+        prevArrow: <SamplePrevArrow />,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        cssEase: 'linear'
     };
 
     return (

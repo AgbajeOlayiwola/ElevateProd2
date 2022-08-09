@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
@@ -13,17 +13,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Progressbar from '../../ReusableComponents/Progressbar';
 
 const StepFour = ({ title }) => {
     const dispatch = useDispatch();
     const router = useRouter();
     const account = localStorage.getItem('meta');
     const accountDetails = JSON.parse(account);
-    const account1 = localStorage.getItem('account');
-    const accountDetails1 = JSON.parse(account1);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [progress, setProgress] = useState('100%');
     const { existingUserProfile, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
@@ -50,7 +50,6 @@ const StepFour = ({ title }) => {
         // };
         dispatch(existingUserProfileData(accountDetails));
     };
-
     const profileTest = () => {
         if (errorMessage) {
             setError(errorMessage);
@@ -66,33 +65,27 @@ const StepFour = ({ title }) => {
     useEffect(() => {
         profileTest();
     }, [errorMessage, existingUserProfile]);
-
-    const onSubmit = async (data) => {
+    const onSubmit = (data) => {
         setLoading(true);
-        console.log(accountDetails1);
+        const name = accountDetails.fullName.split(' ');
 
         const userData = {
-            hostHeaderInfo: {
-                sourceCode: 'ECOBANKMOBILE',
-                affiliateCode: 'ENG',
-                requestId: 'testing534267809',
-                requestType: 'JSON',
-                ipAddress: '10.182.199.171',
-                sourceChannelId: 'MOBILE'
-            },
-            affCode: 'ENG',
-            firstName: accountDetails1.data.userInfo.firstName,
-            middleName: 'Sam',
-            lastName: accountDetails1.data.userInfo.lastName,
-            dob: accountDetails1.data.userInfo.dob,
+            affiliateCode: 'ENG',
+            firstName: name[0],
+            middleName: name[2] === undefined ? 'I' : name[2],
+            lastName: name[1],
+            dob: '1998-08-10',
             id_type: 'IDCD',
             idNo: '1234TTZN14',
             idIssuingDate: '2022-06-27',
             idExpiryDate: '2029-06-05',
-            phoneNumber: accountDetails1.data.userInfo.phoneNumber,
-            email: accountDetails1.data.userInfo.email,
+            phoneNumber:
+                accountDetails.phoneNumber === undefined
+                    ? accountDetails.phone
+                    : accountDetails.phoneNumber,
+            email: 'topeakinfe@gmail.com',
             gender: 'MALE',
-            address1: 'IKORODU LAGOS',
+            address1: 'AKure',
             address2: 'IKORODU',
             countryCode: 'NG',
             custType: 'I',
@@ -100,64 +93,72 @@ const StepFour = ({ title }) => {
             brnCode: 'A01',
             ccy: 'NGN',
             flexCustId: '',
-            accountClass: 'GHSABP'
+            accountClass: 'GHSABP',
+            password: accountDetails.password
         };
-        try {
-            const response = await axios.post(
-                'https://160.119.246.165/unifiedapis-v2/services/createdigitalaccount',
-                userData
-            );
-            if (response) {
-                const userDetail1 = {
-                    hostHeaderInfo: {
-                        sourceCode: 'ECOBANKMOBILE',
-                        requestId: 'b5e750e6af4c1945cd54447b9d4fa3a4',
-                        affiliateCode: 'ENG',
-                        requestToken:
-                            '7a07359d2d6ea5136cfd38a4dc303fcd81b6bacd9ac0661f99a43122cfc2166da0f1ce1dd5f6e23db1f2da2bb3e65658e1fc73acec09df3e280a027990bc7d63',
-                        requestType: 'JSON',
-                        ipAddress: '10.182.99.157',
-                        sourceChannelId: 'MOBILE'
-                    },
-                    trackRef: response.reference
-                };
-                try {
-                    const response2 = await axios.post(
-                        'https://160.119.246.165/unifiedapis-v2/services/getdigitalaccount',
-                        userDetail1
-                    );
-                    window.localStorage.setItem(
-                        'accountNumber',
-                        JSON.stringify(response2)
-                    );
-                    router.push('/Dashboard');
-                } catch (error) {
-                    console.log(error.message);
-                }
-            }
-        } catch (error) {
-            console.log(error.message);
+        dispatch(createAccountData(userData));
+        // window.localStorage.setItem('accountNumber', JSON.stringify(response2));
+        // router.push('/Dashboard');
+    };
+
+    const newAccountTest = () => {
+        console.log(createAccount);
+
+        if (errorData) {
+            setError(errorData);
+            console.log(errorData);
+            setLoading(false);
+        } else if (createAccount.statusCode === 200) {
+            console.log(createAccount);
+            dispatch(accountStatusData(createAccount.data.userId));
         }
     };
-    const accountTest = () => {
-        if (errorMessage) {
-            setError(errorMessage);
-            console.log(errorMessage);
+    useEffect(() => {
+        newAccountTest();
+    }, [errorData, createAccount]);
+
+    const newAccountTest1 = () => {
+        console.log(accountStatus);
+        if (errorMessages) {
+            setError(errorMessages);
+            console.log(errorMessages);
             setLoading(false);
-        } else if (
-            existingUserProfile.message === 'User account created succesfully'
-        ) {
-            setLoading(false);
+        } else if (accountStatus.message === 'Try Again') {
+            setTimeout(() => {
+                dispatch(accountStatusData(createAccount.data.userId));
+                console.log('Hello');
+            }, 40000);
+        } else if (accountStatus.message === 'SUCCESS') {
+            window.localStorage.setItem(
+                'accountNumber',
+                JSON.stringify(accountStatus)
+            );
             router.push('/Dashboard');
         }
     };
     useEffect(() => {
-        accountTest();
-    }, [errorMessage, existingUserProfile]);
+        newAccountTest1();
+    }, [errorMessages, accountStatus]);
+
+    // const accountTest = () => {
+    //     if (errorMessage) {
+    //         setError(errorMessage);
+    //         console.log(errorMessage);
+    //         setLoading(false);
+    //     } else if (
+    //         existingUserProfile.message === 'User account created succesfully'
+    //     ) {
+    //         setLoading(false);
+    //         router.push('/Dashboard');
+    //     }
+    // };
+    // useEffect(() => {
+    //     accountTest();
+    // }, [errorMessage, existingUserProfile]);
     const types = (type) => {
         setOutType(type);
     };
-    const [activeBtn, setActiveBtn] = useState(true);
+    const [activeBtn, setActiveBtn] = useState(false);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
     useEffect(() => {
@@ -167,15 +168,32 @@ const StepFour = ({ title }) => {
             }
         });
     }, [localState]);
+    const myref = useRef();
+    useEffect(() => {
+        myref.current.scrollTo(0, 0);
+        window.scrollTo(0, 0);
+    }, []);
     return (
-        <div>
-            <h1 className={styles.header}>Complete Your Profile</h1>
+        <div ref={myref}>
+            <div className={styles.cardHeading}>
+                <h3 className={styles.LeftHeading}>Complete your Profile</h3>
+                <Progressbar
+                    bgcolor="#6CCF00"
+                    progressCount={progress}
+                    height={14}
+                    progWidth="27%"
+                />
+                {/* <Imag
+                    src="/width"
+                    alt="lineImage" /> */}
+            </div>
             {title === 'New' ? (
                 <div>
                     <form onSubmit={handleSubmit(onSubmitNew)}>
                         {error ? <p className={styles.error}>{error}</p> : null}
                         <div className={styles.bord}>
                             <div className={styles.inps}>
+                                {errors.businessName?.message}
                                 <label>Enter Business Name</label>
 
                                 <br />
@@ -236,16 +254,16 @@ const StepFour = ({ title }) => {
                             <p className={styles.ent}>Enter Business Address</p>
                             <div className={styles.busAdd}>
                                 <div className={styles.inps}>
-                                    <label>Street Name </label>
+                                    <label>Address </label>
                                     {errors.streetName?.message}
                                     <br />
 
                                     <input
-                                        placeholder="Enter Street Name"
+                                        placeholder="Enter Address"
                                         className={styles.textInput}
                                         required
                                         {...register('streetName', {
-                                            required: 'Street Name is Required'
+                                            required: 'Address is Required'
                                             // pattern: {
                                             //     // eslint-disable-next-line
                                             //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -305,22 +323,29 @@ const StepFour = ({ title }) => {
                                 </div>
                                 <div className={styles.inps}>
                                     <label>City </label>
-                                    {errors.email?.message}
+                                    {errors.city?.message}
                                     <br />
 
                                     <input
-                                        placeholder="Enter Business Name"
+                                        placeholder="Enter City"
                                         className={styles.textInput}
-                                        required
-                                        {...register('businessName', {
-                                            required:
-                                                'Business Name is Required'
+                                        {...register('city', {
+                                            required: 'City is Required'
                                             // pattern: {
                                             //     // eslint-disable-next-line
                                             //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                                             //     message: 'Invalid email address'
                                             // }
                                         })}
+                                        onChange={(e) => {
+                                            if (e.target.value.length === 0) {
+                                                setActiveBtn(false);
+                                            } else if (
+                                                e.target.value.length > 0
+                                            ) {
+                                                setActiveBtn(true);
+                                            }
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -376,7 +401,7 @@ const StepFour = ({ title }) => {
                         <div className={styles.bord}>
                             <div className={styles.inps}>
                                 <label>
-                                    Enter RC Number/Business Registration Number{' '}
+                                    Enter RC Number/Business Registration Number
                                 </label>
 
                                 <br />
@@ -385,7 +410,7 @@ const StepFour = ({ title }) => {
                                     placeholder="Enter RC Number"
                                     className={styles.textInput}
                                     required
-                                    {...register('email', {
+                                    {...register('rcNumber', {
                                         required: 'Rc Number is Required'
                                         // pattern: {
                                         //     // eslint-disable-next-line
@@ -393,6 +418,7 @@ const StepFour = ({ title }) => {
                                         //     message: 'Invalid email address'
                                         // }
                                     })}
+                                    type="text"
                                 />
                             </div>
                             <div className={styles.inps}>
@@ -428,13 +454,15 @@ const StepFour = ({ title }) => {
                             <p className={styles.ent}>Enter Business Address</p>
                             <div className={styles.busAdd}>
                                 <div className={styles.inps}>
-                                    <label>Street Name </label>
+                                    <label>Address </label>
 
                                     <br />
 
-                                    <select className={styles.busInp}>
-                                        <option>Enter Street Name</option>
-                                    </select>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Address"
+                                        className={styles.textInput}
+                                    />
                                 </div>
                                 <div className={styles.inps}>
                                     <label>State </label>
@@ -490,9 +518,20 @@ const StepFour = ({ title }) => {
 
                                     <br />
 
-                                    <select className={styles.busInp}>
-                                        <option>Enter City</option>
-                                    </select>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter City"
+                                        className={styles.textInput}
+                                        onChange={(e) => {
+                                            if (e.target.value.length === 0) {
+                                                setActiveBtn(false);
+                                            } else if (
+                                                e.target.value.length > 0
+                                            ) {
+                                                setActiveBtn(true);
+                                            }
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -522,19 +561,23 @@ const StepFour = ({ title }) => {
                             <div className={styles.terms}>
                                 <input type="checkbox" />
                                 <label>
-                                    I agree with Ellevate App{' '}
+                                    I agree with Ellevate App
                                     <span>Terms and Conditions</span>
                                 </label>
                             </div>
                         </div>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="update Profile"
-                            type="submit"
-                            // onClick={handleShowSuccessStep}
-                            // onClick={handleShowFourthStep}
-                        />
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Update Profile"
+                                type="submit"
+                                // onClick={handleShowSuccessStep}
+                                // onClick={handleShowFourthStep}
+                            />
+                        )}
                     </form>
                 </div>
             )}

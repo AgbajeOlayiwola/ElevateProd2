@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import ButtonComp from '../../ReusableComponents/Button';
 import styles from './styles.module.css';
 import Link from 'next/link';
+import Progressbar from '../../ReusableComponents/Progressbar';
 
 const StepThree = () => {
-    const account = localStorage.getItem('meta');
+    const account = localStorage.getItem('displayAccount');
     const accountDetails = JSON.parse(account);
     const [isRegistered, setIsRegistered] = useState(false);
+    const [progress, setProgress] = useState('50%');
     const [bgcolor, setBgcolor] = useState(false);
 
     const [bcolor, setBColor] = useState(false);
@@ -28,7 +30,18 @@ const StepThree = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div>
-            <h1 className={styles.header}>Complete Your Profile</h1>
+            <div className={styles.cardHeading}>
+                <h3 className={styles.LeftHeading}>Complete your Profile</h3>
+                <Progressbar
+                    bgcolor="#6CCF00"
+                    progressCount={progress}
+                    height={14}
+                    progWidth="27%"
+                />
+                {/* <Imag
+                    src="/width"
+                    alt="lineImage" /> */}
+            </div>
 
             {/* <Imag
                     src="/width"
