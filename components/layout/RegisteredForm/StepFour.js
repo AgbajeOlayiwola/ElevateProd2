@@ -111,6 +111,10 @@ const StepFour = ({ title }) => {
         } else if (createAccount.statusCode === 200) {
             console.log(createAccount);
             dispatch(accountStatusData(createAccount.data.userId));
+            localStorage.setItem(
+                'userId',
+                JSON.stringify(createAccount.data.userId)
+            );
         }
     };
     useEffect(() => {
@@ -124,10 +128,7 @@ const StepFour = ({ title }) => {
             console.log(errorMessages);
             setLoading(false);
         } else if (accountStatus.message === 'Try Again') {
-            setTimeout(() => {
-                dispatch(accountStatusData(createAccount.data.userId));
-                console.log('Hello');
-            }, 40000);
+            router.push('/Verify/ExistingAccount');
         } else if (accountStatus.message === 'SUCCESS') {
             window.localStorage.setItem(
                 'accountNumber',
