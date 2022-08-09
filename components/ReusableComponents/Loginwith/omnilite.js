@@ -10,6 +10,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Loader from '../Loader';
+import Visbility from '../Eyeysvg';
 // import { encrypt } from '../../../redux/helper/hash';
 
 const Omnilite = () => {
@@ -78,6 +79,9 @@ const Omnilite = () => {
     // useEffect(() => {
     //     accountTest();
     // }, [accountNumber, errorMessages]);
+    const types = (type) => {
+        setOutType(type);
+    };
     return (
         <form onSubmit={handleSubmit(omniliteSubmit)}>
             {error ? <p className={styles.error}>{error}</p> : null}
@@ -99,15 +103,18 @@ const Omnilite = () => {
                 <div>
                     <label>Enter Your Omnilite Password</label>
                     <br />
-                    <input
-                        placeholder="Omnilite Password"
-                        className={styles.idInput}
-                        {...register('password', {
-                            required: 'Password is Required'
-                        })}
-                        name="password"
-                        type="password"
-                    />
+                    <div className={styles.passwordEye}>
+                        <input
+                            placeholder="Omnilite Password"
+                            className={styles.idInput}
+                            {...register('password', {
+                                required: 'Password is Required'
+                            })}
+                            name="password"
+                            type={outType ? 'text' : 'password'}
+                        />
+                        <Visbility typeSet={types} />
+                    </div>
                 </div>
                 <p className={styles.error}>{errors?.password?.message}</p>
             </div>

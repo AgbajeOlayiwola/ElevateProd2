@@ -39,6 +39,7 @@ const Login = () => {
 
     console.log(encrypt('password'));
     const onSubmit = (data) => {
+        setLoading(true);
         const loginData = {
             email,
             password: encrypt(password)
@@ -130,7 +131,7 @@ const Login = () => {
                                 <input
                                     name="password"
                                     placeholder="Enter Your Password"
-                                    type={outType ? 'password' : 'text'}
+                                    type={outType ? 'text' : 'password'}
                                     className={styles.passwordInput}
                                     required
                                     {...register('password', {

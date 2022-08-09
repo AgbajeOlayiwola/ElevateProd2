@@ -72,6 +72,7 @@
 .sectionII > div {
     max-width: 26rem;
     width: 25rem;
+    padding-top: 80px;
 }
 /* .sectionII::-webkit-scrollbar {
     display: none;

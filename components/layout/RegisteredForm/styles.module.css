@@ -162,7 +162,7 @@
 }
 .bord {
     border: 1px solid #dcdcdc;
-    padding: 0rem 2rem 3rem 2rem;
+    padding: 24px 2rem 3rem 2rem;
     border-radius: 20px;
 }
 .innerToggleNo {
@@ -289,6 +289,7 @@
     background-repeat: no-repeat;
     background-position-x: 94%;
     background-position-y: 50%;
+    margin-bottom: 14px;
 }
 .textInput {
     margin-bottom: 14px;

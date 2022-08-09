@@ -34,8 +34,8 @@ const Countriess = ({
                             </div>
 
                             <Image
-                                src="/../../Assets/Svgs/arrow-down.svg"
-                                width="20%"
+                                src="/../../Assets/Svgs/dropdownSvg.svg"
+                                width="10%"
                                 height="10%"
                             />
                         </div>

@@ -3,7 +3,7 @@ import { login } from '../types/actionTypes';
 const initialState = {
     user: [],
     loggedInUser: null,
-    errorMessages: '...'
+    errorMessages: ''
 };
 
 const authReducer = (state = initialState, { type, payload }) => {

@@ -53,7 +53,7 @@ const ExistingMultiStep = () => {
                             active={activeBtn ? 'active' : 'inactive'}
                             onClick={handleSubmitNew}
                             type="submit"
-                            text={'Continue with the personal account'}
+                            text={'Continue with this account'}
                         />
                     ) : page === 0 ? (
                         <ButtonComp
@@ -74,7 +74,8 @@ const ExistingMultiStep = () => {
                     null}
                     {page === 2 ? (
                         <p onClick={handleSubmit} className={styles.open}>
-                            Tap to open a <span>New Business Account</span>
+                            Create a new aaccount{' '}
+                            <span>In Your Business Name</span>
                         </p>
                     ) : null}
                 </div>
