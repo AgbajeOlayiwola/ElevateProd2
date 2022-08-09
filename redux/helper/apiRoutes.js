@@ -24,6 +24,7 @@ const newProfileSetup = '/auth/profile-setup';
 const profile = '/auth/profile';
 const profileSetupBus = '/auth/profile-setup';
 const verifyOtp = '/verification/verify/otp';
+const verifyDob = '/verification/verify/dob';
 const authProfile = '/auth/profile';
 const account = '/auth/account';
 const completesBusinessProfile = '/business';
@@ -61,6 +62,7 @@ export default {
     beneficiaries,
     profileSetupBus,
     verifyOtp,
+    verifyDob,
     authProfile,
     account,
     completesBusinessProfile,

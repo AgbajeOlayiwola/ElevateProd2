@@ -860,7 +860,7 @@ export const verifyOtp = (otpData) => {
                 }
             })
             .catch((error) => {
-                console.log('profile Bvn dispatch', error);
+                console.log('profile Bvn dispatch', error.response);
             });
     };
 };
