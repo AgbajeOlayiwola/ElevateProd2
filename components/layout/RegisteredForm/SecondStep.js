@@ -123,7 +123,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* include validation with required or other standard HTML validation rules */}
                 <div className={styles.textInput}>
-                    <label>Email Address </label>
+                    <label>Email Address/ Phone Number </label>
                     {errors.email?.message}
                     <br />
 
