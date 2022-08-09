@@ -103,18 +103,20 @@ const StepThree = () => {
                 account
             </p> */}
             <div className={styles.formInner}>
-                <div>
-                    <label>Email </label>
-                    <br />
+                {accountDetails.email === null ? null : (
+                    <div>
+                        <label>Email </label>
+                        <br />
 
-                    <input
-                        placeholder="Enter Your Email"
-                        className={styles.textInput}
-                        required
-                        readOnly
-                        value={accountDetails.email}
-                    />
-                </div>
+                        <input
+                            placeholder="Enter Your Email"
+                            className={styles.textInput}
+                            required
+                            readOnly
+                            value={accountDetails.email}
+                        />
+                    </div>
+                )}
 
                 <div>
                     <label>Account Number </label>
