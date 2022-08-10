@@ -43,6 +43,7 @@ const ExistingMultiStep = () => {
                         title={pageType}
                         action={() => {
                             setPage(page - 1);
+                            setPageType('');
                         }}
                     />
                 );

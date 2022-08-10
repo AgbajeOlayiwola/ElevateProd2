@@ -270,7 +270,7 @@ const StepFour = ({ title, action }) => {
                                     <br />
 
                                     <input
-                                        placeholder="Enter Address"
+                                        placeholder="407 Yaba Bornoway"
                                         className={styles.textInput}
                                         required
                                         {...register('streetName', {
@@ -420,9 +420,18 @@ const StepFour = ({ title, action }) => {
                                 <input
                                     placeholder="Enter RC Number"
                                     className={styles.textInput}
-                                    required
                                     {...register('rcNumber', {
-                                        required: 'Rc Number is Required'
+                                        required: 'RC Number is Required',
+                                        maxLength: {
+                                            value: 15,
+                                            message:
+                                                'RC Number  cannot be more than 15 digits'
+                                        },
+                                        minLength: {
+                                            value: 15,
+                                            message:
+                                                'RC Number  cannot be more than 15 digits'
+                                        }
                                         // pattern: {
                                         //     // eslint-disable-next-line
                                         //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -431,6 +440,9 @@ const StepFour = ({ title, action }) => {
                                     })}
                                     type="text"
                                 />
+                                <p className={styles.error}>
+                                    {errors.rcNumber?.message}
+                                </p>
                             </div>
                             <div className={styles.inps}>
                                 <label>
@@ -441,7 +453,6 @@ const StepFour = ({ title, action }) => {
                                 <input
                                     placeholder="Enter Tin"
                                     className={styles.textInput}
-                                    required
                                     {...register('tin', {
                                         required: 'Tin is Required'
                                         // pattern: {
@@ -471,7 +482,7 @@ const StepFour = ({ title, action }) => {
 
                                     <input
                                         type="text"
-                                        placeholder="Enter Address"
+                                        placeholder="407 Yaba Bornoway"
                                         className={styles.textInput}
                                     />
                                 </div>
@@ -548,7 +559,6 @@ const StepFour = ({ title, action }) => {
                             <input
                                 placeholder="Enter Referal Code"
                                 className={styles.textInput}
-                                required
                                 // {...register('email', {
                                 //     required: 'Business Address is Required',
                                 //     pattern: {
