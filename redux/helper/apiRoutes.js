@@ -28,6 +28,7 @@ const verifyDob = '/verification/verify/dob';
 const authProfile = '/auth/profile';
 const account = '/auth/account';
 const completesBusinessProfile = '/business';
+const newCreateAccount = '/account';
 const createAccount = '/account/create';
 const accountStatus = '/account/status';
 const verifyStatus = '/verification/document/status';
@@ -72,5 +73,6 @@ export default {
     accountNumber,
     existingUserProfile,
     ecobankOnline,
-    verifyStatus
+    verifyStatus,
+    newCreateAccount
 };

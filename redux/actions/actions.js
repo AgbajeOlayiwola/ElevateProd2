@@ -29,7 +29,8 @@ import {
     ecobankOnline,
     createAccount,
     accountStatus,
-    completeProfile
+    completeProfile,
+    newUserCreateAccount
 } from '../types/actionTypes';
 import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -931,3 +932,35 @@ export const CompleteBusinessProfile = (completeProfileData) => {
     };
 };
 //Complete Profile Post End
+
+//Create New User Action
+export const createNewAccountStart = () => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_START,
+    payload: newAccountErrorMessage
+});
+export const createNewAccountSuccess = (newAccount) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_SUCCESS,
+    payload: compBusprofile
+});
+export const createNewAccountError = (newAccountErrorMessage) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_ERROR,
+    payload: newAccountErrorMessage
+});
+
+export const createNewUserAccount = (accountData) => {
+    return (dispatch) => {
+        // dispatch(completeProfileLoadStart());
+        axiosInstance
+            .post(`${apiRoutes.newCreateAccount}`, accountData)
+            .then((response) => {
+                console.log('create New Account', response.data);
+                dispatch(createNewAccountSuccess(response.data));
+            })
+            .catch((error) => {
+                console.log('create new account:', error);
+                dispatch(createNewAccountError(error));
+            });
+    };
+};
+
+//End Create New User Action
