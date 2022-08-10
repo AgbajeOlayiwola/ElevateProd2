@@ -8,7 +8,7 @@ import {
     RegistrationStatus,
     SuccessMainHeading,
     H6Wrapper
-} from './styles.module';
+} from '../../../components/styles.module';
 import Success from '../../../components/ReusableComponents/Success';
 import ButtonComp from '../../../components/ReusableComponents/Button';
 
