@@ -29,7 +29,7 @@ const ExistingAccount = () => {
                 'accountNumber',
                 JSON.stringify(accountStatus)
             );
-            router.push('/Verify/ExistingSuccess');
+            router.push('/Succes');
         }
     };
     useEffect(() => {
