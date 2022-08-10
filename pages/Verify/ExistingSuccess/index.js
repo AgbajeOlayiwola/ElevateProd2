@@ -6,8 +6,12 @@ import Success from '../../../components/ReusableComponents/Success';
 import ButtonComp from '../../../components/ReusableComponents/Button';
 
 const ExistingSuccess = ({ handleShowSuccessStep }) => {
-    const accountDetails = localStorage.getItem('accountNumber');
-    const accountNumber = JSON.parse(accountDetails);
+    let accountDetails;
+    let accountNumber;
+    if (typeof window !== 'undefined') {
+        accountDetails = localStorage.getItem('accountNumber');
+        accountNumber = JSON.parse(accountDetails);
+    }
 
     const [activeBtn, setActiveBtn] = useState(true);
     return (
