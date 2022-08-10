@@ -7,6 +7,7 @@ import { loadLanguageAsync } from '../../../redux/actions/actions';
 
 const Langauges = () => {
     const [languages, setLanguages] = useState([]);
+    const [languageValue, setLanguagevalue] = useState('');
 
     const dispatch = useDispatch();
     const { isLoading, language, errorMessage } = useSelector(
@@ -47,6 +48,12 @@ const Langauges = () => {
                 id="languages"
                 className={styles.selectI}
                 name="languages"
+                value={languageValue}
+                onChange={(e) => {
+                    if (e.target.value !== 'English') {
+                        setLanguagevalue(languages[0]);
+                    }
+                }}
             >
                 {languages.map((item, index) => {
                     return (

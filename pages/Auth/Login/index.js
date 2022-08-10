@@ -186,7 +186,7 @@ const Login = () => {
                     </form>
                     <div>
                         <p className={styles.accout}>
-                            Dont have an account?
+                            Don't have an account?
                             <span>
                                 <Link href="/Auth/SignUp"> Sign up</Link>
                             </span>

@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import Image from 'next/image';
 import Card from '../../../components/layout/NotRegisteredForms/Card';
 import Link from 'next/link';
-import {
-    BodyWrapper,
-    RegistrationStatus,
-    SuccessMainHeading,
-    H6Wrapper
-} from '../../../components/';
 import Success from '../../../components/ReusableComponents/Success';
 import ButtonComp from '../../../components/ReusableComponents/Button';
 
@@ -20,7 +13,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
     return (
         <div className={styles.successWrapper}>
             <Card>
-                <BodyWrapper>
+                <div className={styles.bodyWrapper}>
                     {/* <ProfileCard width="50%" height="80" text="profile card" /> */}
                     {/* yes
             </ProfileCard> */}
@@ -35,16 +28,19 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                         <Success />
                     </div>
 
-                    <RegistrationStatus>
-                        <SuccessMainHeading>
+                    <div className={styles.registrationStatus}>
+                        <h3 className={styles.successMainHeading}>
                             Your Business account is ready
-                        </SuccessMainHeading>
-                        <H6Wrapper style={{ textAlign: 'center' }}>
+                        </h3>
+                        <h6
+                            className={styles.H6Wrapper}
+                            style={{ textAlign: 'center' }}
+                        >
                             Your account number is:{' '}
                             <span style={{ color: '#005b82' }}>
                                 {accountNumber.data.accountNumber}
                             </span>
-                        </H6Wrapper>
+                        </h6>
 
                         <h6 className={styles.elevateSuccess}>
                             With your Ellevate Account, you have <br />
@@ -60,10 +56,10 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                                 // onClick={handleShowSecondStep}
                             />
                         </Link>
-                    </RegistrationStatus>
+                    </div>
 
                     {/* </ProfileCard> */}
-                </BodyWrapper>
+                </div>
             </Card>
         </div>
     );

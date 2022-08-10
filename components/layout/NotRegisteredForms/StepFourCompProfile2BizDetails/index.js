@@ -54,7 +54,7 @@ const StepFourCompProfile2BizDetails = ({
     //     console.log(data);
     // };
     const router = useRouter();
-    const [activeBtn, setActiveBtn] = useState(true);
+    const [activeBtn, setActiveBtn] = useState(false);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
     const [accountInfo, setAccountInfo] = useState('');
@@ -120,7 +120,7 @@ const StepFourCompProfile2BizDetails = ({
                             <br />
                             <FormInput
                                 type="text"
-                                placeholder="Business Full Name"
+                                placeholder=" Full Business Name"
                                 {...register('busnessName')}
                                 value={formData.businessName}
                                 onChange={(event) => {
@@ -166,7 +166,7 @@ const StepFourCompProfile2BizDetails = ({
                                     <p> +{formData.countryCode}</p>
                                     <input
                                         type="number"
-                                        placeholder="0812 345 6789"
+                                        placeholder="812 345 6789"
                                         {...register('countryCode_number', {
                                             required:
                                                 'Country Code is required',
@@ -354,6 +354,24 @@ const StepFourCompProfile2BizDetails = ({
                     </div>
                 </LastFieldAndButton>
                 {/* <Link href="/Succes"> */}
+                <div>
+                    <div className={styles.terms}>
+                        <input
+                            type="checkbox"
+                            onChange={(e) => {
+                                if (e.target.checked === true) {
+                                    setActiveBtn(true);
+                                } else {
+                                    setActiveBtn(false);
+                                }
+                            }}
+                        />
+                        <label>
+                            I agree with Ellevate App{' '}
+                            <span>Terms and Conditions</span>
+                        </label>
+                    </div>
+                </div>
                 <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}

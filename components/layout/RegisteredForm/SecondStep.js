@@ -10,8 +10,9 @@ import { existingUserProfileData } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
 import Progressbar from '../../ReusableComponents/Progressbar';
+import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 
-const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
+const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
     const dispatch = useDispatch();
     const {
         register,
@@ -108,7 +109,10 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit }) => {
     return (
         <>
             <div className={styles.cardHeading}>
-                <h3 className={styles.LeftHeading}>Profile Setup</h3>
+                <div>
+                    <ArrowBackSvg action={action} />
+                    <h3 className={styles.LeftHeading}>Profile Setup</h3>
+                </div>
                 <Progressbar
                     bgcolor="#6CCF00"
                     progressCount={progress}
