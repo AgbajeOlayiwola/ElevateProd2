@@ -13,10 +13,10 @@ const Ecocard = () => {
         <form>
             <div className={styles.cover}>
                 <div>
-                    <label>Bank Card Number</label>
+                    <label>Ecobank Card number</label>
                     <br />
                     <input
-                        placeholder="Bank Card Number"
+                        placeholder="Ecobank Card number"
                         className={styles.idInput}
                         type="number"
                     />

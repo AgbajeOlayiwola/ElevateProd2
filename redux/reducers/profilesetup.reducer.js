@@ -3,7 +3,7 @@ import { setupProfile } from '../types/actionTypes';
 const initialState = {
     isLoading: false,
     profileSetup: null,
-    errorMessages: '...'
+    errorMessages: ''
 };
 
 const profileSetupReducer = (state = initialState, { type, payload }) => {

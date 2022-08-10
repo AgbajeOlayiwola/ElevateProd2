@@ -31,6 +31,7 @@ import existingUserProfileReducer from './exixtingUserProfile.reducer';
 import ecobankOnlineReducer from './ecobankOnline.reducer';
 import createAccountReducer from './createAccount.reducer';
 import accountStatusReducer from './accountStatus.reducer';
+import getNewUserAccountReducer from './getNewUserAccount.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -65,7 +66,8 @@ const rootReducer = combineReducers({
     ecobankOnlineReducer: ecobankOnlineReducer,
     accountStatusReducer: accountStatusReducer,
     createAccountReducer: createAccountReducer,
-    completeBusProfile: completeBusinessprofileReducer
+    completeBusProfile: completeBusinessprofileReducer,
+    newUserAccountDetails: getNewUserAccountReducer
 });
 
 export default rootReducer;

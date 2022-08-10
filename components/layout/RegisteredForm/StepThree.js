@@ -3,8 +3,9 @@ import ButtonComp from '../../ReusableComponents/Button';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import Progressbar from '../../ReusableComponents/Progressbar';
+import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 
-const StepThree = () => {
+const StepThree = ({ action }) => {
     const account = localStorage.getItem('displayAccount');
     const accountDetails = JSON.parse(account);
     const [isRegistered, setIsRegistered] = useState(false);
@@ -31,7 +32,12 @@ const StepThree = () => {
     return (
         <div>
             <div className={styles.cardHeading}>
-                <h3 className={styles.LeftHeading}>Complete your Profile</h3>
+                <div>
+                    <ArrowBackSvg action={action} />
+                    <h3 className={styles.LeftHeading}>
+                        Complete your Profile
+                    </h3>
+                </div>
                 <Progressbar
                     bgcolor="#6CCF00"
                     progressCount={progress}

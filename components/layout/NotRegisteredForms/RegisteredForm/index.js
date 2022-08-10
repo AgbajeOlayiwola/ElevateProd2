@@ -139,7 +139,7 @@ const RegisteredForm = ({ formData, setFormData }) => {
                             </Label>
                         </InputWrapper>
                         <FormInput
-                            type="number"
+                            type="text"
                             placeholder="Your Business Registration number"
                             name="rc_number"
                             {...register('rc_number', {
@@ -249,7 +249,7 @@ const RegisteredForm = ({ formData, setFormData }) => {
                                 <p> +{formData.countryCode}</p>
                                 <input
                                     type="number"
-                                    placeholder="0812 345 6789"
+                                    placeholder="812 345 6789"
                                     {...register('countryCode_number', {
                                         required: 'Country Code is required',
                                         minLength: {
@@ -369,7 +369,7 @@ const RegisteredForm = ({ formData, setFormData }) => {
                                 <p> +{formData.countryCode}</p>
                                 <input
                                     type="number"
-                                    placeholder="0812 345 6789"
+                                    placeholder="812 345 6789"
                                     {...register('countryCode_number', {
                                         required: 'Country Code is required',
                                         minLength: {

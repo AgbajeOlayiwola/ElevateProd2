@@ -54,7 +54,7 @@ const StepFourCompProfile2BizDetails = ({
     //     console.log(data);
     // };
     const router = useRouter();
-    const [activeBtn, setActiveBtn] = useState(true);
+    const [activeBtn, setActiveBtn] = useState(false);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
     const [accountInfo, setAccountInfo] = useState('');
@@ -81,9 +81,7 @@ const StepFourCompProfile2BizDetails = ({
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         if (!errorMessage) {
-            console.log('djhchsd');
-
-            dispatch(CompProfile());
+            // dispatch(CompProfile());
             // do something here 1 sec after current has changed
             const accountData = {
                 affiliateCode: 'ENG',
@@ -93,20 +91,18 @@ const StepFourCompProfile2BizDetails = ({
 
             console.log(accountStatus);
             if (errorMessages) {
-                setError(errorMessages);
+                // setError(errorMessages);
                 console.log(errorMessages);
-                setLoading(false);
+                // setLoading(false);
             } else if (accountStatus.message === 'Try Again') {
                 router.push('/Account/Loading');
             } else if (accountStatus.message === 'SUCCESS') {
-                window.localStorage.setItem(
-                    'accountNumber',
-                    JSON.stringify(accountStatus)
-                );
+                // window.localStorage.setItem(
+                //     'accountNumber',
+                //     JSON.stringify(accountStatus)
+                // );
                 router.push('/Succes');
             }
-        } else {
-            console.log('kjhgfdfgh');
         }
     };
     useEffect(() => {
@@ -124,7 +120,7 @@ const StepFourCompProfile2BizDetails = ({
                             <br />
                             <FormInput
                                 type="text"
-                                placeholder="Business Full Name"
+                                placeholder=" Full Business Name"
                                 {...register('busnessName')}
                                 value={formData.businessName}
                                 onChange={(event) => {
@@ -170,7 +166,7 @@ const StepFourCompProfile2BizDetails = ({
                                     <p> +{formData.countryCode}</p>
                                     <input
                                         type="number"
-                                        placeholder="0812 345 6789"
+                                        placeholder="812 345 6789"
                                         {...register('countryCode_number', {
                                             required:
                                                 'Country Code is required',
@@ -358,6 +354,24 @@ const StepFourCompProfile2BizDetails = ({
                     </div>
                 </LastFieldAndButton>
                 {/* <Link href="/Succes"> */}
+                <div>
+                    <div className={styles.terms}>
+                        <input
+                            type="checkbox"
+                            onChange={(e) => {
+                                if (e.target.checked === true) {
+                                    setActiveBtn(true);
+                                } else {
+                                    setActiveBtn(false);
+                                }
+                            }}
+                        />
+                        <label>
+                            I agree with Ellevate App{' '}
+                            <span>Terms and Conditions</span>
+                        </label>
+                    </div>
+                </div>
                 <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}

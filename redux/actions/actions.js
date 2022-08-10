@@ -30,7 +30,8 @@ import {
     createAccount,
     accountStatus,
     completeProfile,
-    newUserCreateAccount
+    newUserCreateAccount,
+    getNewUserAccount
 } from '../types/actionTypes';
 import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -829,6 +830,14 @@ export const bvnNinErrorI = (bvnErrorI) => ({
     type: otp.BVN_NIN_LOAD_ERRORI,
     payload: bvnErrorI
 });
+export const bvnNinErrorII = (bvnErrorII) => ({
+    type: otp.BVN_NIN_LOAD_ERRORII,
+    payload: bvnErrorII
+});
+export const bvnNinErrorIII = (bvnErrorIII) => ({
+    type: otp.BVN_NIN_LOAD_ERRORIII,
+    payload: bvnErrorIII
+});
 export const bvnNinData = (bvnNin) => ({
     type: otp.BVN_NIN_LOAD_SUCCESS,
     payload: bvnNin
@@ -858,6 +867,8 @@ export const verifyOtp = (otpData) => {
                 } else {
                     dispatch(bvnNinError(response.data.data[0].reason));
                     dispatch(bvnNinErrorI(response.data.data[1].reason));
+                    dispatch(bvnNinErrorII(response.data.data[2].reason));
+                    dispatch(bvnNinErrorIII(response.data.data[3].reason));
                 }
             })
             .catch((error) => {
@@ -940,7 +951,7 @@ export const createNewAccountStart = () => ({
 });
 export const createNewAccountSuccess = (newAccount) => ({
     type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_SUCCESS,
-    payload: compBusprofile
+    payload: newAccount
 });
 export const createNewAccountError = (newAccountErrorMessage) => ({
     type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_ERROR,
@@ -964,3 +975,32 @@ export const createNewUserAccount = (accountData) => {
 };
 
 //End Create New User Action
+
+//start account status
+
+export const getNewAccountStart = () => ({
+    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_START,
+    payload: ''
+});
+export const getNewAccountSuccess = (newUserAccount) => ({
+    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_SUCCESS,
+    payload: newUserAccount
+});
+export const getNewAccountError = (newUserAccountErrorMessage) => ({
+    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_ERROR,
+    payload: newUserAccountErrorMessage
+});
+
+export const getNewUserAccountDetails = (accountData) => {
+    return (dispatch) => {
+        // dispatch(completeProfileLoadStart());
+        dispatch(getNewAccountStart());
+        axiosInstance
+            .get(`${apiRoutes.accountStatus}`)
+            .then((response) => dispatch(getNewAccountSuccess(response.data)))
+            .catch((error) =>
+                dispatch(getNewAccountError(error.response.data.message))
+            );
+    };
+};
+//end account status
