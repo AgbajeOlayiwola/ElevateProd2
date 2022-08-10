@@ -115,6 +115,10 @@ const StepFour = ({ title }) => {
                 'userId',
                 JSON.stringify(createAccount.data.userId)
             );
+            localStorage.setItem(
+                'token',
+                JSON.stringify(createAccount.data.token)
+            );
         }
     };
     useEffect(() => {
