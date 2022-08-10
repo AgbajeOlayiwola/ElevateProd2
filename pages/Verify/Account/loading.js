@@ -7,7 +7,10 @@ import axiosInstance from '../../../redux/helper/apiClient';
 import apiRoutes from '../../../redux/helper/apiRoutes';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { CompProfile } from '../../../redux/actions/actions';
+import {
+    CompProfile,
+    getNewUserAccountDetails
+} from '../../../redux/actions/actions';
 import { IoMdGift } from 'react-icons/io';
 
 const AccountLoading = () => {
@@ -21,8 +24,8 @@ const AccountLoading = () => {
     const dispatch = useDispatch();
 
     console.log(profile);
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
+    const { newUserAccount, newUserAccountErrorMessage } = useSelector(
+        (state) => state.newUserAccountDetails
     );
     useEffect(() => {
         const accountData = {
@@ -31,25 +34,27 @@ const AccountLoading = () => {
         };
         dispatch(createNewUserAccount(accountData));
     }, []);
-    const newUserAccount = () => {
+    const newUserAccountt = () => {
         console.log(accountStatus);
-        if (errorMessages) {
-            setError(errorMessages);
-            console.log(errorMessages);
-            setLoading(false);
-        } else if (accountStatus.message === 'Try Again') {
-            router.push('/Account/Loading');
-        } else if (accountStatus.message === 'SUCCESS') {
-            window.localStorage.setItem(
-                'accountNumber',
-                JSON.stringify(accountStatus)
-            );
+        if (newUserAccountErrorMessage) {
+            // setError(errorMessages);
+            console.log(newUserAccountErrorMessage);
+            // setLoading(false);
+        } else if (newUserAccount.message === 'Try Again') {
+            setTimeout(() => {
+                dispatch(getNewUserAccountDetails());
+            }, 40000);
+        } else if (newUserAccount.message === 'SUCCESS') {
+            // window.localStorage.setItem(
+            //     'accountNumber',
+            //     JSON.stringify(accountStatus)
+            // );
             router.push('/Success');
         }
     };
     useEffect(() => {
-        newUserAccount();
-    }, [errorMessages, accountStatus]);
+        newUserAccountt();
+    }, [newUserAccountErrorMessage, newUserAccount]);
 
     return (
         <>

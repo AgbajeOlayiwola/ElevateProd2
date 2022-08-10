@@ -287,14 +287,28 @@ export const otp = {
 };
 //otp action type end
 
+//complete profile start
 export const completeProfile = {
     COMP_PROFILE_LOAD_START: 'COMP_PROFILE_LOAD_START',
     COMP_PROFILE_LOAD_SUCCESS: 'COMP_PROFILE_LOAD_SUCCESS',
     COMP_PROFILE_LOAD_ERROR: 'COMP_PROFILE_LOAD_ERROR'
 };
+//complete profile end
 
+//create new user account
 export const newUserCreateAccount = {
     CREATE_NEW_ACCOUNT_LOAD_START: 'CREATE_NEW_ACCOUNT_LOAD_START',
     CREATE_NEW_ACCOUNT_LOAD_SUCCESS: 'CREATE_NEW_ACCOUNT_LOAD_SUCCESS',
     CREATE_NEW_ACCOUNT_LOAD_ERROR: 'CREATE_NEW_ACCOUNT_LOAD_ERROR'
 };
+//create new user end
+
+//get new user account start
+
+export const getNewUserAccount = {
+    GET_NEW_ACCOUNT_LOAD_START: 'GET_NEW_ACCOUNT_LOAD_START',
+    GET_NEW_ACCOUNT_LOAD_SUCCESS: 'GET_NEW_ACCOUNT_LOAD_SUCCESS',
+    GET_NEW_ACCOUNT_LOAD_ERROR: 'GET_NEW_ACCOUNT_LOAD_ERROR'
+};
+
+//get new user account end

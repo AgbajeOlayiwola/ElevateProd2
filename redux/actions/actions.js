@@ -30,7 +30,8 @@ import {
     createAccount,
     accountStatus,
     completeProfile,
-    newUserCreateAccount
+    newUserCreateAccount,
+    getNewUserAccount
 } from '../types/actionTypes';
 import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -940,7 +941,7 @@ export const createNewAccountStart = () => ({
 });
 export const createNewAccountSuccess = (newAccount) => ({
     type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_SUCCESS,
-    payload: compBusprofile
+    payload: newAccount
 });
 export const createNewAccountError = (newAccountErrorMessage) => ({
     type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_ERROR,
@@ -964,3 +965,32 @@ export const createNewUserAccount = (accountData) => {
 };
 
 //End Create New User Action
+
+//start account status
+
+export const getNewAccountStart = () => ({
+    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_START,
+    payload: ''
+});
+export const getNewAccountSuccess = (newUserAccount) => ({
+    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_SUCCESS,
+    payload: newUserAccount
+});
+export const getNewAccountError = (newUserAccountErrorMessage) => ({
+    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_ERROR,
+    payload: newUserAccountErrorMessage
+});
+
+export const getNewUserAccountDetails = (accountData) => {
+    return (dispatch) => {
+        // dispatch(completeProfileLoadStart());
+        dispatch(getNewAccountStart());
+        axiosInstance
+            .get(`${apiRoutes.accountStatus}`)
+            .then((response) => dispatch(getNewAccountSuccess(response.data)))
+            .catch((error) =>
+                dispatch(getNewAccountError(error.response.data.message))
+            );
+    };
+};
+//end account status
