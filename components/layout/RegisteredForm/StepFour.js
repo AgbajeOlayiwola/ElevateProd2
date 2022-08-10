@@ -14,8 +14,9 @@ import Loader from '../../ReusableComponents/Loader';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Progressbar from '../../ReusableComponents/Progressbar';
+import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 
-const StepFour = ({ title }) => {
+const StepFour = ({ title, action }) => {
     const dispatch = useDispatch();
     const router = useRouter();
     const account = localStorage.getItem('meta');
@@ -59,7 +60,7 @@ const StepFour = ({ title }) => {
             existingUserProfile.message === 'User account created succesfully'
         ) {
             setLoading(false);
-            router.push('/Dashboard');
+            router.push('/Succes/Success');
         }
     };
     useEffect(() => {
@@ -181,7 +182,12 @@ const StepFour = ({ title }) => {
     return (
         <div ref={myref}>
             <div className={styles.cardHeading}>
-                <h3 className={styles.LeftHeading}>Complete your Profile</h3>
+                <div>
+                    <ArrowBackSvg action={action} />
+                    <h3 className={styles.LeftHeading}>
+                        Complete your Profile
+                    </h3>
+                </div>
                 <Progressbar
                     bgcolor="#6CCF00"
                     progressCount={progress}

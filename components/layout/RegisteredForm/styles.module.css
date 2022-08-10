@@ -94,7 +94,18 @@
     justify-content: space-between;
     align-items: baseline;
     width: 100%;
+    margin-bottom: 20px;
 }
+
+.cardHeading div {
+    display: flex;
+    align-items: center;
+}
+
+.cardHeading div svg {
+    cursor: pointer;
+}
+
 .p {
     font-style: normal;
     font-weight: 500;
@@ -107,8 +118,9 @@
 .LeftHeading {
     display: flex;
     justify-content: space-evenly;
-    /* identical to box height */
+    margin: 0px;
     color: #005b82;
+    margin-left: 10px;
 }
 .ButtonWrapper {
     display: flex;

@@ -24,12 +24,28 @@ const ExistingMultiStep = () => {
                         onSubmit={(e) => {
                             setPage(page + 1);
                         }}
+                        action={() => {
+                            setPage(page - 1);
+                        }}
                     />
                 );
             case 2:
-                return <StepThree />;
+                return (
+                    <StepThree
+                        action={() => {
+                            setPage(page - 1);
+                        }}
+                    />
+                );
             case 3:
-                return <StepFour title={pageType} />;
+                return (
+                    <StepFour
+                        title={pageType}
+                        action={() => {
+                            setPage(page - 1);
+                        }}
+                    />
+                );
             default:
                 return <FirstStep />;
         }

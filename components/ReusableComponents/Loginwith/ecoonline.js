@@ -81,14 +81,14 @@ const Ecoonline = () => {
             {error ? <p className={styles.error}>{error}</p> : null}
             <div className={styles.cover}>
                 <div>
-                    <label>Enter Your Ecobank ID</label>
+                    <label>Enter your Ecobank Online Username</label>
                     <br />
                     <input
-                        placeholder="Ecobank Online"
+                        placeholder="Ecobank Online Username"
                         type="text"
                         className={styles.idInput}
                         {...register('username', {
-                            required: 'Ecobank ID is Required'
+                            required: 'Ecobank Online Username is Required'
                         })}
                         name="username"
                     />

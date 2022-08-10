@@ -113,3 +113,27 @@
     color: #6ccf00;
     margin-top: 2px;
 }
+
+.terms {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    margin-top: 20px;
+    color: #2f2f2f;
+}
+.terms input {
+    width: 10%;
+}
+.terms label span {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 19px;
+    /* identical to box height */
+
+    color: #005b82;
+}
