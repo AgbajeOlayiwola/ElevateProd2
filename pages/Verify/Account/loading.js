@@ -13,7 +13,6 @@ import { IoMdGift } from 'react-icons/io';
 const AccountLoading = () => {
     const [accountInfo, setAccountInfo] = useState('');
     const router = useRouter();
-    const [timeInterval, setTimeInterval] = useState(0);
 
     const { isLoading, profile, errorMessage } = useSelector(
         (state) => state.profile
@@ -22,41 +21,35 @@ const AccountLoading = () => {
     const dispatch = useDispatch();
 
     console.log(profile);
-
-    setTimeout(() => {
-        setTimeInterval(timeInterval + 1);
-    }, 20000);
-
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
     useEffect(() => {
-        setTimeout(() => {
-            dispatch(CompProfile());
-            // do something here 1 sec after current has changed
-            const accountData = {
-                affiliateCode: 'ENG',
-                ccy: 'NGN'
-            };
-            // https://160.119.246.165/unifiedapis-v2/services/createdigitalaccount
-            axiosInstance
-                .post(`${apiRoutes.newCreateAccount}`, accountData)
-                .then((response) => {
-                    console.log('Accoutn Info', response.data);
-                    setAccountInfo(response.data.message);
-                })
-                .catch((error) => {
-                    console.log(error.response.data.message);
-                    setAccountInfo(error.response.data.message);
-                });
-
-            if (
-                accountInfo ===
-                'Your Transaction Request is Successful and Approved'
-            ) {
-                router.push('../../Succes');
-            } else {
-                router.push('../Failed');
-            }
-        }, 10000);
+        const accountData = {
+            affiliateCode: 'ENG',
+            ccy: 'NGN'
+        };
+        dispatch(createNewUserAccount(accountData));
     }, []);
+    const newUserAccount = () => {
+        console.log(accountStatus);
+        if (errorMessages) {
+            setError(errorMessages);
+            console.log(errorMessages);
+            setLoading(false);
+        } else if (accountStatus.message === 'Try Again') {
+            router.push('/Account/Loading');
+        } else if (accountStatus.message === 'SUCCESS') {
+            window.localStorage.setItem(
+                'accountNumber',
+                JSON.stringify(accountStatus)
+            );
+            router.push('/Success');
+        }
+    };
+    useEffect(() => {
+        newUserAccount();
+    }, [errorMessages, accountStatus]);
 
     return (
         <>
