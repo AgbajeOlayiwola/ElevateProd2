@@ -8,6 +8,7 @@ import apiRoutes from '../../../redux/helper/apiRoutes';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { CompProfile } from '../../../redux/actions/actions';
+import { IoMdGift } from 'react-icons/io';
 
 const AccountLoading = () => {
     const [accountInfo, setAccountInfo] = useState('');
@@ -20,30 +21,23 @@ const AccountLoading = () => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(CompProfile());
-    }, []);
-
     console.log(profile);
-    setTimeout(() => {
-        setTimeInterval(timeInterval + 1);
-    }, 10000);
 
     setTimeout(() => {
         setTimeInterval(timeInterval + 1);
-    }, 10000);
+    }, 20000);
 
     useEffect(() => {
         setTimeout(() => {
+            dispatch(CompProfile());
             // do something here 1 sec after current has changed
             const accountData = {
                 affiliateCode: 'ENG',
                 ccy: 'NGN'
             };
             // https://160.119.246.165/unifiedapis-v2/services/createdigitalaccount
-            axiosInstance.post(``);
             axiosInstance
-                .post(`${apiRoutes.createAccount}`, accountData)
+                .post(`${apiRoutes.newCreateAccount}`, accountData)
                 .then((response) => {
                     console.log('Accoutn Info', response.data);
                     setAccountInfo(response.data.message);
@@ -52,59 +46,57 @@ const AccountLoading = () => {
                     console.log(error.response.data.message);
                     setAccountInfo(error.response.data.message);
                 });
+
+            if (
+                accountInfo ===
+                'Your Transaction Request is Successful and Approved'
+            ) {
+                router.push('../../Succes');
+            } else {
+                router.push('../Failed');
+            }
         }, 10000);
-    }, [timeInterval]);
+    }, []);
 
     return (
         <>
-            {accountInfo ===
-            'Your Transaction Request is Successful and Approved' ? (
-                <StepFiveSuccessPage />
-            ) : accountInfo === 'failed' ||
-              accountInfo ===
-                  'You already have an account with us. Please contact us for more information' ? (
-                <div className={styles.cover}>
-                    <FailedModal text={accountInfo} />
-                </div>
-            ) : (
-                <div className={styles.cover}>
-                    <div className={styles.covInn}>
-                        <div className={styles.load}>
-                            <svg
-                                width="59"
-                                height="15"
-                                viewBox="0 0 59 15"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                className={styles.svg}
-                            >
-                                <circle
-                                    cx="7.5"
-                                    cy="7.25684"
-                                    r="7"
-                                    fill="#6CCF00"
-                                />
-                                <circle
-                                    cx="29.5"
-                                    cy="7.25684"
-                                    r="7"
-                                    fill="#6CCF00"
-                                />
-                                <circle
-                                    cx="51.5"
-                                    cy="7.25684"
-                                    r="7"
-                                    fill="#6CCF00"
-                                />
-                            </svg>
-                        </div>
-                        <p className={styles.kindly}>
-                            Kindly wait while the system fetches your account
-                            number, this will take a moment.
-                        </p>
+            <div className={styles.cover}>
+                <div className={styles.covInn}>
+                    <div className={styles.load}>
+                        <svg
+                            width="59"
+                            height="15"
+                            viewBox="0 0 59 15"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className={styles.svg}
+                        >
+                            <circle
+                                cx="7.5"
+                                cy="7.25684"
+                                r="7"
+                                fill="#6CCF00"
+                            />
+                            <circle
+                                cx="29.5"
+                                cy="7.25684"
+                                r="7"
+                                fill="#6CCF00"
+                            />
+                            <circle
+                                cx="51.5"
+                                cy="7.25684"
+                                r="7"
+                                fill="#6CCF00"
+                            />
+                        </svg>
                     </div>
+                    <p className={styles.kindly}>
+                        Kindly wait while the system fetches your account
+                        number, this will take a moment.
+                    </p>
                 </div>
-            )}
+            </div>
         </>
     );
 };

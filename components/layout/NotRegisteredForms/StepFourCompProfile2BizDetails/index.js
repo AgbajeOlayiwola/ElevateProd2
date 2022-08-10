@@ -27,9 +27,14 @@ import {
 import styles from './styles.module.css';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { CompleteBusinessProfile } from '../../../../redux/actions/actions';
+import {
+    CompleteBusinessProfile,
+    CompProfile
+} from '../../../../redux/actions/actions';
 import { useRouter } from 'next/router';
 import { location } from '../../../ReusableComponents/Data';
+import axiosInstance from '../../../../redux/helper/apiClient';
+import apiRoutes from '../../../../redux/helper/apiRoutes';
 const StepFourCompProfile2BizDetails = ({
     handleShowSuccessStep,
     formData,
@@ -51,6 +56,7 @@ const StepFourCompProfile2BizDetails = ({
     const [activeBtn, setActiveBtn] = useState(true);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
+    const [accountInfo, setAccountInfo] = useState('');
     const { isLoading, compBusprofile, errorMessage } = useSelector(
         (state) => state.completeBusProfile
     );
@@ -71,9 +77,85 @@ const StepFourCompProfile2BizDetails = ({
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         if (!errorMessage) {
-            router.push('/Verify/Account/loading');
+            console.log('djhchsd');
+
+            dispatch(CompProfile());
+            // do something here 1 sec after current has changed
+            const accountData = {
+                affiliateCode: 'ENG',
+                ccy: 'NGN'
+            };
+
+            axiosInstance
+                .post(`${apiRoutes.newCreateAccount}`, accountData)
+                .then((response) => {
+                    console.log('Accoutn Info', response.data.message);
+                    setAccountInfo(response.data.message);
+                })
+                .catch((error) => {
+                    console.log('error from create:', error);
+                    setAccountInfo(error.response.data.message);
+                });
         }
+        // } else if (accountInfo === 'SUCCESS') {
+        //     router.push('/Succes');
+        // } else {
+        //     router.push('/Verify/Failed');
+        // }
     };
+    useEffect(() => {
+        handleSubmitIII();
+    }, [errorMessage]);
+    const [timeInterval, setTimeInterval] = useState(0);
+    setTimeout(() => {
+        setTimeInterval(timeInterval + 1);
+    }, 20000);
+
+    useEffect(() => {
+        setTimeout(() => {
+            axiosInstance
+                .get(`${apiRoutes.accountStatus}`)
+                .then((response) => {
+                    console.log('Accoutn Status', response.data.message);
+                    setAccountInfo(response.data.message);
+                    // AccountDone(response.data.data);
+                    if (accountInfo === 'SUCCESS') {
+                        router.push('/Succes');
+                    } else if (accountInfo === 'Try Again') {
+                        if (!errorMessage) {
+                            console.log('djhchsd');
+
+                            dispatch(CompProfile());
+                            // do something here 1 sec after current has changed
+                            const accountData = {
+                                affiliateCode: 'ENG',
+                                ccy: 'NGN'
+                            };
+
+                            axiosInstance
+                                .post(
+                                    `${apiRoutes.newCreateAccount}`,
+                                    accountData
+                                )
+                                .then((response) => {
+                                    console.log(
+                                        'Accoutn Info',
+                                        response.data.message
+                                    );
+                                    setAccountInfo(response.data.message);
+                                })
+                                .catch((error) => {
+                                    console.log('error from create:', error);
+                                    setAccountInfo(error.response.data.message);
+                                });
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }, 20000);
+    }, [accountInfo, timeInterval]);
 
     useEffect(() => {
         location.filter((item) => {
