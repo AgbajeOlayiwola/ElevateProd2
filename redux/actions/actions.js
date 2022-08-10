@@ -687,8 +687,7 @@ export const accountStatusLoadError = (errorMessages) => ({
 });
 export const accountStatusData = (data) => (dispatch) => {
     dispatch(accountStatusLoadStart());
-
-    axios
+    axiosInstance
         .get(`${apiRoutes.accountStatus}/${data}`)
         .then((response) => dispatch(accountStatusLoadSuccess(response.data)))
         .catch((error) =>

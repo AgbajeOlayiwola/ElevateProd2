@@ -111,6 +111,10 @@ const StepFour = ({ title }) => {
         } else if (createAccount.statusCode === 200) {
             console.log(createAccount);
             dispatch(accountStatusData(createAccount.data.userId));
+            localStorage.setItem(
+                'userId',
+                JSON.stringify(createAccount.data.userId)
+            );
         }
     };
     useEffect(() => {
@@ -124,10 +128,7 @@ const StepFour = ({ title }) => {
             console.log(errorMessages);
             setLoading(false);
         } else if (accountStatus.message === 'Try Again') {
-            setTimeout(() => {
-                dispatch(accountStatusData(createAccount.data.userId));
-                console.log('Hello');
-            }, 40000);
+            router.push('/Verify/ExistingAccount');
         } else if (accountStatus.message === 'SUCCESS') {
             window.localStorage.setItem(
                 'accountNumber',
@@ -337,15 +338,6 @@ const StepFour = ({ title }) => {
                                             //     message: 'Invalid email address'
                                             // }
                                         })}
-                                        onChange={(e) => {
-                                            if (e.target.value.length === 0) {
-                                                setActiveBtn(false);
-                                            } else if (
-                                                e.target.value.length > 0
-                                            ) {
-                                                setActiveBtn(true);
-                                            }
-                                        }}
                                     />
                                 </div>
                             </div>
@@ -374,7 +366,16 @@ const StepFour = ({ title }) => {
                         </div>
                         <div>
                             <div className={styles.terms}>
-                                <input type="checkbox" />
+                                <input
+                                    type="checkbox"
+                                    onChange={(e) => {
+                                        if (e.target.checked === true) {
+                                            setActiveBtn(true);
+                                        } else {
+                                            setActiveBtn(false);
+                                        }
+                                    }}
+                                />
                                 <label>
                                     I agree with Ellevate App{' '}
                                     <span>Terms and Conditions</span>
@@ -522,15 +523,6 @@ const StepFour = ({ title }) => {
                                         type="text"
                                         placeholder="Enter City"
                                         className={styles.textInput}
-                                        onChange={(e) => {
-                                            if (e.target.value.length === 0) {
-                                                setActiveBtn(false);
-                                            } else if (
-                                                e.target.value.length > 0
-                                            ) {
-                                                setActiveBtn(true);
-                                            }
-                                        }}
                                     />
                                 </div>
                             </div>
@@ -559,7 +551,16 @@ const StepFour = ({ title }) => {
                         </div>
                         <div>
                             <div className={styles.terms}>
-                                <input type="checkbox" />
+                                <input
+                                    type="checkbox"
+                                    onChange={(e) => {
+                                        if (e.target.checked === true) {
+                                            setActiveBtn(true);
+                                        } else {
+                                            setActiveBtn(false);
+                                        }
+                                    }}
+                                />
                                 <label>
                                     I agree with Ellevate App
                                     <span>Terms and Conditions</span>

@@ -1,0 +1,32 @@
+.elevateSuccess {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    /* or 141% */
+
+    text-align: center;
+    margin-top: 3rem;
+    color: #a5a5a5;
+    margin-bottom: -3rem;
+}
+.elevateSuccess span {
+    color: #005b82;
+}
+.centerP {
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    text-align: center;
+    color: #a5a5a5;
+    cursor: pointer;
+}
+
+.successWrapper {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}

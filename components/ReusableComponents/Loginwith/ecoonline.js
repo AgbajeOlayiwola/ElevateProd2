@@ -95,14 +95,14 @@ const Ecoonline = () => {
                 </div>
                 <p className={styles.error}>{errors?.username?.message}</p>
                 <div>
-                    <label>Enter Your Ecobank Password</label>
+                    <label>Enter Your Ecobank Online Password</label>
                     <br />
                     <div className={styles.passwordEye}>
                         <input
-                            placeholder="Ecobank Password"
+                            placeholder="Ecobank Online Password"
                             className={styles.idInput}
                             {...register('password', {
-                                required: 'Ecobank Password is Required'
+                                required: 'Ecobank Online Password is Required'
                             })}
                             name="password"
                             type={outType ? 'text' : 'password'}
