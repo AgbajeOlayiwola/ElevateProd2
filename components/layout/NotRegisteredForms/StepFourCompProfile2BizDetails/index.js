@@ -27,9 +27,15 @@ import {
 import styles from './styles.module.css';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { CompleteBusinessProfile } from '../../../../redux/actions/actions';
+import {
+    CompleteBusinessProfile,
+    CompProfile,
+    createNewUserAccount
+} from '../../../../redux/actions/actions';
 import { useRouter } from 'next/router';
 import { location } from '../../../ReusableComponents/Data';
+import axiosInstance from '../../../../redux/helper/apiClient';
+import apiRoutes from '../../../../redux/helper/apiRoutes';
 const StepFourCompProfile2BizDetails = ({
     handleShowSuccessStep,
     formData,
@@ -51,6 +57,10 @@ const StepFourCompProfile2BizDetails = ({
     const [activeBtn, setActiveBtn] = useState(true);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
+    const [accountInfo, setAccountInfo] = useState('');
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
     const { isLoading, compBusprofile, errorMessage } = useSelector(
         (state) => state.completeBusProfile
     );
@@ -67,21 +77,41 @@ const StepFourCompProfile2BizDetails = ({
             city: formData.city,
             lga: formData.localGoverment
         };
-        console.log(errorMessage);
+        console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         if (!errorMessage) {
-            router.push('/Verify/Account/loading');
+            console.log('djhchsd');
+
+            dispatch(CompProfile());
+            // do something here 1 sec after current has changed
+            const accountData = {
+                affiliateCode: 'ENG',
+                ccy: 'NGN'
+            };
+            dispatch(createNewUserAccount(accountData));
+
+            console.log(accountStatus);
+            if (errorMessages) {
+                setError(errorMessages);
+                console.log(errorMessages);
+                setLoading(false);
+            } else if (accountStatus.message === 'Try Again') {
+                router.push('/Account/Loading');
+            } else if (accountStatus.message === 'SUCCESS') {
+                window.localStorage.setItem(
+                    'accountNumber',
+                    JSON.stringify(accountStatus)
+                );
+                router.push('/Succes');
+            }
+        } else {
+            console.log('kjhgfdfgh');
         }
     };
-
     useEffect(() => {
-        location.filter((item) => {
-            if (item.state === localState) {
-                setLocalGovernment(item.localGoverment);
-            }
-        });
-    }, [localState]);
+        handleSubmitIII();
+    }, [errorMessage]);
 
     return (
         <div>

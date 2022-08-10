@@ -8,7 +8,7 @@ import {
     RegistrationStatus,
     SuccessMainHeading,
     H6Wrapper
-} from './styles.module';
+} from '../../../components/styles.module';
 import Success from '../../../components/ReusableComponents/Success';
 import ButtonComp from '../../../components/ReusableComponents/Button';
 
@@ -22,7 +22,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
             <Card>
                 <BodyWrapper>
                     {/* <ProfileCard width="50%" height="80" text="profile card" /> */}
-                    {/* yes
+                    {/* yes yes yes
             </ProfileCard> */}
                     {/* <ProfileCard width="50%" height="0"> */}
                     <div
