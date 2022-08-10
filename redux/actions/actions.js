@@ -830,6 +830,14 @@ export const bvnNinErrorI = (bvnErrorI) => ({
     type: otp.BVN_NIN_LOAD_ERRORI,
     payload: bvnErrorI
 });
+export const bvnNinErrorII = (bvnErrorII) => ({
+    type: otp.BVN_NIN_LOAD_ERRORII,
+    payload: bvnErrorII
+});
+export const bvnNinErrorIII = (bvnErrorIII) => ({
+    type: otp.BVN_NIN_LOAD_ERRORIII,
+    payload: bvnErrorIII
+});
 export const bvnNinData = (bvnNin) => ({
     type: otp.BVN_NIN_LOAD_SUCCESS,
     payload: bvnNin
@@ -859,6 +867,8 @@ export const verifyOtp = (otpData) => {
                 } else {
                     dispatch(bvnNinError(response.data.data[0].reason));
                     dispatch(bvnNinErrorI(response.data.data[1].reason));
+                    dispatch(bvnNinErrorII(response.data.data[2].reason));
+                    dispatch(bvnNinErrorIII(response.data.data[3].reason));
                 }
             })
             .catch((error) => {

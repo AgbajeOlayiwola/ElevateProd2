@@ -3,10 +3,12 @@ import { otp } from '../types/actionTypes';
 const initialState = {
     Loading: false,
     otp: null,
-    otpErrorMessage: '',
-    bvnError: null,
-    bvnErrorI: null,
-    bvnNin: null
+    otpErrorMessage: '.',
+    bvnError: '.',
+    bvnErrorI: '.',
+    bvnErrorII: '.',
+    bvnErrorIII: '.',
+    bvnNin: '.'
 };
 
 const otpReducer = (state = initialState, { type, payload }) => {
@@ -37,6 +39,16 @@ const otpReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 bvnErrorI: payload
+            };
+        case otp.BVN_NIN_LOAD_ERRORII:
+            return {
+                ...state,
+                bvnErrorII: payload
+            };
+        case otp.BVN_NIN_LOAD_ERRORIII:
+            return {
+                ...state,
+                bvnErrorIII: payload
             };
         case otp.BVN_NIN_LOAD_SUCCESS:
             return {
