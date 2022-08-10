@@ -81,9 +81,7 @@ const StepFourCompProfile2BizDetails = ({
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         if (!errorMessage) {
-            console.log('djhchsd');
-
-            dispatch(CompProfile());
+            // dispatch(CompProfile());
             // do something here 1 sec after current has changed
             const accountData = {
                 affiliateCode: 'ENG',
@@ -93,20 +91,18 @@ const StepFourCompProfile2BizDetails = ({
 
             console.log(accountStatus);
             if (errorMessages) {
-                setError(errorMessages);
+                // setError(errorMessages);
                 console.log(errorMessages);
-                setLoading(false);
+                // setLoading(false);
             } else if (accountStatus.message === 'Try Again') {
                 router.push('/Account/Loading');
             } else if (accountStatus.message === 'SUCCESS') {
-                window.localStorage.setItem(
-                    'accountNumber',
-                    JSON.stringify(accountStatus)
-                );
+                // window.localStorage.setItem(
+                //     'accountNumber',
+                //     JSON.stringify(accountStatus)
+                // );
                 router.push('/Succes');
             }
-        } else {
-            console.log('kjhgfdfgh');
         }
     };
     useEffect(() => {

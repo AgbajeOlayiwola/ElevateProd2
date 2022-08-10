@@ -42,7 +42,8 @@ const ProfileSetups = () => {
         city: '',
         state: '',
         custCategory: 'Individual',
-        referralCode: ''
+        referralCode: '',
+        signatory: 1
     });
     const countryName = localStorage.getItem('country');
     const countryNames = JSON.parse(countryName);
@@ -67,9 +68,15 @@ const ProfileSetups = () => {
     const { isLoading, profile, errorMessages } = useSelector(
         (state) => state.profileSetup
     );
-    const { Loading, otp, otpErrorMessage, bvnError, bvnErrorI } = useSelector(
-        (state) => state.otp
-    );
+    const {
+        Loading,
+        otp,
+        otpErrorMessage,
+        bvnError,
+        bvnErrorI,
+        bvnErrorII,
+        bvnErrorIII
+    } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
     const conditionalComponent = () => {
         switch (page) {
@@ -108,6 +115,8 @@ const ProfileSetups = () => {
     // }, []);
     const [errorM, setErrorM] = useState('');
     const [errorI, setErrorI] = useState('');
+    const [errorII, setErrorII] = useState('');
+    const [errorIII, setErrorIII] = useState('');
 
     function handleSubmit() {
         // console.log('firstAPi');
@@ -119,11 +128,12 @@ const ProfileSetups = () => {
             bvn: formData.bvNumber,
             phoneNumber: formData.countryCode + formData.phoneNumber,
             countryCode: formData.countryCode,
-            dob: formData.dateOfBirth
+            dob: formData.dateOfBirth,
+            signatoryCount: 1
         };
 
         dispatch(createProfileSetup(profileData));
-        console.log('lol');
+        // console.log('lol');
         setError(errorMessages);
         if (!errorMessages) {
             setPage(page + 1);
@@ -131,15 +141,15 @@ const ProfileSetups = () => {
             console.log('moved');
         }
     }
-    useEffect(() => {
-        setError(errorMessages);
-        //change to no error messages boss
-        if (!errorMessages) {
-            setPage(page + 1);
-        } else {
-            console.log('moved');
-        }
-    }, [errorMessages]);
+    // useEffect(() => {
+    //     setError(errorMessages);
+    //     //change to no error messages boss
+    //     if (!errorMessages) {
+    //         setPage(page + 1);
+    //     } else {
+    //         console.log('moved');
+    //     }
+    // }, [errorMessages]);
 
     const handleSubmitII = () => {
         const otpData = {
@@ -153,26 +163,30 @@ const ProfileSetups = () => {
             setPage(page - 1);
             setErrorM(bvnError);
             setErrorI(bvnErrorI);
+            setErrorII(bvnErrorII);
+            setErrorIII(bvnErrorIII);
         } else if (!otpErrorMessage) {
             setPage(page + 1);
         }
     };
 
-    useEffect(() => {
-        if (bvnError) {
-            setPage(page - 1);
-            setErrorM(bvnError);
-            setErrorI(bvnErrorI);
-        } else if (!otpErrorMessage) {
-            setPage(page + 1);
-        }
-    }, [otpErrorMessage, bvnError]);
+    // useEffect(() => {
+    //     if (bvnError) {
+    //         setPage(page - 1);
+    //         setErrorM(bvnError);
+    //         setErrorI(bvnErrorI);
+    //     } else if (!otpErrorMessage) {
+    //         setPage(page + 1);
+    //     }
+    // }, [otpErrorMessage, bvnError]);
     return (
         <Card>
             {page === 0 ? (
                 <>
                     <p className={styles.error}>{errorM}</p> <br />
-                    <p className={styles.error}>{errorI}</p>
+                    <p className={styles.error}>{errorI}</p> <br />
+                    <p className={styles.error}>{errorII}</p> <br />
+                    <p className={styles.error}>{errorIII}</p> <br />
                 </>
             ) : (
                 <></>
