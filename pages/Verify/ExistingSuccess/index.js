@@ -3,17 +3,19 @@ import styles from './styles.module.css';
 import Card from '../../../components/layout/NotRegisteredForms/Card';
 import Link from 'next/link';
 import Success from '../../../components/ReusableComponents/Success';
-import ButtonComp from '../../../components/ReusableComponents/Button';
 
 const ExistingSuccess = ({ handleShowSuccessStep }) => {
     let accountDetails;
     let accountNumber;
     if (typeof window !== 'undefined') {
-        accountDetails = localStorage.getItem('accountNumber');
-        accountNumber = JSON.parse(accountDetails);
+        accountDetails = window.localStorage.getItem('accountNumber');
+        if (accountDetails === null) {
+            accountNumber = '';
+        } else {
+            accountNumber = JSON.parse(accountDetails);
+        }
     }
 
-    const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.successWrapper}>
             <Card>
@@ -42,7 +44,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                         >
                             Your account number is:{' '}
                             <span style={{ color: '#005b82' }}>
-                                {accountNumber.data.accountNumber}
+                                {/* {accountNumber== accountNumber.accountNumber} */}
                             </span>
                         </h6>
 
@@ -51,14 +53,9 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                             <span> Deposit/Inflow Limit: N1,000,000</span>
                         </h6>
                         <Link href="/Dashboard">
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Proceed to dashboard"
-                                type="button"
-                                margin="20% 0 0 0"
-                                // onClick={handleShowSecondStep}
-                            />
+                            <button className={styles.btnSuccess}>
+                                Proceed to dashboard
+                            </button>
                         </Link>
                     </div>
 
