@@ -1,4 +1,4 @@
-import { createAccount } from '../types/actionTypes';
+import { newUserCreateAccount } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
@@ -6,23 +6,26 @@ const initialState = {
     newAccountErrorMessage: ''
 };
 
-const createAccountReducer = (state = initialState, { type, payload }) => {
+const newUsercreateAccountReducer = (
+    state = initialState,
+    { type, payload }
+) => {
     // console.log(payload);÷ss
     switch (type) {
-        case createAccount.CREATEACCOUNT_LOAD_START:
+        case newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_START:
             return {
                 ...state,
                 isLoading: true,
                 newAccount: [],
                 errorData: ''
             };
-        case createAccount.CREATEACCOUNT_LOAD_SUCCESS:
+        case newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 newAccount: payload
             };
-        case createAccount.CREATEACCOUNT_LOAD_ERROR:
+        case newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: false,
@@ -34,4 +37,4 @@ const createAccountReducer = (state = initialState, { type, payload }) => {
     }
 };
 
-export default createAccountReducer;
+export default newUsercreateAccountReducer;

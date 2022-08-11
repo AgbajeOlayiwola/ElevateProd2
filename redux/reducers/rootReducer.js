@@ -33,6 +33,7 @@ import createAccountReducer from './createAccount.reducer';
 import accountStatusReducer from './accountStatus.reducer';
 import businessCategoriesReducer from './businessCategories.reducer';
 import getNewUserAccountReducer from './getNewUserAccount.reducer';
+import newUsercreateAccountReducer from './newUserCraeteAccount.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -69,7 +70,8 @@ const rootReducer = combineReducers({
     createAccountReducer: createAccountReducer,
     businessCategoriesReducer: businessCategoriesReducer,
     completeBusProfile: completeBusinessprofileReducer,
-    newUserAccountDetails: getNewUserAccountReducer
+    newUserAccountDetails: getNewUserAccountReducer,
+    newUserAccountDets: newUsercreateAccountReducer
 });
 
 export default rootReducer;

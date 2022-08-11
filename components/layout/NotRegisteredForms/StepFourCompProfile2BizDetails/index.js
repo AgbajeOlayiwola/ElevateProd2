@@ -58,11 +58,15 @@ const StepFourCompProfile2BizDetails = ({
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
     const [accountInfo, setAccountInfo] = useState('');
+
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
     const { isLoading, compBusprofile, errorMessage } = useSelector(
         (state) => state.completeBusProfile
+    );
+    const { newAccount, newAccountErrorMessage } = useSelector(
+        (state) => state.newUserAccountDets
     );
 
     const handleSubmitIII = () => {
@@ -90,9 +94,15 @@ const StepFourCompProfile2BizDetails = ({
             dispatch(createNewUserAccount(accountData));
 
             console.log(accountStatus);
-            if (errorMessages) {
+            console.log(newAccountErrorMessage);
+            if (
+                errorMessages ||
+                newAccountErrorMessage ===
+                    'You already have an account with us. Please contact us for more information'
+            ) {
                 // setError(errorMessages);
                 console.log(errorMessages);
+                router.push('/Dashboard');
                 // setLoading(false);
             } else if (accountStatus.message === 'Try Again') {
                 router.push('/Account/Loading');

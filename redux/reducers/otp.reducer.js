@@ -3,12 +3,12 @@ import { otp } from '../types/actionTypes';
 const initialState = {
     Loading: false,
     otp: null,
-    otpErrorMessage: '.',
-    bvnError: '.',
-    bvnErrorI: '.',
-    bvnErrorII: '.',
-    bvnErrorIII: '.',
-    bvnNin: '.'
+    otpErrorMessage: '',
+    bvnError: '',
+    bvnErrorI: '',
+    bvnErrorII: '',
+    bvnErrorIII: '',
+    bvnNin: ''
 };
 
 const otpReducer = (state = initialState, { type, payload }) => {

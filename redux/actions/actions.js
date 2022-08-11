@@ -997,8 +997,8 @@ export const createNewUserAccount = (accountData) => {
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
-                console.log('create new account:', error);
-                dispatch(createNewAccountError(error));
+                console.log('create new account:', error.response.data.message);
+                dispatch(createNewAccountError(error.response.data.message));
             });
     };
 };
