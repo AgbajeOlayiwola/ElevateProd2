@@ -25,6 +25,8 @@ const StepFour = ({ title, action }) => {
 
     const [loading, setLoading] = useState(false);
     const [businessCategory, setBusinessCategory] = useState([]);
+    const [businessType, setBusinessType] = useState([]);
+    const [business, setBusiness] = useState('');
     const [error, setError] = useState('');
     const [progress, setProgress] = useState('100%');
     const { existingUserProfile, errorMessage } = useSelector(
@@ -48,7 +50,6 @@ const StepFour = ({ title, action }) => {
             setBusinessCategory(businessCategories);
         }
     }, [businessCategories]);
-    console.log(businessCategory);
     const {
         register,
         handleSubmit,
@@ -164,21 +165,6 @@ const StepFour = ({ title, action }) => {
         newAccountTest1();
     }, [errorMessages, accountStatus]);
 
-    // const accountTest = () => {
-    //     if (errorMessage) {
-    //         setError(errorMessage);
-    //         console.log(errorMessage);
-    //         setLoading(false);
-    //     } else if (
-    //         existingUserProfile.message === 'User account created succesfully'
-    //     ) {
-    //         setLoading(false);
-    //         router.push('/Dashboard');
-    //     }
-    // };
-    // useEffect(() => {
-    //     accountTest();
-    // }, [errorMessage, existingUserProfile]);
     const types = (type) => {
         setOutType(type);
     };
@@ -192,6 +178,13 @@ const StepFour = ({ title, action }) => {
             }
         });
     }, [localState]);
+    useEffect(() => {
+        Object.keys(businessCategory)?.filter((item) => {
+            if (item === business) {
+                console.log(item, businessCategory);
+            }
+        });
+    }, [business]);
     const myref = useRef();
     useEffect(() => {
         myref.current.scrollTo(0, 0);
@@ -475,19 +468,51 @@ const StepFour = ({ title, action }) => {
                             </div>
 
                             <div className={styles.inps}>
+                                <label>Select Your Business Category </label>
+
+                                <br />
+
+                                <select
+                                    onChange={(e) => {
+                                        setBusiness(e.target.value);
+                                    }}
+                                >
+                                    <option>
+                                        Search Your Business Category
+                                    </option>
+                                    {Object.keys(businessCategory)?.map(
+                                        (business, index) => {
+                                            return (
+                                                <option
+                                                    value={business}
+                                                    key={index}
+                                                >
+                                                    {business}
+                                                </option>
+                                            );
+                                        }
+                                    )}
+                                </select>
+                            </div>
+                            <div className={styles.inps}>
                                 <label>Select Your Business Type </label>
 
                                 <br />
 
                                 <select>
-                                    {/* {businessCategory?.map((business) => {
-                                        return (
-                                            <option value={business}>
-                                                {business}
-                                            </option>
-                                        );
-                                    })} */}
-                                    <option>Search Your Business Type</option>
+                                    <option>Select Your Business Type</option>
+                                    {Object.keys(businessCategory)?.map(
+                                        (business, index) => {
+                                            return (
+                                                <option
+                                                    value={business}
+                                                    key={index}
+                                                >
+                                                    {business}
+                                                </option>
+                                            );
+                                        }
+                                    )}
                                 </select>
                             </div>
                             <p className={styles.ent}>Enter Business Address</p>
