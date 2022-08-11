@@ -44,7 +44,9 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                         >
                             Your account number is:{' '}
                             <span style={{ color: '#005b82' }}>
-                                {accountNumber == accountNumber.accountNumber}
+                                {accountNumber === undefined
+                                    ? null
+                                    : accountNumber.accountNumber}
                             </span>
                         </h6>
 
