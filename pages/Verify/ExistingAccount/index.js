@@ -5,8 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 const ExistingAccount = () => {
-    const user = localStorage.getItem('userId');
-    const userId = JSON.parse(user);
+    let user;
+    let userId;
+    if (typeof window !== 'undefined') {
+        user = localStorage.getItem('userId');
+        if (user === null) {
+            userId = '';
+        } else {
+            userId = JSON.parse(user);
+        }
+    }
     const dispatch = useDispatch();
     const router = useRouter();
     const { accountStatus, errorMessages } = useSelector(
@@ -27,7 +35,7 @@ const ExistingAccount = () => {
         } else if (accountStatus.message === 'SUCCESS') {
             window.localStorage.setItem(
                 'accountNumber',
-                JSON.stringify(accountStatus)
+                JSON.stringify(accountStatus.data)
             );
             router.push('/Verify/ExistingSuccess');
         }
