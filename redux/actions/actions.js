@@ -879,7 +879,7 @@ export const verifyOtp = (otpData) => {
                 dispatch(bvnNinData(response.data));
                 console.log(response.data.data[0].reason);
                 if (
-                    response.data.data[0].status === 'SUCCESS' ||
+                    response.data.data[0].status === 'SUCCESS' &&
                     response.data.data[1].status === 'SUCCESS'
                 ) {
                     axiosInstance

@@ -118,7 +118,13 @@ const StepFourCompProfile2BizDetails = ({
     useEffect(() => {
         handleSubmitIII();
     }, [errorMessage]);
-
+    useEffect(() => {
+        location.filter((item) => {
+            if (item.state === localState) {
+                setLocalGovernment(item.localGoverment);
+            }
+        });
+    }, [localState]);
     return (
         <div>
             <div>

@@ -285,7 +285,7 @@ const StepFour = ({ title, action }) => {
                                     <br />
 
                                     <input
-                                        placeholder="407 Yaba Bornoway"
+                                        placeholder="407  Bornoway"
                                         className={styles.textInput}
                                         required
                                         {...register('streetName', {
@@ -468,14 +468,6 @@ const StepFour = ({ title, action }) => {
                                 <input
                                     placeholder="Enter Tin"
                                     className={styles.textInput}
-                                    {...register('tin', {
-                                        required: 'Tin is Required'
-                                        // pattern: {
-                                        //     // eslint-disable-next-line
-                                        //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                        //     message: 'Invalid email address'
-                                        // }
-                                    })}
                                 />
                             </div>
 
@@ -504,7 +496,7 @@ const StepFour = ({ title, action }) => {
 
                                     <input
                                         type="text"
-                                        placeholder="407 Yaba Bornoway"
+                                        placeholder="407  Bornoway"
                                         className={styles.textInput}
                                     />
                                 </div>

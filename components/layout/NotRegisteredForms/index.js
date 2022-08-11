@@ -85,6 +85,9 @@ const ProfileSetups = () => {
                     <RegisteredForm
                         formData={formData}
                         setFormData={setFormData}
+                        action={() => {
+                            alert('Hello');
+                        }}
                     />
                 );
             case 1:
@@ -133,14 +136,22 @@ const ProfileSetups = () => {
         };
 
         dispatch(createProfileSetup(profileData));
-        // console.log('lol');
-        setError(errorMessages);
-        if (!errorMessages) {
-            setPage(page + 1);
-        } else {
-            console.log('moved');
-        }
     }
+    // console.log('lol');
+    // const actionTest = () => {
+    //     setError(errorMessages);
+    //     alert('Hello');
+    //     if (errorMessages === '') {
+    //         setPage(page + 1);
+    //     } else {
+    //         console.log('moved');
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     actionTest();
+    // }, [errorMessages]);
+
     // useEffect(() => {
     //     setError(errorMessages);
     //     //change to no error messages boss
