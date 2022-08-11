@@ -788,13 +788,50 @@ export const setupProfileError = (errorMessages) => ({
     type: setupProfile.PROFILESETUP_LOAD_ERROR,
     payload: errorMessages
 });
+export const bvnNinError = (bvnError) => ({
+    type: setupProfile.BVN_NIN_LOAD_ERROR,
+    payload: bvnError
+});
+export const bvnNinErrorI = (bvnErrorI) => ({
+    type: setupProfile.BVN_NIN_LOAD_ERRORI,
+    payload: bvnErrorI
+});
+export const bvnNinErrorII = (bvnErrorII) => ({
+    type: setupProfile.BVN_NIN_LOAD_ERRORII,
+    payload: bvnErrorII
+});
+export const bvnNinErrorIII = (bvnErrorIII) => ({
+    type: setupProfile.BVN_NIN_LOAD_ERRORIII,
+    payload: bvnErrorIII
+});
+export const bvnNinData = (bvnNin) => ({
+    type: setupProfile.BVN_NIN_LOAD_SUCCESS,
+    payload: bvnNin
+});
 export const createProfileSetup = (profileData) => {
     return async (dispatch) => {
         await axiosInstance
             .post(`${apiRoutes.profileSetupBus}`, profileData)
             .then((response) => {
                 dispatch(setupProfileSucces(response.data));
+
                 console.log('data from profile', response.data);
+                if (response) {
+                    axiosInstance
+                        .get(`${apiRoutes.verifyStatus}`)
+                        .then((response) => {
+                            dispatch(bvnNinData(response.data));
+                            dispatch(bvnNinError(response.data.data[0].reason));
+                            dispatch(
+                                bvnNinErrorI(response.data.data[1].reason)
+                            );
+                            console.log(response.data.data[0].reason);
+                        })
+                        .catch((error) => {
+                            console.log('profile otp dispatch', error);
+                            dispatch(bvnNinError(error.response.message));
+                        });
+                }
             })
             .catch((error) => {
                 console.log(
@@ -822,54 +859,19 @@ export const otpLoadError = (otpErrorMessage) => ({
     type: otp.OTP_LOAD_ERROR,
     payload: otpErrorMessage
 });
-export const bvnNinError = (bvnError) => ({
-    type: otp.BVN_NIN_LOAD_ERROR,
-    payload: bvnError
-});
-export const bvnNinErrorI = (bvnErrorI) => ({
-    type: otp.BVN_NIN_LOAD_ERRORI,
-    payload: bvnErrorI
-});
-export const bvnNinErrorII = (bvnErrorII) => ({
-    type: otp.BVN_NIN_LOAD_ERRORII,
-    payload: bvnErrorII
-});
-export const bvnNinErrorIII = (bvnErrorIII) => ({
-    type: otp.BVN_NIN_LOAD_ERRORIII,
-    payload: bvnErrorIII
-});
-export const bvnNinData = (bvnNin) => ({
-    type: otp.BVN_NIN_LOAD_SUCCESS,
-    payload: bvnNin
-});
+
 export const verifyOtp = (otpData) => {
     return async (dispatch) => {
         await axiosInstance
-            .get(`${apiRoutes.verifyStatus}`)
+            .post(`${apiRoutes.verifyOtp}`, otpData)
             .then((response) => {
-                dispatch(bvnNinData(response.data));
-                console.log(response.data.data[0].reason);
-                if (
-                    response.data.data[0].status === 'SUCCESS' ||
-                    response.data.data[1].status === 'SUCCESS'
-                ) {
-                    axiosInstance
-                        .post(`${apiRoutes.verifyOtp}`, otpData)
-                        .then((response) => {
-                            dispatch(otpLoadSuccess(response.data));
-                            console.log('otp', otpData);
-                            console.log('data from otp', response.data);
-                        })
-                        .catch((error) => {
-                            console.log('profile otp dispatch', error);
-                            dispatch(bvnNinError(error.response.message));
-                        });
-                } else {
-                    dispatch(bvnNinError(response.data.data[0].reason));
-                    dispatch(bvnNinErrorI(response.data.data[1].reason));
-                    dispatch(bvnNinErrorII(response.data.data[2].reason));
-                    dispatch(bvnNinErrorIII(response.data.data[3].reason));
-                }
+                dispatch(otpLoadSuccess(response.data));
+                console.log('otp', otpData);
+                console.log('data from otp', response.data);
+            })
+            .catch((error) => {
+                console.log('profile otp dispatch', error);
+                dispatch(bvnNinError(error.response.message));
             })
             .catch((error) => {
                 console.log('profile Bvn dispatch', error.response);
