@@ -83,13 +83,16 @@ const StepFour = ({ title, action }) => {
     }, [errorMessage, existingUserProfile]);
     const onSubmit = (data) => {
         setLoading(true);
-        const name = accountDetails.fullName.split(' ');
+        let name;
+        accountDetails.fullName === null
+            ? name === null
+            : (name = accountDetails.fullName.split(' '));
 
         const userData = {
             affiliateCode: 'ENG',
-            firstName: name[0],
-            middleName: name[2] === undefined ? 'I' : name[2],
-            lastName: name[1],
+            firstName: name === undefined ? 'Akinfe' : name[0],
+            middleName: name === undefined ? 'I' : name[2],
+            lastName: name === undefined ? 'Temitope' : name[1],
             dob: '1998-08-10',
             id_type: 'IDCD',
             idNo: '1234TTZN14',
