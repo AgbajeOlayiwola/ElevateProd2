@@ -7,7 +7,8 @@ import { location } from '../../ReusableComponents/Data';
 import {
     existingUserProfileData,
     createAccountData,
-    accountStatusData
+    accountStatusData,
+    businessCategoriesData
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -23,10 +24,14 @@ const StepFour = ({ title, action }) => {
     const accountDetails = JSON.parse(account);
 
     const [loading, setLoading] = useState(false);
+    const [businessCategory, setBusinessCategory] = useState([]);
     const [error, setError] = useState('');
     const [progress, setProgress] = useState('100%');
     const { existingUserProfile, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
+    );
+    const { businessCategories, errorDatas } = useSelector(
+        (state) => state.businessCategoriesReducer
     );
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
@@ -34,6 +39,16 @@ const StepFour = ({ title, action }) => {
     const { createAccount, errorData } = useSelector(
         (state) => state.createAccountReducer
     );
+
+    useEffect(() => {
+        dispatch(businessCategoriesData());
+    }, []);
+    useEffect(() => {
+        if (businessCategories !== null) {
+            setBusinessCategory(businessCategories);
+        }
+    }, [businessCategories]);
+    console.log(businessCategory);
     const {
         register,
         handleSubmit,
@@ -470,6 +485,13 @@ const StepFour = ({ title, action }) => {
                                 <br />
 
                                 <select>
+                                    {/* {businessCategory?.map((business) => {
+                                        return (
+                                            <option value={business}>
+                                                {business}
+                                            </option>
+                                        );
+                                    })} */}
                                     <option>Search Your Business Type</option>
                                 </select>
                             </div>

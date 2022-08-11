@@ -31,6 +31,7 @@ import {
     accountStatus,
     completeProfile,
     newUserCreateAccount,
+    businessCategories,
     getNewUserAccount
 } from '../types/actionTypes';
 import axiosInstance from '../helper/apiClient';
@@ -61,6 +62,34 @@ export const loadCountry = () => (dispatch) => {
         );
 };
 //country actions end
+
+//businessCategories actions
+export const businessCategoriesStart = () => ({
+    type: businessCategories.BUSINESSCATEGORIES_LOAD_START
+});
+
+export const businessCategoriesSuccess = (countries) => ({
+    type: businessCategories.BUSINESSCATEGORIES_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const businessCategoriesError = (errorMessage) => ({
+    type: businessCategories.BUSINESSCATEGORIES_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const businessCategoriesData = () => (dispatch) => {
+    dispatch(businessCategoriesStart());
+    axiosInstance
+        .get(`${apiRoutes.businessCategories}`)
+        .then((response) =>
+            dispatch(businessCategoriesSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(businessCategoriesError(error.response.data.message))
+        );
+};
+//businessCategories actions end
 
 //banks actions
 export const bankLoadStart = () => ({
