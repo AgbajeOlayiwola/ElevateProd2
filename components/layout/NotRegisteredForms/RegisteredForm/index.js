@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 // import { loadCountry } from '../../../../redux/actions/actions';
 
-const RegisteredForm = ({ formData, setFormData }) => {
+const RegisteredForm = ({ formData, setFormData, action }) => {
     const [progress, setProgress] = useState('25%');
     const [switchs, setSwitch] = useState(true);
     const [isRegistered, setIsRegistered] = useState(false);
@@ -313,6 +313,7 @@ const RegisteredForm = ({ formData, setFormData }) => {
                             {errors.date_of_birth?.message}
                         </div>
                     </InputWrapper>
+                    <button onClick={action}>Nexts</button>
                 </>
             ) : (
                 ''

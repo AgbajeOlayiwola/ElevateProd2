@@ -245,6 +245,16 @@ export const accountStatus = {
 
 //accountNumber action type ends
 
+//businessCategory action types
+
+export const businessCategories = {
+    BUSINESSCATEGORIES_LOAD_START: 'BUSINESSCATEGORIES_LOAD_START',
+    BUSINESSCATEGORIES_LOAD_SUCCESS: 'BUSINESSCATEGORIES_LOAD_SUCCESS',
+    BUSINESSCATEGORIES_LOAD_ERROR: 'BUSINESSCATEGORIES_LOAD_ERROR'
+};
+
+//businessCategory action type ends
+
 //auth action types
 export const login = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',

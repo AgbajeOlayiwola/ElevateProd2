@@ -36,6 +36,7 @@ const omnilite = '/auth/register/omnilite';
 const ecobankOnline = '/auth/register/ecobank-online';
 const accountNumber = '/auth/register/account-number';
 const existingUserProfile = '/auth/existing-user/profile-setup/personal';
+const businessCategories = '/business-categories';
 export default {
     getBanks,
     getCountries,
@@ -74,5 +75,6 @@ export default {
     existingUserProfile,
     ecobankOnline,
     verifyStatus,
+    businessCategories,
     newCreateAccount
 };

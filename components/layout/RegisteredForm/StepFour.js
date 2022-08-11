@@ -7,7 +7,8 @@ import { location } from '../../ReusableComponents/Data';
 import {
     existingUserProfileData,
     createAccountData,
-    accountStatusData
+    accountStatusData,
+    businessCategoriesData
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -23,10 +24,14 @@ const StepFour = ({ title, action }) => {
     const accountDetails = JSON.parse(account);
 
     const [loading, setLoading] = useState(false);
+    const [businessCategory, setBusinessCategory] = useState([]);
     const [error, setError] = useState('');
     const [progress, setProgress] = useState('100%');
     const { existingUserProfile, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
+    );
+    const { businessCategories, errorDatas } = useSelector(
+        (state) => state.businessCategoriesReducer
     );
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
@@ -34,6 +39,16 @@ const StepFour = ({ title, action }) => {
     const { createAccount, errorData } = useSelector(
         (state) => state.createAccountReducer
     );
+
+    useEffect(() => {
+        dispatch(businessCategoriesData());
+    }, []);
+    useEffect(() => {
+        if (businessCategories !== null) {
+            setBusinessCategory(businessCategories);
+        }
+    }, [businessCategories]);
+    console.log(businessCategory);
     const {
         register,
         handleSubmit,
@@ -68,13 +83,16 @@ const StepFour = ({ title, action }) => {
     }, [errorMessage, existingUserProfile]);
     const onSubmit = (data) => {
         setLoading(true);
-        const name = accountDetails.fullName.split(' ');
+        let name;
+        accountDetails.fullName === null
+            ? name === null
+            : (name = accountDetails.fullName.split(' '));
 
         const userData = {
             affiliateCode: 'ENG',
-            firstName: name[0],
-            middleName: name[2] === undefined ? 'I' : name[2],
-            lastName: name[1],
+            firstName: name === undefined ? 'Akinfe' : name[0],
+            middleName: name === undefined ? 'I' : name[2],
+            lastName: name === undefined ? 'Temitope' : name[1],
             dob: '1998-08-10',
             id_type: 'IDCD',
             idNo: '1234TTZN14',
@@ -270,7 +288,7 @@ const StepFour = ({ title, action }) => {
                                     <br />
 
                                     <input
-                                        placeholder="407 Yaba Bornoway"
+                                        placeholder="407  Bornoway"
                                         className={styles.textInput}
                                         required
                                         {...register('streetName', {
@@ -453,14 +471,6 @@ const StepFour = ({ title, action }) => {
                                 <input
                                     placeholder="Enter Tin"
                                     className={styles.textInput}
-                                    {...register('tin', {
-                                        required: 'Tin is Required'
-                                        // pattern: {
-                                        //     // eslint-disable-next-line
-                                        //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                        //     message: 'Invalid email address'
-                                        // }
-                                    })}
                                 />
                             </div>
 
@@ -470,6 +480,13 @@ const StepFour = ({ title, action }) => {
                                 <br />
 
                                 <select>
+                                    {/* {businessCategory?.map((business) => {
+                                        return (
+                                            <option value={business}>
+                                                {business}
+                                            </option>
+                                        );
+                                    })} */}
                                     <option>Search Your Business Type</option>
                                 </select>
                             </div>
@@ -482,7 +499,7 @@ const StepFour = ({ title, action }) => {
 
                                     <input
                                         type="text"
-                                        placeholder="407 Yaba Bornoway"
+                                        placeholder="407  Bornoway"
                                         className={styles.textInput}
                                     />
                                 </div>
