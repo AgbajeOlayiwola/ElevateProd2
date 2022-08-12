@@ -153,17 +153,17 @@ const ProfileSetups = () => {
     }
 
     useEffect(() => {
-        console.log('new bvn:', bvnNinPend);
+        console.log('new bvn:', bvnError);
         if (errorMessages === null && bvnError === null && bvnErrorI === null) {
             setPage(page + 1);
         } else {
             console.log('moved');
             setErrorM(errorMessages);
             setErrorI(bvnError);
-            setErrorI(bvnErrorI);
+            setErrorII(bvnErrorI);
             setLoading(false);
         }
-    }, [errorMessages, bvnError, bvnNinPend]);
+    }, [errorMessages, bvnError, bvnErrorI, bvnNinPend]);
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
