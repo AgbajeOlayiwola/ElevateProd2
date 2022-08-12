@@ -98,7 +98,7 @@ const AccountUpgrade = () => {
                                   <AccountUpgradeSingle
                                       icon={item.icon}
                                       text={item.title}
-                                      index={index}
+                                      key={index}
                                       action={() => {
                                           setTitle(item.title);
                                       }}
@@ -111,7 +111,7 @@ const AccountUpgrade = () => {
                                   <AccountUpgradeSingle
                                       icon={item.icon}
                                       text={item.title}
-                                      index={index}
+                                      key={index}
                                       action={() => {
                                           setTitle(item.title);
                                       }}
