@@ -4,8 +4,8 @@ const initialState = {
     isLoading: false,
     profileSetup: null,
     errorMessages: ' ',
-    bvnError: null,
-    bvnErrorI: null,
+    bvnError: ' ',
+    bvnErrorI: ' ',
     bvnErrorII: null,
     bvnErrorIII: null,
     bvnNin: null

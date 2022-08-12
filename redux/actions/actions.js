@@ -816,7 +816,7 @@ export const createProfileSetup = (profileData) => {
                 dispatch(setupProfileSucces(response.data));
 
                 console.log('data from profile', response.data);
-                if (response) {
+                if (response.data.message === 'Profile setup successful') {
                     axiosInstance
                         .get(`${apiRoutes.verifyStatus}`)
                         .then((response) => {
@@ -838,9 +838,7 @@ export const createProfileSetup = (profileData) => {
                     'profile seytup dispatch',
                     error.response.data.message
                 );
-                dispatch(
-                    setupProfileError('error check the fields and try again')
-                );
+                dispatch(setupProfileError(error.response.data.message));
             });
     };
 };
