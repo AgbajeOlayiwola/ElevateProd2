@@ -72,7 +72,8 @@ const ProfileSetups = () => {
         bvnError,
         bvnErrorI,
         bvnErrorII,
-        bvnErrorIII
+        bvnErrorIII,
+        bvnNinPend
     } = useSelector((state) => state.profileSetup);
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
@@ -152,7 +153,7 @@ const ProfileSetups = () => {
     }
 
     useEffect(() => {
-        console.log('new bvn:', bvnError, bvnErrorI, errorMessages);
+        console.log('new bvn:', bvnNinPend);
         if (errorMessages === null && bvnError === null && bvnErrorI === null) {
             setPage(page + 1);
         } else {
@@ -162,7 +163,7 @@ const ProfileSetups = () => {
             setErrorI(bvnErrorI);
             setLoading(false);
         }
-    }, [errorMessages, bvnError]);
+    }, [errorMessages, bvnError, bvnNinPend]);
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
