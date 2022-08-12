@@ -25,7 +25,8 @@ import { otp } from '../../../../redux/types/actionTypes';
 const StepTwoBVNAuthenticator = ({
     handleShowThirdStep,
     setFormData,
-    formData
+    formData,
+    action
 }) => {
     const [progress, setProgress] = useState('50%');
     const [otps, setOtp] = useState([]);
@@ -46,35 +47,45 @@ const StepTwoBVNAuthenticator = ({
 
     const [activeBtn, setActiveBtn] = useState(true);
     return (
-        <div className={styles.cover}>
-            <div>
-                {/* <ProfileCard width="50%" height="0"> */}
-                <CardHeadingBVN>
-                    <LeftHeading>BVN (OTP) Authenticator</LeftHeading>
-                    {/* <Imag 
+        <>
+            <div className={styles.cover}>
+                <div>
+                    {/* <ProfileCard width="50%" height="0"> */}
+                    <CardHeadingBVN>
+                        <LeftHeading>BVN (OTP) Authenticator</LeftHeading>
+                        {/* <Imag 
                     src="/width" 
                     alt="lineImage" /> */}
-                </CardHeadingBVN>
-                <SmallInstructionText>
-                    An OTP has been sent to your Phone number registered with
-                    BVN. Please enter the OTP below to complete your profile.
-                </SmallInstructionText>
-                <p className={styles.inp}>Input OTP</p>
-                <OtpInput formData={formData} setFormData={setFormData} />
-                <ResetOTP>
-                    <p style={{ color: '#005B82', cursor: 'pointer' }}>
-                        Resend OTP
-                    </p>
-                    <button
-                        style={{ cursor: 'pointer' }}
-                        className={styles.clr}
-                        type="reset"
-                    >
-                        Clear
-                    </button>
-                </ResetOTP>
+                    </CardHeadingBVN>
+                    <SmallInstructionText>
+                        An OTP has been sent to your Phone number registered
+                        with BVN. Please enter the OTP below to complete your
+                        profile.
+                    </SmallInstructionText>
+                    <p className={styles.inp}>Input OTP</p>
+                    <OtpInput formData={formData} setFormData={setFormData} />
+                    <ResetOTP>
+                        <p style={{ color: '#005B82', cursor: 'pointer' }}>
+                            Resend OTP
+                        </p>
+                        <button
+                            style={{ cursor: 'pointer' }}
+                            className={styles.clr}
+                            type="reset"
+                        >
+                            Clear
+                        </button>
+                    </ResetOTP>
+                </div>
             </div>
-        </div>
+            <ButtonComp
+                disabled={activeBtn}
+                active={activeBtn ? 'active' : 'inactive'}
+                onClick={action}
+                type="submit"
+                text="Next"
+            />
+        </>
     );
 };
 

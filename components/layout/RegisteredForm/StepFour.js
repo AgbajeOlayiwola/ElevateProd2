@@ -7,7 +7,8 @@ import { location } from '../../ReusableComponents/Data';
 import {
     existingUserProfileData,
     createAccountData,
-    accountStatusData
+    accountStatusData,
+    businessCategoriesData
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -23,10 +24,16 @@ const StepFour = ({ title, action }) => {
     const accountDetails = JSON.parse(account);
 
     const [loading, setLoading] = useState(false);
+    const [businessCategory, setBusinessCategory] = useState([]);
+    const [businessType, setBusinessType] = useState([]);
+    const [business, setBusiness] = useState('');
     const [error, setError] = useState('');
     const [progress, setProgress] = useState('100%');
     const { existingUserProfile, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
+    );
+    const { businessCategories, errorDatas } = useSelector(
+        (state) => state.businessCategoriesReducer
     );
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
@@ -34,6 +41,15 @@ const StepFour = ({ title, action }) => {
     const { createAccount, errorData } = useSelector(
         (state) => state.createAccountReducer
     );
+
+    useEffect(() => {
+        dispatch(businessCategoriesData());
+    }, []);
+    useEffect(() => {
+        if (businessCategories !== null) {
+            setBusinessCategory(businessCategories);
+        }
+    }, [businessCategories]);
     const {
         register,
         handleSubmit,
@@ -68,13 +84,16 @@ const StepFour = ({ title, action }) => {
     }, [errorMessage, existingUserProfile]);
     const onSubmit = (data) => {
         setLoading(true);
-        const name = accountDetails.fullName.split(' ');
+        let name;
+        accountDetails.fullName === null
+            ? name === null
+            : (name = accountDetails.fullName.split(' '));
 
         const userData = {
             affiliateCode: 'ENG',
-            firstName: name[0],
-            middleName: name[2] === undefined ? 'I' : name[2],
-            lastName: name[1],
+            firstName: name === undefined ? 'Akinfe' : name[0],
+            middleName: name === undefined ? 'I' : name[2],
+            lastName: name === undefined ? 'Temitope' : name[1],
             dob: '1998-08-10',
             id_type: 'IDCD',
             idNo: '1234TTZN14',
@@ -146,21 +165,6 @@ const StepFour = ({ title, action }) => {
         newAccountTest1();
     }, [errorMessages, accountStatus]);
 
-    // const accountTest = () => {
-    //     if (errorMessage) {
-    //         setError(errorMessage);
-    //         console.log(errorMessage);
-    //         setLoading(false);
-    //     } else if (
-    //         existingUserProfile.message === 'User account created succesfully'
-    //     ) {
-    //         setLoading(false);
-    //         router.push('/Dashboard');
-    //     }
-    // };
-    // useEffect(() => {
-    //     accountTest();
-    // }, [errorMessage, existingUserProfile]);
     const types = (type) => {
         setOutType(type);
     };
@@ -174,6 +178,13 @@ const StepFour = ({ title, action }) => {
             }
         });
     }, [localState]);
+    useEffect(() => {
+        Object.keys(businessCategory)?.filter((item) => {
+            if (item === business) {
+                console.log(item, businessCategory);
+            }
+        });
+    }, [business]);
     const myref = useRef();
     useEffect(() => {
         myref.current.scrollTo(0, 0);
@@ -270,7 +281,7 @@ const StepFour = ({ title, action }) => {
                                     <br />
 
                                     <input
-                                        placeholder="407 Yaba Bornoway"
+                                        placeholder="407  Bornoway"
                                         className={styles.textInput}
                                         required
                                         {...register('streetName', {
@@ -453,24 +464,55 @@ const StepFour = ({ title, action }) => {
                                 <input
                                     placeholder="Enter Tin"
                                     className={styles.textInput}
-                                    {...register('tin', {
-                                        required: 'Tin is Required'
-                                        // pattern: {
-                                        //     // eslint-disable-next-line
-                                        //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                        //     message: 'Invalid email address'
-                                        // }
-                                    })}
                                 />
                             </div>
 
+                            <div className={styles.inps}>
+                                <label>Select Your Business Category </label>
+
+                                <br />
+
+                                <select
+                                    onChange={(e) => {
+                                        setBusiness(e.target.value);
+                                    }}
+                                >
+                                    <option>
+                                        Search Your Business Category
+                                    </option>
+                                    {Object.keys(businessCategory)?.map(
+                                        (business, index) => {
+                                            return (
+                                                <option
+                                                    value={business}
+                                                    key={index}
+                                                >
+                                                    {business}
+                                                </option>
+                                            );
+                                        }
+                                    )}
+                                </select>
+                            </div>
                             <div className={styles.inps}>
                                 <label>Select Your Business Type </label>
 
                                 <br />
 
                                 <select>
-                                    <option>Search Your Business Type</option>
+                                    <option>Select Your Business Type</option>
+                                    {Object.keys(businessCategory)?.map(
+                                        (business, index) => {
+                                            return (
+                                                <option
+                                                    value={business}
+                                                    key={index}
+                                                >
+                                                    {business}
+                                                </option>
+                                            );
+                                        }
+                                    )}
                                 </select>
                             </div>
                             <p className={styles.ent}>Enter Business Address</p>
@@ -482,7 +524,7 @@ const StepFour = ({ title, action }) => {
 
                                     <input
                                         type="text"
-                                        placeholder="407 Yaba Bornoway"
+                                        placeholder="407  Bornoway"
                                         className={styles.textInput}
                                     />
                                 </div>

@@ -6,7 +6,10 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUserAction } from '../../../redux/actions/actions';
+import {
+    createNewUserAccount,
+    loginUserAction
+} from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
 
@@ -21,6 +24,10 @@ const Login = () => {
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
     );
+    const { newAccount, newAccountErrorMessage } = useSelector(
+        (state) => state.newUserAccountDets
+    );
+
     // const hashed = hash();
 
     const {
@@ -45,11 +52,17 @@ const Login = () => {
             password: encrypt(password)
         };
         dispatch(loginUserAction(loginData));
+        // dispatch(createNewUserAccount());
     };
     const sentLogin = () => {
         if (errorMessages !== 'Login successful') {
             setError(errorMessages);
             setLoading(false);
+            // } else if (
+            //     newAccountErrorMessage ===
+            //     'You already have an account with us. Please contact us for more information'
+            // ) {
+            // router.push('/Dashboard');,
         } else {
             router.push('../../Onboarding/ProfileSetup');
         }

@@ -13,10 +13,10 @@ import {
     loadCountry
 } from '../../../redux/actions/actions';
 import { Router, useRouter } from 'next/router';
+import Loader from '../../ReusableComponents/Loader';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
-    // 22422561587
     const router = useRouter();
     // Router.reload();
     // router.replace(router.asPath);
@@ -65,18 +65,16 @@ const ProfileSetups = () => {
         }
     }, [countries]);
     const [activeBtn, setActiveBtn] = useState(true);
-    const { isLoading, profile, errorMessages } = useSelector(
-        (state) => state.profileSetup
-    );
     const {
-        Loading,
-        otp,
-        otpErrorMessage,
+        isLoading,
+        profile,
+        errorMessages,
         bvnError,
         bvnErrorI,
         bvnErrorII,
         bvnErrorIII
-    } = useSelector((state) => state.otp);
+    } = useSelector((state) => state.profileSetup);
+    const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
     const conditionalComponent = () => {
         switch (page) {
@@ -92,6 +90,21 @@ const ProfileSetups = () => {
                     <StepTwoBVNAuthenticator
                         formData={formData}
                         setFormData={setFormData}
+                        // setPage={page+1}
+                        page={page}
+                        action={() => {
+                            const otpData = {
+                                phoneNumber:
+                                    formData.countryCode + formData.phoneNumber,
+                                otp: '123456'
+                            };
+                            dispatch(verifyOtp(otpData));
+                            if (otpErrorMessage) {
+                                console.log('otpError');
+                            } else if (!otpErrorMessage) {
+                                setPage(page + 1);
+                            }
+                        }}
                     />
                 );
             case 2:
@@ -117,6 +130,7 @@ const ProfileSetups = () => {
     const [errorI, setErrorI] = useState('');
     const [errorII, setErrorII] = useState('');
     const [errorIII, setErrorIII] = useState('');
+    const [loading, setLoading] = useState(false);
 
     function handleSubmit() {
         // console.log('firstAPi');
@@ -131,54 +145,34 @@ const ProfileSetups = () => {
             dob: formData.dateOfBirth,
             signatoryCount: 1
         };
+        setLoading(true);
 
         dispatch(createProfileSetup(profileData));
         // console.log('lol');
-        setError(errorMessages);
-        if (!errorMessages) {
+    }
+
+    useEffect(() => {
+        console.log('new bvn:', bvnError, bvnErrorI, errorMessages);
+        if (errorMessages === null && bvnError === null && bvnErrorI === null) {
             setPage(page + 1);
         } else {
             console.log('moved');
-        }
-    }
-    // useEffect(() => {
-    //     setError(errorMessages);
-    //     //change to no error messages boss
-    //     if (!errorMessages) {
-    //         setPage(page + 1);
-    //     } else {
-    //         console.log('moved');
-    //     }
-    // }, [errorMessages]);
-
-    const handleSubmitII = () => {
-        const otpData = {
-            phoneNumber: formData.countryCode + formData.phoneNumber,
-            otp: '123456'
-        };
-        dispatch(verifyOtp(otpData));
-        console.log('bnv', bvnError, bvnErrorI);
-        setError(otpErrorMessage);
-        if (bvnError) {
-            setPage(page - 1);
-            setErrorM(bvnError);
+            setErrorM(errorMessages);
+            setErrorI(bvnError);
             setErrorI(bvnErrorI);
-            setErrorII(bvnErrorII);
-            setErrorIII(bvnErrorIII);
-        } else if (!otpErrorMessage) {
-            setPage(page + 1);
+            setLoading(false);
         }
-    };
-
+    }, [errorMessages, bvnError]);
     // useEffect(() => {
-    //     if (bvnError) {
+    //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
     //         setErrorM(bvnError);
     //         setErrorI(bvnErrorI);
-    //     } else if (!otpErrorMessage) {
+    //     } else if (!otpErrorMessage && !bvnError && !bvnErrorI) {
     //         setPage(page + 1);
     //     }
-    // }, [otpErrorMessage, bvnError]);
+    // }, [otpErrorMessage, bvnError, bvnErrorI]);
+
     return (
         <Card>
             {page === 0 ? (
@@ -186,7 +180,7 @@ const ProfileSetups = () => {
                     <p className={styles.error}>{errorM}</p> <br />
                     <p className={styles.error}>{errorI}</p> <br />
                     <p className={styles.error}>{errorII}</p> <br />
-                    <p className={styles.error}>{errorIII}</p> <br />
+                    {/*<p className={styles.error}>{errorIII}</p> <br /> */}
                 </>
             ) : (
                 <></>
@@ -194,13 +188,15 @@ const ProfileSetups = () => {
             <div className={styles.error}>{error}</div>
             {conditionalComponent()}
 
-            {page === 2 ? null : (
+            {page === 2 || page == 1 ? null : loading === true ? (
+                <Loader />
+            ) : (
                 <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
-                    onClick={page === 0 ? handleSubmit : handleSubmitII}
+                    onClick={handleSubmit}
                     type="submit"
-                    text={page === 2 ? 'Next' : 'Next'}
+                    text={'Next'}
                 />
             )}
         </Card>
