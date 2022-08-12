@@ -181,7 +181,7 @@ const StepFour = ({ title, action }) => {
     useEffect(() => {
         Object.keys(businessCategory)?.filter((item) => {
             if (item === business) {
-                console.log(item, businessCategory);
+                setBusinessType(businessCategory[item]);
             }
         });
     }, [business]);
@@ -501,18 +501,16 @@ const StepFour = ({ title, action }) => {
 
                                 <select>
                                     <option>Select Your Business Type</option>
-                                    {Object.keys(businessCategory)?.map(
-                                        (business, index) => {
-                                            return (
-                                                <option
-                                                    value={business}
-                                                    key={index}
-                                                >
-                                                    {business}
-                                                </option>
-                                            );
-                                        }
-                                    )}
+                                    {businessType?.map((business, index) => {
+                                        return (
+                                            <option
+                                                value={business}
+                                                key={index}
+                                            >
+                                                {business}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                             </div>
                             <p className={styles.ent}>Enter Business Address</p>
