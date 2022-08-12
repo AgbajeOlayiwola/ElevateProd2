@@ -83,41 +83,40 @@ const StepFourCompProfile2BizDetails = ({
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
-
-        if (!errorMessage) {
+    };
+    const businessProfileAction = () => {
+        if (errorMessage !== '') {
             // dispatch(CompProfile());
             // do something here 1 sec after current has changed
+            console.log(errorMessage);
+        } else if (compBusprofile !== null) {
             const accountData = {
                 affiliateCode: 'ENG',
                 ccy: 'NGN'
             };
             dispatch(createNewUserAccount(accountData));
-
-            console.log(accountStatus);
-            console.log(newAccountErrorMessage);
-            if (
-                errorMessages ||
-                newAccountErrorMessage ===
-                    'You already have an account with us. Please contact us for more information'
-            ) {
-                // setError(errorMessages);
-                console.log(errorMessages);
-                router.push('/Dashboard');
-                // setLoading(false);
-            } else if (accountStatus.message === 'Try Again') {
-                router.push('/Account/Loading');
-            } else if (accountStatus.message === 'SUCCESS') {
-                // window.localStorage.setItem(
-                //     'accountNumber',
-                //     JSON.stringify(accountStatus)
-                // );
-                router.push('/Succes');
-            }
+        }
+    };
+    const createNewAccountAction = () => {
+        if (
+            errorMessages ||
+            newAccountErrorMessage ===
+                'You already have an account with us. Please contact us for more information'
+        ) {
+            console.log(errorMessages);
+            router.push('/Dashboard');
+        } else if (accountStatus.message === 'Try Again') {
+            router.push('/Account/Loading');
+        } else if (accountStatus.message === 'SUCCESS') {
+            router.push('/Succes');
         }
     };
     useEffect(() => {
-        handleSubmitIII();
-    }, [errorMessage]);
+        businessProfileAction();
+    }, [errorMessage, compBusprofile]);
+    useEffect(() => {
+        createNewAccountAction();
+    }, [errorMessages, newAccountErrorMessage, accountStatus]);
     useEffect(() => {
         location.filter((item) => {
             if (item.state === localState) {
