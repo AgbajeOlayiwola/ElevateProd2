@@ -833,6 +833,10 @@ export const bvnNinErrorIII = (bvnErrorIII) => ({
     type: setupProfile.BVN_NIN_LOAD_ERRORIII,
     payload: bvnErrorIII
 });
+export const bvnNiniPending = (bvnNinPend) => ({
+    type: setupProfile.BVN_NIN_LOAD_PENDING,
+    payload: bvnNinPend
+});
 export const bvnNinData = (bvnNin) => ({
     type: setupProfile.BVN_NIN_LOAD_SUCCESS,
     payload: bvnNin
@@ -845,7 +849,7 @@ export const createProfileSetup = (profileData) => {
                 dispatch(setupProfileSucces(response.data));
 
                 console.log('data from profile', response.data);
-                if (response) {
+                if (response.data.message === 'Profile setup successful') {
                     axiosInstance
                         .get(`${apiRoutes.verifyStatus}`)
                         .then((response) => {
@@ -854,6 +858,9 @@ export const createProfileSetup = (profileData) => {
                             dispatch(
                                 bvnNinErrorI(response.data.data[1].reason)
                             );
+                            if (response.data.data[1].status === 'PENDING') {
+                                dispatch(bvnNiniPending('Try Again'));
+                            }
                             console.log(response.data.data[0].reason);
                         })
                         .catch((error) => {
@@ -867,9 +874,7 @@ export const createProfileSetup = (profileData) => {
                     'profile seytup dispatch',
                     error.response.data.message
                 );
-                dispatch(
-                    setupProfileError('error check the fields and try again')
-                );
+                dispatch(setupProfileError(error.response.data.message));
             });
     };
 };

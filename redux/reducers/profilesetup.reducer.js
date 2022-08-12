@@ -4,11 +4,12 @@ const initialState = {
     isLoading: false,
     profileSetup: null,
     errorMessages: ' ',
-    bvnError: null,
-    bvnErrorI: null,
+    bvnError: ' ',
+    bvnErrorI: ' ',
     bvnErrorII: null,
     bvnErrorIII: null,
-    bvnNin: null
+    bvnNin: null,
+    bvnNinPend: ' '
 };
 
 const profileSetupReducer = (state = initialState, { type, payload }) => {
@@ -54,6 +55,11 @@ const profileSetupReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 bvnNin: payload
+            };
+        case setupProfile.BVN_NIN_LOAD_PENDING:
+            return {
+                ...state,
+                bvnNinPend: payload
             };
         default:
             return state;

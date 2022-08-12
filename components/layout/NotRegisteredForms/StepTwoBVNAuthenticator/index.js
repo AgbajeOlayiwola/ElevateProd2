@@ -34,16 +34,6 @@ const StepTwoBVNAuthenticator = ({
         setOtp();
         console.log(otps);
     };
-    const {
-        Loading,
-        otp,
-        otpErrorMessage,
-        bvnError,
-        bvnErrorI,
-        bvnErrorII,
-        bvnErrorIII
-    } = useSelector((state) => state.otp);
-
     const dispatch = useDispatch();
     const {
         register,

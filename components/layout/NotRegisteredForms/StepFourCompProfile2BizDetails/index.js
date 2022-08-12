@@ -83,13 +83,19 @@ const StepFourCompProfile2BizDetails = ({
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
+
+        const accountData = {
+            affiliateCode: 'ENG',
+            ccy: 'NGN'
+        };
+        dispatch(createNewUserAccount(accountData));
     };
     const businessProfileAction = () => {
         if (errorMessage !== '') {
             // dispatch(CompProfile());
             // do something here 1 sec after current has changed
             console.log(errorMessage);
-        } else if (compBusprofile !== null) {
+        } else if (compBusprofile !== ' ') {
             const accountData = {
                 affiliateCode: 'ENG',
                 ccy: 'NGN'
@@ -104,17 +110,18 @@ const StepFourCompProfile2BizDetails = ({
                 'You already have an account with us. Please contact us for more information'
         ) {
             console.log(errorMessages);
-            router.push('/Dashboard');
+            router.push('/Succes/AccountSuccess');
         } else if (accountStatus.message === 'Try Again') {
             router.push('/Account/Loading');
         } else if (accountStatus.message === 'SUCCESS') {
             router.push('/Succes');
         }
     };
+    // useEffect(() => {
+
+    // }, [errorMessage, compBusprofile]);
     useEffect(() => {
         businessProfileAction();
-    }, [errorMessage, compBusprofile]);
-    useEffect(() => {
         createNewAccountAction();
     }, [errorMessages, newAccountErrorMessage, accountStatus]);
     useEffect(() => {

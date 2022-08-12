@@ -13,6 +13,7 @@ import {
     loadCountry
 } from '../../../redux/actions/actions';
 import { Router, useRouter } from 'next/router';
+import Loader from '../../ReusableComponents/Loader';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
@@ -71,7 +72,8 @@ const ProfileSetups = () => {
         bvnError,
         bvnErrorI,
         bvnErrorII,
-        bvnErrorIII
+        bvnErrorIII,
+        bvnNinPend
     } = useSelector((state) => state.profileSetup);
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
@@ -129,6 +131,7 @@ const ProfileSetups = () => {
     const [errorI, setErrorI] = useState('');
     const [errorII, setErrorII] = useState('');
     const [errorIII, setErrorIII] = useState('');
+    const [loading, setLoading] = useState(false);
 
     function handleSubmit() {
         // console.log('firstAPi');
@@ -143,21 +146,24 @@ const ProfileSetups = () => {
             dob: formData.dateOfBirth,
             signatoryCount: 1
         };
+        setLoading(true);
 
         dispatch(createProfileSetup(profileData));
         // console.log('lol');
     }
 
     useEffect(() => {
-        console.log('new bvn:', bvnError, bvnErrorI);
-        if (!errorMessages && !bvnError & !bvnErrorI) {
+        console.log('new bvn:', bvnError);
+        if (errorMessages === null && bvnError === null && bvnErrorI === null) {
             setPage(page + 1);
-            setErrorM(bvnError);
-            setErrorI(bvnErrorI);
         } else {
             console.log('moved');
+            setErrorM(errorMessages);
+            setErrorI(bvnError);
+            setErrorII(bvnErrorI);
+            setLoading(false);
         }
-    }, [errorMessages, bvnError, bvnErrorI]);
+    }, [errorMessages, bvnError, bvnErrorI, bvnNinPend]);
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
@@ -174,8 +180,8 @@ const ProfileSetups = () => {
                 <>
                     <p className={styles.error}>{errorM}</p> <br />
                     <p className={styles.error}>{errorI}</p> <br />
-                    {/* <p className={styles.error}>{errorII}</p> <br />
-                    <p className={styles.error}>{errorIII}</p> <br /> */}
+                    <p className={styles.error}>{errorII}</p> <br />
+                    {/*<p className={styles.error}>{errorIII}</p> <br /> */}
                 </>
             ) : (
                 <></>
@@ -183,7 +189,9 @@ const ProfileSetups = () => {
             <div className={styles.error}>{error}</div>
             {conditionalComponent()}
 
-            {page === 2 || page == 1 ? null : (
+            {page === 2 || page == 1 ? null : loading === true ? (
+                <Loader />
+            ) : (
                 <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
