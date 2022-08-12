@@ -42,9 +42,9 @@ const StepFour = ({ title, action }) => {
         (state) => state.createAccountReducer
     );
 
-    // useEffect(() => {
-    //     dispatch(businessCategoriesData());
-    // }, []);
+    useEffect(() => {
+        dispatch(businessCategoriesData());
+    }, []);
     useEffect(() => {
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
@@ -88,11 +88,15 @@ const StepFour = ({ title, action }) => {
         accountDetails.fullName === null
             ? name === null
             : (name = accountDetails.fullName.split(' '));
-
         const userData = {
             affiliateCode: 'ENG',
             firstName: name === undefined ? 'Akinfe' : name[0],
-            middleName: name === undefined ? 'I' : name[2],
+            middleName:
+                name === undefined
+                    ? 'I'
+                    : name[2] === undefined
+                    ? 'I'
+                    : name[2],
             lastName: name === undefined ? 'Temitope' : name[1],
             dob: '1998-08-10',
             id_type: 'IDCD',
