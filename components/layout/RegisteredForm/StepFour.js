@@ -42,9 +42,9 @@ const StepFour = ({ title, action }) => {
         (state) => state.createAccountReducer
     );
 
-    // useEffect(() => {
-    //     dispatch(businessCategoriesData());
-    // }, []);
+    useEffect(() => {
+        dispatch(businessCategoriesData());
+    }, []);
     useEffect(() => {
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
