@@ -1,0 +1,33 @@
+.inps {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.inps label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #3e3e3e;
+    margin-bottom: 10px;
+}
+
+.inps select {
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    background-image: url(../../../public/Assets/Svgs/arrow-down.svg);
+    color: #3e3e3e;
+    margin-top: 8px;
+    cursor: pointer;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position-x: 94%;
+    background-position-y: 50%;
+    margin-bottom: 14px;
+}

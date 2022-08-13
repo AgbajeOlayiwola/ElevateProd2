@@ -378,18 +378,14 @@ const StepFourCompProfile2BizDetails = ({
                 {/* <Link href="/Succes"> */}
                 <div>
                     <div className={styles.terms}>
-                        <input
-                            type="checkbox"
-                            onChange={(e) => {
-                                if (e.target.checked === true) {
-                                    setActiveBtn(true);
-                                } else {
-                                    setActiveBtn(false);
-                                }
+                        <CircleSvg
+                            action={() => {
+                                setActiveBtn(!activeBtn);
                             }}
+                            circleStatus={activeBtn}
                         />
                         <label>
-                            I agree with Ellevate App{' '}
+                            I agree with Ellevate App
                             <span>Terms and Conditions</span>
                         </label>
                     </div>
