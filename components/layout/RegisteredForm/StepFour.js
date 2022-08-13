@@ -7,8 +7,7 @@ import { location } from '../../ReusableComponents/Data';
 import {
     existingUserProfileData,
     createAccountData,
-    accountStatusData,
-    businessCategoriesData
+    accountStatusData
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -16,6 +15,8 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
+import BusinessCategory from '../../ReusableComponents/BusinessCategory';
+import CircleSvg from '../../ReusableComponents/ReusableSvgComponents/CircleSvg';
 
 const StepFour = ({ title, action }) => {
     const dispatch = useDispatch();
@@ -24,16 +25,10 @@ const StepFour = ({ title, action }) => {
     const accountDetails = JSON.parse(account);
 
     const [loading, setLoading] = useState(false);
-    const [businessCategory, setBusinessCategory] = useState([]);
-    const [businessType, setBusinessType] = useState([]);
-    const [business, setBusiness] = useState('');
     const [error, setError] = useState('');
     const [progress, setProgress] = useState('100%');
     const { existingUserProfile, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
-    );
-    const { businessCategories, errorDatas } = useSelector(
-        (state) => state.businessCategoriesReducer
     );
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
@@ -42,14 +37,6 @@ const StepFour = ({ title, action }) => {
         (state) => state.createAccountReducer
     );
 
-    // useEffect(() => {
-    //     dispatch(businessCategoriesData());
-    // }, []);
-    useEffect(() => {
-        if (businessCategories !== null) {
-            setBusinessCategory(businessCategories);
-        }
-    }, [businessCategories]);
     const {
         register,
         handleSubmit,
@@ -88,11 +75,15 @@ const StepFour = ({ title, action }) => {
         accountDetails.fullName === null
             ? name === null
             : (name = accountDetails.fullName.split(' '));
-
         const userData = {
             affiliateCode: 'ENG',
             firstName: name === undefined ? 'Akinfe' : name[0],
-            middleName: name === undefined ? 'I' : name[2],
+            middleName:
+                name === undefined
+                    ? 'I'
+                    : name[2] === undefined
+                    ? 'I'
+                    : name[2],
             lastName: name === undefined ? 'Temitope' : name[1],
             dob: '1998-08-10',
             id_type: 'IDCD',
@@ -123,8 +114,9 @@ const StepFour = ({ title, action }) => {
 
     const newAccountTest = () => {
         console.log(createAccount);
-
-        if (errorData) {
+        if (errorData === 'User already Exists') {
+            router.push('/Succes/AccountSuccess');
+        } else if (errorData) {
             setError(errorData);
             console.log(errorData);
             setLoading(false);
@@ -178,13 +170,6 @@ const StepFour = ({ title, action }) => {
             }
         });
     }, [localState]);
-    useEffect(() => {
-        Object.keys(businessCategory)?.filter((item) => {
-            if (item === business) {
-                setBusinessType(businessCategory[item]);
-            }
-        });
-    }, [business]);
     const myref = useRef();
     useEffect(() => {
         myref.current.scrollTo(0, 0);
@@ -387,18 +372,14 @@ const StepFour = ({ title, action }) => {
                         </div>
                         <div>
                             <div className={styles.terms}>
-                                <input
-                                    type="checkbox"
-                                    onChange={(e) => {
-                                        if (e.target.checked === true) {
-                                            setActiveBtn(true);
-                                        } else {
-                                            setActiveBtn(false);
-                                        }
+                                <CircleSvg
+                                    action={() => {
+                                        setActiveBtn(!activeBtn);
                                     }}
+                                    circleStatus={activeBtn}
                                 />
                                 <label>
-                                    I agree with Ellevate App{' '}
+                                    I agree with Ellevate App
                                     <span>Terms and Conditions</span>
                                 </label>
                             </div>
@@ -467,7 +448,7 @@ const StepFour = ({ title, action }) => {
                                 />
                             </div>
 
-                            <div className={styles.inps}>
+                            {/* <div className={styles.inps}>
                                 <label>Select Your Business Category </label>
 
                                 <br />
@@ -512,7 +493,8 @@ const StepFour = ({ title, action }) => {
                                         );
                                     })}
                                 </select>
-                            </div>
+                            </div> */}
+                            <BusinessCategory />
                             <p className={styles.ent}>Enter Business Address</p>
                             <div className={styles.busAdd}>
                                 <div className={styles.inps}>
@@ -611,15 +593,11 @@ const StepFour = ({ title, action }) => {
                         </div>
                         <div>
                             <div className={styles.terms}>
-                                <input
-                                    type="checkbox"
-                                    onChange={(e) => {
-                                        if (e.target.checked === true) {
-                                            setActiveBtn(true);
-                                        } else {
-                                            setActiveBtn(false);
-                                        }
+                                <CircleSvg
+                                    action={() => {
+                                        setActiveBtn(!activeBtn);
                                     }}
+                                    circleStatus={activeBtn}
                                 />
                                 <label>
                                     I agree with Ellevate App
