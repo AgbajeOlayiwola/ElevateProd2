@@ -44,7 +44,6 @@ const Login = () => {
         setEmail(e.target.value);
     };
 
-    console.log(encrypt('password'));
     const onSubmit = (data) => {
         setError('');
         setLoading((prev) => !prev);
