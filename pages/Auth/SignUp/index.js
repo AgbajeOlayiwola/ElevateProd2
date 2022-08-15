@@ -89,6 +89,7 @@ const Signup = ({ type }) => {
     //     onSubmit();
     // }[errorMessage]);
     const onSubmit = (data) => {
+        setError('');
         if (password === confirmPassword) {
             const postData = {
                 pName,
@@ -105,16 +106,16 @@ const Signup = ({ type }) => {
         }
     };
     const sentSIgnUp = () => {
-        if (errorMessage !== 'Account created successfully!') {
+        if (errorMessage !== null) {
             setError(errorMessage);
             setLoading(false);
-        } else {
+        } else if (user == 'Account created successfully!') {
             router.push('../Verify/Loading');
         }
     };
     useEffect(() => {
         sentSIgnUp();
-    }, [errorMessage]);
+    }, [errorMessage, user]);
 
     const [bgcolor, setBgcolor] = useState(false);
 

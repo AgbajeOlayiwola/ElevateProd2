@@ -7,7 +7,7 @@ const withAuth = (WrappedComponent) => {
         const [accessGranted, setAccessGranted] = useState(false);
 
         useEffect(() => {
-            if (localStorage.getItem('user')) {
+            if (localStorage.getItem('token')) {
                 setAccessGranted(true);
             } else {
                 Router.replace('../Auth/Login');
