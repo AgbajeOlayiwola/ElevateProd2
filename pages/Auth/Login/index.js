@@ -46,7 +46,8 @@ const Login = () => {
 
     console.log(encrypt('password'));
     const onSubmit = (data) => {
-        setLoading(true);
+        setError('');
+        setLoading((prev) => !prev);
         const loginData = {
             email,
             password: encrypt(password)
@@ -55,21 +56,22 @@ const Login = () => {
         // dispatch(createNewUserAccount());
     };
     const sentLogin = () => {
-        if (errorMessages !== 'Login successful') {
+        if (errorMessages !== null) {
             setError(errorMessages);
-            setLoading(false);
+            // setLoading(false);
+            setLoading((prev) => !prev);
             // } else if (
             //     newAccountErrorMessage ===
             //     'You already have an account with us. Please contact us for more information'
             // ) {
             // router.push('/Dashboard');,
-        } else {
+        } else if (user === 'Login successful') {
             router.push('../../Onboarding/ProfileSetup');
         }
     };
     useEffect(() => {
         sentLogin();
-    }, [errorMessages]);
+    }, [errorMessages, user]);
 
     const [outType, setOutType] = useState();
     const types = (type) => {

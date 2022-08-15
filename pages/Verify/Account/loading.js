@@ -28,14 +28,14 @@ const AccountLoading = () => {
         (state) => state.newUserAccountDetails
     );
     useEffect(() => {
-        const accountData = {
-            affiliateCode: 'ENG',
-            ccy: 'NGN'
-        };
-        dispatch(createNewUserAccount(accountData));
+        // const accountData = {
+        //     affiliateCode: 'ENG',
+        //     ccy: 'NGN'
+        // };
+        // dispatch(createNewUserAccount(accountData));
     }, []);
     const newUserAccountt = () => {
-        console.log(accountStatus);
+        // console.log(accountStatus);
         if (newUserAccountErrorMessage) {
             // setError(errorMessages);
             console.log(newUserAccountErrorMessage);

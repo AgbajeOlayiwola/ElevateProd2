@@ -75,6 +75,7 @@ const ProfileSetups = () => {
         bvnErrorIII,
         bvnNinPend
     } = useSelector((state) => state.profileSetup);
+
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
     const conditionalComponent = () => {
@@ -146,7 +147,7 @@ const ProfileSetups = () => {
             dob: formData.dateOfBirth,
             signatoryCount: 1
         };
-        setLoading(true);
+        setLoading((prev) => !prev);
 
         dispatch(createProfileSetup(profileData));
         // console.log('lol');
@@ -167,7 +168,6 @@ const ProfileSetups = () => {
             setErrorI(bvnError);
             setErrorII(bvnErrorI);
             setErrorIII(bvnNinPend);
-            setLoading(false);
         }
     }, [errorMessages, bvnError, bvnErrorI, bvnNinPend]);
     // useEffect(() => {
@@ -196,9 +196,7 @@ const ProfileSetups = () => {
             <div className={styles.error}>{error}</div>
             {conditionalComponent()}
 
-            {page === 2 || page == 1 ? null : loading === true ? (
-                <Loader />
-            ) : (
+            {page === 2 || page == 1 ? null : (
                 <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
