@@ -36,6 +36,7 @@ import { useRouter } from 'next/router';
 import { location } from '../../../ReusableComponents/Data';
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
+import CircleSvg from '../../../ReusableComponents/ReusableSvgComponents/CircleSvg';
 const StepFourCompProfile2BizDetails = ({
     handleShowSuccessStep,
     formData,
