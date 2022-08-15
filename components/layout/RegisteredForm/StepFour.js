@@ -55,7 +55,9 @@ const StepFour = ({ title, action }) => {
         dispatch(existingUserProfileData(accountDetails));
     };
     const profileTest = () => {
-        if (errorMessage) {
+        if (errorMessage === 'Account already exists') {
+            router.push('/Succes/AccountSuccess');
+        } else if (errorMessage) {
             setError(errorMessage);
             console.log(errorMessage);
             setLoading(false);
