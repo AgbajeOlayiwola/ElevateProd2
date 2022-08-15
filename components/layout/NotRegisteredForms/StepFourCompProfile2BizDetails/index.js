@@ -119,7 +119,7 @@ const StepFourCompProfile2BizDetails = ({
                 'You already have an account with us. Please contact us for more information'
         ) {
             console.log(errorMessages);
-            router.push('../Succes/AccountSuccess');
+            router.push('../Verify/Account/loading');
         } else if (accountStatus.message === 'Try Again') {
             router.push('../Verify/Account/loading');
         } else if (accountStatus.message === 'SUCCESS') {

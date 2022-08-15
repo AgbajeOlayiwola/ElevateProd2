@@ -168,7 +168,6 @@ const ProfileSetups = () => {
             setErrorI(bvnError);
             setErrorII(bvnErrorI);
             setErrorIII(bvnNinPend);
-            setLoading(false);
         }
     }, [errorMessages, bvnError, bvnErrorI, bvnNinPend]);
     // useEffect(() => {
@@ -197,9 +196,7 @@ const ProfileSetups = () => {
             <div className={styles.error}>{error}</div>
             {conditionalComponent()}
 
-            {page === 2 || page == 1 ? null : loading === true ? (
-                <Loader />
-            ) : (
+            {page === 2 || page == 1 ? null : (
                 <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
