@@ -1,18 +1,25 @@
 import { login } from '../types/actionTypes';
 
 const initialState = {
-    user: [],
+    user: null,
     loggedInUser: null,
-    errorMessage: ''
+    errorMessage: null
 };
 
 const registerReducer = (state = initialState, { type, payload }) => {
     switch (type) {
+        case login.REGISTER_START:
+            return {
+                ...state,
+                user: null,
+                loggedInUser: null,
+                errorMessage: null
+            };
         case login.REGISTER_SUCCESS:
             return {
                 ...state,
                 user: payload,
-                errorMessage: payload
+                errorMessage: null
             };
         case login.REGISTER_FAIL:
             return {

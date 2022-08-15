@@ -258,13 +258,15 @@ export const businessCategories = {
 //auth action types
 export const login = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',
+    REGISTER_START: 'REGISTER_START',
     REGISTER_FAIL: 'REGISTER_FAIL',
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
     LOGIN_ERROR: 'LOGIN_ERROE',
     SET_MESSAGE: 'SET_MESSAGE',
     CLEAR_MESSAGE: 'CLEAR_MESSAGE',
     LOGIN_FAIL: 'LOGIN_FAIL',
-    LOGOUT: 'LOGOUT'
+    LOGOUT: 'LOGOUT',
+    LOGIN_START: 'LOGIN_START'
 };
 //end auth action types
 //profile setup

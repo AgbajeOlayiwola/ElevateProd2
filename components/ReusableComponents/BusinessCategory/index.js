@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 const BusinessCategory = () => {
     const dispatch = useDispatch();
     const [businessCategory, setBusinessCategory] = useState([]);
-    const [businessType, setBusinessType] = useState([]);
+    const [businessType, setBusinessType] = useState('');
     const [business, setBusiness] = useState('');
     const { businessCategories, errorDatas } = useSelector(
         (state) => state.businessCategoriesReducer
@@ -55,13 +55,19 @@ const BusinessCategory = () => {
 
                 <select>
                     <option>Select Your Business Type</option>
-                    {businessType?.map((business, index) => {
-                        return (
-                            <option value={business} key={index}>
-                                {business}
-                            </option>
-                        );
-                    })}
+                    {businessType ? (
+                        businessType?.map((business, index) => {
+                            return (
+                                <option value={business} key={index}>
+                                    {business}
+                                </option>
+                            );
+                        })
+                    ) : (
+                        <option value="">
+                            Choose a business Category First
+                        </option>
+                    )}
                 </select>
             </div>
         </>

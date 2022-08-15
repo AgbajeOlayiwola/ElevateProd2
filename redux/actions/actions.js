@@ -730,6 +730,9 @@ export const accountStatusData = (data) => (dispatch) => {
 
 //add user
 export const userRegisterStart = (user) => ({
+    type: login.REGISTER_START
+});
+export const userRegisterSucess = (user) => ({
     type: login.REGISTER_SUCCESS,
     payload: user
 });
@@ -739,11 +742,12 @@ export const userRegisterError = (errorMessage) => ({
 });
 export const createUserAction = (postData) => {
     return (dispatch) => {
+        dispatch(userRegisterStart());
         axiosInstance
             .post(`${apiRoutes.register}`, postData)
             .then((response) => {
                 console.log('data from action', response.data);
-                dispatch(userRegisterStart(response.data.message));
+                dispatch(userRegisterSucess(response.data.message));
             })
             .catch((error) => {
                 dispatch(userRegisterError(error.response.data.message));
@@ -753,7 +757,11 @@ export const createUserAction = (postData) => {
 //add user end
 
 //login User
-export const userLoadStart = (errorMessages) => ({
+export const userLoadStart = () => ({
+    type: login.LOGIN_START
+});
+
+export const userLoadSuccess = (errorMessages) => ({
     type: login.LOGIN_SUCCESS,
     payload: errorMessages
 });
@@ -764,6 +772,7 @@ export const userLoadError = (errorMessages) => ({
 
 export const loginUserAction = (loginData) => {
     return (dispatch) => {
+        dispatch(userLoadStart());
         axiosInstance
             .post(`${apiRoutes.login}`, loginData)
             .then((response) => {
@@ -774,7 +783,7 @@ export const loginUserAction = (loginData) => {
                     JSON.stringify(response.data.data.token)
                 );
 
-                dispatch(userLoadStart(response.data.message));
+                dispatch(userLoadSuccess(response.data.message));
             })
             .catch((error) => {
                 console.log(error);
