@@ -1039,7 +1039,7 @@ export const getNewAccountError = (newUserAccountErrorMessage) => ({
 export const getNewUserAccountDetails = (accountData) => {
     return (dispatch) => {
         // dispatch(completeProfileLoadStart());
-        dispatch(getNewAccountStart());
+        // dispatch(getNewAccountStart());
         axiosInstance
             .get(`${apiRoutes.accountStatus}`)
             .then((response) => dispatch(getNewAccountSuccess(response.data)))

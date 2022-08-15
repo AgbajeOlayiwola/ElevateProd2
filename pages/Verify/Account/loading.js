@@ -27,29 +27,31 @@ const AccountLoading = () => {
     const { newUserAccount, newUserAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDetails
     );
-    useEffect(() => {
-        // const accountData = {
-        //     affiliateCode: 'ENG',
-        //     ccy: 'NGN'
-        // };
-        // dispatch(createNewUserAccount(accountData));
-    }, []);
+    // useEffect(() => {
+    // const accountData = {
+    //     affiliateCode: 'ENG',
+    //     ccy: 'NGN'
+    // };
+    // dispatch(createNewUserAccount(accountData));
+    // }, []);
     const newUserAccountt = () => {
-        // console.log(accountStatus);
-        if (newUserAccountErrorMessage) {
-            // setError(errorMessages);
-            console.log(newUserAccountErrorMessage);
-            // setLoading(false);
-        } else if (newUserAccount.message === 'Try Again') {
+        console.log(newUserAccount.message);
+        if (!newUserAccountErrorMessage) {
+            // dispatch(getNewUserAccountDetails());
+            dispatch(getNewUserAccountDetails());
             setTimeout(() => {
                 dispatch(getNewUserAccountDetails());
             }, 40000);
+            // setLoading(false);
+        }
+        if (newUserAccount.message === 'SUCCESS') {
+            router.push('/Succes');
         } else if (newUserAccount.message === 'SUCCESS') {
             // window.localStorage.setItem(
             //     'accountNumber',
             //     JSON.stringify(accountStatus)
             // );
-            router.push('/Success');
+            router.push('/Succes');
         }
     };
     useEffect(() => {
