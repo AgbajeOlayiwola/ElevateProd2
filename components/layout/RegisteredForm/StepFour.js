@@ -413,17 +413,17 @@ const StepFour = ({ title, action }) => {
                                     placeholder="Enter RC Number"
                                     className={styles.textInput}
                                     {...register('rcNumber', {
-                                        required: 'RC Number is Required',
-                                        maxLength: {
-                                            value: 15,
-                                            message:
-                                                'RC Number  cannot be more than 15 digits'
-                                        },
-                                        minLength: {
-                                            value: 15,
-                                            message:
-                                                'RC Number  cannot be more than 15 digits'
-                                        }
+                                        required: 'RC Number is Required'
+                                        // maxLength: {
+                                        //     value: 15,
+                                        //     message:
+                                        //         'RC Number  cannot be more than 15 digits'
+                                        // },
+                                        // minLength: {
+                                        //     value: 15,
+                                        //     message:
+                                        //         'RC Number  cannot be more than 15 digits'
+                                        // }
                                         // pattern: {
                                         //     // eslint-disable-next-line
                                         //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,

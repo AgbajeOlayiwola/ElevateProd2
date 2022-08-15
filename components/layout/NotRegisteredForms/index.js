@@ -75,6 +75,7 @@ const ProfileSetups = () => {
         bvnErrorIII,
         bvnNinPend
     } = useSelector((state) => state.profileSetup);
+
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
     const conditionalComponent = () => {
@@ -146,7 +147,7 @@ const ProfileSetups = () => {
             dob: formData.dateOfBirth,
             signatoryCount: 1
         };
-        setLoading(true);
+        setLoading((prev) => !prev);
 
         dispatch(createProfileSetup(profileData));
         // console.log('lol');

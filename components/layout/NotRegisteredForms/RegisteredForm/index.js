@@ -173,9 +173,9 @@ const RegisteredForm = ({ formData, setFormData, action }) => {
                                 //setRcnumber(event?.target.value); //saving input to state
                             }}
                         />
-                        <div className="errors">
+                        {/* <div className="errors">
                             {errors.rc_number?.message}
-                        </div>
+                        </div> */}
                     </div>
                     <InputWrapper>
                         <Label>Enter your TIN</Label>
@@ -313,7 +313,6 @@ const RegisteredForm = ({ formData, setFormData, action }) => {
                             {errors.date_of_birth?.message}
                         </div>
                     </InputWrapper>
-                    <button onClick={action}>Nexts</button>
                 </>
             ) : (
                 ''

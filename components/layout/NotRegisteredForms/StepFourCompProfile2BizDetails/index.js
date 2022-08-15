@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import Card from '../../NotRegisteredForms/Card';
 import Link from 'next/link';
 import {
@@ -28,6 +29,7 @@ import styles from './styles.module.css';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    businessCategoriesData,
     CompleteBusinessProfile,
     CompProfile,
     createNewUserAccount
@@ -37,6 +39,7 @@ import { location } from '../../../ReusableComponents/Data';
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import CircleSvg from '../../../ReusableComponents/ReusableSvgComponents/CircleSvg';
+import BusinessCategory from '../../../ReusableComponents/BusinessCategory';
 const StepFourCompProfile2BizDetails = ({
     handleShowSuccessStep,
     formData,
@@ -69,7 +72,12 @@ const StepFourCompProfile2BizDetails = ({
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
-
+    const { businessCategories, errorDatas } = useSelector(
+        (state) => state.businessCategoriesReducer
+    );
+    const [businessCategory, setBusinessCategory] = useState([]);
+    const [businessType, setBusinessType] = useState([]);
+    const [business, setBusiness] = useState('');
     const handleSubmitIII = () => {
         const commpleteProfileData = {
             businessName: formData.bussinessName,
@@ -111,16 +119,30 @@ const StepFourCompProfile2BizDetails = ({
                 'You already have an account with us. Please contact us for more information'
         ) {
             console.log(errorMessages);
-            router.push('/Succes/AccountSuccess');
+            router.push('../Succes/AccountSuccess');
         } else if (accountStatus.message === 'Try Again') {
-            router.push('/Account/Loading');
+            router.push('../Verify/Account/loading');
         } else if (accountStatus.message === 'SUCCESS') {
             router.push('/Succes');
         }
     };
-    // useEffect(() => {
 
-    // }, [errorMessage, compBusprofile]);
+    useEffect(() => {
+        dispatch(businessCategoriesData());
+    }, []);
+    useEffect(() => {
+        if (businessCategories !== null) {
+            setBusinessCategory(businessCategories);
+        }
+    }, [businessCategories]);
+    useEffect(() => {
+        Object.keys(businessCategory)?.filter((item) => {
+            if (item === business) {
+                setBusinessType(businessCategory[item]);
+            }
+        });
+    }, [business]);
+
     useEffect(() => {
         businessProfileAction();
         createNewAccountAction();
@@ -213,9 +235,34 @@ const StepFourCompProfile2BizDetails = ({
                             </div>
                         </div>
                         <div style={{ marginTop: '2rem', width: '100%' }}>
-                            <Label>Select Business Type</Label>
+                            <label>Select Your Business Type </label>
                             <br />
-                            <SelectInput
+                            <select
+                                onChange={(e) => {
+                                    setBusiness(e.target.value);
+                                }}
+                            >
+                                <option>Business Category</option>
+                                {Object.keys(businessCategory)?.map(
+                                    (business, index) => {
+                                        return (
+                                            <option
+                                                value={business}
+                                                key={index}
+                                            >
+                                                {business}
+                                            </option>
+                                        );
+                                    }
+                                )}
+                            </select>
+                        </div>
+                        <div style={{ marginTop: '2rem', width: '100%' }}>
+                            <label>Select Your Business Type </label>
+
+                            <br />
+
+                            <select
                                 onChange={(event) => {
                                     setFormData({
                                         ...formData,
@@ -223,15 +270,15 @@ const StepFourCompProfile2BizDetails = ({
                                     });
                                 }}
                             >
-                                <option value="">Select Business</option>
-
-                                <option value="Retail business">
-                                    Retail business
-                                </option>
-                                <option value="Perishable business">
-                                    Perishable business
-                                </option>
-                            </SelectInput>
+                                <option>Select Your Business Type</option>
+                                {businessType?.map((business, index) => {
+                                    return (
+                                        <option value={business} key={index}>
+                                            {business}
+                                        </option>
+                                    );
+                                })}
+                            </select>
                         </div>
 
                         <p className={styles.ent}>Enter Business Address</p>
