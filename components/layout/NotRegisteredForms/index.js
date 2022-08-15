@@ -154,13 +154,19 @@ const ProfileSetups = () => {
 
     useEffect(() => {
         console.log('new bvn:', bvnError);
-        if (errorMessages === null && bvnError === null && bvnErrorI === null) {
+        if (
+            errorMessages === null &&
+            bvnError === null &&
+            bvnErrorI === null &&
+            bvnNinPend === null
+        ) {
             setPage(page + 1);
         } else {
             console.log('moved');
             setErrorM(errorMessages);
             setErrorI(bvnError);
             setErrorII(bvnErrorI);
+            setErrorIII(bvnNinPend);
             setLoading(false);
         }
     }, [errorMessages, bvnError, bvnErrorI, bvnNinPend]);
@@ -181,6 +187,7 @@ const ProfileSetups = () => {
                     <p className={styles.error}>{errorM}</p> <br />
                     <p className={styles.error}>{errorI}</p> <br />
                     <p className={styles.error}>{errorII}</p> <br />
+                    <p className={styles.error}>{errorIII}</p> <br />
                     {/*<p className={styles.error}>{errorIII}</p> <br /> */}
                 </>
             ) : (

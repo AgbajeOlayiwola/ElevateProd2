@@ -833,7 +833,7 @@ export const bvnNinErrorIII = (bvnErrorIII) => ({
     type: setupProfile.BVN_NIN_LOAD_ERRORIII,
     payload: bvnErrorIII
 });
-export const bvnNiniPending = (bvnNinPend) => ({
+export const bvnNinPending = (bvnNinPend) => ({
     type: setupProfile.BVN_NIN_LOAD_PENDING,
     payload: bvnNinPend
 });
@@ -859,7 +859,7 @@ export const createProfileSetup = (profileData) => {
                                 bvnNinErrorI(response.data.data[1].reason)
                             );
                             if (response.data.data[1].status === 'PENDING') {
-                                dispatch(bvnNiniPending('Try Again'));
+                                dispatch(bvnNinPending('Try Again'));
                             }
                             console.log(response.data.data[0].reason);
                         })
