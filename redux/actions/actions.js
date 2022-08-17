@@ -730,9 +730,6 @@ export const accountStatusData = (data) => (dispatch) => {
 
 //add user
 export const userRegisterStart = (user) => ({
-    type: login.REGISTER_START
-});
-export const userRegisterSucess = (user) => ({
     type: login.REGISTER_SUCCESS,
     payload: user
 });
@@ -742,12 +739,11 @@ export const userRegisterError = (errorMessage) => ({
 });
 export const createUserAction = (postData) => {
     return (dispatch) => {
-        dispatch(userRegisterStart());
         axiosInstance
             .post(`${apiRoutes.register}`, postData)
             .then((response) => {
                 console.log('data from action', response.data);
-                dispatch(userRegisterSucess(response.data.message));
+                dispatch(userRegisterStart(response.data.message));
             })
             .catch((error) => {
                 dispatch(userRegisterError(error.response.data.message));
@@ -757,11 +753,7 @@ export const createUserAction = (postData) => {
 //add user end
 
 //login User
-export const userLoadStart = () => ({
-    type: login.LOGIN_START
-});
-
-export const userLoadSuccess = (errorMessages) => ({
+export const userLoadStart = (errorMessages) => ({
     type: login.LOGIN_SUCCESS,
     payload: errorMessages
 });
@@ -772,7 +764,6 @@ export const userLoadError = (errorMessages) => ({
 
 export const loginUserAction = (loginData) => {
     return (dispatch) => {
-        dispatch(userLoadStart());
         axiosInstance
             .post(`${apiRoutes.login}`, loginData)
             .then((response) => {
@@ -783,7 +774,7 @@ export const loginUserAction = (loginData) => {
                     JSON.stringify(response.data.data.token)
                 );
 
-                dispatch(userLoadSuccess(response.data.message));
+                dispatch(userLoadStart(response.data.message));
             })
             .catch((error) => {
                 console.log(error);
@@ -868,7 +859,7 @@ export const createProfileSetup = (profileData) => {
                                 bvnNinErrorI(response.data.data[1].reason)
                             );
                             if (response.data.data[1].status === 'PENDING') {
-                                dispatch(bvnNinPending('Try Again'));
+                                dispatch(bvnNiniending('Try Again'));
                             }
                             console.log(response.data.data[0].reason);
                         })
@@ -1039,7 +1030,7 @@ export const getNewAccountError = (newUserAccountErrorMessage) => ({
 export const getNewUserAccountDetails = (accountData) => {
     return (dispatch) => {
         // dispatch(completeProfileLoadStart());
-        // dispatch(getNewAccountStart());
+        dispatch(getNewAccountStart());
         axiosInstance
             .get(`${apiRoutes.accountStatus}`)
             .then((response) => dispatch(getNewAccountSuccess(response.data)))
