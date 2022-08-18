@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadLanguageAsync } from '../../../redux/actions/actions';
@@ -8,6 +8,7 @@ import { loadLanguageAsync } from '../../../redux/actions/actions';
 const Langauges = () => {
     const [languages, setLanguages] = useState([]);
     const [languageValue, setLanguagevalue] = useState('');
+    const [error, setError] = useState('');
 
     const dispatch = useDispatch();
     const { isLoading, language, errorMessage } = useSelector(
@@ -33,6 +34,7 @@ const Langauges = () => {
     // console.log(languages);
     return (
         <div className={styles.select2}>
+            {error ? <p className={styles.error}>{error}</p> : null}
             <label className={styles.label} htmlFor="languages">
                 Language
             </label>
@@ -52,6 +54,7 @@ const Langauges = () => {
                 onChange={(e) => {
                     if (e.target.value !== 'English') {
                         setLanguagevalue(languages[0]);
+                        setError('This App is available in English currently');
                     }
                 }}
             >

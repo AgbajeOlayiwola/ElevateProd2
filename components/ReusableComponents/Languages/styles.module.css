@@ -14,3 +14,9 @@
 .select2 {
     width: 100%;
 }
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 1rem;
+}

@@ -12,13 +12,26 @@
 }
 
 .accountUpgradeSingleText {
-    width: 70%;
+    width: 50%;
 }
 .accountUpgradeSingleIcon {
     width: 10%;
 }
 .accountUpgradeSingleChecked {
-    width: 10%;
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+
+.accountUpgradeSingleChecked p {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0px;
+    margin-left: 24px;
+    color: #303030;
 }
 
 .accountUpgradeSingleText div {

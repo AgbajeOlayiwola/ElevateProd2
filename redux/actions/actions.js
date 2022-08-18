@@ -863,12 +863,24 @@ export const createProfileSetup = (profileData) => {
                         .get(`${apiRoutes.verifyStatus}`)
                         .then((response) => {
                             dispatch(bvnNinData(response.data));
-                            dispatch(bvnNinError(response.data.data[0].reason));
-                            dispatch(
-                                bvnNinErrorI(response.data.data[1].reason)
-                            );
+                            if (response.data.data[0].reason) {
+                                dispatch(
+                                    bvnNinError(
+                                        'We are unable to verify your details at the momemnt. Try again later'
+                                    )
+                                );
+                            }
+                            if (response.data.data[1].reason) {
+                                dispatch(
+                                    bvnNinErrorI(
+                                        'We are unable to verify your details at the momemnt. Try again later'
+                                    )
+                                );
+                            }
                             if (response.data.data[1].status === 'PENDING') {
                                 dispatch(bvnNinPending('Try Again'));
+                            } else {
+                                dispatch(bvnNinPending(null));
                             }
                             console.log(response.data.data[0].reason);
                         })
