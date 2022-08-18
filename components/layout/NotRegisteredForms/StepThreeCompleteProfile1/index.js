@@ -167,11 +167,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
                                                 name="gender"
                                                 value="male"
                                                 {...register('bvn')}
-                                                checked={
-                                                    gender === 'm'
-                                                        ? true
-                                                        : false
-                                                }
                                             />
                                             <label className={styles.fmLabel}>
                                                 Male
@@ -186,11 +181,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
                                                 name="gender"
                                                 value="female"
                                                 {...register('bvn')}
-                                                checked={
-                                                    gender === 'f'
-                                                        ? true
-                                                        : false
-                                                }
                                             />
                                             <label className={styles.fmLabel}>
                                                 Female
