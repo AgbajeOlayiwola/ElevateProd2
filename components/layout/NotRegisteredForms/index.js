@@ -174,7 +174,7 @@ const ProfileSetups = () => {
     //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
     //         setErrorM(bvnError);
-    //         setErrorI(bvnErrorI);
+    //         setErrorI(bvnErrorI);`   1qa¸asw2a   q1`
     //     } else if (!otpErrorMessage && !bvnError && !bvnErrorI) {
     //         setPage(page + 1);
     //     }

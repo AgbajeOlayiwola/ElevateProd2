@@ -854,12 +854,25 @@ export const createProfileSetup = (profileData) => {
                         .get(`${apiRoutes.verifyStatus}`)
                         .then((response) => {
                             dispatch(bvnNinData(response.data));
-                            dispatch(bvnNinError(response.data.data[0].reason));
-                            dispatch(
-                                bvnNinErrorI(response.data.data[1].reason)
-                            );
+                            if (response.data.data[0].reason) {
+                                dispatch(
+                                    bvnNinError(
+                                        'We are unable to verify your details at the momemnt. Try again later'
+                                    )
+                                );
+                            }
+                            if (response.data.data[1].reason) {
+                                dispatch(
+                                    bvnNinErrorI(
+                                        'We are unable to verify your details at the momemnt. Try again later'
+                                    )
+                                );
+                            }
+
+                            bvnNinErrorII(response.data.data[0].reason);
+
                             if (response.data.data[1].status === 'PENDING') {
-                                dispatch(bvnNiniending('Try Again'));
+                                dispatch(bvnNinPending('Try Again'));
                             }
                             console.log(response.data.data[0].reason);
                         })
@@ -871,7 +884,7 @@ export const createProfileSetup = (profileData) => {
             })
             .catch((error) => {
                 console.log(
-                    'profile seytup dispatch',
+                    'profile setup dispatch',
                     error.response.data.message
                 );
                 dispatch(setupProfileError(error.response.data.message));
