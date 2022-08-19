@@ -157,8 +157,8 @@ const ProfileSetups = () => {
         console.log('new bvn:', bvnError);
         if (
             errorMessages === null &&
-            bvnError === ' ' &&
-            bvnErrorI === ' ' &&
+            bvnError === null &&
+            bvnErrorI === null &&
             bvnNinPend === null
         ) {
             setPage(page + 1);

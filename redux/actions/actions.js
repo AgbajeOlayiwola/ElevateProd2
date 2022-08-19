@@ -870,8 +870,6 @@ export const createProfileSetup = (profileData) => {
                             }
                             if (response.data.data[1].status === 'PENDING') {
                                 dispatch(bvnNinPending('Try Again'));
-                            } else {
-                                dispatch(bvnNinPending(null));
                             }
                             console.log(response.data.data[0].reason);
                         })
