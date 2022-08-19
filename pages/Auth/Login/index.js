@@ -17,7 +17,7 @@ const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [email, setEmail] = useState('');
+    const [id, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const router = useRouter();
@@ -48,7 +48,7 @@ const Login = () => {
         setError('');
         setLoading((prev) => !prev);
         const loginData = {
-            email,
+            id,
             password: encrypt(password)
         };
         dispatch(loginUserAction(loginData));

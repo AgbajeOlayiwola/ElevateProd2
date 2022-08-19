@@ -854,26 +854,34 @@ export const createProfileSetup = (profileData) => {
                         .get(`${apiRoutes.verifyStatus}`)
                         .then((response) => {
                             dispatch(bvnNinData(response.data));
-                            if (response.data.data[0].reason) {
+                            if (
+                                response.data.data[0].reason &&
+                                response.data.data[1].reason
+                            ) {
                                 dispatch(
                                     bvnNinError(
                                         'We are unable to verify your details at the momemnt. Try again later'
                                     )
+                                ),
+                                    dispatch(
+                                        bvnNinErrorI(
+                                            'We are unable to verify your details at the momemnt. Try again later'
+                                        )
+                                    );
+                            } else if (
+                                response.data.data[1].status === 'PENDING'
+                            ) {
+                                bvnNinErrorI(
+                                    'We are unable to verify your details at the momemnt. Try again later'
                                 );
-                            }
-                            if (response.data.data[1].reason) {
-                                dispatch(
-                                    bvnNinErrorI(
-                                        'We are unable to verify your details at the momemnt. Try again later'
-                                    )
-                                );
+                            } else if (
+                                response.data.data[1].status === 'SUCCESS' &&
+                                response.data.data[0].status === 'SUCCESS'
+                            ) {
+                                dispatch(bvnNinError(null)),
+                                    dispatch(bvnNinErrorI(null));
                             }
 
-                            bvnNinErrorII(response.data.data[0].reason);
-
-                            if (response.data.data[1].status === 'PENDING') {
-                                dispatch(bvnNinPending('Try Again'));
-                            }
                             console.log(response.data.data[0].reason);
                         })
                         .catch((error) => {
@@ -1043,7 +1051,7 @@ export const getNewAccountError = (newUserAccountErrorMessage) => ({
 export const getNewUserAccountDetails = (accountData) => {
     return (dispatch) => {
         // dispatch(completeProfileLoadStart());
-        dispatch(getNewAccountStart());
+        // dispatch(getNewAccountStart());
         axiosInstance
             .get(`${apiRoutes.accountStatus}`)
             .then((response) => dispatch(getNewAccountSuccess(response.data)))

@@ -3,7 +3,7 @@ import AccountChecked from '../ReusableSvgComponents/AccountCheckedSvg';
 import InfoSvg from '../ReusableSvgComponents/InfoSvg';
 import styles from './styles.module.css';
 
-const AccountUpgradeSingle = ({ icon, text, index, action }) => {
+const AccountUpgradeSingle = ({ icon, text, index, action, statusInfo }) => {
     return (
         <div
             key={index}
@@ -18,8 +18,9 @@ const AccountUpgradeSingle = ({ icon, text, index, action }) => {
                     <InfoSvg />
                 </div>
             </div>
-            <div className={styles.accountUpgradeSngleChecked}>
+            <div className={styles.accountUpgradeSingleChecked}>
                 <AccountChecked />
+                <p>{statusInfo}</p>
             </div>
         </div>
     );

@@ -868,7 +868,7 @@ const Payment = () => {
                         successfully today.
                     </p>
                     <div className={styles.chart}>
-                        <ChartDiv width={qr} bg="#3CE312" zIndex="4"></ChartDiv>
+                        <ChartDiv width={qr} bg="#3A5207" zIndex="4"></ChartDiv>
                         <ChartDiv
                             width={paylink}
                             bg="#69940D"
