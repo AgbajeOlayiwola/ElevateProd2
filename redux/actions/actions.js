@@ -1086,7 +1086,7 @@ export const createNewUserAccount = (accountData) => {
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
-                console.log('create new account:', error.response.data.message);
+                // console.log('create new account:', error.response.data.message);
                 dispatch(createNewAccountError(error.response.data.message));
             });
     };
@@ -1095,17 +1095,17 @@ export const createNewUserAccount = (accountData) => {
 //End Create New User Action
 
 //Create New Corporate User Action
-export const createNewCorpAccountStart = () => ({
+export const createNewCorpAccountStart = (newCorpAccountErrorMessage) => ({
     type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_START,
-    payload: newAccountErrorMessage
+    payload: newCorpAccountErrorMessage
 });
-export const createNewCorpAccountSuccess = (newAccount) => ({
+export const createNewCorpAccountSuccess = (newCorpAccount) => ({
     type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_SUCCESS,
-    payload: newAccount
+    payload: newCorpAccount
 });
-export const createNewCorpAccountError = (newAccountErrorMessage) => ({
+export const createNewCorpAccountError = (newCorpAccountErrorMessage) => ({
     type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_ERROR,
-    payload: newAccountErrorMessage
+    payload: newCorpAccountErrorMessage
 });
 
 export const createNewCorpUserAccount = (accountData) => {
@@ -1115,11 +1115,17 @@ export const createNewCorpUserAccount = (accountData) => {
             .post(`${apiRoutes.corpNewUser}`, accountData)
             .then((response) => {
                 console.log('create New Account', response.data);
+                console.log('create new account:', error.response.data.message);
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
-                console.log('create new account:', error.response.data.message);
-                dispatch(createNewAccountError(error.response.data.message));
+                console.log(
+                    'create new account Error:',
+                    error.response.data.message
+                );
+                dispatch(
+                    createNewCorpAccountError(error.response.data.message)
+                );
             });
     };
 };

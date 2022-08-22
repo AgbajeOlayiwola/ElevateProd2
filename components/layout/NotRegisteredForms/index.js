@@ -18,6 +18,7 @@ import Liveness from './Liveness';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
+
     const router = useRouter();
     // Router.reload();
     // router.replace(router.asPath);

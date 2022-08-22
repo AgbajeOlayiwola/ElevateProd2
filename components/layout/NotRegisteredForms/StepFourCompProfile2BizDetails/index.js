@@ -33,10 +33,10 @@ import {
     CompleteBusinessProfile,
     CompProfile,
     createNewCorpUserAccount,
-    createNewUserAccount
+    createNewUserAccount,
+    statesData
 } from '../../../../redux/actions/actions';
 import { useRouter } from 'next/router';
-import { location } from '../../../ReusableComponents/Data';
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import CircleSvg from '../../../ReusableComponents/ReusableSvgComponents/CircleSvg';
@@ -62,6 +62,7 @@ const StepFourCompProfile2BizDetails = ({
     const [activeBtn, setActiveBtn] = useState(false);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
+    const [location, setLocation] = useState([]);
     const [accountInfo, setAccountInfo] = useState('');
     const [registered, setRegistered] = useState();
     const [profileCont, setProfileCont] = useState([]);
@@ -76,6 +77,9 @@ const StepFourCompProfile2BizDetails = ({
     );
     const { businessCategories, errorDatas } = useSelector(
         (state) => state.businessCategoriesReducer
+    );
+    const { newCorpAccount, newCorpAccountErrorMessage } = useSelector(
+        (state) => state.newuserCorpAccount
     );
     const { profile } = useSelector((state) => state.profile);
 
@@ -104,16 +108,63 @@ const StepFourCompProfile2BizDetails = ({
         dispatch(createNewUserAccount(accountData));
     };
     const businessProfileAction = () => {
-        if (errorMessage !== '') {
-            // dispatch(CompProfile());
-            // do something here 1 sec after current has changed
-            console.log(errorMessage);
-        } else if (compBusprofile !== ' ') {
-            const accountData = {
-                affiliateCode: 'ENG',
-                ccy: 'NGN'
-            };
-            dispatch(createNewUserAccount(accountData));
+        const commpleteProfileData = {
+            businessName: formData.bussinessName,
+            businessType: formData.businessType,
+            referralCode: formData.refferalCode,
+            countryCode: '+234',
+            phoneNumber: formData.bussinessName,
+            businessAddress: formData.streetName,
+            state: formData.state,
+            city: formData.city,
+            lga: formData.localGoverment
+        };
+        console.log(commpleteProfileData);
+        dispatch(CompleteBusinessProfile(commpleteProfileData));
+
+        const accountData = {
+            affiliateCode: 'ENG',
+            ccy: 'NGN'
+        };
+        dispatch(createNewUserAccount(accountData));
+    };
+
+    const createCorpAccount = () => {
+        const commpleteProfileData = {
+            businessName: formData.bussinessName,
+            businessType: formData.businessType,
+            referralCode: formData.refferalCode,
+            countryCode: '+234',
+            phoneNumber: formData.bussinessName,
+            businessAddress: formData.streetName,
+            state: formData.state,
+            city: formData.city,
+            lga: formData.localGoverment
+        };
+        console.log(commpleteProfileData);
+        dispatch(CompleteBusinessProfile(commpleteProfileData));
+
+        const accountData = {
+            affiliateCode: 'ENG',
+            ccy: 'NGN'
+        };
+
+        dispatch(createNewCorpUserAccount(accountData));
+    };
+
+    const createCorp = () => {
+        console.log(newCorpAccountErrorMessage);
+        if (
+            errorMessages ||
+            newCorpAccountErrorMessage ===
+                'You already have an account with us. Please contact us for more information'
+        ) {
+            console.log(errorMessages);
+            router.push('../Verify/Account/loading');
+        } else if (accountStatus.message === 'Try Again') {
+            router.push('../Verify/Account/loading');
+        } else if (accountStatus.message === 'SUCCESS') {
+            router.push('/Succes');
         }
     };
 
@@ -150,14 +201,27 @@ const StepFourCompProfile2BizDetails = ({
 
         setProfileCont(profile.data);
         console.log(profileCont.isBusinessRegistered);
+        createCorp();
     }, [business, profile]);
 
     useEffect(() => {
-        businessProfileAction();
+        // businessProfileAction();
         // createNewAccountAction();
     }, [errorMessages, newAccountErrorMessage, accountStatus]);
+    const { states } = useSelector((state) => state.statesReducer);
     useEffect(() => {
-        location.filter((item) => {
+        dispatch(statesData());
+    }, []);
+    const newStates = () => {
+        if (states !== null) {
+            setLocation(states);
+        }
+    };
+    useEffect(() => {
+        newStates();
+    }, [states]);
+    useEffect(() => {
+        location?.filter((item) => {
             if (item.state === localState) {
                 setLocalGovernment(item.localGoverment);
             }
@@ -185,6 +249,7 @@ const StepFourCompProfile2BizDetails = ({
             ccy: 'NGN'
         };
         dispatch(createNewCorpUserAccount(accountData));
+        console.log(newCorpAccountErrorMessage);
     };
     return (
         <div>
@@ -395,10 +460,10 @@ const StepFourCompProfile2BizDetails = ({
                                               (item, index) => {
                                                   return (
                                                       <option
-                                                          value={item}
+                                                          value={item.lgaName}
                                                           key={index}
                                                       >
-                                                          {item}
+                                                          {item.lgaName}
                                                       </option>
                                                   );
                                               }
@@ -474,7 +539,7 @@ const StepFourCompProfile2BizDetails = ({
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
-                        text="Next"
+                        text="Corp Next"
                         type="button"
                         onClick={handleSubmitReg}
                         // onClick={handleShowFourthStep}

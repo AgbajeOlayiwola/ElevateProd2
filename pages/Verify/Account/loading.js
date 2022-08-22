@@ -30,7 +30,7 @@ const AccountLoading = () => {
         if (profile !== null) {
             setProfileCont(profile.data);
         }
-        setGender(profileCont.gender);
+        // setGender(profileCont.gender);
     }, [profile]);
     const dispatch = useDispatch();
 

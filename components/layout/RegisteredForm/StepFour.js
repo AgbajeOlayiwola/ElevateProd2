@@ -3,11 +3,11 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import ButtonComp from '../../ReusableComponents/Button';
-import { location } from '../../ReusableComponents/Data';
 import {
     existingUserProfileData,
     createAccountData,
-    accountStatusData
+    accountStatusData,
+    statesData
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -166,20 +166,40 @@ const StepFour = ({ title, action }) => {
         setOutType(type);
     };
     const [activeBtn, setActiveBtn] = useState(false);
+    const [location, setLocation] = useState([]);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
-    useEffect(() => {
-        location.filter((item) => {
-            if (item.state === localState) {
-                setLocalGovernment(item.localGoverment);
-            }
-        });
-    }, [localState]);
+    // useEffect(() => {
+    //     location.filter((item) => {
+    //         if (item.state === localState) {
+    //             setLocalGovernment(item.localGoverment);
+    //         }
+    //     });
+    // }, [localState]);
     const myref = useRef();
     useEffect(() => {
         myref.current.scrollTo(0, 0);
         window.scrollTo(0, 0);
     }, []);
+    const { states } = useSelector((state) => state.statesReducer);
+    useEffect(() => {
+        dispatch(statesData());
+    }, []);
+    const newStates = () => {
+        if (states !== null) {
+            setLocation(states);
+        }
+    };
+    useEffect(() => {
+        newStates();
+    }, [states]);
+    useEffect(() => {
+        location?.filter((item) => {
+            if (item.state === localState) {
+                setLocalGovernment(item.localGoverment);
+            }
+        });
+    }, [localState]);
     return (
         <div ref={myref}>
             <div className={styles.cardHeading}>
@@ -322,10 +342,12 @@ const StepFour = ({ title, action }) => {
                                                   (item, index) => {
                                                       return (
                                                           <option
-                                                              value={item}
+                                                              value={
+                                                                  item.lgaName
+                                                              }
                                                               key={index}
                                                           >
-                                                              {item}
+                                                              {item.lgaName}
                                                           </option>
                                                       );
                                                   }
@@ -551,10 +573,12 @@ const StepFour = ({ title, action }) => {
                                                   (item, index) => {
                                                       return (
                                                           <option
-                                                              value={item}
+                                                              value={
+                                                                  item.lgaName
+                                                              }
                                                               key={index}
                                                           >
-                                                              {item}
+                                                              {item.lgaName}
                                                           </option>
                                                       );
                                                   }
