@@ -2,8 +2,8 @@ import { airtime } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    airtime: [],
-    errorMessage: null
+    airtime: null,
+    errorMessageAirtime: null
 };
 
 const airtimeReducer = (state = initialState, { type, payload }) => {
@@ -13,7 +13,7 @@ const airtimeReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 isLoading: true,
                 airtime: null,
-                errorMessage: null
+                errorMessageAirtime: null
             };
         case airtime.AIRTIME_LOAD_SUCCESS:
             return {
@@ -25,7 +25,7 @@ const airtimeReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: false,
-                errorMessage: payload
+                errorMessageAirtime: payload
             };
 
         default:

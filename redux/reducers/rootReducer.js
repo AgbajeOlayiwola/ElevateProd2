@@ -34,6 +34,8 @@ import accountStatusReducer from './accountStatus.reducer';
 import businessCategoriesReducer from './businessCategories.reducer';
 import getNewUserAccountReducer from './getNewUserAccount.reducer';
 import newUsercreateAccountReducer from './newUserCraeteAccount.reducer';
+import cardLoginReducer from './cardLogin.reducer';
+import statesReducer from './states.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -71,6 +73,8 @@ const rootReducer = combineReducers({
     businessCategoriesReducer: businessCategoriesReducer,
     completeBusProfile: completeBusinessprofileReducer,
     newUserAccountDetails: getNewUserAccountReducer,
+    statesReducer: statesReducer,
+    cardLoginReducer: cardLoginReducer,
     newUserAccountDets: newUsercreateAccountReducer
 });
 

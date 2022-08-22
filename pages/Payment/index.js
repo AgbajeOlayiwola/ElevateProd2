@@ -92,11 +92,87 @@ const Payment = () => {
     const [link, setLink] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
     const [bank, setBank] = useState({});
-    const [, updateState] = useState();
-    const forceUpdate = useCallback(() => {
-        updateState({}), [];
-        alert('Hello');
-    });
+    const interBankCheck = () => {
+        if (interBank !== null) {
+            console.log(interBank);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (errorMessageInterBank !== null) {
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessageInterBank);
+            setStatus('error');
+        }
+    };
+    useEffect(() => {
+        interBankCheck();
+    }, [interBank, errorMessageInterBank]);
+    const billsCheck = () => {
+        if (bills !== null) {
+            console.log(bills);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (errorMessageBills !== null) {
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessageBills);
+            setStatus('error');
+        }
+    };
+    useEffect(() => {
+        billsCheck();
+    }, [bills, errorMessageBills]);
+    const bulkcheck = () => {
+        if (bulkTransfer !== null) {
+            console.log(bulkTransfer);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (errorMessagebulkTransfer !== null) {
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessagebulkTransfer);
+            setStatus('error');
+        }
+    };
+    useEffect(() => {
+        bulkcheck();
+    }, [bulkTransfer, errorMessagebulkTransfer]);
+    const airtimeCheck = () => {
+        if (airtime !== null) {
+            console.log(airtime);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (errorMessageAirtime !== null) {
+            console.log(errorMessageAirtime);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessageAirtime);
+            setStatus('error');
+        }
+    };
+    useEffect(() => {
+        airtimeCheck();
+    }, [airtime, errorMessageAirtime]);
+    const internalBankCheck = () => {
+        if (internalBank !== null) {
+            console.log(internalBank);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (errorMessageInternalBank !== null) {
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessageInternalBank);
+            setStatus(error);
+        }
+    };
+    useEffect(() => {
+        internalBankCheck();
+    }, [internalBank, errorMessageInternalBank]);
 
     useEffect(() => {
         dispatch(getBalanceEnquiry());
@@ -131,21 +207,6 @@ const Payment = () => {
             setInterEnquiry(interBankEnquiry);
         }
     }, [interBankEnquiry]);
-    // useEffect(() => {
-    //     if (interBankEnquiry !== null) {
-    //         setInterEnquiry(interBankEnquiry);
-    //     }
-    // }, [interBankEnquiry]);
-    // useEffect(() => {
-    //     if (interBankEnquiry !== null) {
-    //         setInterEnquiry(interBankEnquiry);
-    //     }
-    // }, [interBankEnquiry]);
-    // useEffect(() => {
-    //     if (interBankEnquiry !== null) {
-    //         setInterEnquiry(interBankEnquiry);
-    //     }
-    // }, [interBankEnquiry]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -412,12 +473,6 @@ const Payment = () => {
                                             dispatch(
                                                 postInternalBank(paymentData)
                                             );
-                                            if (internalBank !== null) {
-                                                console.log(internalBank);
-                                                setCount(count + 1);
-                                            } else {
-                                                setCount(count + 1);
-                                            }
                                         } else {
                                             console.log(interEnquiry);
 
@@ -442,48 +497,6 @@ const Payment = () => {
                                             dispatch(
                                                 postInterBank(paymentData)
                                             );
-                                            setTimeout(() => {
-                                                forceUpdate();
-
-                                                if (interBank !== null) {
-                                                    if (
-                                                        interBank.message ===
-                                                        'SUCCESS'
-                                                    ) {
-                                                        console.log(interBank);
-                                                        setCount(
-                                                            (count) => count + 1
-                                                        );
-                                                        setIsLoading(false);
-                                                        setStatus('success');
-                                                    } else if (
-                                                        interBank.message !==
-                                                        'SUCCESS'
-                                                    ) {
-                                                        setCount(
-                                                            (count) => count + 1
-                                                        );
-                                                        setIsLoading(false);
-                                                        setError(
-                                                            interBank.message
-                                                        );
-                                                        setStatus(error);
-                                                    }
-                                                } else if (
-                                                    errorMessageInterBank !==
-                                                    null
-                                                ) {
-                                                    setCount(
-                                                        (count) => count + 1
-                                                    );
-                                                    setIsLoading(false);
-                                                    setStatus(error);
-                                                    setError(
-                                                        errorMessageInterBank
-                                                    );
-                                                }
-                                            }, 3000);
-                                            console.log(errorMessageInterBank);
                                         }
                                     }
                                 }}
@@ -555,12 +568,14 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentSecond
+                                isLoading={isLoading}
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountNumber}
                                 sender={paymentDetails.accountName}
                                 recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
                                 transferAction={() => {
+                                    setIsLoading(true);
                                     const paymentData = {
                                         senderAccountNo: '1823020500',
                                         senderAccountType: 'A',
@@ -576,7 +591,7 @@ const Payment = () => {
                                                     'CHIJIOKE NWANKWO',
                                                 narration: 'salary',
                                                 // amount: paymentDetails.amount,
-                                                amount: '120.00',
+                                                amount: '1.00',
                                                 ccy: 'NGN'
                                             },
                                             {
@@ -587,7 +602,7 @@ const Payment = () => {
                                                 beneficiaryName:
                                                     'CHIJIOKE NWANKWO',
                                                 narration: 'salary',
-                                                amount: '100.00',
+                                                amount: '2.00',
                                                 ccy: 'NGN'
                                             }
                                         ]
@@ -601,18 +616,19 @@ const Payment = () => {
                                             beneficiaryAccountNo: '2252999740',
                                             beneficiaryName: 'CHIJIOKE NWANKWO',
                                             narration: 'salary',
-                                            amount: '110.00',
+                                            amount: '3.00',
                                             ccy: 'NGN'
                                         });
                                     }
                                     dispatch(getBulkTransfer(paymentData));
-                                    setCount(count + 1);
                                 }}
                             />
                         );
                     case 2:
                         return (
                             <PaymentSuccess
+                                error={error}
+                                statusbar={status}
                                 overlay={overlay}
                                 action={() => {
                                     setCount(0);
@@ -641,9 +657,9 @@ const Payment = () => {
                             />
                         );
                     case 1:
-                        console.log(paymentDetails);
                         return (
                             <MakePaymentSecond
+                                isLoading={isLoading}
                                 recieverName={paymentDetails.billerType}
                                 amount={paymentDetails.amount}
                                 number={paymentDetails.phoneNumber}
@@ -653,9 +669,11 @@ const Payment = () => {
                                 refNuber={paymentDetails.billerDetail}
                                 overlay={overlay}
                                 transferAction={() => {
+                                    setIsLoading(true);
                                     if (
                                         paymentDetails.billerType === 'AIRTIME'
                                     ) {
+                                        setIsLoading(true);
                                         dispatch(
                                             loadbillerPlan(
                                                 paymentDetails.billerCategory
@@ -676,8 +694,9 @@ const Payment = () => {
                                                     billerPlan.billerDetail
                                                         .billerID
                                                 ),
-                                                sourceAccount: '8100467021',
-                                                sourceAccountType: 'X',
+                                                sourceAccount:
+                                                    senderDetails.accountNo,
+                                                sourceAccountType: 'A',
                                                 productCode:
                                                     billerPlan
                                                         .billerProductInfo[0]
@@ -698,16 +717,6 @@ const Payment = () => {
                                             };
                                             dispatch(postAirtime(billerData));
                                         }
-                                        if (airtime !== null) {
-                                            console.log(airtime);
-                                            setCount(count + 1);
-                                        } else if (
-                                            errorMessageAirtime !== null
-                                        ) {
-                                            console.log(errorMessageAirtime);
-                                            setError(errorMessageAirtime);
-                                            setCount(count + 1);
-                                        }
                                     } else {
                                         dispatch(
                                             loadbillerPlan(
@@ -726,8 +735,9 @@ const Payment = () => {
                                                     billerPlan.billerDetail
                                                         .billerID
                                                 ),
-                                                sourceAccount: '8100467021',
-                                                sourceAccountType: 'X',
+                                                sourceAccount:
+                                                    senderDetails.accountNo,
+                                                sourceAccountType: 'A',
                                                 productCode:
                                                     billerPlan
                                                         .billerProductInfo[0]
@@ -752,44 +762,27 @@ const Payment = () => {
                                             };
                                             dispatch(postBills(billerData));
                                         }
-                                        if (errorMessageBills !== null) {
-                                            console.log(errorMessageBills);
-                                            setError(errorMessageBills);
-                                            setCount(count + 1);
-                                        }
-                                        if (bills !== null) {
-                                            console.log(bills);
-                                            setCount(count + 1);
-                                        }
                                     }
                                 }}
                             />
                         );
                     case 2:
-                        // switch (error) {
-                        //     case null:
                         return (
                             <PaymentSuccess
                                 overlay={overlay}
+                                error={error}
+                                statusbar={status}
                                 action={() => {
                                     setCount(0);
                                     setOverlay(false);
                                     setFormType('');
                                 }}
                                 title="Bill Payment"
-                                // paymentType="AIRTIME"
                                 paymentType={paymentDetails.billerType}
                                 number={paymentDetails.phoneNumber}
                                 amount={paymentDetails.amount}
                             />
                         );
-                    //     case !null:
-                    //         return console.log(error);
-                    //     // <PaymentError
-                    //     //     overlay={overlay}
-                    //     //     errorPass={error}
-                    //     // />
-                    // }
                 }
 
             case 'fx transfer ':

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
-import { CompProfile } from '../../redux/actions/actions';
+import { CompProfile, statesData } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { location } from '../../components/ReusableComponents/Data';
 
 const VerifyAddress = () => {
     const dispatch = useDispatch();
@@ -12,6 +11,7 @@ const VerifyAddress = () => {
     const [landmark, setLandmark] = useState('');
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
+    const [location, setLocation] = useState([]);
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [lga, setlga] = useState('');
@@ -22,15 +22,7 @@ const VerifyAddress = () => {
             setLongitude(position.coords.longitude);
         });
     }, []);
-    console.log(latitude);
-    console.log(longitude);
-    useEffect(() => {
-        location.filter((item) => {
-            if (item.code === state) {
-                setLocalGovernment(item.localGoverment);
-            }
-        });
-    }, [state]);
+
     const { profile } = useSelector((state) => state.profile);
     useEffect(() => {
         dispatch(CompProfile());
@@ -44,6 +36,25 @@ const VerifyAddress = () => {
     useEffect(() => {
         newAccountTest1();
     }, [profile]);
+    const { states } = useSelector((state) => state.statesReducer);
+    useEffect(() => {
+        dispatch(statesData());
+    }, []);
+    const newStates = () => {
+        if (states !== null) {
+            setLocation(states);
+        }
+    };
+    useEffect(() => {
+        newStates();
+    }, [states]);
+    useEffect(() => {
+        location?.filter((item) => {
+            if (item.code === state) {
+                setLocalGovernment(item.localGoverment);
+            }
+        });
+    }, [state]);
     return (
         <div className={styles.verifyAddress}>
             <div className={styles.verifyAddressPopup}>
@@ -90,7 +101,7 @@ const VerifyAddress = () => {
                                     }}
                                 >
                                     <option value="">Select State</option>
-                                    {location.map((state, index) => {
+                                    {location?.map((state, index) => {
                                         return (
                                             <option
                                                 value={state.code}

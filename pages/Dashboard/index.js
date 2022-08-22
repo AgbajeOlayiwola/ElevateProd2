@@ -20,7 +20,7 @@ import Piechart from '../../components/ReusableComponents/Chart/Piechart';
 import { OtherAccounts } from '../../components/ReusableComponents/Data';
 import MakePaymentBtn from '../../components/ReusableComponents/MakePayment';
 import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymnet';
-import withAuth from '../../components/HOC/withAuth.js';
+// import withAuth from '../../components/HOC/withAuth.js';
 import {
     getBalanceEnquiry,
     getTransactionElevate
@@ -315,5 +315,5 @@ const Dashboard = () => {
     );
 };
 
-export default withAuth(Dashboard);
-// export default Dashboard;
+// export default withAuth(Dashboard);
+export default Dashboard;

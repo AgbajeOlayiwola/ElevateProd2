@@ -87,6 +87,7 @@ const StepFour = ({ title, action }) => {
                     ? 'I'
                     : name[2],
             lastName: name === undefined ? 'Temitope' : name[1],
+            password: accountDetails.password,
             dob: '1998-08-10',
             id_type: 'IDCD',
             idNo: '1234TTZN14',
@@ -96,7 +97,10 @@ const StepFour = ({ title, action }) => {
                 accountDetails.phoneNumber === undefined
                     ? accountDetails.phone
                     : accountDetails.phoneNumber,
-            email: 'topeakinfe@gmail.com',
+            email:
+                accountDetails.email === null
+                    ? 'topeakinfe@gmail.com'
+                    : accountDetails.email,
             gender: 'MALE',
             address1: 'AKure',
             address2: 'IKORODU',
@@ -106,8 +110,7 @@ const StepFour = ({ title, action }) => {
             brnCode: 'A01',
             ccy: 'NGN',
             flexCustId: '',
-            accountClass: 'GHSABP',
-            password: accountDetails.password
+            accountClass: 'GHSABP'
         };
         dispatch(createAccountData(userData));
         // window.localStorage.setItem('accountNumber', JSON.stringify(response2));
@@ -150,9 +153,9 @@ const StepFour = ({ title, action }) => {
         } else if (accountStatus.message === 'SUCCESS') {
             window.localStorage.setItem(
                 'accountNumber',
-                JSON.stringify(accountStatus)
+                JSON.stringify(accountStatus.data)
             );
-            router.push('/Dashboard');
+            router.push('/Verify/ExistingSuccess');
         }
     };
     useEffect(() => {

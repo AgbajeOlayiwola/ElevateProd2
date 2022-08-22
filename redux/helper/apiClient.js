@@ -5,7 +5,7 @@ var token;
 if (typeof window !== 'undefined') {
     loginToken = window.localStorage.getItem('token');
     if (loginToken === null) {
-        token = JSON.parse(window.localStorage.getItem('token'));
+        token = window.localStorage.getItem('token');
     } else {
         token = JSON.parse(loginToken);
     }

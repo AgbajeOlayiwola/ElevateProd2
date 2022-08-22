@@ -29,14 +29,16 @@ const authProfile = '/auth/profile';
 const account = '/auth/account';
 const completesBusinessProfile = '/business';
 const newCreateAccount = '/account';
-const createAccount = '/account/create';
-const accountStatus = '/account/status';
+const createAccount = '/account/corp/create-for-existing-user';
+const accountStatus = '/account/corp-acct';
 const verifyStatus = '/verification/document/status';
 const omnilite = '/auth/register/omnilite';
 const ecobankOnline = '/auth/register/ecobank-online';
 const accountNumber = '/auth/register/account-number';
 const existingUserProfile = '/auth/existing-user/profile-setup/personal';
 const businessCategories = '/business-categories';
+const states = '/lga';
+const cardLogin = '/auth/register/card';
 export default {
     getBanks,
     getCountries,
@@ -76,5 +78,7 @@ export default {
     ecobankOnline,
     verifyStatus,
     businessCategories,
+    states,
+    cardLogin,
     newCreateAccount
 };

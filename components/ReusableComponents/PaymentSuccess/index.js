@@ -9,6 +9,7 @@ import {
 import Link from 'next/link';
 import ButtonComp from '../Button';
 import Overlay from '../Overlay';
+import ErrorSvg from '../ReusableSvgComponents/ErrorSvg';
 
 const PaymentSuccess = ({
     action,
@@ -142,7 +143,20 @@ const PaymentSuccess = ({
                         )}
                     </div>
                 ) : statusbar === 'error' ? (
-                    <div>{error}</div>
+                    <div className={styles.errorCont}>
+                        <div>
+                            <ErrorSvg />
+                        </div>
+                        <h2>Oops.</h2>
+                        <p>{error}</p>
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text="Try again"
+                            type="button"
+                            onClick={action}
+                        />
+                    </div>
                 ) : null}
             </div>
         </Overlay>
