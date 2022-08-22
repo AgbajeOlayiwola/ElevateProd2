@@ -196,8 +196,8 @@ const ProfileSetups = () => {
                 <>
                     <p className={styles.error}>{errorM}</p> <br />
                     <p className={styles.error}>{errorI}</p> <br />
-                    <p className={styles.error}>{errorII}</p> <br />
-                    <p className={styles.error}>{errorIII}</p> <br />
+                    {/* <p className={styles.error}>{errorII}</p> <br /> */}
+                    {/* <p className={styles.error}>{errorIII}</p> <br /> */}
                     {/*<p className={styles.error}>{errorIII}</p> <br /> */}
                 </>
             ) : (
