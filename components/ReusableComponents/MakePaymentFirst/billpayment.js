@@ -34,7 +34,7 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-    const loadbillerType = (e) => {
+    const loadbillerTypeData = (e) => {
         dispatch(loadbillerType('ENG', e.target.value));
         setBillerId(e.target.value);
         setBillerTypes([]);
@@ -58,7 +58,7 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
         <div>
             <form onSubmit={handleSubmit(action)}>
                 <h2>{firstTitle}</h2>
-                <div className={styles.destinationCountry}>
+                {/* <div className={styles.destinationCountry}>
                     <div>
                         <label>Payment Type</label>
                         <select
@@ -91,7 +91,7 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                             {errors?.accountDebit?.message}
                         </p>
                     </div>
-                </div>
+                </div> */}
                 <div className={styles.accountDetails}>
                     <label>Please choose Biller Details</label>
                     <div className={styles.accountDetailsBody}>
@@ -101,7 +101,7 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
                                 {...register('billerType', {
                                     required: 'Biller type is required'
                                 })}
-                                onChange={loadbillerType}
+                                onChange={loadbillerTypeData}
                                 name="billerType"
                             >
                                 <option value="">Select Biller</option>

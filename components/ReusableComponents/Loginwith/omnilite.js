@@ -3,10 +3,7 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 import ButtonComp from '../Button';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    omniliteData,
-    accountNumberData
-} from '../../../redux/actions/actions';
+import { omniliteData } from '../../../redux/actions/actions';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Loader from '../Loader';
@@ -22,9 +19,6 @@ const Omnilite = () => {
     const dispatch = useDispatch();
     const { isLoading, omnilite, errorMessage } = useSelector(
         (state) => state.omniliteReducer
-    );
-    const { accountNumber, errorMessages } = useSelector(
-        (state) => state.accountNumberReducer
     );
     const {
         register,
@@ -63,32 +57,12 @@ const Omnilite = () => {
                 JSON.stringify(omnilite.data.meta)
             );
             router.push('/Onboarding/ExistingProfileSetup');
-            // const accountDetails = {
-            //     accountNo: omnilite.data.accounts[0].accountNumber
-            // };
-            // dispatch(accountNumberData(accountDetails));
         }
     };
 
-    // const accountTest = () => {
-    //     console.log(accountNumber);
-    //     if (accountNumber.message === 'SUCCESS') {
-    //         window.localStorage.setItem(
-    //             'account',
-    //             JSON.stringify(accountNumber)
-    //         );
-    //         router.push('/Onboarding/ExistingProfileSetup');
-    //     } else if (errorMessages) {
-    //         setError(errorMessages);
-    //         setLoading(false);
-    //     }
-    // };
     useEffect(() => {
         OmniliteTest();
     }, [omnilite, errorMessage]);
-    // useEffect(() => {
-    //     accountTest();
-    // }, [accountNumber, errorMessages]);
     const types = (type) => {
         setOutType(type);
     };
@@ -129,7 +103,6 @@ const Omnilite = () => {
                 <p className={styles.error}>{errors?.password?.message}</p>
             </div>
             <div className={styles.btn}>
-                {/* <Link href="/Onboarding/ExistingProfileSetup"> */}
                 {loading ? (
                     <Loader />
                 ) : (
@@ -140,8 +113,6 @@ const Omnilite = () => {
                         type="submit"
                     />
                 )}
-
-                {/* </Link> */}
             </div>
         </form>
     );

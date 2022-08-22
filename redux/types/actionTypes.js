@@ -255,6 +255,26 @@ export const businessCategories = {
 
 //businessCategory action type ends
 
+//states action types
+
+export const states = {
+    STATES_LOAD_START: 'STATES_LOAD_START',
+    STATES_LOAD_SUCCESS: 'STATES_LOAD_SUCCESS',
+    STATES_LOAD_ERROR: 'STATES_LOAD_ERROR'
+};
+
+//states action type ends
+
+//cardLogin action types
+
+export const cardLogin = {
+    CARDLOGIN_LOAD_START: 'CARDLOGIN_LOAD_START',
+    CARDLOGIN_LOAD_SUCCESS: 'CARDLOGIN_LOAD_SUCCESS',
+    CARDLOGIN_LOAD_ERROR: 'CARDLOGIN_LOAD_ERROR'
+};
+
+//cardLogin action type ends
+
 //auth action types
 export const login = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',
