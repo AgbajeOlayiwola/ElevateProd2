@@ -229,6 +229,7 @@ const StepFourCompProfile2BizDetails = ({
     }, [localState]);
 
     //registered businerss
+    const [errorMes, setErrorMes] = useState();
     const handleSubmitReg = () => {
         const commpleteProfileData = {
             businessName: formData.bussinessName,
@@ -248,8 +249,25 @@ const StepFourCompProfile2BizDetails = ({
             affiliateCode: 'ENG',
             ccy: 'NGN'
         };
-        dispatch(createNewCorpUserAccount(accountData));
-        console.log(newCorpAccountErrorMessage);
+        axiosInstance
+            .post(`${apiRoutes.corpNewUser}`, accountData)
+            .then((response) => {
+                console.log('create New Account', response.data);
+            })
+            .catch((error) => {
+                console.log(
+                    'create new account Error:',
+                    error.response.data.message
+                );
+                setErrorMes(error.response.data.message);
+            });
+
+        if (
+            errorMes ===
+            'You already have an account with us. Please contact us for more information'
+        ) {
+            router.push('/Succes');
+        }
     };
     return (
         <div>

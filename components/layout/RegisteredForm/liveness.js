@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import ButtonComp from '../../../ReusableComponents/Button';
 import Webcam from 'react-webcam';
+import ButtonComp from '../../ReusableComponents/Button';
 const Liveness = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const videoConstraints = {
