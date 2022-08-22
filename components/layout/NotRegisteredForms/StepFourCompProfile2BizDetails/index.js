@@ -541,7 +541,7 @@ const StepFourCompProfile2BizDetails = ({
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
-                        text="Corp Next"
+                        text="Next"
                         type="button"
                         onClick={handleSubmitReg}
                         // onClick={handleShowFourthStep}
