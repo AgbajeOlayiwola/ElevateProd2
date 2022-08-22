@@ -32,10 +32,10 @@ import {
     businessCategoriesData,
     CompleteBusinessProfile,
     CompProfile,
-    createNewUserAccount
+    createNewUserAccount,
+    statesData
 } from '../../../../redux/actions/actions';
 import { useRouter } from 'next/router';
-import { location } from '../../../ReusableComponents/Data';
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import CircleSvg from '../../../ReusableComponents/ReusableSvgComponents/CircleSvg';
@@ -61,6 +61,7 @@ const StepFourCompProfile2BizDetails = ({
     const [activeBtn, setActiveBtn] = useState(false);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
+    const [location, setLocation] = useState([]);
     const [accountInfo, setAccountInfo] = useState('');
 
     const { accountStatus, errorMessages } = useSelector(
@@ -147,8 +148,20 @@ const StepFourCompProfile2BizDetails = ({
         businessProfileAction();
         createNewAccountAction();
     }, [errorMessages, newAccountErrorMessage, accountStatus]);
+    const { states } = useSelector((state) => state.statesReducer);
     useEffect(() => {
-        location.filter((item) => {
+        dispatch(statesData());
+    }, []);
+    const newStates = () => {
+        if (states !== null) {
+            setLocation(states);
+        }
+    };
+    useEffect(() => {
+        newStates();
+    }, [states]);
+    useEffect(() => {
+        location?.filter((item) => {
             if (item.state === localState) {
                 setLocalGovernment(item.localGoverment);
             }
@@ -363,10 +376,10 @@ const StepFourCompProfile2BizDetails = ({
                                               (item, index) => {
                                                   return (
                                                       <option
-                                                          value={item}
+                                                          value={item.lgaName}
                                                           key={index}
                                                       >
-                                                          {item}
+                                                          {item.lgaName}
                                                       </option>
                                                   );
                                               }
