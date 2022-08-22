@@ -14,6 +14,7 @@ import {
 } from '../../../redux/actions/actions';
 import { Router, useRouter } from 'next/router';
 import Loader from '../../ReusableComponents/Loader';
+import Liveness from './Liveness';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
@@ -75,6 +76,9 @@ const ProfileSetups = () => {
         bvnErrorIII,
         bvnNinPend
     } = useSelector((state) => state.profileSetup);
+    const types = (type) => {
+        setOutType(type);
+    };
 
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
@@ -110,6 +114,15 @@ const ProfileSetups = () => {
                     />
                 );
             case 2:
+                return (
+                    <Liveness
+                        action={() => {
+                            setPage(page - 1);
+                            setPageType('');
+                        }}
+                    />
+                );
+            case 3:
                 return (
                     <StepThreeCompleteProfile1
                         formData={formData}
@@ -163,6 +176,10 @@ const ProfileSetups = () => {
             setErrorI(bvnError);
         }
     }, [errorMessages, bvnError, bvnErrorI, bvnNinPend]);
+
+    const handleSubmitt = () => {
+        setPage(page + 1);
+    };
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
@@ -189,7 +206,15 @@ const ProfileSetups = () => {
             <div className={styles.error}>{error}</div>
             {conditionalComponent()}
 
-            {page === 2 || page == 1 ? null : (
+            {page == 1 ? null : page == 2 ? (
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    onClick={handleSubmitt}
+                    type="submit"
+                    text={'Next'}
+                />
+            ) : (
                 <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}

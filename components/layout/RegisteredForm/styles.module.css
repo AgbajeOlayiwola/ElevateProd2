@@ -368,3 +368,12 @@
     padding: 1px 0px;
     transition: 2s all ease;
 }
+.imageOut{
+    display: flex;
+    justify-content: center;
+}
+.imageInner{
+    overflow: hidden;
+    border-radius: 50%;
+    height:43vh;
+}
