@@ -15,7 +15,18 @@
     align-items: center;
     position: relative;
     cursor: pointer;
+
+    font-family: 'Avenir';
+font-style: normal;
+font-weight: 900;
+font-size: 14px;
+line-height: 19px;
+text-align: center;
+
+color: #235B7F;
 }
+
+
 
 .selectCountry div {
     display: flex;

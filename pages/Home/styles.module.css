@@ -10,15 +10,23 @@
     font-size: 36px;
     line-height: 44px;
     color: #005b82;
+    margin-bottom: 32px;
 }
-
+.accout span {
+    color: #005b82;
+    font-weight: 600;
+}
+.accout {
+    text-align: start;
+    color: #a5a5a5;
+}
 .Svg {
     position: absolute;
-    width: 100%;
+    width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 25%;
+    top: 45%;
 }
 /* .Svg svg {
     margin: 0 auto;
@@ -56,43 +64,16 @@
 }
 .topLeft {
     background: linear-gradient(0deg, rgba(0, 0, 0, 70%), rgba(0, 0, 0, 70%)),
-        url('/Assets/Images/WomanWithMac.png');
+        url('/Assets/Images/Shutter.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
-    width: 100%;
-    height: 100%;
-}
-.topRight {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 70%), rgba(0, 0, 0, 70%)),
-        url('/Assets/Images/Clothe.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0%;
-    width: 100%;
-    height: 100%;
-}
-.bottomleft {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 70%), rgba(0, 0, 0, 70%)),
-        url('/Assets/Images/Barber.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0%;
-    width: 100%;
-    height: 100%;
-}
-.bottomRight {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 70%), rgba(0, 0, 0, 70%)),
-        url('/Assets/Images/Equipment.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0%;
-    width: 100%;
+    width: 50vw;
     height: 100%;
 }
 .sectionII {
-    padding-left: 7.625rem;
-    padding-right: 7.625rem;
+    padding-left: 182.27px;
+    padding-right: 182.27px;
     width: 50%;
     height: 100vh;
     overflow: scroll;
@@ -115,7 +96,10 @@
     font-size: 20px;
     line-height: 24px;
     color: #ffffff;
-    text-align: center;
+    text-align: start;
+}
+.SMeApp span{
+    font-weight: 600;
 }
 .disclaimer {
     font-family: 'Inter', sans-serif;
@@ -130,6 +114,8 @@
 }
 .disclaimer p {
     font-weight: 500;
+    width: 85%;
+    margin-top:44px;
 }
 .Center {
     display: flex;

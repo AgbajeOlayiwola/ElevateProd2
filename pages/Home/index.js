@@ -15,6 +15,7 @@ import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadCountry } from '../../redux/actions/actions';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const HomeMain = () => {
     const router = useRouter();
@@ -75,13 +76,12 @@ const HomeMain = () => {
                 <div className={styles.Svg}>
                     <div>
                         <HomeSvg />
-                        <p className={styles.SMeApp}>Ellevate</p>
+                        <p className={styles.SMeApp}>
+                            Powered by <span>Ecobank</span>
+                        </p>
                     </div>
                 </div>
                 <div className={styles.topLeft}></div>
-                <div className={styles.topRight}></div>
-                <div className={styles.bottomleft}></div>
-                <div className={styles.bottomRight}></div>
                 <div className={styles.Center}>
                     <div className={styles.sectionBottom}>
                         <div className={styles.space}>
@@ -103,7 +103,7 @@ const HomeMain = () => {
             <section className={styles.sectionII}>
                 <div>
                     <div>
-                        <h3 className={styles.elevatenow}>ellevate now...</h3>
+                        <h3 className={styles.elevatenow}>Sign up</h3>
                     </div>
                     <div>
                         <form
@@ -148,6 +148,17 @@ const HomeMain = () => {
                                 text="Proceed"
                                 type="submit"
                             />
+                            <div>
+                                <p className={styles.accout}>
+                                    Already Registered?
+                                    <Link href="../Auth/Login">
+                                        <span className={styles.termss}>
+                                            {' '}
+                                            Sign In
+                                        </span>
+                                    </Link>
+                                </p>
+                            </div>
                         </form>
                     </div>
                 </div>

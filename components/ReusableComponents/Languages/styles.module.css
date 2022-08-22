@@ -5,8 +5,11 @@
     margin-top: 0.844rem;
     font-family: 'Avenir';
     font-style: normal;
-    font-weight: 800;
+    font-weight: 900;
     font-size: 14px;
+    line-height: 19px;
+    
+    color: #235B7F;
     text-transform: uppercase;
     background-image: url(/Assets/Svgs/dropdownSvg.svg);
 }
