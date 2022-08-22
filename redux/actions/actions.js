@@ -34,7 +34,8 @@ import {
     getNewUserAccount,
     states,
     cardLogin,
-    businessCategories
+    businessCategories,
+    newUserCreateCorpAccount
 } from '../types/actionTypes';
 import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -1093,18 +1094,49 @@ export const createNewUserAccount = (accountData) => {
 
 //End Create New User Action
 
+//Create New Corporate User Action
+export const createNewCorpAccountStart = () => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_START,
+    payload: newAccountErrorMessage
+});
+export const createNewCorpAccountSuccess = (newAccount) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_SUCCESS,
+    payload: newAccount
+});
+export const createNewCorpAccountError = (newAccountErrorMessage) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_ERROR,
+    payload: newAccountErrorMessage
+});
+
+export const createNewCorpUserAccount = (accountData) => {
+    return (dispatch) => {
+        // dispatch(completeProfileLoadStart());
+        axiosInstance
+            .post(`${apiRoutes.corpNewUser}`, accountData)
+            .then((response) => {
+                console.log('create New Account', response.data);
+                dispatch(createNewAccountSuccess(response.data));
+            })
+            .catch((error) => {
+                console.log('create new account:', error.response.data.message);
+                dispatch(createNewAccountError(error.response.data.message));
+            });
+    };
+};
+//End Create New Corporate User Action
+
 //start account status
 
 export const getNewAccountStart = () => ({
-    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_START,
+    type: newUserCreateCorpAccount.CREATE_NEW_CORP_ACCOUNT_LOAD_START,
     payload: ''
 });
 export const getNewAccountSuccess = (newUserAccount) => ({
-    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_SUCCESS,
+    type: newUserCreateCorpAccount.CREATE_NEW_CORP_ACCOUNT_LOAD_SUCCESS,
     payload: newUserAccount
 });
 export const getNewAccountError = (newUserAccountErrorMessage) => ({
-    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_ERROR,
+    type: newUserCreateCorpAccount.CREATE_NEW_CORP_ACCOUNT_LOAD_ERROR,
     payload: newUserAccountErrorMessage
 });
 

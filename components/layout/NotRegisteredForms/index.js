@@ -46,7 +46,8 @@ const ProfileSetups = () => {
         referralCode: '',
         signatory: 1
     });
-    const countryName = localStorage.getItem('country');
+    const countryName = window.localStorage.getItem('country');
+
     const countryNames = JSON.parse(countryName);
     useEffect(() => {
         dispatch(loadCountry());

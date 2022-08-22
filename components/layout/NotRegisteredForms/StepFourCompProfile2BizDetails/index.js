@@ -32,6 +32,7 @@ import {
     businessCategoriesData,
     CompleteBusinessProfile,
     CompProfile,
+    createNewCorpUserAccount,
     createNewUserAccount
 } from '../../../../redux/actions/actions';
 import { useRouter } from 'next/router';
@@ -62,7 +63,8 @@ const StepFourCompProfile2BizDetails = ({
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
     const [accountInfo, setAccountInfo] = useState('');
-
+    const [registered, setRegistered] = useState();
+    const [profileCont, setProfileCont] = useState([]);
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
@@ -75,6 +77,8 @@ const StepFourCompProfile2BizDetails = ({
     const { businessCategories, errorDatas } = useSelector(
         (state) => state.businessCategoriesReducer
     );
+    const { profile } = useSelector((state) => state.profile);
+
     const [businessCategory, setBusinessCategory] = useState([]);
     const [businessType, setBusinessType] = useState([]);
     const [business, setBusiness] = useState('');
@@ -112,6 +116,7 @@ const StepFourCompProfile2BizDetails = ({
             dispatch(createNewUserAccount(accountData));
         }
     };
+
     const createNewAccountAction = () => {
         if (
             errorMessages ||
@@ -129,6 +134,7 @@ const StepFourCompProfile2BizDetails = ({
 
     useEffect(() => {
         dispatch(businessCategoriesData());
+        dispatch(CompProfile());
     }, []);
     useEffect(() => {
         if (businessCategories !== null) {
@@ -141,11 +147,14 @@ const StepFourCompProfile2BizDetails = ({
                 setBusinessType(businessCategory[item]);
             }
         });
-    }, [business]);
+
+        setProfileCont(profile.data);
+        console.log(profileCont.isBusinessRegistered);
+    }, [business, profile]);
 
     useEffect(() => {
         businessProfileAction();
-        createNewAccountAction();
+        // createNewAccountAction();
     }, [errorMessages, newAccountErrorMessage, accountStatus]);
     useEffect(() => {
         location.filter((item) => {
@@ -154,6 +163,29 @@ const StepFourCompProfile2BizDetails = ({
             }
         });
     }, [localState]);
+
+    //registered businerss
+    const handleSubmitReg = () => {
+        const commpleteProfileData = {
+            businessName: formData.bussinessName,
+            businessType: formData.businessType,
+            referralCode: formData.refferalCode,
+            countryCode: '+234',
+            phoneNumber: formData.bussinessName,
+            businessAddress: formData.streetName,
+            state: formData.state,
+            city: formData.city,
+            lga: formData.localGoverment
+        };
+        console.log(commpleteProfileData);
+        dispatch(CompleteBusinessProfile(commpleteProfileData));
+
+        const accountData = {
+            affiliateCode: 'ENG',
+            ccy: 'NGN'
+        };
+        dispatch(createNewCorpUserAccount(accountData));
+    };
     return (
         <div>
             <div>
@@ -438,14 +470,25 @@ const StepFourCompProfile2BizDetails = ({
                         </label>
                     </div>
                 </div>
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    text="Next"
-                    type="button"
-                    onClick={handleSubmitIII}
-                    // onClick={handleShowFourthStep}
-                />
+                {profileCont.isBusinessRegistered === true ? (
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        text="Next"
+                        type="button"
+                        onClick={handleSubmitReg}
+                        // onClick={handleShowFourthStep}
+                    />
+                ) : (
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        text="Next"
+                        type="button"
+                        onClick={handleSubmitIII}
+                        // onClick={handleShowFourthStep}
+                    />
+                )}
                 {/* </Link> */}
                 {/* <RegistrationStatus>
                    

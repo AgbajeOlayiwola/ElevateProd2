@@ -347,3 +347,12 @@ export const getNewUserAccount = {
 };
 
 //get new user account end
+
+//create new user Corp account
+export const newUserCreateCorpAccount = {
+    CREATE_NEW_CORP_ACCOUNT_LOAD_START: 'CREATE_NEW_CORP_ACCOUNT_LOAD_START',
+    CREATE_NEW_CORP_ACCOUNT_LOAD_SUCCESS:
+        'CREATE_NEW_CORP_ACCOUNT_LOAD_SUCCESS',
+    CREATE_NEW_CORP_ACCOUNT_LOAD_ERROR: 'CREATE_NEW_CORP_ACCOUNT_LOAD_ERROR'
+};
+//create new user Corp end
