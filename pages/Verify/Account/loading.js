@@ -15,12 +15,23 @@ import { IoMdGift } from 'react-icons/io';
 
 const AccountLoading = () => {
     const [accountInfo, setAccountInfo] = useState('');
+    const [profileCont, setProfileCont] = useState([]);
+
     const router = useRouter();
 
     const { isLoading, profile, errorMessage } = useSelector(
         (state) => state.profile
     );
 
+    useEffect(() => {
+        dispatch(CompProfile());
+    }, []);
+    useEffect(() => {
+        if (profile !== null) {
+            setProfileCont(profile.data);
+        }
+        // setGender(profileCont.gender);
+    }, [profile]);
     const dispatch = useDispatch();
 
     console.log(profile);
@@ -41,7 +52,7 @@ const AccountLoading = () => {
             dispatch(getNewUserAccountDetails());
             setTimeout(() => {
                 dispatch(getNewUserAccountDetails());
-            }, 40000);
+            }, 10000);
             // setLoading(false);
         }
         if (newUserAccount.message === 'SUCCESS') {

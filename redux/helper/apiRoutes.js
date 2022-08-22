@@ -30,6 +30,8 @@ const account = '/auth/account';
 const completesBusinessProfile = '/business';
 const newCreateAccount = '/account';
 const createAccount = '/account/corp/create-for-existing-user';
+const corpNewUser = '/account/corp/create-for-new-user';
+// const accountStatus = '/account/corp-acct';
 const accountStatus = '/account/corp-acct';
 const verifyStatus = '/verification/document/status';
 const omnilite = '/auth/register/omnilite';
@@ -62,6 +64,7 @@ export default {
     verifyCurrency,
     internationalTransfer,
     profile,
+    corpNewUser,
     bulkTransfer,
     beneficiaries,
     profileSetupBus,

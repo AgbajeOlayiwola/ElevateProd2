@@ -34,7 +34,8 @@ import {
     getNewUserAccount,
     states,
     cardLogin,
-    businessCategories
+    businessCategories,
+    newUserCreateCorpAccount
 } from '../types/actionTypes';
 import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -914,23 +915,34 @@ export const createProfileSetup = (profileData) => {
                         .get(`${apiRoutes.verifyStatus}`)
                         .then((response) => {
                             dispatch(bvnNinData(response.data));
-                            if (response.data.data[0].reason) {
+                            if (
+                                response.data.data[0].reason &&
+                                response.data.data[1].reason
+                            ) {
                                 dispatch(
                                     bvnNinError(
                                         'We are unable to verify your details at the momemnt. Try again later'
                                     )
+                                ),
+                                    dispatch(
+                                        bvnNinErrorI(
+                                            'We are unable to verify your details at the momemnt. Try again later'
+                                        )
+                                    );
+                            } else if (
+                                response.data.data[1].status === 'PENDING'
+                            ) {
+                                bvnNinErrorI(
+                                    'We are unable to verify your details at the momemnt. Try again later'
                                 );
+                            } else if (
+                                response.data.data[1].status === 'SUCCESS' &&
+                                response.data.data[0].status === 'SUCCESS'
+                            ) {
+                                dispatch(bvnNinError(null)),
+                                    dispatch(bvnNinErrorI(null));
                             }
-                            if (response.data.data[1].reason) {
-                                dispatch(
-                                    bvnNinErrorI(
-                                        'We are unable to verify your details at the momemnt. Try again later'
-                                    )
-                                );
-                            }
-                            if (response.data.data[1].status === 'PENDING') {
-                                dispatch(bvnNinPending('Try Again'));
-                            }
+
                             console.log(response.data.data[0].reason);
                         })
                         .catch((error) => {
@@ -941,7 +953,7 @@ export const createProfileSetup = (profileData) => {
             })
             .catch((error) => {
                 console.log(
-                    'profile seytup dispatch',
+                    'profile setup dispatch',
                     error.response.data.message
                 );
                 dispatch(setupProfileError(error.response.data.message));
@@ -1074,7 +1086,7 @@ export const createNewUserAccount = (accountData) => {
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
-                console.log('create new account:', error.response.data.message);
+                // console.log('create new account:', error.response.data.message);
                 dispatch(createNewAccountError(error.response.data.message));
             });
     };
@@ -1082,25 +1094,62 @@ export const createNewUserAccount = (accountData) => {
 
 //End Create New User Action
 
+//Create New Corporate User Action
+export const createNewCorpAccountStart = (newCorpAccountErrorMessage) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_START,
+    payload: newCorpAccountErrorMessage
+});
+export const createNewCorpAccountSuccess = (newCorpAccount) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_SUCCESS,
+    payload: newCorpAccount
+});
+export const createNewCorpAccountError = (newCorpAccountErrorMessage) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_ERROR,
+    payload: newCorpAccountErrorMessage
+});
+
+export const createNewCorpUserAccount = (accountData) => {
+    return (dispatch) => {
+        // dispatch(completeProfileLoadStart());
+        axiosInstance
+            .post(`${apiRoutes.corpNewUser}`, accountData)
+            .then((response) => {
+                console.log('create New Account', response.data);
+                console.log('create new account:', error.response.data.message);
+                dispatch(createNewAccountSuccess(response.data));
+            })
+            .catch((error) => {
+                console.log(
+                    'create new account Error:',
+                    error.response.data.message
+                );
+                dispatch(
+                    createNewCorpAccountError(error.response.data.message)
+                );
+            });
+    };
+};
+//End Create New Corporate User Action
+
 //start account status
 
 export const getNewAccountStart = () => ({
-    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_START,
+    type: newUserCreateCorpAccount.CREATE_NEW_CORP_ACCOUNT_LOAD_START,
     payload: ''
 });
 export const getNewAccountSuccess = (newUserAccount) => ({
-    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_SUCCESS,
+    type: newUserCreateCorpAccount.CREATE_NEW_CORP_ACCOUNT_LOAD_SUCCESS,
     payload: newUserAccount
 });
 export const getNewAccountError = (newUserAccountErrorMessage) => ({
-    type: getNewUserAccount.GET_NEW_ACCOUNT_LOAD_ERROR,
+    type: newUserCreateCorpAccount.CREATE_NEW_CORP_ACCOUNT_LOAD_ERROR,
     payload: newUserAccountErrorMessage
 });
 
 export const getNewUserAccountDetails = (accountData) => {
     return (dispatch) => {
         // dispatch(completeProfileLoadStart());
-        dispatch(getNewAccountStart());
+        // dispatch(getNewAccountStart());
         axiosInstance
             .get(`${apiRoutes.accountStatus}`)
             .then((response) => dispatch(getNewAccountSuccess(response.data)))

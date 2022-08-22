@@ -8,6 +8,7 @@ import StepFour from './StepFour';
 import Link from 'next/link';
 import styles from './styles.module.css';
 import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticator';
+import Liveness from './liveness';
 
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
@@ -30,6 +31,9 @@ const ExistingMultiStep = () => {
                     />
                 );
             case 2:
+                return <Liveness />;
+
+            case 3:
                 return (
                     <StepThree
                         action={() => {
@@ -37,7 +41,7 @@ const ExistingMultiStep = () => {
                         }}
                     />
                 );
-            case 3:
+            case 4:
                 return (
                     <StepFour
                         title={pageType}

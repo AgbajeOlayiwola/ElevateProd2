@@ -14,9 +14,11 @@ import {
 } from '../../../redux/actions/actions';
 import { Router, useRouter } from 'next/router';
 import Loader from '../../ReusableComponents/Loader';
+import Liveness from './Liveness';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
+
     const router = useRouter();
     // Router.reload();
     // router.replace(router.asPath);
@@ -45,7 +47,8 @@ const ProfileSetups = () => {
         referralCode: '',
         signatory: 1
     });
-    const countryName = localStorage.getItem('country');
+    const countryName = window.localStorage.getItem('country');
+
     const countryNames = JSON.parse(countryName);
     useEffect(() => {
         dispatch(loadCountry());
@@ -75,6 +78,9 @@ const ProfileSetups = () => {
         bvnErrorIII,
         bvnNinPend
     } = useSelector((state) => state.profileSetup);
+    const types = (type) => {
+        setOutType(type);
+    };
 
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
@@ -110,6 +116,15 @@ const ProfileSetups = () => {
                     />
                 );
             case 2:
+                return (
+                    <Liveness
+                        action={() => {
+                            setPage(page - 1);
+                            setPageType('');
+                        }}
+                    />
+                );
+            case 3:
                 return (
                     <StepThreeCompleteProfile1
                         formData={formData}
@@ -155,26 +170,23 @@ const ProfileSetups = () => {
 
     useEffect(() => {
         console.log('new bvn:', bvnError);
-        if (
-            errorMessages === null &&
-            bvnError === null &&
-            bvnErrorI === null &&
-            bvnNinPend === null
-        ) {
+        if (errorMessages === null && bvnError === null && bvnErrorI === null) {
             setPage(page + 1);
         } else {
             console.log('moved');
             setErrorM(errorMessages);
             setErrorI(bvnError);
-            setErrorII(bvnErrorI);
-            setErrorIII(bvnNinPend);
         }
     }, [errorMessages, bvnError, bvnErrorI, bvnNinPend]);
+
+    const handleSubmitt = () => {
+        setPage(page + 1);
+    };
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
     //         setErrorM(bvnError);
-    //         setErrorI(bvnErrorI);
+    //         setErrorI(bvnErrorI);`   1qa¸asw2a   q1`
     //     } else if (!otpErrorMessage && !bvnError && !bvnErrorI) {
     //         setPage(page + 1);
     //     }
@@ -186,8 +198,8 @@ const ProfileSetups = () => {
                 <>
                     <p className={styles.error}>{errorM}</p> <br />
                     <p className={styles.error}>{errorI}</p> <br />
-                    <p className={styles.error}>{errorII}</p> <br />
-                    <p className={styles.error}>{errorIII}</p> <br />
+                    {/* <p className={styles.error}>{errorII}</p> <br /> */}
+                    {/* <p className={styles.error}>{errorIII}</p> <br /> */}
                     {/*<p className={styles.error}>{errorIII}</p> <br /> */}
                 </>
             ) : (
@@ -196,7 +208,17 @@ const ProfileSetups = () => {
             <div className={styles.error}>{error}</div>
             {conditionalComponent()}
 
-            {page === 2 || page == 1 ? null : (
+            {page == 1 ? null : page == 2 ? (
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    onClick={handleSubmitt}
+                    type="submit"
+                    text={'Next'}
+                />
+            ) : page === 3 ? (
+                <></>
+            ) : (
                 <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}

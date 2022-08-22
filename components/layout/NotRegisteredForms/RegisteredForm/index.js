@@ -43,15 +43,15 @@ const RegisteredForm = ({ formData, setFormData, action }) => {
 
         setFormData({ ...formData, type: 'UNREGISTERED BUSINESS' });
     };
-    console.log(
-        formData.type,
-        formData.rcnumber,
-        formData.tinNumber,
-        formData.bvNumber,
-        formData.phoneNumber,
-        formData.dateOfBirth
-    );
-    console.log(formData.flag);
+    // console.log(
+    //     formData.type,
+    //     formData.rcnumber,
+    //     formData.tinNumber,
+    //     formData.bvNumber,
+    //     formData.phoneNumber,
+    //     formData.dateOfBirth
+    // );
+    // console.log(formData.flag);
     const {
         register,
         handleSubmit,

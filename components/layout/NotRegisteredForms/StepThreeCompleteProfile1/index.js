@@ -42,6 +42,10 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
     const { isLoading, profile, errorMessage } = useSelector(
         (state) => state.profile
     );
+    const { newCorpAccount, newCorpAccountErrorMMessage } = useSelector(
+        (state) => state.newuserCorpAccount
+    );
+
     const [checker, setChecker] = useState();
     const [gender, setGender] = useState('');
     useEffect(() => {
@@ -53,7 +57,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
         }
         setGender(profileCont.gender);
     }, [profile]);
-    // console.log(co
 
     if (gender === 'm') console.log(profileCont);
 
