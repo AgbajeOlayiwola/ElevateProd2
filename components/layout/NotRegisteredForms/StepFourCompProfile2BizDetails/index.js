@@ -152,22 +152,6 @@ const StepFourCompProfile2BizDetails = ({
         dispatch(createNewCorpUserAccount(accountData));
     };
 
-    const createCorp = () => {
-        console.log(newCorpAccountErrorMessage);
-        if (
-            errorMessages ||
-            newCorpAccountErrorMessage ===
-                'You already have an account with us. Please contact us for more information'
-        ) {
-            console.log(errorMessages);
-            router.push('../Verify/Account/loading');
-        } else if (accountStatus.message === 'Try Again') {
-            router.push('../Verify/Account/loading');
-        } else if (accountStatus.message === 'SUCCESS') {
-            router.push('/Succes');
-        }
-    };
-
     const createNewAccountAction = () => {
         if (
             errorMessages ||
@@ -185,7 +169,7 @@ const StepFourCompProfile2BizDetails = ({
 
     useEffect(() => {
         dispatch(businessCategoriesData());
-        dispatch(CompProfile());
+        // dispatch(CompProfile());
     }, []);
     useEffect(() => {
         if (businessCategories !== null) {
@@ -201,12 +185,12 @@ const StepFourCompProfile2BizDetails = ({
 
         setProfileCont(profile.data);
         console.log(profileCont.isBusinessRegistered);
-        createCorp();
+        // createCorp();
     }, [business, profile]);
 
     useEffect(() => {
         businessProfileAction();
-        createNewAccountAction();
+        // createNewAccountAction();
     }, [errorMessages, newAccountErrorMessage, accountStatus]);
     const { states } = useSelector((state) => state.statesReducer);
     useEffect(() => {
