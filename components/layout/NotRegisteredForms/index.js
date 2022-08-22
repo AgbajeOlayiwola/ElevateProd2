@@ -214,6 +214,8 @@ const ProfileSetups = () => {
                     type="submit"
                     text={'Next'}
                 />
+            ) : page === 3 ? (
+                <></>
             ) : (
                 <ButtonComp
                     disabled={activeBtn}

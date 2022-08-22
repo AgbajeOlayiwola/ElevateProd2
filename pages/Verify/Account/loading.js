@@ -38,7 +38,7 @@ const AccountLoading = () => {
         console.log(newUserAccount.message);
         if (!newUserAccountErrorMessage) {
             // dispatch(getNewUserAccountDetails());
-            // dispatch(getNewUserAccountDetails());
+            dispatch(getNewUserAccountDetails());
             setTimeout(() => {
                 dispatch(getNewUserAccountDetails());
             }, 10000);
