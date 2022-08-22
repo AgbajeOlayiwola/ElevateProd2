@@ -205,8 +205,8 @@ const StepFourCompProfile2BizDetails = ({
     }, [business, profile]);
 
     useEffect(() => {
-        // businessProfileAction();
-        // createNewAccountAction();
+        businessProfileAction();
+        createNewAccountAction();
     }, [errorMessages, newAccountErrorMessage, accountStatus]);
     const { states } = useSelector((state) => state.statesReducer);
     useEffect(() => {
