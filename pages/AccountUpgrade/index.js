@@ -96,6 +96,7 @@ const AccountUpgrade = () => {
                         ? AccountUpgradeData.individual.map((item, index) => {
                               return (
                                   <AccountUpgradeSingle
+                                      statusInfo="Pending"
                                       icon={item.icon}
                                       text={item.title}
                                       key={index}
@@ -109,6 +110,7 @@ const AccountUpgrade = () => {
                         ? AccountUpgradeData.corporate.map((item, index) => {
                               return (
                                   <AccountUpgradeSingle
+                                      statusInfo="Pending"
                                       icon={item.icon}
                                       text={item.title}
                                       key={index}

@@ -48,7 +48,7 @@ const Login = () => {
         setError('');
         setLoading((prev) => !prev);
         const loginData = {
-            id:email,
+            id: email,
             password: encrypt(password)
         };
         dispatch(loginUserAction(loginData));

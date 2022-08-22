@@ -33,7 +33,9 @@ const Ecoacct = () => {
     };
     const acctTest = () => {
         console.log(errorMessages);
-        if (errorMessages) {
+        if (errorMessages === 'Account already exists with the phone') {
+            router.push('/Auth/Login');
+        } else if (errorMessages) {
             setError(errorMessages);
             setLoading(false);
         } else if (accountNumber.message === 'SUCCESS') {

@@ -9,7 +9,7 @@ const initialState = {
     bvnErrorII: null,
     bvnErrorIII: null,
     bvnNin: null,
-    bvnNinPend: null
+    bvnNinPend: ' '
 };
 
 const profileSetupReducer = (state = initialState, { type, payload }) => {

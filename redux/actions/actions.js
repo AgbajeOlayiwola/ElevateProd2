@@ -32,6 +32,8 @@ import {
     completeProfile,
     newUserCreateAccount,
     getNewUserAccount,
+    states,
+    cardLogin,
     businessCategories
 } from '../types/actionTypes';
 import axiosInstance from '../helper/apiClient';
@@ -90,6 +92,32 @@ export const businessCategoriesData = () => (dispatch) => {
         );
 };
 //businessCategories actions end
+
+//states actions
+export const statesLoadStart = () => ({
+    type: states.STATES_LOAD_START
+});
+
+export const statesLoadSuccess = (countries) => ({
+    type: states.STATES_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const statesLoadError = (errorMessage) => ({
+    type: states.STATES_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const statesData = () => (dispatch) => {
+    dispatch(statesLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.states}`)
+        .then((response) => dispatch(statesLoadSuccess(response.data.data)))
+        .catch((error) =>
+            dispatch(statesLoadError(error.response.data.message))
+        );
+};
+//states actions end
 
 //banks actions
 export const bankLoadStart = () => ({
@@ -231,7 +259,9 @@ export const postAirtime = (data) => (dispatch) => {
     axiosInstance
         .post(`${apiRoutes.airtime}`, data)
         .then((response) => dispatch(airtimeLoadSuccess(response.data)))
-        .catch((error) => dispatch(airtimeLoadError(error.message)));
+        .catch((error) =>
+            dispatch(airtimeLoadError(error.response.data.message))
+        );
 };
 
 //airtime action end
@@ -255,7 +285,9 @@ export const postBills = (data) => (dispatch) => {
     axiosInstance
         .post(`${apiRoutes.bills}`, data)
         .then((response) => dispatch(billsLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(billsLoadError(error.response.data.error)));
+        .catch((error) =>
+            dispatch(billsLoadError(error.response.data.message))
+        );
 };
 
 //bills action end
@@ -435,7 +467,9 @@ export const getBulkTransfer = (data) => (dispatch) => {
         .then((response) =>
             dispatch(bulkTransferLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(bulkTransferLoadError(error.message)));
+        .catch((error) =>
+            dispatch(bulkTransferLoadError(error.response.data.message))
+        );
 };
 
 //transactionHistory action end
@@ -648,6 +682,32 @@ export const accountNumberData = (data) => (dispatch) => {
 
 //accountNumber action end
 
+//cardLogin action
+export const cardLoginLoadStart = () => ({
+    type: cardLogin.CARDLOGIN_LOAD_START
+});
+
+export const cardLoginLoadSuccess = (bill) => ({
+    type: cardLogin.CARDLOGIN_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const cardLoginLoadError = (errorMessages) => ({
+    type: cardLogin.CARDLOGIN_LOAD_ERROR,
+    payload: errorMessages
+});
+export const cardLoginData = (data) => (dispatch) => {
+    dispatch(cardLoginLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.cardLogin}`, data)
+        .then((response) => dispatch(cardLoginLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(cardLoginLoadError(error.response.data.message))
+        );
+};
+
+//cardLogin action end
+
 //existingUserProfile action
 export const existingUserProfileLoadStart = () => ({
     type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_START
@@ -854,12 +914,22 @@ export const createProfileSetup = (profileData) => {
                         .get(`${apiRoutes.verifyStatus}`)
                         .then((response) => {
                             dispatch(bvnNinData(response.data));
-                            dispatch(bvnNinError(response.data.data[0].reason));
-                            dispatch(
-                                bvnNinErrorI(response.data.data[1].reason)
-                            );
+                            if (response.data.data[0].reason) {
+                                dispatch(
+                                    bvnNinError(
+                                        'We are unable to verify your details at the momemnt. Try again later'
+                                    )
+                                );
+                            }
+                            if (response.data.data[1].reason) {
+                                dispatch(
+                                    bvnNinErrorI(
+                                        'We are unable to verify your details at the momemnt. Try again later'
+                                    )
+                                );
+                            }
                             if (response.data.data[1].status === 'PENDING') {
-                                dispatch(bvnNiniending('Try Again'));
+                                dispatch(bvnNinPending('Try Again'));
                             }
                             console.log(response.data.data[0].reason);
                         })

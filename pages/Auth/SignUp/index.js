@@ -244,7 +244,6 @@ const Signup = ({ type }) => {
                                         <input
                                             placeholder="Enter Your Email"
                                             className={styles.textInput}
-                                            required
                                             {...register('email', {
                                                 required: 'Email is required',
                                                 pattern: {
@@ -255,6 +254,7 @@ const Signup = ({ type }) => {
                                                 }
                                             })}
                                             onChange={handleEmail}
+                                            value={email}
                                         />
                                         {errors.email?.message}
                                     </div>
