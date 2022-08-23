@@ -7,7 +7,7 @@
 
 .dets {
     border: 1px solid #d3d3d3;
-    padding: 2rem;
+    padding: 0px 2rem 2rem;
     border-radius: 12px;
     margin-top: 2rem;
 }
@@ -15,8 +15,38 @@
     background: #f8f8f8;
     border: 1px solid #dbdbdb;
     border-radius: 12px;
-    padding: 24px;
+    padding: 0px 24px 24px;
 }
+
+.busAdd div {
+    margin-top: 16px;
+}
+
+.busAdd select {
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+}
+
+.busAdd input {
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+}
+
+.addressNumber {
+    display: flex;
+    justify-content: space-between;
+}
+
+.addressNumber input {
+    width: 73%;
+}
+
+.number {
+    width: 25% !important;
+}
+
 .busInp {
     background: #ffffff;
     border: 1px solid #dbdbdb;

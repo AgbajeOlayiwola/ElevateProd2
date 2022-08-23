@@ -179,7 +179,7 @@ const Login = () => {
                             <div>
                                 <Link href="../Auth/ForgotPassword">
                                     <p className={styles.forget}>
-                                        Forgot Password
+                                        Forgot Password?
                                     </p>
                                 </Link>
                             </div>

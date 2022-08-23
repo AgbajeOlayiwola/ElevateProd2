@@ -6,8 +6,6 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
-    padding-left: 7.625rem;
-    padding-right: 7.625rem;
     background-position: center;
     display: flex;
     justify-content: center;
@@ -101,6 +99,8 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 19px;
+    margin: 0px;
+    margin-top: 32px;
     color: #a5a5a5;
 }
 .accout span {

@@ -1,12 +1,56 @@
-.bodyWrapper {
-    width: 100vh;
+.registeredBody {
+    display: flex;
+}
+
+.sectionI {
+    background: url('/Assets/Images/cover.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
+    background-position: center;
     display: flex;
     justify-content: center;
-    width: 100%;
-    height: 100vh;
     align-items: center;
-    padding: 2rem 3rem;
+    width: 50%;
+    overflow: hidden;
+    height: 100%;
 }
+.bvn {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-top: 40vh;
+    max-width: 417px;
+}
+.bvn span {
+    color: #6ccf00;
+}
+
+.sectionII {
+    width: 50%;
+    height: 100vh;
+    padding: 120px 0px;
+}
+
+.bodyWrapper {
+    width: 54%;
+    max-width: 400px;
+    margin: 0px auto;
+}
+
+.profileBody {
+    height: 70vh;
+    overflow-y: scroll;
+}
+
+.profileBody::-webkit-scrollbar {
+    display: none;
+}
+
 .cardHeading {
     display: flex;
     flex-flow: wrap;

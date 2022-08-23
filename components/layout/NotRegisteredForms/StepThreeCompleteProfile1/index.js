@@ -73,138 +73,178 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.cover}>
-            <div>
-                <div className={styles.prog}>
-                    <CardHeadingBVN>
-                        <LeftHeading>Complete your Profile</LeftHeading>
-                        {/* <Imag 
+            <section className={styles.sectionI}>
+                <div>
+                    <h2 className={styles.bvn}>
+                        Input your BVN and open a Business Account in
+                        <span> 3 minutes.</span>
+                    </h2>
+                    <svg
+                        width="2"
+                        height="227"
+                        viewBox="0 0 2 227"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M1 0V387"
+                            stroke="white"
+                            strokeDasharray="8 8"
+                        />
+                    </svg>
+                </div>
+            </section>
+            <section className={styles.sectionII}>
+                <div className={styles.bodyWrapper}>
+                    <div className={styles.prog}>
+                        <CardHeadingBVN>
+                            <LeftHeading>Complete your Profile</LeftHeading>
+                            {/* <Imag 
                     src="/width" 
                     alt="lineImage" /> */}
-                    </CardHeadingBVN>
-                    <Progressbar
-                        bgcolor="#6CCF00"
-                        progressCount={progress}
-                        height={14}
-                        progWidth="27%"
-                    />
-                </div>
-                {/* The small card that wraps the form */}
-
-                <ButtonWrapper>
-                    <ToggleNo
-                        onClick={handleShowFourthStep}
-                        style={
-                            bgcolor
-                                ? { background: '#f8f8f8' }
-                                : { background: 'rgba(108, 207, 0, 0.3)' }
-                        }
-                    >
-                        <ToggleNoText
-                            style={
-                                bgcolor
-                                    ? { color: '#a5a5a5' }
-                                    : { color: '#407a00' }
-                            }
-                        >
-                            Personal details
-                        </ToggleNoText>
-                    </ToggleNo>
-                    <ToggleYes
-                        onClick={handleShowFourthStep}
-                        style={
-                            bgcolor
-                                ? { background: 'rgba(108, 207, 0, 0.3)' }
-                                : { background: '#f8f8f8' }
-                        }
-                    >
-                        <ToggleYesText
-                            style={
-                                bgcolor
-                                    ? { color: '#407a00' }
-                                    : { color: '#a5a5a5' }
-                            }
-                        >
-                            Business details
-                        </ToggleYesText>
-                    </ToggleYes>
-                </ButtonWrapper>
-
-                {switchs ? (
-                    <>
-                        <StepFourCompProfile2BizDetails
-                            formData={formData}
-                            setFormData={setFormData}
+                        </CardHeadingBVN>
+                        <Progressbar
+                            bgcolor="#6CCF00"
+                            progressCount={progress}
+                            height={14}
+                            progWidth="27%"
                         />
-                    </>
-                ) : (
-                    <>
-                        <>
-                            <div
-                                className={styles.dets}
-                                style={{ marginTop: '2rem' }}
-                            >
-                                <Label className={styles.label}>
-                                    Enter your Full Name
-                                </Label>
-                                <br />
-                                <FormInput
-                                    type="text"
-                                    placeholder=""
-                                    value={profileCont.fullName}
-                                    disabled
-                                    {...register('bvn')}
-                                />
-
-                                <GenderWrapper>
-                                    <Label className={styles.label}>
-                                        Select your Gender
-                                    </Label>
-                                    <br />
-                                    <div className={styles.genderInps}>
-                                        <div className={styles.male}>
-                                            <FormInput
-                                                style={{
-                                                    width: '15px'
-                                                }}
-                                                type="radio"
-                                                name="gender"
-                                                value="male"
-                                                {...register('bvn')}
-                                            />
-                                            <label className={styles.fmLabel}>
-                                                Male
-                                            </label>
-                                        </div>
-                                        <div className={styles.female}>
-                                            <FormInput
-                                                style={{
-                                                    width: '15px'
-                                                }}
-                                                type="radio"
-                                                name="gender"
-                                                value="female"
-                                                {...register('bvn')}
-                                            />
-                                            <label className={styles.fmLabel}>
-                                                Female
-                                            </label>
-                                        </div>
-                                    </div>
-                                </GenderWrapper>
-                            </div>
-
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Next"
-                                type="button"
-                                // onClick={handleShowSuccessStep}
+                    </div>
+                    {/* The small card that wraps the form */}
+                    <div className={styles.businessCont}>
+                        <ButtonWrapper>
+                            <ToggleNo
                                 onClick={handleShowFourthStep}
-                            />
-                        </>
-                    </>
-                )}
-            </div>
+                                style={
+                                    bgcolor
+                                        ? { background: '#f8f8f8' }
+                                        : {
+                                              background:
+                                                  'rgba(108, 207, 0, 0.3)'
+                                          }
+                                }
+                            >
+                                <ToggleNoText
+                                    style={
+                                        bgcolor
+                                            ? { color: '#a5a5a5' }
+                                            : { color: '#407a00' }
+                                    }
+                                >
+                                    Personal details
+                                </ToggleNoText>
+                            </ToggleNo>
+                            <ToggleYes
+                                onClick={handleShowFourthStep}
+                                style={
+                                    bgcolor
+                                        ? {
+                                              background:
+                                                  'rgba(108, 207, 0, 0.3)'
+                                          }
+                                        : { background: '#f8f8f8' }
+                                }
+                            >
+                                <ToggleYesText
+                                    style={
+                                        bgcolor
+                                            ? { color: '#407a00' }
+                                            : { color: '#a5a5a5' }
+                                    }
+                                >
+                                    Business details
+                                </ToggleYesText>
+                            </ToggleYes>
+                        </ButtonWrapper>
+
+                        {switchs ? (
+                            <>
+                                <StepFourCompProfile2BizDetails
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <>
+                                    <div
+                                        className={styles.dets}
+                                        style={{ marginTop: '2rem' }}
+                                    >
+                                        <Label className={styles.label}>
+                                            Enter your Full Name
+                                        </Label>
+                                        <br />
+                                        <FormInput
+                                            type="text"
+                                            placeholder=""
+                                            value={profileCont.fullName}
+                                            disabled
+                                            {...register('bvn')}
+                                        />
+
+                                        <GenderWrapper>
+                                            <Label className={styles.label}>
+                                                Select your Gender
+                                            </Label>
+                                            <br />
+                                            <div className={styles.genderInps}>
+                                                <div className={styles.male}>
+                                                    <FormInput
+                                                        style={{
+                                                            width: '15px'
+                                                        }}
+                                                        type="radio"
+                                                        name="gender"
+                                                        value="male"
+                                                        {...register('bvn')}
+                                                    />
+                                                    <label
+                                                        className={
+                                                            styles.fmLabel
+                                                        }
+                                                    >
+                                                        Male
+                                                    </label>
+                                                </div>
+                                                <div className={styles.female}>
+                                                    <FormInput
+                                                        style={{
+                                                            width: '15px'
+                                                        }}
+                                                        type="radio"
+                                                        name="gender"
+                                                        value="female"
+                                                        {...register('bvn')}
+                                                    />
+                                                    <label
+                                                        className={
+                                                            styles.fmLabel
+                                                        }
+                                                    >
+                                                        Female
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </GenderWrapper>
+                                    </div>
+
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Next"
+                                        type="button"
+                                        // onClick={handleShowSuccessStep}
+                                        onClick={handleShowFourthStep}
+                                    />
+                                </>
+                            </>
+                        )}
+                    </div>
+                </div>
+            </section>
         </div>
     );
 };

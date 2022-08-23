@@ -47,9 +47,17 @@ const ProfileSetups = () => {
         referralCode: '',
         signatory: 1
     });
-    const countryName = window.localStorage.getItem('country');
+    let countryName = '';
+    let countryNames;
 
-    const countryNames = JSON.parse(countryName);
+    if (typeof window !== 'undefined') {
+        countryName = window.localStorage.getItem('country');
+        if (countryName === null) {
+            countryNames = window.localStorage.getItem('country');
+        } else {
+            countryNames = JSON.parse(countryName);
+        }
+    }
     useEffect(() => {
         dispatch(loadCountry());
     }, []);
@@ -91,6 +99,7 @@ const ProfileSetups = () => {
                     <RegisteredForm
                         formData={formData}
                         setFormData={setFormData}
+                        action={handleSubmit}
                     />
                 );
             case 1:
@@ -196,8 +205,6 @@ const ProfileSetups = () => {
         <Card>
             {page === 0 ? (
                 <>
-                    <p className={styles.error}>{errorM}</p> <br />
-                    <p className={styles.error}>{errorI}</p> <br />
                     {/* <p className={styles.error}>{errorII}</p> <br /> */}
                     {/* <p className={styles.error}>{errorIII}</p> <br /> */}
                     {/*<p className={styles.error}>{errorIII}</p> <br /> */}
@@ -205,7 +212,7 @@ const ProfileSetups = () => {
             ) : (
                 <></>
             )}
-            <div className={styles.error}>{error}</div>
+            {error ? <div className={styles.error}>{error}</div> : null}
             {conditionalComponent()}
 
             {page == 1 ? null : page == 2 ? (
@@ -218,15 +225,14 @@ const ProfileSetups = () => {
                 />
             ) : page === 3 ? (
                 <></>
-            ) : (
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    onClick={handleSubmit}
-                    type="submit"
-                    text={'Next'}
-                />
-            )}
+            ) : // <ButtonComp
+            //     disabled={activeBtn}
+            //     active={activeBtn ? 'active' : 'inactive'}
+            //     onClick={handleSubmit}
+            //     type="submit"
+            //     text={'Next'}
+            // />
+            null}
         </Card>
     );
 };

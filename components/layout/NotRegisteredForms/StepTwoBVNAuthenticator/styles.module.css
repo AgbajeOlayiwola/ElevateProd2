@@ -1,7 +1,20 @@
+.bvnBody {
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    max-width: 600px;
+    width: 40%;
+    margin: 100px auto 0px;
+    padding: 60px 0px;
+}
+
 .cover {
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    width: 67%;
+    max-width: 400px;
+    margin: 0px auto;
 }
 .inputs {
     width: 100%;
@@ -9,17 +22,24 @@
     margin-left: 10px;
 }
 .clr {
-    color: #7a7978;
     margin: 0px;
-    width: fit-content;
-    /* height: fit-content; */
     background-color: white;
-    height: 0;
-    font-weight: 500;
+    width: 40px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #a5a5a5;
 }
 .inp {
-    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
     line-height: 19px;
-    margin-top: 4rem;
     color: #3e3e3e;
+    margin: 0px;
+    margin-top: 48px;
+    margin-bottom: 8px;
 }
