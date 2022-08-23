@@ -18,7 +18,7 @@ const Countriess = ({
                 <div className={styles.selectCountry} onClick={displayCountry}>
                     {selectCountry ? (
                         <div>
-                            <div>
+                            <div className={styles.flagDiv}>
                                 <div className={styles.flags}>
                                     <img
                                         src={
@@ -32,12 +32,9 @@ const Countriess = ({
 
                                 <p>{selectCountry.name}</p>
                             </div>
-
-                            <Image
-                                src="/../../Assets/Svgs/dropdownSvg.svg"
-                                width="10%"
-                                height="10%"
-                            />
+                            <div className={styles.dropdown}>
+                                <img src="/../../Assets/Svgs/dropdownSvg.svg" />
+                            </div>
                         </div>
                     ) : (
                         <>

@@ -12,6 +12,7 @@ import {
 } from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
+import CircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/CircleSvg';
 
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -84,8 +85,8 @@ const Login = () => {
             <section className={styles.sectionI}>
                 <div>
                     <h2 className={styles.bvn}>
-                        ellevate your Business to the the
-                        <span> next level!</span>
+                        Input your BVN and open a Business Account in
+                        <span> 3 minutes.</span>
                     </h2>
                     <svg
                         width="2"
@@ -103,7 +104,7 @@ const Login = () => {
                 </div>
             </section>
             <section className={styles.sectionII}>
-                <div>
+                <div className={styles.loginCont}>
                     <div className={styles.welc}>
                         <h2>Welcome Back!</h2>
                         <p>
@@ -111,15 +112,13 @@ const Login = () => {
                             Kindly enter your details to Login.
                         </p>
                     </div>
-                    <h2 className={styles.error}>{error}</h2>
+                    {error ? <h2 className={styles.error}>{error}</h2> : null}
                     <form
                         onSubmit={handleSubmit(onSubmit)}
                         className={styles.form}
                     >
                         <div>
                             <label>Email Address </label>
-
-                            <br />
                             <input
                                 type="email"
                                 name="email"
@@ -140,7 +139,6 @@ const Login = () => {
                         </div>
                         <div className={styles.spacing}>
                             <label>Password </label>
-                            <br />
                             <div className={styles.divs}>
                                 <input
                                     name="password"
@@ -175,7 +173,7 @@ const Login = () => {
                         </div>
                         <div className={styles.remForg}>
                             <div>
-                                <input type="checkbox" />
+                                <CircleSvg />
                                 <p>Remember me</p>
                             </div>
                             <div>
@@ -192,7 +190,7 @@ const Login = () => {
                             <ButtonComp
                                 disabled={activeBtn}
                                 active={activeBtn ? 'active' : 'inactive'}
-                                margin="1.5rem 0 0 0"
+                                margin="0px 0 0 0"
                                 text="Login"
                                 type="submit"
                             />

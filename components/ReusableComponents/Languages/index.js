@@ -8,6 +8,8 @@ import { loadLanguageAsync } from '../../../redux/actions/actions';
 const Langauges = () => {
     const [languages, setLanguages] = useState([]);
     const [languageValue, setLanguagevalue] = useState('');
+    const [languageState, setLanguageState] = useState(false);
+
     const [error, setError] = useState('');
 
     const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const Langauges = () => {
             setLanguages(language);
         }
     }, [language]);
-    // console.log(languages);
+    console.log(language);
     const {
         register,
         handleSubmit,
@@ -31,15 +33,51 @@ const Langauges = () => {
         formState: { errors }
     } = useForm();
 
-    // console.log(languages);
+    const displayLanguage = () => {
+        setLanguageState(!languageState);
+        setError('');
+    };
+    const [selectLanguage, setSelectLanguage] = useState('English');
     return (
         <div className={styles.select2}>
-            {error ? <p className={styles.error}>{error}</p> : null}
             <label className={styles.label} htmlFor="languages">
                 Language
             </label>
-            <br />
-            <select
+            {error ? <p className={styles.error}>{error}</p> : null}
+            <div className={styles.selectCont}>
+                <div className={styles.selectCountry} onClick={displayLanguage}>
+                    <p>{selectLanguage}</p>
+                    <div className={styles.dropdown}>
+                        <img src="/../../Assets/Svgs/dropdownSvg.svg" />
+                    </div>
+                </div>
+                {languageState && (
+                    <ul className={styles.selectOption}>
+                        {languages.map((item, index) => {
+                            return (
+                                <li
+                                    key={index}
+                                    onClick={() => {
+                                        if (item.name !== 'English') {
+                                            setError(
+                                                'This App is available in English currently'
+                                            );
+                                            setLanguageState(false);
+                                        } else {
+                                            // setSelectCountry(item);
+
+                                            setLanguageState(false);
+                                        }
+                                    }}
+                                >
+                                    <p>{item.name}</p>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                )}
+            </div>
+            {/* <select
                 {...register('first_name', {
                     required: 'Language is required',
                     minLength: {
@@ -65,7 +103,7 @@ const Langauges = () => {
                         </option>
                     );
                 })}
-            </select>
+            </select> */}
             {/* <div>error</div> */}
         </div>
     );

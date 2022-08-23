@@ -11,22 +11,28 @@ const Loading = () => {
     };
     return (
         <div className={styles.verifyCov}>
-            <div className={styles.body}>
-                <Messagesvg />
-                <div className={styles.veriEmaillTxt}>
-                    <h3 className={styles.verifyEmail}>Verify your Email</h3>
-                </div>
+            <div className={styles.verifyPopup}>
+                <div className={styles.body}>
+                    <Messagesvg />
+                    <div className={styles.veriEmaillTxt}>
+                        <h3 className={styles.verifyEmail}>
+                            Verify your Email
+                        </h3>
+                    </div>
 
-                <p className={styles.hi}>
-                    Open your email and click on the link to verify.
-                </p>
-                <div onClick={handleClick}>
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        type="submit"
-                        text="Go To Login"
-                    />
+                    <p className={styles.hi}>
+                        Hi Lanre! By proceeding, we will verify your email
+                        address. Open your email and click on the link to
+                        verify.
+                    </p>
+                    <div onClick={handleClick}>
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            type="submit"
+                            text="Verify your Email"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
