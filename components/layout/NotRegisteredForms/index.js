@@ -15,6 +15,8 @@ import {
 import { Router, useRouter } from 'next/router';
 import Loader from '../../ReusableComponents/Loader';
 import Liveness from './Liveness';
+import { getCookie } from 'cookies-next';
+
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
@@ -22,6 +24,9 @@ const ProfileSetups = () => {
     const router = useRouter();
     // Router.reload();
     // router.replace(router.asPath);
+
+    const cookie = getCookie('cookieToken');
+    console.log('register page', cookie);
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
