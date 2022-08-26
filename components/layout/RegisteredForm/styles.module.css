@@ -1,10 +1,19 @@
+.existingBody {
+    width: 43%;
+    margin: 100px auto 0px;
+    max-width: 644px;
+    background: #fefefe;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+}
+
 .form div label {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 19px;
-
     color: #3e3e3e;
 }
 .busAdd {
@@ -28,8 +37,6 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 23px;
-    /* identical to box height, or 161% */
-
     text-align: center;
     cursor: pointer;
     color: #a5a5a5;
@@ -368,12 +375,18 @@
     padding: 1px 0px;
     transition: 2s all ease;
 }
-.imageOut{
+.imageOut {
     display: flex;
     justify-content: center;
 }
-.imageInner{
+.imageInner {
     overflow: hidden;
     border-radius: 50%;
-    height:43vh;
+    height: 43vh;
+}
+
+.stepFour {
+    width: 73%;
+    max-width: 470px;
+    margin: 50px auto;
 }

@@ -51,7 +51,7 @@ const Countriess = ({
                                     onClick={() => {
                                         if (item.name !== 'Nigeria') {
                                             setError(
-                                                'This App is only available in Nigeria currently'
+                                                'This App is  available in Nigeria currently'
                                             );
                                             setCountryState(false);
                                         } else {

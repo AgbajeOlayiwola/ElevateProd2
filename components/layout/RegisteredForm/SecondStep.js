@@ -107,7 +107,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     return (
-        <>
+        <div className={styles.stepFour}>
             <div className={styles.cardHeading}>
                 <div>
                     <ArrowBackSvg action={action} />
@@ -206,7 +206,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
                     />
                 )}
             </form>
-        </>
+        </div>
     );
 };
 

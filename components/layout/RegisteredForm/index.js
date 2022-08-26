@@ -35,6 +35,8 @@ const ExistingMultiStep = () => {
                         action={() => {
                             setPage(page - 1);
                         }}
+                        handleSubmit={handleSubmit}
+                        handleSubmitNew={handleSubmitNew}
                     />
                 );
             case 3:
@@ -60,46 +62,30 @@ const ExistingMultiStep = () => {
     }
     return (
         <Card>
-            {conditionalComponent()}
-            {page === 3 ? null : (
-                <div>
-                    {page === 2 ? (
-                        // <Link href="/Succes/Success">
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            onClick={handleSubmitNew}
-                            type="submit"
-                            text={'Continue with this account'}
-                        />
-                    ) : page === 0 ? (
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            onClick={handleSubmit}
-                            type="submit"
-                            text="Next"
-                        />
-                    ) : // </Link>
-                    // <ButtonComp
-                    //     disabled={activeBtn}
-                    //     active={activeBtn ? 'active' : 'inactive'}
-                    //     onClick={handleSubmit}
-                    //     type="submit"
-                    //     text={page === 2 ? 'Create Account' : 'Next'}
-                    // />
-                    null}
-                    {page === 2 ? (
-                        <p onClick={handleSubmit} className={styles.open}>
-                            Tap to{' '}
-                            <span>
-                                create a new account in your registered business
-                                name
-                            </span>
-                        </p>
-                    ) : null}
-                </div>
-            )}
+            <div className={styles.existingBody}>
+                {conditionalComponent()}
+                {page === 3 ? null : (
+                    <div>
+                        {page === 2 ? null : page === 0 ? ( // <Link href="/Succes/Success">
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                onClick={handleSubmit}
+                                type="submit"
+                                text="Next"
+                            />
+                        ) : // </Link>
+                        // <ButtonComp
+                        //     disabled={activeBtn}
+                        //     active={activeBtn ? 'active' : 'inactive'}
+                        //     onClick={handleSubmit}
+                        //     type="submit"
+                        //     text={page === 2 ? 'Create Account' : 'Next'}
+                        // />
+                        null}
+                    </div>
+                )}
+            </div>
         </Card>
     );
 };
