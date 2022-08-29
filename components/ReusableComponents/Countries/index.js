@@ -32,9 +32,9 @@ const Countriess = ({
 
                                 <p>{selectCountry.name}</p>
                             </div>
-                            <div className={styles.dropdown}>
-                                <img src="/../../Assets/Svgs/dropdownSvg.svg" />
-                            </div>
+                            {/* <div className={styles.dropdown}> */}
+                            <img src="/../../Assets/Svgs/dropdownSvg.svg" />
+                            {/* </div> */}
                         </div>
                     ) : (
                         <>

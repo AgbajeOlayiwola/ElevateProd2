@@ -37,19 +37,14 @@ const Langauges = () => {
         setLanguageState(!languageState);
         setError('');
     };
-    const [selectLanguage, setSelectLanguage] = useState('English');
+    const [selectLanguage, setSelectLanguage] = useState('Eng');
     return (
         <div className={styles.select2}>
-            <label className={styles.label} htmlFor="languages">
-                Language
-            </label>
             {error ? <p className={styles.error}>{error}</p> : null}
             <div className={styles.selectCont}>
                 <div className={styles.selectCountry} onClick={displayLanguage}>
                     <p>{selectLanguage}</p>
-                    <div className={styles.dropdown}>
-                        <img src="/../../Assets/Svgs/dropdownSvg.svg" />
-                    </div>
+                    <img src="/../../Assets/Svgs/languageDropdown.svg" />
                 </div>
                 {languageState && (
                     <ul className={styles.selectOption}>
@@ -64,13 +59,11 @@ const Langauges = () => {
                                             );
                                             setLanguageState(false);
                                         } else {
-                                            // setSelectCountry(item);
-
                                             setLanguageState(false);
                                         }
                                     }}
                                 >
-                                    <p>{item.name}</p>
+                                    <p>{item.name.slice(0, 3)}</p>
                                 </li>
                             );
                         })}

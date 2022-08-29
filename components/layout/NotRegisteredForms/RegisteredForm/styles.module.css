@@ -1,20 +1,27 @@
 .registeredBody {
     display: flex;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0px 133px 0px 96px;
 }
 
 .sectionI {
-    background: url('/Assets/Images/cover.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0%;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    overflow: hidden;
+    width: 37%;
+    max-width: 470px;
     height: 100%;
 }
+
+.sectionI img {
+    height: 100%;
+    width: 100%;
+    object-fit: scale-down;
+}
+
+.sectionII {
+    flex: 1;
+    padding: 120px 0px;
+}
+
 .bvn {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -28,12 +35,6 @@
 }
 .bvn span {
     color: #6ccf00;
-}
-
-.sectionII {
-    width: 50%;
-    height: 100vh;
-    padding: 120px 0px;
 }
 
 .bodyWrapper {

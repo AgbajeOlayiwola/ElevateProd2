@@ -21,16 +21,15 @@ const Loading = () => {
                     </div>
 
                     <p className={styles.hi}>
-                        Hi Lanre! By proceeding, we will verify your email
-                        address. Open your email and click on the link to
-                        verify.
+                        An Email has been sent to d*******@gmail.com,Please
+                        check your inbox and verify your email.
                     </p>
                     <div onClick={handleClick}>
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
-                            text="Verify your Email"
+                            text="Resend Mail"
                         />
                     </div>
                 </div>

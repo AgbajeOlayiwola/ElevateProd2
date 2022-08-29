@@ -1,25 +1,24 @@
 .sectionCove {
     display: flex;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0px 133px 0px 96px;
 }
 .sectionI {
-    background: url('/Assets/Images/cover.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0%;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 50%;
-    overflow: hidden;
-    height: 100vh;
+    width: 37%;
+    max-width: 470px;
 }
+
+.sectionI img {
+    height: 100%;
+    width: 100%;
+    object-fit: scale-down;
+}
+
 .sectionII {
-    width: 50%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex: 1;
+    padding: 150px 0px;
 }
 
 .loginCont {
@@ -50,11 +49,11 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 36px;
-    line-height: 44px;
+    font-size: 32px;
+    line-height: 43px;
     margin: 0px;
     margin-bottom: 0.5rem;
-    color: #005b82;
+    color: #102572;
 }
 .welc p {
     margin: 0px;
@@ -63,22 +62,25 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 152.52%;
-    color: #8c8c8c;
+    color: #6a6a6a;
 }
 .form div label {
     font-family: 'Inter', sans-serif;
     font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 19px;
-    margin-bottom: 0.5rem;
-    color: #3e3e3e;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+    display: block;
+    margin-bottom: 8px;
 }
 
-.form div input {
-    margin-top: 0.5rem;
+.loginForm {
+    padding-bottom: 24px;
+    display: block;
     margin-bottom: 24px;
 }
+
 .emailInput {
     background-image: url('/Assets/Svgs/mail.svg');
     background-position: 8%;
@@ -93,6 +95,15 @@
     position: relative;
 }
 
+.form button {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+}
+
 .accout {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -100,12 +111,12 @@
     font-size: 14px;
     line-height: 19px;
     margin: 0px;
-    margin-top: 32px;
+    margin-top: 24px;
     color: #a5a5a5;
 }
 .accout span {
-    color: #005b82;
-    font-weight: 600;
+    color: #102572;
+    font-weight: 700;
 }
 .visible {
     position: absolute;
@@ -120,7 +131,8 @@
 }
 .divs {
     display: flex;
-    /* align-items: center; */
+    align-items: center;
+    padding: 0px;
 }
 .remForg {
     display: flex;

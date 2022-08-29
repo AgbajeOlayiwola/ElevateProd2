@@ -99,7 +99,7 @@ const ProfileSetups = () => {
                     <RegisteredForm
                         formData={formData}
                         setFormData={setFormData}
-                        action={handleSubmit}
+                        action={handleSubmitt}
                     />
                 );
             case 1:
@@ -202,7 +202,7 @@ const ProfileSetups = () => {
     // }, [otpErrorMessage, bvnError, bvnErrorI]);
 
     return (
-        <Card>
+        <>
             {page === 0 ? (
                 <>
                     {/* <p className={styles.error}>{errorII}</p> <br /> */}
@@ -212,7 +212,7 @@ const ProfileSetups = () => {
             ) : (
                 <></>
             )}
-            {error ? <div className={styles.error}>{error}</div> : null}
+            {/* {error ? <div className={styles.error}>{error}</div> : null} */}
             {conditionalComponent()}
 
             {page == 1 ? null : page == 2 ? (
@@ -233,7 +233,7 @@ const ProfileSetups = () => {
             //     text={'Next'}
             // />
             null}
-        </Card>
+        </>
     );
 };
 

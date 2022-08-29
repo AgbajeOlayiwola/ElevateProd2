@@ -86,7 +86,6 @@ const Ecocard = () => {
             <div className={styles.cover}>
                 <div>
                     <label>Ecobank Card number</label>
-                    <br />
                     <input
                         placeholder="Ecobank Card number"
                         className={styles.idInput}
@@ -102,7 +101,6 @@ const Ecocard = () => {
                     <div className={styles.exp}>
                         <div className={styles.shows}>
                             <label>Expiry Date</label>
-                            <br />
                             <input
                                 placeholder="MM/YY"
                                 className={styles.passwordInput}
@@ -127,7 +125,6 @@ const Ecocard = () => {
                     <div className={styles.cvvCode}>
                         <div className={styles.shows}>
                             <label>CVV</label>
-                            <br />
                             <input
                                 placeholder="CVV"
                                 className={styles.passwordInput}

@@ -5,9 +5,9 @@ import ProfileSetups from '../../../components/layout/NotRegisteredForms';
 
 const ProfileSetup = () => {
     return (
-        <div className={styles.Cover}>
+        <>
             <ProfileSetups />
-        </div>
+        </>
     );
 };
 

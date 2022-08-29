@@ -1,5 +1,340 @@
+.homeBody {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0px 133px 0px 96px;
+}
+
+.firstSection {
+    width: 37%;
+    max-width: 470px;
+    position: relative;
+}
+
+.firstSection img {
+    height: 100%;
+    width: 100%;
+}
+
+.firstSection .content {
+    position: absolute;
+    bottom: 111px;
+    left: 16%;
+    max-width: 317px;
+    width: 76%;
+}
+
+.secondSection {
+    flex: 1;
+    padding: 100px 0px 150px 131px;
+}
+
+.secondSectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.secondSectionHeaderText {
+    width: 365px;
+}
+
+.secondSectionHeader h2 {
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    color: #102572;
+}
+
+.secondSectionHeader p {
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+    margin-top: 4px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 152.52%;
+    color: #6a6a6a;
+}
+
+.languages {
+    width: 60px;
+}
+
+.secondSectionMid {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 64px;
+    border-bottom: 1px solid #ebebeb;
+    padding-bottom: 32px;
+}
+
+.secondSectionMid label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.secondSectionMidCountry,
+.secondSectionMidYes {
+    width: 43%;
+    max-width: 296px;
+}
+
+.homeForm {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.homeForm label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.divs {
+    display: flex;
+    align-items: center;
+}
+
+.errorCont {
+    width: 100%;
+    margin-top: 0.5rem;
+    background-color: white;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.errorCont p {
+    margin: 0px;
+}
+
+.errors {
+    background-color: red;
+    color: white;
+    width: 30%;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    border-radius: 12px;
+    padding: 1px 0px;
+    transition: 2s all ease;
+}
+
+.medium {
+    background-color: blue;
+    color: white;
+    width: 70%;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    border-radius: 12px;
+    padding: 1px 0px;
+    transition: 2s all ease;
+}
+
+.strong {
+    background-color: green;
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    border-radius: 12px;
+    padding: 1px 0px;
+    transition: 2s all ease;
+}
+
+.secondSection button {
+    margin-top: 48px;
+}
+
+.already {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0px;
+    margin-top: 24px;
+    color: #3e3e3e;
+}
+
+.already span {
+    font-weight: 700;
+    color: #102572;
+    cursor: pointer;
+}
+
+.existingUser {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 0px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.existingUserHeader,
+.existingUserBody {
+    width: 43%;
+    max-width: 296px;
+}
+
+.existingUserHeader .choose {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0px;
+    color: #7a7978;
+    margin-bottom: 16px;
+}
+
+.omnisets {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    /* padding-top: 1%;
+    padding-bottom: 10%;
+    text-align: center; */
+}
+.existingForm div label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.existingForm > div {
+    margin-bottom: 24px;
+}
+
+.show {
+    display: flex;
+    transition: all 0.5s ease-in-out;
+}
+
+.cvvCode {
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+.expCvv {
+    display: flex;
+    justify-content: space-between;
+}
+.cvvCode {
+    width: 30%;
+}
+.exp {
+    width: 50%;
+}
+
+.form {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.form::-webkit-scrollbar {
+    display: none;
+}
+
+.idInput {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    color: #a5a5a5;
+}
+.passwordInput {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    background-color: white;
+    line-height: 19px;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: black;
+}
+
+.active {
+    background: #6ccf00;
+    transition: all 0.3s ease-in-out;
+    filter: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 57px;
+    height: 57px;
+    cursor: pointer;
+    border: none;
+}
+.name {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #7a7978;
+}
+.activeName {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #102572;
+}
+.notActive {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 57px;
+    height: 57px;
+    cursor: pointer;
+    background: #f4f4f4;
+    border: 1px solid #dbdbdb;
+    transition: all 0.3s ease-in-out;
+    filter: grayscale(100%);
+}
+
+.cov {
+    width: 22%;
+}
+
 .cover {
     display: flex;
+    padding: 0px 133px 0px 96px;
+    height: 100%;
 }
 .form {
     color: #3e3e3e;
@@ -20,14 +355,8 @@
     text-align: start;
     color: #a5a5a5;
 }
-.Svg {
-    /* position: absolute; */
-    width: 70%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 45%;
-}
+/* .Svg {
+} */
 /* .Svg svg {
     margin: 0 auto;
 } */
@@ -51,24 +380,18 @@
     margin-top: 50px;
 }
 .sectionI {
-    background: url('/Assets/Images/Shutter.png');
-    width: 50%;
+    background: url('/Assets/Images/homeImage.png');
+    width: 37%;
     display: flex;
-    /* flex-direction: column; */
     justify-content: center;
     align-items: center;
-    /* height: 100%; */
+    height: 100%;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
     background-position: center;
     overflow: hidden;
     position: relative;
-}
-
-.sectionI img {
-    position: absolute;
-    width: 100%;
 }
 
 .sectionI .content {
@@ -87,9 +410,10 @@
 .sectionII {
     padding-left: 182.27px;
     padding-right: 182.27px;
-    width: 50%;
-    height: 100vh;
-    overflow: scroll;
+    /* width: 50%; */
+    flex: 1;
+    /* height: 100vh; */
+    /* overflow: scroll; */
     align-items: center;
     display: flex;
     justify-content: center;
@@ -244,7 +568,8 @@
 .error {
     color: red;
     font-size: 12px;
-    margin-top: 1rem;
+    margin: 0px;
+    margin-top: 0.5rem;
 }
 @keyframes spaceshow {
     0% {

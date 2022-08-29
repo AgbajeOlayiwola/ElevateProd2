@@ -1,3 +1,4 @@
+//I commented out line 176
 import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
@@ -183,7 +184,7 @@ const StepFourCompProfile2BizDetails = ({
             }
         });
 
-        setProfileCont(profile.data);
+        // setProfileCont(profile.data);
         console.log(profileCont.isBusinessRegistered);
         // createCorp();
     }, [business, profile]);
@@ -282,27 +283,6 @@ const StepFourCompProfile2BizDetails = ({
                                         <img src={formData.flag} alt="" />
                                     </span>
                                     <p>{formData.baseCurrency}</p>
-                                    {/* <input
-                                    type="number"
-                                    placeholder="+234"
-                                    {...register('phone_number', {
-                                        required: 'phone number is required',
-                                        minLength: {
-                                            value: 9,
-                                            message: 'Min length is 9'
-                                        }
-                                    })}
-                                    value={formData.countryCode}
-                                    onChange={(event) => {
-                                        setFormData({
-                                            ...formData,
-                                            countryCode: event.target.value
-                                        });
-                                        if (event.target.value.length == 15)
-                                          return false; //limits to 10 digit entry
-                                        setPhoneNumber(event?.target.value); //saving input to state
-                                    }}
-                                /> */}
                                 </div>
                                 <div className={styles.phoneDetails}>
                                     <p> +{formData.countryCode}</p>
@@ -323,9 +303,6 @@ const StepFourCompProfile2BizDetails = ({
                                                 ...formData,
                                                 phoneNumber: event.target.value
                                             });
-                                            //if (event.target.value.length == 15)
-                                            //  return false; //limits to 10 digit entry
-                                            //setPhoneNumber(event?.target.value); //saving input to state
                                         }}
                                     />
                                 </div>
