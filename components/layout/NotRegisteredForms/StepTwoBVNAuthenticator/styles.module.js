@@ -12,12 +12,12 @@ export const CardHeadingBVN = styled.div``;
 export const SmallInstructionText = styled.h6`
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
-    line-height: 23px;
-    color: #005b82;
+    font-size: 14px;
+    line-height: 27px;
+    color: #7a7978;
     text-align: left;
     margin: 0px;
-    margin-top: 46px;
+    margin-top: 32px;
 `;
 
 export const LeftHeading = styled.h3`
@@ -25,10 +25,9 @@ export const LeftHeading = styled.h3`
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
-    line-height: 29px;
-    color: #005b82;
+    line-height: 33px;
+    color: #102572;
     margin: 0px;
-    margin-bottom: 14px;
 `;
 
 export const RegisteredCardWrapper = styled.div`

@@ -13,9 +13,22 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadCountry } from '../../redux/actions/actions';
+import {
+    loadCountry,
+    omniliteData,
+    accountNumberData
+} from '../../redux/actions/actions';
 import Image from 'next/image';
 import Link from 'next/link';
+import Loader from '../../components/ReusableComponents/Loader';
+import { encrypt } from '../../redux/helper/hash';
+import validator from 'validator';
+import Visbility from '../../components/ReusableComponents/Eyeysvg';
+import Omnilite from '../../components/ReusableComponents/Loginwith/omnilite';
+import Ecoonline from '../../components/ReusableComponents/Loginwith/ecoonline';
+import Ecocard from '../../components/ReusableComponents/Loginwith/ecocard';
+import Ecoacct from '../../components/ReusableComponents/Loginwith/ecoacct';
+import NewUser from './NewUser';
 
 const HomeMain = () => {
     const router = useRouter();
@@ -32,9 +45,24 @@ const HomeMain = () => {
         name: 'Nigeria'
     });
     const [error, setError] = useState('');
+    const [ecobankAccount, setEcobankAccount] = useState('No');
+    const [page, setPage] = useState(0);
+    const [omnilit, setOmnilite] = useState(true);
+    const [ecobank, setEcobank] = useState(false);
+    const [acct, setAcct] = useState(false);
+    const [card, setCard] = useState(false);
+    const [outType, setOutType] = useState();
+    const [loading, setLoading] = useState(false);
+    const [activeBtn, setActiveBtn] = useState(true);
     const dispatch = useDispatch();
-    const { isLoading, countries, errorMessage } = useSelector(
+    const { countries, errorData } = useSelector(
         (state) => state.countryReducer
+    );
+    const { isLoading, omnilite, errorMessage } = useSelector(
+        (state) => state.omniliteReducer
+    );
+    const { accountNumber, errorMessages } = useSelector(
+        (state) => state.accountNumberReducer
     );
 
     useEffect(() => {
@@ -48,32 +76,397 @@ const HomeMain = () => {
             setCountry(countries);
         }
     }, [countries]);
-    const [activeBtn, setActiveBtn] = useState(true);
 
+    // console.log(watch('example')); // watch input value by passing the name of it
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
-    const onSubmit = (data) => {
-        console.log(data);
-        if (selectCountry === '') {
-            setError('Choose a country');
-        } else {
-            window.localStorage.setItem(
-                'country',
-                JSON.stringify(selectCountry)
-            );
-            router.push('./Auth/SignUp');
+    const conditionalComponent = () => {
+        switch (page) {
+            case 0:
+                return (
+                    <div className={styles.existingForm}>
+                        <div>
+                            <label>Enter Your Omnilite Username</label>
+                            <input
+                                placeholder="Omnilite Username"
+                                type="text"
+                                className={styles.idInput}
+                                {...register('username', {
+                                    required: 'Username is Required'
+                                })}
+                                name="username"
+                            />
+                        </div>
+                        <p className={styles.error}>
+                            {errors?.username?.message}
+                        </p>
+                        <div>
+                            <label>Enter Your Omnilite Password</label>
+                            <div className={styles.passwordEye}>
+                                <input
+                                    placeholder="Omnilite Password"
+                                    className={styles.idInput}
+                                    {...register('password', {
+                                        required: 'Password is Required'
+                                    })}
+                                    name="password"
+                                    type={outType ? 'text' : 'password'}
+                                />
+                                <Visbility typeSet={types} />
+                            </div>
+                        </div>
+                        <p className={styles.error}>
+                            {errors?.password?.message}
+                        </p>
+                    </div>
+                );
+            case 1:
+                return (
+                    <div className={styles.existingForm}>
+                        <div>
+                            <label>Enter your Ecobank Online Username</label>
+                            <input
+                                placeholder="Ecobank Online Username"
+                                type="text"
+                                className={styles.idInput}
+                                {...register('username', {
+                                    required:
+                                        'Ecobank Online Username is Required'
+                                })}
+                                name="username"
+                            />
+                        </div>
+                        <p className={styles.error}>
+                            {errors?.username?.message}
+                        </p>
+                        <div>
+                            <label>Enter Your Ecobank Online Password</label>
+                            <div className={styles.passwordEye}>
+                                <input
+                                    placeholder="Ecobank Online Password"
+                                    className={styles.idInput}
+                                    {...register('password', {
+                                        required:
+                                            'Ecobank Online Password is Required'
+                                    })}
+                                    name="password"
+                                    type={outType ? 'text' : 'password'}
+                                />
+                                <Visbility typeSet={types} />
+                            </div>
+                        </div>
+                        <p className={styles.error}>
+                            {errors?.password?.message}
+                        </p>
+                    </div>
+                );
+            case 2:
+                return (
+                    <div className={styles.existingForm}>
+                        <div>
+                            <label>Enter Your Ecobank Account Number</label>
+                            <input
+                                placeholder="123*******62"
+                                type="text"
+                                className={styles.idInput}
+                                {...register('accountNumber', {
+                                    required: 'Account Number is Required'
+                                })}
+                                name="accountNumber"
+                            />
+                        </div>
+                        <p className={styles.error}>
+                            {errors?.accountNumber?.message}
+                        </p>
+                    </div>
+                );
+            case 3:
+                return (
+                    <div className={styles.existingForm}>
+                        <div>
+                            <label>Ecobank Card number</label>
+                            <input
+                                placeholder="Ecobank Card number"
+                                className={styles.idInput}
+                                type="number"
+                                {...register('cardNumber', {
+                                    required: 'Card Number is Required'
+                                })}
+                                name="cardNumber"
+                            />
+                        </div>
+                        <p className={styles.error}>
+                            {errors?.cardNumber?.message}
+                        </p>
+                        <div className={styles.expCvv}>
+                            <div className={styles.exp}>
+                                <div className={styles.shows}>
+                                    <label>Expiry Date</label>
+                                    <input
+                                        placeholder="MM/YY"
+                                        className={styles.passwordInput}
+                                        type="text"
+                                        {...register('expiryDate', {
+                                            required: 'Expiry Date is Required'
+                                        })}
+                                        name="expiryDate"
+                                        onChange={(e) => {
+                                            if (e.target.value.length === 2) {
+                                                e.target.value += '/';
+                                            }
+                                            // setExpiryDate(e.target.value);
+                                        }}
+                                        maxLength="5"
+                                    />
+                                </div>
+                                <p className={styles.error}>
+                                    {errors?.expiryDate?.message}
+                                </p>
+                            </div>
+                            <div className={styles.cvvCode}>
+                                <div className={styles.shows}>
+                                    <label>CVV</label>
+                                    <input
+                                        placeholder="CVV"
+                                        className={styles.passwordInput}
+                                        maxLength="3"
+                                        type="password"
+                                        {...register('cvv', {
+                                            required: 'CVV is Required'
+                                        })}
+                                        name="cvv"
+                                    />
+                                    <p className={styles.error}>
+                                        {errors?.cvv?.message}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            default:
+                return (
+                    <div className={styles.existingForm}>
+                        <div>
+                            <label>Enter Your Omnilite Username</label>
+                            <input
+                                placeholder="Omnilite Username"
+                                type="text"
+                                className={styles.idInput}
+                                {...register('username', {
+                                    required: 'Username is Required'
+                                })}
+                                name="username"
+                            />
+                        </div>
+                        <p className={styles.error}>
+                            {errors?.username?.message}
+                        </p>
+                        <div>
+                            <label>Enter Your Omnilite Password</label>
+                            <div className={styles.passwordEye}>
+                                <input
+                                    placeholder="Omnilite Password"
+                                    className={styles.idInput}
+                                    {...register('password', {
+                                        required: 'Password is Required'
+                                    })}
+                                    name="password"
+                                    type={outType ? 'text' : 'password'}
+                                />
+                                <Visbility typeSet={types} />
+                            </div>
+                        </div>
+                        <p className={styles.error}>
+                            {errors?.password?.message}
+                        </p>
+                    </div>
+                );
         }
     };
-    // console.log(watch('example')); // watch input value by passing the name of it
+    const onSubmit = (data) => {
+        if (page === 0) {
+            if (error) {
+                setError('');
+            }
+            setLoading(true);
+            const postData = {
+                username: data.username,
+                password: data.password
+            };
+            dispatch(omniliteData(postData));
+        } else if (page === 1) {
+            alert('Ecobank Online');
+        } else if (page === 2) {
+            setLoading(true);
+            const postData = {
+                accountNo: data.accountNumber
+            };
+            dispatch(accountNumberData(postData));
+        }
+        console.log(data);
+    };
+    const OmniliteTest = () => {
+        console.log(omnilite);
+        console.log(errorMessage);
+        if (errorMessage) {
+            setError(errorMessage);
+            setLoading(false);
+        } else if (omnilite.message === 'Success') {
+            const data = {
+                email: omnilite.data.userInfo.email,
+                accountNumber: omnilite.data.meta.accountNumber,
+                fullName: omnilite.data.meta.fullName,
+                phoneNumber: omnilite.data.meta.phoneNumber
+            };
+            window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            window.localStorage.setItem(
+                'account',
+                JSON.stringify(omnilite.data.meta)
+            );
+            router.push('/Onboarding/ExistingProfileSetup');
+        }
+    };
+    useEffect(() => {
+        OmniliteTest();
+    }, [omnilite, errorMessage]);
+    const acctTest = () => {
+        console.log(errorMessages);
+        if (errorMessages === 'Account already exists with the phone') {
+            router.push('/Auth/Login');
+        } else if (errorMessages) {
+            setError(errorMessages);
+            setLoading(false);
+        } else if (accountNumber.message === 'SUCCESS') {
+            router.push('/Onboarding/ExistingProfileSetup');
+            const data = {
+                email: accountNumber.data.email,
+                accountNumber: accountNumber.data.accountNumber,
+                fullName: accountNumber.data.fullName,
+                phoneNumber: accountNumber.data.phoneNumber
+            };
 
+            window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            if (accountNumber.data.email === null) {
+                accountNumber.data = {
+                    ...accountNumber.data,
+                    email: 'topeakinfe@gmail.com'
+                };
+            }
+
+            window.localStorage.setItem(
+                'account',
+                JSON.stringify(accountNumber.data)
+            );
+        }
+    };
+    useEffect(() => {
+        acctTest();
+    }, [accountNumber, errorMessages]);
+    const types = (type) => {
+        setOutType(type);
+    };
     return (
-        <div className={styles.cover}>
-            <section className={styles.sectionI}>
-                <img src="/Assets/Images/Overlay2.svg" alt="" />
+        // <div className={styles.cover}>
+        //     <section className={styles.sectionI}>
+        //         <div className={styles.content}>
+        //             <div className={styles.Svg}>
+        //                 <div>
+        //                     <HomeSvg />
+        //                     <p className={styles.SMeApp}>
+        //                         Powered by <span>Ecobank</span>
+        //                     </p>
+        //                 </div>
+        //             </div>
+        //             <div className={styles.Center}>
+        //                 <div className={styles.sectionBottom}>
+        //                     <div className={styles.space}>
+        //                         <SpaceshipSvg />
+
+        //                         <p>Start</p>
+        //                     </div>
+        //                     <div className={styles.gears}>
+        //                         <Gearsvg />
+        //                         <p>Run</p>
+        //                     </div>
+        //                     <div className={styles.scale}>
+        //                         <Scalesvg />
+        //                         <p>Grow</p>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     </section>
+        //     <section className={styles.sectionII}>
+        //         <div>
+        //             <div>
+        //                 <h3 className={styles.elevatenow}>Sign up</h3>
+        //             </div>
+        //             <div>
+        //                 <form
+        //                     onSubmit={handleSubmit(onSubmit)}
+        //                     className={styles.form}
+        //                 >
+        //                     <Languages />
+        //                     <div className={styles.countryWrapper}>
+        //                         <label
+        //                             className={styles.label}
+        //                             htmlFor="country"
+        //                         >
+        //                             Choose The Country Where you Run Busines
+        //                         </label>
+        //                         {error ? (
+        //                             <p className={styles.error}>{error}</p>
+        //                         ) : null}
+        //                         <Countries
+        //                             displayCountry={() => {
+        //                                 setCountryState(!countryState);
+        //                                 setError('');
+        //                             }}
+        //                             selectCountry={selectCountry}
+        //                             countryState={countryState}
+        //                             countrys={countrys}
+        //                             setCountryState={setCountryState}
+        //                             setError={setError}
+        //                             setSelectCountry={setSelectCountry}
+        //                             error={error}
+        //                         />
+        //                     </div>
+        //                     <div className={styles.disclaimer}>
+        //                         <p>
+        //                             Get onboard and have access to unlimited
+        //                             possibilites with your account!
+        //                         </p>
+        //                     </div>{' '}
+        //                     <ButtonComp
+        //                         disabled={activeBtn}
+        //                         active={activeBtn ? 'active' : 'inactive'}
+        //                         text="Proceed"
+        //                         type="submit"
+        //                     />
+        //                     <div>
+        //                         <p className={styles.accout}>
+        //                             Already Registered?
+        //                             <Link href="../Auth/Login">
+        //                                 <span className={styles.termss}>
+        //                                     {' '}
+        //                                     Sign In
+        //                                 </span>
+        //                             </Link>
+        //                         </p>
+        //                     </div>
+        //                 </form>
+        //             </div>
+        //         </div>
+        //     </section>
+        // </div>
+        <div className={styles.homeBody}>
+            <section className={styles.firstSection}>
+                <img src="/Assets/Images/homeImage.png" alt="" />
                 <div className={styles.content}>
                     <div className={styles.Svg}>
                         <div>
@@ -87,7 +480,6 @@ const HomeMain = () => {
                         <div className={styles.sectionBottom}>
                             <div className={styles.space}>
                                 <SpaceshipSvg />
-
                                 <p>Start</p>
                             </div>
                             <div className={styles.gears}>
@@ -102,67 +494,226 @@ const HomeMain = () => {
                     </div>
                 </div>
             </section>
-            <section className={styles.sectionII}>
-                <div>
-                    <div>
-                        <h3 className={styles.elevatenow}>Sign up</h3>
+            <section className={styles.secondSection}>
+                <div className={styles.secondSectionHeader}>
+                    <div className={styles.secondSectionHeaderText}>
+                        <h2>Create an Account</h2>
+                        <p>
+                            Get onboard and have access to unlimited
+                            possibilites.
+                        </p>
                     </div>
-                    <div>
-                        <form
-                            onSubmit={handleSubmit(onSubmit)}
-                            className={styles.form}
-                        >
-                            <Languages />
-                            <div className={styles.countryWrapper}>
-                                <label
-                                    className={styles.label}
-                                    htmlFor="country"
-                                >
-                                    Choose The Country Where you Run Busines
-                                </label>
-                                {error ? (
-                                    <p className={styles.error}>{error}</p>
-                                ) : null}
-                                <Countries
-                                    displayCountry={() => {
-                                        setCountryState(!countryState);
-                                        setError('');
-                                    }}
-                                    selectCountry={selectCountry}
-                                    countryState={countryState}
-                                    countrys={countrys}
-                                    setCountryState={setCountryState}
-                                    setError={setError}
-                                    setSelectCountry={setSelectCountry}
-                                    error={error}
-                                />
-                            </div>
-                            <div className={styles.disclaimer}>
-                                <p>
-                                    Get onboard and have access to unlimited
-                                    possibilites with your account!
-                                </p>
-                            </div>{' '}
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Proceed"
-                                type="submit"
-                            />
-                            <div>
-                                <p className={styles.accout}>
-                                    Already Registered?
-                                    <Link href="../Auth/Login">
-                                        <span className={styles.termss}>
-                                            {' '}
-                                            Sign In
-                                        </span>
-                                    </Link>
-                                </p>
-                            </div>
-                        </form>
+                    <div className={styles.languages}>
+                        <Languages />
                     </div>
                 </div>
+                <div className={styles.secondSectionMid}>
+                    <div className={styles.secondSectionMidCountry}>
+                        <label>Choose your Business Location</label>
+                        <Countries
+                            displayCountry={() => {
+                                setCountryState(!countryState);
+                                setError('');
+                            }}
+                            selectCountry={selectCountry}
+                            countryState={countryState}
+                            countrys={countrys}
+                            setCountryState={setCountryState}
+                            setError={setError}
+                            setSelectCountry={setSelectCountry}
+                            error={error}
+                        />
+                    </div>
+                    <div className={styles.secondSectionMidYes}>
+                        <label htmlFor="">
+                            Do you have an Ecobank Account?
+                        </label>
+                        <select
+                            onChange={(e) => {
+                                if (e.target.value === 'No') {
+                                    setEcobankAccount('No');
+                                } else if (e.target.value === 'Yes') {
+                                    setEcobankAccount('Yes');
+                                }
+                            }}
+                        >
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                {ecobankAccount === 'No' ? (
+                    <NewUser selectCountry={selectCountry} />
+                ) : (
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className={styles.form}
+                    >
+                        <div className={styles.existingUser}>
+                            <div className={styles.existingUserHeader}>
+                                <p className={styles.choose}>
+                                    Choose Preferred Login Option
+                                </p>
+                                <div className={styles.omnisets}>
+                                    <div className={styles.cov}>
+                                        <div
+                                            className={
+                                                omnilit
+                                                    ? styles.active
+                                                    : styles.notActive
+                                            }
+                                            onClick={() => {
+                                                setPage(0);
+                                                setOmnilite(true);
+                                                setEcobank(false);
+                                                setCard(false);
+                                                setAcct(false);
+                                            }}
+                                        >
+                                            <Image
+                                                src="/Assets/Images/omni.png"
+                                                width={45}
+                                                height={45}
+                                                alt="omnilite"
+                                            />
+                                        </div>
+                                        <p
+                                            className={
+                                                omnilit
+                                                    ? styles.activeName
+                                                    : styles.name
+                                            }
+                                        >
+                                            Omnilite Details
+                                        </p>
+                                    </div>
+                                    <div className={styles.cov}>
+                                        {' '}
+                                        <div
+                                            className={
+                                                ecobank
+                                                    ? styles.active
+                                                    : styles.notActive
+                                            }
+                                            onClick={() => {
+                                                setPage(1);
+                                                setOmnilite(false);
+                                                setEcobank(true);
+                                                setCard(false);
+                                                setAcct(false);
+                                            }}
+                                        >
+                                            <div>
+                                                <Image
+                                                    src="/Assets/Images/ecobank.png"
+                                                    width={45}
+                                                    height={45}
+                                                    alt="omnilite"
+                                                />
+                                            </div>
+                                        </div>
+                                        <p
+                                            className={
+                                                ecobank
+                                                    ? styles.activeName
+                                                    : styles.name
+                                            }
+                                        >
+                                            Ecobank Online
+                                        </p>
+                                    </div>
+
+                                    <div className={styles.cov}>
+                                        <div
+                                            className={
+                                                acct
+                                                    ? styles.active
+                                                    : styles.notActive
+                                            }
+                                            onClick={() => {
+                                                setPage(2);
+                                                setOmnilite(false);
+                                                setEcobank(false);
+                                                setCard(false);
+                                                setAcct(true);
+                                            }}
+                                        >
+                                            <Image
+                                                src="/Assets/Images/AccountNum.png"
+                                                width={45}
+                                                height={45}
+                                                alt="AccountNumber"
+                                            />
+                                        </div>
+                                        <p
+                                            className={
+                                                acct
+                                                    ? styles.activeName
+                                                    : styles.name
+                                            }
+                                        >
+                                            Account Number
+                                        </p>
+                                    </div>
+                                    <div className={styles.cov}>
+                                        <div
+                                            className={
+                                                card
+                                                    ? styles.active
+                                                    : styles.notActive
+                                            }
+                                            onClick={() => {
+                                                setPage(3);
+                                                setOmnilite(false);
+                                                setEcobank(false);
+                                                setCard(true);
+                                                setAcct(false);
+                                            }}
+                                        >
+                                            <Image
+                                                src="/Assets/Images/Details.png"
+                                                width={45}
+                                                height={45}
+                                                alt="Details"
+                                            />
+                                        </div>
+                                        <p
+                                            className={
+                                                card
+                                                    ? styles.activeName
+                                                    : styles.name
+                                            }
+                                        >
+                                            Bank Card Details
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.existingUserBody}>
+                                {conditionalComponent()}
+                            </div>
+                        </div>
+                        <div className={styles.secondSectionMidCountry}>
+                            {loading ? (
+                                <Loader />
+                            ) : (
+                                <ButtonComp
+                                    disabled={activeBtn}
+                                    active={activeBtn ? 'active' : 'inactive'}
+                                    text="Create account"
+                                    type="submit"
+                                />
+                            )}
+
+                            <p className={styles.already}>
+                                Already have an account?{' '}
+                                <Link href="../Auth/Login">
+                                    <span>Sign in</span>
+                                </Link>
+                            </p>
+                        </div>
+                    </form>
+                )}
             </section>
         </div>
     );

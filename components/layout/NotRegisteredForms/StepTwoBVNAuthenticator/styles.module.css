@@ -35,11 +35,11 @@
 .inp {
     font-family: 'Inter', sans-serif;
     font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
     color: #3e3e3e;
     margin: 0px;
-    margin-top: 48px;
-    margin-bottom: 8px;
+    margin-top: 64px;
+    margin-bottom: 16px;
 }

@@ -28,7 +28,7 @@ const StepTwoBVNAuthenticator = ({
     formData,
     action
 }) => {
-    const [progress, setProgress] = useState('50%');
+    // const [progress, setProgress] = useState('50%');
     const [otps, setOtp] = useState([]);
     const handleChange = (otps) => {
         setOtp();
@@ -52,21 +52,20 @@ const StepTwoBVNAuthenticator = ({
                 <div>
                     {/* <ProfileCard width="50%" height="0"> */}
                     <CardHeadingBVN>
-                        <LeftHeading>BVN (OTP) Authenticator</LeftHeading>
-                        <Progressbar
+                        <LeftHeading>OTP Verification</LeftHeading>
+                        {/* <Progressbar
                             bgcolor="#6CCF00"
                             progressCount={progress}
                             height={14}
                             progWidth="100%"
-                        />
+                        /> */}
                         {/* <Imag 
                     src="/width" 
                     alt="lineImage" /> */}
                     </CardHeadingBVN>
                     <SmallInstructionText>
-                        An OTP has been sent to your Phone number registered
-                        with BVN. Please enter the OTP below to complete your
-                        profile.
+                        A one time Password has been sent to your registered
+                        phone number please enter digits below.
                     </SmallInstructionText>
                     <p className={styles.inp}>Input OTP</p>
                     <OtpInput formData={formData} setFormData={setFormData} />

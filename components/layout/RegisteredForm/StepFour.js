@@ -201,7 +201,7 @@ const StepFour = ({ title, action }) => {
         });
     }, [localState]);
     return (
-        <div ref={myref}>
+        <div ref={myref} className={styles.stepFour}>
             <div className={styles.cardHeading}>
                 <div>
                     <ArrowBackSvg action={action} />

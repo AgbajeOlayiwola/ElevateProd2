@@ -26,15 +26,14 @@
 .selectCont {
     position: relative;
     width: 100%;
-    margin-top: 8px;
 }
 
 .selectCountry {
     width: 100%;
-    background: #f8f8f8;
-    border: 1px solid #dbdbdb;
+    /* background: #f8f8f8;
+    border: 1px solid #dbdbdb; */
     border-radius: 12px;
-    padding: 22px 33px 22px 22px;
+    /* padding: 22px 33px 22px 22px; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -55,7 +54,7 @@
 
 .selectOption {
     height: 25vh;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     width: 100%;
     position: absolute;
     background-color: #f8f8f8;
@@ -63,14 +62,13 @@
     margin: 0px;
     padding: 0px;
     z-index: 2;
-    /* top: 0; */
 }
 
 .selectOption li {
     list-style-type: none;
     display: flex;
     cursor: pointer;
-    padding: 12px 24px;
+    padding: 12px 6px;
 }
 
 .selectOption li p {

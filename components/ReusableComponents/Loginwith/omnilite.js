@@ -72,7 +72,6 @@ const Omnilite = () => {
             <div className={styles.cover}>
                 <div>
                     <label>Enter Your Omnilite Username</label>
-                    <br />
                     <input
                         placeholder="Omnilite Username"
                         type="text"
@@ -86,7 +85,6 @@ const Omnilite = () => {
                 <p className={styles.error}>{errors?.username?.message}</p>
                 <div>
                     <label>Enter Your Omnilite Password</label>
-                    <br />
                     <div className={styles.passwordEye}>
                         <input
                             placeholder="Omnilite Password"
@@ -102,7 +100,7 @@ const Omnilite = () => {
                 </div>
                 <p className={styles.error}>{errors?.password?.message}</p>
             </div>
-            <div className={styles.btn}>
+            {/* <div className={styles.btn}>
                 {loading ? (
                     <Loader />
                 ) : (
@@ -113,7 +111,7 @@ const Omnilite = () => {
                         type="submit"
                     />
                 )}
-            </div>
+            </div> */}
         </form>
     );
 };

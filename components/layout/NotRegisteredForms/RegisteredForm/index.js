@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { loadCountry } from '../../../../redux/actions/actions';
 
 const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
-    const [progress, setProgress] = useState('25%');
+    // const [progress, setProgress] = useState('25%');
     const [switchs, setSwitch] = useState(true);
     const [isRegistered, setIsRegistered] = useState(false);
     const [bgcolor, setBgcolor] = useState(false);
@@ -79,37 +79,19 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
     return (
         <div className={styles.registeredBody}>
             <section className={styles.sectionI}>
-                <div>
-                    <h2 className={styles.bvn}>
-                        Input your BVN and open a Business Account in
-                        <span> 3 minutes.</span>
-                    </h2>
-                    <svg
-                        width="2"
-                        height="227"
-                        viewBox="0 0 2 227"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M1 0V387"
-                            stroke="white"
-                            strokeDasharray="8 8"
-                        />
-                    </svg>
-                </div>
+                <img src="../Assets/Images/profileSetup1.png" alt="" />
             </section>
             {/* register your input into the hook by invoking the "register" function */}
             <section className={styles.sectionII}>
                 <div className={styles.bodyWrapper}>
                     <div className={styles.cardHeading}>
                         <h3 className={styles.LeftHeading}>Profile Setup</h3>
-                        <Progressbar
+                        {/* <Progressbar
                             bgcolor="#6CCF00"
                             progressCount={progress}
                             height={14}
                             progWidth="27%"
-                        />
+                        /> */}
                         {/* <Imag
                     src="/width"
                     alt="lineImage" /> */}
@@ -125,17 +107,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                 <p className={styles.error}>{errorI}</p> <br />
                             </>
                         ) : null}
-                        <p
-                            style={{
-                                fontWeight: '400',
-                                fontSize: '16px',
-                                lineHeight: '19px',
-                                color: '#3E3E3E'
-                            }}
-                        >
-                            Is your business registered?
-                        </p>
-                        <div className={styles.ButtonWrapper}>
+                        {/* <div className={styles.ButtonWrapper}>
                             <span
                                 className={styles.ToggleNo}
                                 onClick={switchRegistrationStatus}
@@ -176,7 +148,24 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                     Yes
                                 </p>
                             </span>
-                        </div>
+                        </div> */}
+                        <InputWrapper>
+                            <Label>Is your Business Registered?</Label>
+                            <select
+                                name=""
+                                id=""
+                                onChange={(e) => {
+                                    if (e.target.value === 'No') {
+                                        switchRegistrationStatus();
+                                    } else if (e.target.value === 'Yes') {
+                                        handleRegistrationStatus();
+                                    }
+                                }}
+                            >
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </InputWrapper>
                         {isRegistered ? (
                             <>
                                 <div>
@@ -464,7 +453,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                     <label>Date of Birth</label>
                                     <FormInput
                                         type="date"
-                                        placeholder="dd-mm-yyyy"
+                                        placeholder="DD  |  MM  |  YYYY"
                                         max="2002-12-31"
                                         {...register('date_of_birth', {
                                             required:

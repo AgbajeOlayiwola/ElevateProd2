@@ -32,9 +32,9 @@ const Countriess = ({
 
                                 <p>{selectCountry.name}</p>
                             </div>
-                            <div className={styles.dropdown}>
-                                <img src="/../../Assets/Svgs/dropdownSvg.svg" />
-                            </div>
+                            {/* <div className={styles.dropdown}> */}
+                            <img src="/../../Assets/Svgs/dropdownSvg.svg" />
+                            {/* </div> */}
                         </div>
                     ) : (
                         <>
@@ -51,7 +51,7 @@ const Countriess = ({
                                     onClick={() => {
                                         if (item.name !== 'Nigeria') {
                                             setError(
-                                                'This App is only available in Nigeria currently'
+                                                'This App is  available in Nigeria currently'
                                             );
                                             setCountryState(false);
                                         } else {

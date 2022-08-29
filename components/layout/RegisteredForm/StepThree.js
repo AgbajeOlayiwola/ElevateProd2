@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 
-const StepThree = ({ action }) => {
+const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     const account = localStorage.getItem('displayAccount');
     const accountDetails = JSON.parse(account);
     const [isRegistered, setIsRegistered] = useState(false);
@@ -30,7 +30,7 @@ const StepThree = ({ action }) => {
     };
     const [activeBtn, setActiveBtn] = useState(true);
     return (
-        <div>
+        <div className={styles.stepFour}>
             <div className={styles.cardHeading}>
                 <div>
                     <ArrowBackSvg action={action} />
@@ -48,7 +48,6 @@ const StepThree = ({ action }) => {
                     src="/width"
                     alt="lineImage" /> */}
             </div>
-
             {/* <Imag
                     src="/width"
                     alt="lineImage" /> */}
@@ -191,6 +190,13 @@ const StepThree = ({ action }) => {
                     </div>
                 </div>
             </div>
+            <button onClick={handleSubmitNew}>Contine with this account</button>{' '}
+            <p onClick={handleSubmit} className={styles.open}>
+                Tap to{' '}
+                <span>
+                    create a new account in your registered business name
+                </span>
+            </p>
         </div>
     );
 };
