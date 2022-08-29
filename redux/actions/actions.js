@@ -46,17 +46,17 @@ var loginToken = '';
 var Token;
 var options = 1 / 24;
 
-// loginToken = getCookie('cookieToken', options);
-// if (loginToken === null) {
-//     Token = getCookie('cookieToken', options);
-// } else {
-//     Token = getCookie('cookieToken', options);
-// }
+loginToken = getCookie('cookieToken', options);
+if (loginToken === null) {
+    Token = getCookie('cookieToken', options);
+} else {
+    Token = getCookie('cookieToken', options);
+}
 
 // export const getServerSideProps = async (context) => {
 //     // Fetching de notre route
 //     // API fetching
-//     const res = getCookie('Token', options);
+//     const res = getCookie('cookieToken', options);
 
 //     const awaitToken = res;
 
@@ -947,7 +947,7 @@ export const bvnNinData = (bvnNin) => ({
 });
 export const createProfileSetup = (profileData) => {
     const cookie = getCookie('cookieToken');
-    console.log('cookie in create profile function', cookie);
+    // console.log('cookie in create profile function', cookie);
     return async (dispatch) => {
         await axios
             .post(

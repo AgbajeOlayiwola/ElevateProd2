@@ -1,6 +1,59 @@
 .cover {
-
     width: 100%;
+    display: flex;
+}
+
+.sectionI {
+    background: url('/Assets/Images/cover.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    overflow: hidden;
+    height: 100%;
+}
+.bvn {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-top: 40vh;
+    max-width: 417px;
+}
+.bvn span {
+    color: #6ccf00;
+}
+
+.sectionII {
+    width: 50%;
+    height: 100vh;
+    padding: 120px 0px;
+}
+
+.bodyWrapper {
+    width: 54%;
+    max-width: 400px;
+    margin: 0px auto;
+}
+
+.businessCont {
+    height: 70vh;
+    overflow-y: scroll;
+}
+
+.businessCont::-webkit-scrollbar {
+    display: none;
+}
+
+.businessCont button {
+    margin-top: 60px;
 }
 
 .cov {

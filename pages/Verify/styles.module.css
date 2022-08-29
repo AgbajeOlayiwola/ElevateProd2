@@ -21,8 +21,7 @@
     line-height: 33px;
     text-align: center;
     width: 277px;
-    color: #005B82;
-    
+    color: #005b82;
 }
 .hi {
     font-family: 'Inter', sans-serif;
@@ -36,7 +35,19 @@
     margin: 0 auto;
     margin-bottom: 1.5rem;
 }
-.email{
+.email {
     display: flex;
     justify-content: center;
+}
+
+.check {
+    transform: translate(48%, 25%);
+    animation: stroke 1s ease-in-out forwards 1;
+}
+.checkBox {
+    transform: translate(36%, 0px);
+}
+
+.body button {
+    width: 300px;
 }

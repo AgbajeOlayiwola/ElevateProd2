@@ -15,12 +15,13 @@ export const RegisteredCardWrapper = styled.div`
 export const Label = styled.label`
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
     color: #3e3e3e;
 `;
 export const FormInput = styled.input`
     margin-top: 0.5rem;
+
     ::placeholder {
         font-style: normal;
         font-weight: 400;

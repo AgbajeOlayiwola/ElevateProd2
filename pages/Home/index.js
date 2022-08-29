@@ -73,29 +73,31 @@ const HomeMain = () => {
     return (
         <div className={styles.cover}>
             <section className={styles.sectionI}>
-                <div className={styles.Svg}>
-                    <div>
-                        <HomeSvg />
-                        <p className={styles.SMeApp}>
-                            Powered by <span>Ecobank</span>
-                        </p>
+                <img src="/Assets/Images/Overlay2.svg" alt="" />
+                <div className={styles.content}>
+                    <div className={styles.Svg}>
+                        <div>
+                            <HomeSvg />
+                            <p className={styles.SMeApp}>
+                                Powered by <span>Ecobank</span>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div className={styles.topLeft}></div>
-                <div className={styles.Center}>
-                    <div className={styles.sectionBottom}>
-                        <div className={styles.space}>
-                            <SpaceshipSvg />
+                    <div className={styles.Center}>
+                        <div className={styles.sectionBottom}>
+                            <div className={styles.space}>
+                                <SpaceshipSvg />
 
-                            <p>Start</p>
-                        </div>
-                        <div className={styles.gears}>
-                            <Gearsvg />
-                            <p>Run</p>
-                        </div>
-                        <div className={styles.scale}>
-                            <Scalesvg />
-                            <p>Grow</p>
+                                <p>Start</p>
+                            </div>
+                            <div className={styles.gears}>
+                                <Gearsvg />
+                                <p>Run</p>
+                            </div>
+                            <div className={styles.scale}>
+                                <Scalesvg />
+                                <p>Grow</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,14 +113,13 @@ const HomeMain = () => {
                             className={styles.form}
                         >
                             <Languages />
-                            <div>
+                            <div className={styles.countryWrapper}>
                                 <label
                                     className={styles.label}
                                     htmlFor="country"
                                 >
                                     Choose The Country Where you Run Busines
                                 </label>
-                                <br />
                                 {error ? (
                                     <p className={styles.error}>{error}</p>
                                 ) : null}
