@@ -1,22 +1,18 @@
 import axios from 'axios';
-let loginToken = '';
-let token;
+import { getCookie } from 'cookies-next';
+var loginToken = '';
+var cookieToken;
+var options = 1 / 24;
 
-if (typeof window !== 'undefined') {
-    loginToken = window.localStorage.getItem('token');
-    if (loginToken === null) {
-        token = window.localStorage.getItem('token');
-    } else {
-        token = JSON.parse(loginToken);
-    }
+loginToken = getCookie('Token', options);
+if (loginToken === null) {
+    cookieToken = getCookie('Token', options);
+} else {
+    cookieToken = getCookie('Token', options);
 }
 
 const axiosInstance = axios.create({
-    baseURL: 'https://ellevate-app.herokuapp.com/',
-    headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-    }
+    baseURL: 'https://ellevate-app.herokuapp.com/'
 });
 
 export default axiosInstance;
