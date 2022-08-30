@@ -73,9 +73,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.cover}>
-            <section className={styles.sectionI}>
-                <img src="../Assets/Images/profilePage.png" alt="" />
-            </section>
             <section className={styles.sectionII}>
                 <div className={styles.bodyWrapper}>
                     <div className={styles.prog}>

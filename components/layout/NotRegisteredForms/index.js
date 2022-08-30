@@ -17,6 +17,7 @@ import Loader from '../../ReusableComponents/Loader';
 import Liveness from './Liveness';
 import { getCookie } from 'cookies-next';
 import Head from 'next/head';
+import HomeSvg from '../../ReusableComponents/HomeSvg';
 
 const ProfileSetups = () => {
     const dispatch = useDispatch();
@@ -214,7 +215,13 @@ const ProfileSetups = () => {
     return (
         <div className={styles.sections}>
             <section className={styles.sectionI}>
-                <img src="../Assets/Images/profileSetup1.png" alt="" />
+                {/* <img src="../Assets/Images/profileSetup1.png" alt="" /> */}
+                <div className={styles.green}></div>
+                <div className={styles.grey}>
+                    <div className={styles.home}>
+                        <HomeSvg />
+                    </div>
+                </div>
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.registeredBody}>

@@ -966,7 +966,15 @@ export const createProfileSetup = (profileData) => {
                 console.log('data from profile', response.data);
                 if (response.data.message === 'Profile setup successful') {
                     axiosInstance
-                        .get(`${apiRoutes.verifyStatus}`)
+                        .get(
+                            `https://ellevate-app.herokuapp.com${apiRoutes.verifyStatus}`,
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${cookie}`
+                                }
+                            }
+                        )
                         .then((response) => {
                             dispatch(bvnNinData(response.data));
                             if (

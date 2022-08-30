@@ -12,9 +12,7 @@ if (loginToken === null) {
 }
 
 const axiosInstance = axios.create({
-    baseURL: 'https://ellevate-app.herokuapp.com/',
-    headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookieToken}`
-    }
+    baseURL: 'https://ellevate-app.herokuapp.com/'
 });
+
+export default axiosInstance;
