@@ -2,7 +2,10 @@
     display: flex;
     height: 100vh;
     overflow: hidden;
-    padding: 0px 133px 0px 96px;
+    width: 85%;
+    max-width: 1283px;
+    margin: 0px auto;
+    justify-content: space-between;
 }
 
 .firstSection {
@@ -14,6 +17,7 @@
 .firstSection img {
     height: 100%;
     width: 100%;
+    object-fit: scale-down;
 }
 
 .firstSection .content {
@@ -25,8 +29,9 @@
 }
 
 .secondSection {
-    flex: 1;
-    padding: 100px 0px 150px 131px;
+    padding: 100px 0px;
+    max-width: 682px;
+    width: 53%;
 }
 
 .secondSectionHeader {
@@ -280,6 +285,11 @@
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
     color: black;
+}
+
+.passwordEye {
+    display: flex;
+    align-items: center;
 }
 
 .active {

@@ -7,7 +7,8 @@ import {
     existingUserProfileData,
     createAccountData,
     accountStatusData,
-    statesData
+    statesData,
+    businessCategoriesData
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -17,6 +18,8 @@ import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import BusinessCategory from '../../ReusableComponents/BusinessCategory';
 import CircleSvg from '../../ReusableComponents/ReusableSvgComponents/CircleSvg';
+import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
+import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 
 const StepFour = ({ title, action }) => {
     const dispatch = useDispatch();
@@ -26,7 +29,6 @@ const StepFour = ({ title, action }) => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [progress, setProgress] = useState('100%');
     const { existingUserProfile, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
@@ -35,6 +37,9 @@ const StepFour = ({ title, action }) => {
     );
     const { createAccount, errorData } = useSelector(
         (state) => state.createAccountReducer
+    );
+    const { businessCategories, errorDatas } = useSelector(
+        (state) => state.businessCategoriesReducer
     );
 
     const {
@@ -47,11 +52,6 @@ const StepFour = ({ title, action }) => {
         setLoading(true);
         console.log(data);
 
-        // const userData = {
-        //     email: data.email,
-        //     password: password,
-        //     confirmPassword: confPassword
-        // };
         dispatch(existingUserProfileData(accountDetails));
     };
     const profileTest = () => {
@@ -113,8 +113,6 @@ const StepFour = ({ title, action }) => {
             accountClass: 'GHSABP'
         };
         dispatch(createAccountData(userData));
-        // window.localStorage.setItem('accountNumber', JSON.stringify(response2));
-        // router.push('/Dashboard');
     };
 
     const newAccountTest = () => {
@@ -165,22 +163,16 @@ const StepFour = ({ title, action }) => {
     const types = (type) => {
         setOutType(type);
     };
-    const [activeBtn, setActiveBtn] = useState(false);
+    const [activeBtn, setActiveBtn] = useState(true);
     const [location, setLocation] = useState([]);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
-    // useEffect(() => {
-    //     location.filter((item) => {
-    //         if (item.state === localState) {
-    //             setLocalGovernment(item.localGoverment);
-    //         }
-    //     });
-    // }, [localState]);
-    const myref = useRef();
-    useEffect(() => {
-        myref.current.scrollTo(0, 0);
-        window.scrollTo(0, 0);
-    }, []);
+    const [businessCategory, setBusinessCategory] = useState([]);
+    const [businessType, setBusinessType] = useState([]);
+    const [business, setBusiness] = useState('');
+    const [businesses, setBusinesses] = useState('');
+    const [businessTest, setBusinessTest] = useState(false);
+    const [businessText, setBusinessText] = useState(false);
     const { states } = useSelector((state) => state.statesReducer);
     useEffect(() => {
         dispatch(statesData());
@@ -200,282 +192,791 @@ const StepFour = ({ title, action }) => {
             }
         });
     }, [localState]);
+    useEffect(() => {
+        dispatch(businessCategoriesData());
+    }, []);
+    useEffect(() => {
+        if (businessCategories !== null) {
+            setBusinessCategory(businessCategories);
+        }
+    }, [businessCategories]);
+    useEffect(() => {
+        Object.keys(businessCategory)?.filter((item) => {
+            if (item === business) {
+                setBusinessType(businessCategory[item]);
+            }
+        });
+    }, [business]);
     return (
-        <div ref={myref} className={styles.stepFour}>
-            <div className={styles.cardHeading}>
+        <div className={styles.body}>
+            <section className={styles.sectionI}>
                 <div>
-                    <ArrowBackSvg action={action} />
-                    <h3 className={styles.LeftHeading}>
-                        Complete your Profile
-                    </h3>
+                    <img src="../Assets/Images/profileSetup1.png" alt="" />
                 </div>
-                <Progressbar
-                    bgcolor="#6CCF00"
-                    progressCount={progress}
-                    height={14}
-                    progWidth="27%"
-                />
-                {/* <Imag
-                    src="/width"
-                    alt="lineImage" /> */}
-            </div>
-            {title === 'New' ? (
-                <div>
-                    <form onSubmit={handleSubmit(onSubmitNew)}>
-                        {error ? <p className={styles.error}>{error}</p> : null}
-                        <div className={styles.bord}>
-                            <div className={styles.inps}>
-                                {errors.businessName?.message}
-                                <label>Enter Business Name</label>
-
-                                <br />
-
-                                <input
-                                    placeholder="Enter Business Name"
-                                    className={styles.textInput}
-                                    required
-                                    {...register('businessName', {
-                                        required: 'Business Name is Required'
-                                        // pattern: {
-                                        //     // eslint-disable-next-line
-                                        //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                        //     message: 'Invalid email address'
-                                        // }
-                                    })}
-                                />
-                            </div>
-                            {/* <div className={styles.inps}>
-                                    <label>
-                                        Enter TIN <i>(optional)</i>{' '}
-                                    </label>
-                                    <br />
-
-                                    <input
-                                        placeholder="Enter Tin"
-                                        className={styles.textInput}
-                                        required
-                                        {...register('tin', {
-                                            required: 'Tin is Required'
-                                            // pattern: {
-                                            //     // eslint-disable-next-line
-                                            //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                            //     message: 'Invalid email address'
-                                            // }
-                                        })}
-                                    />
-                                </div> */}
-
-                            <div className={styles.inps}>
-                                <label>Select Your Business Type </label>
-                                {errors.email?.message}
-                                <br />
-
-                                <select>
-                                    <option value="">
-                                        Search Your Business Type
-                                    </option>
-
-                                    <option value="Retail business">
-                                        Retail business
-                                    </option>
-                                    <option value="Perishable business">
-                                        Perishable business
-                                    </option>
-                                </select>
-                            </div>
-                            <p className={styles.ent}>Enter Business Address</p>
-                            <div className={styles.busAdd}>
-                                <div className={styles.inps}>
-                                    <label>Address </label>
-                                    {errors.streetName?.message}
-                                    <br />
-
-                                    <input
-                                        placeholder="407  Bornoway"
-                                        className={styles.textInput}
-                                        required
-                                        {...register('streetName', {
-                                            required: 'Address is Required'
-                                            // pattern: {
-                                            //     // eslint-disable-next-line
-                                            //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                            //     message: 'Invalid email address'
-                                            // }
-                                        })}
-                                    />
-                                </div>
-                                <div className={styles.inps}>
-                                    <label>State </label>
-                                    {errors.email?.message}
-                                    <br />
-
-                                    <select
-                                        className={styles.busInp}
-                                        onChange={(event) => {
-                                            setLocalState(event.target.value);
-                                        }}
-                                    >
-                                        <option>Enter State</option>
-                                        {location?.map((item, index) => {
-                                            return (
-                                                <option
-                                                    value={item.state}
-                                                    key={index}
-                                                >
-                                                    {item.state}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </div>
-                                <div className={styles.inps}>
-                                    <label>Select Your Local Government </label>
-                                    {errors.email?.message}
-                                    <br />
-
-                                    <select className={styles.busInp}>
-                                        <option value="">
-                                            Select Local Government
-                                        </option>
-                                        {localGovernment
-                                            ? localGovernment?.map(
-                                                  (item, index) => {
-                                                      return (
-                                                          <option
-                                                              value={
-                                                                  item.lgaName
-                                                              }
-                                                              key={index}
-                                                          >
-                                                              {item.lgaName}
-                                                          </option>
-                                                      );
-                                                  }
-                                              )
-                                            : null}
-                                    </select>
-                                </div>
-                                <div className={styles.inps}>
-                                    <label>City </label>
-                                    {errors.city?.message}
-                                    <br />
-
-                                    <input
-                                        placeholder="Enter City"
-                                        className={styles.textInput}
-                                        {...register('city', {
-                                            required: 'City is Required'
-                                            // pattern: {
-                                            //     // eslint-disable-next-line
-                                            //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                            //     message: 'Invalid email address'
-                                            // }
-                                        })}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className={styles.inps}>
-                            <label>
-                                Enter Referal Code <i>(optional)</i>{' '}
-                            </label>
-                            {errors.email?.message}
-                            <br />
-
-                            <input
-                                placeholder="Enter Referal Code"
-                                className={styles.textInput}
-                                // required
-                                // {...register('email', {
-                                //     required: 'Business Address is Required',
-                                //     pattern: {
-                                //         // eslint-disable-next-line
-                                //         value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                //         message: 'Invalid email address'
-                                //     }
-                                // })}
-                            />
-                        </div>
+            </section>
+            <section className={styles.sectionII}>
+                <div className={styles.lastStep}>
+                    <div className={styles.cardHeading}>
+                        <ArrowBackSvg action={action} />
                         <div>
-                            <div className={styles.terms}>
-                                <CircleSvg
-                                    action={() => {
-                                        setActiveBtn(!activeBtn);
-                                    }}
-                                    circleStatus={activeBtn}
-                                />
-                                <label>
-                                    I agree with Ellevate App
-                                    <span>Terms and Conditions</span>
-                                </label>
-                            </div>
+                            <h3 className={styles.LeftHeading}>
+                                Complete your Profile
+                            </h3>
                         </div>
-                        {loading ? (
-                            <Loader />
-                        ) : (
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Update Profile"
-                                type="submit"
-                                // onClick={handleShowSuccessStep}
-                                // onClick={handleShowFourthStep}
-                            />
-                        )}
-                    </form>
+                    </div>
+                    {title === 'New' ? (
+                        <div className={styles.lastContainer}>
+                            <form onSubmit={handleSubmit(onSubmitNew)}>
+                                {error ? (
+                                    <p className={styles.error}>{error}</p>
+                                ) : null}
+                                <div className={styles.existingUserHead}>
+                                    <div className={styles.existingUserSingle}>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Select your Business Category
+                                            </label>
+                                            <div className={styles.businessCat}>
+                                                <div
+                                                    className={
+                                                        styles.businessCategories
+                                                    }
+                                                    onClick={() => {
+                                                        setBusinessTest(
+                                                            !businessTest
+                                                        );
+                                                    }}
+                                                >
+                                                    <SearchSvg />
+                                                    {business ? (
+                                                        <p>{business}</p>
+                                                    ) : (
+                                                        <p>
+                                                            Search Business
+                                                            Category
+                                                        </p>
+                                                    )}
+
+                                                    <DropdownSvg />
+                                                </div>
+                                                {businessTest && (
+                                                    <ul
+                                                        className={
+                                                            styles.businessGroup
+                                                        }
+                                                    >
+                                                        {Object.keys(
+                                                            businessCategory
+                                                        )?.map(
+                                                            (
+                                                                business,
+                                                                index
+                                                            ) => {
+                                                                return (
+                                                                    <li
+                                                                        value={
+                                                                            business
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        onClick={() => {
+                                                                            setBusiness(
+                                                                                business
+                                                                            );
+                                                                            setBusinessTest(
+                                                                                false
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            business
+                                                                        }
+                                                                    </li>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>Street Name</label>
+                                            <div
+                                                className={styles.addressNumber}
+                                            >
+                                                <input
+                                                    type="text"
+                                                    placeholder="101"
+                                                    className={styles.number}
+                                                />
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter Street Name"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Local Government Area (LGA)
+                                            </label>
+                                            <select>
+                                                <option value="">
+                                                    Select Local Government
+                                                </option>
+                                                {localGovernment
+                                                    ? localGovernment?.map(
+                                                          (item, index) => {
+                                                              return (
+                                                                  <option
+                                                                      value={
+                                                                          item.lgaName
+                                                                      }
+                                                                      key={
+                                                                          index
+                                                                      }
+                                                                  >
+                                                                      {
+                                                                          item.lgaName
+                                                                      }
+                                                                  </option>
+                                                              );
+                                                          }
+                                                      )
+                                                    : null}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className={styles.existingUserSingle}>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Select your Business Type
+                                            </label>
+                                            <div className={styles.businessCat}>
+                                                <div
+                                                    className={
+                                                        styles.businessCategories
+                                                    }
+                                                    onClick={() => {
+                                                        setBusinessText(
+                                                            !businessText
+                                                        );
+                                                    }}
+                                                >
+                                                    <SearchSvg />
+                                                    {businesses ? (
+                                                        <p>{businesses}</p>
+                                                    ) : (
+                                                        <p>
+                                                            Search Business Type
+                                                        </p>
+                                                    )}
+
+                                                    <DropdownSvg />
+                                                </div>
+                                                {businessText && (
+                                                    <ul
+                                                        className={
+                                                            styles.businessGroup
+                                                        }
+                                                    >
+                                                        {businessType?.map(
+                                                            (
+                                                                business,
+                                                                index
+                                                            ) => {
+                                                                return (
+                                                                    <li
+                                                                        value={
+                                                                            business
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        onClick={() => {
+                                                                            setBusinesses(
+                                                                                business
+                                                                            );
+                                                                            setBusinessText(
+                                                                                false
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            business
+                                                                        }
+                                                                    </li>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>State</label>
+                                            <select
+                                                onChange={(event) => {
+                                                    setLocalState(
+                                                        event.target.value
+                                                    );
+                                                }}
+                                            >
+                                                <option>Select State</option>
+                                                {location?.map(
+                                                    (item, index) => {
+                                                        return (
+                                                            <option
+                                                                value={
+                                                                    item.state
+                                                                }
+                                                                key={index}
+                                                            >
+                                                                {item.state}
+                                                            </option>
+                                                        );
+                                                    }
+                                                )}
+                                            </select>
+                                        </div>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>City/Town</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Enter City"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className={styles.existingUserSingle}>
+                                    <label>
+                                        Enter Referal Code <i>(optional)</i>{' '}
+                                    </label>
+                                    {errors.email?.message}
+                                    <input
+                                        placeholder="Enter  Code"
+                                        className={styles.textInput}
+                                    />{' '}
+                                    {loading ? (
+                                        <Loader />
+                                    ) : (
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            text="Save and Continue"
+                                            type="submit"
+                                            // onClick={handleShowSuccessStep}
+                                            // onClick={handleShowFourthStep}
+                                        />
+                                    )}
+                                </div>
+                                {/* <div>
+                                    <div className={styles.terms}>
+                                        <CircleSvg
+                                            action={() => {
+                                                setActiveBtn(!activeBtn);
+                                            }}
+                                            circleStatus={activeBtn}
+                                        />
+                                        <label>
+                                            I agree with Ellevate App
+                                            <span>Terms and Conditions</span>
+                                        </label>
+                                    </div>
+                                </div> */}
+                            </form>
+                        </div>
+                    ) : (
+                        <div className={styles.lastContainer}>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className={styles.existingUserHead}>
+                                    <div className={styles.existingUserSingle}>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Enter your RC Number/Business
+                                                Registration Number
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="Your RC Number"
+                                            />
+                                        </div>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Select your Business Type
+                                            </label>
+                                            <div className={styles.businessCat}>
+                                                <div
+                                                    className={
+                                                        styles.businessCategories
+                                                    }
+                                                    onClick={() => {
+                                                        setBusinessText(
+                                                            !businessText
+                                                        );
+                                                    }}
+                                                >
+                                                    <SearchSvg />
+                                                    {businesses ? (
+                                                        <p>{businesses}</p>
+                                                    ) : (
+                                                        <p>
+                                                            Search Business Type
+                                                        </p>
+                                                    )}
+
+                                                    <DropdownSvg />
+                                                </div>
+                                                {businessText && (
+                                                    <ul
+                                                        className={
+                                                            styles.businessGroup
+                                                        }
+                                                    >
+                                                        {businessType?.map(
+                                                            (
+                                                                business,
+                                                                index
+                                                            ) => {
+                                                                return (
+                                                                    <li
+                                                                        value={
+                                                                            business
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        onClick={() => {
+                                                                            setBusinesses(
+                                                                                business
+                                                                            );
+                                                                            setBusinessText(
+                                                                                false
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            business
+                                                                        }
+                                                                    </li>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.existingUserSingle}>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Select your Business Category
+                                            </label>
+                                            <div className={styles.businessCat}>
+                                                <div
+                                                    className={
+                                                        styles.businessCategories
+                                                    }
+                                                    onClick={() => {
+                                                        setBusinessTest(
+                                                            !businessTest
+                                                        );
+                                                    }}
+                                                >
+                                                    <SearchSvg />
+                                                    {business ? (
+                                                        <p>{business}</p>
+                                                    ) : (
+                                                        <p>
+                                                            Search Business
+                                                            Category
+                                                        </p>
+                                                    )}
+
+                                                    <DropdownSvg />
+                                                </div>
+                                                {businessTest && (
+                                                    <ul
+                                                        className={
+                                                            styles.businessGroup
+                                                        }
+                                                    >
+                                                        {Object.keys(
+                                                            businessCategory
+                                                        )?.map(
+                                                            (
+                                                                business,
+                                                                index
+                                                            ) => {
+                                                                return (
+                                                                    <li
+                                                                        value={
+                                                                            business
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        onClick={() => {
+                                                                            setBusiness(
+                                                                                business
+                                                                            );
+                                                                            setBusinessTest(
+                                                                                false
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            business
+                                                                        }
+                                                                    </li>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.existingUserHead}>
+                                    <div className={styles.existingUserSingle}>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>Street Name</label>
+                                            <div
+                                                className={styles.addressNumber}
+                                            >
+                                                <input
+                                                    type="text"
+                                                    placeholder="101"
+                                                    className={styles.number}
+                                                />
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter Street Name"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Local Government Area (LGA)
+                                            </label>
+                                            <select>
+                                                <option value="">
+                                                    Select Local Government
+                                                </option>
+                                                {localGovernment
+                                                    ? localGovernment?.map(
+                                                          (item, index) => {
+                                                              return (
+                                                                  <option
+                                                                      value={
+                                                                          item.lgaName
+                                                                      }
+                                                                      key={
+                                                                          index
+                                                                      }
+                                                                  >
+                                                                      {
+                                                                          item.lgaName
+                                                                      }
+                                                                  </option>
+                                                              );
+                                                          }
+                                                      )
+                                                    : null}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className={styles.existingUserSingle}>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>State</label>
+                                            <select
+                                                onChange={(event) => {
+                                                    setLocalState(
+                                                        event.target.value
+                                                    );
+                                                }}
+                                            >
+                                                <option>Select State</option>
+                                                {location?.map(
+                                                    (item, index) => {
+                                                        return (
+                                                            <option
+                                                                value={
+                                                                    item.state
+                                                                }
+                                                                key={index}
+                                                            >
+                                                                {item.state}
+                                                            </option>
+                                                        );
+                                                    }
+                                                )}
+                                            </select>
+                                        </div>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>City/Town</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Enter City"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className={styles.existingUserSingle}>
+                                    <label>
+                                        Enter Referal Code <i>(optional)</i>{' '}
+                                    </label>
+                                    {errors.email?.message}
+                                    <input
+                                        placeholder="Enter  Code"
+                                        className={styles.textInput}
+                                    />{' '}
+                                    {loading ? (
+                                        <Loader />
+                                    ) : (
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            text="Save and Continue"
+                                            type="submit"
+                                            // onClick={handleShowSuccessStep}
+                                            // onClick={handleShowFourthStep}
+                                        />
+                                    )}
+                                </div>
+                            </form>
+                        </div>
+                    )}
                 </div>
-            ) : (
-                <div>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className={styles.bord}>
-                            <div className={styles.inps}>
-                                <label>
-                                    Enter RC Number/Business Registration Number
-                                </label>
+            </section>
+        </div>
+    );
+};
 
-                                <br />
+export default StepFour;
 
-                                <input
-                                    placeholder="Enter RC Number"
-                                    className={styles.textInput}
-                                    {...register('rcNumber', {
-                                        required: 'RC Number is Required'
-                                        // maxLength: {
-                                        //     value: 15,
-                                        //     message:
-                                        //         'RC Number  cannot be more than 15 digits'
-                                        // },
-                                        // minLength: {
-                                        //     value: 15,
-                                        //     message:
-                                        //         'RC Number  cannot be more than 15 digits'
-                                        // }
-                                        // pattern: {
-                                        //     // eslint-disable-next-line
-                                        //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                        //     message: 'Invalid email address'
-                                        // }
-                                    })}
-                                    type="text"
-                                />
-                                <p className={styles.error}>
-                                    {errors.rcNumber?.message}
-                                </p>
-                            </div>
-                            <div className={styles.inps}>
-                                <label>
-                                    Enter TIN <i>(optional)</i>{' '}
-                                </label>
-                                <br />
+//   <div className={styles.bord}>
+//       <div className={styles.inps}>
+//           {errors.businessName?.message}
+//           <label>Enter Business Name</label>
 
-                                <input
-                                    placeholder="Enter Tin"
-                                    className={styles.textInput}
-                                />
-                            </div>
+//           <br />
 
-                            {/* <div className={styles.inps}>
+//           <input
+//               placeholder="Enter Business Name"
+//               className={styles.textInput}
+//               required
+//               {...register('businessName', {
+//                   required: 'Business Name is Required',
+//                   pattern: {
+//                       // eslint-disable-next-line
+//                       value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+//                       message: 'Invalid email address'
+//                   }
+//               })}
+//           />
+//       </div>
+//       <div className={styles.inps}>
+//                                     <label>
+//                                         Enter TIN <i>(optional)</i>{' '}
+//                                     </label>
+//                                     <br />
+
+//                                     <input
+//                                         placeholder="Enter Tin"
+//                                         className={styles.textInput}
+//                                         required
+//                                         {...register('tin', {
+//                                             required: 'Tin is Required'
+//                                             // pattern: {
+//                                             //     // eslint-disable-next-line
+//                                             //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+//                                             //     message: 'Invalid email address'
+//                                             // }
+//                                         })}
+//                                     />
+//                                 </div>
+
+//       <div className={styles.inps}>
+//           <label>Select Your Business Type </label>
+//           {errors.email?.message}
+//           <br />
+
+//           <select>
+//               <option value="">Search Your Business Type</option>
+
+//               <option value="Retail business">Retail business</option>
+//               <option value="Perishable business">Perishable business</option>
+//           </select>
+//       </div>
+//       <p className={styles.ent}>Enter Business Address</p>
+//       <div className={styles.busAdd}>
+//           <div className={styles.inps}>
+//               <label>Address </label>
+//               {errors.streetName?.message}
+//               <br />
+
+//               <input
+//                   placeholder="407  Bornoway"
+//                   className={styles.textInput}
+//                   required
+//                   {...register('streetName', {
+//                       required: 'Address is Required',
+//                       pattern: {
+//                           // eslint-disable-next-line
+//                           value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+//                           message: 'Invalid email address'
+//                       }
+//                   })}
+//               />
+//           </div>
+//           <div className={styles.inps}>
+//               <label>State </label>
+//               {errors.email?.message}
+//               <br />
+
+//               <select
+//                   className={styles.busInp}
+//                   onChange={(event) => {
+//                       setLocalState(event.target.value);
+//                   }}
+//               >
+//                   <option>Enter State</option>
+//                   {location?.map((item, index) => {
+//                       return (
+//                           <option value={item.state} key={index}>
+//                               {item.state}
+//                           </option>
+//                       );
+//                   })}
+//               </select>
+//           </div>
+//           <div className={styles.inps}>
+//               <label>Select Your Local Government </label>
+//               {errors.email?.message}
+//               <br />
+
+//               <select className={styles.busInp}>
+//                   <option value="">Select Local Government</option>
+//                   {localGovernment
+//                       ? localGovernment?.map((item, index) => {
+//                             return (
+//                                 <option value={item.lgaName} key={index}>
+//                                     {item.lgaName}
+//                                 </option>
+//                             );
+//                         })
+//                       : null}
+//               </select>
+//           </div>
+//           <div className={styles.inps}>
+//               <label>City </label>
+//               {errors.city?.message}
+//               <br />
+
+//               <input
+//                   placeholder="Enter City"
+//                   className={styles.textInput}
+//                   {...register('city', {
+//                       required: 'City is Required',
+//                       pattern: {
+//                           // eslint-disable-next-line
+//                           value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+//                           message: 'Invalid email address'
+//                       }
+//                   })}
+//               />
+//           </div>
+//       </div>
+//   </div>;
+{
+    /* <div className={styles.bord}>
+                                    <div className={styles.inps}>
+                                        <label>
+                                            Enter RC Number/Business
+                                            Registration Number
+                                        </label>
+
+                                        <br />
+
+                                        <input
+                                            placeholder="Enter RC Number"
+                                            className={styles.textInput}
+                                            {...register('rcNumber', {
+                                                required:
+                                                    'RC Number is Required'
+                                                maxLength: {
+                                                    value: 15,
+                                                    message:
+                                                        'RC Number  cannot be more than 15 digits'
+                                                },
+                                                minLength: {
+                                                    value: 15,
+                                                    message:
+                                                        'RC Number  cannot be more than 15 digits'
+                                                }
+                                                pattern: {
+                                                    // eslint-disable-next-line
+                                                    value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                                    message: 'Invalid email address'
+                                                }
+                                            })}
+                                            type="text"
+                                        />
+                                        <p className={styles.error}>
+                                            {errors.rcNumber?.message}
+                                        </p>
+                                    </div>
+                                    <div className={styles.inps}>
+                                        <label>
+                                            Enter TIN <i>(optional)</i>{' '}
+                                        </label>
+                                        <br />
+
+                                        <input
+                                            placeholder="Enter Tin"
+                                            className={styles.textInput}
+                                        />
+                                    </div>
+
+                                    <div className={styles.inps}>
                                 <label>Select Your Business Category </label>
 
                                 <br />
@@ -520,137 +1021,132 @@ const StepFour = ({ title, action }) => {
                                         );
                                     })}
                                 </select>
-                            </div> */}
-                            <BusinessCategory />
-                            <p className={styles.ent}>Enter Business Address</p>
-                            <div className={styles.busAdd}>
-                                <div className={styles.inps}>
-                                    <label>Address </label>
+                            </div>
+                                    <BusinessCategory />
+                                    <p className={styles.ent}>
+                                        Enter Business Address
+                                    </p>
+                                    <div className={styles.busAdd}>
+                                        <div className={styles.inps}>
+                                            <label>Address </label>
 
-                                    <br />
+                                            <br />
 
-                                    <input
-                                        type="text"
-                                        placeholder="407  Bornoway"
-                                        className={styles.textInput}
-                                    />
-                                </div>
-                                <div className={styles.inps}>
-                                    <label>State </label>
+                                            <input
+                                                type="text"
+                                                placeholder="407  Bornoway"
+                                                className={styles.textInput}
+                                            />
+                                        </div>
+                                        <div className={styles.inps}>
+                                            <label>State </label>
 
-                                    <br />
+                                            <br />
 
-                                    <select
-                                        className={styles.busInp}
-                                        onChange={(event) => {
-                                            setLocalState(event.target.value);
-                                        }}
-                                    >
-                                        <option>Enter State</option>
-                                        {location?.map((item, index) => {
-                                            return (
-                                                <option
-                                                    value={item.state}
-                                                    key={index}
-                                                >
-                                                    {item.state}
+                                            <select
+                                                className={styles.busInp}
+                                                onChange={(event) => {
+                                                    setLocalState(
+                                                        event.target.value
+                                                    );
+                                                }}
+                                            >
+                                                <option>Enter State</option>
+                                                {location?.map(
+                                                    (item, index) => {
+                                                        return (
+                                                            <option
+                                                                value={
+                                                                    item.state
+                                                                }
+                                                                key={index}
+                                                            >
+                                                                {item.state}
+                                                            </option>
+                                                        );
+                                                    }
+                                                )}
+                                            </select>
+                                        </div>
+                                        <div className={styles.inps}>
+                                            <label>
+                                                Select Your Local Government{' '}
+                                            </label>
+                                            {errors.email?.message}
+                                            <br />
+
+                                            <select className={styles.busInp}>
+                                                <option value="">
+                                                    Select Local Government
                                                 </option>
-                                            );
-                                        })}
-                                    </select>
-                                </div>
-                                <div className={styles.inps}>
-                                    <label>Select Your Local Government </label>
-                                    {errors.email?.message}
-                                    <br />
+                                                {localGovernment
+                                                    ? localGovernment?.map(
+                                                          (item, index) => {
+                                                              return (
+                                                                  <option
+                                                                      value={
+                                                                          item.lgaName
+                                                                      }
+                                                                      key={
+                                                                          index
+                                                                      }
+                                                                  >
+                                                                      {
+                                                                          item.lgaName
+                                                                      }
+                                                                  </option>
+                                                              );
+                                                          }
+                                                      )
+                                                    : null}
+                                            </select>
+                                        </div>
+                                        <div className={styles.inps}>
+                                            <label>City </label>
 
-                                    <select className={styles.busInp}>
-                                        <option value="">
-                                            Select Local Government
-                                        </option>
-                                        {localGovernment
-                                            ? localGovernment?.map(
-                                                  (item, index) => {
-                                                      return (
-                                                          <option
-                                                              value={
-                                                                  item.lgaName
-                                                              }
-                                                              key={index}
-                                                          >
-                                                              {item.lgaName}
-                                                          </option>
-                                                      );
-                                                  }
-                                              )
-                                            : null}
-                                    </select>
+                                            <br />
+
+                                            <input
+                                                type="text"
+                                                placeholder="Enter City"
+                                                className={styles.textInput}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <div className={styles.inps}>
-                                    <label>City </label>
+                                    <label>
+                                        Enter Referal Code <i>(optional)</i>{' '}
+                                    </label>
 
                                     <br />
 
                                     <input
-                                        type="text"
-                                        placeholder="Enter City"
+                                        placeholder="Enter Referal Code"
                                         className={styles.textInput}
+                                        {...register('email', {
+                                            required: 'Business Address is Required',
+                                            pattern: {
+                                                // eslint-disable-next-line
+                                                value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                                message: 'Invalid email address'
+                                            }
+                                        })}
                                     />
                                 </div>
-                            </div>
-                        </div>
-
-                        <div className={styles.inps}>
-                            <label>
-                                Enter Referal Code <i>(optional)</i>{' '}
-                            </label>
-
-                            <br />
-
-                            <input
-                                placeholder="Enter Referal Code"
-                                className={styles.textInput}
-                                // {...register('email', {
-                                //     required: 'Business Address is Required',
-                                //     pattern: {
-                                //         // eslint-disable-next-line
-                                //         value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                //         message: 'Invalid email address'
-                                //     }
-                                // })}
-                            />
-                        </div>
-                        <div>
-                            <div className={styles.terms}>
-                                <CircleSvg
-                                    action={() => {
-                                        setActiveBtn(!activeBtn);
-                                    }}
-                                    circleStatus={activeBtn}
-                                />
-                                <label>
-                                    I agree with Ellevate App
-                                    <span>Terms and Conditions</span>
-                                </label>
-                            </div>
-                        </div>
-                        {loading ? (
-                            <Loader />
-                        ) : (
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Update Profile"
-                                type="submit"
-                                // onClick={handleShowSuccessStep}
-                                // onClick={handleShowFourthStep}
-                            />
-                        )}
-                    </form>
-                </div>
-            )}
-        </div>
-    );
-};
-
-export default StepFour;
+                                <div>
+                                    <div className={styles.terms}>
+                                        <CircleSvg
+                                            action={() => {
+                                                setActiveBtn(!activeBtn);
+                                            }}
+                                            circleStatus={activeBtn}
+                                        />
+                                        <label>
+                                            I agree with Ellevate App
+                                            <span>Terms and Conditions</span>
+                                        </label>
+                                    </div>
+                                </div> */
+}

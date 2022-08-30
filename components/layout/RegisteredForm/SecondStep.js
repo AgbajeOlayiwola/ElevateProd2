@@ -108,101 +108,99 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
-                <img src="../Assets/Images/profileSetup1.png" alt="" />
+                <div>
+                    <img src="../Assets/Images/profileSetup1.png" alt="" />
+                </div>
             </section>
             <section className={styles.sectionII}>
-                <div className={styles.cardHeading}>
-                    <div>
+                <div className={styles.secondStepForm}>
+                    <div className={styles.cardHeading}>
                         <ArrowBackSvg action={action} />
-                        <h3 className={styles.LeftHeading}>Profile Setup</h3>
+                        <div>
+                            <h3 className={styles.LeftHeading}>
+                                Profile Setup
+                            </h3>
+                        </div>
                     </div>
-                    {/* <Imag
-                    src="/width"
-                    alt="lineImage" /> */}
-                </div>
-
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    {/* include validation with required or other standard HTML validation rules */}
-                    <div className={styles.textInput}>
-                        <label>Email Address/ Phone Number </label>
-                        {errors.email?.message}
-                        <br />
-
-                        <input
-                            placeholder="Enter Your Email"
-                            className={styles.textInput}
-                            required
-                            readOnly
-                            value={
-                                accountDetails.email === null
-                                    ? accountDetails.phoneNumber
-                                    : accountDetails.email.toLowerCase()
-                            }
-                        />
-                    </div>
-
-                    <div className={styles.textInput}>
-                        <label>Create Password</label>
-                        <br />
-                        <div className={styles.divs}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        {/* include validation with required or other standard HTML validation rules */}
+                        <div className={styles.textInput}>
+                            <label>Email Address/ Phone Number </label>
+                            {errors.email?.message}
                             <input
-                                placeholder="Confirm Password"
+                                placeholder="Enter Your Email"
                                 className={styles.textInput}
                                 required
-                                type={outType ? 'text' : 'password'}
-                                onChange={handlePwd}
+                                readOnly
+                                value={
+                                    accountDetails.email === null
+                                        ? accountDetails.phoneNumber
+                                        : accountDetails.email.toLowerCase()
+                                }
                             />
-                            <Visbility typeSet={types} />
                         </div>
-                        {errorMessages === '' ? null : (
-                            <div className={styles.errorCont}>
-                                <div
-                                    className={
-                                        errorMessages === 'Strong'
-                                            ? styles.strong
-                                            : errorMessages === 'Medium'
-                                            ? styles.medium
-                                            : errorMessages === 'Weak'
-                                            ? styles.errors
-                                            : styles.strong
-                                    }
-                                >
-                                    <p>{errorMessages}</p>
-                                </div>
+
+                        <div className={styles.textInput}>
+                            <label> Password</label>
+                            <div className={styles.divs}>
+                                <input
+                                    placeholder="Enter your Password"
+                                    className={styles.textInput}
+                                    required
+                                    type={outType ? 'text' : 'password'}
+                                    onChange={handlePwd}
+                                />
+                                <Visbility typeSet={types} />
                             </div>
-                        )}
-                    </div>
-
-                    <div className={styles.textInput}>
-                        <label>Confirm Password</label>
-                        <br />
-                        <div className={styles.divs}>
-                            <input
-                                placeholder="Confirm Password"
-                                className={styles.textInput}
-                                required
-                                type={outType ? 'text' : 'password'}
-                                onChange={handlePaswword}
-                            />
-
-                            <Visbility typeSet={types} />
+                            {errorMessages === '' ? null : (
+                                <div className={styles.errorCont}>
+                                    <div
+                                        className={
+                                            errorMessages === 'Strong'
+                                                ? styles.strong
+                                                : errorMessages === 'Medium'
+                                                ? styles.medium
+                                                : errorMessages === 'Weak'
+                                                ? styles.errors
+                                                : styles.strong
+                                        }
+                                    >
+                                        <p>{errorMessages}</p>
+                                    </div>
+                                </div>
+                            )}
                         </div>
-                        {password === confPassword ? null : (
-                            <p className={styles.error}>{passwordMatch}</p>
+
+                        <div className={styles.textInput}>
+                            <label>Confirm Password</label>
+                            <div className={styles.divs}>
+                                <input
+                                    placeholder="Confirm your Password"
+                                    className={styles.textInput}
+                                    required
+                                    type={outType ? 'text' : 'password'}
+                                    onChange={handlePaswword}
+                                />
+
+                                <Visbility typeSet={types} />
+                            </div>
+                            {password === confPassword ? null : (
+                                <p className={styles.error}>{passwordMatch}</p>
+                            )}
+                        </div>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                // onClick={handleSubmit}
+                                type="submit"
+                                text="Next"
+                            />
                         )}
-                    </div>
-                    {loading ? (
-                        <Loader />
-                    ) : (
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            // onClick={handleSubmit}
-                            type="submit"
-                            text="Next"
-                        />
-                    )}
-                </form>
+                    </form>
+                </div>
             </section>
         </div>
     );
