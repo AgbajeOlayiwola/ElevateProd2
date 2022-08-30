@@ -8,3 +8,31 @@ justify-content: center;
     font-size: 12px;
     margin-top: -1rem;
 }
+
+.sectionI {
+    width: 37%;
+    max-width: 470px;
+    height: 100%;
+}
+.bodyWrapper {
+    width: 54%;
+    max-width: 400px;
+    margin: 0px auto;
+    align-items: center;
+}
+
+.sectionII {
+    flex: 1;
+    /* padding: 120px 0px; */
+}
+.registeredBody {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    align-items: center;
+    padding: 0px 0px 0px 0px;
+}
+.sections{
+    display: flex;
+    padding-left: 97px;
+}

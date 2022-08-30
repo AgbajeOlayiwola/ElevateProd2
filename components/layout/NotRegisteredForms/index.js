@@ -103,6 +103,8 @@ const ProfileSetups = () => {
             case 0:
                 return (
                     <RegisteredForm
+                        errorM={errorM}
+                        errorI={errorI}
                         formData={formData}
                         setFormData={setFormData}
                         action={handleSubmitt}
@@ -197,6 +199,8 @@ const ProfileSetups = () => {
     const handleSubmitt = () => {
         setPage(page + 1);
     };
+    console.log(errorM, errorI);
+
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
@@ -208,38 +212,49 @@ const ProfileSetups = () => {
     // }, [otpErrorMessage, bvnError, bvnErrorI]);
 
     return (
-        <>
-            {page === 0 ? (
-                <>
-                    {/* <p className={styles.error}>{errorII}</p> <br /> */}
-                    {/* <p className={styles.error}>{errorIII}</p> <br /> */}
-                    {/*<p className={styles.error}>{errorIII}</p> <br /> */}
-                </>
-            ) : (
-                <></>
-            )}
-            {/* {error ? <div className={styles.error}>{error}</div> : null} */}
-            {conditionalComponent()}
+        <div className={styles.sections}>
+            <section className={styles.sectionI}>
+                <img src="../Assets/Images/profileSetup1.png" alt="" />
+            </section>
+            <section className={styles.sectionII}>
+                <div className={styles.registeredBody}>
+                    {/* register your input into the hook by invoking the "register" function */}
 
-            {page == 1 ? null : page == 2 ? (
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    onClick={handleSubmitt}
-                    type="submit"
-                    text={'Next'}
-                />
-            ) : page === 3 ? (
-                <></>
-            ) : // <ButtonComp
-            //     disabled={activeBtn}
-            //     active={activeBtn ? 'active' : 'inactive'}
-            //     onClick={handleSubmit}
-            //     type="submit"
-            //     text={'Next'}
-            // />
-            null}
-        </>
+                    <div className={styles.bodyWrapper}>
+                        {page === 0 ? (
+                            <>
+                                {/* <p className={styles.error}>{errorM}</p> <br />
+                                <p className={styles.error}>{errorI}</p> <br /> */}
+                                <br />
+                            </>
+                        ) : (
+                            <></>
+                        )}
+                        {/* {error ? <div className={styles.error}>{error}</div> : null} */}
+                        {conditionalComponent()}
+                        {page == 1 ? null : page == 2 ? (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                onClick={handleSubmitt}
+                                type="submit"
+                                text={'NextI'}
+                            />
+                        ) : page === 3 ? (
+                            <></>
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                onClick={handleSubmit}
+                                type="submit"
+                                text={'Next'}
+                            />
+                        )}
+                    </div>
+                </div>
+            </section>
+        </div>
     );
 };
 

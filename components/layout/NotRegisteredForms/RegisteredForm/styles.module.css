@@ -2,7 +2,7 @@
     display: flex;
     height: 100vh;
     overflow: hidden;
-    padding: 0px 133px 0px 96px;
+    align-items: center;
 }
 
 .sectionI {
@@ -160,5 +160,10 @@
     line-height: 19px;
     margin-left: 12px;
     color: #6ccf00;
+    margin-top: 2px;
+}
+.error {
+    color: red;
+    font-size: 12px;
     margin-top: 2px;
 }
