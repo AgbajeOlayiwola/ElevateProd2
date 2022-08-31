@@ -249,15 +249,15 @@ const ProfileSetups = () => {
                             />
                         ) : page === 3 ? (
                             <></>
-                        ) : (
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                onClick={handleSubmit}
-                                type="submit"
-                                text={'Next'}
-                            />
-                        )}
+                        ) : // <ButtonComp
+                        //     disabled={activeBtn}
+                        //     active={activeBtn ? 'active' : 'inactive'}
+                        //     onClick={handleSubmit}
+                        //     type="submit"
+                        //     text={'Next'}
+                        // />
+                        null}
+                         
                     </div>
                 </div>
             </section>

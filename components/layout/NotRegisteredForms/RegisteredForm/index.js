@@ -8,9 +8,14 @@ import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 // import { loadCountry } from '../../../../redux/actions/actions';
+import Head from 'next/head';
 
 const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
     // const [progress, setProgress] = useState('25%');
+    <Head>
+        <script src="https://web-button.mati.io/button.js"></script>
+    </Head>;
+
     const [switchs, setSwitch] = useState(true);
     const [isRegistered, setIsRegistered] = useState(false);
     const [bgcolor, setBgcolor] = useState(false);
