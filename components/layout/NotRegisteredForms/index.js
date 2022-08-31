@@ -215,13 +215,15 @@ const ProfileSetups = () => {
     return (
         <div className={styles.sections}>
             <section className={styles.sectionI}>
-                {/* <img src="../Assets/Images/profileSetup1.png" alt="" /> */}
-                <div className={styles.green}></div>
+                <div>
+                    <img src="../Assets/Images/profileSetup1.png" alt="" />
+                </div>
+                {/* <div className={styles.green}></div>
                 <div className={styles.grey}>
                     <div className={styles.home}>
                         <HomeSvg />
                     </div>
-                </div>
+                </div> */}
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.registeredBody}>
@@ -249,14 +251,15 @@ const ProfileSetups = () => {
                             />
                         ) : page === 3 ? (
                             <></>
-                        ) : // <ButtonComp
-                        //     disabled={activeBtn}
-                        //     active={activeBtn ? 'active' : 'inactive'}
-                        //     onClick={handleSubmit}
-                        //     type="submit"
-                        //     text={'Next'}
-                        // />
-                        null}
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                onClick={handleSubmit}
+                                type="submit"
+                                text={'Next'}
+                            />
+                        )}
                          
                     </div>
                 </div>

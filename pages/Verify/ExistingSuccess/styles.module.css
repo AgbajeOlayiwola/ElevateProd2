@@ -30,6 +30,8 @@
     display: flex;
     align-items: center;
     margin: 70px auto;
+    width: 600px;
+    border-radius: 50px;
 }
 
 .bodyWrapper {
@@ -51,13 +53,14 @@
 }
 
 .successMainHeading {
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
     line-height: 33px;
-    text-align: center;
-    color: #005b82;
+    color: #102572;
     margin-top: 4%;
+    text-align: center;
 }
 
 .h6Wrapper {
@@ -66,10 +69,9 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 23px;
-    text-align: center;
     color: #a5a5a5;
 }
 
 .btnSuccess {
-    margin: 20% 0px 0px 0px;
+    margin: 48px 0px 0px 0px;
 }

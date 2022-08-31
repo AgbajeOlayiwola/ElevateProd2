@@ -29,6 +29,10 @@ import Ecoonline from '../../components/ReusableComponents/Loginwith/ecoonline';
 import Ecocard from '../../components/ReusableComponents/Loginwith/ecocard';
 import Ecoacct from '../../components/ReusableComponents/Loginwith/ecoacct';
 import NewUser from './NewUser';
+import OmniliteSvg from '../../components/ReusableComponents/ReusableSvgComponents/OmniliteSvg';
+import EcobankMobileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EcobankMobileSvg';
+import AccountNumberSvg from '../../components/ReusableComponents/ReusableSvgComponents/AccountNumberSvg';
+import CardSvg from '../../components/ReusableComponents/ReusableSvgComponents/CardSvg';
 
 const HomeMain = () => {
     const router = useRouter();
@@ -100,10 +104,10 @@ const HomeMain = () => {
                                 })}
                                 name="username"
                             />
+                            <p className={styles.error}>
+                                {errors?.username?.message}
+                            </p>
                         </div>
-                        <p className={styles.error}>
-                            {errors?.username?.message}
-                        </p>
                         <div>
                             <label>Enter Your Omnilite Password</label>
                             <div className={styles.passwordEye}>
@@ -118,10 +122,10 @@ const HomeMain = () => {
                                 />
                                 <Visbility typeSet={types} />
                             </div>
+                            <p className={styles.error}>
+                                {errors?.password?.message}
+                            </p>
                         </div>
-                        <p className={styles.error}>
-                            {errors?.password?.message}
-                        </p>
                     </div>
                 );
             case 1:
@@ -139,10 +143,10 @@ const HomeMain = () => {
                                 })}
                                 name="username"
                             />
+                            <p className={styles.error}>
+                                {errors?.username?.message}
+                            </p>
                         </div>
-                        <p className={styles.error}>
-                            {errors?.username?.message}
-                        </p>
                         <div>
                             <label>Enter Your Ecobank Online Password</label>
                             <div className={styles.passwordEye}>
@@ -158,10 +162,10 @@ const HomeMain = () => {
                                 />
                                 <Visbility typeSet={types} />
                             </div>
+                            <p className={styles.error}>
+                                {errors?.password?.message}
+                            </p>
                         </div>
-                        <p className={styles.error}>
-                            {errors?.password?.message}
-                        </p>
                     </div>
                 );
             case 2:
@@ -178,10 +182,10 @@ const HomeMain = () => {
                                 })}
                                 name="accountNumber"
                             />
+                            <p className={styles.error}>
+                                {errors?.accountNumber?.message}
+                            </p>
                         </div>
-                        <p className={styles.error}>
-                            {errors?.accountNumber?.message}
-                        </p>
                     </div>
                 );
             case 3:
@@ -198,10 +202,10 @@ const HomeMain = () => {
                                 })}
                                 name="cardNumber"
                             />
+                            <p className={styles.error}>
+                                {errors?.cardNumber?.message}
+                            </p>
                         </div>
-                        <p className={styles.error}>
-                            {errors?.cardNumber?.message}
-                        </p>
                         <div className={styles.expCvv}>
                             <div className={styles.exp}>
                                 <div className={styles.shows}>
@@ -222,10 +226,10 @@ const HomeMain = () => {
                                         }}
                                         maxLength="5"
                                     />
+                                    <p className={styles.error}>
+                                        {errors?.expiryDate?.message}
+                                    </p>
                                 </div>
-                                <p className={styles.error}>
-                                    {errors?.expiryDate?.message}
-                                </p>
                             </div>
                             <div className={styles.cvvCode}>
                                 <div className={styles.shows}>
@@ -371,101 +375,42 @@ const HomeMain = () => {
         setOutType(type);
     };
     return (
-        // <div className={styles.cover}>
-        //     <section className={styles.sectionI}>
-        //         <div className={styles.content}>
-        //             <div className={styles.Svg}>
-        //                 <div>
-        //                     <HomeSvg />
-        //                     <p className={styles.SMeApp}>
-        //                         Powered by <span>Ecobank</span>
-        //                     </p>
-        //                 </div>
-        //             </div>
-        //             <div className={styles.Center}>
-        //                 <div className={styles.sectionBottom}>
-        //                     <div className={styles.space}>
-        //                         <SpaceshipSvg />
-
-        //                         <p>Start</p>
-        //                     </div>
-        //                     <div className={styles.gears}>
-        //                         <Gearsvg />
-        //                         <p>Run</p>
-        //                     </div>
-        //                     <div className={styles.scale}>
-        //                         <Scalesvg />
-        //                         <p>Grow</p>
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </section>
-        //     <section className={styles.sectionII}>
-        //         <div>
-        //             <div>
-        //                 <h3 className={styles.elevatenow}>Sign up</h3>
-        //             </div>
-        //             <div>
-        //                 <form
-        //                     onSubmit={handleSubmit(onSubmit)}
-        //                     className={styles.form}
-        //                 >
-        //                     <Languages />
-        //                     <div className={styles.countryWrapper}>
-        //                         <label
-        //                             className={styles.label}
-        //                             htmlFor="country"
-        //                         >
-        //                             Choose The Country Where you Run Busines
-        //                         </label>
-        //                         {error ? (
-        //                             <p className={styles.error}>{error}</p>
-        //                         ) : null}
-        //                         <Countries
-        //                             displayCountry={() => {
-        //                                 setCountryState(!countryState);
-        //                                 setError('');
-        //                             }}
-        //                             selectCountry={selectCountry}
-        //                             countryState={countryState}
-        //                             countrys={countrys}
-        //                             setCountryState={setCountryState}
-        //                             setError={setError}
-        //                             setSelectCountry={setSelectCountry}
-        //                             error={error}
-        //                         />
-        //                     </div>
-        //                     <div className={styles.disclaimer}>
-        //                         <p>
-        //                             Get onboard and have access to unlimited
-        //                             possibilites with your account!
-        //                         </p>
-        //                     </div>{' '}
-        //                     <ButtonComp
-        //                         disabled={activeBtn}
-        //                         active={activeBtn ? 'active' : 'inactive'}
-        //                         text="Proceed"
-        //                         type="submit"
-        //                     />
-        //                     <div>
-        //                         <p className={styles.accout}>
-        //                             Already Registered?
-        //                             <Link href="../Auth/Login">
-        //                                 <span className={styles.termss}>
-        //                                     {' '}
-        //                                     Sign In
-        //                                 </span>
-        //                             </Link>
-        //                         </p>
-        //                     </div>
-        //                 </form>
-        //             </div>
-        //         </div>
-        //     </section>
-        // </div>
         <div className={styles.homeBody}>
             <section className={styles.firstSection}>
+                {/* <div className={styles.banner}>
+                    <div className={styles.green}></div>
+                    <div className={styles.grey}>
+                        <div className={styles.contentWrapper}>
+                            <div className={styles.content}>
+                                <div className={styles.Svg}>
+                                    <div>
+                                        <HomeSvg />
+                                        <p className={styles.SMeApp}>
+                                            Powered by <span>Ecobank</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className={styles.Center}>
+                                    <div className={styles.sectionBottom}>
+                                        <div className={styles.space}>
+                                            <SpaceshipSvg />
+                                            <p>Start</p>
+                                        </div>
+                                        <div className={styles.gears}>
+                                            <Gearsvg />
+                                            <p>Run</p>
+                                        </div>
+                                        <div className={styles.scale}>
+                                            <Scalesvg />
+                                            <p>Grow</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="./Assets/Images/Shutter.png" alt="" />
+                    </div>
+                </div> */}
                 <img src="/Assets/Images/homeImage.png" alt="" />
                 <div className={styles.content}>
                     <div className={styles.Svg}>
@@ -570,12 +515,7 @@ const HomeMain = () => {
                                                 setAcct(false);
                                             }}
                                         >
-                                            <Image
-                                                src="/Assets/Images/omni.png"
-                                                width={45}
-                                                height={45}
-                                                alt="omnilite"
-                                            />
+                                            <OmniliteSvg id="image0_8209_39687" />
                                         </div>
                                         <p
                                             className={
@@ -603,14 +543,13 @@ const HomeMain = () => {
                                                 setAcct(false);
                                             }}
                                         >
-                                            <div>
-                                                <Image
-                                                    src="/Assets/Images/ecobank.png"
-                                                    width={45}
-                                                    height={45}
-                                                    alt="omnilite"
-                                                />
-                                            </div>
+                                            <Image
+                                                src="/Assets/Svgs/ecobankMobile.svg"
+                                                width={45}
+                                                height={45}
+                                                alt="Details"
+                                            />
+                                            {/* <EcobankMobileSvg /> */}
                                         </div>
                                         <p
                                             className={
@@ -638,12 +577,7 @@ const HomeMain = () => {
                                                 setAcct(true);
                                             }}
                                         >
-                                            <Image
-                                                src="/Assets/Images/AccountNum.png"
-                                                width={45}
-                                                height={45}
-                                                alt="AccountNumber"
-                                            />
+                                            <AccountNumberSvg />
                                         </div>
                                         <p
                                             className={
@@ -670,12 +604,7 @@ const HomeMain = () => {
                                                 setAcct(false);
                                             }}
                                         >
-                                            <Image
-                                                src="/Assets/Images/Details.png"
-                                                width={45}
-                                                height={45}
-                                                alt="Details"
-                                            />
+                                            <CardSvg />
                                         </div>
                                         <p
                                             className={

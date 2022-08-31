@@ -241,7 +241,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                     </InputWrapper>
 
                     <InputWrapper>
-                        <label>Phone Number</label>
+                        <Label>Phone Number</Label>
                         <div className={styles.phone}>
                             <div className={styles.phoneHeader}>
                                 <span>
@@ -300,7 +300,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                         </div>
                     </InputWrapper>
                     <InputWrapper>
-                        <label>Date of Birth</label>
+                        <Label>Date of Birth</Label>
                         <FormInput
                             type="date"
                             placeholder="dd-mm-yyyy"
@@ -358,7 +358,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                         <div className="errors">{errors.bvn?.message}</div>
                     </InputWrapper>
                     <InputWrapper>
-                        <label>Phone Number</label>
+                        <Label>Phone Number</Label>
                         <div className={styles.phone}>
                             <div className={styles.phoneHeader}>
                                 <span>
@@ -417,7 +417,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                         </div>
                     </InputWrapper>
                     <InputWrapper>
-                        <label>Date of Birth</label>
+                        <Label>Date of Birth</Label>
                         <FormInput
                             type="date"
                             placeholder="DD  |  MM  |  YYYY"
@@ -441,12 +441,6 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                             {errors.date_of_birth?.message}
                         </div>
                     </InputWrapper>
-                    <mati-button
-                        clientId="622f44566ac1c1001cd1daac" // from your Mati dashboard
-                        flowId="62fb9b12235dfd001ed92fec" // from your Mati dashboard
-                        color="#000000" // any color
-                        metadata='{"user_id":"1234778"}'
-                    />
                 </>
             ) : null}
             {/* <ButtonComp
