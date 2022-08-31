@@ -236,7 +236,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                     </InputWrapper>
 
                     <InputWrapper>
-                        <label>Phone Number</label>
+                        <Label>Phone Number</Label>
                         <div className={styles.phone}>
                             <div className={styles.phoneHeader}>
                                 <span>
@@ -295,7 +295,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                         </div>
                     </InputWrapper>
                     <InputWrapper>
-                        <label>Date of Birth</label>
+                        <Label>Date of Birth</Label>
                         <FormInput
                             type="date"
                             placeholder="dd-mm-yyyy"
@@ -353,7 +353,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                         <div className="errors">{errors.bvn?.message}</div>
                     </InputWrapper>
                     <InputWrapper>
-                        <label>Phone Number</label>
+                        <Label>Phone Number</Label>
                         <div className={styles.phone}>
                             <div className={styles.phoneHeader}>
                                 <span>
@@ -412,7 +412,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                         </div>
                     </InputWrapper>
                     <InputWrapper>
-                        <label>Date of Birth</label>
+                        <Label>Date of Birth</Label>
                         <FormInput
                             type="date"
                             placeholder="DD  |  MM  |  YYYY"

@@ -8,6 +8,56 @@
     justify-content: space-between;
 }
 
+.green {
+    background: #396805;
+    border-radius: 60px;
+    transform: rotate(180deg);
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    transform: skew(0deg, 50rad);
+    width: 100%;
+    margin-top: -20%;
+    height: 23vh;
+}
+
+.grey {
+    background: #303030;
+    border-radius: 60px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin-top: 2%;
+    width: 100%;
+    transform: skew(0deg, 50rad);
+    height: 104vh;
+}
+
+.contentWrapper {
+    width: 100%;
+    transform: skew(0deg, 15deg);
+    background: linear-gradient(
+            0deg,
+            rgba(32, 32, 32, 0.85),
+            rgba(32, 32, 32, 0.85)
+        ),
+        url(../../public/Assets/Images/Shutter.png);
+    background-size: cover;
+    height: 100%;
+    background-color: green;
+}
+
+.banner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.firstSection .content {
+    position: absolute;
+    bottom: 111px;
+    left: 16%;
+    max-width: 317px;
+    width: 76%;
+}
+
 .firstSection {
     width: 37%;
     max-width: 470px;
@@ -15,17 +65,8 @@
 }
 
 .firstSection img {
-    height: 100%;
     width: 100%;
-    object-fit: scale-down;
-}
-
-.firstSection .content {
-    position: absolute;
-    bottom: 111px;
-    left: 16%;
-    max-width: 317px;
-    width: 76%;
+    height: 100%;
 }
 
 .secondSection {

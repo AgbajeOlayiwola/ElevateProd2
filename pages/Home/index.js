@@ -377,6 +377,40 @@ const HomeMain = () => {
     return (
         <div className={styles.homeBody}>
             <section className={styles.firstSection}>
+                {/* <div className={styles.banner}>
+                    <div className={styles.green}></div>
+                    <div className={styles.grey}>
+                        <div className={styles.contentWrapper}>
+                            <div className={styles.content}>
+                                <div className={styles.Svg}>
+                                    <div>
+                                        <HomeSvg />
+                                        <p className={styles.SMeApp}>
+                                            Powered by <span>Ecobank</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className={styles.Center}>
+                                    <div className={styles.sectionBottom}>
+                                        <div className={styles.space}>
+                                            <SpaceshipSvg />
+                                            <p>Start</p>
+                                        </div>
+                                        <div className={styles.gears}>
+                                            <Gearsvg />
+                                            <p>Run</p>
+                                        </div>
+                                        <div className={styles.scale}>
+                                            <Scalesvg />
+                                            <p>Grow</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="./Assets/Images/Shutter.png" alt="" />
+                    </div>
+                </div> */}
                 <img src="/Assets/Images/homeImage.png" alt="" />
                 <div className={styles.content}>
                     <div className={styles.Svg}>

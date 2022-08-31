@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
 import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
+import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 
 const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
     const dispatch = useDispatch();
@@ -108,6 +109,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
+                {/* <ProfileSetupSide /> */}
                 <div>
                     <img src="../Assets/Images/profileSetup1.png" alt="" />
                 </div>

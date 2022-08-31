@@ -1,0 +1,64 @@
+.profileSetupSide {
+    /* display: flex;
+    justify-content: space-between;
+    flex-direction: column; */
+    height: 100%;
+}
+
+.green {
+    background: #396805;
+    border-radius: 60px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    transform: skew(0deg, 50rad);
+    width: 100%;
+    margin-top: -20%;
+    height: 23vh;
+}
+
+.grey {
+    background: #303030;
+    border-radius: 60px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin-top: 2%;
+    width: 100%;
+    transform: skew(0deg, 50rad);
+    height: 104vh;
+}
+
+.content {
+    transform: skew(0deg, 15deg);
+    padding: 50px 99px 0px 68px;
+}
+
+.content .SMeApp {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #ffffff;
+    margin: 0px;
+    margin-top: 8px;
+}
+
+.content h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 120%;
+    color: #ffffff;
+}
+
+.navImage {
+    transform: skew(0deg, 15deg);
+    width: 72%;
+    height: 278px;
+}
+
+.navImage img {
+    /* width: 100%; */
+    height: 100%;
+}
