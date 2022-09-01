@@ -3,71 +3,13 @@
     display: flex;
     justify-content: center;
 }
-.green {
-    background: #396805;
-    border-radius: 60px;
-    transform: rotate(180deg);
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
-    transform: skew(0deg, 50rad);
-    width: 80%;
-    margin-top: -13%;
-    height: 23vh;
-}
-/* .green:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #396805;
-    transform-origin: 100% 0;
-    transform: skew(5deg, 50rad);
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-    border-radius: 60px;
-    z-index: -1;
-  } */
-.grey {
-    background: #303030;
-    padding: 40px 10px 40px 68px;
-    border-radius: 60px;
-    transform: rotate(180deg);
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-    margin-top: 2%;
-    width: 80%;
-    transform: skew(0deg, 50rad);
-    height: 90vh;
-}
+
 .error {
     color: red;
     font-size: 12px;
     margin-top: -1rem;
 }
-.home {
-    transform: skew(0deg, 13deg);
-}
 
-.bodyWrapper {
-    width: 54%;
-    max-width: 400px;
-    margin: 0px auto;
-    align-items: center;
-}
-
-/* .sectionII {
-    flex: 1;
-    padding: 120px 0px;
-} */
-.registeredBody {
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-    align-items: center;
-    padding: 0px 0px 0px 0px;
-}
 .sections {
     display: flex;
     height: 100vh;
@@ -82,17 +24,6 @@
     width: 37%;
     max-width: 470px;
     position: relative;
-}
-
-.sectionI div {
-    /* width: 470px; */
-    height: 100%;
-}
-
-.sectionI img {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
 }
 
 .sectionII {

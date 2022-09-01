@@ -18,6 +18,7 @@ import Liveness from './Liveness';
 import { getCookie } from 'cookies-next';
 import Head from 'next/head';
 import HomeSvg from '../../ReusableComponents/HomeSvg';
+import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 
 const ProfileSetups = () => {
     const dispatch = useDispatch();
@@ -108,7 +109,7 @@ const ProfileSetups = () => {
                         errorI={errorI}
                         formData={formData}
                         setFormData={setFormData}
-                        action={handleSubmitt}
+                        action={handleSubmit}
                     />
                 );
             case 1:
@@ -136,10 +137,11 @@ const ProfileSetups = () => {
             case 2:
                 return (
                     <Liveness
-                        action={() => {
-                            setPage(page - 1);
-                            setPageType('');
-                        }}
+                        // action={() => {
+                        //     setPage(page - 1);
+                        //     setPageType('');
+                        // }}
+                        action={handleSubmitt}
                     />
                 );
             case 3:
@@ -147,6 +149,9 @@ const ProfileSetups = () => {
                     <StepThreeCompleteProfile1
                         formData={formData}
                         setFormData={setFormData}
+                        action={() => {
+                            alert('Hello');
+                        }}
                     />
                 );
             default:
@@ -211,58 +216,36 @@ const ProfileSetups = () => {
     //         setPage(page + 1);
     //     }
     // }, [otpErrorMessage, bvnError, bvnErrorI]);
-
+    let text;
+    {
+        page === 0
+            ? (text =
+                  'Input your BVN and open a Business Account in 3 minutes.')
+            : page === 1
+            ? (text =
+                  'Input your BVN and open a Business Account in 3 minutes.')
+            : page === 2
+            ? (text = 'Checkout Priceless Oppurtunities Be ahead')
+            : page === 3
+            ? (text = 'Checkout Priceless Oppurtunities Be ahead')
+            : null;
+    }
     return (
         <div className={styles.sections}>
             <section className={styles.sectionI}>
-                <div>
-                    <img src="../Assets/Images/profileSetup1.png" alt="" />
-                </div>
-                {/* <div className={styles.green}></div>
-                <div className={styles.grey}>
-                    <div className={styles.home}>
-                        <HomeSvg />
-                    </div>
-                </div> */}
+                <ProfileSetupSide text={text} />
             </section>
             <section className={styles.sectionII}>
-                <div className={styles.registeredBody}>
-                    {/* register your input into the hook by invoking the "register" function */}
-
-                    <div className={styles.bodyWrapper}>
-                        {page === 0 ? (
-                            <>
-                                {/* <p className={styles.error}>{errorM}</p> <br />
+                {page === 0 ? (
+                    <>
+                        {/* <p className={styles.error}>{errorM}</p> <br />
                                 <p className={styles.error}>{errorI}</p> <br /> */}
-                                <br />
-                            </>
-                        ) : (
-                            <></>
-                        )}
-                        {/* {error ? <div className={styles.error}>{error}</div> : null} */}
-                        {conditionalComponent()}
-                        {page == 1 ? null : page == 2 ? (
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                onClick={handleSubmitt}
-                                type="submit"
-                                text={'NextI'}
-                            />
-                        ) : page === 3 ? (
-                            <></>
-                        ) : (
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                onClick={handleSubmit}
-                                type="submit"
-                                text={'Next'}
-                            />
-                        )}
-                         
-                    </div>
-                </div>
+                    </>
+                ) : (
+                    <></>
+                )}
+                {/* {error ? <div className={styles.error}>{error}</div> : null} */}
+                {conditionalComponent()}
             </section>
         </div>
     );

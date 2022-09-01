@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
+import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 
 const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     const account = localStorage.getItem('displayAccount');
@@ -43,9 +44,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
-                <div>
-                    <img src="../Assets/Images/profileSetup1.png" alt="" />
-                </div>
+                <ProfileSetupSide text="Input your BVN and open a Business Account in 3 minutes." />
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>

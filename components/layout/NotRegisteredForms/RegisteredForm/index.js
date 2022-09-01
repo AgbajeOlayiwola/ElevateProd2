@@ -82,83 +82,31 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
     }, [errorMessages]);
 
     return (
-        <>
+        <div className={styles.bodyWrapper}>
             <div className={styles.cardHeading}>
                 <h3 className={styles.LeftHeading}>Profile Setup</h3>
-                {/* <Progressbar
-                            bgcolor="#6CCF00"
-                            progressCount={progress}
-                            height={14}
-                            progWidth="27%"
-                        /> */}
-                {/* <Imag
-                    src="/width"
-                    alt="lineImage" /> */}
             </div>
-
-            {/* <div className={styles.ButtonWrapper}>
-                            <span
-                                className={styles.ToggleNo}
-                                onClick={switchRegistrationStatus}
-                                style={
-                                    bgcolor
-                                        ? { background: '#f8f8f8' }
-                                        : { background: '#6ccf00' }
-                                }
-                            >
-                                <p
-                                    className={styles.ToggleNoText}
-                                    style={
-                                        bgcolor
-                                            ? { color: '#a5a5a5' }
-                                            : { color: '#ffffff' }
-                                    }
-                                >
-                                    No
-                                </p>
-                            </span>
-                            <span
-                                className={styles.ToggleYes}
-                                onClick={handleRegistrationStatus}
-                                style={
-                                    bgcolor
-                                        ? { background: '#6ccf00' }
-                                        : { background: '#f8f8f8' }
-                                }
-                            >
-                                <p
-                                    className={styles.ToggleYesText}
-                                    style={
-                                        bgcolor
-                                            ? { color: '#ffffff' }
-                                            : { color: '#a5a5a5' }
-                                    }
-                                >
-                                    Yes
-                                </p>
-                            </span>
-                        </div> */}
-            <InputWrapper>
-                <p className={styles.error}>{errorI}</p> <br />
-                <Label>Is your Business Registered?</Label>
-                <select
-                    name=""
-                    id=""
-                    onChange={(e) => {
-                        if (e.target.value === 'No') {
-                            switchRegistrationStatus();
-                        } else if (e.target.value === 'Yes') {
-                            handleRegistrationStatus();
-                        }
-                    }}
-                >
-                    <option value="No">No</option>
-                    <option value="Yes">Yes</option>
-                </select>
-            </InputWrapper>
-            {isRegistered ? (
-                <>
-                    <div>
+            <div className={styles.formWrapper}>
+                <InputWrapper>
+                    <p className={styles.error}>{errorI}</p> <br />
+                    <Label>Is your Business Registered?</Label>
+                    <select
+                        name=""
+                        id=""
+                        onChange={(e) => {
+                            if (e.target.value === 'No') {
+                                switchRegistrationStatus();
+                            } else if (e.target.value === 'Yes') {
+                                handleRegistrationStatus();
+                            }
+                        }}
+                    >
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </InputWrapper>
+                {isRegistered ? (
+                    <>
                         <InputWrapper>
                             <Label>
                                 Enter your RC Number/Business Registration
@@ -190,65 +138,64 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                         {/* <div className="errors">
                             {errors.rc_number?.message}
                         </div> */}
-                    </div>
-                    <InputWrapper>
-                        <Label>Enter your TIN</Label>
-                        <FormInput
-                            name="tin"
-                            type="number"
-                            placeholder="Your Tax Identification number"
-                            {...register('tin')}
-                            value={formData.tinNumber}
-                            onChange={(event) => {
-                                setFormData({
-                                    ...formData,
-                                    tinNumber: event.target.value
-                                });
-                                //if (event.target.value.length == 9)
-                                //return false; //limits to 10 digit entry
-                                //setTinumber(event?.target.value); //saving input to state
-                            }}
-                        />
-                        <div className="errors">{errors.tin?.message}</div>
-                    </InputWrapper>
+                        <InputWrapper>
+                            <Label>Enter your TIN</Label>
+                            <FormInput
+                                name="tin"
+                                type="number"
+                                placeholder="Your Tax Identification number"
+                                {...register('tin')}
+                                value={formData.tinNumber}
+                                onChange={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        tinNumber: event.target.value
+                                    });
+                                    //if (event.target.value.length == 9)
+                                    //return false; //limits to 10 digit entry
+                                    //setTinumber(event?.target.value); //saving input to state
+                                }}
+                            />
+                            <div className="errors">{errors.tin?.message}</div>
+                        </InputWrapper>
 
-                    <InputWrapper>
-                        <Label>Enter your BVN</Label>
-                        <FormInput
-                            type="number"
-                            placeholder="Your BVN"
-                            name="bvn"
-                            {...register('bvn', {
-                                required: 'BVN is required',
-                                minLength: {
-                                    value: 10,
-                                    message: 'Min length is 10'
-                                }
-                            })}
-                            value={formData.bvNumber}
-                            onChange={(event) => {
-                                setFormData({
-                                    ...formData,
-                                    bvNumber: event.target.value
-                                });
-                                //if (event.target.value.length == 12)
-                                // return false; //limits to 10 digit entry
-                                // setNumber(event?.target.value); //saving input to state
-                            }}
-                        />
-                        <p className={styles.error}>{errorM}</p>
-                        <div className="errors">{errors.bvn?.message}</div>
-                    </InputWrapper>
+                        <InputWrapper>
+                            <Label>Enter your BVN</Label>
+                            <FormInput
+                                type="number"
+                                placeholder="Your BVN"
+                                name="bvn"
+                                {...register('bvn', {
+                                    required: 'BVN is required',
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Min length is 10'
+                                    }
+                                })}
+                                value={formData.bvNumber}
+                                onChange={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        bvNumber: event.target.value
+                                    });
+                                    //if (event.target.value.length == 12)
+                                    // return false; //limits to 10 digit entry
+                                    // setNumber(event?.target.value); //saving input to state
+                                }}
+                            />
+                            <p className={styles.error}>{errorM}</p>
+                            <div className="errors">{errors.bvn?.message}</div>
+                        </InputWrapper>
 
-                    <InputWrapper>
-                        <Label>Phone Number</Label>
-                        <div className={styles.phone}>
-                            <div className={styles.phoneHeader}>
-                                <span>
-                                    <img src={formData.flag} alt="" />
-                                </span>
-                                <p>{formData.baseCurrency}</p>
-                                {/* <input
+                        <InputWrapper>
+                            <Label>Phone Number</Label>
+                            <div className={styles.phone}>
+                                <div className={styles.phoneHeader}>
+                                    <span>
+                                        <img src={formData.flag} alt="" />
+                                    </span>
+                                    <p>{formData.baseCurrency}</p>
+                                    {/* <input
                                     type="number"
                                     placeholder="+234"
                                     {...register('phone_number', {
@@ -269,103 +216,104 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                         setPhoneNumber(event?.target.value); //saving input to state
                                     }}
                                 /> */}
+                                </div>
+                                <div className={styles.phoneDetails}>
+                                    <p> +{formData.countryCode}</p>
+                                    <input
+                                        type="number"
+                                        placeholder="812 345 6789"
+                                        {...register('countryCode_number', {
+                                            required:
+                                                'Country Code is required',
+                                            minLength: {
+                                                value: 9,
+                                                message: 'Min length is 9'
+                                            }
+                                        })}
+                                        value={formData.phoneNumber}
+                                        onChange={(event) => {
+                                            setFormData({
+                                                ...formData,
+                                                phoneNumber: event.target.value
+                                            });
+                                            //if (event.target.value.length == 15)
+                                            //  return false; //limits to 10 digit entry
+                                            //setPhoneNumber(event?.target.value); //saving input to state
+                                        }}
+                                    />
+                                </div>
                             </div>
-                            <div className={styles.phoneDetails}>
-                                <p> +{formData.countryCode}</p>
-                                <input
-                                    type="number"
-                                    placeholder="812 345 6789"
-                                    {...register('countryCode_number', {
-                                        required: 'Country Code is required',
-                                        minLength: {
-                                            value: 9,
-                                            message: 'Min length is 9'
-                                        }
-                                    })}
-                                    value={formData.phoneNumber}
-                                    onChange={(event) => {
-                                        setFormData({
-                                            ...formData,
-                                            phoneNumber: event.target.value
-                                        });
-                                        //if (event.target.value.length == 15)
-                                        //  return false; //limits to 10 digit entry
-                                        //setPhoneNumber(event?.target.value); //saving input to state
-                                    }}
-                                />
+                            <div className="errors">
+                                {errors.phone_number?.message}
                             </div>
-                        </div>
-                        <div className="errors">
-                            {errors.phone_number?.message}
-                        </div>
-                    </InputWrapper>
-                    <InputWrapper>
-                        <Label>Date of Birth</Label>
-                        <FormInput
-                            type="date"
-                            placeholder="dd-mm-yyyy"
-                            max="2002-12-31"
-                            {...register('date_of_birth', {
-                                required: 'Date of birth is required',
-                                minLength: {
-                                    value: 9,
-                                    message: 'Min length is 9'
-                                }
-                            })}
-                            vallue={formData.dateOfBirth}
-                            onChange={(event) => {
-                                setFormData({
-                                    ...formData,
-                                    dateOfBirth: event.target.value
-                                });
-                            }}
-                        />
-                        <div className="errors">
-                            {errors.date_of_birth?.message}
-                        </div>
-                    </InputWrapper>
-                </>
-            ) : (
-                ''
-            )}
-            {!isRegistered ? (
-                <>
-                    <InputWrapper>
-                        <Label>Enter your BVN</Label>
-                        <FormInput
-                            type="number"
-                            placeholder="Your BVN"
-                            name="bvn"
-                            {...register('bvn', {
-                                required: 'BVN is required',
-                                minLength: {
-                                    value: 10,
-                                    message: 'Min length is 10'
-                                }
-                            })}
-                            value={formData.bvNumber}
-                            onChange={(event) => {
-                                setFormData({
-                                    ...formData,
-                                    bvNumber: event.target.value
-                                });
-                                //if (event.target.value.length == 12)
-                                //  return false; //limits to 10 digit entry
-                                //setNumber(event?.target.value); //saving input to state
-                            }}
-                        />
-                        <p className={styles.error}>{errorM}</p>
-                        <div className="errors">{errors.bvn?.message}</div>
-                    </InputWrapper>
-                    <InputWrapper>
-                        <Label>Phone Number</Label>
-                        <div className={styles.phone}>
-                            <div className={styles.phoneHeader}>
-                                <span>
-                                    <img src={formData.flag} alt="" />
-                                </span>
-                                <p>{formData.baseCurrency}</p>
-                                {/* <input
+                        </InputWrapper>
+                        <InputWrapper>
+                            <Label>Date of Birth</Label>
+                            <FormInput
+                                type="date"
+                                placeholder="dd-mm-yyyy"
+                                max="2002-12-31"
+                                {...register('date_of_birth', {
+                                    required: 'Date of birth is required',
+                                    minLength: {
+                                        value: 9,
+                                        message: 'Min length is 9'
+                                    }
+                                })}
+                                vallue={formData.dateOfBirth}
+                                onChange={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        dateOfBirth: event.target.value
+                                    });
+                                }}
+                            />
+                            <div className="errors">
+                                {errors.date_of_birth?.message}
+                            </div>
+                        </InputWrapper>
+                    </>
+                ) : (
+                    ''
+                )}
+                {!isRegistered ? (
+                    <>
+                        <InputWrapper>
+                            <Label>Enter your BVN</Label>
+                            <FormInput
+                                type="number"
+                                placeholder="Your BVN"
+                                name="bvn"
+                                {...register('bvn', {
+                                    required: 'BVN is required',
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Min length is 10'
+                                    }
+                                })}
+                                value={formData.bvNumber}
+                                onChange={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        bvNumber: event.target.value
+                                    });
+                                    //if (event.target.value.length == 12)
+                                    //  return false; //limits to 10 digit entry
+                                    //setNumber(event?.target.value); //saving input to state
+                                }}
+                            />
+                            <p className={styles.error}>{errorM}</p>
+                            <div className="errors">{errors.bvn?.message}</div>
+                        </InputWrapper>
+                        <InputWrapper>
+                            <Label>Phone Number</Label>
+                            <div className={styles.phone}>
+                                <div className={styles.phoneHeader}>
+                                    <span>
+                                        <img src={formData.flag} alt="" />
+                                    </span>
+                                    <p>{formData.baseCurrency}</p>
+                                    {/* <input
                                     type="number"
                                     placeholder="+234"
                                     {...register('phone_number', {
@@ -386,71 +334,73 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                         setPhoneNumber(event?.target.value); //saving input to state
                                     }}
                                 /> */}
+                                </div>
+                                <div className={styles.phoneDetails}>
+                                    <p> +{formData.countryCode}</p>
+                                    <input
+                                        type="number"
+                                        placeholder="812 345 6789"
+                                        {...register('countryCode_number', {
+                                            required:
+                                                'Country Code is required',
+                                            minLength: {
+                                                value: 9,
+                                                message: 'Min length is 9'
+                                            }
+                                        })}
+                                        value={formData.phoneNumber}
+                                        onChange={(event) => {
+                                            setFormData({
+                                                ...formData,
+                                                phoneNumber: event.target.value
+                                            });
+                                            //if (event.target.value.length == 15)
+                                            //  return false; //limits to 10 digit entry
+                                            //setPhoneNumber(event?.target.value); //saving input to state
+                                        }}
+                                    />
+                                </div>
                             </div>
-                            <div className={styles.phoneDetails}>
-                                <p> +{formData.countryCode}</p>
-                                <input
-                                    type="number"
-                                    placeholder="812 345 6789"
-                                    {...register('countryCode_number', {
-                                        required: 'Country Code is required',
-                                        minLength: {
-                                            value: 9,
-                                            message: 'Min length is 9'
-                                        }
-                                    })}
-                                    value={formData.phoneNumber}
-                                    onChange={(event) => {
-                                        setFormData({
-                                            ...formData,
-                                            phoneNumber: event.target.value
-                                        });
-                                        //if (event.target.value.length == 15)
-                                        //  return false; //limits to 10 digit entry
-                                        //setPhoneNumber(event?.target.value); //saving input to state
-                                    }}
-                                />
+                            <div className="errors">
+                                {errors.phone_number?.message}
                             </div>
-                        </div>
-                        <div className="errors">
-                            {errors.phone_number?.message}
-                        </div>
-                    </InputWrapper>
-                    <InputWrapper>
-                        <Label>Date of Birth</Label>
-                        <FormInput
-                            type="date"
-                            placeholder="DD  |  MM  |  YYYY"
-                            max="2002-12-31"
-                            {...register('date_of_birth', {
-                                required: 'Date of birth is required',
-                                minLength: {
-                                    value: 9,
-                                    message: 'Min length is 9'
-                                }
-                            })}
-                            value={formData.dateOfBirth}
-                            onChange={(event) => {
-                                setFormData({
-                                    ...formData,
-                                    dateOfBirth: event.target.value
-                                });
-                            }}
-                        />
-                        <div className="errors">
-                            {errors.date_of_birth?.message}
-                        </div>
-                    </InputWrapper>
-                </>
-            ) : null}
-            {/* <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            onClick={action}
-                            type="submit"
-                            text={'NextI'}
-                        /> */}
-        </>
+                        </InputWrapper>
+                        <InputWrapper>
+                            <Label>Date of Birth</Label>
+                            <FormInput
+                                type="date"
+                                placeholder="DD  |  MM  |  YYYY"
+                                max="2002-12-31"
+                                {...register('date_of_birth', {
+                                    required: 'Date of birth is required',
+                                    minLength: {
+                                        value: 9,
+                                        message: 'Min length is 9'
+                                    }
+                                })}
+                                value={formData.dateOfBirth}
+                                onChange={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        dateOfBirth: event.target.value
+                                    });
+                                }}
+                            />
+                            <div className="errors">
+                                {errors.date_of_birth?.message}
+                            </div>
+                        </InputWrapper>
+                    </>
+                ) : null}
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    onClick={action}
+                    type="submit"
+                    text={'Next'}
+                />
+            </div>
+        </div>
     );
 };
 

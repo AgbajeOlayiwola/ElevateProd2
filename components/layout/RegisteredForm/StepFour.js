@@ -20,6 +20,7 @@ import BusinessCategory from '../../ReusableComponents/BusinessCategory';
 import CircleSvg from '../../ReusableComponents/ReusableSvgComponents/CircleSvg';
 import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
+import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 
 const StepFour = ({ title, action }) => {
     const dispatch = useDispatch();
@@ -210,9 +211,7 @@ const StepFour = ({ title, action }) => {
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
-                <div>
-                    <img src="../Assets/Images/profileSetup1.png" alt="" />
-                </div>
+                <ProfileSetupSide text="Checkout Priceless Oppurtunities Be ahead" />
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.lastStep}>

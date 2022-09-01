@@ -109,10 +109,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
-                {/* <ProfileSetupSide /> */}
-                <div>
-                    <img src="../Assets/Images/profileSetup1.png" alt="" />
-                </div>
+                <ProfileSetupSide text="Input your BVN and open a Business Account in 3 minutes." />
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>

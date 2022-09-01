@@ -381,6 +381,7 @@ const HomeMain = () => {
                     <div className={styles.green}></div>
                     <div className={styles.grey}>
                         <div className={styles.contentWrapper}>
+                            <img src="./Assets/Images/tailor.png" alt="" />
                             <div className={styles.content}>
                                 <div className={styles.Svg}>
                                     <div>
@@ -408,36 +409,8 @@ const HomeMain = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* <img src="./Assets/Images/Shutter.png" alt="" /> */}
                     </div>
                 </div>
-                {/* <img src="/Assets/Images/homeImage.png" alt="" />
-                <div className={styles.content}>
-                    <div className={styles.Svg}>
-                        <div>
-                            <HomeSvg />
-                            <p className={styles.SMeApp}>
-                                Powered by <span>Ecobank</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div className={styles.Center}>
-                        <div className={styles.sectionBottom}>
-                            <div className={styles.space}>
-                                <SpaceshipSvg />
-                                <p>Start</p>
-                            </div>
-                            <div className={styles.gears}>
-                                <Gearsvg />
-                                <p>Run</p>
-                            </div>
-                            <div className={styles.scale}>
-                                <Scalesvg />
-                                <p>Grow</p>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
             </section>
             <section className={styles.secondSection}>
                 <div className={styles.secondSectionHeader}>
