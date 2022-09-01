@@ -377,7 +377,7 @@ const HomeMain = () => {
     return (
         <div className={styles.homeBody}>
             <section className={styles.firstSection}>
-                {/* <div className={styles.banner}>
+                <div className={styles.banner}>
                     <div className={styles.green}></div>
                     <div className={styles.grey}>
                         <div className={styles.contentWrapper}>
@@ -408,10 +408,10 @@ const HomeMain = () => {
                                 </div>
                             </div>
                         </div>
-                        <img src="./Assets/Images/Shutter.png" alt="" />
+                        {/* <img src="./Assets/Images/Shutter.png" alt="" /> */}
                     </div>
-                </div> */}
-                <img src="/Assets/Images/homeImage.png" alt="" />
+                </div>
+                {/* <img src="/Assets/Images/homeImage.png" alt="" />
                 <div className={styles.content}>
                     <div className={styles.Svg}>
                         <div>
@@ -437,7 +437,7 @@ const HomeMain = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </section>
             <section className={styles.secondSection}>
                 <div className={styles.secondSectionHeader}>

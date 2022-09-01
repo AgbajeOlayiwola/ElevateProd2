@@ -14,7 +14,7 @@
     transform: rotate(180deg);
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
-    transform: skew(0deg, 50rad);
+    transform: skew(0deg, -7deg);
     width: 100%;
     margin-top: -20%;
     height: 23vh;
@@ -27,22 +27,25 @@
     border-bottom-left-radius: 0px;
     margin-top: 2%;
     width: 100%;
-    transform: skew(0deg, 50rad);
-    height: 104vh;
+    transform: skew(0deg, -7deg);
+    height: 110vh;
 }
 
 .contentWrapper {
     width: 100%;
-    transform: skew(0deg, 15deg);
-    background: linear-gradient(
+    transform: skew(0deg, 7deg);
+    /* background: linear-gradient(
             0deg,
             rgba(32, 32, 32, 0.85),
             rgba(32, 32, 32, 0.85)
         ),
-        url(../../public/Assets/Images/Shutter.png);
+        url(../../public/Assets/Images/Shutter.png); */
     background-size: cover;
     height: 100%;
-    background-color: green;
+    padding: 0 77px;
+    position: relative;
+    box-sizing: border-box;
+    /* background-color: green; */
 }
 
 .banner {
@@ -51,11 +54,13 @@
     width: 100%;
 }
 .firstSection .content {
+    width: 100%;
     position: absolute;
-    bottom: 111px;
-    left: 16%;
-    max-width: 317px;
-    width: 76%;
+    bottom: 30%;
+    /* left: 16%; */
+    /* max-width: 317px; */
+    /* width: 76%; */
+
 }
 
 .firstSection {
@@ -447,7 +452,7 @@
 
 .sectionI .content {
     width: 60%;
-    margin: 42vh auto 0px;
+    /* margin: 42vh auto 0px; */
     z-index: 10;
     position: relative;
 }
@@ -510,7 +515,7 @@
     display: flex;
     justify-content: center;
     /* position: absolute; */
-    width: 100%;
+    /* width: 100%; */
     /* bottom: 22%; */
 }
 .space {
