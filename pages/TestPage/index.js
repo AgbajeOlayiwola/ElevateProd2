@@ -1,13 +1,13 @@
 import React from 'react';
 import Head from 'next/head';
+import Script from 'next/script';
 
 const TestPage = () => {
     return (
         <>
             <h1>Text Page</h1>
-            <Head>
-                <script src="https://web-button.mati.io/button.js"></script>
-            </Head>
+            <Script src="https://web-button.mati.io/button.js"></Script>
+
             <mati-button
                 clientId="622f44566ac1c1001cd1daac" // from your Mati dashboard
                 flowId="62fb9b12235dfd001ed92fec" // from your Mati dashboard
