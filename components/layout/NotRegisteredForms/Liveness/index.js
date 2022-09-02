@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonComp from '../../../ReusableComponents/Button';
 import Webcam from 'react-webcam';
+import Head from 'next/head';
 
 const videoConstraints = {
     width: 390,
@@ -23,6 +24,10 @@ const Liveness = ({ action }) => {
 
     return (
         <div className={styles.body}>
+            <Head>
+                <script src="https://web-button.mati.io/button.js"></script>
+            </Head>
+
             <div className={styles.cover}>
                 <div className={styles.imageOut}>
                     <div>
@@ -31,14 +36,14 @@ const Liveness = ({ action }) => {
                             Finish up with a clear photo of your face to verify
                             your identity.
                         </p>
-                        <div className={styles.imageInner}>
+                        {/* <div className={styles.imageInner}>
                             <Webcam
                                 audio={false}
                                 screenshotFormat="image/jpeg"
                                 videoConstraints={videoConstraints}
                                 ref={webcamRef}
-                            />
-                        </div>
+                            /> 
+                        </div> */}
                     </div>
                 </div>
                 {/* <ButtonComp
@@ -49,9 +54,16 @@ const Liveness = ({ action }) => {
                     text={'Snap'}
                     action={action}
                 /> */}
-                <button onClick={action}>Snap</button>
+                <div className={styles.matiButtonSetup}>
+                    <mati-button
+                        clientId="622f44566ac1c1001cd1daac" // from your Mati dashboard
+                        flowId="62fb9b12235dfd001ed92fec" // from your Mati dashboard
+                        color="#6ccf00" // any color
+                        className={styles.MatiButton}
+                        metadata='{"user_id":"1234778"}'
+                    />
+                </div>
             </div>
-
             {/* {imgSrc && <img src={imgSrc} />} */}
         </div>
     );

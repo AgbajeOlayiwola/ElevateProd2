@@ -12,9 +12,6 @@ import Head from 'next/head';
 
 const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
     // const [progress, setProgress] = useState('25%');
-    <Head>
-        <script src="https://web-button.mati.io/button.js"></script>
-    </Head>;
 
     const [switchs, setSwitch] = useState(true);
     const [isRegistered, setIsRegistered] = useState(false);
