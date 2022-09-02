@@ -10,14 +10,14 @@ export const CardContainer = styled.div`
 `;
 export const CardHeadingBVN = styled.div``;
 export const SmallInstructionText = styled.h6`
-    height: 68px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 14px;
-    line-height: 23px;
-    /* or 141% */
-    color: #005b82;
+    line-height: 27px;
+    color: #7a7978;
     text-align: left;
+    margin: 0px;
+    margin-top: 32px;
 `;
 
 export const LeftHeading = styled.h3`
@@ -25,9 +25,9 @@ export const LeftHeading = styled.h3`
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
-    line-height: 29px;
-    /* identical to box height */
-    color: #005b82;
+    line-height: 33px;
+    color: #102572;
+    margin: 0px;
 `;
 
 export const RegisteredCardWrapper = styled.div`
@@ -58,7 +58,20 @@ export const InputWrapper = styled.div`
 
 export const ResetOTP = styled.div`
     display: flex;
-    flex-flow: row wrap;
     justify-content: space-between;
-    margin-top: 1.2rem;
+    margin-top: 24px;
+    width: 100%;
+    align-items: center;
+
+    p {
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        text-align: center;
+        color: #a5a5a5;
+        margin: 0px;
+        cursor: pointer;
+    }
 `;

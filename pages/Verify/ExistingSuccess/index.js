@@ -43,22 +43,22 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                             style={{ textAlign: 'center' }}
                         >
                             Your account number is:{' '}
-                            <span style={{ color: '#005b82' }}>
+                            <span style={{ color: '#102572', fontWeight: 700 }}>
                                 {accountNumber === undefined
                                     ? null
                                     : accountNumber.accountNumber}
                             </span>
                         </h6>
 
-                        <h6 className={styles.elevateSuccess}>
-                            With your Ellevate Account, you have <br />
-                            <span> Deposit/Inflow Limit: N1,000,000</span>
-                        </h6>
                         <Link href="/Dashboard">
                             <button className={styles.btnSuccess}>
                                 Proceed to dashboard
                             </button>
                         </Link>
+                        <h6 className={styles.elevateSuccess}>
+                            With your Ellevate Account, you have <br />
+                            <span> Deposit/Inflow Limit: N1,000,000</span>
+                        </h6>
                     </div>
 
                     {/* </ProfileCard> */}

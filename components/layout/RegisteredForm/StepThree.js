@@ -4,8 +4,9 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
+import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 
-const StepThree = ({ action }) => {
+const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     const account = localStorage.getItem('displayAccount');
     const accountDetails = JSON.parse(account);
     const [isRegistered, setIsRegistered] = useState(false);
@@ -28,31 +29,40 @@ const StepThree = ({ action }) => {
     const handleBusinessTog = () => {
         setBColor(true);
     };
+    let countryName = '';
+    let countryNames;
+
+    if (typeof window !== 'undefined') {
+        countryName = window.localStorage.getItem('country');
+        if (countryName === null) {
+            countryNames = window.localStorage.getItem('country');
+        } else {
+            countryNames = JSON.parse(countryName);
+        }
+    }
     const [activeBtn, setActiveBtn] = useState(true);
     return (
-        <div>
-            <div className={styles.cardHeading}>
-                <div>
-                    <ArrowBackSvg action={action} />
-                    <h3 className={styles.LeftHeading}>
-                        Complete your Profile
-                    </h3>
-                </div>
-                <Progressbar
-                    bgcolor="#6CCF00"
-                    progressCount={progress}
-                    height={14}
-                    progWidth="27%"
-                />
-                {/* <Imag
+        <div className={styles.body}>
+            <section className={styles.sectionI}>
+                <ProfileSetupSide text="Input your BVN and open a Business Account in 3 minutes." />
+            </section>
+            <section className={styles.sectionII}>
+                <div className={styles.secondStepForm}>
+                    <div className={styles.cardHeading}>
+                        <ArrowBackSvg action={action} />
+                        <div>
+                            <h3 className={styles.LeftHeading}>
+                                Complete your Profile
+                            </h3>
+                        </div>
+                        {/* <Imag
                     src="/width"
                     alt="lineImage" /> */}
-            </div>
-
-            {/* <Imag
+                    </div>
+                    {/* <Imag
                     src="/width"
                     alt="lineImage" /> */}
-            {/* <p
+                    {/* <p
                 style={{
                     fontWeight: '400',
                     fontSize: '16px',
@@ -104,93 +114,91 @@ const StepThree = ({ action }) => {
                     </p>
                 </span>
             </div> */}
-            {/* <p>
+                    {/* <p>
                 Contine with your personal account or open a new business
                 account
             </p> */}
-            <div className={styles.formInner}>
-                {accountDetails.email === null ? null : (
-                    <div>
-                        <label>Email </label>
-                        <br />
+                    <div className={styles.formWrapper}>
+                        <div className={styles.formInner}>
+                            {accountDetails.email === null ? null : (
+                                <div>
+                                    <label>Email </label>
 
-                        <input
-                            placeholder="Enter Your Email"
-                            className={styles.textInput}
-                            required
-                            readOnly
-                            value={accountDetails.email}
-                        />
-                    </div>
-                )}
+                                    <input
+                                        placeholder="Enter Your Email"
+                                        className={styles.textInput}
+                                        required
+                                        readOnly
+                                        value={accountDetails.email}
+                                    />
+                                </div>
+                            )}
 
-                <div>
-                    <label>Account Number </label>
-                    <br />
+                            <div>
+                                <label>Account Number </label>
 
-                    <input
-                        placeholder="Account Numberl"
-                        className={styles.textInput}
-                        required
-                        readOnly
-                        value={accountDetails.accountNumber}
-                    />
-                </div>
-                <div>
-                    <label>Full Name </label>
-                    <br />
+                                <input
+                                    placeholder="Account Numberl"
+                                    className={styles.textInput}
+                                    required
+                                    readOnly
+                                    value={accountDetails.accountNumber}
+                                />
+                            </div>
+                            <div>
+                                <label>Full Name </label>
 
-                    <input
-                        placeholder="Enter Your Email"
-                        className={styles.textInput}
-                        required
-                        readOnly
-                        value={accountDetails.fullName}
-                    />
-                </div>
-                <div>
-                    <label>Phone Number </label>
-                    <br />
+                                <input
+                                    placeholder="Enter Your Email"
+                                    className={styles.textInput}
+                                    required
+                                    readOnly
+                                    value={accountDetails.fullName}
+                                />
+                            </div>
+                            <div>
+                                <label>Phone Number </label>
+                                <div className={styles.phone}>
+                                    <div className={styles.phoneHeader}>
+                                        <span>
+                                            <img
+                                                src={countryNames.flags.svg}
+                                                alt=""
+                                            />
+                                        </span>
+                                        <p>{countryNames.baseCurrency}</p>
+                                    </div>
+                                    <div className={styles.phoneDetails}>
+                                        {/* <p>{countryNames.countryCode}</p> */}
+                                        <input
+                                            type="number"
+                                            placeholder="812 345 6789"
+                                            value={accountDetails.phoneNumber}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className={styles.genBtm}
+                                style={{ marginBottom: '0px' }}
+                            >
+                                <label>Your Gender </label>
 
-                    <input
-                        placeholder="Tel"
-                        className={styles.textInput}
-                        required
-                        readOnly
-                        value={accountDetails.phoneNumber}
-                    />
-                </div>
-                <div className={styles.genBtm} style={{ marginBottom: '0px' }}>
-                    <p>Your Gender </p>
-                    <br />
-
-                    <div
-                        className={styles.genders}
-                        style={{ marginBottom: '0px' }}
-                    >
-                        <div className={styles.genderPart}>
-                            <input
-                                className={styles.radioInput}
-                                required
-                                disabled
-                                //    {accountDetails.data.gender === "m" ?checked}
-                                type="radio"
-                                checked
-                            />
-                            <label>Male</label>
+                                <select name="" id="">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
                         </div>
-                        <div className={styles.genderPart}>
-                            <input
-                                className={styles.radioInput}
-                                required
-                                disabled
-                                type="radio"
-                            />
-                            <label>Female</label>
-                        </div>
+                        <button onClick={handleSubmitNew}>
+                            Contine with this Personal account
+                        </button>
+                        <p onClick={handleSubmit} className={styles.open}>
+                            Click to open a <span>New Busiess Account</span>
+                        </p>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     );
 };

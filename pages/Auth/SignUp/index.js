@@ -124,24 +124,12 @@ const Signup = ({ type }) => {
         <>
             <div className={styles.cover}>
                 <section className={styles.sectionI}>
+                    <img src="/Assets/Images/Overlay1.svg" alt="" />
                     <div>
                         <h2 className={styles.bvn}>
                             Input your BVN and open a Business Account in
                             <span> 3 minutes.</span>
                         </h2>
-                        <svg
-                            width="2"
-                            height="227"
-                            viewBox="0 0 2 227"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M1 0V387"
-                                stroke="white"
-                                strokeDasharray="8 8"
-                            />
-                        </svg>
                     </div>
                 </section>
                 <section className={styles.sectionII}>
@@ -150,7 +138,7 @@ const Signup = ({ type }) => {
                             <div>
                                 <div>
                                     <div className={styles.doYou}>
-                                        Do you have an Ecobank account?
+                                        <h2>Do you have an Ecobank account?</h2>
                                     </div>
                                     <div className={styles.ButtonWrapper}>
                                         <span

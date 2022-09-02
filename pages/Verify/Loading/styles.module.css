@@ -74,21 +74,30 @@ color: #A5A5A5;
         opacity: 0;
     } */
 
-
 .verifyCov {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
-.body {
-    text-align: center;
-    width: 44%;
+
+.verifyPopup {
+    width: 38%;
+    margin: 0px auto;
+    max-width: 575px;
     background: #fefefe;
     border: 1px solid rgba(219, 219, 219, 0.6);
     box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
-    padding: 4.92rem 4.8rem;
+    padding: 80px 0px;
+}
+
+.body {
+    text-align: center;
+    width: 55%;
+    max-width: 313px;
+    margin: 0px auto;
 }
 .verifyEmail {
     font-family: 'Inter';
@@ -97,9 +106,7 @@ color: #A5A5A5;
     font-size: 24px;
     line-height: 33px;
     text-align: center;
-    width: 277px;
-    color: #005B82;
-    
+    color: #005b82;
 }
 .hi {
     font-family: 'Inter', sans-serif;
@@ -107,17 +114,17 @@ color: #A5A5A5;
     font-weight: 400;
     font-size: 14px;
     line-height: 23px;
-    width: 70%;
+    /* width: 70%; */
     text-align: center;
     color: #a5a5a5;
     margin: 0 auto;
     margin-bottom: 1.5rem;
 }
-.email{
+.email {
     display: flex;
     justify-content: center;
 }
-.veriEmaillTxt{
+.veriEmaillTxt {
     display: flex;
     justify-content: center;
 }

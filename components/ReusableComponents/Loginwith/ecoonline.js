@@ -82,7 +82,6 @@ const Ecoonline = () => {
             <div className={styles.cover}>
                 <div>
                     <label>Enter your Ecobank Online Username</label>
-                    <br />
                     <input
                         placeholder="Ecobank Online Username"
                         type="text"
@@ -96,7 +95,6 @@ const Ecoonline = () => {
                 <p className={styles.error}>{errors?.username?.message}</p>
                 <div>
                     <label>Enter Your Ecobank Online Password</label>
-                    <br />
                     <div className={styles.passwordEye}>
                         <input
                             placeholder="Ecobank Online Password"

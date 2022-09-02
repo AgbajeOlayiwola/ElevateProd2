@@ -63,9 +63,11 @@ export const Label = styled.label`
     font-size: 14px;
     line-height: 19px;
     color: #3e3e3e;
+    margin-bottom: 8px;
+    display: block;
 `;
 export const FormInput = styled.input`
-    margin-top: 0.5rem;
+    margin-top: 0rem;
 `;
 export const SelectInput = styled.select`
     width: 100%;

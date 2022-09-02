@@ -15,6 +15,11 @@ import {
 import { Router, useRouter } from 'next/router';
 import Loader from '../../ReusableComponents/Loader';
 import Liveness from './Liveness';
+import { getCookie } from 'cookies-next';
+import Head from 'next/head';
+import HomeSvg from '../../ReusableComponents/HomeSvg';
+import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
+
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
@@ -22,6 +27,9 @@ const ProfileSetups = () => {
     const router = useRouter();
     // Router.reload();
     // router.replace(router.asPath);
+
+    const cookie = getCookie('cookieToken');
+    console.log('register page', cookie);
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
@@ -47,9 +55,17 @@ const ProfileSetups = () => {
         referralCode: '',
         signatory: 1
     });
-    const countryName = window.localStorage.getItem('country');
+    let countryName = '';
+    let countryNames;
 
-    const countryNames = JSON.parse(countryName);
+    if (typeof window !== 'undefined') {
+        countryName = window.localStorage.getItem('country');
+        if (countryName === null) {
+            countryNames = window.localStorage.getItem('country');
+        } else {
+            countryNames = JSON.parse(countryName);
+        }
+    }
     useEffect(() => {
         dispatch(loadCountry());
     }, []);
@@ -89,8 +105,11 @@ const ProfileSetups = () => {
             case 0:
                 return (
                     <RegisteredForm
+                        errorM={errorM}
+                        errorI={errorI}
                         formData={formData}
                         setFormData={setFormData}
+                        action={handleSubmit}
                     />
                 );
             case 1:
@@ -118,10 +137,11 @@ const ProfileSetups = () => {
             case 2:
                 return (
                     <Liveness
-                        action={() => {
-                            setPage(page - 1);
-                            setPageType('');
-                        }}
+                        // action={() => {
+                        //     setPage(page - 1);
+                        //     setPageType('');
+                        // }}
+                        action={handleSubmitt}
                     />
                 );
             case 3:
@@ -129,6 +149,9 @@ const ProfileSetups = () => {
                     <StepThreeCompleteProfile1
                         formData={formData}
                         setFormData={setFormData}
+                        action={() => {
+                            alert('Hello');
+                        }}
                     />
                 );
             default:
@@ -182,6 +205,8 @@ const ProfileSetups = () => {
     const handleSubmitt = () => {
         setPage(page + 1);
     };
+    console.log(errorM, errorI);
+
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
@@ -191,43 +216,38 @@ const ProfileSetups = () => {
     //         setPage(page + 1);
     //     }
     // }, [otpErrorMessage, bvnError, bvnErrorI]);
-
+    let text;
+    {
+        page === 0
+            ? (text =
+                  'Input your BVN and open a Business Account in 3 minutes.')
+            : page === 1
+            ? (text =
+                  'Input your BVN and open a Business Account in 3 minutes.')
+            : page === 2
+            ? (text = 'Checkout Priceless Oppurtunities Be ahead')
+            : page === 3
+            ? (text = 'Checkout Priceless Oppurtunities Be ahead')
+            : null;
+    }
     return (
-        <Card>
-            {page === 0 ? (
-                <>
-                    <p className={styles.error}>{errorM}</p> <br />
-                    <p className={styles.error}>{errorI}</p> <br />
-                    {/* <p className={styles.error}>{errorII}</p> <br /> */}
-                    {/* <p className={styles.error}>{errorIII}</p> <br /> */}
-                    {/*<p className={styles.error}>{errorIII}</p> <br /> */}
-                </>
-            ) : (
-                <></>
-            )}
-            <div className={styles.error}>{error}</div>
-            {conditionalComponent()}
-
-            {page == 1 ? null : page == 2 ? (
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    onClick={handleSubmitt}
-                    type="submit"
-                    text={'Next'}
-                />
-            ) : page === 3 ? (
-                <></>
-            ) : (
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    onClick={handleSubmit}
-                    type="submit"
-                    text={'Next'}
-                />
-            )}
-        </Card>
+        <div className={styles.sections}>
+            <section className={styles.sectionI}>
+                <ProfileSetupSide text={text} />
+            </section>
+            <section className={styles.sectionII}>
+                {page === 0 ? (
+                    <>
+                        {/* <p className={styles.error}>{errorM}</p> <br />
+                                <p className={styles.error}>{errorI}</p> <br /> */}
+                    </>
+                ) : (
+                    <></>
+                )}
+                {/* {error ? <div className={styles.error}>{error}</div> : null} */}
+                {conditionalComponent()}
+            </section>
+        </div>
     );
 };
 

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
 import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
+import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 
 const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
     const dispatch = useDispatch();
@@ -25,7 +26,6 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
     const sendAccount = localStorage.getItem('account');
     const sendAccounts = JSON.parse(sendAccount);
     const [activeBtn, setActiveBtn] = useState(true);
-    const [progress, setProgress] = useState('25%');
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
     const [passwordMatch, setPasswordMatch] = useState('');
@@ -107,106 +107,101 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     return (
-        <>
-            <div className={styles.cardHeading}>
-                <div>
-                    <ArrowBackSvg action={action} />
-                    <h3 className={styles.LeftHeading}>Profile Setup</h3>
-                </div>
-                <Progressbar
-                    bgcolor="#6CCF00"
-                    progressCount={progress}
-                    height={14}
-                    progWidth="27%"
-                />
-                {/* <Imag
-                    src="/width"
-                    alt="lineImage" /> */}
-            </div>
-
-            <form onSubmit={handleSubmit(onSubmit)}>
-                {/* include validation with required or other standard HTML validation rules */}
-                <div className={styles.textInput}>
-                    <label>Email Address/ Phone Number </label>
-                    {errors.email?.message}
-                    <br />
-
-                    <input
-                        placeholder="Enter Your Email"
-                        className={styles.textInput}
-                        required
-                        readOnly
-                        value={
-                            accountDetails.email === null
-                                ? accountDetails.phoneNumber
-                                : accountDetails.email.toLowerCase()
-                        }
-                    />
-                </div>
-
-                <div className={styles.textInput}>
-                    <label>Create Password</label>
-                    <br />
-                    <div className={styles.divs}>
-                        <input
-                            placeholder="Confirm Password"
-                            className={styles.textInput}
-                            required
-                            type={outType ? 'text' : 'password'}
-                            onChange={handlePwd}
-                        />
-                        <Visbility typeSet={types} />
-                    </div>
-                    {errorMessages === '' ? null : (
-                        <div className={styles.errorCont}>
-                            <div
-                                className={
-                                    errorMessages === 'Strong'
-                                        ? styles.strong
-                                        : errorMessages === 'Medium'
-                                        ? styles.medium
-                                        : errorMessages === 'Weak'
-                                        ? styles.errors
-                                        : styles.strong
-                                }
-                            >
-                                <p>{errorMessages}</p>
-                            </div>
+        <div className={styles.body}>
+            <section className={styles.sectionI}>
+                <ProfileSetupSide text="Input your BVN and open a Business Account in 3 minutes." />
+            </section>
+            <section className={styles.sectionII}>
+                <div className={styles.secondStepForm}>
+                    <div className={styles.cardHeading}>
+                        <ArrowBackSvg action={action} />
+                        <div>
+                            <h3 className={styles.LeftHeading}>
+                                Profile Setup
+                            </h3>
                         </div>
-                    )}
-                </div>
-
-                <div className={styles.textInput}>
-                    <label>Confirm Password</label>
-                    <br />
-                    <div className={styles.divs}>
-                        <input
-                            placeholder="Confirm Password"
-                            className={styles.textInput}
-                            required
-                            type={outType ? 'text' : 'password'}
-                            onChange={handlePaswword}
-                        />
-
-                        <Visbility typeSet={types} />
                     </div>
-                    {password === confPassword ? null : (
-                        <p className={styles.error}>{passwordMatch}</p>
-                    )}
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        {/* include validation with required or other standard HTML validation rules */}
+                        <div className={styles.textInput}>
+                            <label>Email Address/ Phone Number </label>
+                            {errors.email?.message}
+                            <input
+                                placeholder="Enter Your Email"
+                                className={styles.textInput}
+                                required
+                                readOnly
+                                value={
+                                    accountDetails.email === null
+                                        ? accountDetails.phoneNumber
+                                        : accountDetails.email.toLowerCase()
+                                }
+                            />
+                        </div>
+
+                        <div className={styles.textInput}>
+                            <label> Password</label>
+                            <div className={styles.divs}>
+                                <input
+                                    placeholder="Enter your Password"
+                                    className={styles.textInput}
+                                    required
+                                    type={outType ? 'text' : 'password'}
+                                    onChange={handlePwd}
+                                />
+                                <Visbility typeSet={types} />
+                            </div>
+                            {errorMessages === '' ? null : (
+                                <div className={styles.errorCont}>
+                                    <div
+                                        className={
+                                            errorMessages === 'Strong'
+                                                ? styles.strong
+                                                : errorMessages === 'Medium'
+                                                ? styles.medium
+                                                : errorMessages === 'Weak'
+                                                ? styles.errors
+                                                : styles.strong
+                                        }
+                                    >
+                                        <p>{errorMessages}</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className={styles.textInput}>
+                            <label>Confirm Password</label>
+                            <div className={styles.divs}>
+                                <input
+                                    placeholder="Confirm your Password"
+                                    className={styles.textInput}
+                                    required
+                                    type={outType ? 'text' : 'password'}
+                                    onChange={handlePaswword}
+                                />
+
+                                <Visbility typeSet={types} />
+                            </div>
+                            {password === confPassword ? null : (
+                                <p className={styles.error}>{passwordMatch}</p>
+                            )}
+                        </div>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                // onClick={handleSubmit}
+                                type="submit"
+                                text="Next"
+                            />
+                        )}
+                    </form>
                 </div>
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        // onClick={handleSubmit}
-                        type="submit"
-                        text="Next"
-                    />
-                )}
-            </form>
-        </>
+            </section>
+        </div>
     );
 };
 

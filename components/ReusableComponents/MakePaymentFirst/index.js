@@ -62,13 +62,14 @@ const MakePaymentFirst = ({
                     <CloseButton
                         action={closeAction}
                         classes={styles.closebtn}
+                        color="white"
                     />
-                    <img
+                    {/* <img
                         src="../../Assets/Svgs/closebtn.svg"
                         alt=""
                         className={styles.closebtn}
                         onClick={closeAction}
-                    />
+                    /> */}
                 </div>
             </div>
         </Overlay>

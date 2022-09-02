@@ -1,3 +1,4 @@
+//I commented out line 176
 import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
@@ -59,7 +60,7 @@ const StepFourCompProfile2BizDetails = ({
     //     console.log(data);
     // };
     const router = useRouter();
-    const [activeBtn, setActiveBtn] = useState(false);
+    const [activeBtn, setActiveBtn] = useState(true);
     const [localState, setLocalState] = useState('');
     const [localGovernment, setLocalGovernment] = useState('');
     const [location, setLocation] = useState([]);
@@ -183,14 +184,14 @@ const StepFourCompProfile2BizDetails = ({
             }
         });
 
-        setProfileCont(profile.data);
+        // setProfileCont(profile.data);
         console.log(profileCont.isBusinessRegistered);
         // createCorp();
     }, [business, profile]);
 
     useEffect(() => {
         businessProfileAction();
-        // createNewAccountAction();
+        createNewAccountAction();
     }, [errorMessages, newAccountErrorMessage, accountStatus]);
     const { states } = useSelector((state) => state.statesReducer);
     useEffect(() => {
@@ -254,14 +255,13 @@ const StepFourCompProfile2BizDetails = ({
         }
     };
     return (
-        <div>
+        <div className={styles.businessCont}>
             <div>
                 {/* The small card that wraps the form */}
                 <div className={styles.dets}>
                     <SmallCardContainer>
                         <div style={{ marginTop: '2rem' }}>
                             <Label>Enter Business Name</Label>
-                            <br />
                             <FormInput
                                 type="text"
                                 placeholder=" Full Business Name"
@@ -277,34 +277,12 @@ const StepFourCompProfile2BizDetails = ({
                         </div>
                         <div style={{ marginTop: '2rem' }}>
                             <Label>Enter Business Phone number</Label>
-                            <br />
                             <div className={styles.phone}>
                                 <div className={styles.phoneHeader}>
                                     <span>
                                         <img src={formData.flag} alt="" />
                                     </span>
                                     <p>{formData.baseCurrency}</p>
-                                    {/* <input
-                                    type="number"
-                                    placeholder="+234"
-                                    {...register('phone_number', {
-                                        required: 'phone number is required',
-                                        minLength: {
-                                            value: 9,
-                                            message: 'Min length is 9'
-                                        }
-                                    })}
-                                    value={formData.countryCode}
-                                    onChange={(event) => {
-                                        setFormData({
-                                            ...formData,
-                                            countryCode: event.target.value
-                                        });
-                                        if (event.target.value.length == 15)
-                                          return false; //limits to 10 digit entry
-                                        setPhoneNumber(event?.target.value); //saving input to state
-                                    }}
-                                /> */}
                                 </div>
                                 <div className={styles.phoneDetails}>
                                     <p> +{formData.countryCode}</p>
@@ -325,17 +303,13 @@ const StepFourCompProfile2BizDetails = ({
                                                 ...formData,
                                                 phoneNumber: event.target.value
                                             });
-                                            //if (event.target.value.length == 15)
-                                            //  return false; //limits to 10 digit entry
-                                            //setPhoneNumber(event?.target.value); //saving input to state
                                         }}
                                     />
                                 </div>
                             </div>
                         </div>
                         <div style={{ marginTop: '2rem', width: '100%' }}>
-                            <label>Select Your Business Type </label>
-                            <br />
+                            <Label>Select Your Business Category </Label>
                             <select
                                 onChange={(e) => {
                                     setBusiness(e.target.value);
@@ -357,9 +331,7 @@ const StepFourCompProfile2BizDetails = ({
                             </select>
                         </div>
                         <div style={{ marginTop: '2rem', width: '100%' }}>
-                            <label>Select Your Business Type </label>
-
-                            <br />
+                            <Label>Select Your Business Type </Label>
 
                             <select
                                 onChange={(event) => {
@@ -383,31 +355,34 @@ const StepFourCompProfile2BizDetails = ({
                         <p className={styles.ent}>Enter Business Address</p>
                         <div className={styles.busAdd}>
                             <div className={styles.inps}>
-                                <label>Address</label>
-                                {errors.email?.message}
-                                <br />
-
-                                <FormInput
-                                    type="text"
-                                    placeholder="Address"
-                                    {...register('streetName')}
-                                    value={formData.streetName}
-                                    onChange={(event) => {
-                                        setFormData({
-                                            ...formData,
-                                            streetName: event.target.value
-                                        });
-                                        //     if (event.target.value.length == 15)
-                                        //         return false; //limits to 10 digit entry
-                                        //     setPhoneNumber(event?.target.value); //saving input to state
-                                        // }}
-                                    }}
-                                />
+                                <Label>Street Name</Label>
+                                <div className={styles.addressNumber}>
+                                    <input
+                                        type="text"
+                                        placeholder="101"
+                                        className={styles.number}
+                                    />
+                                    <FormInput
+                                        type="text"
+                                        placeholder="Street Name"
+                                        {...register('streetName')}
+                                        value={formData.streetName}
+                                        onChange={(event) => {
+                                            setFormData({
+                                                ...formData,
+                                                streetName: event.target.value
+                                            });
+                                            //     if (event.target.value.length == 15)
+                                            //         return false; //limits to 10 digit entry
+                                            //     setPhoneNumber(event?.target.value); //saving input to state
+                                            // }}
+                                        }}
+                                    />
+                                </div>
                             </div>
                             <div className={styles.inps}>
-                                <label>State </label>
-                                {errors.email?.message}
-                                <br />
+                                <Label>State </Label>
+                                {errors.email?.message}{' '}
                                 <SelectInput
                                     name="State"
                                     id=""
@@ -435,10 +410,8 @@ const StepFourCompProfile2BizDetails = ({
                                 </SelectInput>
                             </div>
                             <div className={styles.inps}>
-                                <label>Select Your Local Government </label>
+                                <Label>Select Your Local Government </Label>
                                 {errors.email?.message}
-                                <br />
-
                                 <SelectInput
                                     name="localGovernment"
                                     id=""
@@ -474,10 +447,8 @@ const StepFourCompProfile2BizDetails = ({
                                 </SelectInput>
                             </div>
                             <div className={styles.inps}>
-                                <label>City </label>
+                                <Label>City </Label>
                                 {errors.email?.message}
-                                <br />
-
                                 <FormInput
                                     type="type"
                                     placeholder="City"
@@ -512,18 +483,17 @@ const StepFourCompProfile2BizDetails = ({
                     <p className={styles.ent}>Your Signature</p>
                     <div className={styles.busAdd}>
                         <div className={styles.inps}>
-                            <label className={styles.signa}>
+                            <Label className={styles.signa}>
                                 Kindly scan your signature or sign
                                 electronically
-                            </label>
+                            </Label>
                             {errors.email?.message}
-                            <br />
                             <input className={styles.inputFile} type="file" />
                         </div>
                     </div>
                 </LastFieldAndButton>
                 {/* <Link href="/Succes"> */}
-                <div>
+                {/* <div>
                     <div className={styles.terms}>
                         <CircleSvg
                             action={() => {
@@ -536,7 +506,7 @@ const StepFourCompProfile2BizDetails = ({
                             <span>Terms and Conditions</span>
                         </label>
                     </div>
-                </div>
+                </div> */}
                 {profileCont.isBusinessRegistered === true ? (
                     <ButtonComp
                         disabled={activeBtn}
