@@ -7,6 +7,7 @@ import StepThreeCompleteProfile1 from './StepThreeCompleteProfile1';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
+import Script from 'next/script';
 import {
     createProfileSetup,
     verifyOtp,
@@ -214,6 +215,8 @@ const ProfileSetups = () => {
 
     return (
         <div className={styles.sections}>
+            <script src="https://web-button.mati.io/button.js"></script>
+
             <section className={styles.sectionI}>
                 <div>
                     <img src="../Assets/Images/profileSetup1.png" alt="" />
@@ -242,12 +245,11 @@ const ProfileSetups = () => {
                         {/* {error ? <div className={styles.error}>{error}</div> : null} */}
                         {conditionalComponent()}
                         {page == 1 ? null : page == 2 ? (
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                onClick={handleSubmitt}
-                                type="submit"
-                                text={'NextI'}
+                            <mati-button
+                                clientId="622f44566ac1c1001cd1daac" // from your Mati dashboard
+                                flowId="62fb9b12235dfd001ed92fec" // from your Mati dashboard
+                                color="#000000" // any color
+                                metadata='{"user_id":"1234778"}'
                             />
                         ) : page === 3 ? (
                             <></>
