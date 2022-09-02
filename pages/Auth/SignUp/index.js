@@ -5,12 +5,12 @@ import { ButtonComp, LoginWith } from '../../../components';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { createUserAction } from '../../../redux/actions/actions';
-import { useSelector } from 'react-redux';
 import { encrypt } from '../../../redux/helper/hash';
 import validator from 'validator';
+import Loader from '../../../components/ReusableComponents/Loader';
 
 const Signup = ({ type }) => {
     const router = useRouter();
@@ -22,6 +22,7 @@ const Signup = ({ type }) => {
     const [confirmPassword, setConfPassword] = useState('');
     const [activeBtn, setActiveBtn] = useState(true);
     const [business, setBusiness] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
@@ -30,7 +31,6 @@ const Signup = ({ type }) => {
         (state) => state.registered
     );
 
-    console.log(user);
     const [passwordMatch, setPasswordMatch] = useState('');
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
@@ -89,6 +89,7 @@ const Signup = ({ type }) => {
     //     onSubmit();
     // }[errorMessage]);
     const onSubmit = (data) => {
+        setError('');
         if (password === confirmPassword) {
             const postData = {
                 pName,
@@ -97,17 +98,24 @@ const Signup = ({ type }) => {
                 confirmPassword: encrypt(confirmPassword),
                 affiliateCode: 'ENG'
             };
-            console.log(password);
+            setLoading(true);
+            console.log(errorMessage);
             dispatch(createUserAction(postData));
-            if (errorMessage !== 'Account created successfully!') {
-                setError(errorMessage);
-            } else {
-                router.push('../Verify/Loading');
-            }
         } else {
             passwordMatch;
         }
     };
+    const sentSIgnUp = () => {
+        if (errorMessage !== null) {
+            setError(errorMessage);
+            setLoading(false);
+        } else if (user == 'Account created successfully!') {
+            router.push('../Verify/Loading');
+        }
+    };
+    useEffect(() => {
+        sentSIgnUp();
+    }, [errorMessage, user]);
 
     const [bgcolor, setBgcolor] = useState(false);
 
@@ -116,24 +124,12 @@ const Signup = ({ type }) => {
         <>
             <div className={styles.cover}>
                 <section className={styles.sectionI}>
+                    <img src="/Assets/Images/Overlay1.svg" alt="" />
                     <div>
                         <h2 className={styles.bvn}>
                             Input your BVN and open a Business Account in
                             <span> 3 minutes.</span>
                         </h2>
-                        <svg
-                            width="2"
-                            height="227"
-                            viewBox="0 0 2 227"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M1 0V387"
-                                stroke="white"
-                                strokeDasharray="8 8"
-                            />
-                        </svg>
                     </div>
                 </section>
                 <section className={styles.sectionII}>
@@ -142,7 +138,7 @@ const Signup = ({ type }) => {
                             <div>
                                 <div>
                                     <div className={styles.doYou}>
-                                        Do you have an Ecobank account?
+                                        <h2>Do you have an Ecobank account?</h2>
                                     </div>
                                     <div className={styles.ButtonWrapper}>
                                         <span
@@ -236,7 +232,6 @@ const Signup = ({ type }) => {
                                         <input
                                             placeholder="Enter Your Email"
                                             className={styles.textInput}
-                                            required
                                             {...register('email', {
                                                 required: 'Email is required',
                                                 pattern: {
@@ -247,6 +242,7 @@ const Signup = ({ type }) => {
                                                 }
                                             })}
                                             onChange={handleEmail}
+                                            value={email}
                                         />
                                         {errors.email?.message}
                                     </div>
@@ -323,14 +319,20 @@ const Signup = ({ type }) => {
                                     {errors.exampleRequired && (
                                         <span>This field is required</span>
                                     )}
-                                    <ButtonComp
-                                        disabled={activeBtn}
-                                        active={
-                                            activeBtn ? 'active' : 'inactive'
-                                        }
-                                        text="Proceed"
-                                        type="submit"
-                                    />
+                                    {loading ? (
+                                        <Loader />
+                                    ) : (
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            text="Proceed"
+                                            type="submit"
+                                        />
+                                    )}
                                 </form>
                             ) : (
                                 <>
@@ -338,15 +340,13 @@ const Signup = ({ type }) => {
                                         Choose Preferred Login Option
                                     </p>
 
-                                    <div onSubmit={handleSubmit(onSubmit)}>
-                                        <LoginWith />
-                                    </div>
+                                    <LoginWith />
                                 </>
                             )}
 
                             <div>
                                 <p className={styles.accout}>
-                                    Do you Have An Accout?
+                                    Already Registered?
                                     <Link href="../Auth/Login">
                                         <span className={styles.termss}>
                                             {' '}

@@ -1,0 +1,43 @@
+.accountCont {
+    background-color: #e5e5e5;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    padding: 97px 0px;
+}
+
+.accountUpgradePopup {
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    width: 38%;
+    max-width: 575px;
+    margin: 0px auto;
+}
+
+.accountUpgradePopup .accountUpgradeSingle {
+    width: 69%;
+    max-width: 401px;
+    margin: 0px auto;
+    padding: 64px 0px;
+}
+
+.accountUpgradeSingleHeader {
+    display: flex;
+    align-items: center;
+}
+
+.accountUpgradeSingleHeader svg {
+    cursor: pointer;
+}
+
+.accountUpgradeSingleHeader h2 {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #005b82;
+    margin-left: 16px;
+}

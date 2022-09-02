@@ -2,10 +2,10 @@ import { Router } from 'next/router';
 import React from 'react';
 import styles from './styles.module.css';
 import { useRouter } from 'next/router';
-const FailedModal = () => {
+const FailedModal = ({ text }) => {
     const router = useRouter();
     const restart = () => {
-        router.push('../../Onboarding/ProfileSetup');
+        router.push('/Dashboard');
     };
     return (
         <div className={styles.cover}>
@@ -26,12 +26,10 @@ const FailedModal = () => {
                 </div>
                 <p className={styles.oops}>Oops</p>
                 <div className={styles.someDiv}>
-                    <p className={styles.some}>
-                        Something went wrong, please try again.
-                    </p>
+                    <p className={styles.some}>{text}</p>
                 </div>
                 <button onClick={restart} className={styles.btn}>
-                    Try again
+                    Go to Dashboard
                 </button>
             </div>
         </div>

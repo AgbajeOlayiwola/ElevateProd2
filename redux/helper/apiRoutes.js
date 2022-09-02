@@ -24,12 +24,23 @@ const newProfileSetup = '/auth/profile-setup';
 const profile = '/auth/profile';
 const profileSetupBus = '/auth/profile-setup';
 const verifyOtp = '/verification/verify/otp';
+const verifyDob = '/verification/verify/dob';
 const authProfile = '/auth/profile';
 const account = '/auth/account';
 const completesBusinessProfile = '/business';
-const createAccount = '/account';
-const accountStatus = '/account/status';
+const newCreateAccount = '/account';
+const createAccount = '/account/corp/create-for-existing-user';
+const corpNewUser = '/account/corp/create-for-new-user';
+// const accountStatus = '/account/corp-acct';
+const accountStatus = '/account/corp-acct';
 const verifyStatus = '/verification/document/status';
+const omnilite = '/auth/register/omnilite';
+const ecobankOnline = '/auth/register/ecobank-online';
+const accountNumber = '/auth/register/account-number';
+const existingUserProfile = '/auth/existing-user/profile-setup/personal';
+const businessCategories = '/business-categories';
+const states = '/lga';
+const cardLogin = '/auth/register/card';
 export default {
     getBanks,
     getCountries,
@@ -53,14 +64,24 @@ export default {
     verifyCurrency,
     internationalTransfer,
     profile,
+    corpNewUser,
     bulkTransfer,
     beneficiaries,
     profileSetupBus,
     verifyOtp,
+    verifyDob,
     authProfile,
     account,
     completesBusinessProfile,
     createAccount,
     accountStatus,
-    verifyStatus
+    omnilite,
+    accountNumber,
+    existingUserProfile,
+    ecobankOnline,
+    verifyStatus,
+    businessCategories,
+    states,
+    cardLogin,
+    newCreateAccount
 };

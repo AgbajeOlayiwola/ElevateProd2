@@ -1,0 +1,98 @@
+.profileSetupSide {
+    /* display: flex;
+    justify-content: space-between;
+    flex-direction: column; */
+    height: 100%;
+}
+
+.green {
+    background: #396805;
+    border-radius: 60px;
+    transform: rotate(180deg);
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    transform: skew(0deg, -7deg);
+    width: 100%;
+    margin-top: -20%;
+    height: 23vh;
+}
+
+.grey {
+    background: #303030;
+    border-radius: 60px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin-top: 2%;
+    width: 100%;
+    transform: skew(0deg, -7deg);
+    height: 110vh;
+    overflow: hidden;
+}
+
+.content {
+    transform: skew(0deg, 7deg);
+    padding: 50px 92px 0px 68px;
+}
+
+.content .SMeApp {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #ffffff;
+    margin: 0px;
+    margin-top: 8px;
+}
+
+.content .contentHeader {
+    margin-bottom: 7.1%;
+    margin-top: 21%;
+}
+
+.content h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 120%;
+    color: #ffffff;
+    width: 95%;
+}
+
+.colorDiv {
+    width: 54%;
+    max-width: 164px;
+    height: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 13%;
+}
+
+.firstDiv {
+    width: 59%;
+    max-width: 96px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 100px;
+}
+
+.secondDiv,
+.thirdDiv {
+    width: 13%;
+    max-width: 21px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+}
+
+.navImage {
+    transform: skew(0deg, 7deg);
+    width: 72%;
+    height: 278px;
+}
+
+.navImage img {
+    /* width: 100%; */
+    height: 100%;
+}

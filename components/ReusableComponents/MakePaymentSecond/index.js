@@ -3,6 +3,7 @@ import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import OtpInput from '../Otpinput';
 import Overlay from '../Overlay';
+import Loader from '../Loader';
 
 const MakePaymentSecond = ({
     overlay,
@@ -92,13 +93,17 @@ const MakePaymentSecond = ({
                                 Clear
                             </button>
                         </div>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="Make Transfer"
-                            type="submit"
-                            onClick={transferAction}
-                        />
+                        {isLoading ? (
+                            <Loader />
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Make Transfer"
+                                type="submit"
+                                onClick={transferAction}
+                            />
+                        )}
                     </div>
                 </div>
             ) : (
@@ -154,7 +159,7 @@ const MakePaymentSecond = ({
                             </button>
                         </div>
                         {isLoading ? (
-                            <h2>Loading...</h2>
+                            <Loader />
                         ) : (
                             <ButtonComp
                                 disabled={activeBtn}

@@ -1,0 +1,77 @@
+.elevateSuccess {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    /* or 141% */
+
+    text-align: center;
+    margin-top: 3rem;
+    color: #a5a5a5;
+    margin-bottom: -3rem;
+}
+.elevateSuccess span {
+    color: #005b82;
+}
+.centerP {
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    text-align: center;
+    color: #a5a5a5;
+    cursor: pointer;
+}
+
+.successWrapper {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin: 70px auto;
+    width: 600px;
+    border-radius: 50px;
+}
+
+.bodyWrapper {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding-bottom: 5%;
+    /* background: #fefefe; */
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+}
+
+.registrationStatus {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+}
+
+.successMainHeading {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    color: #102572;
+    margin-top: 4%;
+    text-align: center;
+}
+
+.h6Wrapper {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    color: #a5a5a5;
+}
+
+.btnSuccess {
+    margin: 48px 0px 0px 0px;
+}

@@ -185,16 +185,108 @@ export const internationalTransfer = {
 
 //transactionHistory action type ends
 
+//omnilite action types
+
+export const omnilite = {
+    OMNILITE_LOAD_START: 'OMNILITE_LOAD_START',
+    OMNILITE_LOAD_SUCCESS: 'OMNILITE_LOAD_SUCCESS',
+    OMNILITE_LOAD_ERROR: 'OMNILITE_LOAD_ERROR'
+};
+
+//omnilite action type ends
+
+//ecobankOnline action types
+
+export const ecobankOnline = {
+    ECOBANKONLINE_LOAD_START: 'ECOBANKONLINE_LOAD_START',
+    ECOBANKONLINE_LOAD_SUCCESS: 'ECOBANKONLINE_LOAD_SUCCESS',
+    ECOBANKONLINE_LOAD_ERROR: 'ECOBANKONLINE_LOAD_ERROR'
+};
+
+//ecobankOnline action type ends
+
+//accountNumber action types
+
+export const accountNumber = {
+    ACCOUNTNUMBER_LOAD_START: 'ACCOUNTNUMBER_LOAD_START',
+    ACCOUNTNUMBER_LOAD_SUCCESS: 'ACCOUNTNUMBER_LOAD_SUCCESS',
+    ACCOUNTNUMBER_LOAD_ERROR: 'ACCOUNTNUMBER_LOAD_ERROR'
+};
+
+//accountNumber action type ends
+
+//accountNumber action types
+
+export const existingUserProfile = {
+    EXISTINGUSERPROFILE_LOAD_START: 'EXISTINGUSERPROFILE_LOAD_START',
+    EXISTINGUSERPROFILE_LOAD_SUCCESS: 'EXISTINGUSERPROFILE_LOAD_SUCCESS',
+    EXISTINGUSERPROFILE_LOAD_ERROR: 'EXISTINGUSERPROFILE_LOAD_ERROR'
+};
+
+//accountNumber action type ends
+
+//accountNumber action types
+
+export const createAccount = {
+    CREATEACCOUNT_LOAD_START: 'CREATEACCOUNT_LOAD_START',
+    CREATEACCOUNT_LOAD_SUCCESS: 'CREATEACCOUNT_LOAD_SUCCESS',
+    CREATEACCOUNT_LOAD_ERROR: 'CREATEACCOUNT_LOAD_ERROR'
+};
+
+//accountNumber action type ends
+
+//accountNumber action types
+
+export const accountStatus = {
+    ACCOUNTSTATUS_LOAD_START: 'ACCOUNTSTATUS_LOAD_START',
+    ACCOUNTSTATUS_LOAD_SUCCESS: 'ACCOUNTSTATUS_LOAD_SUCCESS',
+    ACCOUNTSTATUS_LOAD_ERROR: 'ACCOUNTSTATUS_LOAD_ERROR'
+};
+
+//accountNumber action type ends
+
+//businessCategory action types
+
+export const businessCategories = {
+    BUSINESSCATEGORIES_LOAD_START: 'BUSINESSCATEGORIES_LOAD_START',
+    BUSINESSCATEGORIES_LOAD_SUCCESS: 'BUSINESSCATEGORIES_LOAD_SUCCESS',
+    BUSINESSCATEGORIES_LOAD_ERROR: 'BUSINESSCATEGORIES_LOAD_ERROR'
+};
+
+//businessCategory action type ends
+
+//states action types
+
+export const states = {
+    STATES_LOAD_START: 'STATES_LOAD_START',
+    STATES_LOAD_SUCCESS: 'STATES_LOAD_SUCCESS',
+    STATES_LOAD_ERROR: 'STATES_LOAD_ERROR'
+};
+
+//states action type ends
+
+//cardLogin action types
+
+export const cardLogin = {
+    CARDLOGIN_LOAD_START: 'CARDLOGIN_LOAD_START',
+    CARDLOGIN_LOAD_SUCCESS: 'CARDLOGIN_LOAD_SUCCESS',
+    CARDLOGIN_LOAD_ERROR: 'CARDLOGIN_LOAD_ERROR'
+};
+
+//cardLogin action type ends
+
 //auth action types
 export const login = {
     REGISTER_SUCCESS: 'REGISTER_SUCCESS',
+    REGISTER_START: 'REGISTER_START',
     REGISTER_FAIL: 'REGISTER_FAIL',
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
     LOGIN_ERROR: 'LOGIN_ERROE',
     SET_MESSAGE: 'SET_MESSAGE',
     CLEAR_MESSAGE: 'CLEAR_MESSAGE',
     LOGIN_FAIL: 'LOGIN_FAIL',
-    LOGOUT: 'LOGOUT'
+    LOGOUT: 'LOGOUT',
+    LOGIN_START: 'LOGIN_START'
 };
 //end auth action types
 //profile setup
@@ -202,7 +294,13 @@ export const login = {
 export const setupProfile = {
     PROFILESETUP_LOAD_START: 'PROFILE_SETUPLOAD_START',
     PROFILESETUP_LOAD_SUCCESS: 'PROFILESETUP_LOAD_SUCCESS',
-    PROFILESETUP_LOAD_ERROR: 'PROFILESETUP_LOAD_ERROR'
+    PROFILESETUP_LOAD_ERROR: 'PROFILESETUP_LOAD_ERROR',
+    BVN_NIN_LOAD_ERROR: 'BVN_NIN_LOAD_ERROR',
+    BVN_NIN_LOAD_ERRORI: 'BVN_NIN_LOAD_ERRORI',
+    BVN_NIN_LOAD_ERRORII: 'BVN_NIN_LOAD_ERRORII',
+    BVN_NIN_LOAD_ERRORIII: 'BVN_NIN_LOAD_ERRORIII',
+    BVN_NIN_LOAD_SUCCESS: 'BVN_NIN_LOAD_SUCCESS',
+    BVN_NIN_LOAD_PENDING: 'BVN_NIN_LOAD_PENDING'
 };
 //profile setup end
 //complete profile action type start
@@ -220,13 +318,41 @@ export const compProfile = {
 export const otp = {
     OTP_LOAD_START: 'OTP_LOAD_START',
     OTP_LOAD_SUCCESS: 'OTP_LOAD_SUCCESS',
-    OTP_LOAD_ERROR: 'OTP_LOAD_ERROR',
-    BVN_NIN_LOAD_ERROR: 'BVN_NIN_LOAD_ERROR'
+    OTP_LOAD_ERROR: 'OTP_LOAD_ERROR'
 };
 //otp action type end
 
+//complete profile start
 export const completeProfile = {
     COMP_PROFILE_LOAD_START: 'COMP_PROFILE_LOAD_START',
     COMP_PROFILE_LOAD_SUCCESS: 'COMP_PROFILE_LOAD_SUCCESS',
     COMP_PROFILE_LOAD_ERROR: 'COMP_PROFILE_LOAD_ERROR'
 };
+//complete profile end
+
+//create new user account
+export const newUserCreateAccount = {
+    CREATE_NEW_ACCOUNT_LOAD_START: 'CREATE_NEW_ACCOUNT_LOAD_START',
+    CREATE_NEW_ACCOUNT_LOAD_SUCCESS: 'CREATE_NEW_ACCOUNT_LOAD_SUCCESS',
+    CREATE_NEW_ACCOUNT_LOAD_ERROR: 'CREATE_NEW_ACCOUNT_LOAD_ERROR'
+};
+//create new user end
+
+//get new user account start
+
+export const getNewUserAccount = {
+    GET_NEW_ACCOUNT_LOAD_START: 'GET_NEW_ACCOUNT_LOAD_START',
+    GET_NEW_ACCOUNT_LOAD_SUCCESS: 'GET_NEW_ACCOUNT_LOAD_SUCCESS',
+    GET_NEW_ACCOUNT_LOAD_ERROR: 'GET_NEW_ACCOUNT_LOAD_ERROR'
+};
+
+//get new user account end
+
+//create new user Corp account
+export const newUserCreateCorpAccount = {
+    CREATE_NEW_CORP_ACCOUNT_LOAD_START: 'CREATE_NEW_CORP_ACCOUNT_LOAD_START',
+    CREATE_NEW_CORP_ACCOUNT_LOAD_SUCCESS:
+        'CREATE_NEW_CORP_ACCOUNT_LOAD_SUCCESS',
+    CREATE_NEW_CORP_ACCOUNT_LOAD_ERROR: 'CREATE_NEW_CORP_ACCOUNT_LOAD_ERROR'
+};
+//create new user Corp end

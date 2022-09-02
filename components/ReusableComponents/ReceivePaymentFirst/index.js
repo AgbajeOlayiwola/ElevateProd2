@@ -168,6 +168,7 @@ const ReceivePaymentFirst = ({
                     <CloseButton
                         action={closeAction}
                         classes={styles.closebtn}
+                        color="white"
                     />
                 </div>
             </div>

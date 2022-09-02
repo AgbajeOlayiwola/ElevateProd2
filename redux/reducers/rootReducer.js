@@ -25,6 +25,19 @@ import profileReducer from './completeprofile.reducer';
 import otpReducer from './otp.reducer';
 import profileSetupReducer from './profilesetup.reducer';
 import completeBusinessprofileReducer from './completeBusinessProfile.reducer';
+import omniliteReducer from './omnilite.reducer';
+import accountNumberReducer from './accountNumber.reducer';
+import existingUserProfileReducer from './exixtingUserProfile.reducer';
+import ecobankOnlineReducer from './ecobankOnline.reducer';
+import createAccountReducer from './createAccount.reducer';
+import accountStatusReducer from './accountStatus.reducer';
+import businessCategoriesReducer from './businessCategories.reducer';
+import getNewUserAccountReducer from './getNewUserAccount.reducer';
+import newUsercreateAccountReducer from './newUserCraeteAccount.reducer';
+import cardLoginReducer from './cardLogin.reducer';
+import statesReducer from './states.reducer';
+import newUsercreateCorpAccountReducer from './newusercorporate.reducer';
+
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
     languages: languageReducer,
@@ -52,7 +65,19 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     otp: otpReducer,
     profileSetup: profileSetupReducer,
-    completeBusProfile: completeBusinessprofileReducer
+    omniliteReducer: omniliteReducer,
+    accountNumberReducer: accountNumberReducer,
+    existingUserProfileReducer: existingUserProfileReducer,
+    ecobankOnlineReducer: ecobankOnlineReducer,
+    accountStatusReducer: accountStatusReducer,
+    createAccountReducer: createAccountReducer,
+    businessCategoriesReducer: businessCategoriesReducer,
+    completeBusProfile: completeBusinessprofileReducer,
+    newUserAccountDetails: getNewUserAccountReducer,
+    statesReducer: statesReducer,
+    cardLoginReducer: cardLoginReducer,
+    newUserAccountDets: newUsercreateAccountReducer,
+    newuserCorpAccount: newUsercreateCorpAccountReducer
 });
 
 export default rootReducer;

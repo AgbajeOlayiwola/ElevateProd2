@@ -1,0 +1,61 @@
+.accountUpgradeSingle {
+    display: flex;
+    background: #fdfdfd;
+    box-shadow: 0px 0px 30px rgba(224, 224, 224, 0.71);
+    border-radius: 8px;
+    padding: 16px 60px 16px 24px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
+    cursor: pointer;
+}
+
+.accountUpgradeSingleText {
+    width: 50%;
+}
+.accountUpgradeSingleIcon {
+    width: 10%;
+}
+.accountUpgradeSingleChecked {
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+
+.accountUpgradeSingleChecked p {
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0px;
+    margin-left: 24px;
+    color: #303030;
+}
+
+.accountUpgradeSingleText div {
+    display: flex;
+}
+
+.accountUpgradeSingleText h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #303030;
+    margin: 0px;
+    margin-bottom: 4px;
+}
+
+.accountUpgradeSingleText p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #455a64;
+    margin: 0px;
+    margin-right: 8px;
+}

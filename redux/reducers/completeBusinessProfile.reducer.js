@@ -4,7 +4,7 @@ import { completeProfile } from '../types/actionTypes';
 const initialState = {
     isLoading: false,
     compBusprofile: null,
-    errorMessage: '...'
+    errorMessage: ''
 };
 
 const completeBusinessprofileReducer = (

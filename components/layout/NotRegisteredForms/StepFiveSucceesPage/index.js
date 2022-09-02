@@ -34,7 +34,7 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                 setAccountDone(response.data.data);
             })
             .catch((error) => {
-                console.log(error.response.data.data.message);
+                console.log(error.response.data.message);
             });
     }, []);
     return (

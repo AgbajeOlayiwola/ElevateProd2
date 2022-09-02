@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadLanguageAsync } from '../../../redux/actions/actions';
 
 const Langauges = () => {
     const [languages, setLanguages] = useState([]);
+    const [languageValue, setLanguagevalue] = useState('');
+    const [languageState, setLanguageState] = useState(false);
+
+    const [error, setError] = useState('');
 
     const dispatch = useDispatch();
     const { isLoading, language, errorMessage } = useSelector(
@@ -21,7 +25,7 @@ const Langauges = () => {
             setLanguages(language);
         }
     }, [language]);
-    // console.log(languages);
+    console.log(language);
     const {
         register,
         handleSubmit,
@@ -29,14 +33,44 @@ const Langauges = () => {
         formState: { errors }
     } = useForm();
 
-    // console.log(languages);
+    const displayLanguage = () => {
+        setLanguageState(!languageState);
+        setError('');
+    };
+    const [selectLanguage, setSelectLanguage] = useState('Eng');
     return (
         <div className={styles.select2}>
-            <label className={styles.label} htmlFor="languages">
-                Language
-            </label>
-            <br />
-            <select
+            {error ? <p className={styles.error}>{error}</p> : null}
+            <div className={styles.selectCont}>
+                <div className={styles.selectCountry} onClick={displayLanguage}>
+                    <p>{selectLanguage}</p>
+                    <img src="/../../Assets/Svgs/languageDropdown.svg" />
+                </div>
+                {languageState && (
+                    <ul className={styles.selectOption}>
+                        {languages.map((item, index) => {
+                            return (
+                                <li
+                                    key={index}
+                                    onClick={() => {
+                                        if (item.name !== 'English') {
+                                            setError(
+                                                'This App is available in English currently'
+                                            );
+                                            setLanguageState(false);
+                                        } else {
+                                            setLanguageState(false);
+                                        }
+                                    }}
+                                >
+                                    <p>{item.name.slice(0, 3)}</p>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                )}
+            </div>
+            {/* <select
                 {...register('first_name', {
                     required: 'Language is required',
                     minLength: {
@@ -47,6 +81,13 @@ const Langauges = () => {
                 id="languages"
                 className={styles.selectI}
                 name="languages"
+                value={languageValue}
+                onChange={(e) => {
+                    if (e.target.value !== 'English') {
+                        setLanguagevalue(languages[0]);
+                        setError('This App is available in English currently');
+                    }
+                }}
             >
                 {languages.map((item, index) => {
                     return (
@@ -55,7 +96,7 @@ const Langauges = () => {
                         </option>
                     );
                 })}
-            </select>
+            </select> */}
             {/* <div>error</div> */}
         </div>
     );

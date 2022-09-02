@@ -3,7 +3,7 @@ import { country } from '../types/actionTypes';
 const initialState = {
     isLoading: false,
     countries: null,
-    errorMessage: null
+    errorData: null
 };
 
 const countryReducer = (state = initialState, { type, payload }) => {
@@ -14,7 +14,7 @@ const countryReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 isLoading: true,
                 countries: null,
-                errorMessage: null
+                errorData: null
             };
         case country.COUNTRY_LOAD_SUCCESS:
             return {
@@ -26,7 +26,7 @@ const countryReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: false,
-                errorMessage: payload
+                errorData: payload
             };
 
         default:

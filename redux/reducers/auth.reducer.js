@@ -1,18 +1,25 @@
 import { login } from '../types/actionTypes';
 
 const initialState = {
-    user: [],
+    user: null,
     loggedInUser: null,
-    errorMessages: '...'
+    errorMessages: null
 };
 
 const authReducer = (state = initialState, { type, payload }) => {
     switch (type) {
+        case login.LOGIN_START:
+            return {
+                ...state,
+                user: null,
+                loggedInUser: null,
+                errorMessages: null
+            };
         case login.LOGIN_SUCCESS:
             return {
                 ...state,
                 user: payload,
-                errorMessages: payload
+                errorMessages: null
             };
         case login.LOGIN_FAIL:
             return {

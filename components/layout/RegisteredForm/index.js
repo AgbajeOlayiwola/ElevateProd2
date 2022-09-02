@@ -11,18 +11,43 @@ import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticat
 
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
-    const [activeBtn, setActiveBtn] = useState(true);
+    const [pageType, setPageType] = useState('');
 
     const conditionalComponent = () => {
         switch (page) {
             case 0:
-                return <FirstStep />;
+                return <FirstStep handleSubmit={handleSubmit} />;
             case 1:
-                return <SecondStep />;
+                return (
+                    <SecondStep
+                        onSubmit={(e) => {
+                            setPage(page + 1);
+                        }}
+                        action={() => {
+                            setPage(page - 1);
+                        }}
+                    />
+                );
             case 2:
-                return <StepThree />;
+                return (
+                    <StepThree
+                        action={() => {
+                            setPage(page - 1);
+                        }}
+                        handleSubmit={handleSubmit}
+                        handleSubmitNew={handleSubmitNew}
+                    />
+                );
             case 3:
-                return <StepFour />;
+                return (
+                    <StepFour
+                        title={pageType}
+                        action={() => {
+                            setPage(page - 1);
+                            setPageType('');
+                        }}
+                    />
+                );
             default:
                 return <FirstStep />;
         }
@@ -30,38 +55,14 @@ const ExistingMultiStep = () => {
     function handleSubmit() {
         setPage(page + 1);
     }
+    function handleSubmitNew() {
+        setPage(page + 1);
+        setPageType('New');
+    }
     return (
-        <Card>
-            {conditionalComponent()}
-            {page === 3 ? null : (
-                <div>
-                    {page === 2 ? (
-                        <Link href="/Succes/Success">
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                // onClick={handleSubmit}
-                                type="submit"
-                                text={'Continue with the personal account'}
-                            />
-                        </Link>
-                    ) : (
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            onClick={handleSubmit}
-                            type="submit"
-                            text={page === 2 ? 'Create Account' : 'Next'}
-                        />
-                    )}
-                    {page === 2 ? (
-                        <p onClick={handleSubmit} className={styles.open}>
-                            Tap to open a <span>New Business Account</span>
-                        </p>
-                    ) : null}
-                </div>
-            )}
-        </Card>
+        <>
+            <>{conditionalComponent()}</>
+        </>
     );
 };
 

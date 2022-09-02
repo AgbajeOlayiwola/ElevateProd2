@@ -23,12 +23,56 @@ import {
     otp,
     compProfile,
     setupProfile,
-    completeProfile
+    omnilite,
+    accountNumber,
+    existingUserProfile,
+    ecobankOnline,
+    createAccount,
+    accountStatus,
+    completeProfile,
+    newUserCreateAccount,
+    getNewUserAccount,
+    states,
+    cardLogin,
+    businessCategories,
+    newUserCreateCorpAccount
 } from '../types/actionTypes';
-import axios from '../helper/apiClient';
+// import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
-import axiosInstance from '../helper/apiClient';
+import { setCookie, getCookie } from 'cookies-next';
+import axios from 'axios';
 
+var loginToken = '';
+var Token;
+var options = 1 / 24;
+
+loginToken = getCookie('cookieToken', options);
+if (loginToken === null) {
+    Token = getCookie('cookieToken', options);
+} else {
+    Token = getCookie('cookieToken', options);
+}
+
+// export const getServerSideProps = async (context) => {
+//     // Fetching de notre route
+//     // API fetching
+//     const res = getCookie('cookieToken', options);
+
+//     const awaitToken = res;
+
+//     return {
+//         // Approvisionnement des props de notre page
+//         // Sending articles to page
+//         props: { token: awaitToken }
+//     };
+// };
+const axiosInstance = axios.create({
+    baseURL: 'https://ellevate-app.herokuapp.com/',
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Token}`
+    }
+});
 //country actions
 export const countryLoadStart = () => ({
     type: country.COUNTRY_LOAD_START
@@ -46,7 +90,7 @@ export const countryLoadError = (errorMessage) => ({
 
 export const loadCountry = () => (dispatch) => {
     dispatch(countryLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getCountries}`)
         .then((response) => dispatch(countryLoadSuccess(response.data.data)))
         .catch((error) =>
@@ -54,6 +98,60 @@ export const loadCountry = () => (dispatch) => {
         );
 };
 //country actions end
+
+//businessCategories actions
+export const businessCategoriesLoadStart = () => ({
+    type: businessCategories.BUSINESSCATEGORIES_LOAD_START
+});
+
+export const businessCategoriesLoadSuccess = (countries) => ({
+    type: businessCategories.BUSINESSCATEGORIES_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const businessCategoriesLoadError = (errorMessage) => ({
+    type: businessCategories.BUSINESSCATEGORIES_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const businessCategoriesData = () => (dispatch) => {
+    dispatch(businessCategoriesLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.businessCategories}`)
+        .then((response) =>
+            dispatch(businessCategoriesLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(businessCategoriesLoadError(error.response.data.message))
+        );
+};
+//businessCategories actions end
+
+//states actions
+export const statesLoadStart = () => ({
+    type: states.STATES_LOAD_START
+});
+
+export const statesLoadSuccess = (countries) => ({
+    type: states.STATES_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const statesLoadError = (errorMessage) => ({
+    type: states.STATES_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const statesData = () => (dispatch) => {
+    dispatch(statesLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.states}`)
+        .then((response) => dispatch(statesLoadSuccess(response.data.data)))
+        .catch((error) =>
+            dispatch(statesLoadError(error.response.data.message))
+        );
+};
+//states actions end
 
 //banks actions
 export const bankLoadStart = () => ({
@@ -72,7 +170,7 @@ export const bankLoadError = (errorMessage) => ({
 
 export const loadbank = (code) => (dispatch) => {
     dispatch(bankLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getBanks}?affiliateCode=${code}`)
         .then((response) => dispatch(bankLoadSuccess(response.data.data)))
         .catch((error) => dispatch(bankLoadError(error.message)));
@@ -96,7 +194,7 @@ export const billerCategoryLoadError = (errorMessage) => ({
 
 export const loadbillerCategory = (code) => (dispatch) => {
     dispatch(billerCategoryLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getBillerCategories}?affiliateCode=${code}`)
         .then((response) =>
             dispatch(billerCategoryLoadSuccess(response.data.data))
@@ -121,7 +219,7 @@ export const billerTypeLoadError = (errorMessage) => ({
 });
 export const loadbillerType = (code, category) => (dispatch) => {
     dispatch(billerTypeLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getBillerType}${code}?category=${category}`)
         .then((response) => dispatch(billerTypeLoadSuccess(response.data.data)))
         .catch((error) => dispatch(billerTypeLoadError(error.message)));
@@ -144,7 +242,7 @@ export const billerPlanLoadError = (errorMessage) => ({
 });
 export const loadbillerPlan = (code) => (dispatch) => {
     dispatch(billerPlanLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getBillerPlan}${code}`)
         .then((response) => dispatch(billerPlanLoadSuccess(response.data.data)))
         .catch((error) => dispatch(billerPlanLoadError(error.message)));
@@ -168,7 +266,7 @@ export const languageLoadError = (errorMessage) => ({
 });
 export const loadLanguageAsync = () => (dispatch) => {
     dispatch(languageLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.getLanguages}`)
         .then((response) => dispatch(languageLoadSuccess(response.data.data)))
         .catch((error) => dispatch(languageLoadError(error.message)));
@@ -192,10 +290,12 @@ export const airtimeLoadError = (errorMessageAirtime) => ({
 });
 export const postAirtime = (data) => (dispatch) => {
     dispatch(airtimeLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.airtime}`, data)
         .then((response) => dispatch(airtimeLoadSuccess(response.data)))
-        .catch((error) => dispatch(airtimeLoadError(error.message)));
+        .catch((error) =>
+            dispatch(airtimeLoadError(error.response.data.message))
+        );
 };
 
 //airtime action end
@@ -216,10 +316,12 @@ export const billsLoadError = (errorMessageBills) => ({
 });
 export const postBills = (data) => (dispatch) => {
     dispatch(billsLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.bills}`, data)
         .then((response) => dispatch(billsLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(billsLoadError(error.response.data.error)));
+        .catch((error) =>
+            dispatch(billsLoadError(error.response.data.message))
+        );
 };
 
 //bills action end
@@ -240,7 +342,7 @@ export const internalBankLoadError = (internalBankerror) => ({
 });
 export const postInternalBank = (data) => (dispatch) => {
     dispatch(internalBankLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.internalBank}`, data)
         .then((response) =>
             dispatch(internalBankLoadSuccess(response.data.data))
@@ -266,7 +368,7 @@ export const interBankLoadError = (interBankerror) => ({
 });
 export const postInterBank = (data) => (dispatch) => {
     dispatch(interBankLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.interBank}`, data)
         .then((response) => dispatch(interBankLoadSuccess(response.data)))
         .catch((error) => dispatch(interBankLoadError(error.message)));
@@ -290,7 +392,7 @@ export const interBankEnquiryLoadError = (interBankEnquiryerror) => ({
 });
 export const postInterBankEnquiry = (data) => (dispatch) => {
     dispatch(interBankEnquiryLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.interBankEnquiry}`, data)
         .then((response) =>
             dispatch(interBankEnquiryLoadSuccess(response.data.data))
@@ -316,7 +418,7 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
 });
 export const getBalanceEnquiry = () => (dispatch) => {
     dispatch(balanceEnquiryLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.balanceEnquiry}`)
         .then((response) =>
             dispatch(balanceEnquiryLoadSuccess(response.data.data))
@@ -342,7 +444,7 @@ export const transactionHistoryLoadError = (transactionHistoryerror) => ({
 });
 export const getTransactionHistory = () => (dispatch) => {
     dispatch(transactionHistoryLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.transactionHistory}`)
         .then((response) =>
             dispatch(transactionHistoryLoadSuccess(response.data.data))
@@ -368,7 +470,7 @@ export const transactionElevateLoadError = (transactionElevateerror) => ({
 });
 export const getTransactionElevate = () => (dispatch) => {
     dispatch(transactionElevateLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.transactionElevate}`)
         .then((response) =>
             dispatch(transactionElevateLoadSuccess(response.data.data))
@@ -394,12 +496,14 @@ export const bulkTransferLoadError = (bulkTransfererror) => ({
 });
 export const getBulkTransfer = (data) => (dispatch) => {
     dispatch(bulkTransferLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.bulkTransfer}`, data)
         .then((response) =>
             dispatch(bulkTransferLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(bulkTransferLoadError(error.message)));
+        .catch((error) =>
+            dispatch(bulkTransferLoadError(error.response.data.message))
+        );
 };
 
 //transactionHistory action end
@@ -420,7 +524,7 @@ export const internationalTransferLoadError = (internationalTransfererror) => ({
 });
 export const getInternationalTransfer = (data) => (dispatch) => {
     dispatch(internationalTransferLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.internationalTransfer}`, data)
         .then((response) =>
             dispatch(internationalTransferLoadSuccess(response.data.data))
@@ -448,7 +552,7 @@ export const verifyBankLoadError = (verifyBankerror) => ({
 });
 export const getverifyBank = (data) => (dispatch) => {
     dispatch(verifyBankLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.verifyBank}`, data)
         .then((response) => dispatch(verifyBankLoadSuccess(response.data.data)))
         .catch((error) => dispatch(verifyBankLoadError(error.message)));
@@ -472,7 +576,7 @@ export const verifyCurrencyLoadError = (verifyCurrencyerror) => ({
 });
 export const getVerifyCurrency = (data) => (dispatch) => {
     dispatch(verifyCurrencyLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.verifyCurrency}`, data)
         .then((response) =>
             dispatch(verifyCurrencyLoadSuccess(response.data.data))
@@ -498,7 +602,7 @@ export const getBeneficiariesLoadError = (getBeneficiarieserror) => ({
 });
 export const getBeneficiariesData = () => (dispatch) => {
     dispatch(getBeneficiariesLoadStart());
-    axios
+    axiosInstance
         .get(`${apiRoutes.beneficiaries}`)
         .then((response) =>
             dispatch(getBeneficiariesLoadSuccess(response.data.data))
@@ -524,7 +628,7 @@ export const postBeneficiariesLoadError = (postBeneficiarieserror) => ({
 });
 export const postBeneficiariesData = (data) => (dispatch) => {
     dispatch(postBeneficiariesLoadStart());
-    axios
+    axiosInstance
         .post(`${apiRoutes.beneficiaries}`, data)
         .then((response) =>
             dispatch(postBeneficiariesLoadSuccess(response.data.data))
@@ -533,6 +637,190 @@ export const postBeneficiariesData = (data) => (dispatch) => {
 };
 
 //postBeneficiaries action end
+
+//omnilite action
+export const omniliteLoadStart = () => ({
+    type: omnilite.OMNILITE_LOAD_START
+});
+
+export const omniliteLoadSuccess = (bill) => ({
+    type: omnilite.OMNILITE_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const omniliteLoadError = (errorMessage) => ({
+    type: omnilite.OMNILITE_LOAD_ERROR,
+    payload: errorMessage
+});
+export const omniliteData = (data) => (dispatch) => {
+    dispatch(omniliteLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.omnilite}`, data)
+        .then((response) => dispatch(omniliteLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(omniliteLoadError(error.response.data.message))
+        );
+};
+
+//omnilite action end
+
+//ecobankOnline action
+export const ecobankOnlineLoadStart = () => ({
+    type: ecobankOnline.ECOBANKONLINE_LOAD_START
+});
+
+export const ecobankOnlineLoadSuccess = (bill) => ({
+    type: ecobankOnline.ECOBANKONLINE_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const ecobankOnlineLoadError = (errorMessage) => ({
+    type: ecobankOnline.ECOBANKONLINE_LOAD_ERROR,
+    payload: errorMessage
+});
+export const ecobankOnlineData = (data) => (dispatch) => {
+    dispatch(ecobankOnlineLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.ecobankOnline}`, data)
+        .then((response) => dispatch(ecobankOnlineLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(ecobankOnlineLoadError(error.response.data.message))
+        );
+};
+
+//ecobankOnline action end
+
+//accountNumber action
+export const accountNumberLoadStart = () => ({
+    type: accountNumber.ACCOUNTNUMBER_LOAD_START
+});
+
+export const accountNumberLoadSuccess = (bill) => ({
+    type: accountNumber.ACCOUNTNUMBER_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const accountNumberLoadError = (errorMessages) => ({
+    type: accountNumber.ACCOUNTNUMBER_LOAD_ERROR,
+    payload: errorMessages
+});
+export const accountNumberData = (data) => (dispatch) => {
+    dispatch(accountNumberLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.accountNumber}`, data)
+        .then((response) => dispatch(accountNumberLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(accountNumberLoadError(error.response.data.message))
+        );
+};
+
+//accountNumber action end
+
+//cardLogin action
+export const cardLoginLoadStart = () => ({
+    type: cardLogin.CARDLOGIN_LOAD_START
+});
+
+export const cardLoginLoadSuccess = (bill) => ({
+    type: cardLogin.CARDLOGIN_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const cardLoginLoadError = (errorMessages) => ({
+    type: cardLogin.CARDLOGIN_LOAD_ERROR,
+    payload: errorMessages
+});
+export const cardLoginData = (data) => (dispatch) => {
+    dispatch(cardLoginLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.cardLogin}`, data)
+        .then((response) => dispatch(cardLoginLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(cardLoginLoadError(error.response.data.message))
+        );
+};
+
+//cardLogin action end
+
+//existingUserProfile action
+export const existingUserProfileLoadStart = () => ({
+    type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_START
+});
+
+export const existingUserProfileLoadSuccess = (bill) => ({
+    type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const existingUserProfileLoadError = (errorMessage) => ({
+    type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_ERROR,
+    payload: errorMessage
+});
+export const existingUserProfileData = (data) => (dispatch) => {
+    dispatch(existingUserProfileLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.existingUserProfile}`, data)
+        .then((response) =>
+            dispatch(existingUserProfileLoadSuccess(response.data))
+        )
+        .catch((error) =>
+            dispatch(existingUserProfileLoadError(error.response.data.message))
+        );
+};
+
+//accountNumber action end
+
+//createAccount action
+export const createAccountLoadStart = () => ({
+    type: createAccount.CREATEACCOUNT_LOAD_START
+});
+
+export const createAccountLoadSuccess = (bill) => ({
+    type: createAccount.CREATEACCOUNT_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const createAccountLoadError = (errorData) => ({
+    type: createAccount.CREATEACCOUNT_LOAD_ERROR,
+    payload: errorData
+});
+export const createAccountData = (data) => (dispatch) => {
+    dispatch(createAccountLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.createAccount}`, data)
+        .then((response) => dispatch(createAccountLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(createAccountLoadError(error.response.data.message))
+        );
+};
+
+//accountNumber action end
+
+//accountStatus action
+export const accountStatusLoadStart = () => ({
+    type: accountStatus.ACCOUNTSTATUS_LOAD_START
+});
+
+export const accountStatusLoadSuccess = (bill) => ({
+    type: accountStatus.ACCOUNTSTATUS_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const accountStatusLoadError = (errorMessages) => ({
+    type: accountStatus.ACCOUNTSTATUS_LOAD_ERROR,
+    payload: errorMessages
+});
+export const accountStatusData = (data) => (dispatch) => {
+    dispatch(accountStatusLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.accountStatus}/${data}`)
+        .then((response) => dispatch(accountStatusLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(accountStatusLoadError(error.response.data.message))
+        );
+};
+
+//accountNumber action end
 
 //add user
 export const userRegisterStart = (user) => ({
@@ -545,7 +833,7 @@ export const userRegisterError = (errorMessage) => ({
 });
 export const createUserAction = (postData) => {
     return (dispatch) => {
-        axios
+        axiosInstance
             .post(`${apiRoutes.register}`, postData)
             .then((response) => {
                 console.log('data from action', response.data);
@@ -570,15 +858,25 @@ export const userLoadError = (errorMessages) => ({
 
 export const loginUserAction = (loginData) => {
     return (dispatch) => {
-        axios
+        axiosInstance
             .post(`${apiRoutes.login}`, loginData)
             .then((response) => {
                 console.log(response.data);
                 localStorage.setItem('user', JSON.stringify(response.data));
-                localStorage.setItem(
-                    'token',
-                    JSON.stringify(response.data.data.token)
-                );
+
+                setCookie('cookieToken', response.data.data.token, 1 / 24);
+                const cookie = getCookie('cookieToken', options);
+                console.log('login token success', cookie);
+
+                //  const getServerSideProps = ({ req, res }) => {
+                //     setCookies('test', 'value', { req, res, maxAge: });
+
+                //   return { props: {}};
+                // }
+                // localStorage.setItem(
+                //     'token',
+                //     JSON.stringify(response.data.data.token)
+                // );
 
                 dispatch(userLoadStart(response.data.message));
             })
@@ -623,22 +921,104 @@ export const setupProfileError = (errorMessages) => ({
     type: setupProfile.PROFILESETUP_LOAD_ERROR,
     payload: errorMessages
 });
+export const bvnNinError = (bvnError) => ({
+    type: setupProfile.BVN_NIN_LOAD_ERROR,
+    payload: bvnError
+});
+export const bvnNinErrorI = (bvnErrorI) => ({
+    type: setupProfile.BVN_NIN_LOAD_ERRORI,
+    payload: bvnErrorI
+});
+export const bvnNinErrorII = (bvnErrorII) => ({
+    type: setupProfile.BVN_NIN_LOAD_ERRORII,
+    payload: bvnErrorII
+});
+export const bvnNinErrorIII = (bvnErrorIII) => ({
+    type: setupProfile.BVN_NIN_LOAD_ERRORIII,
+    payload: bvnErrorIII
+});
+export const bvnNinPending = (bvnNinPend) => ({
+    type: setupProfile.BVN_NIN_LOAD_PENDING,
+    payload: bvnNinPend
+});
+export const bvnNinData = (bvnNin) => ({
+    type: setupProfile.BVN_NIN_LOAD_SUCCESS,
+    payload: bvnNin
+});
 export const createProfileSetup = (profileData) => {
+    const cookie = getCookie('cookieToken');
+    // console.log('cookie in create profile function', cookie);
     return async (dispatch) => {
-        await axiosInstance
-            .post(`${apiRoutes.profileSetupBus}`, profileData)
+        await axios
+            .post(
+                `https://ellevate-app.herokuapp.com${apiRoutes.profileSetupBus}`,
+                profileData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
+                }
+            )
             .then((response) => {
                 dispatch(setupProfileSucces(response.data));
+
                 console.log('data from profile', response.data);
+                if (response.data.message === 'Profile setup successful') {
+                    axiosInstance
+                        .get(
+                            `https://ellevate-app.herokuapp.com${apiRoutes.verifyStatus}`,
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${cookie}`
+                                }
+                            }
+                        )
+                        .then((response) => {
+                            dispatch(bvnNinData(response.data));
+                            if (
+                                response.data.data[0].reason &&
+                                response.data.data[1].reason
+                            ) {
+                                dispatch(
+                                    bvnNinError(
+                                        'We are unable to verify your details at the momemnt. Try again later'
+                                    )
+                                ),
+                                    dispatch(
+                                        bvnNinErrorI(
+                                            'We are unable to verify your details at the momemnt. Try again later'
+                                        )
+                                    );
+                            } else if (
+                                response.data.data[1].status === 'PENDING'
+                            ) {
+                                bvnNinErrorI(
+                                    'We are unable to verify your details at the momemnt. Try again later'
+                                );
+                            } else if (
+                                response.data.data[1].status === 'SUCCESS' &&
+                                response.data.data[0].status === 'SUCCESS'
+                            ) {
+                                dispatch(bvnNinError(null)),
+                                    dispatch(bvnNinErrorI(null));
+                            }
+
+                            console.log(response.data.data[0].reason);
+                        })
+                        .catch((error) => {
+                            console.log('profile otp dispatch', error);
+                            dispatch(bvnNinError(error.response.message));
+                        });
+                }
             })
             .catch((error) => {
                 console.log(
-                    'profile seytup dispatch',
+                    'profile setup dispatch',
                     error.response.data.message
                 );
-                dispatch(
-                    setupProfileError('error check the fields and try again')
-                );
+                dispatch(setupProfileError(error.response.data.message));
             });
     };
 };
@@ -657,38 +1037,22 @@ export const otpLoadError = (otpErrorMessage) => ({
     type: otp.OTP_LOAD_ERROR,
     payload: otpErrorMessage
 });
-export const bvnNinError = (bvnError) => ({
-    type: otp.BVN_NIN_LOAD_ERROR,
-    payload: bvnError
-});
+
 export const verifyOtp = (otpData) => {
     return async (dispatch) => {
         await axiosInstance
-            .get(`${apiRoutes.verifyStatus}`)
+            .post(`${apiRoutes.verifyOtp}`, otpData)
             .then((response) => {
-                console.log(response.data);
-                if (
-                    response.data.data[0].status === 'SUCCESS' &&
-                    response.data.data[1].status === 'SUCCESS'
-                ) {
-                    axiosInstance
-                        .post(`${apiRoutes.verifyOtp}`, otpData)
-                        .then((response) => {
-                            dispatch(otpLoadSuccess(response.data));
-                            console.log('otp', otpData);
-                            console.log('data from otp', response.data);
-                        })
-                        .catch((error) => {
-                            console.log('profile otp dispatch', error);
-                            dispatch(bvnNinError('error otp does not match'));
-                        });
-                } else {
-                    console.log('error');
-                    dispatch(bvnNinError('BVN or NIN Incorrect'));
-                }
+                dispatch(otpLoadSuccess(response.data));
+                console.log('otp', otpData);
+                console.log('data from otp', response.data);
             })
             .catch((error) => {
-                console.log('profile Bvn dispatch', error);
+                console.log('profile otp dispatch', error);
+                dispatch(bvnNinError(error.response.message));
+            })
+            .catch((error) => {
+                console.log('profile Bvn dispatch', error.response);
             });
     };
 };
@@ -759,3 +1123,101 @@ export const CompleteBusinessProfile = (completeProfileData) => {
     };
 };
 //Complete Profile Post End
+
+//Create New User Action
+export const createNewAccountStart = () => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_START,
+    payload: newAccountErrorMessage
+});
+export const createNewAccountSuccess = (newAccount) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_SUCCESS,
+    payload: newAccount
+});
+export const createNewAccountError = (newAccountErrorMessage) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_ERROR,
+    payload: newAccountErrorMessage
+});
+
+export const createNewUserAccount = (accountData) => {
+    return (dispatch) => {
+        // dispatch(completeProfileLoadStart());
+        axiosInstance
+            .post(`${apiRoutes.newCreateAccount}`, accountData)
+            .then((response) => {
+                console.log('create New Account', response.data);
+                dispatch(createNewAccountSuccess(response.data));
+            })
+            .catch((error) => {
+                // console.log('create new account:', error.response.data.message);
+                dispatch(createNewAccountError(error.response.data.message));
+            });
+    };
+};
+
+//End Create New User Action
+
+//Create New Corporate User Action
+export const createNewCorpAccountStart = (newCorpAccountErrorMessage) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_START,
+    payload: newCorpAccountErrorMessage
+});
+export const createNewCorpAccountSuccess = (newCorpAccount) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_SUCCESS,
+    payload: newCorpAccount
+});
+export const createNewCorpAccountError = (newCorpAccountErrorMessage) => ({
+    type: newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_ERROR,
+    payload: newCorpAccountErrorMessage
+});
+
+export const createNewCorpUserAccount = (accountData) => {
+    return (dispatch) => {
+        // dispatch(completeProfileLoadStart());
+        axiosInstance
+            .post(`${apiRoutes.corpNewUser}`, accountData)
+            .then((response) => {
+                console.log('create New Account', response.data);
+                console.log('create new account:', error.response.data.message);
+                dispatch(createNewAccountSuccess(response.data));
+            })
+            .catch((error) => {
+                console.log(
+                    'create new account Error:',
+                    error.response.data.message
+                );
+                dispatch(
+                    createNewCorpAccountError(error.response.data.message)
+                );
+            });
+    };
+};
+//End Create New Corporate User Action
+
+//start account status
+
+export const getNewAccountStart = () => ({
+    type: newUserCreateCorpAccount.CREATE_NEW_CORP_ACCOUNT_LOAD_START,
+    payload: ''
+});
+export const getNewAccountSuccess = (newUserAccount) => ({
+    type: newUserCreateCorpAccount.CREATE_NEW_CORP_ACCOUNT_LOAD_SUCCESS,
+    payload: newUserAccount
+});
+export const getNewAccountError = (newUserAccountErrorMessage) => ({
+    type: newUserCreateCorpAccount.CREATE_NEW_CORP_ACCOUNT_LOAD_ERROR,
+    payload: newUserAccountErrorMessage
+});
+
+export const getNewUserAccountDetails = (accountData) => {
+    return (dispatch) => {
+        // dispatch(completeProfileLoadStart());
+        // dispatch(getNewAccountStart());
+        axiosInstance
+            .get(`${apiRoutes.accountStatus}`)
+            .then((response) => dispatch(getNewAccountSuccess(response.data)))
+            .catch((error) =>
+                dispatch(getNewAccountError(error.response.data.message))
+            );
+    };
+};
+//end account status

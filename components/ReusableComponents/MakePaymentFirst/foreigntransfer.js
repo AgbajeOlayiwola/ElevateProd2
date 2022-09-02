@@ -40,45 +40,42 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
         <div>
             <form onSubmit={handleSubmit(action)}>
                 <h2>{firstTitle}</h2>
-                <div className={styles.destinationCountry}>
-                    <div>
-                        <label>Destination Country</label>
-                        <select
-                            {...register('destinationCountry', {
-                                required: 'Destination Country is Required'
-                            })}
-                            name="destinationCountry"
-                        >
-                            <option value="">Destination Country</option>
-                            {countrys?.map((item) => {
-                                return (
-                                    <option value={item.name} key={item.id}>
-                                        {item.name}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                        <p className={styles.error}>
-                            {errors?.destinationCountry?.message}
-                        </p>
-                    </div>
-                    <div>
-                        <label>Transfer Type</label>
-                        <select
-                            {...register('transferType', {
-                                required: 'Transfer Type is required'
-                            })}
-                            name="transferType"
-                        >
-                            <option value="">others </option>
-                            <option value="Bank Transfer">
-                                Bank Transfer{' '}
-                            </option>
-                        </select>
-                        <p className={styles.error}>
-                            {errors?.transferType?.message}
-                        </p>
-                    </div>
+                <div>
+                    <label>Destination Country</label>
+                    <select
+                        {...register('destinationCountry', {
+                            required: 'Destination Country is Required'
+                        })}
+                        name="destinationCountry"
+                    >
+                        <option value="">Destination Country</option>
+                        {countrys?.map((item) => {
+                            return (
+                                <option value={item.name} key={item.id}>
+                                    {item.name}
+                                </option>
+                            );
+                        })}
+                    </select>
+                    <p className={styles.error}>
+                        {errors?.destinationCountry?.message}
+                    </p>
+                </div>
+                <div className={styles.destinationCountry}></div>
+                <div>
+                    <label>Transfer Type</label>
+                    <select
+                        {...register('transferType', {
+                            required: 'Transfer Type is required'
+                        })}
+                        name="transferType"
+                    >
+                        <option value="">others </option>
+                        <option value="Bank Transfer">Bank Transfer </option>
+                    </select>
+                    <p className={styles.error}>
+                        {errors?.transferType?.message}
+                    </p>
                 </div>
                 <div className={styles.accountDetails}>
                     <label>Enter Destinaton Account Details</label>

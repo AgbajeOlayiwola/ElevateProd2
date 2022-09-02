@@ -1,0 +1,60 @@
+.body {
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    max-width: 600px;
+    padding: 60px 0px;
+}
+
+.cover {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    width: 67%;
+    max-width: 400px;
+    margin: 0px auto;
+}
+.imageOut {
+    display: flex;
+    justify-content: center;
+}
+.imageInner {
+    overflow: hidden;
+    border-radius: 50%;
+    height: 43vh;
+    border: solid 20px #8a8888;
+}
+.imageInnerActive {
+    overflow: hidden;
+    border-radius: 50%;
+    height: 43vh;
+    border: solid 20px #6ccf00;
+}
+.finish {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    color: #005b82;
+}
+
+.takeSelf {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    margin-bottom: 32px;
+    color: #005b82;
+}
+
+.cover button {
+    margin-top: 64px;
+}
+.matiButtonSetup{
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+}
+  

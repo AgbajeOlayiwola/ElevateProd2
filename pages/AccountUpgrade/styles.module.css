@@ -1,0 +1,423 @@
+.currentLevel {
+    display: flex;
+    padding: 16px 24px;
+    width: 100%;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    margin-top: 32px;
+    align-items: center;
+}
+
+.perc {
+    position: absolute;
+    /* top: 0px; */
+    margin: 0px;
+    color: #005b82;
+    font-size: 12px;
+}
+
+.currentLevelDonut {
+    width: 20%;
+    margin-right: 16px;
+    position: relative;
+}
+
+.currentLeveltext h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    color: #102572;
+}
+
+.currentLeveltext div {
+    display: flex;
+}
+
+.currentLeveltext p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #3e3e3e;
+    margin: 0px;
+}
+
+.verifyText {
+    margin-top: 16px;
+}
+
+.verifyText p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    color: #a5a5a5;
+    margin: 0px;
+    margin-bottom: 40px;
+}
+
+/* Utility Popup*/
+.grey {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(219, 219, 219, 0.3);
+    z-index: 10;
+}
+
+.utilityHeader {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.utilityHeader p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin-left: 8px;
+    color: #3e3e3e;
+}
+
+.uploadPhoto {
+    width: 100%;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    margin-top: 16px;
+    padding: 24px 32px;
+    position: relative;
+}
+
+.uploadPhoto h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #7a7978;
+}
+
+.uploadPhoto label {
+    background: #e8e8e8;
+    border-radius: 12px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 16px 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #7a7978;
+    cursor: pointer;
+}
+
+.uploadPhoto label input {
+    display: none;
+}
+
+.uploadPhoto p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #7a7978;
+    margin-top: 16px;
+}
+
+.addressBody {
+    background: #fefefe;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    border-radius: 12px;
+    margin-top: 16px;
+    padding: 24px 32px;
+}
+
+.addressCont {
+    background: #f8f8f8;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    border-radius: 12px;
+    margin-top: 8px;
+    padding: 24px;
+    position: relative;
+}
+
+.addressGroup {
+    margin-bottom: 16px;
+}
+
+.addressGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/*Utility End*/
+
+/* ID Card start*/
+.idPhoto {
+    background: #f8f8f8;
+    border-radius: 12px;
+    height: 200px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.meansIdentification {
+    background: #fefefe;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    border-radius: 12px;
+    padding: 24px 32px;
+    margin-top: 48px;
+}
+
+.identificationGroup select {
+    margin-bottom: 32px;
+}
+
+.identificationGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.signature h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+}
+
+.signatureGroup {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    width: 100%;
+    margin-top: 16px;
+    padding: 24px 32px;
+}
+
+.signatureGroup p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 16px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #7a7978;
+}
+
+.signatureGroup label {
+    background: #e8e8e8;
+    border-radius: 12px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 16px 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #7a7978;
+    cursor: pointer;
+}
+
+.signatureGroup label input {
+    display: none;
+}
+/* ID Card end*/
+
+/*Documents*/
+.rcNumber {
+    margin-top: 48px;
+}
+
+.rcNumber label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.documentSingle {
+    margin-top: 24px;
+}
+
+.documentSingle label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.documentSingle label span {
+    font-style: italic;
+}
+
+.documentCont {
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    width: 100%;
+    padding: 24px 32px;
+}
+
+.documentCont p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #7a7978;
+    margin-bottom: 16px;
+}
+
+.documentCont label {
+    background: #e8e8e8;
+    border-radius: 12px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 16px 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #7a7978;
+    cursor: pointer;
+}
+
+.documentCont label input {
+    display: none;
+}
+
+.documentCont .share {
+    display: flex;
+    justify-content: space-between;
+}
+
+.share div {
+    width: 47%;
+}
+
+/*Documents*/
+
+/*Directors*/
+.directorsSingle {
+    margin-top: 32px;
+}
+
+.directorsSingle p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin-bottom: 24px;
+}
+
+.directorsBody {
+    background: #fefefe;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    border-radius: 12px;
+    width: 100%;
+    padding: 24px 32px;
+}
+
+.directorsGroup input {
+    margin-bottom: 32px;
+}
+
+.directorsGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.radio {
+    display: flex;
+    margin-top: 16px;
+}
+
+.radio div {
+    display: flex;
+    margin-left: 32px;
+}
+
+.radio div:first-child {
+    margin-left: 0px;
+}
+
+.radio div input {
+    margin: 0px;
+    width: 20px;
+}
+
+.radio div p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #a5a5a5;
+    margin-left: 8px;
+}
+
+.addNew {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #6c6c6c;
+    margin: 0px;
+    margin-top: 8px;
+}
+
+/*Directors*/

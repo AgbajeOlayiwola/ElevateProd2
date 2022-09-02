@@ -1,10 +1,33 @@
-.prsForm{
-width: 100%;
-display: flex;
-justify-content: center;
+.prsForm {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
+
 .error {
     color: red;
     font-size: 12px;
     margin-top: -1rem;
+}
+
+.sections {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    width: 85%;
+    max-width: 1283px;
+    margin: 0px auto;
+    justify-content: space-between;
+}
+
+.sectionI {
+    width: 37%;
+    max-width: 470px;
+    position: relative;
+}
+
+.sectionII {
+    padding: 120px 0px;
+    max-width: 682px;
+    width: 53%;
 }

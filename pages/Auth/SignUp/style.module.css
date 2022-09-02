@@ -3,6 +3,16 @@
     /* align-items: center;
     justify-content: center; */
     overflow: hidden;
+    height: 100vh;
+}
+
+.doYou h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #3e3e3e;
 }
 .accout {
     text-align: center;
@@ -21,13 +31,24 @@
     color: #005b82;
     font-weight: 600;
 }
+
+.sectionI div {
+    width: 100%;
+}
+
 .bvn {
+    z-index: 10;
+    position: relative;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 40px;
     line-height: 120%;
     letter-spacing: -0.02em;
-    font-size: 48px;
     color: #ffffff;
+    width: 56%;
+    margin: 32vh auto 0px;
     max-width: 417px;
-    margin-top: 32vh;
 }
 .termcondition {
     width: fit-content;
@@ -42,36 +63,41 @@
 }
 .bvn span {
     color: #6ccf00;
+    font-weight: 700;
 }
 .sectionI {
     width: 50%;
     display: flex;
-    height: 100vh;
     /* flex-direction: column; */
     justify-content: center;
     align-items: center;
-    /* display: flex; */
-
-    background: linear-gradient(0deg, rgba(9, 16, 1, 0.7), rgba(9, 16, 1, 0.7)),
-        url('/Assets/Images/signupimage.png');
+    height: 100%;
+    background: url('/Assets/Images/signupimage.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0%;
     background-position: center;
-    height: 100vh;
+    overflow: hidden;
+    position: relative;
 }
+
+.sectionI img {
+    position: absolute;
+    width: 100%;
+}
+
 .sectionII {
     width: 50%;
     flex: 1;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: scroll;
+    height: 100%;
+    overflow-y: scroll;
+    margin-top: auto;
 }
 .sectionII > div {
     max-width: 26rem;
     width: 25rem;
+    padding-top: 55px;
+    margin: 0px auto;
 }
 /* .sectionII::-webkit-scrollbar {
     display: none;
@@ -79,10 +105,7 @@
 .textInput {
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;
-}
-.form div label {
-    color: #3e3e3e;
-    font-size: 14px;
+    padding: 21px 27px;
 }
 .signup {
     font-weight: 700;
@@ -192,9 +215,7 @@ section .input-wrapper {
     color: #a5a5a5;
     text-align: center;
 }
-.doYou {
-    margin-top: 10%;
-}
+
 .visibility {
     display: flex;
 }

@@ -3,9 +3,17 @@ import { otp } from '../types/actionTypes';
 const initialState = {
     Loading: false,
     otp: null,
-    otpErrorMessage: '...',
-    bvnError: null
+    otpErrorMessage: null
 };
+// useEffect(() => {
+//     if (bvnError) {
+//         setPage(page - 1);
+//         setErrorM(bvnError);
+//         setErrorI(bvnErrorI);
+//     } else if (!otpErrorMessage) {
+//         setPage(page + 1);
+//     }
+// }, [otpErrorMessage, bvnError]);
 
 const otpReducer = (state = initialState, { type, payload }) => {
     switch (type) {
@@ -23,14 +31,7 @@ const otpReducer = (state = initialState, { type, payload }) => {
                 otp: null,
                 otpErrorMessage: payload
             };
-        case otp.BVN_NIN_LOAD_ERROR:
-            return {
-                ...state,
-                Loading: false,
-                otp: null,
-                otpErrorMessage: null,
-                bvnError: payload
-            };
+
         default:
             return state;
     }

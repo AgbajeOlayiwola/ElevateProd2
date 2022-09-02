@@ -34,6 +34,7 @@ import PaymentCard from '../../components/ReusableComponents/PaymentCard';
 // import PaymentError from '../../components/ReusableComponents/PaymentError';
 import { useRouter } from 'next/router';
 import { PaymentData } from '../../components/ReusableComponents/Data';
+import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
 
 const Payment = () => {
     const router = useRouter();
@@ -79,10 +80,7 @@ const Payment = () => {
     const [overlay, setOverlay] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [count, setCount] = useState(0);
-    const [qr, setqr] = useState('10%');
-    const [paylink, setPaylink] = useState('35%');
-    const [ussd, setUssd] = useState('25%');
-    const [mPOS, setMpos] = useState('30%');
+    const [active, setActive] = useState(true);
     const [outType, setOutType] = useState();
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
@@ -92,11 +90,87 @@ const Payment = () => {
     const [link, setLink] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
     const [bank, setBank] = useState({});
-    const [, updateState] = useState();
-    const forceUpdate = useCallback(() => {
-        updateState({}), [];
-        alert('Hello');
-    });
+    const interBankCheck = () => {
+        if (interBank !== null) {
+            console.log(interBank);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (errorMessageInterBank !== null) {
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessageInterBank);
+            setStatus('error');
+        }
+    };
+    useEffect(() => {
+        interBankCheck();
+    }, [interBank, errorMessageInterBank]);
+    const billsCheck = () => {
+        if (bills !== null) {
+            console.log(bills);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (errorMessageBills !== null) {
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessageBills);
+            setStatus('error');
+        }
+    };
+    useEffect(() => {
+        billsCheck();
+    }, [bills, errorMessageBills]);
+    const bulkcheck = () => {
+        if (bulkTransfer !== null) {
+            console.log(bulkTransfer);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (errorMessagebulkTransfer !== null) {
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessagebulkTransfer);
+            setStatus('error');
+        }
+    };
+    useEffect(() => {
+        bulkcheck();
+    }, [bulkTransfer, errorMessagebulkTransfer]);
+    const airtimeCheck = () => {
+        if (airtime !== null) {
+            console.log(airtime);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (errorMessageAirtime !== null) {
+            console.log(errorMessageAirtime);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessageAirtime);
+            setStatus('error');
+        }
+    };
+    useEffect(() => {
+        airtimeCheck();
+    }, [airtime, errorMessageAirtime]);
+    const internalBankCheck = () => {
+        if (internalBank !== null) {
+            console.log(internalBank);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (errorMessageInternalBank !== null) {
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessageInternalBank);
+            setStatus(error);
+        }
+    };
+    useEffect(() => {
+        internalBankCheck();
+    }, [internalBank, errorMessageInternalBank]);
 
     useEffect(() => {
         dispatch(getBalanceEnquiry());
@@ -131,21 +205,6 @@ const Payment = () => {
             setInterEnquiry(interBankEnquiry);
         }
     }, [interBankEnquiry]);
-    // useEffect(() => {
-    //     if (interBankEnquiry !== null) {
-    //         setInterEnquiry(interBankEnquiry);
-    //     }
-    // }, [interBankEnquiry]);
-    // useEffect(() => {
-    //     if (interBankEnquiry !== null) {
-    //         setInterEnquiry(interBankEnquiry);
-    //     }
-    // }, [interBankEnquiry]);
-    // useEffect(() => {
-    //     if (interBankEnquiry !== null) {
-    //         setInterEnquiry(interBankEnquiry);
-    //     }
-    // }, [interBankEnquiry]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -412,12 +471,6 @@ const Payment = () => {
                                             dispatch(
                                                 postInternalBank(paymentData)
                                             );
-                                            if (internalBank !== null) {
-                                                console.log(internalBank);
-                                                setCount(count + 1);
-                                            } else {
-                                                setCount(count + 1);
-                                            }
                                         } else {
                                             console.log(interEnquiry);
 
@@ -442,48 +495,6 @@ const Payment = () => {
                                             dispatch(
                                                 postInterBank(paymentData)
                                             );
-                                            setTimeout(() => {
-                                                forceUpdate();
-
-                                                if (interBank !== null) {
-                                                    if (
-                                                        interBank.message ===
-                                                        'SUCCESS'
-                                                    ) {
-                                                        console.log(interBank);
-                                                        setCount(
-                                                            (count) => count + 1
-                                                        );
-                                                        setIsLoading(false);
-                                                        setStatus('success');
-                                                    } else if (
-                                                        interBank.message !==
-                                                        'SUCCESS'
-                                                    ) {
-                                                        setCount(
-                                                            (count) => count + 1
-                                                        );
-                                                        setIsLoading(false);
-                                                        setError(
-                                                            interBank.message
-                                                        );
-                                                        setStatus(error);
-                                                    }
-                                                } else if (
-                                                    errorMessageInterBank !==
-                                                    null
-                                                ) {
-                                                    setCount(
-                                                        (count) => count + 1
-                                                    );
-                                                    setIsLoading(false);
-                                                    setStatus(error);
-                                                    setError(
-                                                        errorMessageInterBank
-                                                    );
-                                                }
-                                            }, 3000);
-                                            console.log(errorMessageInterBank);
                                         }
                                     }
                                 }}
@@ -555,12 +566,14 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentSecond
+                                isLoading={isLoading}
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountNumber}
                                 sender={paymentDetails.accountName}
                                 recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
                                 transferAction={() => {
+                                    setIsLoading(true);
                                     const paymentData = {
                                         senderAccountNo: '1823020500',
                                         senderAccountType: 'A',
@@ -576,7 +589,7 @@ const Payment = () => {
                                                     'CHIJIOKE NWANKWO',
                                                 narration: 'salary',
                                                 // amount: paymentDetails.amount,
-                                                amount: '120.00',
+                                                amount: '1.00',
                                                 ccy: 'NGN'
                                             },
                                             {
@@ -587,7 +600,7 @@ const Payment = () => {
                                                 beneficiaryName:
                                                     'CHIJIOKE NWANKWO',
                                                 narration: 'salary',
-                                                amount: '100.00',
+                                                amount: '2.00',
                                                 ccy: 'NGN'
                                             }
                                         ]
@@ -601,18 +614,19 @@ const Payment = () => {
                                             beneficiaryAccountNo: '2252999740',
                                             beneficiaryName: 'CHIJIOKE NWANKWO',
                                             narration: 'salary',
-                                            amount: '110.00',
+                                            amount: '3.00',
                                             ccy: 'NGN'
                                         });
                                     }
                                     dispatch(getBulkTransfer(paymentData));
-                                    setCount(count + 1);
                                 }}
                             />
                         );
                     case 2:
                         return (
                             <PaymentSuccess
+                                error={error}
+                                statusbar={status}
                                 overlay={overlay}
                                 action={() => {
                                     setCount(0);
@@ -641,9 +655,9 @@ const Payment = () => {
                             />
                         );
                     case 1:
-                        console.log(paymentDetails);
                         return (
                             <MakePaymentSecond
+                                isLoading={isLoading}
                                 recieverName={paymentDetails.billerType}
                                 amount={paymentDetails.amount}
                                 number={paymentDetails.phoneNumber}
@@ -653,9 +667,11 @@ const Payment = () => {
                                 refNuber={paymentDetails.billerDetail}
                                 overlay={overlay}
                                 transferAction={() => {
+                                    setIsLoading(true);
                                     if (
                                         paymentDetails.billerType === 'AIRTIME'
                                     ) {
+                                        setIsLoading(true);
                                         dispatch(
                                             loadbillerPlan(
                                                 paymentDetails.billerCategory
@@ -676,8 +692,9 @@ const Payment = () => {
                                                     billerPlan.billerDetail
                                                         .billerID
                                                 ),
-                                                sourceAccount: '8100467021',
-                                                sourceAccountType: 'X',
+                                                sourceAccount:
+                                                    senderDetails.accountNo,
+                                                sourceAccountType: 'A',
                                                 productCode:
                                                     billerPlan
                                                         .billerProductInfo[0]
@@ -698,16 +715,6 @@ const Payment = () => {
                                             };
                                             dispatch(postAirtime(billerData));
                                         }
-                                        if (airtime !== null) {
-                                            console.log(airtime);
-                                            setCount(count + 1);
-                                        } else if (
-                                            errorMessageAirtime !== null
-                                        ) {
-                                            console.log(errorMessageAirtime);
-                                            setError(errorMessageAirtime);
-                                            setCount(count + 1);
-                                        }
                                     } else {
                                         dispatch(
                                             loadbillerPlan(
@@ -726,8 +733,9 @@ const Payment = () => {
                                                     billerPlan.billerDetail
                                                         .billerID
                                                 ),
-                                                sourceAccount: '8100467021',
-                                                sourceAccountType: 'X',
+                                                sourceAccount:
+                                                    senderDetails.accountNo,
+                                                sourceAccountType: 'A',
                                                 productCode:
                                                     billerPlan
                                                         .billerProductInfo[0]
@@ -752,44 +760,27 @@ const Payment = () => {
                                             };
                                             dispatch(postBills(billerData));
                                         }
-                                        if (errorMessageBills !== null) {
-                                            console.log(errorMessageBills);
-                                            setError(errorMessageBills);
-                                            setCount(count + 1);
-                                        }
-                                        if (bills !== null) {
-                                            console.log(bills);
-                                            setCount(count + 1);
-                                        }
                                     }
                                 }}
                             />
                         );
                     case 2:
-                        // switch (error) {
-                        //     case null:
                         return (
                             <PaymentSuccess
                                 overlay={overlay}
+                                error={error}
+                                statusbar={status}
                                 action={() => {
                                     setCount(0);
                                     setOverlay(false);
                                     setFormType('');
                                 }}
                                 title="Bill Payment"
-                                // paymentType="AIRTIME"
                                 paymentType={paymentDetails.billerType}
                                 number={paymentDetails.phoneNumber}
                                 amount={paymentDetails.amount}
                             />
                         );
-                    //     case !null:
-                    //         return console.log(error);
-                    //     // <PaymentError
-                    //     //     overlay={overlay}
-                    //     //     errorPass={error}
-                    //     // />
-                    // }
                 }
 
             case 'fx transfer ':
@@ -840,70 +831,37 @@ const Payment = () => {
     };
     return (
         <DashLayout>
-            <div className={styles.greencard}>
-                <div className={styles.greencardDetails}>
-                    <div>
-                        <Image
-                            src="/Assets/Images/clock.png"
-                            width="100%"
-                            height="100%"
-                        />
+            {active && (
+                <div className={styles.greencard}>
+                    <div className={styles.greencardDetails}>
+                        <div>
+                            <Image
+                                src="/Assets/Images/clock.png"
+                                width="47px"
+                                height="55px"
+                            />
+                        </div>
+                        <div className={styles.detailsText}>
+                            <h3>Introducing Scheduled Payments</h3>
+                            <p>
+                                You can now schedule your transfer for a later
+                                time or date by selecting
+                                <span> ‘Schedule for later’ </span> when you
+                                make payments.
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <h3>Introducing Scheduled Payments</h3>
-                        <p>
-                            You can now schedule your transfer for a later time
-                            or date by selecting
-                            <span> ‘Schedule for later’ </span> when you make
-                            payments.
-                        </p>
-                    </div>
+                    <CloseButton
+                        color="#A5A5A5"
+                        action={() => {
+                            setActive(false);
+                        }}
+                        classes={styles.closeButton}
+                    />
                 </div>
-            </div>
+            )}
 
             <div className={styles.cov}>
-                <div className={styles.whiteboard}>
-                    <p className={styles.percentage}>
-                        <span>73%</span>payment transactions completed
-                        successfully today.
-                    </p>
-                    <div className={styles.chart}>
-                        <ChartDiv width={qr} bg="#3CE312" zIndex="4"></ChartDiv>
-                        <ChartDiv
-                            width={paylink}
-                            bg="#69940D"
-                            zIndex="3"
-                        ></ChartDiv>
-                        <ChartDiv
-                            width={ussd}
-                            bg="#6CCF00"
-                            zIndex="2"
-                        ></ChartDiv>
-                        <ChartDiv
-                            width={mPOS}
-                            bg="#C4D344"
-                            zIndex="1"
-                        ></ChartDiv>
-                    </div>
-                    <div className={styles.chartdetails}>
-                        <ChartContent width={qr} color="#3CE312">
-                            <p>QR</p>
-                            <h4>{qr}</h4>
-                        </ChartContent>
-                        <ChartContent width={paylink} color="#69940D">
-                            <p>Paylink</p>
-                            <h4>{paylink}</h4>
-                        </ChartContent>
-                        <ChartContent width={ussd} color="#6CCF00">
-                            <p>USSD</p>
-                            <h4>{ussd}</h4>
-                        </ChartContent>
-                        <ChartContent width={mPOS} color="#C4D344">
-                            <p>Phone POS</p>
-                            <h4>{mPOS}</h4>
-                        </ChartContent>
-                    </div>
-                </div>
                 <div className={styles.whiteboard}>
                     <div className={styles.balance}>
                         <div>
@@ -915,12 +873,13 @@ const Payment = () => {
                             </div>
                             <p className={styles.avail}>Available Balance</p>
                         </div>
-                        <div className="">
-                            <Image
-                                src="/Assets/Images/bagmoney.png "
-                                width="100%"
-                                height="100%"
-                            />
+                        <div className={styles.balanceButtons}>
+                            <div className={styles.first}>
+                                <p>Scheduled Payments</p>
+                            </div>
+                            <div className={styles.second}>
+                                <p>Repeat Payments</p>
+                            </div>
                         </div>
                     </div>
                 </div>

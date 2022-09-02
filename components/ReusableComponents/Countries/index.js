@@ -1,59 +1,116 @@
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
-import Axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadCountry } from '../../../redux/actions/actions';
 
-const Countriess = () => {
-    const [countrys, setCountry] = useState([]);
-    const dispatch = useDispatch();
-    const { isLoading, countries, errorMessage } = useSelector(
-        (state) => state.countryReducer
-    );
-
-    useEffect(() => {
-        dispatch(loadCountry());
-        if (countries !== null) {
-            setCountry(countries);
-        }
-    }, []);
-    useEffect(() => {
-        if (countries !== null) {
-            setCountry(countries);
-        }
-    }, [countries]);
-    // console.log(countries);
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors }
-    } = useForm();
+const Countriess = ({
+    countryState,
+    countrys,
+    displayCountry,
+    selectCountry,
+    error,
+    setSelectCountry,
+    setError,
+    setCountryState
+}) => {
     return (
-        <div>
-            <label className={styles.label} htmlFor="country">
-                Choose The Country Where you Run Busines
-            </label>
-            <br />
-            <select
-                className={styles.select}
-                {...register('countriess', { required: true })}
-                name="countriess"
-                required
-            >
-                <option value="">Choose Country</option>
-                {countrys.map((item, index) => {
-                    // console.log(item.nme);
-                    return (
-                        <option key={index} value={item.name}>
-                            {item.name}
-                        </option>
-                    );
-                })}
-            </select>
-            <p className={styles.error}>{errors?.countriess?.message}</p>
-        </div>
+        <>
+            <div className={styles.selectCont}>
+                <div className={styles.selectCountry} onClick={displayCountry}>
+                    {selectCountry ? (
+                        <div>
+                            <div className={styles.flagDiv}>
+                                <div className={styles.flags}>
+                                    <img
+                                        src={
+                                            selectCountry.flags === undefined
+                                                ? null
+                                                : selectCountry.flags.svg
+                                        }
+                                        alt=""
+                                    />
+                                </div>
+
+                                <p>{selectCountry.name}</p>
+                            </div>
+                            {/* <div className={styles.dropdown}> */}
+                            <img src="/../../Assets/Svgs/dropdownSvg.svg" />
+                            {/* </div> */}
+                        </div>
+                    ) : (
+                        <>
+                            <p>Choose Country</p>
+                        </>
+                    )}
+                </div>
+                {countryState && (
+                    <ul className={styles.selectOption}>
+                        {countrys.map((item, index) => {
+                            return (
+                                <li
+                                    key={index}
+                                    onClick={() => {
+                                        if (item.name !== 'Nigeria') {
+                                            setError(
+                                                'This App is  available in Nigeria currently'
+                                            );
+                                            setCountryState(false);
+                                        } else {
+                                            setSelectCountry(item);
+
+                                            setCountryState(false);
+                                        }
+                                        // if (error !== '') {
+                                        //     setError('');
+                                        // }
+                                    }}
+                                >
+                                    <img
+                                        src={
+                                            item.flags === undefined
+                                                ? null
+                                                : item.flags.svg
+                                        }
+                                        alt=""
+                                    />
+                                    <p>{item.name}</p>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                )}
+            </div>
+
+            {/* <select
+                                    className={styles.select}
+                                    {...register('countriess', {
+                                        required:
+                                            'Destination Country is Required'
+                                    })}
+                                    name="countriess"
+                                >
+                                    <option value="">Choose Country</option>
+                                    {countrys.map((item, index) => {
+                                        console.log(item.nme);
+                                        return (
+                                        <StyledOption
+                                            key={index}
+                                            value={item.name}
+                                        >
+                                            <span>
+                                                <img
+                                                    src="../../Assets/Images/bluemoney.png"
+                                                    alt=""
+                                                />
+                                            </span>{' '}
+                                            {item.name}
+                                        </StyledOption>
+                                        );
+                                    })}
+                                </select>
+
+                                */}
+            {/* {error ? <p className={styles.error}>{error}</p> : null} */}
+        </>
     );
 };
 
