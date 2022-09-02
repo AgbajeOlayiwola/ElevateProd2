@@ -34,6 +34,7 @@ import PaymentCard from '../../components/ReusableComponents/PaymentCard';
 // import PaymentError from '../../components/ReusableComponents/PaymentError';
 import { useRouter } from 'next/router';
 import { PaymentData } from '../../components/ReusableComponents/Data';
+import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
 
 const Payment = () => {
     const router = useRouter();
@@ -79,10 +80,7 @@ const Payment = () => {
     const [overlay, setOverlay] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [count, setCount] = useState(0);
-    const [qr, setqr] = useState('10%');
-    const [paylink, setPaylink] = useState('35%');
-    const [ussd, setUssd] = useState('25%');
-    const [mPOS, setMpos] = useState('30%');
+    const [active, setActive] = useState(true);
     const [outType, setOutType] = useState();
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
@@ -833,70 +831,37 @@ const Payment = () => {
     };
     return (
         <DashLayout>
-            <div className={styles.greencard}>
-                <div className={styles.greencardDetails}>
-                    <div>
-                        <Image
-                            src="/Assets/Images/clock.png"
-                            width="100%"
-                            height="100%"
-                        />
+            {active && (
+                <div className={styles.greencard}>
+                    <div className={styles.greencardDetails}>
+                        <div>
+                            <Image
+                                src="/Assets/Images/clock.png"
+                                width="47px"
+                                height="55px"
+                            />
+                        </div>
+                        <div className={styles.detailsText}>
+                            <h3>Introducing Scheduled Payments</h3>
+                            <p>
+                                You can now schedule your transfer for a later
+                                time or date by selecting
+                                <span> ‘Schedule for later’ </span> when you
+                                make payments.
+                            </p>
+                        </div>
                     </div>
-                    <div>
-                        <h3>Introducing Scheduled Payments</h3>
-                        <p>
-                            You can now schedule your transfer for a later time
-                            or date by selecting
-                            <span> ‘Schedule for later’ </span> when you make
-                            payments.
-                        </p>
-                    </div>
+                    <CloseButton
+                        color="#A5A5A5"
+                        action={() => {
+                            setActive(false);
+                        }}
+                        classes={styles.closeButton}
+                    />
                 </div>
-            </div>
+            )}
 
             <div className={styles.cov}>
-                <div className={styles.whiteboard}>
-                    <p className={styles.percentage}>
-                        <span>73%</span>payment transactions completed
-                        successfully today.
-                    </p>
-                    <div className={styles.chart}>
-                        <ChartDiv width={qr} bg="#3A5207" zIndex="4"></ChartDiv>
-                        <ChartDiv
-                            width={paylink}
-                            bg="#69940D"
-                            zIndex="3"
-                        ></ChartDiv>
-                        <ChartDiv
-                            width={ussd}
-                            bg="#6CCF00"
-                            zIndex="2"
-                        ></ChartDiv>
-                        <ChartDiv
-                            width={mPOS}
-                            bg="#C4D344"
-                            zIndex="1"
-                        ></ChartDiv>
-                    </div>
-                    <div className={styles.chartdetails}>
-                        <ChartContent width={qr} color="#3CE312">
-                            <p>QR</p>
-                            <h4>{qr}</h4>
-                        </ChartContent>
-                        <ChartContent width={paylink} color="#69940D">
-                            <p>Paylink</p>
-                            <h4>{paylink}</h4>
-                        </ChartContent>
-                        <ChartContent width={ussd} color="#6CCF00">
-                            <p>USSD</p>
-                            <h4>{ussd}</h4>
-                        </ChartContent>
-                        <ChartContent width={mPOS} color="#C4D344">
-                            <p>Phone POS</p>
-                            <h4>{mPOS}</h4>
-                        </ChartContent>
-                    </div>
-                </div>
                 <div className={styles.whiteboard}>
                     <div className={styles.balance}>
                         <div>
@@ -908,12 +873,13 @@ const Payment = () => {
                             </div>
                             <p className={styles.avail}>Available Balance</p>
                         </div>
-                        <div className="">
-                            <Image
-                                src="/Assets/Images/bagmoney.png "
-                                width="100%"
-                                height="100%"
-                            />
+                        <div className={styles.balanceButtons}>
+                            <div className={styles.first}>
+                                <p>Scheduled Payments</p>
+                            </div>
+                            <div className={styles.second}>
+                                <p>Repeat Payments</p>
+                            </div>
                         </div>
                     </div>
                 </div>

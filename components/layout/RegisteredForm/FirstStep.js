@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ButtonComp from '../../ReusableComponents/Button';
 import OtpInput from '../../ReusableComponents/Otpinput';
+import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { ResetOTP } from '../NotRegisteredForms/StepTwoBVNAuthenticator/styles.module';
 import styles from './styles.module.css';
 
@@ -9,9 +10,7 @@ const FirstStep = ({ handleSubmit }) => {
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
-                <div>
-                    <img src="../Assets/Images/profileSetup1.png" alt="" />
-                </div>
+                <ProfileSetupSide text="The world is your Canvas Explore" />
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.existingBody}>

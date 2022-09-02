@@ -13,6 +13,7 @@ import {
 import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
 import CircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/CircleSvg';
+import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
 
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -83,7 +84,7 @@ const Login = () => {
     return (
         <div className={styles.sectionCove}>
             <section className={styles.sectionI}>
-                <img src="/Assets/Images/loginImage.png" alt="" />
+                <ProfileSetupSide text="The world is your Canvas Explore " />
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.loginCont}>

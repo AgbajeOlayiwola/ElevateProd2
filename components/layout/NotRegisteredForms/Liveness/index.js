@@ -22,33 +22,38 @@ const Liveness = ({ action }) => {
     }, [webcamRef, setImgSrc]);
 
     return (
-        <>
-            <div className={styles.imageOut}>
-                <div>
-                    <p className={styles.takeSelf}>Take a Lively Selfie</p>
-                    <p className={styles.finish}>
-                        Finish up with a clear photo of your face to verify your
-                        identity.
-                    </p>
-                    <div className={styles.imageInner}>
-                        <Webcam
-                            audio={false}
-                            screenshotFormat="image/jpeg"
-                            videoConstraints={videoConstraints}
-                            ref={webcamRef}
-                        />
+        <div className={styles.body}>
+            <div className={styles.cover}>
+                <div className={styles.imageOut}>
+                    <div>
+                        <p className={styles.takeSelf}>Take a Lively Selfie</p>
+                        <p className={styles.finish}>
+                            Finish up with a clear photo of your face to verify
+                            your identity.
+                        </p>
+                        <div className={styles.imageInner}>
+                            <Webcam
+                                audio={false}
+                                screenshotFormat="image/jpeg"
+                                videoConstraints={videoConstraints}
+                                ref={webcamRef}
+                            />
+                        </div>
                     </div>
                 </div>
+                {/* <ButtonComp
+                    onClick={capture}
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    type="submit"
+                    text={'Snap'}
+                    action={action}
+                /> */}
+                <button onClick={action}>Snap</button>
             </div>
-            {/* <ButtonComp
-                onClick={capture}
-                disabled={activeBtn}
-                active={activeBtn ? 'active' : 'inactive'}
-                type="submit"
-                text={'Next'}
-            /> */}
+
             {/* {imgSrc && <img src={imgSrc} />} */}
-        </>
+        </div>
     );
 };
 
