@@ -34,17 +34,17 @@ export const RegistrationStatus = styled.div`
     margin-right: auto;
     margin-top: 10%;
 
-    p {
-        font-family: 'Inter', sans-serif;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 23px;
-        text-align: center;
-        width: 60%;
-        margin: 16px auto;
-        color: #005b82;
-    }
+    // p {
+    //     font-family: 'Inter', sans-serif;
+    //     font-style: normal;
+    //     font-weight: 500;
+    //     font-size: 14px;
+    //     line-height: 23px;
+    //     text-align: center;
+    //     width: 60%;
+    //     margin: 16px auto;
+    //     color: #005b82;
+    // }
 `;
 export const RegStatusHeading = styled.h6`
     font-family: 'Inter', sans-serif;
@@ -101,10 +101,9 @@ export const SuccessMainHeading = styled.h3`
     font-weight: 700;
     font-size: 24px;
     line-height: 33px;
-    /* identical to box height */
     text-align: center;
     color: #005b82;
-    margin-top: 4%;
+    margin: 0px;
 `;
 export const H6Wrapper = styled.h6`
     font-family: 'Inter', sans-serif;

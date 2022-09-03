@@ -25,7 +25,8 @@ const PaymentSuccess = ({
     beneName,
     isLoading,
     statusbar,
-    error
+    error,
+    repeatAction
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -80,7 +81,7 @@ const PaymentSuccess = ({
                                     </SuccessMainHeading>
                                     {title === 'Bill payment' ? (
                                         <h6 className={styles.elevateSuccess}>
-                                            Your recharge of{' '}
+                                            Your recharge of
                                             <span>{amount} </span> for Airtime
                                             on June 12, 2022 by 12:02pm
                                         </h6>
@@ -88,7 +89,7 @@ const PaymentSuccess = ({
                                       'Foreign Transfer Payments' ? (
                                         <h6 className={styles.elevateSuccess}>
                                             <span>{amount} </span> will be
-                                            transferred to{' '}
+                                            transferred to
                                             <span>{beneName}</span> on June 12,
                                             2022 by 12:02pm
                                         </h6>
@@ -127,6 +128,12 @@ const PaymentSuccess = ({
                                         type="button"
                                         onClick={action}
                                     />
+                                    <p className={styles.repeat}>
+                                        Set this transaction as{' '}
+                                        <span onClick={repeatAction}>
+                                            Repeat
+                                        </span>
+                                    </p>
                                 </RegistrationStatus>
                             </BodyWrapper>
                         )}

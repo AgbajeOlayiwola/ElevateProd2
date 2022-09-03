@@ -6,7 +6,7 @@
     line-height: 23px;
     text-align: center;
     color: #8f8f8f;
-    width: 60%;
+    width: 57%;
     margin: 8px auto 0px;
 }
 
@@ -72,8 +72,14 @@
 
 .successcont button {
     width: 66%;
-    margin: 64px auto;
+    margin: 48px auto 16px;
     display: block;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
 }
 
 .errorCont {
@@ -131,4 +137,22 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+.repeat {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #a5a5a5;
+    margin: 0px;
+    margin-bottom: 64px;
+}
+
+.repeat span {
+    color: #102572;
+    font-weight: 700;
+    cursor: pointer;
 }

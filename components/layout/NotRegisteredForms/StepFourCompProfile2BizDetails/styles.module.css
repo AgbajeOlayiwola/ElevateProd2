@@ -81,7 +81,7 @@
     font-size: 14px;
     line-height: 17px;
     /* identical to box height */
-    -webkit-user-select: none;
+    /* -webkit-user-select: none; */
     color: #7a7978;
 }
 .phone {
