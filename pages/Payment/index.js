@@ -35,6 +35,7 @@ import PaymentCard from '../../components/ReusableComponents/PaymentCard';
 import { useRouter } from 'next/router';
 import { PaymentData } from '../../components/ReusableComponents/Data';
 import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
+import PaymentRepeat from '../../components/ReusableComponents/PaymentRepeat';
 
 const Payment = () => {
     const router = useRouter();
@@ -485,8 +486,13 @@ const Payment = () => {
                                 title="Single Transfer Payment"
                                 amount={paymentDetails.amount}
                                 beneName={paymentDetails.accountNumber}
+                                repeatAction={() => {
+                                    setCount(count + 1);
+                                }}
                             />
                         );
+                    case 3:
+                        return <PaymentRepeat overlay={overlay} />;
                 }
 
             case 'bulk transfer':

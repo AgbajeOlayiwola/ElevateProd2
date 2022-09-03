@@ -9,7 +9,8 @@ import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     CompProfile,
-    businessCategoriesData
+    businessCategoriesData,
+    statesData
 } from '../../../../redux/actions/actions';
 import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
@@ -34,8 +35,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const { businessCategories, errorDatas } = useSelector(
         (state) => state.businessCategoriesReducer
     );
+    const { states } = useSelector((state) => state.statesReducer);
 
     const [checker, setChecker] = useState();
+    const [localState, setLocalState] = useState('');
+    const [localGovernment, setLocalGovernment] = useState('');
+    const [location, setLocation] = useState([]);
     const [gender, setGender] = useState('');
     const [businessCategory, setBusinessCategory] = useState([]);
     const [businessType, setBusinessType] = useState([]);
@@ -43,6 +48,25 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const [businesses, setBusinesses] = useState('');
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
+    useEffect(() => {
+        dispatch(statesData());
+    }, []);
+    const newStates = () => {
+        if (states !== null) {
+            setLocation(states);
+        }
+    };
+    useEffect(() => {
+        newStates();
+    }, [states]);
+    useEffect(() => {
+        location?.filter((item) => {
+            if (item.state === localState) {
+                setLocalGovernment(item.localGoverment);
+            }
+        });
+    }, [localState]);
+
     useEffect(() => {
         dispatch(CompProfile());
     }, []);
@@ -329,8 +353,39 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                 </div>
                                 <div className={styles.singleFormGroup}>
                                     <label>Local Government Area (LGA)</label>
-                                    <select name="" id="">
+                                    <select
+                                        name=""
+                                        id=""
+                                        {...register('localGoverment')}
+                                        onChange={(event) => {
+                                            setFormData({
+                                                ...formData,
+                                                localGoverment:
+                                                    event.target.value
+                                            });
+                                            //     if (event.target.value.length == 15)
+                                            //         return false; //limits to 10 digit entry
+                                            //     setPhoneNumber(event?.target.value); //saving input to state
+                                            // }}
+                                        }}
+                                    >
                                         <option value="">Select LGA</option>
+                                        {localGovernment
+                                            ? localGovernment?.map(
+                                                  (item, index) => {
+                                                      return (
+                                                          <option
+                                                              value={
+                                                                  item.lgaName
+                                                              }
+                                                              key={index}
+                                                          >
+                                                              {item.lgaName}
+                                                          </option>
+                                                      );
+                                                  }
+                                              )
+                                            : null}
                                     </select>
                                 </div>
                             </div>
@@ -342,8 +397,30 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                     }}
                                 >
                                     <label>State</label>
-                                    <select name="" id="">
+                                    <select
+                                        name=""
+                                        id=""
+                                        {...register('State')}
+                                        value={formData.state}
+                                        onChange={(event) => {
+                                            setLocalState(event.target.value);
+                                            setFormData({
+                                                ...formData,
+                                                state: event.target.value
+                                            });
+                                        }}
+                                    >
                                         <option value="">Select State</option>
+                                        {location.map((item, index) => {
+                                            return (
+                                                <option
+                                                    value={item.state}
+                                                    key={index}
+                                                >
+                                                    {item.state}
+                                                </option>
+                                            );
+                                        })}
                                     </select>
                                 </div>
                                 <div className={styles.singleFormGroup}>
