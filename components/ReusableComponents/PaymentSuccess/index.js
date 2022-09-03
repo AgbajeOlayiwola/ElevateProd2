@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Success from '../Success';
 import styles from './styles.module.css';
 import {
     BodyWrapper,
@@ -10,6 +9,7 @@ import Link from 'next/link';
 import ButtonComp from '../Button';
 import Overlay from '../Overlay';
 import ErrorSvg from '../ReusableSvgComponents/ErrorSvg';
+import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 
 const PaymentSuccess = ({
     action,
@@ -40,14 +40,10 @@ const PaymentSuccess = ({
                     <div>
                         {type === 'profile' ? (
                             <BodyWrapper>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        justifyContent: 'center'
-                                    }}
-                                >
-                                    <Success />
+                                <div className={styles.successCheck}>
+                                    <div>
+                                        <SuccessCheckSvg />
+                                    </div>
                                 </div>
 
                                 <RegistrationStatus>
@@ -72,14 +68,10 @@ const PaymentSuccess = ({
                             </BodyWrapper>
                         ) : (
                             <BodyWrapper>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        justifyContent: 'center'
-                                    }}
-                                >
-                                    <Success />
+                                <div className={styles.successCheck}>
+                                    <div>
+                                        <SuccessCheckSvg />
+                                    </div>
                                 </div>
 
                                 <RegistrationStatus>
@@ -126,9 +118,6 @@ const PaymentSuccess = ({
                                         </p>
                                     ) : null}
 
-                                    <div className={styles.reminder}>
-                                        <p>Set Reminder</p>
-                                    </div>
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={

@@ -161,7 +161,7 @@ const ReceivePaymentFirst = ({
                         height="100%"
                     /> */}
                     <img
-                        src="../../Assets/Images/Group 33664.png"
+                        src="../../Assets/Images/greenmoney.png"
                         alt=""
                         className={styles.greenImg}
                     />

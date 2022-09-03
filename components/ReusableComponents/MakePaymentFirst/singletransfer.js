@@ -8,16 +8,11 @@ import {
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Beneficiary from '../Beneficiary';
+import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
+import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 
-const SingleTransfer = ({
-    selfaction,
-    othersaction,
-    firstTitle,
-    buttonText
-}) => {
+const SingleTransfer = ({ othersaction, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
-    const [others, setOthers] = useState(true);
-    const [self, setSelf] = useState(false);
     const [bank, setBank] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
@@ -38,277 +33,150 @@ const SingleTransfer = ({
     return (
         <div>
             <h2>{firstTitle}</h2>
-            <p className={styles.choose}>Choose Transfer Type</p>
-            <div className={styles.transferHead}>
-                <div
-                    className={
-                        others
-                            ? styles.transferActive
-                            : styles.transferHeadSingle
-                    }
-                    onClick={() => {
-                        setOthers(true);
-                        setSelf(false);
-                    }}
-                >
-                    <p>Others</p>
+            <div className={styles.beneficiary}>
+                <div className={styles.beneficiaryHeader}>
+                    <h2>Beneficiaries</h2>
+                    <p>View all</p>
                 </div>
-                <div
-                    className={
-                        self ? styles.transferActive : styles.transferHeadSingle
-                    }
-                    onClick={() => {
-                        setSelf(true);
-                        setOthers(false);
-                    }}
-                >
-                    <p>To Self</p>
+                <div className={styles.beneficiaryBody}>
+                    <div className={styles.beneficiarySingle}>
+                        <BeneficiaryAvatarSvg />
+                        <p className={styles.name}>Babalola</p>
+                        <p className={styles.benebank}>Wema Bank</p>
+                    </div>
+                    <div className={styles.beneficiarySingle}>
+                        <BeneficiaryAvatarSvg />
+                        <p className={styles.name}>Babalola</p>
+                        <p className={styles.benebank}>Wema Bank</p>
+                    </div>
+                    <div className={styles.beneficiarySingle}>
+                        <BeneficiaryAvatarSvg />
+                        <p className={styles.name}>Babalola</p>
+                        <p className={styles.benebank}>Wema Bank</p>
+                    </div>
+                    <div className={styles.beneficiarySingle}>
+                        <BeneficiaryAvatarSvg />
+                        <p className={styles.name}>Babalola</p>
+                        <p className={styles.benebank}>Wema Bank</p>
+                    </div>
+                    <div className={styles.beneficiarySingle}>
+                        <BeneficiaryAvatarSvg />
+                        <p className={styles.name}>Babalola</p>
+                        <p className={styles.benebank}>Wema Bank</p>
+                    </div>
                 </div>
             </div>
-            {others && (
-                <form onSubmit={handleSubmit(othersaction)}>
+            <form onSubmit={handleSubmit(othersaction)}>
+                <div className={styles.source}>
+                    <h2>
+                        Source <span>- Marvelous N******</span>
+                    </h2>
+                    <SourceSvg />
+                </div>
+                <div className={styles.narration}>
+                    <label> Account Number</label>
                     <input
-                        type="text"
-                        defaultValue="others"
-                        {...register('others')}
-                        className={styles.displayNone}
+                        {...register('accountNumber', {
+                            required: 'Please enter  Acount Number',
+                            pattern: {
+                                value: /^[0-9 ]/i,
+                                message: 'Account Number must be a number'
+                            }
+                        })}
+                        type="number"
+                        placeholder="Enter account number here"
                     />
-                    <div>
-                        <label>Account to Debit</label>
-                        <input
-                            {...register('accountName', {
-                                required: 'Please enter your Acount Name',
-                                pattern: {
-                                    value: /^[A-Za-z ]+$/i,
-                                    message: 'Only Alphabelts allowed'
-                                }
-                            })}
-                            type="text"
-                            placeholder="Account to Debit"
-                        />
-                        <p className={styles.error}>
-                            {errors?.accountName?.message}
-                        </p>
-                    </div>
-                    <div className={styles.accountDetails}>
-                        <label>Account Details to Credit</label>
-                        <div className={styles.accountDetailsBody}>
-                            <div className={styles.accountDetailSingle}>
-                                <div
-                                    className={styles.accountDetailSingleInput}
-                                >
-                                    <label> Account Number</label>
-                                    <input
-                                        {...register('accountNumber', {
-                                            required:
-                                                'Please enter  Acount Number',
-                                            pattern: {
-                                                value: /^[0-9 ]/i,
-                                                message:
-                                                    'Account Number must be a number'
-                                            }
-                                        })}
-                                        type="number"
-                                        placeholder="Enter account number here"
-                                    />
-                                    <p className={styles.error}>
-                                        {errors?.accountNumber?.message}
-                                    </p>
-                                </div>
-                                <div
-                                    className={styles.accountDetailSingleSelect}
-                                >
-                                    <label>Bank</label>
-                                    <select
-                                        {...register('bankName', {
-                                            required: 'Choose a bank'
-                                        })}
-                                        name="bankName"
-                                    >
-                                        <option value="">Select Bank</option>
-                                        <option value="Ecobank">Ecobank</option>
-                                        {bank?.map((bank, index) => {
-                                            return (
-                                                <option
-                                                    value={bank.institutionId}
-                                                    key={index}
-                                                >
-                                                    {bank.institutionName}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                    {errors.bankName && (
-                                        <p className={styles.error}>
-                                            {errors?.bankName?.message}
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-                            <div className={styles.beneficiaryCheck}>
-                                <div>
-                                    <input
-                                        type="checkbox"
-                                        name="bene"
-                                        id=""
-                                        {...register('bene')}
-                                    />
-                                </div>
-                                <p>Save to Beneficiary</p>
-                            </div>
-                        </div>
-                    </div>
-                    <Beneficiary />
-                    <div className={styles.narration}>
-                        <label>Enter Amount</label>
-                        <input
-                            {...register('amount', {
-                                required: 'Please enter Amount',
-                                pattern: {
-                                    value: /^[0-9]/i,
-                                    message: 'Amount can only be number '
-                                }
-                            })}
-                            type="number"
-                            placeholder="5,000,000,000.00"
-                        />
-                    </div>
-                    <p className={styles.error}>{errors?.amount?.message}</p>
-                    <div className={styles.narration}>
-                        <label>Transfer Narration</label>
-                        <input
-                            {...register('narration', {
-                                required: 'Please enter your Narration',
-                                pattern: {
-                                    value: /^[A-Za-z ]+$/i,
-                                    message: 'Only Alphabelts allowed'
-                                }
-                            })}
-                            type="text"
-                            placeholder="5,000,000,000.00"
-                            onChange={(e) => {
-                                if (e?.target.value.length === 0) {
-                                    setActiveBtn(false);
-                                } else if (e?.target.value.length > 0) {
-                                    setActiveBtn(true);
-                                }
-                            }}
-                            name="narration"
-                        />
-                    </div>
-                    <p className={styles.error}>{errors?.narration?.message}</p>
-                    <div className={styles.repeat}>
-                        <input type="checkbox" />
-                        <p>Do you want to set this as a repeat transaction?</p>
-                    </div>
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text={buttonText}
-                        type="submit"
-                    />
-                    <p className={styles.schedule}>
-                        Not paying now?<span>Schedule for Later</span>
-                    </p>
-                </form>
-            )}
-            {self && (
-                <form onSubmit={handleSubmit(selfaction)}>
-                    <input
-                        type="text"
-                        defaultValue="self"
-                        {...register('self')}
-                        className={styles.displayNone}
-                    />
-                    <div>
-                        <label>Account to Debit</label>
-                        <input
-                            {...register('accountName', {
-                                required: 'Please enter your Acount Name',
-                                pattern: {
-                                    value: /^[A-Za-z ]+$/i,
-                                    message: 'Only Alphabelts allowed'
-                                }
-                            })}
-                            type="text"
-                            placeholder="Account to Debit"
-                        />
-                        <p className={styles.error}>
-                            {errors?.accountName?.message}
-                        </p>
-                    </div>
-                    <div className={styles.narration}>
-                        <label>Account to Credit</label>
-                        <input
-                            {...register('accountNumber', {
-                                required:
-                                    'Please enter Account Number to Credit',
-                                pattern: {
-                                    value: /^[0-9]/i,
-                                    message:
-                                        'Account Number can only be number '
-                                }
-                            })}
-                            type="number"
-                            placeholder="Enter Account Number"
-                        />
-                    </div>
                     <p className={styles.error}>
                         {errors?.accountNumber?.message}
                     </p>
-                    <div className={styles.narration}>
-                        <label>Enter Amount</label>
-                        <input
-                            {...register('amount', {
-                                required: 'Please enter Amount',
-                                pattern: {
-                                    value: /^[0-9]/i,
-                                    message: 'Amount can only be number '
-                                }
-                            })}
-                            type="number"
-                            placeholder="5,000,000,000.00"
-                        />
-                    </div>
-                    <p className={styles.error}>{errors?.amount?.message}</p>
-                    <div className={styles.narration}>
-                        <label>Transfer Narration</label>
-                        <input
-                            {...register('narration', {
-                                required: 'Please enter your Narration',
-                                pattern: {
-                                    value: /^[A-Za-z ]+$/i,
-                                    message: 'Only Alphabelts allowed'
-                                }
-                            })}
-                            type="text"
-                            placeholder="5,000,000,000.00"
-                            onChange={(e) => {
-                                if (e?.target.value.length === 0) {
-                                    setActiveBtn(false);
-                                } else if (e?.target.value.length > 0) {
-                                    setActiveBtn(true);
-                                }
-                            }}
-                            name="narration"
-                        />
-                    </div>
-                    <p className={styles.error}>{errors?.narration?.message}</p>
-                    <div className={styles.repeat}>
-                        <input type="checkbox" />
-                        <p>Do you want to set this as a repeat transaction?</p>
-                    </div>
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text={buttonText}
-                        type="submit"
+                </div>
+                <div className={styles.narration}>
+                    <label>Choose Bank</label>
+                    <select
+                        {...register('bankName', {
+                            required: 'Choose a bank'
+                        })}
+                        name="bankName"
+                    >
+                        <option value="">Select Bank</option>
+                        <option value="Ecobank">Ecobank</option>
+                        {bank?.map((bank, index) => {
+                            return (
+                                <option value={bank.institutionId} key={index}>
+                                    {bank.institutionName}
+                                </option>
+                            );
+                        })}
+                    </select>
+                    {errors.bankName && (
+                        <p className={styles.error}>
+                            {errors?.bankName?.message}
+                        </p>
+                    )}
+                </div>
+                <div className={styles.narration}>
+                    <label>Enter Amount</label>
+                    <input
+                        {...register('amount', {
+                            required: 'Please enter Amount',
+                            pattern: {
+                                value: /^[0-9]/i,
+                                message: 'Amount can only be number '
+                            }
+                        })}
+                        type="number"
+                        placeholder="5,000,000,000.00"
+                        onChange={(e) => {
+                            if (e?.target.value.length === 0) {
+                                setActiveBtn(false);
+                            } else if (e?.target.value.length > 0) {
+                                setActiveBtn(true);
+                            }
+                        }}
                     />
-                    <p className={styles.schedule}>
-                        Not paying now?<span>Schedule for Later</span>
-                    </p>
-                </form>
-            )}
+                    <p className={styles.error}>{errors?.amount?.message}</p>
+                </div>
+                <div className={styles.narration}>
+                    <label>
+                        Transfer Narration <span>(optional)</span>
+                    </label>
+                    <input
+                        {...register('narration', {
+                            pattern: {
+                                value: /^[A-Za-z ]+$/i,
+                                message: 'Only Alphabelts allowed'
+                            }
+                        })}
+                        type="text"
+                        placeholder="Enter Narration"
+                        name="narration"
+                    />
+                    <p className={styles.error}>{errors?.narration?.message}</p>
+                </div>
+                {/* <div className={styles.repeat}>
+                    <input type="checkbox" />
+                    <p>Do you want to set this as a repeat transaction?</p>
+                </div> */}
+                <div className={styles.saveBene}>
+                    <label className={styles.beneCheck}>
+                        <input type="checkbox" />
+                        <span>
+                            <i></i>
+                        </span>
+                    </label>
+                    <p>Save Beneficiary</p>
+                </div>
+
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    text={buttonText}
+                    type="submit"
+                />
+                <p className={styles.schedule}>
+                    Not paying now? <span>Schedule for Later</span>
+                </p>
+            </form>
         </div>
     );
 };

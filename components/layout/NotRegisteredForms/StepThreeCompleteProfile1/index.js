@@ -1,32 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
-import {
-    CardContainer,
-    CardHeadingBVN,
-    LeftHeading,
-    // SmallInstructionText,
-    Label,
-    FormInput,
-    ResetOTP,
-    InputWrapper,
-    ProgressBar,
-    SmallCardContainer,
-    RegStatusHeading,
-    ButtonWrapper,
-    ToggleYes,
-    ToggleNo,
-    ToggleYesText,
-    ToggleNoText,
-    GenderWrapper,
-    LastFieldAndButton
-} from './styles.module';
+import { CardHeadingBVN, LeftHeading, ButtonWrapper } from './styles.module';
 import styles from './styles.module.css';
 import Card from '../../NotRegisteredForms/Card';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';
 import { useDispatch, useSelector } from 'react-redux';
-import { CompProfile } from '../../../../redux/actions/actions';
+import {
+    CompProfile,
+    businessCategoriesData
+} from '../../../../redux/actions/actions';
+import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
+import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     // const [progress, setProgress] = useState('75%');
     const [title, setTitle] = useState('Basic');
@@ -45,9 +31,18 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const { newCorpAccount, newCorpAccountErrorMMessage } = useSelector(
         (state) => state.newuserCorpAccount
     );
+    const { businessCategories, errorDatas } = useSelector(
+        (state) => state.businessCategoriesReducer
+    );
 
     const [checker, setChecker] = useState();
     const [gender, setGender] = useState('');
+    const [businessCategory, setBusinessCategory] = useState([]);
+    const [businessType, setBusinessType] = useState([]);
+    const [business, setBusiness] = useState('');
+    const [businesses, setBusinesses] = useState('');
+    const [businessTest, setBusinessTest] = useState(false);
+    const [businessText, setBusinessText] = useState(false);
     useEffect(() => {
         dispatch(CompProfile());
     }, []);
@@ -57,6 +52,21 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
         }
         setGender(profileCont.gender);
     }, [profile]);
+    useEffect(() => {
+        dispatch(businessCategoriesData());
+    }, []);
+    useEffect(() => {
+        if (businessCategories !== null) {
+            setBusinessCategory(businessCategories);
+        }
+    }, [businessCategories]);
+    useEffect(() => {
+        Object.keys(businessCategory)?.filter((item) => {
+            if (item === business) {
+                setBusinessType(businessCategory[item]);
+            }
+        });
+    }, [business]);
 
     if (gender === 'm') console.log(profileCont);
 
@@ -118,48 +128,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                         </h2>
                         <p>Other Details</p>
                     </div>
-                    {/* <ToggleNo
-                                onClick={handleShowFourthStep}
-                                style={
-                                    bgcolor
-                                        ? { background: '#f8f8f8' }
-                                        : {
-                                              background:
-                                                  'rgba(108, 207, 0, 0.3)'
-                                          }
-                                }
-                            >
-                                <ToggleNoText
-                                    style={
-                                        bgcolor
-                                            ? { color: '#a5a5a5' }
-                                            : { color: '#407a00' }
-                                    }
-                                >
-                                    Personal details
-                                </ToggleNoText>
-                            </ToggleNo>
-                            <ToggleYes
-                                onClick={handleShowFourthStep}
-                                style={
-                                    bgcolor
-                                        ? {
-                                              background:
-                                                  'rgba(108, 207, 0, 0.3)'
-                                          }
-                                        : { background: '#f8f8f8' }
-                                }
-                            >
-                                <ToggleYesText
-                                    style={
-                                        bgcolor
-                                            ? { color: '#407a00' }
-                                            : { color: '#a5a5a5' }
-                                    }
-                                >
-                                    Business details
-                                </ToggleYesText>
-                            </ToggleYes> */}
                 </ButtonWrapper>
                 {title === 'Basic' ? (
                     <>
@@ -192,11 +160,51 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                 <div className={styles.singleFormGroup}>
                                     <label>Select your Business Category</label>
 
-                                    <select name="" id="">
-                                        <option value="">
-                                            Select your Business Category
-                                        </option>
-                                    </select>
+                                    <div className={styles.businessCat}>
+                                        <div
+                                            className={
+                                                styles.businessCategories
+                                            }
+                                            onClick={() => {
+                                                setBusinessTest(!businessTest);
+                                            }}
+                                        >
+                                            <SearchSvg />
+                                            {business ? (
+                                                <p>{business}</p>
+                                            ) : (
+                                                <p>Search Business Category</p>
+                                            )}
+
+                                            <DropdownSvg />
+                                        </div>
+                                        {businessTest && (
+                                            <ul
+                                                className={styles.businessGroup}
+                                            >
+                                                {Object.keys(
+                                                    businessCategory
+                                                )?.map((business, index) => {
+                                                    return (
+                                                        <li
+                                                            value={business}
+                                                            key={index}
+                                                            onClick={() => {
+                                                                setBusiness(
+                                                                    business
+                                                                );
+                                                                setBusinessTest(
+                                                                    false
+                                                                );
+                                                            }}
+                                                        >
+                                                            {business}
+                                                        </li>
+                                                    );
+                                                })}
+                                            </ul>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.formGroup}>
@@ -245,12 +253,51 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                 </div>
                                 <div className={styles.singleFormGroup}>
                                     <label>Select your Business Type</label>
+                                    <div className={styles.businessCat}>
+                                        <div
+                                            className={
+                                                styles.businessCategories
+                                            }
+                                            onClick={() => {
+                                                setBusinessText(!businessText);
+                                            }}
+                                        >
+                                            <SearchSvg />
+                                            {businesses ? (
+                                                <p>{businesses}</p>
+                                            ) : (
+                                                <p>Search Business Type</p>
+                                            )}
 
-                                    <select name="" id="">
-                                        <option value="">
-                                            Select your Business Type
-                                        </option>
-                                    </select>
+                                            <DropdownSvg />
+                                        </div>
+                                        {businessText && (
+                                            <ul
+                                                className={styles.businessGroup}
+                                            >
+                                                {businessType?.map(
+                                                    (business, index) => {
+                                                        return (
+                                                            <li
+                                                                value={business}
+                                                                key={index}
+                                                                onClick={() => {
+                                                                    setBusinesses(
+                                                                        business
+                                                                    );
+                                                                    setBusinessText(
+                                                                        false
+                                                                    );
+                                                                }}
+                                                            >
+                                                                {business}
+                                                            </li>
+                                                        );
+                                                    }
+                                                )}
+                                            </ul>
+                                        )}
+                                    </div>
                                 </div>
                                 <button
                                     onClick={() => {
