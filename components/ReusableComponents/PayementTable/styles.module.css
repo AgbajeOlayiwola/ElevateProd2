@@ -33,7 +33,7 @@
 
 .tableFilter div {
     width: 239px !important;
-    border-radius: 16px;
+    border-radius: 8px;
     border: 1px solid #dae1ff;
     display: flex;
     background-color: transparent;
@@ -64,7 +64,7 @@
     width: 103px;
     margin: 0px;
     background-color: #005b82;
-    border-radius: 16px;
+    border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
     font-family: 'Inter', sans-serif;
@@ -85,7 +85,7 @@
     display: flex;
     width: 100%;
     background: #f5f6fa;
-    border-radius: 16px;
+    border-radius: 4px;
     padding: 16px 0px 16px 24px;
 }
 

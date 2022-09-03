@@ -1,0 +1,23 @@
+import React from 'react';
+
+const SourceSvg = () => {
+    return (
+        <svg
+            width="8"
+            height="5"
+            viewBox="0 0 8 5"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M1 1L3.99795 4L6.9959 1"
+                stroke="#7A7978"
+                strokeWidth="1.66667"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    );
+};
+
+export default SourceSvg;

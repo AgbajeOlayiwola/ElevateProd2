@@ -110,6 +110,7 @@ const ProfileSetups = () => {
                         formData={formData}
                         setFormData={setFormData}
                         action={handleSubmit}
+                        // action is supposed to be handleSubmit
                     />
                 );
             case 1:
