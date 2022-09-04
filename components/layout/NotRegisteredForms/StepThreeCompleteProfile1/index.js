@@ -8,10 +8,14 @@ import Progressbar from '../../../ReusableComponents/Progressbar';
 import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    CompProfile,
     businessCategoriesData,
+    CompleteBusinessProfile,
+    CompProfile,
+    createNewCorpUserAccount,
+    createNewUserAccount,
     statesData
 } from '../../../../redux/actions/actions';
+import { useRouter } from 'next/router';
 import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
@@ -47,6 +51,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const [businesses, setBusinesses] = useState('');
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
+    const router = useRouter();
     useEffect(() => {
         dispatch(statesData());
     }, []);
@@ -99,14 +104,19 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
         watch,
         formState: { errors }
     } = useForm();
-
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
+    const { newAccount, newAccountErrorMessage } = useSelector(
+        (state) => state.newUserAccountDets
+    );
     const handleSubmitIII = () => {
         const commpleteProfileData = {
             businessName: formData.bussinessName,
-            businessType: formData.businessType,
-            referralCode: formData.refferalCode,
+            businessType: businesses,
+            referralCode: formData.referralCode,
             countryCode: '+234',
-            phoneNumber: formData.bussinessName,
+            phoneNumber: formData.phoneNumber,
             businessAddress: formData.streetName,
             state: formData.state,
             city: formData.city,
@@ -120,6 +130,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
             ccy: 'NGN'
         };
         dispatch(createNewUserAccount(accountData));
+        console.log(errorMessages, newAccountErrorMessage);
         if (
             errorMessages ||
             newAccountErrorMessage ===
@@ -233,6 +244,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                     <input
                                         type="text"
                                         placeholder="Enter Business Full Name"
+                                        onChange={(event) => {
+                                            setFormData({
+                                                ...formData,
+                                                bussinessName:
+                                                    event.target.value
+                                            });
+                                        }}
                                     />
                                 </div>
                                 <div className={styles.singleFormGroup}>
@@ -402,6 +420,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                         <input
                                             type="text"
                                             placeholder="Enter Street Name"
+                                            onChange={(event) => {
+                                                setFormData({
+                                                    ...formData,
+                                                    streetName:
+                                                        event.target.value
+                                                });
+                                            }}
                                         />
                                     </div>
                                 </div>
@@ -417,10 +442,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                                 localGoverment:
                                                     event.target.value
                                             });
-                                            //     if (event.target.value.length == 15)
-                                            //         return false; //limits to 10 digit entry
-                                            //     setPhoneNumber(event?.target.value); //saving input to state
-                                            // }}
                                         }}
                                     >
                                         <option value="">Select LGA</option>
@@ -482,6 +503,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                     <input
                                         type="text"
                                         placeholder="Enter City/Town"
+                                        onChange={(event) => {
+                                            setFormData({
+                                                ...formData,
+                                                city: event.target.value
+                                            });
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -496,6 +523,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                     <input
                                         type="text"
                                         placeholder="Enter Code"
+                                        onChange={(event) => {
+                                            setFormData({
+                                                ...formData,
+                                                referralCode: event.target.value
+                                            });
+                                        }}
                                     />
                                 </div>
                                 {profileCont.isBusinessRegistered === true ? (
