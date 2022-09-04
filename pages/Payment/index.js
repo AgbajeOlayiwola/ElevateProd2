@@ -397,6 +397,9 @@ const Payment = () => {
                                     setPaymentDetails(data);
                                     setCount(count + 1);
                                 }}
+                                scheduleLater={() => {
+                                    setCount(count + 4);
+                                }}
                             />
                         );
                     case 1:
@@ -492,7 +495,23 @@ const Payment = () => {
                             />
                         );
                     case 3:
-                        return <PaymentRepeat overlay={overlay} />;
+                        return (
+                            <PaymentRepeat
+                                overlay={overlay}
+                                closeAction={handleClose}
+                            />
+                        );
+                    case 4:
+                        return (
+                            <SchedulePayment
+                                overlay={overlay}
+                                action={() => {
+                                    setCount(0);
+                                    setFormType('');
+                                }}
+                                closeAction={handleClose}
+                            />
+                        );
                 }
 
             case 'bulk transfer':
