@@ -100,4 +100,4 @@ const CorporateAccount = () => {
     );
 };
 
-export default AccountLoading;
+export default CorporateAccount;
