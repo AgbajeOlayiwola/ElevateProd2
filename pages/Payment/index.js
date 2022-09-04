@@ -35,6 +35,7 @@ import PaymentCard from '../../components/ReusableComponents/PaymentCard';
 import { useRouter } from 'next/router';
 import { PaymentData } from '../../components/ReusableComponents/Data';
 import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
+import PaymentRepeat from '../../components/ReusableComponents/PaymentRepeat';
 
 const Payment = () => {
     const router = useRouter();
@@ -381,12 +382,7 @@ const Payment = () => {
                                 overlay={overlay}
                                 firstTitle="Single Transfer Payment"
                                 closeAction={handleClose}
-                                buttonText="Send Now"
-                                selfaction={(data) => {
-                                    console.log(data);
-                                    setPaymentDetails(data);
-                                    setCount(count + 1);
-                                }}
+                                buttonText="Next"
                                 othersaction={(data) => {
                                     if (data.bankName !== 'Ecobank') {
                                         const enquiry = {
@@ -406,6 +402,7 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentSecond
+                                closeAction={handleClose}
                                 isLoading={isLoading}
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountNumber}
@@ -413,90 +410,65 @@ const Payment = () => {
                                 recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
                                 transferAction={() => {
-                                    // if (paymentDetails.self === 'self') {
-                                    // const paymentData = {
-                                    //     debitAccountNo: '4262004003',
-                                    //     debitAccountType: 'A',
-                                    //     creditAccountNo:
-                                    //         paymentDetails.accountNumber,
-                                    //     creditAccountType: 'A',
-                                    //     amount: paymentDetails.amount,
-                                    //     ccy: 'NGN'
-                                    // };
-                                    // dispatch(postInternalBank(paymentData));
-                                    // if (internalBank !== null) {
-                                    //     console.log(internalBank);
+                                    setCount(count + 1);
+                                    setStatus('success');
+                                    // setIsLoading(true);
+                                    // if (paymentDetails.bene === true) {
+                                    //     const newBene = {
+                                    //         name: interEnquiry.accountName,
+                                    //         accountNumber:
+                                    //             interEnquiry.accountNo,
+                                    //         bankName:
+                                    // bank.filter(
+                                    //     (item) => {
+                                    //         if (
+                                    //             item.institutionId ===
+                                    //             paymentDetails.bankName
+                                    //         ) {
+                                    //             return item.institutionName;
+                                    //         }
+                                    //     }
+                                    // )
+                                    //             'Zenith Bank',
+                                    //         bankCode: paymentDetails.bankName
+                                    //     };
+                                    //     dispatch(
+                                    //         postBeneficiariesData(newBene)
+                                    //     );
                                     // }
-                                    // } else
-                                    if (paymentDetails.others === 'others') {
-                                        setIsLoading(true);
-                                        if (paymentDetails.bene === true) {
-                                            const newBene = {
-                                                name: interEnquiry.accountName,
-                                                accountNumber:
-                                                    interEnquiry.accountNo,
-                                                bankName:
-                                                    // bank.filter(
-                                                    //     (item) => {
-                                                    //         if (
-                                                    //             item.institutionId ===
-                                                    //             paymentDetails.bankName
-                                                    //         ) {
-                                                    //             return item.institutionName;
-                                                    //         }
-                                                    //     }
-                                                    // )
-                                                    'Zenith Bank',
-                                                bankCode:
-                                                    paymentDetails.bankName
-                                            };
-                                            dispatch(
-                                                postBeneficiariesData(newBene)
-                                            );
-                                        }
-                                        if (
-                                            paymentDetails.bankName ===
-                                            'Ecobank'
-                                        ) {
-                                            const paymentData = {
-                                                debitAccountNo:
-                                                    senderDetails.accountNo,
-                                                debitAccountType: 'A',
-                                                creditAccountNo:
-                                                    paymentDetails.accountNumber,
-                                                creditAccountType: 'A',
-                                                amount: paymentDetails.amount,
-                                                ccy: senderDetails.ccy
-                                            };
-                                            dispatch(
-                                                postInternalBank(paymentData)
-                                            );
-                                        } else {
-                                            console.log(interEnquiry);
+                                    // if (paymentDetails.bankName === 'Ecobank') {
+                                    //     const paymentData = {
+                                    //         debitAccountNo:
+                                    //             senderDetails.accountNo,
+                                    //         debitAccountType: 'A',
+                                    //         creditAccountNo:
+                                    //             paymentDetails.accountNumber,
+                                    //         creditAccountType: 'A',
+                                    //         amount: paymentDetails.amount,
+                                    //         ccy: senderDetails.ccy
+                                    //     };
+                                    //     dispatch(postInternalBank(paymentData));
+                                    // } else {
+                                    //     console.log(interEnquiry);
 
-                                            const paymentData = {
-                                                destinationBankCode:
-                                                    paymentDetails.bankName,
-                                                senderAccountNo:
-                                                    senderDetails.accountNo,
-                                                senderAccountType: 'A',
-                                                senderName:
-                                                    'Aderohunmu Matthew',
-                                                senderPhone: '2348039219191',
-                                                beneficiaryAccountNo:
-                                                    interEnquiry.accountNo,
-                                                beneficiaryName:
-                                                    interEnquiry.accountName,
-                                                narration:
-                                                    paymentDetails.narration,
-                                                amount: paymentDetails.amount,
-                                                ccy: senderDetails.ccy
-                                            };
-                                            dispatch(
-                                                postInterBank(paymentData)
-                                            );
-                                        }
-                                    }
+                                    //     const paymentData = {
+                                    //         destinationBankCode:
+                                    //             paymentDetails.bankName,
+                                    //         senderAccountNo:
+                                    //             senderDetails.accountNo,
+                                    //         senderAccountType: 'A',
+                                    //         senderName: 'Aderohunmu Matthew',
+                                    //         senderPhone: '2348039219191',
+                                    //         beneficiaryAccountNo:
+                                    //             interEnquiry.accountNo,
+                                    //         beneficiaryName:
+                                    //             interEnquiry.accountName,
+                                    //         narration: paymentDetails.narration,
+                                    //         amount: paymentDetails.amount,
+                                    //         ccy: senderDetails.ccy
+                                    //     };
+                                    //     dispatch(postInterBank(paymentData));
+                                    // }
                                 }}
                             />
                         );
@@ -514,8 +486,13 @@ const Payment = () => {
                                 title="Single Transfer Payment"
                                 amount={paymentDetails.amount}
                                 beneName={paymentDetails.accountNumber}
+                                repeatAction={() => {
+                                    setCount(count + 1);
+                                }}
                             />
                         );
+                    case 3:
+                        return <PaymentRepeat overlay={overlay} />;
                 }
 
             case 'bulk transfer':

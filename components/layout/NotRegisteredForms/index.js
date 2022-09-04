@@ -110,6 +110,7 @@ const ProfileSetups = () => {
                         formData={formData}
                         setFormData={setFormData}
                         action={handleSubmit}
+                        // action is supposed to be handleSubmit
                     />
                 );
             case 1:
@@ -134,17 +135,17 @@ const ProfileSetups = () => {
                         }}
                     />
                 );
+            // case 2:
+            //     return (
+            //         <Liveness
+            //             // action={() => {
+            //             //     setPage(page - 1);
+            //             //     setPageType('');
+            //             // }}
+            //             action={handleSubmitt}
+            //         />
+            //     );
             case 2:
-                return (
-                    <Liveness
-                        // action={() => {
-                        //     setPage(page - 1);
-                        //     setPageType('');
-                        // }}
-                        action={handleSubmitt}
-                    />
-                );
-            case 3:
                 return (
                     <StepThreeCompleteProfile1
                         formData={formData}

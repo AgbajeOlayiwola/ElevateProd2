@@ -1,0 +1,23 @@
+.repeatCont {
+    width: 40%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 50px;
+    margin: 0px auto;
+    position: absolute;
+    top: 3%;
+    left: 35%;
+    z-index: 10;
+}
+
+.closeCont {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    padding: 32px 32px 0px 0px;
+}
+
+.closeBtn {
+    display: block;
+    cursor: pointer;
+}
