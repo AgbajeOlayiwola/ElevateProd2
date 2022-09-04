@@ -9,8 +9,8 @@ const SuccessN = () => {
     const [activeBtn, setActiveBtn] = useState(true);
 
     return (
-        <div className={styles.cover}>
-            <Card>
+        <div className={styles.succCov}>
+            <div className={styles.succCovInn}>
                 <div className={styles.Success}>
                     <Success />
                 </div>
@@ -24,7 +24,7 @@ const SuccessN = () => {
                         text="Proceed To Dashboard"
                     />
                 </Link>
-            </Card>
+            </div>
         </div>
     );
 };

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const CorporateAccount = () => {
     const [accountInfo, setAccountInfo] = useState('');
