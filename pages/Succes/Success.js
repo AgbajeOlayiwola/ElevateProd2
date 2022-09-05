@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Card from '../../components/layout/NotRegisteredForms/Card';
 import Success from '../../components/ReusableComponents/Success';
 import { ButtonComp } from '../../components';
 import Link from 'next/link';
@@ -24,6 +23,10 @@ const SuccessN = () => {
                         text="Proceed To Dashboard"
                     />
                 </Link>
+                <p>
+                    With your Ellevate Account, you have Deposit/Inflow Limit:
+                    N1,000,000
+                </p>
             </div>
         </div>
     );

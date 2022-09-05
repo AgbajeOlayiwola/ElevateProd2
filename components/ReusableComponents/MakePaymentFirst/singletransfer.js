@@ -11,7 +11,12 @@ import Beneficiary from '../Beneficiary';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 
-const SingleTransfer = ({ othersaction, firstTitle, buttonText }) => {
+const SingleTransfer = ({
+    othersaction,
+    firstTitle,
+    buttonText,
+    scheduleLater
+}) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);
     const dispatch = useDispatch();
@@ -174,7 +179,8 @@ const SingleTransfer = ({ othersaction, firstTitle, buttonText }) => {
                     type="submit"
                 />
                 <p className={styles.schedule}>
-                    Not paying now? <span>Schedule for Later</span>
+                    Not paying now?{' '}
+                    <span onClick={scheduleLater}>Schedule for Later</span>
                 </p>
             </form>
         </div>

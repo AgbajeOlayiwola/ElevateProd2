@@ -2,23 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ButtonComp } from '../../../../components';
 import styles from './styles.module.css';
 import Image from 'next/image';
-import Card from '../../NotRegisteredForms/Card';
 import Link from 'next/link';
-import {
-    CardContainer,
-    BodyWrapper,
-    CardHeading,
-    LeftHeading,
-    RegistrationStatus,
-    RegStatusHeading,
-    ButtonWrapper,
-    ToggleYes,
-    ToggleNo,
-    ToggleYesText,
-    ToggleNoText,
-    SuccessMainHeading,
-    H6Wrapper
-} from './styles.module';
 import Success from '../../../ReusableComponents/Success';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import axiosInstance from '../../../../redux/helper/apiClient';
@@ -48,6 +32,7 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
             });
     }, []);
     return (
+<<<<<<< HEAD
         <div className={styles.succCov}>
             <div className={styles.succCovInn}>
                 <BodyWrapper>
@@ -95,6 +80,36 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                     {/* </ProfileCard> */}
                 </BodyWrapper>
             </div>
+=======
+        <div className={styles.cover}>
+            <>
+                <div className={styles.Success}>
+                    <Success />
+                </div>
+                <div className={styles.successBody}>
+                    <h2 className={styles.h2}>
+                        Your Business account is ready!
+                    </h2>
+                    <h3>
+                        Your Account Number is{' '}
+                        <span>{accountDone.accountNumber}</span>
+                    </h3>
+                    <Link href="/Dashboard">
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            // onClick={handleSubmit}
+                            type="submit"
+                            text="Proceed To Dashboard"
+                        />
+                    </Link>
+                    <p>
+                        With your Ellevate Account, you have Deposit/Inflow
+                        Limit: N1,000,000
+                    </p>
+                </div>
+            </>
+>>>>>>> ccc305cb95bd528020a8f0424d8e4e4a9eb7fa29
         </div>
     );
 };

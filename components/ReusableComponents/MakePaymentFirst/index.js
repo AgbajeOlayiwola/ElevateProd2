@@ -14,7 +14,8 @@ const MakePaymentFirst = ({
     action,
     selfaction,
     othersaction,
-    overlay
+    overlay,
+    scheduleLater
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -32,6 +33,7 @@ const MakePaymentFirst = ({
                             othersaction={othersaction}
                             firstTitle="Single Transfer Payment"
                             buttonText={buttonText}
+                            scheduleLater={scheduleLater}
                         />
                     ) : firstTitle === 'Foreign Transfer Payments' ? (
                         <ForeignTransfer
@@ -64,12 +66,6 @@ const MakePaymentFirst = ({
                         classes={styles.closebtn}
                         color="white"
                     />
-                    {/* <img
-                        src="../../Assets/Svgs/closebtn.svg"
-                        alt=""
-                        className={styles.closebtn}
-                        onClick={closeAction}
-                    /> */}
                 </div>
             </div>
         </Overlay>

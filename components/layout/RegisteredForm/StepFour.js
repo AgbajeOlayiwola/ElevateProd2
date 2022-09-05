@@ -211,7 +211,7 @@ const StepFour = ({ title, action }) => {
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
-                <ProfileSetupSide text="Checkout Priceless Oppurtunities Be ahead" />
+                <ProfileSetupSide text="Checkout Priceless opportunities Be ahead" />
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.lastStep}>

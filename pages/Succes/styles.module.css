@@ -7,11 +7,22 @@
     justify-content: center;
 }
 .cover {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    /* height: 100vh; */
+    width: 40%;
+    max-width: 600px;
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 50px;
+    margin: 120px auto;
+    padding: 80px 0px;
 }
+
+.successBody {
+    width: 67%;
+    max-width: 400px;
+    margin: 0px auto;
+}
+
 .Success {
     display: flex;
     justify-content: center;
@@ -22,12 +33,11 @@
     font-weight: 700;
     font-size: 24px;
     line-height: 33px;
-    /* identical to box height */
-
+    margin: 24px 0px 55px;
     text-align: center;
-
     color: #005b82;
 }
+<<<<<<< HEAD
 .succCov{
     display: flex;
     justify-content: center;
@@ -38,3 +48,18 @@
     width: 400px;
     border-radius: 12px;
 }
+=======
+
+.successBody p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 23px;
+    text-align: center;
+    color: #a5a5a5;
+    width: 62%;
+    max-width: 248px;
+    margin: 16px auto;
+}
+>>>>>>> ccc305cb95bd528020a8f0424d8e4e4a9eb7fa29
