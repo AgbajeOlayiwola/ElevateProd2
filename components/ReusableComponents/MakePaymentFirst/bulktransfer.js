@@ -4,12 +4,18 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import { loadbank } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import SourceSvg from '../ReusableSvgComponents/SourceSvg';
+import PlusSvg from '../ReusableSvgComponents/PlusSvg';
 
 const BulkTransfer = ({ action, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
+    const count = 0;
+    const [number, setNumber] = useState([]);
+    console.log(number);
+    useEffect(() => {}, [number]);
 
     useEffect(() => {
         dispatch(loadbank('ENG'));
@@ -26,8 +32,53 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
     } = useForm();
     return (
         <div>
-            <form onSubmit={handleSubmit(action)}>
-                <h2>{firstTitle}</h2>
+            <form onSubmit={handleSubmit()}>
+                <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                <div className={styles.source}>
+                    <h2>
+                        Source <span>- Marvelous N******</span>
+                    </h2>
+                    <SourceSvg />
+                </div>
+                {number?.map(() => {
+                    return (
+                        <div className={styles.formCont}>
+                            <div className={styles.formGroup}>
+                                <label>Account Number</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Account Number"
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Choose Bank</label>
+                                <select>
+                                    <option value="">Select Bank</option>
+                                </select>
+                            </div>
+                        </div>
+                    );
+                })}
+                <div className={styles.formCont}>
+                    <div className={styles.formGroup}>
+                        <label>Account Number</label>
+                        <input type="text" placeholder="Enter Account Number" />
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label>Choose Bank</label>
+                        <select>
+                            <option value="">Select Bank</option>
+                        </select>
+                    </div>
+                    <div
+                        className={styles.plus}
+                        onClick={() => {
+                            setNumber((arr) => [...arr, `${arr.length}`]);
+                        }}
+                    >
+                        <PlusSvg />
+                    </div>
+                </div>
                 <div className={styles.destinationCountry}>
                     <div>
                         <label>Select Method</label>
@@ -238,10 +289,6 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                         }}
                     />
                     <p className={styles.error}>{errors?.amount?.message}</p>
-                </div>
-                <div className={styles.repeat}>
-                    <input type="checkbox" />
-                    <p>Do you want to set this as a repeat transaction?</p>
                 </div>
                 <ButtonComp
                     disabled={activeBtn}

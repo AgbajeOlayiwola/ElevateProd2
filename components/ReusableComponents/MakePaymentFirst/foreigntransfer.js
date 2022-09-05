@@ -39,8 +39,26 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
     return (
         <div>
             <form onSubmit={handleSubmit(action)}>
-                <h2>{firstTitle}</h2>
-                <div>
+                <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                <div className={styles.foreignBody}>
+                    <div className={styles.formGroup}>
+                        <label>Choose Transfer Currency</label>
+                        <select name="" id="">
+                            <option value="">Select Currency</option>
+                        </select>
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label>Choose Destination Country</label>
+                        <select name="" id="">
+                            <option value="">Select Country</option>
+                        </select>
+                    </div>
+                    <button>Next</button>
+                    <p className={styles.schedule}>
+                        Not paying now?<span>Schedule for Later</span>
+                    </p>
+                </div>
+                {/* <div>
                     <label>Destination Country</label>
                     <select
                         {...register('destinationCountry', {
@@ -143,7 +161,6 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                         </div>
                     </div>
                 </div>
-                <Beneficiary />
                 <div className={styles.EnterAmount}>
                     <div>
                         <label>Enter Amount</label>
@@ -202,20 +219,16 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                             }
                         }}
                     />
-                </div>
-                <div className={styles.repeat}>
-                    <input type="checkbox" />
-                    <p>Do you want to set this as a repeat transaction?</p>
-                </div>
-                <ButtonComp
+                </div> */}
+                {/* <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
                     text={buttonText}
                     type="submit"
-                />
-                <p className={styles.schedule}>
+                /> */}
+                {/* <p className={styles.schedule}>
                     Not paying now?<span>Schedule for Later</span>
-                </p>
+                </p> */}
             </form>
         </div>
     );

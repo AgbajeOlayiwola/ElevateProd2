@@ -10,6 +10,18 @@
     left: 33%;
     z-index: 10;
 }
+.firstDivs {
+    width: 63%;
+    max-width: 781px;
+    background-color: white;
+    border-radius: 50px;
+    margin: 0px auto;
+    display: flex;
+    position: absolute;
+    top: 3.7%;
+    left: 33%;
+    z-index: 10;
+}
 
 .error {
     color: red;
@@ -19,7 +31,6 @@
 }
 
 .firstDiv > div:last-child {
-    /* height: 100%; */
     width: 30%;
     background-color: #102572;
     border-radius: 0px 50px 50px 0px;
@@ -48,7 +59,7 @@
     margin: 48px auto;
 }
 
-.firstBody h2 {
+.firstTitle {
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -119,6 +130,20 @@
 .beneficiarySingle svg {
     margin: 0px auto;
     display: block;
+}
+
+.beneficiarySingle div {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.beneficiarySingle div img {
+    margin: auto;
 }
 
 .name {
@@ -445,4 +470,155 @@
     border: 1px solid #dbdbdb;
     border-radius: 12px;
     color: #bdbdbd;
+}
+
+.formCont {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: green;
+}
+
+.formGroup {
+    margin-bottom: 16px;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
+}
+
+.formGroup select {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #a5a5a5;
+}
+
+.formCont .plus {
+    width: 50px;
+    height: 50px;
+    margin-top: 16px;
+    padding: 0px;
+    background: #102572;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.foreignBody {
+    margin-top: 48px;
+}
+
+.foreignBody button {
+    margin-top: 70%;
+}
+
+.billSingle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: #ffffff;
+    border-top: 2px solid #f6f6f6;
+    padding: 20px 16px;
+    cursor: pointer;
+}
+
+.billSingle:first-child {
+    border-bottom: 0px;
+}
+
+.billSingle:last-child {
+    border-bottom: 2px solid #f6f6f6;
+}
+
+.billSingle p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+    margin: 0px;
+}
+
+.networkCarrier {
+    width: 100%;
+    margin-top: 24px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #f6f6f6;
+}
+
+.networkCarrier h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+    margin: 0px;
+    margin-bottom: 8px;
+}
+
+.networkBody {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.networkSingle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.networkSingle div {
+    width: 90%;
+    height: 90%;
+    display: flex;
+}
+.networkActive {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #102572;
+}
+
+.networkActive div {
+    width: 90%;
+    height: 90%;
+    display: flex;
+}
+
+.networkForm {
+    margin-top: 24px;
+}
+
+.networkForm button {
+    margin-top: 48px;
+}
+
+.body {
+    margin-top: 48px;
 }

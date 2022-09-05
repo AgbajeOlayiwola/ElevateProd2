@@ -15,7 +15,8 @@ const MakePaymentFirst = ({
     selfaction,
     othersaction,
     overlay,
-    scheduleLater
+    scheduleLater,
+    arrowAction
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -25,8 +26,21 @@ const MakePaymentFirst = ({
 
     return (
         <Overlay overlay={overlay}>
-            <div className={styles.firstDiv} ref={myref}>
-                <div className={styles.firstBody}>
+            <div
+                className={
+                    firstTitle === 'Foreign Transfer Payments'
+                        ? styles.firstDivs
+                        : styles.firstDiv
+                }
+                ref={myref}
+            >
+                <div
+                    className={
+                        firstTitle === 'Bulk Payments'
+                            ? styles.bulkBody
+                            : styles.firstBody
+                    }
+                >
                     {firstTitle === 'Single Transfer Payment' ? (
                         <SingleTransfer
                             selfaction={selfaction}
@@ -44,14 +58,16 @@ const MakePaymentFirst = ({
                     ) : firstTitle === 'Bulk Payments' ? (
                         <BulkTransfer
                             action={action}
-                            firstTitle="Bulk Payments"
+                            firstTitle={firstTitle}
                             buttonText={buttonText}
                         />
                     ) : (
                         <BillPayment
                             action={action}
-                            firstTitle="Bill Payment"
+                            firstTitle={firstTitle}
                             buttonText={buttonText}
+                            arrowAction={arrowAction}
+                            scheduleLater={scheduleLater}
                         />
                     )}
                 </div>
