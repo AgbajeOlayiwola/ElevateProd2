@@ -6,7 +6,7 @@ import Link from 'next/link';
 const MakePaymentBtn = () => {
     const [showDrop, setShowDrop] = useState(false);
     return (
-        <>
+        <div className={styles.body}>
             <button
                 className={styles.make}
                 onClick={() => setShowDrop(!showDrop)}
@@ -30,7 +30,7 @@ const MakePaymentBtn = () => {
                     );
                 })}
             </div>
-        </>
+        </div>
     );
 };
 export default MakePaymentBtn;

@@ -16,7 +16,6 @@ const Visbility = ({ typeSet, color }) => {
                 className="material-symbols-outlined"
                 id={color !== 'green' ? styles.notGreen : styles.green}
                 style={{
-                    marginLeft: '-46px',
                     zIndex: '10',
 
                     fontWeight: '300',

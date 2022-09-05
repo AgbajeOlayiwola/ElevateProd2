@@ -13,18 +13,20 @@ const AccountSuccess = () => {
                 <div className={styles.Success}>
                     <Success />
                 </div>
-                <h2 className={styles.h2}>
-                    You already have an account with us.
-                </h2>
-                <Link href="/Dashboard">
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        // onClick={handleSubmit}
-                        type="submit"
-                        text="Proceed To Dashboard"
-                    />
-                </Link>
+                <div className={styles.successBody}>
+                    <h2 className={styles.h2}>
+                        You already have an account with us.
+                    </h2>
+                    <Link href="/Dashboard">
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            // onClick={handleSubmit}
+                            type="submit"
+                            text="Proceed To Dashboard"
+                        />
+                    </Link>
+                </div>
             </Card>
         </div>
     );

@@ -58,6 +58,8 @@
     line-height: 120%;
     color: #ffffff;
     width: 95%;
+    max-width: 303px;
+    min-width: 277px;
 }
 
 .colorDiv {

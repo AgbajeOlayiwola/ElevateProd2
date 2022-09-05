@@ -5,7 +5,7 @@ import Link from 'next/link';
 const RecievePaymentBtn = () => {
     const [showDrop, setShowDrop] = useState(false);
     return (
-        <>
+        <div className={styles.body}>
             <button
                 className={styles.rec}
                 onClick={() => setShowDrop(!showDrop)}
@@ -29,7 +29,7 @@ const RecievePaymentBtn = () => {
                     );
                 })}
             </div>
-        </>
+        </div>
     );
 };
 

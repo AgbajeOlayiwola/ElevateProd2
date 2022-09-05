@@ -1,8 +1,10 @@
 .sectionII {
-    width: 50%;
+    width: 55%;
+    max-width: 677px;
 }
 .sectionI {
-    width: 48%;
+    width: 42%;
+    max-width: 478px;
 }
 .cove {
     display: flex;
@@ -12,17 +14,10 @@
 .card {
     background: linear-gradient(124.52deg, #7fbb01 -34.31%, #2f2f2f 115.35%);
     position: relative;
-    max-width: 677px;
+    width: 100%;
     border-radius: 16px;
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 19px 30px 25px 32px;
-}
-.otherTrans p {
-    margin-bottom: 18px;
-    margin-top: 15px;
+    padding: 32px;
 }
 .Top {
     display: flex;
@@ -31,19 +26,34 @@
 .Tpwh {
     background: white;
     border-radius: 16px;
-    max-width: 478px;
+    width: 100%;
     flex-direction: column;
     justify-content: space-between;
     display: flex;
-    padding: 23px 32px 56px 32px;
+    padding: 24px;
 }
+
+.Tpwh p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: center;
+    color: #a4a4a4;
+    width: 34%;
+    max-width: 162px;
+    margin: 70px auto 80px;
+}
+
 .transP {
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-    margin-bottom: 23px;
     color: #102572;
+    margin: 0px;
 }
 .h5 {
     font-family: 'Inter', sans-serif;
@@ -96,25 +106,27 @@
     display: flex;
     justify-content: space-between;
 }
-.cardMone {
+/* .cardMone {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 43%;
-}
+} */
 .avail {
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    margin-bottom: 0px;
-    margin-top: 1px;
     color: #efffcc;
+    margin: 0px;
+    margin-top: 4px;
 }
 .recMak {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 58%;
+    max-width: 329px;
 }
 .rec {
     padding: 16px;
@@ -128,21 +140,39 @@
     border-radius: 12px;
     cursor: pointer;
 }
-.cardRight {
-    width: 75%;
+
+.cardMone {
+    display: flex;
+    align-items: center;
 }
+
+#green {
+    margin-left: 0px;
+}
+
 .cardMone h1 {
-    margin-bottom: 0px;
-    margin-top: 0px;
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    margin-right: 8px;
 }
 .otherTrans {
+    margin: 24px 0px 16px;
+}
+
+.otherTrans p {
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 14px;
-    line-height: 17px;
-    /* identical to box height */
+    font-size: 16px;
+    line-height: 19px;
     color: #102572;
+    margin: 0px;
 }
+
 .name {
     font-style: normal;
     font-weight: 500;
@@ -151,8 +181,7 @@
     margin-top: 14px;
     text-align: center;
     line-height: 14px;
-    /* identical to box height, or 99% */
-    color: #005b82;
+    color: #102572;
 }
 .svg {
     display: flex;
@@ -177,7 +206,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
 }
 .cards {
     /* display: flex;
@@ -245,10 +273,10 @@
     color: #ffffff;
 }
 .btm {
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
     width: 100%;
-    margin-top: 24px;
+    margin-top: 32px;
 }
 .btmI {
     height: 352px;
@@ -257,6 +285,7 @@
     box-shadow: 4px 14px 34px -11px #ededed;
     border-radius: 16px;
     padding: 1.5rem 1.25rem 1.5rem 1.25rem;
+    margin-top: 32px;
 }
 .btmItop {
     display: flex;
@@ -291,8 +320,8 @@
     color: #005b82;
 }
 .btmII {
-    width: 51%;
-    max-width: 378px;
+    /* width: 51%;
+    max-width: 378px; */
     height: 352px;
     background: #ffffff;
     box-shadow: 4px 14px 34px -11px #ededed;
@@ -381,12 +410,6 @@
 .hr {
     border: 1px solid #f5f5f5;
 }
-.money {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 35%;
-}
 .money p:nth-child(1) {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -458,4 +481,112 @@
     /* identical to box height */
 
     color: #2f2f2f;
+}
+
+.moneyCont {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px 36px;
+}
+
+.moneyBody {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    width: 100%;
+    padding: 16px 23px;
+}
+
+.moneybodyDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.accountDetails {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #efffcc;
+}
+
+.accountNumber {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ffffff;
+}
+
+.bagMoney {
+    position: absolute;
+    right: 10%;
+    top: 30%;
+}
+
+.cardRight {
+    position: relative;
+}
+
+.otherAccounts {
+    margin-top: 32px;
+}
+
+.otherAccounts h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0px;
+    color: #102572;
+}
+
+.otherAccountsDiv {
+    margin-top: 16px;
+}
+
+.otherAccounts button {
+    background: rgba(105, 148, 13, 0.08);
+    border-radius: 8px;
+    width: 80px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #69940d;
+    cursor: pointer;
+}
+
+.transactionBody {
+    width: 32%;
+    max-width: 219px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px auto;
+}
+
+.transactionBody .transactionSvg {
+    margin: 0px auto;
+    text-align: center;
+}
+
+.transactionBody p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: center;
+    color: #a4a4a4;
+    margin: 0px;
 }
