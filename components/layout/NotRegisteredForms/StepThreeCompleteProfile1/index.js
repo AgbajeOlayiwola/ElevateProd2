@@ -225,7 +225,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                 <label>Enter Full Name</label>
                                 <input
                                     type="text"
-                                    placeholder="Babatunde Abiodun"
+                                    placeholder={profileCont.fullName}
                                     disabled
                                 />
                             </div>
