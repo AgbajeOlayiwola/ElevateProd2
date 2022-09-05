@@ -16,7 +16,9 @@ const MakePaymentFirst = ({
     othersaction,
     overlay,
     scheduleLater,
-    arrowAction
+    arrowAction,
+    dataAction,
+    airtimeAction
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -68,6 +70,8 @@ const MakePaymentFirst = ({
                             buttonText={buttonText}
                             arrowAction={arrowAction}
                             scheduleLater={scheduleLater}
+                            dataAction={dataAction}
+                            airtimeAction={airtimeAction}
                         />
                     )}
                 </div>

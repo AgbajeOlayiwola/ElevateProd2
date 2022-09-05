@@ -655,121 +655,136 @@ const Payment = () => {
                         );
                     case 1:
                         return (
-                            // <MakePaymentSecond
-                            //     isLoading={isLoading}
-                            //     recieverName={paymentDetails.billerType}
-                            //     amount={paymentDetails.amount}
-                            //     number={paymentDetails.phoneNumber}
-                            //     title="Bills Payment"
-                            //     recieverBank={paymentDetails.billerCategory}
-                            //     sender={paymentDetails.billerPlan}
-                            //     refNuber={paymentDetails.billerDetail}
-                            //     overlay={overlay}
-                            //     transferAction={() => {
-                            //         setIsLoading(true);
-                            //         if (
-                            //             paymentDetails.billerType === 'AIRTIME'
-                            //         ) {
-                            //             setIsLoading(true);
-                            //             dispatch(
-                            //                 loadbillerPlan(
-                            //                     paymentDetails.billerCategory
-                            //                 )
-                            //             );
-                            //             if (billerPlan !== null) {
-                            //                 console.log(
-                            //                     billerPlan.billerDetail.billerID
-                            //                 );
-                            //                 const billerData = {
-                            //                     amount: paymentDetails.amount,
-                            //                     ccy: billerPlan
-                            //                         .billerProductInfo[0].ccy,
-                            //                     billerCode:
-                            //                         billerPlan.billerDetail
-                            //                             .billerCode,
-                            //                     billerID: String(
-                            //                         billerPlan.billerDetail
-                            //                             .billerID
-                            //                     ),
-                            //                     sourceAccount:
-                            //                         senderDetails.accountNo,
-                            //                     sourceAccountType: 'A',
-                            //                     productCode:
-                            //                         billerPlan
-                            //                             .billerProductInfo[0]
-                            //                             .productCode,
-                            //                     customerName: String(
-                            //                         paymentDetails.acountDebit
-                            //                     ),
-                            //                     mobileNo: '2348111380591',
-                            //                     formDataValue: [
-                            //                         {
-                            //                             fieldName:
-                            //                                 'BEN_PHONE_NO',
-                            //                             fieldValue:
-                            //                                 paymentDetails.phoneNumber,
-                            //                             dataType: 'string'
-                            //                         }
-                            //                     ]
-                            //                 };
-                            //                 dispatch(postAirtime(billerData));
-                            //             }
-                            //         } else {
-                            //             dispatch(
-                            //                 loadbillerPlan(
-                            //                     paymentDetails.billerCategory
-                            //                 )
-                            //             );
-                            //             if (billerPlan !== null) {
-                            //                 const billerData = {
-                            //                     amount: paymentDetails.amount,
-                            //                     ccy: billerPlan
-                            //                         .billerProductInfo[0].ccy,
-                            //                     billerCode:
-                            //                         billerPlan.billerDetail
-                            //                             .billerCode,
-                            //                     billerID: String(
-                            //                         billerPlan.billerDetail
-                            //                             .billerID
-                            //                     ),
-                            //                     sourceAccount:
-                            //                         senderDetails.accountNo,
-                            //                     sourceAccountType: 'A',
-                            //                     productCode:
-                            //                         billerPlan
-                            //                             .billerProductInfo[0]
-                            //                             .productCode,
-                            //                     customerName: String(
-                            //                         paymentDetails.acountDebit
-                            //                     ),
-                            //                     customerRefNo: String(
-                            //                         paymentDetails.billerDetail
-                            //                     ),
-                            //                     paymentDescription: 'Testing',
-                            //                     mobileNo: '2348111380591',
-                            //                     formDataValue: [
-                            //                         {
-                            //                             fieldName:
-                            //                                 'BEN_PHONE_NO',
-                            //                             fieldValue:
-                            //                                 paymentDetails.phoneNumber,
-                            //                             dataType: 'string'
-                            //                         }
-                            //                     ]
-                            //                 };
-                            //                 dispatch(postBills(billerData));
-                            //             }
-                            //         }
-                            //     }}
-                            // />
                             <MakePaymentFirst
                                 overlay={overlay}
                                 firstTitle={bill}
                                 buttonText="Send Now"
                                 closeAction={handleClose}
+                                dataAction={(data) => {
+                                    setCount(count + 1);
+                                    setPaymentDetails(data);
+                                }}
+                                airtimeAction={(data) => {
+                                    setCount(count + 1);
+                                    setPaymentDetails(data);
+                                }}
+                                scheduleLater={() => {
+                                    setCount(count + 3);
+                                }}
                             />
                         );
                     case 2:
+                        return (
+                            <MakePaymentSecond
+                                isLoading={isLoading}
+                                closeAction={handleClose}
+                                recieverName={paymentDetails.billerType}
+                                amount={paymentDetails.amount}
+                                number={paymentDetails.phoneNumber}
+                                title="Bills Payment"
+                                recieverBank={paymentDetails.billerCategory}
+                                sender={paymentDetails.billerPlan}
+                                refNuber={paymentDetails.billerDetail}
+                                overlay={overlay}
+                                transferAction={() => {
+                                    setIsLoading(true);
+                                    if (
+                                        paymentDetails.billerType === 'AIRTIME'
+                                    ) {
+                                        setIsLoading(true);
+                                        dispatch(
+                                            loadbillerPlan(
+                                                paymentDetails.billerCategory
+                                            )
+                                        );
+                                        if (billerPlan !== null) {
+                                            console.log(
+                                                billerPlan.billerDetail.billerID
+                                            );
+                                            const billerData = {
+                                                amount: paymentDetails.amount,
+                                                ccy: billerPlan
+                                                    .billerProductInfo[0].ccy,
+                                                billerCode:
+                                                    billerPlan.billerDetail
+                                                        .billerCode,
+                                                billerID: String(
+                                                    billerPlan.billerDetail
+                                                        .billerID
+                                                ),
+                                                sourceAccount:
+                                                    senderDetails.accountNo,
+                                                sourceAccountType: 'A',
+                                                productCode:
+                                                    billerPlan
+                                                        .billerProductInfo[0]
+                                                        .productCode,
+                                                customerName: String(
+                                                    paymentDetails.acountDebit
+                                                ),
+                                                mobileNo: '2348111380591',
+                                                formDataValue: [
+                                                    {
+                                                        fieldName:
+                                                            'BEN_PHONE_NO',
+                                                        fieldValue:
+                                                            paymentDetails.phoneNumber,
+                                                        dataType: 'string'
+                                                    }
+                                                ]
+                                            };
+                                            dispatch(postAirtime(billerData));
+                                        }
+                                    } else {
+                                        dispatch(
+                                            loadbillerPlan(
+                                                paymentDetails.billerCategory
+                                            )
+                                        );
+                                        if (billerPlan !== null) {
+                                            const billerData = {
+                                                amount: paymentDetails.amount,
+                                                ccy: billerPlan
+                                                    .billerProductInfo[0].ccy,
+                                                billerCode:
+                                                    billerPlan.billerDetail
+                                                        .billerCode,
+                                                billerID: String(
+                                                    billerPlan.billerDetail
+                                                        .billerID
+                                                ),
+                                                sourceAccount:
+                                                    senderDetails.accountNo,
+                                                sourceAccountType: 'A',
+                                                productCode:
+                                                    billerPlan
+                                                        .billerProductInfo[0]
+                                                        .productCode,
+                                                customerName: String(
+                                                    paymentDetails.acountDebit
+                                                ),
+                                                customerRefNo: String(
+                                                    paymentDetails.billerDetail
+                                                ),
+                                                paymentDescription: 'Testing',
+                                                mobileNo: '2348111380591',
+                                                formDataValue: [
+                                                    {
+                                                        fieldName:
+                                                            'BEN_PHONE_NO',
+                                                        fieldValue:
+                                                            paymentDetails.phoneNumber,
+                                                        dataType: 'string'
+                                                    }
+                                                ]
+                                            };
+                                            dispatch(postBills(billerData));
+                                        }
+                                    }
+                                }}
+                            />
+                        );
+                    case 3:
                         return (
                             <PaymentSuccess
                                 overlay={overlay}
@@ -784,6 +799,17 @@ const Payment = () => {
                                 paymentType={paymentDetails.billerType}
                                 number={paymentDetails.phoneNumber}
                                 amount={paymentDetails.amount}
+                            />
+                        );
+                    case 4:
+                        return (
+                            <SchedulePayment
+                                overlay={overlay}
+                                action={() => {
+                                    setCount(0);
+                                    setFormType('');
+                                }}
+                                closeAction={handleClose}
                             />
                         );
                 }
