@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { getCookie } from 'cookies-next';
+import axiosInstance from '../../../redux/helper/apiClient';
+import apiRoutes from '../../../redux/helper/apiRoutes';
 
 const CorporateAccount = () => {
     const [accountInfo, setAccountInfo] = useState('');
     const [profileCont, setProfileCont] = useState([]);
+    const [accountDone, setAccountDone] = useState('');
 
     const router = useRouter();
 
@@ -13,51 +17,29 @@ const CorporateAccount = () => {
         (state) => state.profile
     );
 
-    useEffect(() => {
-        dispatch(CompProfile());
-    }, []);
-    useEffect(() => {
-        if (profile !== null) {
-            setProfileCont(profile.data);
-        }
-        // setGender(profileCont.gender);
-    }, [profile]);
-    const dispatch = useDispatch();
-
-    console.log(profile);
-    const { newUserAccount, newUserAccountErrorMessage } = useSelector(
-        (state) => state.newUserAccountDetails
-    );
-    // useEffect(() => {
-    // const accountData = {
-    //     affiliateCode: 'ENG',
-    //     ccy: 'NGN'
-    // };
-    // dispatch(createNewUserAccount(accountData));
-    // }, []);
     const newUserAccountt = () => {
-        console.log(newUserAccount.message);
-        if (!newUserAccountErrorMessage) {
-            // dispatch(getNewUserAccountDetails());
-            dispatch(getNewUserAccountDetails());
-            setTimeout(() => {
-                dispatch(getNewUserAccountDetails());
-            }, 10000);
-            // setLoading(false);
-        }
-        if (newUserAccount.message === 'SUCCESS') {
-            router.push('/Succes');
-        } else if (newUserAccount.message === 'SUCCESS') {
-            // window.localStorage.setItem(
-            //     'accountNumber',
-            //     JSON.stringify(accountStatus)
-            // );
-            router.push('/Succes');
-        }
+        const cookie = getCookie('cookieToken');
+        axiosInstance
+            .get(
+                `https://ellevate-app.herokuapp.com${apiRoutes.corpAccountStatus}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
+                }
+            )
+            .then((response) => {
+                console.log('Accoutn Status', response);
+                setAccountDone(response.data.data);
+            })
+            .catch((error) => {
+                console.log(error.response.data.message);
+            });
     };
     useEffect(() => {
         newUserAccountt();
-    }, [newUserAccountErrorMessage, newUserAccount]);
+    }, []);
 
     return (
         <>
