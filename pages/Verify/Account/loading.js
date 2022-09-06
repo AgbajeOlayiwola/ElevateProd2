@@ -43,7 +43,7 @@ const AccountLoading = () => {
         dispatch(newAccountStatusData());
     }, []);
 
-    console.log(errorMessages);
+    // console.log(errorMessages);
     const newUserAccountt = () => {
         console.log(accountStatus);
         if (!errorMessages) {

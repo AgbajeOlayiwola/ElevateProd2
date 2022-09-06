@@ -436,12 +436,6 @@
     position: relative;
 }
 
-.sectionI img {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
-}
-
 .sectionII {
     padding: 120px 0px;
     max-width: 682px;
