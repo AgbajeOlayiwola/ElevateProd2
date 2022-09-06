@@ -562,6 +562,7 @@ const Payment = () => {
                         return (
                             <MakePaymentSecond
                                 isLoading={isLoading}
+                                closeAction={handleClose}
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountNumber}
                                 sender={paymentDetails.accountName}

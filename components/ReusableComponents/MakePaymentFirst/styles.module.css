@@ -76,6 +76,10 @@
     margin: 48px auto 0px;
 }
 
+.bulkHeader h2 {
+    margin-bottom: 56px;
+}
+
 .bulkWrapper {
     width: 72%;
     margin: 0px auto;
@@ -553,6 +557,36 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    margin-top: 5px;
+}
+
+.uploadCsv {
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f6f6f6;
+}
+
+.uploadCsv p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #a5a5a5;
+}
+
+.uploadCsv p span {
+    font-weight: 700;
+    color: #102572;
+    cursor: pointer;
+}
+
+.amountDiv {
+    margin-top: 16px;
+}
+
+.bulkWrapper button {
+    margin-top: 112px;
 }
 
 .foreignBody {

@@ -32,7 +32,7 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
     } = useForm();
     return (
         <div>
-            <form onSubmit={handleSubmit()}>
+            <form onSubmit={handleSubmit(action)}>
                 <div className={styles.bulkHeader}>
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     <div className={styles.source}>
@@ -142,8 +142,8 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                             Tap to <span>Upload CSV File</span>
                         </p>
                     </div>
-                    <div>
-                        <label className={styles.bulkLabel}></label>
+                    <div className={styles.amountDiv}>
+                        <label className={styles.bulkLabel}>Amount</label>
                         <input
                             {...register('amount', {
                                 required: 'Amount  is required',
@@ -171,7 +171,7 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                                 <i></i>
                             </span>
                         </label>
-                        <p>Save Beneficiary</p>
+                        <p>Input Different Amount</p>
                     </div>
                     <ButtonComp
                         disabled={activeBtn}
