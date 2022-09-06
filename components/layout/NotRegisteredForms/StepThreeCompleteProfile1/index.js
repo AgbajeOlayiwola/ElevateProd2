@@ -143,11 +143,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                 'You already have an account with us. Please contact us for more information'
         ) {
             console.log(errorMessages);
-            router.push('../Verify/Account/loading');
+            router.push('/Verify/CorportateAccount');
         } else if (accountStatus.message === 'Try Again') {
-            router.push('../Verify/Account/loading');
+            router.push('/Verify/CorportateAccount');
         } else if (accountStatus.message === 'SUCCESS') {
-            router.push('/Succes');
+            router.push('/Succes/CorpSuccess');
         }
     };
 
@@ -187,7 +187,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
             errorMes ===
             'You already have an account with us. Please contact us for more information'
         ) {
-            router.push('/Succes');
+            router.push('/Succes/CorpSuccess');
         }
     };
     // useEffect(() => {
