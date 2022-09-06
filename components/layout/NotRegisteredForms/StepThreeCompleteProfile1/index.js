@@ -110,6 +110,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
+
     const handleSubmitIII = () => {
         const commpleteProfileData = {
             businessName: formData.bussinessName,
@@ -130,9 +131,14 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
             ccy: 'NGN'
         };
         dispatch(createNewUserAccount(accountData));
-        console.log(errorMessages, newAccountErrorMessage);
+        console.log(
+            'errorMessages from account',
+            newAccount.message,
+            newAccountErrorMessage
+        );
         if (
-            errorMessages ||
+            newAccount.message ===
+                'Your Transaction Request is Successful and Approved' ||
             newAccountErrorMessage ===
                 'You already have an account with us. Please contact us for more information'
         ) {
@@ -144,27 +150,32 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
             router.push('/Succes');
         }
     };
-    const businessProfileAction = () => {
-        const commpleteProfileData = {
-            businessName: formData.bussinessName,
-            businessType: formData.businessType,
-            referralCode: formData.refferalCode,
-            countryCode: '+234',
-            phoneNumber: formData.bussinessName,
-            businessAddress: formData.streetName,
-            state: formData.state,
-            city: formData.city,
-            lga: formData.localGoverment
-        };
-        console.log(commpleteProfileData);
-        dispatch(CompleteBusinessProfile(commpleteProfileData));
 
-        const accountData = {
-            affiliateCode: 'ENG',
-            ccy: 'NGN'
-        };
-        dispatch(createNewUserAccount(accountData));
-    };
+    // useEffect(() => {
+    //     handleSubmitIII();
+    // }, [newAccountErrorMessage]);
+
+    // const businessProfileAction = () => {
+    //     const commpleteProfileData = {
+    //         businessName: formData.bussinessName,
+    //         businessType: formData.businessType,
+    //         referralCode: formData.refferalCode,
+    //         countryCode: '+234',
+    //         phoneNumber: formData.bussinessName,
+    //         businessAddress: formData.streetName,
+    //         state: formData.state,
+    //         city: formData.city,
+    //         lga: formData.localGoverment
+    //     };
+    //     console.log(commpleteProfileData);
+    //     dispatch(CompleteBusinessProfile(commpleteProfileData));
+
+    //     const accountData = {
+    //         affiliateCode: 'ENG',
+    //         ccy: 'NGN'
+    //     };
+    //     dispatch(createNewUserAccount(accountData));
+    // };
 
     // const sendOTP = (data) => {
     //     console.log(data);
@@ -548,7 +559,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
-                                        text="Save & Continue"
+                                        text="Save & ContinueI"
                                         type="button"
                                         onClick={handleSubmitIII}
                                         // onClick={handleShowFourthStep}

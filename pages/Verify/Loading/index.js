@@ -21,7 +21,7 @@ const Loading = () => {
                     </div>
 
                     <p className={styles.hi}>
-                        An Email has been sent to d*******@gmail.com,Please
+                        An Email has been sent to your email account,Please
                         check your inbox and verify your email.
                     </p>
                     <div onClick={handleClick}>
@@ -29,7 +29,7 @@ const Loading = () => {
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
-                            text="Resend Mail"
+                            text="Proceed To Login"
                         />
                     </div>
                 </div>

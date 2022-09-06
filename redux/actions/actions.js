@@ -834,9 +834,15 @@ export const newAccountStatusLoadError = (errorMessages) => ({
     payload: errorMessages
 });
 export const newAccountStatusData = () => (dispatch) => {
+    const cookie = getCookie('cookieToken');
     dispatch(accountStatusLoadStart());
     axiosInstance
-        .get(`${apiRoutes.accountStatus}`)
+        .get(`https://ellevate-app.herokuapp.com${apiRoutes.accountStatus}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) => dispatch(accountStatusLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(accountStatusLoadError(error.response.data.message))
@@ -1001,8 +1007,10 @@ export const createProfileSetup = (profileData) => {
                         .then((response) => {
                             dispatch(bvnNinData(response.data));
                             if (
-                                response.data.data[0].reason &&
-                                response.data.data[1].reason
+                                response.data.data[0].reason ||
+                                response.data.data[1].reason ||
+                                response.data.data[1].status === 'PENDING' ||
+                                response.data.data[0].status === 'PENDING'
                             ) {
                                 dispatch(
                                     bvnNinError(
@@ -1015,7 +1023,8 @@ export const createProfileSetup = (profileData) => {
                                         )
                                     );
                             } else if (
-                                response.data.data[1].status === 'PENDING'
+                                response.data.data[1].status === 'PENDING' ||
+                                response.data.data[0].status === 'PENDING'
                             ) {
                                 bvnNinErrorI(
                                     'We are unable to verify your details at the momemnt. Try again later'
@@ -1027,8 +1036,6 @@ export const createProfileSetup = (profileData) => {
                                 dispatch(bvnNinError(null)),
                                     dispatch(bvnNinErrorI(null));
                             }
-
-                            console.log(response.data.data[0].reason);
                         })
                         .catch((error) => {
                             console.log('profile otp dispatch', error);
