@@ -307,9 +307,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                     <input
                                         type="text"
                                         value={
-                                            profileCont.business.name
+                                            profileCont.business
                                                 ? profileCont.business.name
-                                                : ''
+                                                : formData.businessName
                                         }
                                         placeholder="Enter Business Full Name"
                                         onChange={(event) => {
