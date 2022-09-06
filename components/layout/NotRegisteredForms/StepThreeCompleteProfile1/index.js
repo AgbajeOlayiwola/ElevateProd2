@@ -559,7 +559,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
-                                        text="Save & ContinueI"
+                                        text="Save & Continue"
                                         type="button"
                                         onClick={handleSubmitIII}
                                         // onClick={handleShowFourthStep}
