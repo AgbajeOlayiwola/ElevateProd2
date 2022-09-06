@@ -33,6 +33,8 @@ import OmniliteSvg from '../../components/ReusableComponents/ReusableSvgComponen
 import EcobankMobileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EcobankMobileSvg';
 import AccountNumberSvg from '../../components/ReusableComponents/ReusableSvgComponents/AccountNumberSvg';
 import CardSvg from '../../components/ReusableComponents/ReusableSvgComponents/CardSvg';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
 
 const HomeMain = () => {
     const router = useRouter();
@@ -374,6 +376,18 @@ const HomeMain = () => {
     const types = (type) => {
         setOutType(type);
     };
+    const settings = {
+        className: 'center',
+        // centerMode: true,
+        infinite: true,
+        slidesToShow: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        speed: 500,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        cssEase: 'linear'
+    };
     return (
         <div className={styles.homeBody}>
             <section className={styles.firstSection}>
@@ -381,7 +395,11 @@ const HomeMain = () => {
                     <div className={styles.green}></div>
                     <div className={styles.grey}>
                         <div className={styles.contentWrapper}>
-                            <img src="./Assets/Images/tailor.png" alt="" />
+                            <Slider {...settings}>
+                                <img src="./Assets/Images/tailor.png" alt="" />
+                                <img src="Assets/Images/tailor2.png" />
+                            </Slider>
+
                             <div className={styles.content}>
                                 <div className={styles.Svg}>
                                     <div>
@@ -394,15 +412,21 @@ const HomeMain = () => {
                                 <div className={styles.Center}>
                                     <div className={styles.sectionBottom}>
                                         <div className={styles.space}>
-                                            <SpaceshipSvg />
+                                            <div>
+                                                <SpaceshipSvg />
+                                            </div>
                                             <p>Start</p>
                                         </div>
                                         <div className={styles.gears}>
-                                            <Gearsvg />
+                                            <div>
+                                                <Gearsvg />
+                                            </div>
                                             <p>Run</p>
                                         </div>
                                         <div className={styles.scale}>
-                                            <Scalesvg />
+                                            <div>
+                                                <Scalesvg />
+                                            </div>
                                             <p>Grow</p>
                                         </div>
                                     </div>

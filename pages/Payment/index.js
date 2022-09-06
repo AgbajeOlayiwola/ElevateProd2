@@ -821,26 +821,47 @@ const Payment = () => {
                         return (
                             <MakePaymentFirst
                                 overlay={overlay}
-                                firstTitle="Foreign Transfer Payments"
+                                firstTitle="Foreign Transfer"
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 action={(data) => {
                                     console.log(data);
                                     setCount(count + 1);
                                 }}
+                                scheduleLater={() => {
+                                    setCount(count + 4);
+                                }}
                             />
                         );
                     case 1:
                         return (
+                            <MakePaymentFirst
+                                overlay={overlay}
+                                type={'two'}
+                                firstTitle="Foreign Transfer"
+                                closeAction={handleClose}
+                                buttonText="Send Now"
+                                secondAction={(data) => {
+                                    console.log(data);
+                                    setCount(count + 1);
+                                }}
+                                scheduleLater={() => {
+                                    setCount(count + 3);
+                                }}
+                            />
+                        );
+                    case 2:
+                        return (
                             <MakePaymentSecond
                                 overlay={overlay}
+                                closeAction={handleClose}
                                 transferAction={(data) => {
                                     console.log(data);
                                     setCount(count + 1);
                                 }}
                             />
                         );
-                    case 2:
+                    case 3:
                         return (
                             <PaymentSuccess
                                 overlay={overlay}
@@ -851,6 +872,17 @@ const Payment = () => {
                                 }}
                                 country="Nigeria"
                                 title="Foreign Transfer Payments"
+                            />
+                        );
+                    case 4:
+                        return (
+                            <SchedulePayment
+                                overlay={overlay}
+                                action={() => {
+                                    setCount(0);
+                                    setFormType('');
+                                }}
+                                closeAction={handleClose}
                             />
                         );
                 }
