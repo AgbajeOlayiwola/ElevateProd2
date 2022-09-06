@@ -6,8 +6,20 @@ import { loadbillerCategory } from '../../../redux/actions/actions';
 import { loadbillerType } from '../../../redux/actions/actions';
 import { loadbillerPlan } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
+import ArrowRightSvg from '../ReusableSvgComponents/ArrowRightSvg';
+import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 
-const BillPayment = ({ action, firstTitle, buttonText }) => {
+const BillPayment = ({
+    action,
+    firstTitle,
+    buttonText,
+    arrowAction,
+    airtimeAction,
+    scheduleLater,
+    dataAction
+}) => {
+    const [network, setNetwork] = useState('mtn');
     const [activeBtn, setActiveBtn] = useState(false);
     const [billerCategories, setBillerCategories] = useState([]);
     const [billerTypes, setBillerTypes] = useState([]);
@@ -54,219 +66,293 @@ const BillPayment = ({ action, firstTitle, buttonText }) => {
             setBillerPlans(billerPlan.billerProductInfo);
         }
     }, [billerPlan]);
+    const bills = [
+        'Airtime',
+        'Data',
+        'Cable TV',
+        'Government Levies',
+        'Airtime and Data'
+    ];
     return (
         <div>
-            <form onSubmit={handleSubmit(action)}>
-                <h2>{firstTitle}</h2>
-                {/* <div className={styles.destinationCountry}>
-                    <div>
-                        <label>Payment Type</label>
-                        <select
-                            {...register('paymentType', {
-                                required: 'Payment type is required'
-                            })}
-                            name="paymentType"
-                        >
-                            <option value="">Single Transfer</option>
-                            <option value="Bulk Transfer">Bulk Transfer</option>
-                        </select>
-                        <p className={styles.error}>
-                            {errors?.paymentType?.message}
-                        </p>
-                    </div>
-                    <div>
-                        <label>Account to Debit</label>
-                        <select
-                            {...register('accountDebit', {
-                                required: 'Account to debit is required'
-                            })}
-                            name="accountDebit"
-                        >
-                            <option value="">Marvelous Solutions</option>
-                            <option value="Akinfe Temitope">
-                                Akinfe Temitope
-                            </option>
-                        </select>
-                        <p className={styles.error}>
-                            {errors?.accountDebit?.message}
-                        </p>
-                    </div>
-                </div> */}
-                <div className={styles.accountDetails}>
-                    <label>Please choose Biller Details</label>
-                    <div className={styles.accountDetailsBody}>
-                        <div className={styles.billerType}>
-                            <label>Choose Biller Type</label>
-                            <select
-                                {...register('billerType', {
-                                    required: 'Biller type is required'
-                                })}
-                                onChange={loadbillerTypeData}
-                                name="billerType"
-                            >
-                                <option value="">Select Biller</option>
-                                {billerCategories?.map((item, index) => {
-                                    return (
-                                        <option
-                                            value={item.categoryName}
-                                            key={index}
-                                        >
-                                            {item.categoryName}
-                                        </option>
-                                    );
-                                })}
-                            </select>
+            {firstTitle === 'Bill Payment' ? (
+                <>
+                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
+
+                    <div className={styles.beneficiary}>
+                        <div className={styles.beneficiaryHeader}>
+                            <h2>Recent</h2>
+                            <p>View all</p>
                         </div>
-                        <p className={styles.error}>
-                            {errors?.billerType?.message}
-                        </p>
-                        <div className={styles.billerCategory}>
-                            <label>Choose Category</label>
-                            <select
-                                {...register('billerCategory', {
-                                    required: 'Biller Category is required'
-                                })}
-                                name="billerCategory"
-                                onChange={loadPlans}
-                            >
-                                <option value="">Select Category</option>
-                                {billerTypes?.map((item, index) => {
-                                    return (
-                                        <option
-                                            value={item.billerCode}
-                                            key={index}
-                                        >
-                                            {item.billerName}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                        <p className={styles.error}>
-                            {errors?.billerCategory?.message}
-                        </p>
-                    </div>
-                </div>
-                {billerId && (
-                    <div className={styles.accountDetails}>
-                        <label>Please choose Biller Details</label>
-                        <div className={styles.accountDetailsBody}>
-                            {billerId === 'AIRTIME' ? (
-                                <>
-                                    <div className={styles.billerType}>
-                                        <label>Phone Number</label>
-                                        <input
-                                            {...register('phoneNumber', {
-                                                required:
-                                                    'Phone Number is required',
-                                                pattern: {
-                                                    value: /^[0-9]/i,
-                                                    message:
-                                                        'Phone Number can only be number '
-                                                }
-                                            })}
-                                            name="phoneNumber"
-                                            type="number"
-                                            placeholder="Enter Phone Number"
-                                        />
-                                    </div>
-                                    <p className={styles.error}>
-                                        {errors?.billerDetail?.message}
-                                    </p>
-                                </>
-                            ) : (
-                                <>
-                                    <div className={styles.billerType}>
-                                        <label>
-                                            Ref. number (i.e. smartcard no,
-                                            meter no, etc)
-                                        </label>
-                                        <input
-                                            {...register('billerDetail', {
-                                                required:
-                                                    'Biller Detail is required',
-                                                pattern: {
-                                                    value: /^[0-9A-Za-z]/i,
-                                                    message:
-                                                        'Biller Detail can only be number '
-                                                }
-                                            })}
-                                            name="billerDetail"
-                                            type="text"
-                                            placeholder="Enter Ref No. here"
-                                        />
-                                    </div>
-                                    <p className={styles.error}>
-                                        {errors?.billerDetail?.message}
-                                    </p>
-                                    <div className={styles.billerCategory}>
-                                        <label>Choose your Plan</label>
-                                        <select
-                                            {...register('billerPlan', {
-                                                required:
-                                                    'Biller plan is required'
-                                            })}
-                                            name="billerPlan"
-                                        >
-                                            <option value="">
-                                                Select Plan
-                                            </option>
-                                            {billerPlans?.map((item, index) => {
-                                                return (
-                                                    <option
-                                                        value={item.productName}
-                                                        key={index}
-                                                    >
-                                                        {item.productName}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <p className={styles.error}>
-                                        {errors?.billerPlan?.message}
-                                    </p>
-                                </>
-                            )}
+                        <div className={styles.beneficiaryBody}>
+                            <div className={styles.beneficiarySingle}>
+                                <div>
+                                    <img
+                                        src="../../Assets/Svgs/IkejaLogo.svg"
+                                        alt=""
+                                    />
+                                </div>
+                                <p className={styles.name}>Ikeja Electric</p>
+                            </div>
+                            <div className={styles.beneficiarySingle}>
+                                <div>
+                                    <img
+                                        src="../../Assets/Svgs/gotv.svg"
+                                        alt=""
+                                    />
+                                </div>
+                                <p className={styles.name}>GOtv Subscriti...</p>
+                            </div>
+                            {/* <div className={styles.beneficiarySingle}>
+                                <BeneficiaryAvatarSvg />
+                                <p className={styles.name}>Ikeja Electric</p>
+                            </div>
+                            <div className={styles.beneficiarySingle}>
+                                <BeneficiaryAvatarSvg />
+                                <p className={styles.name}>Ikeja Electric</p>
+                            </div>
+                            <div className={styles.beneficiarySingle}>
+                                <BeneficiaryAvatarSvg />
+                                <p className={styles.name}>Ikeja Electric</p>
+                            </div> */}
                         </div>
                     </div>
-                )}
-                <div className={styles.billerAmount}>
-                    <label>Enter Amount</label>
-                    <input
-                        {...register('amount', {
-                            required: 'Amount is required',
-                            pattern: {
-                                value: /^[0-9]/i,
-                                message: 'Amount can only be number '
-                            }
+                    <div className={styles.billBody}>
+                        {bills.map((bill, index) => {
+                            return (
+                                <div
+                                    className={styles.billSingle}
+                                    onClick={arrowAction}
+                                    key={index}
+                                >
+                                    <p>{bill}</p>
+                                    <ArrowRightSvg />
+                                </div>
+                            );
                         })}
-                        name="amount"
-                        type="number"
-                        placeholder="5000"
-                        onChange={(e) => {
-                            if (e?.target.value.length === 0) {
-                                setActiveBtn(false);
-                            } else if (e?.target.value.length > 0) {
-                                setActiveBtn(true);
-                            }
-                        }}
-                    />
-                </div>
-                <div className={styles.repeat}>
-                    <input type="checkbox" />
-                    <p>Do you want to set this as a repeat transaction?</p>
-                </div>
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    text={buttonText}
-                    type="submit"
-                />
-                <p className={styles.schedule}>
-                    Not paying now?<span>Schedule for Later</span>
-                </p>
-            </form>
+                    </div>
+                </>
+            ) : firstTitle === 'Airtime' ? (
+                <>
+                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                    <div className={styles.body}>
+                        <form onSubmit={handleSubmit(airtimeAction)}>
+                            <div className={styles.source}>
+                                <h2>
+                                    Source <span>- Marvelous N******</span>
+                                </h2>
+                                <SourceSvg />
+                            </div>
+                            <div className={styles.networkCarrier}>
+                                <h2>Network</h2>
+                                <div className={styles.networkBody}>
+                                    <div
+                                        className={
+                                            network === 'mtn'
+                                                ? styles.networkActive
+                                                : styles.networkSingle
+                                        }
+                                        onClick={() => {
+                                            setNetwork('mtn');
+                                        }}
+                                    >
+                                        <div>
+                                            <img
+                                                src="../../Assets/Svgs/mtn.svg"
+                                                alt=""
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        className={
+                                            network === 'airtel'
+                                                ? styles.networkActive
+                                                : styles.networkSingle
+                                        }
+                                        onClick={() => {
+                                            setNetwork('airtel');
+                                        }}
+                                    >
+                                        <div>
+                                            <img
+                                                src="../../Assets/Svgs/airtel.svg"
+                                                alt=""
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        className={
+                                            network === 'glo'
+                                                ? styles.networkActive
+                                                : styles.networkSingle
+                                        }
+                                        onClick={() => {
+                                            setNetwork('glo');
+                                        }}
+                                    >
+                                        <div>
+                                            <img
+                                                src="../../Assets/Svgs/glo.svg"
+                                                alt=""
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        className={
+                                            network === '9mobile'
+                                                ? styles.networkActive
+                                                : styles.networkSingle
+                                        }
+                                        onClick={() => {
+                                            setNetwork('9mobile');
+                                        }}
+                                    >
+                                        <div>
+                                            <img
+                                                src="../../Assets/Svgs/9mobile.svg"
+                                                alt=""
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.networkForm}>
+                                <div className={styles.formGroup}>
+                                    <label>Phone Number</label>
+                                    <input
+                                        type="text"
+                                        placeholder="0801 234 5678"
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Amount</label>
+                                    <input type="text" placeholder="0.00" />
+                                </div>
+                                <button>Next</button>{' '}
+                            </div>
+                            <p className={styles.schedule}>
+                                Not paying now?{' '}
+                                <span onClick={scheduleLater}>
+                                    Schedule for Later
+                                </span>
+                            </p>
+                        </form>
+                    </div>
+                </>
+            ) : firstTitle === 'Data' ? (
+                <>
+                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                    <div className={styles.body}>
+                        <form onSubmit={handleSubmit(dataAction)}>
+                            <div className={styles.source}>
+                                <h2>
+                                    Source <span>- Marvelous N******</span>
+                                </h2>
+                                <SourceSvg />
+                            </div>
+                            <div className={styles.networkCarrier}>
+                                <h2>Network</h2>
+                                <div className={styles.networkBody}>
+                                    <div
+                                        className={
+                                            network === 'mtn'
+                                                ? styles.networkActive
+                                                : styles.networkSingle
+                                        }
+                                        onClick={() => {
+                                            setNetwork('mtn');
+                                        }}
+                                    >
+                                        <div>
+                                            <img
+                                                src="../../Assets/Svgs/mtn.svg"
+                                                alt=""
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        className={
+                                            network === 'airtel'
+                                                ? styles.networkActive
+                                                : styles.networkSingle
+                                        }
+                                        onClick={() => {
+                                            setNetwork('airtel');
+                                        }}
+                                    >
+                                        <div>
+                                            <img
+                                                src="../../Assets/Svgs/airtel.svg"
+                                                alt=""
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        className={
+                                            network === 'glo'
+                                                ? styles.networkActive
+                                                : styles.networkSingle
+                                        }
+                                        onClick={() => {
+                                            setNetwork('glo');
+                                        }}
+                                    >
+                                        <div>
+                                            <img
+                                                src="../../Assets/Svgs/glo.svg"
+                                                alt=""
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        className={
+                                            network === '9mobile'
+                                                ? styles.networkActive
+                                                : styles.networkSingle
+                                        }
+                                        onClick={() => {
+                                            setNetwork('9mobile');
+                                        }}
+                                    >
+                                        <div>
+                                            <img
+                                                src="../../Assets/Svgs/9mobile.svg"
+                                                alt=""
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.networkForm}>
+                                <div className={styles.formGroup}>
+                                    <label>Choose Plan</label>
+                                    <select name="" id="">
+                                        <option value="">Select Plan</option>
+                                    </select>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Phone Number</label>
+                                    <input
+                                        type="text"
+                                        placeholder="0801 234 5678"
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Amount</label>
+                                    <input type="text" placeholder="0.00" />
+                                </div>
+                                <button>Next</button>{' '}
+                            </div>
+                            <p className={styles.schedule}>
+                                Not paying now?{' '}
+                                <span onClick={scheduleLater}>
+                                    Schedule for Later
+                                </span>
+                            </p>
+                        </form>
+                    </div>
+                </>
+            ) : null}
         </div>
     );
 };

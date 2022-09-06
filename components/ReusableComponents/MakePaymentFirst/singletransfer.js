@@ -37,7 +37,7 @@ const SingleTransfer = ({
     } = useForm();
     return (
         <div>
-            <h2>{firstTitle}</h2>
+            <h2 className={styles.firstTitle}>{firstTitle}</h2>
             <div className={styles.beneficiary}>
                 <div className={styles.beneficiaryHeader}>
                     <h2>Beneficiaries</h2>

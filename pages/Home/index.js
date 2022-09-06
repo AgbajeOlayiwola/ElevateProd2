@@ -110,7 +110,7 @@ const HomeMain = () => {
                         </div>
                         <div>
                             <label>Enter Your Omnilite Password</label>
-                            <div className={styles.passwordEye}>
+                            <div className={styles.divs}>
                                 <input
                                     placeholder="Omnilite Password"
                                     className={styles.idInput}
@@ -149,7 +149,7 @@ const HomeMain = () => {
                         </div>
                         <div>
                             <label>Enter Your Ecobank Online Password</label>
-                            <div className={styles.passwordEye}>
+                            <div className={styles.divs}>
                                 <input
                                     placeholder="Ecobank Online Password"
                                     className={styles.idInput}
@@ -272,7 +272,7 @@ const HomeMain = () => {
                         </p>
                         <div>
                             <label>Enter Your Omnilite Password</label>
-                            <div className={styles.passwordEye}>
+                            <div className={styles.divs}>
                                 <input
                                     placeholder="Omnilite Password"
                                     className={styles.idInput}

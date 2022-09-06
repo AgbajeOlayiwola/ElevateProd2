@@ -154,6 +154,16 @@
 .divs {
     display: flex;
     align-items: center;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding-right: 16px;
+}
+
+.divs input {
+    height: 100%;
+    padding: 0px;
+    border: 0px;
+    padding: 16px 16px 16px 24px;
 }
 
 .errorCont {
