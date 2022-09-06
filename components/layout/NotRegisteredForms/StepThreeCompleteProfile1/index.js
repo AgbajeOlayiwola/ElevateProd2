@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 import axiosInstance from '../../../../redux/helper/apiClient';
+import apiRoutes from '../../../../redux/helper/apiRoutes';
 const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     // const [progress, setProgress] = useState('75%');
     const [title, setTitle] = useState('Basic');
