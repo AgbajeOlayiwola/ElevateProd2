@@ -3,6 +3,7 @@ import styles from './styles.module.css';
 import Card from '../../../components/layout/NotRegisteredForms/Card';
 import Link from 'next/link';
 import Success from '../../../components/ReusableComponents/Success';
+import { ButtonComp } from '../../../components';
 
 const ExistingSuccess = ({ handleShowSuccessStep }) => {
     let accountDetails;

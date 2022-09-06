@@ -23,7 +23,8 @@ import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymne
 // import withAuth from '../../components/HOC/withAuth.js';
 import {
     getBalanceEnquiry,
-    getTransactionElevate
+    getTransactionElevate,
+    newAccountStatusData
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
@@ -127,7 +128,16 @@ const Dashboard = () => {
         autoplaySpeed: 2000,
         cssEase: 'linear'
     };
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
 
+    const [acctNumber, setAcctNumber] = useState('');
+    useEffect(() => {
+        dispatch(newAccountStatusData());
+        setAcctNumber(accountStatus.data.accountNumber);
+    }, []);
+    // console.log(accountStatus.data.accountNumber);
     return (
         <DashLayout>
             <Levelup />
@@ -228,7 +238,9 @@ const Dashboard = () => {
                                                 Account Number
                                             </p>
                                             <p className={styles.accountNumber}>
-                                                Pending
+                                                {acctNumber
+                                                    ? acctNumber
+                                                    : 'Pending'}
                                             </p>
                                         </div>
                                     </div>
