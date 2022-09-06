@@ -593,8 +593,30 @@
     margin-top: 48px;
 }
 
+.foreignBody .formGroup {
+    width: 100%;
+}
+
 .foreignBody button {
     margin-top: 70%;
+}
+
+.foreignBodyTwo {
+    margin-top: 24px;
+}
+
+.foreignBodyTwo .formGroup {
+    width: 100%;
+}
+
+.foreignBodyTwo button {
+    margin-top: 48px;
+}
+
+.amountCont {
+    padding-bottom: 24px;
+    border-bottom: 2px solid #f6f6f6;
+    margin-bottom: 24px;
 }
 
 .billSingle {
