@@ -147,7 +147,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
         } else if (accountStatus.message === 'Try Again') {
             router.push('/Verify/CorportateAccount');
         } else if (accountStatus.message === 'SUCCESS') {
-            router.push('/Succes/CorpSuccess');
+            router.push('/Succes');
         }
     };
 
