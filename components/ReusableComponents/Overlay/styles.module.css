@@ -3,8 +3,7 @@
 }
 .mainOverlay {
     display: block;
-    background-color: rgba(245, 246, 250, 0.8);
-    padding: 36px 32px 46px 32px;
+    background: rgba(0, 0, 0, 0.6);
     position: absolute;
     top: 0;
     left: 0;

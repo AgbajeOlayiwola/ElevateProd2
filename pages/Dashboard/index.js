@@ -23,9 +23,11 @@ import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymne
 // import withAuth from '../../components/HOC/withAuth.js';
 import {
     getBalanceEnquiry,
-    getTransactionElevate
+    getTransactionElevate,
+    newAccountStatusData
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -79,7 +81,7 @@ const Dashboard = () => {
     const [nav2, setNav2] = useState();
     const slider1 = useRef();
     const [outType, setOutType] = useState();
-    const [balance, setBalance] = useState('000,000.00');
+    const [balance, setBalance] = useState('#0.00');
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
     const route = router.pathname;
@@ -126,15 +128,24 @@ const Dashboard = () => {
         autoplaySpeed: 2000,
         cssEase: 'linear'
     };
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
 
+    const [acctNumber, setAcctNumber] = useState('');
+    useEffect(() => {
+        dispatch(newAccountStatusData());
+        setAcctNumber(accountStatus.data.accountNumber);
+    }, []);
+    // console.log(accountStatus.data.accountNumber);
     return (
         <DashLayout>
             <Levelup />
             <div className={styles.cove}>
                 <section className={styles.sectionI}>
                     <div className={styles.Tpwh}>
-                        <p className={styles.transP}>Transaction Today</p>
-                        <div className={styles.payEco}>
+                        <h2 className={styles.transP}>Transactions Today</h2>
+                        {/* <div className={styles.payEco}>
                             <div className={styles.svgTxt}>
                                 <div className={styles.svgCov}>
                                     <Paylink />
@@ -153,7 +164,8 @@ const Dashboard = () => {
                                     <h5 className={styles.h5}>₦24,000,000</h5>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
+                        <p>No transactions has been made today.</p>
                     </div>
 
                     <div className={styles.otherTrans}>
@@ -196,62 +208,104 @@ const Dashboard = () => {
                     </div>
                 </section>
                 <section className={styles.sectionII}>
-                    <div>
+                    <div className={styles.moneyCont}>
                         <div className={styles.card}>
                             <div className={styles.cardRight}>
-                                <div className={styles.cardMone}>
-                                    <h1>{outType ? '*******' : balance}</h1>
-                                    <Visbility color="green" typeSet={types} />
+                                <div className={styles.moneyBody}>
+                                    <div className={styles.moneybodyDiv}>
+                                        <div>
+                                            <div className={styles.cardMone}>
+                                                <h1>
+                                                    {outType
+                                                        ? '*******'
+                                                        : balance}
+                                                </h1>
+                                                <Visbility
+                                                    color="green"
+                                                    typeSet={types}
+                                                />
+                                            </div>
+                                            <p className={styles.avail}>
+                                                Available Balance
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p
+                                                className={
+                                                    styles.accountDetails
+                                                }
+                                            >
+                                                Account Number
+                                            </p>
+                                            <p className={styles.accountNumber}>
+                                                {acctNumber
+                                                    ? acctNumber
+                                                    : 'Pending'}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <p className={styles.avail}>
-                                    Available Balance
-                                </p>
-
                                 <div className={styles.recMak}>
                                     <RecievePaymentBtn />
                                     <MakePaymentBtn />
                                 </div>
                             </div>
-                            <div>
+                            <div className={styles.bagMoney}>
                                 <img src="/Assets/Images/bagmoney.png" />
                             </div>
                         </div>
+                        <div className={styles.otherAccounts}>
+                            <h2>Other Accounts</h2>
+                            <div className={styles.otherAccountsDiv}>
+                                <button>+Add New</button>
+                            </div>
+                        </div>
                     </div>
-                    {/* bottom  */}
                     <div className={styles.btm}>
                         <div className={styles.btmII}>
                             <div className={styles.btmIIp}>
                                 <p>Recent Transactions</p>
                                 <p>View All</p>
                             </div>
-                            <p className={styles.select}>
-                                (Select transaction to view more)
-                            </p>
-
-                            {transactionData.map((item, index) => {
-                                return (
-                                    <div key={index}>
-                                        <div className={styles.transaction}>
-                                            <div className={styles.names}>
-                                                <p>{item.beneficiaryName}</p>
-                                                <p>{item.type}</p>
-                                            </div>
-                                            <div className={styles.money}>
-                                                <p>{item.amount}</p>
-                                                <div
-                                                    className={item.color}
-                                                ></div>
-                                            </div>
+                            {transactionData.length === 0 ? (
+                                <div className={styles.transactionBody}>
+                                    <div>
+                                        <div className={styles.transactionSvg}>
+                                            <TransactionSvg />
                                         </div>
-                                        <hr className={styles.hr} />
+                                        <p>
+                                            No transactions has been made, click
+                                            on make payment to get started.
+                                        </p>
                                     </div>
-                                );
-                            })}
+                                </div>
+                            ) : (
+                                transactionData.map((item, index) => {
+                                    return (
+                                        <div key={index}>
+                                            <div className={styles.transaction}>
+                                                <div className={styles.names}>
+                                                    <p>
+                                                        {item.beneficiaryName}
+                                                    </p>
+                                                    <p>{item.type}</p>
+                                                </div>
+                                                <div className={styles.money}>
+                                                    <p>{item.amount}</p>
+                                                    <div
+                                                        className={item.color}
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                            <hr className={styles.hr} />
+                                        </div>
+                                    );
+                                })
+                            )}
                         </div>
-                        <div className={styles.btmIII}>
+                        {/* <div className={styles.btmIII}>
                             <p className={styles.paylink}>Other Accounts</p>
-                            {/* <Piechart />
-                             */}
+                            
                             {OtherAccounts.map((item, index) => {
                                 return (
                                     <div
@@ -263,17 +317,11 @@ const Dashboard = () => {
                                     </div>
                                 );
                             })}
-                        </div>
+                        </div> */}
                     </div>
-                    <div className={styles.cards}>
+                    {/* <div className={styles.cards}>
                         <Slider
                             {...settings}
-                            // className="mainSlider"
-                            // asNavFor={nav2}
-                            // ref={(slider1) => setNav2(slider1)}
-                            // slidesToShow={1}
-                            // swipeToSlide={true}
-                            // focusOnSelect={true}
                         >
                             <div>
                                 <div className={styles.cardI}>
@@ -308,7 +356,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </Slider>
-                    </div>
+                    </div> */}
                 </section>
             </div>
         </DashLayout>

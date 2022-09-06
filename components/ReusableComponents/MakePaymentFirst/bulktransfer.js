@@ -4,12 +4,18 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import { loadbank } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import SourceSvg from '../ReusableSvgComponents/SourceSvg';
+import PlusSvg from '../ReusableSvgComponents/PlusSvg';
 
 const BulkTransfer = ({ action, firstTitle, buttonText }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
+    const count = 0;
+    const [number, setNumber] = useState([]);
+    console.log(number);
+    useEffect(() => {}, [number]);
 
     useEffect(() => {
         dispatch(loadbank('ENG'));
@@ -27,8 +33,157 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
     return (
         <div>
             <form onSubmit={handleSubmit(action)}>
-                <h2>{firstTitle}</h2>
-                <div className={styles.destinationCountry}>
+                <div className={styles.bulkHeader}>
+                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                    <div className={styles.source}>
+                        <h2>
+                            Source <span>- Marvelous N******</span>
+                        </h2>
+                        <SourceSvg />
+                    </div>
+                    {number?.map((e, index) => {
+                        return (
+                            <div className={styles.addedFormCont} key={index}>
+                                <div className={styles.formNumber}>
+                                    <label className={styles.bulkLabel}>
+                                        Account Number
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Account Number"
+                                    />
+                                </div>
+                                <div className={styles.formBank}>
+                                    <label className={styles.bulkLabel}>
+                                        Choose Bank
+                                    </label>
+                                    <select
+                                        {...register('bankName' + { index }, {
+                                            required: 'Bank name is required'
+                                        })}
+                                        name={'bankName' + { index }}
+                                    >
+                                        <option value="">Select Bank</option>
+                                        {banks?.map((item, index) => {
+                                            return (
+                                                <option
+                                                    value={item.institutionId}
+                                                    key={index}
+                                                >
+                                                    {item.institutionName}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+                <div className={styles.oldForm}>
+                    <div className={styles.formCont}>
+                        <div className={styles.oldFormBody}>
+                            <div className={styles.formGroup}>
+                                <label className={styles.bulkLabel}>
+                                    Account Number
+                                </label>
+                                <input
+                                    {...register('firstAccountNumber', {
+                                        required: 'Account Number  is required',
+                                        pattern: {
+                                            value: /^[0-9]/i,
+                                            message:
+                                                'Account Number can only be number '
+                                        }
+                                    })}
+                                    name="firstAccountNumber"
+                                    type="number"
+                                    placeholder="Enter Account Number"
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label className={styles.bulkLabel}>
+                                    Choose Bank
+                                </label>
+                                <select
+                                    {...register('firstBank', {
+                                        required: 'Bank name is required'
+                                    })}
+                                    name="firstBank"
+                                >
+                                    <option value="">Select Bank</option>
+                                    {banks?.map((item, index) => {
+                                        return (
+                                            <option
+                                                value={item.institutionId}
+                                                key={index}
+                                            >
+                                                {item.institutionName}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div
+                            className={styles.plus}
+                            onClick={() => {
+                                setNumber((arr) => [...arr, `${arr.length}`]);
+                            }}
+                        >
+                            <PlusSvg />
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.bulkWrapper}>
+                    <div className={styles.uploadCsv}>
+                        <p>
+                            Tap to <span>Upload CSV File</span>
+                        </p>
+                    </div>
+                    <div className={styles.amountDiv}>
+                        <label className={styles.bulkLabel}>Amount</label>
+                        <input
+                            {...register('amount', {
+                                required: 'Amount  is required',
+                                pattern: {
+                                    value: /^[0-9]/i,
+                                    message: 'Amount can only be number '
+                                }
+                            })}
+                            name="amount"
+                            type="number"
+                            placeholder="0.00"
+                            onChange={(e) => {
+                                if (e?.target.value.length === 0) {
+                                    setActiveBtn(false);
+                                } else if (e?.target.value.length > 0) {
+                                    setActiveBtn(true);
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className={styles.saveBene}>
+                        <label className={styles.beneCheck}>
+                            <input type="checkbox" />
+                            <span>
+                                <i></i>
+                            </span>
+                        </label>
+                        <p>Input Different Amount</p>
+                    </div>
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        text={buttonText}
+                        type="submit"
+                    />
+                    <p className={styles.schedule}>
+                        Not paying now?<span>Schedule for Later</span>
+                    </p>
+                </div>
+                {/* <div className={styles.destinationCountry}>
                     <div>
                         <label>Select Method</label>
                         <select
@@ -238,20 +393,7 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                         }}
                     />
                     <p className={styles.error}>{errors?.amount?.message}</p>
-                </div>
-                <div className={styles.repeat}>
-                    <input type="checkbox" />
-                    <p>Do you want to set this as a repeat transaction?</p>
-                </div>
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    text={buttonText}
-                    type="submit"
-                />
-                <p className={styles.schedule}>
-                    Not paying now?<span>Schedule for Later</span>
-                </p>
+                </div> */}
             </form>
         </div>
     );

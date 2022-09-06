@@ -1,0 +1,94 @@
+.repeatCont {
+    width: 40%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 50px;
+    margin: 0px auto;
+    position: absolute;
+    top: 3%;
+    left: 35%;
+    z-index: 10;
+}
+
+.closeCont {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    padding: 32px 32px 0px 0px;
+}
+
+.closeBtn {
+    display: block;
+    cursor: pointer;
+}
+
+.repeatHeader {
+    display: flex;
+    width: 67%;
+    max-width: 400px;
+    margin: 4px auto 64px;
+}
+
+.repeatHeader div {
+    margin-left: 12px;
+}
+
+.repeatHeader h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #102572;
+    margin: 0px;
+}
+
+.repeatHeader p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    color: #a5a5a5;
+    margin: 0px;
+    margin-top: 4px;
+}
+
+.repeatBody {
+    width: 67%;
+    max-width: 400px;
+    margin: 0px auto 64px;
+}
+
+.formGroup {
+    margin-bottom: 16px;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.formGroup input {
+    appearance: none;
+}
+
+.formGroup select {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #a5a5a5;
+    background-color: #f4f4f4;
+}
+
+.repeatBody button {
+    margin-top: 64px;
+}

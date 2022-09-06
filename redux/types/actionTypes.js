@@ -356,3 +356,7 @@ export const newUserCreateCorpAccount = {
     CREATE_NEW_CORP_ACCOUNT_LOAD_ERROR: 'CREATE_NEW_CORP_ACCOUNT_LOAD_ERROR'
 };
 //create new user Corp end
+
+//ACCOUNT STATUS START
+
+//ACCOUNT STATS END

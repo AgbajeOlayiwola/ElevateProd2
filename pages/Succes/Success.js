@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Card from '../../components/layout/NotRegisteredForms/Card';
 import Success from '../../components/ReusableComponents/Success';
 import { ButtonComp } from '../../components';
 import Link from 'next/link';
@@ -9,8 +8,8 @@ const SuccessN = () => {
     const [activeBtn, setActiveBtn] = useState(true);
 
     return (
-        <div className={styles.cover}>
-            <Card>
+        <div className={styles.succCov}>
+            <div className={styles.succCovInn}>
                 <div className={styles.Success}>
                     <Success />
                 </div>
@@ -24,7 +23,11 @@ const SuccessN = () => {
                         text="Proceed To Dashboard"
                     />
                 </Link>
-            </Card>
+                <p>
+                    With your Ellevate Account, you have Deposit/Inflow Limit:
+                    N1,000,000
+                </p>
+            </div>
         </div>
     );
 };

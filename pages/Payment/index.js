@@ -35,6 +35,7 @@ import PaymentCard from '../../components/ReusableComponents/PaymentCard';
 import { useRouter } from 'next/router';
 import { PaymentData } from '../../components/ReusableComponents/Data';
 import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
+import PaymentRepeat from '../../components/ReusableComponents/PaymentRepeat';
 
 const Payment = () => {
     const router = useRouter();
@@ -88,6 +89,7 @@ const Payment = () => {
     const [error, setError] = useState('');
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');
+    const [bill, setBill] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
     const [bank, setBank] = useState({});
     const interBankCheck = () => {
@@ -381,12 +383,7 @@ const Payment = () => {
                                 overlay={overlay}
                                 firstTitle="Single Transfer Payment"
                                 closeAction={handleClose}
-                                buttonText="Send Now"
-                                selfaction={(data) => {
-                                    console.log(data);
-                                    setPaymentDetails(data);
-                                    setCount(count + 1);
-                                }}
+                                buttonText="Next"
                                 othersaction={(data) => {
                                     if (data.bankName !== 'Ecobank') {
                                         const enquiry = {
@@ -401,11 +398,15 @@ const Payment = () => {
                                     setPaymentDetails(data);
                                     setCount(count + 1);
                                 }}
+                                scheduleLater={() => {
+                                    setCount(count + 4);
+                                }}
                             />
                         );
                     case 1:
                         return (
                             <MakePaymentSecond
+                                closeAction={handleClose}
                                 isLoading={isLoading}
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountNumber}
@@ -413,89 +414,62 @@ const Payment = () => {
                                 recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
                                 transferAction={() => {
-                                    // if (paymentDetails.self === 'self') {
-                                    // const paymentData = {
-                                    //     debitAccountNo: '4262004003',
-                                    //     debitAccountType: 'A',
-                                    //     creditAccountNo:
-                                    //         paymentDetails.accountNumber,
-                                    //     creditAccountType: 'A',
-                                    //     amount: paymentDetails.amount,
-                                    //     ccy: 'NGN'
-                                    // };
-                                    // dispatch(postInternalBank(paymentData));
-                                    // if (internalBank !== null) {
-                                    //     console.log(internalBank);
-                                    // }
-                                    // } else
-                                    if (paymentDetails.others === 'others') {
-                                        setIsLoading(true);
-                                        if (paymentDetails.bene === true) {
-                                            const newBene = {
-                                                name: interEnquiry.accountName,
-                                                accountNumber:
-                                                    interEnquiry.accountNo,
-                                                bankName:
-                                                    // bank.filter(
-                                                    //     (item) => {
-                                                    //         if (
-                                                    //             item.institutionId ===
-                                                    //             paymentDetails.bankName
-                                                    //         ) {
-                                                    //             return item.institutionName;
-                                                    //         }
-                                                    //     }
-                                                    // )
-                                                    'Zenith Bank',
-                                                bankCode:
-                                                    paymentDetails.bankName
-                                            };
-                                            dispatch(
-                                                postBeneficiariesData(newBene)
-                                            );
-                                        }
-                                        if (
-                                            paymentDetails.bankName ===
-                                            'Ecobank'
-                                        ) {
-                                            const paymentData = {
-                                                debitAccountNo:
-                                                    senderDetails.accountNo,
-                                                debitAccountType: 'A',
-                                                creditAccountNo:
-                                                    paymentDetails.accountNumber,
-                                                creditAccountType: 'A',
-                                                amount: paymentDetails.amount,
-                                                ccy: senderDetails.ccy
-                                            };
-                                            dispatch(
-                                                postInternalBank(paymentData)
-                                            );
-                                        } else {
-                                            console.log(interEnquiry);
+                                    setIsLoading(true);
+                                    if (paymentDetails.bene === true) {
+                                        const newBene = {
+                                            name: interEnquiry.accountName,
+                                            accountNumber:
+                                                interEnquiry.accountNo,
+                                            bankName:
+                                                // bank.filter(
+                                                //     (item) => {
+                                                //         if (
+                                                //             item.institutionId ===
+                                                //             paymentDetails.bankName
+                                                //         ) {
+                                                //             return item.institutionName;
+                                                //         }
+                                                //     }
+                                                // )
+                                                'Zenith Bank',
+                                            bankCode: paymentDetails.bankName
+                                        };
+                                        dispatch(
+                                            postBeneficiariesData(newBene)
+                                        );
+                                    }
+                                    if (paymentDetails.bankName === 'Ecobank') {
+                                        const paymentData = {
+                                            debitAccountNo:
+                                                senderDetails.accountNo,
+                                            debitAccountType: 'A',
+                                            creditAccountNo:
+                                                paymentDetails.accountNumber,
+                                            creditAccountType: 'A',
+                                            amount: paymentDetails.amount,
+                                            ccy: senderDetails.ccy
+                                        };
+                                        dispatch(postInternalBank(paymentData));
+                                    } else {
+                                        console.log(interEnquiry);
 
-                                            const paymentData = {
-                                                destinationBankCode:
-                                                    paymentDetails.bankName,
-                                                senderAccountNo:
-                                                    senderDetails.accountNo,
-                                                senderAccountType: 'A',
-                                                senderName:
-                                                    'Aderohunmu Matthew',
-                                                senderPhone: '2348039219191',
-                                                beneficiaryAccountNo:
-                                                    interEnquiry.accountNo,
-                                                beneficiaryName:
-                                                    interEnquiry.accountName,
-                                                narration:
-                                                    paymentDetails.narration,
-                                                amount: paymentDetails.amount,
-                                                ccy: senderDetails.ccy
-                                            };
-                                            dispatch(
-                                                postInterBank(paymentData)
-                                            );
-                                        }
+                                        const paymentData = {
+                                            destinationBankCode:
+                                                paymentDetails.bankName,
+                                            senderAccountNo:
+                                                senderDetails.accountNo,
+                                            senderAccountType: 'A',
+                                            senderName: 'Aderohunmu Matthew',
+                                            senderPhone: '2348039219191',
+                                            beneficiaryAccountNo:
+                                                interEnquiry.accountNo,
+                                            beneficiaryName:
+                                                interEnquiry.accountName,
+                                            narration: paymentDetails.narration,
+                                            amount: paymentDetails.amount,
+                                            ccy: senderDetails.ccy
+                                        };
+                                        dispatch(postInterBank(paymentData));
                                     }
                                 }}
                             />
@@ -514,6 +488,27 @@ const Payment = () => {
                                 title="Single Transfer Payment"
                                 amount={paymentDetails.amount}
                                 beneName={paymentDetails.accountNumber}
+                                repeatAction={() => {
+                                    setCount(count + 1);
+                                }}
+                            />
+                        );
+                    case 3:
+                        return (
+                            <PaymentRepeat
+                                overlay={overlay}
+                                closeAction={handleClose}
+                            />
+                        );
+                    case 4:
+                        return (
+                            <SchedulePayment
+                                overlay={overlay}
+                                action={() => {
+                                    setCount(0);
+                                    setFormType('');
+                                }}
+                                closeAction={handleClose}
                             />
                         );
                 }
@@ -567,6 +562,7 @@ const Payment = () => {
                         return (
                             <MakePaymentSecond
                                 isLoading={isLoading}
+                                closeAction={handleClose}
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountNumber}
                                 sender={paymentDetails.accountName}
@@ -652,12 +648,37 @@ const Payment = () => {
                                     setPaymentDetails(data);
                                     setCount(count + 1);
                                 }}
+                                arrowAction={(e) => {
+                                    setBill(e.target.outerText);
+                                    setCount(count + 1);
+                                }}
                             />
                         );
                     case 1:
                         return (
+                            <MakePaymentFirst
+                                overlay={overlay}
+                                firstTitle={bill}
+                                buttonText="Send Now"
+                                closeAction={handleClose}
+                                dataAction={(data) => {
+                                    setCount(count + 1);
+                                    setPaymentDetails(data);
+                                }}
+                                airtimeAction={(data) => {
+                                    setCount(count + 1);
+                                    setPaymentDetails(data);
+                                }}
+                                scheduleLater={() => {
+                                    setCount(count + 3);
+                                }}
+                            />
+                        );
+                    case 2:
+                        return (
                             <MakePaymentSecond
                                 isLoading={isLoading}
+                                closeAction={handleClose}
                                 recieverName={paymentDetails.billerType}
                                 amount={paymentDetails.amount}
                                 number={paymentDetails.phoneNumber}
@@ -764,7 +785,7 @@ const Payment = () => {
                                 }}
                             />
                         );
-                    case 2:
+                    case 3:
                         return (
                             <PaymentSuccess
                                 overlay={overlay}
@@ -779,6 +800,17 @@ const Payment = () => {
                                 paymentType={paymentDetails.billerType}
                                 number={paymentDetails.phoneNumber}
                                 amount={paymentDetails.amount}
+                            />
+                        );
+                    case 4:
+                        return (
+                            <SchedulePayment
+                                overlay={overlay}
+                                action={() => {
+                                    setCount(0);
+                                    setFormType('');
+                                }}
+                                closeAction={handleClose}
                             />
                         );
                 }

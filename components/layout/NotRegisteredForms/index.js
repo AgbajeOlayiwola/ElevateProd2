@@ -29,7 +29,7 @@ const ProfileSetups = () => {
     // router.replace(router.asPath);
 
     const cookie = getCookie('cookieToken');
-    console.log('register page', cookie);
+    // console.log('register page', cookie);
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
@@ -110,6 +110,7 @@ const ProfileSetups = () => {
                         formData={formData}
                         setFormData={setFormData}
                         action={handleSubmit}
+                        // action is supposed to be handleSubmit
                     />
                 );
             case 1:
@@ -134,17 +135,17 @@ const ProfileSetups = () => {
                         }}
                     />
                 );
+            // case 2:
+            //     return (
+            //         <Liveness
+            //             // action={() => {
+            //             //     setPage(page - 1);
+            //             //     setPageType('');
+            //             // }}
+            //             action={handleSubmitt}
+            //         />
+            //     );
             case 2:
-                return (
-                    <Liveness
-                        // action={() => {
-                        //     setPage(page - 1);
-                        //     setPageType('');
-                        // }}
-                        action={handleSubmitt}
-                    />
-                );
-            case 3:
                 return (
                     <StepThreeCompleteProfile1
                         formData={formData}
@@ -205,7 +206,7 @@ const ProfileSetups = () => {
     const handleSubmitt = () => {
         setPage(page + 1);
     };
-    console.log(errorM, errorI);
+    // console.log(errorM, errorI);
 
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
@@ -225,9 +226,9 @@ const ProfileSetups = () => {
             ? (text =
                   'Input your BVN and open a Business Account in 3 minutes.')
             : page === 2
-            ? (text = 'Checkout Priceless Oppurtunities Be ahead')
+            ? (text = 'Checkout Priceless opportunities Be ahead')
             : page === 3
-            ? (text = 'Checkout Priceless Oppurtunities Be ahead')
+            ? (text = 'Checkout Priceless opportunities Be ahead')
             : null;
     }
     return (

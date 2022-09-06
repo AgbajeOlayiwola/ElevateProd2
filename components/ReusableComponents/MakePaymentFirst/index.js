@@ -14,7 +14,11 @@ const MakePaymentFirst = ({
     action,
     selfaction,
     othersaction,
-    overlay
+    overlay,
+    scheduleLater,
+    arrowAction,
+    dataAction,
+    airtimeAction
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -24,14 +28,28 @@ const MakePaymentFirst = ({
 
     return (
         <Overlay overlay={overlay}>
-            <div className={styles.firstDiv} ref={myref}>
-                <div className={styles.firstBody}>
+            <div
+                className={
+                    firstTitle === 'Foreign Transfer Payments'
+                        ? styles.firstDivs
+                        : styles.firstDiv
+                }
+                ref={myref}
+            >
+                <div
+                    className={
+                        firstTitle === 'Bulk Payments'
+                            ? styles.bulkBody
+                            : styles.firstBody
+                    }
+                >
                     {firstTitle === 'Single Transfer Payment' ? (
                         <SingleTransfer
                             selfaction={selfaction}
                             othersaction={othersaction}
                             firstTitle="Single Transfer Payment"
                             buttonText={buttonText}
+                            scheduleLater={scheduleLater}
                         />
                     ) : firstTitle === 'Foreign Transfer Payments' ? (
                         <ForeignTransfer
@@ -42,14 +60,18 @@ const MakePaymentFirst = ({
                     ) : firstTitle === 'Bulk Payments' ? (
                         <BulkTransfer
                             action={action}
-                            firstTitle="Bulk Payments"
+                            firstTitle={firstTitle}
                             buttonText={buttonText}
                         />
                     ) : (
                         <BillPayment
                             action={action}
-                            firstTitle="Bill Payment"
+                            firstTitle={firstTitle}
                             buttonText={buttonText}
+                            arrowAction={arrowAction}
+                            scheduleLater={scheduleLater}
+                            dataAction={dataAction}
+                            airtimeAction={airtimeAction}
                         />
                     )}
                 </div>
@@ -64,12 +86,6 @@ const MakePaymentFirst = ({
                         classes={styles.closebtn}
                         color="white"
                     />
-                    {/* <img
-                        src="../../Assets/Svgs/closebtn.svg"
-                        alt=""
-                        className={styles.closebtn}
-                        onClick={closeAction}
-                    /> */}
                 </div>
             </div>
         </Overlay>

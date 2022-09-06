@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Success from '../Success';
 import styles from './styles.module.css';
 import {
     BodyWrapper,
@@ -10,6 +9,7 @@ import Link from 'next/link';
 import ButtonComp from '../Button';
 import Overlay from '../Overlay';
 import ErrorSvg from '../ReusableSvgComponents/ErrorSvg';
+import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 
 const PaymentSuccess = ({
     action,
@@ -25,7 +25,8 @@ const PaymentSuccess = ({
     beneName,
     isLoading,
     statusbar,
-    error
+    error,
+    repeatAction
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -40,14 +41,10 @@ const PaymentSuccess = ({
                     <div>
                         {type === 'profile' ? (
                             <BodyWrapper>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        justifyContent: 'center'
-                                    }}
-                                >
-                                    <Success />
+                                <div className={styles.successCheck}>
+                                    <div>
+                                        <SuccessCheckSvg />
+                                    </div>
                                 </div>
 
                                 <RegistrationStatus>
@@ -72,14 +69,10 @@ const PaymentSuccess = ({
                             </BodyWrapper>
                         ) : (
                             <BodyWrapper>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        justifyContent: 'center'
-                                    }}
-                                >
-                                    <Success />
+                                <div className={styles.successCheck}>
+                                    <div>
+                                        <SuccessCheckSvg />
+                                    </div>
                                 </div>
 
                                 <RegistrationStatus>
@@ -88,7 +81,7 @@ const PaymentSuccess = ({
                                     </SuccessMainHeading>
                                     {title === 'Bill payment' ? (
                                         <h6 className={styles.elevateSuccess}>
-                                            Your recharge of{' '}
+                                            Your recharge of
                                             <span>{amount} </span> for Airtime
                                             on June 12, 2022 by 12:02pm
                                         </h6>
@@ -96,7 +89,7 @@ const PaymentSuccess = ({
                                       'Foreign Transfer Payments' ? (
                                         <h6 className={styles.elevateSuccess}>
                                             <span>{amount} </span> will be
-                                            transferred to{' '}
+                                            transferred to
                                             <span>{beneName}</span> on June 12,
                                             2022 by 12:02pm
                                         </h6>
@@ -126,9 +119,6 @@ const PaymentSuccess = ({
                                         </p>
                                     ) : null}
 
-                                    <div className={styles.reminder}>
-                                        <p>Set Reminder</p>
-                                    </div>
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={
@@ -138,6 +128,12 @@ const PaymentSuccess = ({
                                         type="button"
                                         onClick={action}
                                     />
+                                    <p className={styles.repeat}>
+                                        Set this transaction as{' '}
+                                        <span onClick={repeatAction}>
+                                            Repeat
+                                        </span>
+                                    </p>
                                 </RegistrationStatus>
                             </BodyWrapper>
                         )}
