@@ -143,11 +143,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                 'You already have an account with us. Please contact us for more information'
         ) {
             console.log(errorMessages);
-            router.push('/Verify/CorportateAccount');
+            router.push('/Verify/Account/loading');
         } else if (accountStatus.message === 'Try Again') {
-            router.push('/Verify/CorportateAccount');
+            router.push('/Verify/Account/loading');
         } else if (accountStatus.message === 'SUCCESS') {
-            router.push('/Succes');
+            router.push('/Succes/CorpSuccess');
         }
     };
 
