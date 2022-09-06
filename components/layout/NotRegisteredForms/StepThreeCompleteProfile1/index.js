@@ -151,6 +151,45 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
         }
     };
 
+    const handleSubmitReg = () => {
+        const commpleteProfileData = {
+            businessName: formData.bussinessName,
+            businessType: formData.businessType,
+            referralCode: formData.refferalCode,
+            countryCode: '+234',
+            phoneNumber: formData.bussinessName,
+            businessAddress: formData.streetName,
+            state: formData.state,
+            city: formData.city,
+            lga: formData.localGoverment
+        };
+        console.log(commpleteProfileData);
+        dispatch(CompleteBusinessProfile(commpleteProfileData));
+
+        const accountData = {
+            affiliateCode: 'ENG',
+            ccy: 'NGN'
+        };
+        axiosInstance
+            .post(`${apiRoutes.corpNewUser}`, accountData)
+            .then((response) => {
+                console.log('create New Account', response.data);
+            })
+            .catch((error) => {
+                console.log(
+                    'create new account Error:',
+                    error.response.data.message
+                );
+                setErrorMes(error.response.data.message);
+            });
+
+        if (
+            errorMes ===
+            'You already have an account with us. Please contact us for more information'
+        ) {
+            router.push('/Succes');
+        }
+    };
     // useEffect(() => {
     //     handleSubmitIII();
     // }, [newAccountErrorMessage]);
