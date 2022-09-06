@@ -7,7 +7,6 @@ import { loadLanguageAsync } from '../../../redux/actions/actions';
 
 const Langauges = () => {
     const [languages, setLanguages] = useState([]);
-    const [languageValue, setLanguagevalue] = useState('');
     const [languageState, setLanguageState] = useState(false);
 
     const [error, setError] = useState('');
@@ -44,7 +43,7 @@ const Langauges = () => {
             <div className={styles.selectCont}>
                 <div className={styles.selectCountry} onClick={displayLanguage}>
                     <p>{selectLanguage}</p>
-                    <img src="/../../Assets/Svgs/languageDropdown.svg" />
+                    <img src="/../../Assets/Svgs/dropdownSvg.svg" />
                 </div>
                 {languageState && (
                     <ul className={styles.selectOption}>

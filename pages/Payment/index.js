@@ -89,6 +89,7 @@ const Payment = () => {
     const [error, setError] = useState('');
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');
+    const [bill, setBill] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
     const [bank, setBank] = useState({});
     const interBankCheck = () => {
@@ -561,6 +562,7 @@ const Payment = () => {
                         return (
                             <MakePaymentSecond
                                 isLoading={isLoading}
+                                closeAction={handleClose}
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountNumber}
                                 sender={paymentDetails.accountName}
@@ -646,12 +648,37 @@ const Payment = () => {
                                     setPaymentDetails(data);
                                     setCount(count + 1);
                                 }}
+                                arrowAction={(e) => {
+                                    setBill(e.target.outerText);
+                                    setCount(count + 1);
+                                }}
                             />
                         );
                     case 1:
                         return (
+                            <MakePaymentFirst
+                                overlay={overlay}
+                                firstTitle={bill}
+                                buttonText="Send Now"
+                                closeAction={handleClose}
+                                dataAction={(data) => {
+                                    setCount(count + 1);
+                                    setPaymentDetails(data);
+                                }}
+                                airtimeAction={(data) => {
+                                    setCount(count + 1);
+                                    setPaymentDetails(data);
+                                }}
+                                scheduleLater={() => {
+                                    setCount(count + 3);
+                                }}
+                            />
+                        );
+                    case 2:
+                        return (
                             <MakePaymentSecond
                                 isLoading={isLoading}
+                                closeAction={handleClose}
                                 recieverName={paymentDetails.billerType}
                                 amount={paymentDetails.amount}
                                 number={paymentDetails.phoneNumber}
@@ -758,7 +785,7 @@ const Payment = () => {
                                 }}
                             />
                         );
-                    case 2:
+                    case 3:
                         return (
                             <PaymentSuccess
                                 overlay={overlay}
@@ -773,6 +800,17 @@ const Payment = () => {
                                 paymentType={paymentDetails.billerType}
                                 number={paymentDetails.phoneNumber}
                                 amount={paymentDetails.amount}
+                            />
+                        );
+                    case 4:
+                        return (
+                            <SchedulePayment
+                                overlay={overlay}
+                                action={() => {
+                                    setCount(0);
+                                    setFormType('');
+                                }}
+                                closeAction={handleClose}
                             />
                         );
                 }
