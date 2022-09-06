@@ -20,6 +20,7 @@ import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/Dropd
 import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
+import { getCookie } from 'cookies-next';
 const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     // const [progress, setProgress] = useState('75%');
     const [title, setTitle] = useState('Basic');
@@ -172,8 +173,18 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
             affiliateCode: 'ENG',
             ccy: 'NGN'
         };
+        const cookie = getCookie('cookieToken');
         axiosInstance
-            .post(`${apiRoutes.corpNewUser}`, accountData)
+            .post(
+                `https://ellevate-app.herokuapp.com${apiRoutes.corpNewUser}`,
+                accountData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
+                }
+            )
             .then((response) => {
                 console.log('create New Account', response.data);
             })
