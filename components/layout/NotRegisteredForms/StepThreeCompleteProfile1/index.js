@@ -110,7 +110,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
-
+    const [errorMes, setErrorMes] = useState();
     const handleSubmitIII = () => {
         const commpleteProfileData = {
             businessName: formData.bussinessName,
