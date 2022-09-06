@@ -6,8 +6,16 @@ import { loadCountry } from '../../../redux/actions/actions';
 import { loadbank } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Beneficiary from '../Beneficiary';
+import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 
-const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
+const ForeignTransfer = ({
+    secondAction,
+    firstTitle,
+    buttonText,
+    type,
+    action,
+    scheduleLater
+}) => {
     const [countrys, setCountry] = useState([]);
     const [bank, setBank] = useState([]);
     const dispatch = useDispatch();
@@ -38,27 +46,89 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
     } = useForm();
     return (
         <div>
-            <form onSubmit={handleSubmit(action)}>
-                <h2 className={styles.firstTitle}>{firstTitle}</h2>
-                <div className={styles.foreignBody}>
-                    <div className={styles.formGroup}>
-                        <label>Choose Transfer Currency</label>
-                        <select name="" id="">
-                            <option value="">Select Currency</option>
-                        </select>
+            {type === 'two' ? (
+                <form onSubmit={handleSubmit(secondAction)}>
+                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                    <div className={styles.source}>
+                        <h2>
+                            Source <span>- Marvelous N******</span>
+                        </h2>
+                        <SourceSvg />
                     </div>
-                    <div className={styles.formGroup}>
-                        <label>Choose Destination Country</label>
-                        <select name="" id="">
-                            <option value="">Select Country</option>
-                        </select>
+                    <div className={styles.foreignBodyTwo}>
+                        <div className={styles.amountCont}>
+                            <label>Amount</label>
+                            <input
+                                {...register('amount', {
+                                    required: 'Amount is required',
+                                    pattern: {
+                                        value: /^[0-9]/i,
+                                        message: 'Amount can only be number '
+                                    }
+                                })}
+                                name="amount"
+                                type="text"
+                                placeholder="0.00"
+                            />
+                            <p className={styles.error}>
+                                {errors?.amount?.message}
+                            </p>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Select Preferred Option</label>
+                            <select name="" id="">
+                                <option value="">Swift Code</option>
+                            </select>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Swift Code</label>
+                            <input type="text" placeholder="Enter Code" />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Bank Name</label>
+                            <input type="text" placeholder="Enter Bank Name" />
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Account Number</label>
+                            <input
+                                type="text"
+                                placeholder="Enter Account Number"
+                            />
+                        </div>
+                        <button>Next</button>
+                        <p className={styles.schedule}>
+                            Not paying now?
+                            <span onClick={scheduleLater}>
+                                Schedule for Later
+                            </span>
+                        </p>
                     </div>
-                    <button>Next</button>
-                    <p className={styles.schedule}>
-                        Not paying now?<span>Schedule for Later</span>
-                    </p>
-                </div>
-                {/* <div>
+                </form>
+            ) : (
+                <form onSubmit={handleSubmit(action)}>
+                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                    <div className={styles.foreignBody}>
+                        <div className={styles.formGroup}>
+                            <label>Choose Transfer Currency</label>
+                            <select name="" id="">
+                                <option value="">Select Currency</option>
+                            </select>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Choose Destination Country</label>
+                            <select name="" id="">
+                                <option value="">Select Country</option>
+                            </select>
+                        </div>
+                        <button>Next</button>
+                        <p className={styles.schedule}>
+                            Not paying now?
+                            <span onClick={scheduleLater}>
+                                Schedule for Later
+                            </span>
+                        </p>
+                    </div>
+                    {/* <div>
                     <label>Destination Country</label>
                     <select
                         {...register('destinationCountry', {
@@ -220,16 +290,17 @@ const ForeignTransfer = ({ action, firstTitle, buttonText }) => {
                         }}
                     />
                 </div> */}
-                {/* <ButtonComp
+                    {/* <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
                     text={buttonText}
                     type="submit"
                 /> */}
-                {/* <p className={styles.schedule}>
+                    {/* <p className={styles.schedule}>
                     Not paying now?<span>Schedule for Later</span>
                 </p> */}
-            </form>
+                </form>
+            )}
         </div>
     );
 };

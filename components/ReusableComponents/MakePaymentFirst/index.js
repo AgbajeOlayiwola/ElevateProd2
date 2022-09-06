@@ -18,7 +18,9 @@ const MakePaymentFirst = ({
     scheduleLater,
     arrowAction,
     dataAction,
-    airtimeAction
+    airtimeAction,
+    type,
+    secondAction
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -28,14 +30,7 @@ const MakePaymentFirst = ({
 
     return (
         <Overlay overlay={overlay}>
-            <div
-                className={
-                    firstTitle === 'Foreign Transfer Payments'
-                        ? styles.firstDivs
-                        : styles.firstDiv
-                }
-                ref={myref}
-            >
+            <div className={styles.firstDiv} ref={myref}>
                 <div
                     className={
                         firstTitle === 'Bulk Payments'
@@ -51,11 +46,14 @@ const MakePaymentFirst = ({
                             buttonText={buttonText}
                             scheduleLater={scheduleLater}
                         />
-                    ) : firstTitle === 'Foreign Transfer Payments' ? (
+                    ) : firstTitle === 'Foreign Transfer' ? (
                         <ForeignTransfer
                             action={action}
-                            firstTitle="Foreign Transfer Payments"
+                            firstTitle={firstTitle}
                             buttonText={buttonText}
+                            type={type}
+                            secondAction={secondAction}
+                            scheduleLater={scheduleLater}
                         />
                     ) : firstTitle === 'Bulk Payments' ? (
                         <BulkTransfer
