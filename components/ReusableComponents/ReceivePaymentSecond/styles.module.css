@@ -4,7 +4,6 @@
     background-color: white;
     border-radius: 20px;
     margin: 32px auto;
-    display: flex;
     position: absolute;
     top: 5%;
     left: 33%;
@@ -13,7 +12,19 @@
 
 .secondCont {
     width: 67%;
-    margin: 64px auto;
+    margin: 4px auto 64px;
+}
+
+.closeCont {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    padding: 32px 32px 0px 0px;
+}
+
+.closeBtn {
+    display: block;
+    cursor: pointer;
 }
 
 .secondCont h2 {
@@ -40,7 +51,7 @@
     align-items: center;
     width: 100%;
     background-color: #f8f8f8;
-    padding: 8px 24px;
+    padding: 16px 24px;
     margin-bottom: 60px;
     border-radius: 12px;
 }
@@ -81,6 +92,7 @@
     line-height: 17px;
     color: #3e3e3e;
     font-family: 'Inter', sans-serif;
+    margin: 0px;
 }
 
 .secondCopy button {
@@ -91,39 +103,43 @@
     font-size: 12px;
     font-weight: 500;
     line-height: 15px;
+    padding: 0px;
 }
 
 .deadline {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 24px;
+    padding: 16px 24px;
     border-bottom: 1px solid #dbdbdb;
 }
 
 .deadline p {
+    font-style: normal;
     font-weight: 400;
     font-size: 12px;
-    font-family: 'Inter', sans-serif;
-    color: #455a64;
     line-height: 15px;
+    margin: 0px;
+    color: #102572;
 }
 
 .deadlines {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 24px;
+    padding: 16px 24px;
     border-bottom: 1px solid #dbdbdb;
     border-top: 1px solid #dbdbdb;
 }
 
 .deadlines p {
+    font-style: normal;
     font-weight: 400;
     font-size: 12px;
-    font-family: 'Inter', sans-serif;
-    color: #455a64;
     line-height: 15px;
+    margin: 0px;
+    color: #102572;
+    font-family: 'Inter', sans-serif;
 }
 
 .deadlineValues {
@@ -131,22 +147,33 @@
     width: 70%;
 }
 
+.deadlineValues p {
+    font-weight: 500;
+}
+
+.copy {
+    font-weight: 500;
+    font-size: 10px;
+}
+
 .deadline span {
     margin-right: 4px;
 }
 
 .destination {
-    margin-top: 32px;
+    margin-top: 24px;
     border-bottom: 1px solid #dbdbdb;
 }
 
 .destination h2 {
-    font-weight: 400;
+    font-style: normal;
+    font-weight: 500;
     font-size: 14px;
+    line-height: 152.52%;
+    color: #6a6a6a;
     font-family: 'Inter', sans-serif;
-    color: #3e3e3e;
-    line-height: 15px;
-    margin-bottom: 12px;
+    margin: 0px;
+    margin-bottom: 8px;
 }
 
 .destinationType {
@@ -170,18 +197,33 @@
 }
 
 .destinationTypeTitle img {
-    margin: 8px auto;
+    margin: 4px auto;
     display: block;
+}
+
+.destinationTypeTitle p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #455a64;
+    margin: 0px;
 }
 
 .destinationTypeValue {
     padding: 5px 24px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
-    color: #3e3e3e;
-    line-height: 15px;
     cursor: pointer;
+}
+
+.destinationTypeValue {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
 }
 
 .addnew {
@@ -197,18 +239,20 @@
 }
 
 .allLinks {
+    font-style: normal;
+    font-weight: 500;
     font-size: 14px;
-    font-weight: 400;
-    font-family: 'Inter', sans-serif;
     line-height: 17px;
+    color: #a5a5a5;
+    font-family: 'Inter', sans-serif;
     text-align: center;
-    margin-top: 32px;
-    color: #3e3e3e;
+    margin-top: 12px;
 }
 
 .allLinks span {
     color: #5f8903;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .secondCont button {

@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import Overlay from '../Overlay';
 import CloseButton from '../CloseButtonSvg';
+import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 // import axios from 'axios';
 
 const ReceivePaymentFirst = ({
@@ -45,25 +46,28 @@ const ReceivePaymentFirst = ({
                 <div className={styles.firstBody}>
                     <div>
                         <h2>{firstTitle}</h2>
-                        {firstTitle === 'Create Payment Link' ? (
-                            <p className={styles.accept}>
-                                (Accepts Card Payment without POS)
-                            </p>
-                        ) : null}
+                        <p className={styles.accept}>
+                            (Accepts Card Payment without POS)
+                        </p>
                         <form onSubmit={handleSubmit(action)}>
+                            <div className={styles.source}>
+                                <h2>
+                                    Source <span>- Marvelous N******</span>
+                                </h2>
+                                <SourceSvg />
+                            </div>
                             <div className={styles.formGroup}>
-                                <label>Account to Credit</label>
+                                <label>Name of Payment</label>
                                 <input
                                     {...register('accountName', {
-                                        required:
-                                            'Please enter your Acount Name',
+                                        required: 'Please enter Paayment Name',
                                         pattern: {
                                             value: /^[A-Za-z ]+$/i,
                                             message: 'Only Alphabelts allowed'
                                         }
                                     })}
                                     type="text"
-                                    placeholder="Marvelous Solutions"
+                                    placeholder="Enter Payment Name"
                                 />
                                 <p className={styles.error}>
                                     {errors?.accountName?.message}
@@ -83,7 +87,7 @@ const ReceivePaymentFirst = ({
                                     // value={amount}
                                     type="number("
                                     name="amount"
-                                    placeholder="# 5,000,000,000.00"
+                                    placeholder="0.00"
                                     // onChange={(e) => {
                                     //     setAmount(
                                     //         Intl.NumberFormat('en', {
@@ -95,24 +99,6 @@ const ReceivePaymentFirst = ({
                                 />
                                 <p className={styles.error}>
                                     {errors?.amount?.message}
-                                </p>
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label>Name of Payment</label>
-                                <input
-                                    {...register('payer', {
-                                        required: "Please enter Payer's name",
-                                        pattern: {
-                                            value: /^[A-Za-z ]+$/i,
-                                            message: 'Only Alphabelts allowed'
-                                        }
-                                    })}
-                                    type="text"
-                                    name="payer"
-                                    placeholder="Name of Payment"
-                                />
-                                <p className={styles.error}>
-                                    {errors?.payer?.message}
                                 </p>
                             </div>
                             <div className={styles.formGroup}>

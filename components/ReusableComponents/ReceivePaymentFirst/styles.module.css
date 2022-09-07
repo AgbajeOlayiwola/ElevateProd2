@@ -49,7 +49,7 @@
     color: #102572;
     font-family: 'Inter', sans-serif;
     margin: 0px;
-    margin-bottom: 32px;
+    /* margin-bottom: 32px; */
 }
 
 .error {
@@ -60,12 +60,40 @@
 }
 
 .firstBody .accept {
+    font-style: normal;
     font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
-    color: #bdbdbd;
+    font-size: 12px;
+    line-height: 15px;
+    color: #a5a5a5;
     font-family: 'Inter', sans-serif;
-    margin-bottom: 8px;
+    margin: 4px 0px 48px;
+}
+
+.source {
+    width: 50%;
+    max-width: 200px;
+    border: 1px solid #eeeeee;
+    border-radius: 4px;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.source h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 12px;
+    margin: 0px;
+    color: #102572;
+}
+
+.source span {
+    font-weight: 500;
+    color: #7a7978;
 }
 
 .formGroup {
@@ -73,18 +101,19 @@
 }
 
 .formGroup label {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    color: #3e3e3e;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
     font-family: 'Inter', sans-serif;
-    /* margin-bottom: 12px; */
+    margin-bottom: 8px;
+    display: block;
 }
 
 .formGroup input,
 .formGroup textarea {
     width: 100%;
-    margin-top: 12px;
     background: #f8f8f8;
     border: 1px solid #dbdbdb;
     border-radius: 12px;
@@ -92,6 +121,7 @@
     font-size: 14px;
     font-family: 'Inter', sans-serif;
     padding: 16px;
+    margin: 0px;
 }
 
 .formGroup textarea {
@@ -104,14 +134,17 @@
 }
 
 .later {
-    font-size: 14px;
     font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    color: #cccccc;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
     line-height: 17px;
-    margin-top: 32px;
+    color: #a5a5a5;
+    margin-top: 24px;
 }
 
 .later span {
     font-weight: 700;
+    cursor: pointer;
+    color: #102572;
 }
