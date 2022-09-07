@@ -256,7 +256,7 @@ const Payment = () => {
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Create Payment Link"
-                                buttonText="Generate Paylink"
+                                buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     console.log(data);
@@ -270,8 +270,9 @@ const Payment = () => {
                                 overlay={overlay}
                                 title="Payment Link Generated"
                                 action={buttonHandleClose}
-                                buttonText="Share Paylink"
+                                buttonText="Send Paylink"
                                 type="Paylinks"
+                                closeAction={buttonHandleClose}
                             />
                         );
                 }
@@ -283,7 +284,7 @@ const Payment = () => {
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Create USSD Payment Code"
-                                buttonText="Share USSD code"
+                                buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     console.log(data);
@@ -299,6 +300,7 @@ const Payment = () => {
                                 action={buttonHandleClose}
                                 buttonText="Share USSD Code"
                                 type="USSD Code"
+                                closeAction={buttonHandleClose}
                             />
                         );
                 }
@@ -309,7 +311,7 @@ const Payment = () => {
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Create Ecobank QR Code"
-                                buttonText="Share Ecobank QR Codes"
+                                buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     console.log(data);
@@ -323,8 +325,9 @@ const Payment = () => {
                                 overlay={overlay}
                                 title=" Ecobank QR Code"
                                 action={buttonHandleClose}
-                                buttonText="Share Ecobank QR Code"
+                                buttonText="Next"
                                 type=" Ecobank QR Codes"
+                                closeAction={buttonHandleClose}
                             />
                         );
                 }
@@ -335,7 +338,7 @@ const Payment = () => {
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Use Mobile POS"
-                                buttonText="Activate NFC Scanner"
+                                buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     console.log(data);
@@ -348,10 +351,9 @@ const Payment = () => {
                             <ReceivePaymentSecond
                                 overlay={overlay}
                                 title="Confirm mPOS Payment Details"
-                                action={() => {
-                                    setCount(count + 1);
-                                }}
+                                action={buttonHandleClose}
                                 buttonText="Activate NFC Scanner"
+                                closeAction={buttonHandleClose}
                             />
                         );
                     case 2:

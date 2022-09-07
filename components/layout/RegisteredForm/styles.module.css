@@ -497,7 +497,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #c6c6c6;
+    color: #3e3e3e;
 }
 
 .phone {
@@ -514,6 +514,7 @@
     background-color: transparent;
     border: 0px;
     padding-left: 12px;
+    color: #3e3e3e;
 }
 
 .phone .phoneHeader {
@@ -563,10 +564,10 @@
 .phoneDetails input::placeholder {
     font-family: 'Inter', sans-serif;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #a5a5a5;
+    color: #3e3e3e;
 }
 
 .lastStep {
