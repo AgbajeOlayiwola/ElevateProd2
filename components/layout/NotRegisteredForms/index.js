@@ -104,6 +104,18 @@ const ProfileSetups = () => {
         switch (page) {
             case 0:
                 return (
+                    <RegisteredForm
+                        errorM={errorM}
+                        errorI={errorI}
+                        formData={formData}
+                        setFormData={setFormData}
+                        action={handleSubmit}
+                        // action is supposed to be handleSubmit
+                    />
+                    // <StepTwoBVNAuthenticator />
+                );
+            case 1:
+                return (
                     <StepTwoBVNAuthenticator
                         formData={formData}
                         setFormData={setFormData}
@@ -134,7 +146,7 @@ const ProfileSetups = () => {
             //             action={handleSubmitt}
             //         />
             //     );
-            case 1:
+            case 2:
                 return (
                     <StepThreeCompleteProfile1
                         formData={formData}
