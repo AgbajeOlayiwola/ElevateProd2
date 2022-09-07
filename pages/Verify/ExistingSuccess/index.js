@@ -6,7 +6,6 @@ import Success from '../../../components/ReusableComponents/Success';
 import { ButtonComp } from '../../../components';
 
 const ExistingSuccess = ({ handleShowSuccessStep }) => {
-    const [activeBtn, setActiveBtn] = useState(true);
     let accountDetails;
     let accountNumber;
     if (typeof window !== 'undefined') {
