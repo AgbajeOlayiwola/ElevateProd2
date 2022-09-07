@@ -295,6 +295,14 @@ const HomeMain = () => {
         }
     };
     const onSubmit = (data) => {
+        if (selectCountry === '') {
+            setError('Choose a country');
+        } else {
+            window.localStorage.setItem(
+                'country',
+                JSON.stringify(selectCountry)
+            );
+        }
         if (page === 0) {
             if (error) {
                 setError('');
@@ -451,6 +459,7 @@ const HomeMain = () => {
                 </div>
                 <div className={styles.secondSectionMid}>
                     <div className={styles.secondSectionMidCountry}>
+                        {error && <p className={styles.error}>{error}</p>}
                         <label>Choose your Business Location</label>
                         <Countries
                             displayCountry={() => {

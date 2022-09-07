@@ -123,7 +123,8 @@
 .errors {
     color: red;
     font-size: 12px;
-    margin-top: -1rem;
+    margin: 0px;
+    margin-top: 5px;
 }
 .spacing {
     margin-top: 1rem;
@@ -131,7 +132,16 @@
 .divs {
     display: flex;
     align-items: center;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding-right: 16px;
+}
+
+.divs input {
+    height: 100%;
     padding: 0px;
+    border: 0px;
+    padding: 16px 16px 16px 65px;
 }
 .remForg {
     display: flex;
@@ -160,5 +170,6 @@
 .error {
     color: red;
     font-size: 12px;
-    margin-top: -1rem;
+    margin: 0px;
+    /* margin-top: -1rem; */
 }

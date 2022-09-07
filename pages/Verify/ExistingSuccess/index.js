@@ -17,7 +17,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
             accountNumber = JSON.parse(accountDetails);
         }
     }
-
+    const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.cover}>
             <>

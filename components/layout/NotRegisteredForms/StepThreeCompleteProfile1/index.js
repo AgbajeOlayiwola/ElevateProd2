@@ -481,7 +481,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                     <label>Street Name</label>
                                     <div className={styles.addressNumber}>
                                         <input
-                                            type="text"
+                                            type="number"
                                             placeholder="101"
                                             className={styles.number}
                                         />
