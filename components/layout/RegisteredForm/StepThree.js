@@ -55,69 +55,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                 Complete your Profile
                             </h3>
                         </div>
-                        {/* <Imag
-                    src="/width"
-                    alt="lineImage" /> */}
                     </div>
-                    {/* <Imag
-                    src="/width"
-                    alt="lineImage" /> */}
-                    {/* <p
-                style={{
-                    fontWeight: '400',
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: '#3E3E3E'
-                }}
-            >
-                Is your business registered?
-            </p>
-            <div className={styles.ButtonWrapper}>
-                <span
-                    className={styles.ToggleNo}
-                    onClick={switchRegistrationStatus}
-                    style={
-                        bgcolor
-                            ? { background: '#f8f8f8' }
-                            : { background: '#6ccf00' }
-                    }
-                >
-                    <p
-                        className={styles.ToggleNoText}
-                        style={
-                            bgcolor
-                                ? { color: '#a5a5a5' }
-                                : { color: '#ffffff' }
-                        }
-                    >
-                        No
-                    </p>
-                </span>
-                <span
-                    className={styles.ToggleYes}
-                    onClick={handleRegistrationStatus}
-                    style={
-                        bgcolor
-                            ? { background: '#6ccf00' }
-                            : { background: '#f8f8f8' }
-                    }
-                >
-                    <p
-                        className={styles.ToggleYesText}
-                        style={
-                            bgcolor
-                                ? { color: '#ffffff' }
-                                : { color: '#a5a5a5' }
-                        }
-                    >
-                        Yes
-                    </p>
-                </span>
-            </div> */}
-                    {/* <p>
-                Contine with your personal account or open a new business
-                account
-            </p> */}
                     <div className={styles.formWrapper}>
                         <div className={styles.formInner}>
                             {accountDetails.email === null ? null : (
@@ -182,7 +120,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                 className={styles.genBtm}
                                 style={{ marginBottom: '0px' }}
                             >
-                                <label>Your Gender </label>
+                                <label> Gender </label>
 
                                 <select name="" id="">
                                     <option value="Male">Male</option>

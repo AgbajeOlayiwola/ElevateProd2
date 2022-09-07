@@ -104,14 +104,15 @@ const ProfileSetups = () => {
         switch (page) {
             case 0:
                 return (
-                    <RegisteredForm
-                        errorM={errorM}
-                        errorI={errorI}
-                        formData={formData}
-                        setFormData={setFormData}
-                        action={handleSubmit}
-                        // action is supposed to be handleSubmit
-                    />
+                    // <RegisteredForm
+                    //     errorM={errorM}
+                    //     errorI={errorI}
+                    //     formData={formData}
+                    //     setFormData={setFormData}
+                    //     action={handleSubmit}
+                    //     // action is supposed to be handleSubmit
+                    // />
+                    <StepTwoBVNAuthenticator />
                 );
             case 1:
                 return (

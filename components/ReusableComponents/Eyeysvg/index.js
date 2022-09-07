@@ -17,7 +17,6 @@ const Visbility = ({ typeSet, color }) => {
                 id={color !== 'green' ? styles.notGreen : styles.green}
                 style={{
                     zIndex: '10',
-
                     fontWeight: '300',
                     fontSize: '21px',
 
@@ -25,7 +24,7 @@ const Visbility = ({ typeSet, color }) => {
                 }}
                 onClick={visibilityToggle}
             >
-                {visible ? 'visibility_off' : 'visibility'}
+                {visible ? 'visibility' : 'visibility_off'}
             </span>
         </>
     );

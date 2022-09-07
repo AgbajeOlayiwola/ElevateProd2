@@ -21,8 +21,9 @@ const Loading = () => {
                     </div>
 
                     <p className={styles.hi}>
-                        An Email has been sent to d*******@gmail.com,Please
-                        check your inbox and verify your email.
+                        Hi Lanre! An Email has been sent to
+                        d*******@gmail.com,Please check your inbox and verify
+                        your email.
                     </p>
                     <div onClick={handleClick}>
                         <ButtonComp

@@ -23,14 +23,8 @@ const FirstStep = ({ handleSubmit }) => {
                         <form>
                             <OtpInput />
                             <div className={styles.resendFlex}>
-                                <p
-                                    style={{
-                                        color: '#005B82',
-                                        cursor: 'pointer'
-                                    }}
-                                >
-                                    Resend OTP
-                                </p>
+                                <p>Resend OTP</p>
+
                                 <button
                                     style={{ cursor: 'pointer' }}
                                     className={styles.clr}

@@ -40,7 +40,7 @@ export const LeftHeading = styled.h3`
     font-size: 24px;
     line-height: 29px;
     /* identical to box height */
-    color: #005b82;
+    color: #102572;
 `;
 
 export const RegisteredCardWrapper = styled.div`

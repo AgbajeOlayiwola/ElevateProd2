@@ -133,6 +133,15 @@
     max-width: 296px;
 }
 
+.secondSectionMidYes select {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+}
+
 .homeForm {
     display: flex;
     width: 100%;
@@ -421,10 +430,7 @@
 .countryWrapper {
     margin-top: 1.5rem;
 }
-.form div label {
-    margin-bottom: 3%;
-    color: #3e3e3e;
-}
+
 .sectionBottom {
     background: rgba(108, 207, 0, 0.12);
     border-radius: 36px;
