@@ -138,7 +138,9 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                             {errors.rc_number?.message}
                         </div> */}
                         <InputWrapper>
-                            <Label>Enter your TIN</Label>
+                            <Label>
+                                Enter your TIN <i>(optional)</i>{' '}
+                            </Label>
                             <FormInput
                                 name="tin"
                                 type="number"
