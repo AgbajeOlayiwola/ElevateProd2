@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import CloseButton from '../CloseButtonSvg';
 import Overlay from '../Overlay';
+import LinkSvg from '../ReusableSvgComponents/LinkSvg';
 import styles from './styles.module.css';
 
-const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
+const ReceivePaymentSecond = ({
+    title,
+    action,
+    buttonText,
+    type,
+    overlay,
+    closeAction
+}) => {
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
     useEffect(() => {
@@ -11,6 +20,13 @@ const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
     return (
         <Overlay overlay={overlay}>
             <div className={styles.secondBody}>
+                <div className={styles.closeCont}>
+                    <CloseButton
+                        color="#A5A5A5"
+                        classes={styles.closeBtn}
+                        action={closeAction}
+                    />
+                </div>
                 <div className={styles.secondCont}>
                     <h2>{title}</h2>
                     <p className={styles.intro}>
@@ -28,7 +44,7 @@ const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
                         </div>
                     ) : (
                         <div className={styles.secondCopy}>
-                            <img src="../../Assets/Svgs/Vector.svg" alt="" />
+                            <LinkSvg />
                             <p>ellevate.com/qyweywbdbsdfsds/ei...</p>
                             <button>Copy</button>
                         </div>
@@ -56,7 +72,7 @@ const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
                         <p>Tracking ID</p>
 
                         <p>refdbg47t34jn2j35m6777rt</p>
-                        <p>
+                        <p className={styles.copy}>
                             <span>
                                 <img src="../../Assets/Svgs/copy.svg" alt="" />
                             </span>

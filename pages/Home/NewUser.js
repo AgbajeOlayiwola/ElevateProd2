@@ -133,7 +133,7 @@ const NewUser = ({ selectCountry }) => {
                             required: 'Preferred name  is required'
                         })}
                         onChange={userName}
-                        // value={email}
+                        value={pName}
                         placeholder="Preferred Name"
                     />
                     <p className={styles.error}>{errors.userName?.message}</p>

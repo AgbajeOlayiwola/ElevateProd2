@@ -12,8 +12,8 @@ import {
 } from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
-import CircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/CircleSvg';
 import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
+import LoginCircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LoginCircleSvg';
 
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -109,6 +109,7 @@ const Login = () => {
                                     placeholder="Enter Your Email"
                                     className={styles.emailInput}
                                     {...register('email', {
+                                        required: 'Email is required',
                                         pattern: {
                                             value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                                             message: 'Invalid email address'
@@ -117,9 +118,9 @@ const Login = () => {
                                     onChange={checkDataContent}
                                 />
                             </div>
-                            <div className={styles.errors}>
+                            <p className={styles.errors}>
                                 {errors.email?.message}
-                            </div>
+                            </p>
                         </div>
                         <div className={styles.loginForm}>
                             <label>Password </label>
@@ -129,7 +130,6 @@ const Login = () => {
                                     placeholder="Enter Your Password"
                                     type={outType ? 'text' : 'password'}
                                     className={styles.passwordInput}
-                                    required
                                     {...register('password', {
                                         required: 'Password is required'
                                     })}
@@ -137,11 +137,13 @@ const Login = () => {
                                 />
                                 <Visbility typeSet={types} />
                             </div>
-                            <div className={styles.errors}></div>
+                            <p className={styles.errors}>
+                                {errors?.password?.message}
+                            </p>
                         </div>
                         <div className={styles.remForg}>
                             <div>
-                                <CircleSvg />
+                                <LoginCircleSvg />
                                 <p>Remember me</p>
                             </div>
                             <div>

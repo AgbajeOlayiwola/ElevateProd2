@@ -135,7 +135,11 @@ const Dashboard = () => {
     const [acctNumber, setAcctNumber] = useState('');
     useEffect(() => {
         dispatch(newAccountStatusData());
-        setAcctNumber(accountStatus.data.accountNumber);
+        if (accountStatus.data) {
+            setAcctNumber(accountStatus.data.accountNumber);
+        } else {
+            setAcctNumber('Pending');
+        }
     }, []);
     // console.log(accountStatus.data.accountNumber);
     return (

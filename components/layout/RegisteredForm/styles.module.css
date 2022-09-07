@@ -25,7 +25,23 @@
 .resendFlex {
     display: flex;
     justify-content: space-between;
+    margin-top: 24px;
+    width: 100%;
+    align-items: center;
 }
+
+.resendFlex p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #102572;
+    margin: 0px;
+    cursor: pointer;
+}
+
 .busInp {
     background: #ffffff;
     border: 1px solid #dbdbdb;
@@ -335,6 +351,16 @@
 .divs {
     display: flex;
     align-items: center;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding-right: 16px;
+}
+
+.divs input {
+    height: 100%;
+    padding: 0px;
+    border: 0px;
+    padding: 16px 16px 16px 24px;
 }
 .error {
     color: red;
@@ -471,7 +497,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #c6c6c6;
+    color: #3e3e3e;
 }
 
 .phone {
@@ -488,6 +514,7 @@
     background-color: transparent;
     border: 0px;
     padding-left: 12px;
+    color: #3e3e3e;
 }
 
 .phone .phoneHeader {
@@ -537,10 +564,10 @@
 .phoneDetails input::placeholder {
     font-family: 'Inter', sans-serif;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #a5a5a5;
+    color: #3e3e3e;
 }
 
 .lastStep {
