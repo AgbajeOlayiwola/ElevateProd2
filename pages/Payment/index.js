@@ -61,8 +61,10 @@ const Payment = () => {
     const { bulkTransfer, errorMessagebulkTransfer } = useSelector(
         (state) => state.bulkTransferReducer
     );
-    const { internationalTransfer, errorMessageinternationalTransfer } =
-        useSelector((state) => state.internationalTransferReducer);
+    const {
+        internationalTransfer,
+        errorMessageinternationalTransfer
+    } = useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
@@ -446,7 +448,7 @@ const Payment = () => {
                                                 senderDetails.accountNo,
                                             debitAccountType: 'A',
                                             creditAccountNo:
-                                                paymentDetails.accountNumber,
+                                                '1382002892',
                                             creditAccountType: 'A',
                                             amount: paymentDetails.amount,
                                             ccy: senderDetails.ccy
@@ -458,8 +460,7 @@ const Payment = () => {
                                         const paymentData = {
                                             destinationBankCode:
                                                 paymentDetails.bankName,
-                                            senderAccountNo:
-                                                senderDetails.accountNo,
+                                            senderAccountNo: '',
                                             senderAccountType: 'A',
                                             senderName: 'Aderohunmu Matthew',
                                             senderPhone: '2348039219191',
@@ -706,8 +707,10 @@ const Payment = () => {
                                             );
                                             const billerData = {
                                                 amount: paymentDetails.amount,
-                                                ccy: billerPlan
-                                                    .billerProductInfo[0].ccy,
+                                                ccy:
+                                                    billerPlan
+                                                        .billerProductInfo[0]
+                                                        .ccy,
                                                 billerCode:
                                                     billerPlan.billerDetail
                                                         .billerCode,
@@ -747,8 +750,10 @@ const Payment = () => {
                                         if (billerPlan !== null) {
                                             const billerData = {
                                                 amount: paymentDetails.amount,
-                                                ccy: billerPlan
-                                                    .billerProductInfo[0].ccy,
+                                                ccy:
+                                                    billerPlan
+                                                        .billerProductInfo[0]
+                                                        .ccy,
                                                 billerCode:
                                                     billerPlan.billerDetail
                                                         .billerCode,
