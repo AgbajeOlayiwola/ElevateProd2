@@ -14,8 +14,8 @@
 }
 
 .profileHeader {
-    width: 30%;
-    max-width: 342px;
+    width: 41%;
+    max-width: 478px;
     background-color: #ffffff;
     border-radius: 16px;
     padding: 64px 32px 32px 32px;
@@ -165,8 +165,8 @@
 }
 
 .profileBody {
-    width: 75%;
-    max-width: 741px;
+    width: 58%;
+    max-width: 677px;
     height: 745px;
     background: #ffffff;
     border-radius: 16px;

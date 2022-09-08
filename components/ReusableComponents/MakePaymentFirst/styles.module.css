@@ -708,6 +708,10 @@
     margin-top: 24px;
 }
 
+.networkForm .formGroup {
+    width: 100%;
+}
+
 .networkForm button {
     margin-top: 48px;
 }

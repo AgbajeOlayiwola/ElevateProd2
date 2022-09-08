@@ -129,7 +129,7 @@ const Dashboard = () => {
     };
 
     return (
-        <DashLayout>
+        <DashLayout page="Dashboard">
             <Levelup />
             <div className={styles.cove}>
                 <section className={styles.sectionI}>

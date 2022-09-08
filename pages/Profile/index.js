@@ -286,19 +286,20 @@ const Profile = () => {
         }
     };
     return (
-        <DashLayout>
+        <DashLayout page="Profile Management">
             <div className={styles.profileWrapper}>
-                <h2>Profile Management</h2>
                 <div className={styles.profileCont}>
                     <div className={styles.profileHeader}>
-                        <div className={styles.profileHeaderImg}>
-                            <Image
-                                src="/Assets/Images/profileImg.png"
-                                width="100%"
-                                height="100%"
-                                layout="responsive"
-                            />
-                            <p>Change Photo</p>
+                        <div className={styles.profileHeaderHead}>
+                            <div className={styles.profileHeaderImg}>
+                                <Image
+                                    src="/Assets/Images/profileImg.png"
+                                    width="100%"
+                                    height="100%"
+                                    layout="responsive"
+                                />
+                            </div>
+                            <div className={styles.profileBodyHeaderCont}></div>
                         </div>
                         <div className={styles.profileHeaderText}>
                             <label

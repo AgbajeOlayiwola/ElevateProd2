@@ -3,10 +3,7 @@
     width: 273px;
     padding-top: 3.25rem;
     background: #ffffff;
-    position: fixed;
-    overflow: scroll;
-    left: 0;
-    top: 0;
+    /* position: fixed; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;

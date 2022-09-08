@@ -22,14 +22,14 @@ const SingleTransfer = ({
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
 
-    useEffect(() => {
-        dispatch(loadbank('ENG'));
-    }, []);
-    useEffect(() => {
-        if (banks !== null) {
-            setBank(banks);
-        }
-    }, [banks]);
+    // useEffect(() => {
+    //     dispatch(loadbank('ENG'));
+    // }, []);
+    // useEffect(() => {
+    //     if (banks !== null) {
+    //         setBank(banks);
+    //     }
+    // }, [banks]);
     const {
         register,
         handleSubmit,

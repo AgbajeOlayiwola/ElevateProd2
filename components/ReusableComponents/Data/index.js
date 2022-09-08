@@ -131,6 +131,36 @@ export const SidebarData = [
                 icon: <FaIcons.FaHandHoldingUsd />
             }
         ]
+    },
+    {
+        title: 'Settings',
+        path: '',
+        icon: <FiIcons.FiSettings />,
+        iconActive: <FiIcons.FiSettings />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />,
+        subNav: [
+            {
+                title: 'Analysis',
+                path: '',
+                icon: <BiIcons.BiTransfer />
+            },
+            {
+                title: 'Inventory',
+                path: '',
+                icon: <BulkTransfer />
+            },
+            {
+                title: 'e invoice',
+                path: '',
+                icon: <NairaSvg />
+            },
+            {
+                title: 'Others',
+                path: '',
+                icon: <FaIcons.FaHandHoldingUsd />
+            }
+        ]
     }
 ];
 
