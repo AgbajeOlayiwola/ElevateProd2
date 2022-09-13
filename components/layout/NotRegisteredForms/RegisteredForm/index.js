@@ -36,15 +36,14 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
         setShowFirstStep(false);
     };
     const handleRegistrationStatus = () => {
-        setIsRegistered(true);
+        setIsRegistered('true');
         setBgcolor((prevState) => !prevState);
-        setFormData({ ...formData, type: 'REGISTERED BUSINESS' });
+        setFormData({ ...formData, type: false });
     };
     const switchRegistrationStatus = () => {
-        setIsRegistered(false);
+        setIsRegistered('false');
         setBgcolor((prevState) => !prevState);
-
-        setFormData({ ...formData, type: 'UNREGISTERED BUSINESS' });
+        setFormData({ ...formData, type: true });
     };
     // console.log(
     //     formData.type,
@@ -68,6 +67,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
         (state) => state.profileSetup
     );
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
+
     // console.log('error essage', otpErrorMessage);
     useEffect(() => {
         console.log('bvnError', bvnErrorI);

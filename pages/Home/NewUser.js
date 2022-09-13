@@ -16,7 +16,7 @@ const NewUser = ({ selectCountry }) => {
     const dispatch = useDispatch();
     const [error, setError] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
-    const [pName, setPname] = useState('');
+    const [preferredName, setPname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfPassword] = useState('');
@@ -96,10 +96,10 @@ const NewUser = ({ selectCountry }) => {
         setError('');
         if (password === confirmPassword) {
             const postData = {
-                pName,
+                preferredName,
                 email,
-                password: encrypt(password),
-                confirmPassword: encrypt(confirmPassword),
+                password,
+                confirmPassword,
                 affiliateCode: 'ENG'
             };
             setLoading(true);
@@ -114,7 +114,7 @@ const NewUser = ({ selectCountry }) => {
         if (errorMessage !== null) {
             setError(errorMessage);
             setLoading(false);
-        } else if (user == 'Account created successfully!') {
+        } else if (user == 'User registered successfully') {
             router.push('../Verify/Loading');
         }
     };
@@ -133,7 +133,7 @@ const NewUser = ({ selectCountry }) => {
                             required: 'Preferred name  is required'
                         })}
                         onChange={userName}
-                        value={pName}
+                        value={preferredName}
                         placeholder="Preferred Name"
                     />
                     <p className={styles.error}>{errors.userName?.message}</p>

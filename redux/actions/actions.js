@@ -67,7 +67,7 @@ if (loginToken === null) {
 //     };
 // };
 const axiosInstance = axios.create({
-    baseURL: 'https://ellevate-app.herokuapp.com/',
+    baseURL: 'https://ellevate-test.herokuapp.com',
     headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Token}`
@@ -288,10 +288,10 @@ export const airtimeLoadError = (errorMessageAirtime) => ({
     type: airtime.AIRTIME_LOAD_ERROR,
     payload: errorMessageAirtime
 });
-export const postAirtime = (billerData) => (dispatch) => {
+export const postAirtime = (billerdata) => (dispatch) => {
     dispatch(airtimeLoadStart());
     axiosInstance
-        .post(`${apiRoutes.airtime}`, billerData)
+        .post(`${apiRoutes.airtime}`, billerdata)
         .then((response) => dispatch(airtimeLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(airtimeLoadError(error.response.data.message))
@@ -814,7 +814,10 @@ export const accountStatusData = (data) => (dispatch) => {
     dispatch(accountStatusLoadStart());
     axiosInstance
         .get(`${apiRoutes.accountStatus}/${data}`)
-        .then((response) => dispatch(accountStatusLoadSuccess(response.data)))
+        .then((response) => {
+            console.log(response);
+            dispatch(accountStatusLoadSuccess(response));
+        })
         .catch((error) =>
             dispatch(accountStatusLoadError(error.response.data.message))
         );
@@ -826,7 +829,7 @@ export const newAccountStatusLoadStart = () => ({
 
 export const newAccountStatusLoadSuccess = (bill) => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_SUCCESS,
-    payload: bill
+    payload: accountStatus
 });
 
 export const newAccountStatusLoadError = (errorMessages) => ({
@@ -837,13 +840,16 @@ export const newAccountStatusData = () => (dispatch) => {
     const cookie = getCookie('cookieToken');
     dispatch(accountStatusLoadStart());
     axiosInstance
-        .get(`https://ellevate-app.herokuapp.com${apiRoutes.accountStatus}`, {
+        .get(`https://ellevate-test.herokuapp.com${apiRoutes.accountStatus}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
             }
         })
-        .then((response) => dispatch(accountStatusLoadSuccess(response.data)))
+        .then((response) => {
+            dispatch(accountStatusLoadSuccess(response));
+            console.log(response.data.message);
+        })
         .catch((error) =>
             dispatch(accountStatusLoadError(error.response.data.message))
         );
@@ -980,7 +986,7 @@ export const createProfileSetup = (profileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://ellevate-app.herokuapp.com${apiRoutes.profileSetupBus}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.profileSetupBus}`,
                 profileData,
                 {
                     headers: {
@@ -993,10 +999,15 @@ export const createProfileSetup = (profileData) => {
                 dispatch(setupProfileSucces(response.data));
 
                 console.log('data from profile', response.data);
-                if (response.data.message === 'Profile setup successful') {
+                if (
+                    response.data.message ===
+                    'profile setup intialized, sending otp'
+                ) {
+                    const cookie = getCookie('cookieToken');
                     axiosInstance
-                        .get(
-                            `https://ellevate-app.herokuapp.com${apiRoutes.verifyStatus}`,
+                        .post(
+                            `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatus}`,
+
                             {
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -1005,41 +1016,12 @@ export const createProfileSetup = (profileData) => {
                             }
                         )
                         .then((response) => {
-                            dispatch(bvnNinData(response.data));
-                            if (
-                                response.data.data[0].reason ||
-                                response.data.data[1].reason ||
-                                response.data.data[1].status === 'PENDING' ||
-                                response.data.data[0].status === 'PENDING'
-                            ) {
-                                dispatch(
-                                    bvnNinError(
-                                        'We are unable to verify your details at the momemnt. Try again later'
-                                    )
-                                ),
-                                    dispatch(
-                                        bvnNinErrorI(
-                                            'We are unable to verify your details at the momemnt. Try again later'
-                                        )
-                                    );
-                            } else if (
-                                response.data.data[1].status === 'PENDING' ||
-                                response.data.data[0].status === 'PENDING'
-                            ) {
-                                bvnNinErrorI(
-                                    'We are unable to verify your details at the momemnt. Try again later'
-                                );
-                            } else if (
-                                response.data.data[1].status === 'SUCCESS' &&
-                                response.data.data[0].status === 'SUCCESS'
-                            ) {
-                                dispatch(bvnNinError(null)),
-                                    dispatch(bvnNinErrorI(null));
-                            }
+                            dispatch(bvnNinData(response.data.message));
+                            console.log('profile otp dispatch', response);
                         })
                         .catch((error) => {
                             console.log('profile otp dispatch', error);
-                            dispatch(bvnNinError(error.response.message));
+                            dispatch(bvnNinError(error.response.data.message));
                         });
                 }
             })
@@ -1073,7 +1055,7 @@ export const verifyOtp = (otpData) => {
     return async (dispatch) => {
         await axiosInstance
             .post(
-                `https://ellevate-app.herokuapp.com${apiRoutes.verifyOtp}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.verifyOtp}`,
                 otpData,
                 {
                     headers: {
@@ -1118,12 +1100,15 @@ export const CompProfile = () => {
     return (dispatch) => {
         dispatch(profileLoadStart());
         axiosInstance
-            .get(`https://ellevate-app.herokuapp.com${apiRoutes.authProfile}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${cookie}`
+            .get(
+                `https://ellevate-test.herokuapp.com${apiRoutes.authProfile}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
                 }
-            })
+            )
             .then((response) => {
                 dispatch(profileLoadSuccess(response.data));
             })
@@ -1154,8 +1139,8 @@ export const CompleteBusinessProfile = (completeProfileData) => {
     return (dispatch) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
-            .patch(
-                `https://ellevate-app.herokuapp.com${apiRoutes.completesBusinessProfile}`,
+            .post(
+                `https://ellevate-test.herokuapp.com${apiRoutes.completesBusinessProfile}`,
                 completeProfileData,
                 {
                     headers: {
@@ -1200,7 +1185,7 @@ export const createNewUserAccount = (accountData) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
             .post(
-                `https://ellevate-app.herokuapp.com${apiRoutes.newCreateAccount}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.newCreateAccount}`,
                 accountData,
                 {
                     headers: {
@@ -1214,8 +1199,9 @@ export const createNewUserAccount = (accountData) => {
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
-                // console.log('create new account:', error.response.data.message);
+                console.log('create new account:', error.response.data.message);
                 dispatch(createNewAccountError(error.response.data.message));
+                // console.log(error);
             });
     };
 };
@@ -1253,7 +1239,7 @@ export const createNewCorpUserAccount = (accountData) => {
             )
             .then((response) => {
                 console.log('create New Account', response.data);
-                console.log('create new account:', error.response.data.message);
+                // console.log('create new account:', error.response.data.message);
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {

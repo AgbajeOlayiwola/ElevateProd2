@@ -19,7 +19,7 @@ const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [id, setEmail] = useState('');
+    const [identifier, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const router = useRouter();
@@ -50,8 +50,8 @@ const Login = () => {
         setError('');
         setLoading((prev) => !prev);
         const loginData = {
-            id,
-            password: encrypt(password)
+            identifier,
+            password
         };
         dispatch(loginUserAction(loginData));
         // dispatch(createNewUserAccount());

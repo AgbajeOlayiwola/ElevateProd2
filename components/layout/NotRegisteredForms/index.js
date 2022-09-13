@@ -33,7 +33,7 @@ const ProfileSetups = () => {
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
-        type: 'UNREGISTERED BUSINESS',
+        type: 'false',
         rcnumber: '',
         tinNumber: '',
         bvNumber: '',
@@ -92,7 +92,7 @@ const ProfileSetups = () => {
         bvnErrorI,
         bvnErrorII,
         bvnErrorIII,
-        bvnNinPend
+        bvnNin
     } = useSelector((state) => state.profileSetup);
     const types = (type) => {
         setOutType(type);
@@ -149,6 +149,7 @@ const ProfileSetups = () => {
             case 2:
                 return (
                     <StepThreeCompleteProfile1
+                        type={formData.type}
                         formData={formData}
                         setFormData={setFormData}
                         action={() => {
@@ -178,14 +179,10 @@ const ProfileSetups = () => {
         // console.log('firstAPi');
 
         const profileData = {
-            type: formData.type,
-            registrationNumber: formData.rcnumber,
-            tin: formData.tinNumber,
-            bvn: formData.bvNumber,
-            phoneNumber: formData.countryCode + formData.phoneNumber,
+            bvnNumber: formData.bvNumber,
+            phoneNumber: formData.phoneNumber,
             countryCode: formData.countryCode,
-            dob: formData.dateOfBirth,
-            signatoryCount: 1
+            dateOfBirth: formData.dateOfBirth
         };
         setLoading((prev) => !prev);
 
@@ -194,15 +191,15 @@ const ProfileSetups = () => {
     }
 
     useEffect(() => {
-        console.log('new bvn:', bvnError);
-        if (errorMessages === null && bvnError === null && bvnErrorI === null) {
+        // console.log('new bvn:', bvnNin.message);
+        if (bvnNin === 'verification successful') {
             setPage(page + 1);
         } else {
             console.log('moved');
             setErrorM(errorMessages);
             setErrorI(bvnError);
         }
-    }, [errorMessages, bvnError, bvnErrorI, bvnNinPend]);
+    }, [bvnNin]);
 
     const handleSubmitt = () => {
         setPage(page + 1);

@@ -51,7 +51,7 @@ const AccountLoading = () => {
                 setTimeout(() => {
                     dispatch(newAccountStatusData());
                 }, 1000);
-            } else if (accountStatus.message === 'SUCCESS') {
+            } else if (accountStatus.message === 'success') {
                 router.push('/Succes');
             }
         }

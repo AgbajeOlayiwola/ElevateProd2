@@ -21,7 +21,7 @@ import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchS
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import { getCookie } from 'cookies-next';
-const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
+const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // const [progress, setProgress] = useState('75%');
     const [title, setTitle] = useState('Basic');
     const [bgcolor, setBgcolor] = useState(false);
@@ -113,35 +113,38 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
+    console.log(type);
     const [errorMes, setErrorMes] = useState();
     const handleSubmitIII = () => {
         const commpleteProfileData = {
+            isRegistered: type,
             businessName: formData.bussinessName,
+            businessCategory: business,
             businessType: businesses,
             referralCode: formData.referralCode,
             countryCode: '+234',
-            phoneNumber: formData.phoneNumber,
-            businessAddress: formData.streetName,
+            businessPhoneNumber: formData.phoneNumber,
+            street: formData.streetName,
             state: formData.state,
             city: formData.city,
-            lga: formData.localGoverment
+            lga: formData.localGoverment,
+            refereeCode: 'string'
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         const accountData = {
             affiliateCode: 'ENG',
-            ccy: 'NGN'
+            currency: 'NGN'
         };
         dispatch(createNewUserAccount(accountData));
         console.log(
             'errorMessages from account',
-            newAccount.message,
+            newAccount,
             newAccountErrorMessage
         );
         if (
-            newAccount.message ===
-                'Your Transaction Request is Successful and Approved' ||
+            newAccount === 'Success' ||
             newAccountErrorMessage ===
                 'You already have an account with us. Please contact us for more information'
         ) {
@@ -156,6 +159,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
 
     const handleSubmitReg = () => {
         const commpleteProfileData = {
+            isRegistered: type,
             businessName: formData.bussinessName,
             businessType: businesses,
             referralCode: formData.refferalCode,
@@ -463,13 +467,29 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                         )}
                                     </div>
                                 </div>
-                                <button
-                                    onClick={() => {
-                                        setTitle('Other');
-                                    }}
-                                >
-                                    Next
-                                </button>
+                                {type === true ? (
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Next"
+                                        type="button"
+                                        // onClick={handleSubmitReg}
+                                        // onClick={handleShowFourthStep}
+                                    />
+                                ) : (
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Next"
+                                        type="button"
+                                        // onClick={handleSubmitIII}
+                                        // onClick={handleShowFourthStep}
+                                    />
+                                )}
                             </div>
                         </div>
                     </>
@@ -599,7 +619,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                         }}
                                     />
                                 </div>
-                                {profileCont.isBusinessRegistered === true ? (
+                                {type === true ? (
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={

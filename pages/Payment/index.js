@@ -447,8 +447,7 @@ const Payment = () => {
                                             debitAccountNo:
                                                 senderDetails.accountNo,
                                             debitAccountType: 'A',
-                                            creditAccountNo:
-                                                '1382002892',
+                                            creditAccountNo: '1382002892',
                                             creditAccountType: 'A',
                                             amount: paymentDetails.amount,
                                             ccy: senderDetails.ccy
@@ -465,7 +464,7 @@ const Payment = () => {
                                             senderName: 'Aderohunmu Matthew',
                                             senderPhone: '2348039219191',
                                             beneficiaryAccountNo:
-                                                interEnquiry.accountNo,
+                                                interEnquiry.accountNumber,
                                             beneficiaryName:
                                                 interEnquiry.accountName,
                                             narration: paymentDetails.narration,
@@ -664,17 +663,38 @@ const Payment = () => {
                                 firstTitle={bill}
                                 buttonText="Send Now"
                                 closeAction={handleClose}
-                                dataAction={(data) => {
-                                    setCount(count + 1);
-                                    setPaymentDetails(data);
-                                }}
+                                // dataAction={(data) => {
+                                // setCount(count + 1);
+                                //     setPaymentDetails(data);
+                                // }}
                                 airtimeAction={(data) => {
                                     setCount(count + 1);
                                     setPaymentDetails(data);
+                                    const billerdata = {
+                                        amount: '100.00',
+                                        ccy: 'NGN',
+                                        billerCode: 'Glo TOPUP',
+                                        billerID: '3280',
+                                        sourceAccount: '8100467021',
+                                        sourceAccountType: 'X',
+                                        productCode: 'GLO-ANY',
+                                        mobileNo: '2348111380591',
+                                        formDataValue: [
+                                            {
+                                                fieldName: 'BEN_PHONE_NO',
+                                                fieldValue: '2348111380591',
+                                                dataType: 'string'
+                                            }
+                                        ],
+                                        beneficiaryName: 'optional',
+                                        paymentDescription: 'optional'
+                                    };
+
+                                    dispatch(postAirtime(billerdata));
                                 }}
-                                scheduleLater={() => {
-                                    setCount(count + 3);
-                                }}
+                                // scheduleLater={() => {
+                                //     setCount(count + 3);
+                                // }}
                             />
                         );
                     case 2:
@@ -718,8 +738,7 @@ const Payment = () => {
                                                     billerPlan.billerDetail
                                                         .billerID
                                                 ),
-                                                sourceAccount:
-                                                    senderDetails.accountNo,
+                                                sourceAccount: '1382002892',
                                                 sourceAccountType: 'A',
                                                 productCode:
                                                     billerPlan
