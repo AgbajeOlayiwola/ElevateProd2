@@ -39,16 +39,26 @@ const Sidebar = () => {
                     <ElevateLogo />
                 </div>
                 <div className={styles.track}>
-                    {
-                        SidebarData.map((item, index) => (
-                            <div key={index}>
+                    {SidebarData.map((item, index) => {
+                        console.log(item);
+                        if (item.subNav) {
+                            return (<div key={index}>
+                                    <a href={null}>
+                                        {item.title}
+                                        {item.subNav && item.iconClosed}
+                                    </a>
+                                </div>
+                            );
+                        } else {
+                            return (<div key={index}>
                                 <a href={router.pathname !== item.path ? item.path : null}>
                                     {item.title}
                                     {item.subNav && item.iconClosed}
                                 </a>
                             </div>
-                        ))
-                    }
+                        );
+                        }
+                    })}
                     {/* {SidebarData.map((item, index) => {
                         return (
                             <div
