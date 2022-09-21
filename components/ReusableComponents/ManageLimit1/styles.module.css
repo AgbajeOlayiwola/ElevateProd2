@@ -20,13 +20,23 @@
     align-items: center;
 }
 
-.name h2 {
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    margin-left: 8px;
+}
+
+.name h3 {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
     color: #102572;
+    margin: 0px;
 }
 
 .name p {
@@ -36,6 +46,8 @@
     font-size: 10px;
     line-height: 12px;
     color: #8b8b8b;
+    margin: 0px;
+    margin-top: 4px;
 }
 
 .action {

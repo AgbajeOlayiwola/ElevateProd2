@@ -278,7 +278,7 @@
 }
 .btmI {
     height: 352px;
-    max-width: 478px;
+    /* max-width: 478px; */
     background: #ffffff;
     box-shadow: 4px 14px 34px -11px #ededed;
     border-radius: 16px;

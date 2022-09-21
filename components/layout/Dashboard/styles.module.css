@@ -22,3 +22,15 @@
 .main {
     margin-top: 32px;
 }
+
+.dashCont {
+    flex: 1;
+    background-color: #f5f6fa;
+    padding: 36px 32px 46px 32px;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.dashCont::-webkit-scrollbar {
+    display: none;
+}

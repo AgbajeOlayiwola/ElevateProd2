@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Innersubnav = ({ item, subNav }) => {
     const [innersubNav, setInnerSubNav] = useState(false);
@@ -9,6 +10,8 @@ const Innersubnav = ({ item, subNav }) => {
         setInnerSubNav((prev) => !prev);
         console.log('clicked');
     };
+    const router = useRouter();
+    const { pid } = router.query;
     return (
         <>
             {!item.subNavTitles ? (
@@ -17,7 +20,9 @@ const Innersubnav = ({ item, subNav }) => {
                         return (
                             <div className={styles.subMenuLink} key={index}>
                                 <span className={styles.icon}>{item.icon}</span>
-                                <p>{item.title}</p>
+                                <Link href={{ pid: item.path }}>
+                                    <p>{item.title}</p>
+                                </Link>
                             </div>
                         );
                     })
@@ -58,16 +63,14 @@ const Innersubnav = ({ item, subNav }) => {
                                         <span className={styles.icon}>
                                             {item.icon}
                                         </span>
-                                        <p>
-                                            <Link
-                                                href={{
-                                                    pathname: './Payment',
-                                                    query: { id: item.path }
-                                                }}
-                                            >
-                                                {item.title}
-                                            </Link>
-                                        </p>
+                                        <Link
+                                            href={{
+                                                pathname: './Payment',
+                                                query: { id: item.path }
+                                            }}
+                                        >
+                                            <p>{item.title}</p>
+                                        </Link>
                                     </div>
                                 ) : null;
                             })}

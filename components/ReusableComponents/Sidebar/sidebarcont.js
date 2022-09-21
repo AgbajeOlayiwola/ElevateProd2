@@ -19,10 +19,11 @@ const SideBarDrop = ({ item }) => {
                 {item.subNav && subNav ? (
                     <div onClick={item.subNav && showSubnav}>
                         {item.iconOpened}
+                        hello
                     </div>
                 ) : item.subNav ? (
                     <div onClick={item.subNav && showSubnav}>
-                        {item.iconClosed}
+                        {item.iconClosed}hello
                     </div>
                 ) : null}
             </div>

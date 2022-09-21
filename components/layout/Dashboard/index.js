@@ -1,7 +1,7 @@
 // import React, { useEffect, useState } from 'react';
 // import { Navbar, Sidebar } from '../../index';
 // import styles from './styles.module.css';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 // const DashLayout = ({ children, overlay }) => {
 //     const [height, setHeight] = useState('');
@@ -41,14 +41,15 @@ import React from 'react';
 import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
 
-const DashLayout = ({ children, page }) => {
-    const DashCont = styled.div`
-        flex: 1;
-        background-color: #f5f6fa;
-        padding: 36px 32px 46px 32px;
-        height: 100vh;
-        overflow-y: scroll;
-    `;
+const DashLayout = ({
+    children,
+    page,
+    text,
+    action,
+    preview,
+    previewSingle,
+    productAction
+}) => {
     return (
         // <div className={styles.dash}>
         //     <Navbar page={page} />
@@ -57,10 +58,17 @@ const DashLayout = ({ children, page }) => {
         // </div>
         <div className={styles.dash}>
             <Sidebar />
-            <DashCont>
-                <Navbar page={page} />
+            <div className={styles.dashCont}>
+                <Navbar
+                    page={page}
+                    text={text}
+                    action={action}
+                    preview={preview}
+                    previewSingle={previewSingle}
+                    productAction={productAction}
+                />
                 {children}
-            </DashCont>
+            </div>
         </div>
     );
 };

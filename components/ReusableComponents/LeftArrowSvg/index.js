@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LeftArrowSvg = () => {
+const LeftArrowSvg = ({ color }) => {
     return (
         <svg
             width="8"
@@ -11,7 +11,7 @@ const LeftArrowSvg = () => {
         >
             <path
                 d="M1 1L6.64645 6.64645C6.84171 6.84171 6.84171 7.15829 6.64645 7.35355L1 13"
-                stroke="#7A7978"
+                stroke={color}
                 strokeWidth="2"
             />
         </svg>

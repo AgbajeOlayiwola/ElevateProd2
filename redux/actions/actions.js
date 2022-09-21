@@ -37,42 +37,9 @@ import {
     businessCategories,
     newUserCreateCorpAccount
 } from '../types/actionTypes';
-// import axiosInstance from '../helper/apiClient';
+import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
-import { setCookie, getCookie } from 'cookies-next';
-import axios from 'axios';
 
-var loginToken = '';
-var Token;
-var options = 1 / 24;
-
-loginToken = getCookie('cookieToken', options);
-if (loginToken === null) {
-    Token = getCookie('cookieToken', options);
-} else {
-    Token = getCookie('cookieToken', options);
-}
-
-// export const getServerSideProps = async (context) => {
-//     // Fetching de notre route
-//     // API fetching
-//     const res = getCookie('cookieToken', options);
-
-//     const awaitToken = res;
-
-//     return {
-//         // Approvisionnement des props de notre page
-//         // Sending articles to page
-//         props: { token: awaitToken }
-//     };
-// };
-const axiosInstance = axios.create({
-    baseURL: 'https://ellevate-app.herokuapp.com/',
-    headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Token}`
-    }
-});
 //country actions
 export const countryLoadStart = () => ({
     type: country.COUNTRY_LOAD_START
@@ -863,20 +830,10 @@ export const loginUserAction = (loginData) => {
             .then((response) => {
                 console.log(response.data);
                 localStorage.setItem('user', JSON.stringify(response.data));
-
-                setCookie('cookieToken', response.data.data.token, 1 / 24);
-                const cookie = getCookie('cookieToken', options);
-                console.log('login token success', cookie);
-
-                //  const getServerSideProps = ({ req, res }) => {
-                //     setCookies('test', 'value', { req, res, maxAge: });
-
-                //   return { props: {}};
-                // }
-                // localStorage.setItem(
-                //     'token',
-                //     JSON.stringify(response.data.data.token)
-                // );
+                localStorage.setItem(
+                    'token',
+                    JSON.stringify(response.data.data.token)
+                );
 
                 dispatch(userLoadStart(response.data.message));
             })
@@ -946,35 +903,16 @@ export const bvnNinData = (bvnNin) => ({
     payload: bvnNin
 });
 export const createProfileSetup = (profileData) => {
-    const cookie = getCookie('cookieToken');
-    // console.log('cookie in create profile function', cookie);
     return async (dispatch) => {
-        await axios
-            .post(
-                `https://ellevate-app.herokuapp.com${apiRoutes.profileSetupBus}`,
-                profileData,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
-                }
-            )
+        await axiosInstance
+            .post(`${apiRoutes.profileSetupBus}`, profileData)
             .then((response) => {
                 dispatch(setupProfileSucces(response.data));
 
                 console.log('data from profile', response.data);
                 if (response.data.message === 'Profile setup successful') {
                     axiosInstance
-                        .get(
-                            `https://ellevate-app.herokuapp.com${apiRoutes.verifyStatus}`,
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization: `Bearer ${cookie}`
-                                }
-                            }
-                        )
+                        .get(`${apiRoutes.verifyStatus}`)
                         .then((response) => {
                             dispatch(bvnNinData(response.data));
                             if (

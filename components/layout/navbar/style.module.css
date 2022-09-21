@@ -1,18 +1,20 @@
-.cov {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 32px;
-}
-
 .navigation {
+    margin-bottom: 32px;
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-between;
 }
 
-.imageName {
-    display: flex;
+.imageName p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 27px;
+    margin: 0px;
+    margin-top: 4px;
+    color: #7a7978;
 }
 
 .userName {
@@ -27,6 +29,21 @@
     line-height: 24px;
     margin: 0px;
     color: #102572;
+}
+
+.previewName {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 135.52%;
+    margin: 0px;
+    color: #3e3e3e;
+}
+
+.name span {
+    margin-right: 21px;
+    cursor: pointer;
 }
 
 .company {
@@ -78,6 +95,89 @@
 .rightNav div {
     margin-left: 16px;
 }
+
+.notificationBar img {
+    cursor: pointer;
+}
+
+.productSearchCont {
+    display: flex;
+    align-items: center;
+}
+
+.productSearchWrapper {
+    display: flex;
+    align-items: center;
+    width: 426px;
+    background: rgba(201, 201, 201, 0.13);
+    border-radius: 12px;
+    padding-left: 26px;
+}
+
+.productSearchWrapper input {
+    background: transparent;
+    border: none;
+}
+
+.productSearchCont button {
+    width: 50px;
+    background: #549e04;
+    border-radius: 12px;
+    margin-top: 0px;
+    padding: 16px 0px;
+    margin-left: 8px;
+}
+
+.productAction {
+    display: flex;
+    width: 172px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.share {
+    font-family: 'Inter', sans-serif;
+    border: 1.5px solid #6ccf00;
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0px;
+    color: #6ccf00;
+    width: 78px;
+}
+
+.close {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    background: #6ccf00;
+    border-radius: 8px;
+    margin: 0px;
+    width: 78px;
+}
+
+.cartCont {
+    display: flex;
+    align-items: center;
+}
+
+.cartCont div {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(84, 158, 4, 0.1);
+    display: flex;
+    margin-right: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
 /* .cov {
     display: flex;
     justify-content: flex-end;

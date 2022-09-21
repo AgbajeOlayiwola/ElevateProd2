@@ -216,7 +216,7 @@ const StepFour = ({ title, action }) => {
             <section className={styles.sectionII}>
                 <div className={styles.lastStep}>
                     <div className={styles.cardHeading}>
-                        <ArrowBackSvg action={action} />
+                        <ArrowBackSvg action={action} color="#102572" />
                         <div>
                             <h3 className={styles.LeftHeading}>
                                 Complete your Profile
@@ -248,7 +248,7 @@ const StepFour = ({ title, action }) => {
                                                         );
                                                     }}
                                                 >
-                                                    <SearchSvg />
+                                                    <SearchSvg color="#005B82" />
                                                     {business ? (
                                                         <p>{business}</p>
                                                     ) : (
@@ -370,7 +370,7 @@ const StepFour = ({ title, action }) => {
                                                         );
                                                     }}
                                                 >
-                                                    <SearchSvg />
+                                                    <SearchSvg color="#005B82" />
                                                     {businesses ? (
                                                         <p>{businesses}</p>
                                                     ) : (
@@ -536,7 +536,7 @@ const StepFour = ({ title, action }) => {
                                                         );
                                                     }}
                                                 >
-                                                    <SearchSvg />
+                                                    <SearchSvg color="#005B82" />
                                                     {businesses ? (
                                                         <p>{businesses}</p>
                                                     ) : (
@@ -605,7 +605,7 @@ const StepFour = ({ title, action }) => {
                                                         );
                                                     }}
                                                 >
-                                                    <SearchSvg />
+                                                    <SearchSvg color="#005B82" />
                                                     {business ? (
                                                         <p>{business}</p>
                                                     ) : (

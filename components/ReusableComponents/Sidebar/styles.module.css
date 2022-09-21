@@ -144,3 +144,12 @@
     margin-right: 65px;
     color: #cccccc;
 }
+
+.cont {
+    display: flex;
+    align-items: center;
+}
+
+.cont p {
+    margin: 0px;
+}
