@@ -8,7 +8,8 @@ import {
     createAccountData,
     accountStatusData,
     statesData,
-    businessCategoriesData
+    businessCategoriesData,
+    bankAccountsData
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';

@@ -21,11 +21,13 @@ const beneficiaries = '/account/beneficiaries';
 const register = '/authentication/register';
 const login = '/authentication/login';
 const newProfileSetup = '/auth/profile-setup';
-const profile = '/auth/profile';
-const profileSetupBus = '/authentication/profile-setup/unregistered-business';
+const profile = '/users/profile';
+const profileSetupBus = '/authentication/profile-setup/registered-business';
+const profileSetup = '/authentication/profile-setup/unregistered-business ';
 const verifyOtp = '/verification/verify/otp';
+const verifyStatusBus = '/document-verification/registered-business';
 const verifyDob = '/verification/verify/dob';
-const authProfile = '/auth/profile';
+const authProfile = '/document-verification/user-doc';
 const account = '/auth/account';
 const completesBusinessProfile = '/business/setup';
 const newCreateAccount = '/bank-account/individual/create';
@@ -34,20 +36,24 @@ const corpNewUser = '/account/corp/create-for-new-user';
 const accountStatus = '/bank-account/individual/status';
 const corpAccountStatus = '/account/corp-acct';
 const verifyStatus = '/document-verification/unregistered-business';
-const omnilite = '/auth/register/omnilite';
-const ecobankOnline = '/auth/register/ecobank-online';
-const accountNumber = '/auth/register/account-number';
-const existingUserProfile = '/auth/existing-user/profile-setup/personal';
+const omnilite = '/authentication/register/omnilite';
+const ecobankOnline = '/authentication/register/ecobank-online';
+const accountNumber = '/authentication/register/account-number';
+const existingUserProfile =
+    '/authentication/profile-setup/unregistered-business/eco-auth';
 const businessCategories = '/business-categories';
 const states = '/lga';
 const cardLogin = '/auth/register/card';
+const banksAccounts = '/bank-account';
 export default {
     getBanks,
     getCountries,
     getBillerCategories,
     getBillerType,
+    verifyStatusBus,
     getBillerPlan,
     getLanguages,
+    profileSetup,
     airtime,
     bills,
     internalBank,
@@ -84,5 +90,6 @@ export default {
     states,
     cardLogin,
     newCreateAccount,
-    corpAccountStatus
+    corpAccountStatus,
+    banksAccounts
 };

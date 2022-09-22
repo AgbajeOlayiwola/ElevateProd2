@@ -10,7 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     createProfileSetup,
     verifyOtp,
-    loadCountry
+    loadCountry,
+    createBusProfileSetup,
+    CompProfile
 } from '../../../redux/actions/actions';
 import { Router, useRouter } from 'next/router';
 import Loader from '../../ReusableComponents/Loader';
@@ -55,6 +57,7 @@ const ProfileSetups = () => {
         referralCode: '',
         signatory: 1
     });
+    // console.log(formData.type);
     let countryName = '';
     let countryNames;
 
@@ -110,6 +113,7 @@ const ProfileSetups = () => {
                         formData={formData}
                         setFormData={setFormData}
                         action={handleSubmit}
+                        actionI={regsiteredBus}
                         // action is supposed to be handleSubmit
                     />
                     // <StepTwoBVNAuthenticator />
@@ -128,6 +132,7 @@ const ProfileSetups = () => {
                                 otp: '123456'
                             };
                             dispatch(verifyOtp(otpData));
+                            dispatch(CompProfile());
                             if (otpErrorMessage) {
                                 console.log('otpError');
                             } else if (!otpErrorMessage) {
@@ -174,6 +179,22 @@ const ProfileSetups = () => {
     const [errorII, setErrorII] = useState('');
     const [errorIII, setErrorIII] = useState('');
     const [loading, setLoading] = useState(false);
+
+    function regsiteredBus() {
+        console.log('firstAPi');
+
+        const businessProfileData = {
+            bvnNumber: formData.bvNumber,
+            phoneNumber: formData.phoneNumber,
+            countryCode: formData.countryCode,
+            dateOfBirth: formData.dateOfBirth,
+            taxNumber: formData.tinNumber,
+            registerationNumber: formData.rcnumber
+        };
+        setLoading((prev) => !prev);
+
+        dispatch(createBusProfileSetup(businessProfileData));
+    }
 
     function handleSubmit() {
         // console.log('firstAPi');

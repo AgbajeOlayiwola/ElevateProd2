@@ -35,7 +35,9 @@ import {
     states,
     cardLogin,
     businessCategories,
-    newUserCreateCorpAccount
+    newUserCreateCorpAccount,
+    setupBusProfile,
+    getUserBankAccounts
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -643,16 +645,16 @@ export const omniliteLoadStart = () => ({
     type: omnilite.OMNILITE_LOAD_START
 });
 
-export const omniliteLoadSuccess = (bill) => ({
+export const omniliteLoadSuccess = (omniliteData) => ({
     type: omnilite.OMNILITE_LOAD_SUCCESS,
-    payload: bill
+    payload: omniliteData
 });
 
 export const omniliteLoadError = (errorMessage) => ({
     type: omnilite.OMNILITE_LOAD_ERROR,
     payload: errorMessage
 });
-export const omniliteData = (data) => (dispatch) => {
+export const omniliteDataa = (data) => (dispatch) => {
     dispatch(omniliteLoadStart());
     axiosInstance
         .post(`${apiRoutes.omnilite}`, data)
@@ -674,9 +676,9 @@ export const ecobankOnlineLoadSuccess = (bill) => ({
     payload: bill
 });
 
-export const ecobankOnlineLoadError = (errorMessage) => ({
+export const ecobankOnlineLoadError = (ecoOnlineErrorMessage) => ({
     type: ecobankOnline.ECOBANKONLINE_LOAD_ERROR,
-    payload: errorMessage
+    payload: ecoOnlineErrorMessage
 });
 export const ecobankOnlineData = (data) => (dispatch) => {
     dispatch(ecobankOnlineLoadStart());
@@ -695,9 +697,9 @@ export const accountNumberLoadStart = () => ({
     type: accountNumber.ACCOUNTNUMBER_LOAD_START
 });
 
-export const accountNumberLoadSuccess = (bill) => ({
+export const accountNumberLoadSuccess = (accountNumbers) => ({
     type: accountNumber.ACCOUNTNUMBER_LOAD_SUCCESS,
-    payload: bill
+    payload: accountNumbers
 });
 
 export const accountNumberLoadError = (errorMessages) => ({
@@ -747,9 +749,9 @@ export const existingUserProfileLoadStart = () => ({
     type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_START
 });
 
-export const existingUserProfileLoadSuccess = (bill) => ({
+export const existingUserProfileLoadSuccess = (existingUserProfilee) => ({
     type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_SUCCESS,
-    payload: bill
+    payload: existingUserProfilee
 });
 
 export const existingUserProfileLoadError = (errorMessage) => ({
@@ -760,12 +762,12 @@ export const existingUserProfileData = (data) => (dispatch) => {
     dispatch(existingUserProfileLoadStart());
     axiosInstance
         .post(`${apiRoutes.existingUserProfile}`, data)
-        .then((response) =>
-            dispatch(existingUserProfileLoadSuccess(response.data))
-        )
-        .catch((error) =>
-            dispatch(existingUserProfileLoadError(error.response.data.message))
-        );
+        .then((response) => {
+            dispatch(existingUserProfileLoadSuccess(response));
+            console.log(existingUserProfilee.data.data.token);
+            setCookie('existingToken', existingUserProfilee.data.data.token);
+        })
+        .catch((error) => dispatch(existingUserProfileLoadError(error)));
 };
 
 //accountNumber action end
@@ -827,7 +829,7 @@ export const newAccountStatusLoadStart = () => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_START
 });
 
-export const newAccountStatusLoadSuccess = (bill) => ({
+export const newAccountStatusLoadSuccess = (accountStatus) => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_SUCCESS,
     payload: accountStatus
 });
@@ -838,7 +840,7 @@ export const newAccountStatusLoadError = (errorMessages) => ({
 });
 export const newAccountStatusData = () => (dispatch) => {
     const cookie = getCookie('cookieToken');
-    dispatch(accountStatusLoadStart());
+    // dispatch(accountStatusLoadStart());
     axiosInstance
         .get(`https://ellevate-test.herokuapp.com${apiRoutes.accountStatus}`, {
             headers: {
@@ -847,7 +849,7 @@ export const newAccountStatusData = () => (dispatch) => {
             }
         })
         .then((response) => {
-            dispatch(accountStatusLoadSuccess(response));
+            dispatch(accountStatusLoadSuccess(response.data));
             console.log(response.data.message);
         })
         .catch((error) =>
@@ -986,7 +988,7 @@ export const createProfileSetup = (profileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://ellevate-test.herokuapp.com${apiRoutes.profileSetupBus}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.profileSetup}`,
                 profileData,
                 {
                     headers: {
@@ -1036,6 +1038,97 @@ export const createProfileSetup = (profileData) => {
 };
 
 // profile setuo action end
+
+//business profile setup action start
+export const setupBusProfileStart = (busErrorMessages) => ({
+    type: setupBusProfile.BUS_PROFILESETUP_LOAD_START,
+    payload: busErrorMessages
+});
+export const setupBusProfileSucces = (busProfileSetup) => ({
+    type: setupBusProfile.BUS_PROFILESETUP_LOAD_SUCCESS,
+    payload: busProfileSetup
+});
+export const setupBusProfileError = (busErrorMessages) => ({
+    type: setupBusProfile.BUS_PROFILESETUP_LOAD_ERROR,
+    payload: busErrorMessages
+});
+export const bvnBusNinError = (busBvnError) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_ERROR,
+    payload: busBvnError
+});
+export const bvnBusNinErrorI = (busBvnErrorI) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_ERRORI,
+    payload: busBvnErrorI
+});
+export const bvnBusNinErrorII = (busBvnErrorII) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_ERRORII,
+    payload: busBvnErrorII
+});
+export const bvnBusNinErrorIII = (busBvnErrorIII) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_ERRORIII,
+    payload: busBvnErrorIII
+});
+export const bvnBusNinPending = (busBvnNinPend) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_PENDING,
+    payload: busBvnNinPend
+});
+export const bvnBusNinData = (busBvnNin) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_SUCCESS,
+    payload: busBvnNin
+});
+export const createBusProfileSetup = (businessProfileData) => {
+    const cookie = getCookie('cookieToken');
+    // console.log('cookie in create profile function', cookie);
+    return async (dispatch) => {
+        await axios
+            .post(
+                `https://ellevate-test.herokuapp.com${apiRoutes.profileSetupBus}`,
+                businessProfileData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
+                }
+            )
+            .then((response) => {
+                dispatch(setupProfileSucces(response.data));
+
+                console.log('data from Business profile', response.data);
+                if (response.data.message === 'Success') {
+                    const cookie = getCookie('cookieToken');
+                    axiosInstance
+                        .post(
+                            `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatusBus}`,
+
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${cookie}`
+                                }
+                            }
+                        )
+                        .then((response) => {
+                            dispatch(bvnNinData(response.data.message));
+                            console.log('profile otp dispatch', response);
+                        })
+                        .catch((error) => {
+                            console.log('profile otp dispatch', error);
+                            dispatch(bvnNinError(error.response.data.message));
+                        });
+                }
+            })
+            .catch((error) => {
+                console.log(
+                    'profile setup dispatch',
+                    error.response.data.message
+                );
+                dispatch(setupProfileError(error.response.data.message));
+            });
+    };
+};
+
+// business profile setuo action end
 //BVN Otp
 export const otpLoadStart = (errorMessages) => ({
     type: otp.OTP_LOAD_START,
@@ -1110,7 +1203,7 @@ export const CompProfile = () => {
                 }
             )
             .then((response) => {
-                dispatch(profileLoadSuccess(response.data));
+                dispatch(profileLoadSuccess(response));
             })
             .catch((error) => {
                 console.log(error);
@@ -1283,3 +1376,39 @@ export const getNewUserAccountDetails = (accountData) => {
     };
 };
 //end corp account status
+
+//bank accounts start
+
+export const bankAccountsStart = () => ({
+    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_START
+});
+
+export const bankAccountsSuccess = (bankAccounts) => ({
+    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_SUCCESS,
+    payload: bankAccounts
+});
+
+export const bankAccountsLoadError = (bankAccountErrorMessages) => ({
+    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_ERROR,
+    payload: bankAccountErrorMessages
+});
+export const bankAccountsData = () => (dispatch) => {
+    const exToken = getCookie('existingToken');
+    dispatch(accountNumberLoadStart());
+    axios
+        .get(`https://ellevate-test.herokuapp.com${apiRoutes.banksAccounts}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${exToken}`
+            }
+        })
+        .then((response) => {
+            dispatch(bankAccountsSuccess(response.data[0].accountNumber));
+            console.log(response.data.accountNumber);
+        })
+        .catch((error) =>
+            dispatch(bankAccountsLoadError(error.response.data.message))
+        );
+};
+
+//bank accunt end

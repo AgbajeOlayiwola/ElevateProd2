@@ -26,6 +26,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [title, setTitle] = useState('Basic');
     const [bgcolor, setBgcolor] = useState(false);
     const [profileCont, setProfileCont] = useState([]);
+    const [businessProfile, setBusinessProfile] = useState([]);
 
     const handleShowFourthStep = () => {
         setSwitchs((prev) => !prev);
@@ -35,6 +36,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const { isLoading, profile, errorMessage } = useSelector(
         (state) => state.profile
     );
+
     const { newCorpAccount, newCorpAccountErrorMMessage } = useSelector(
         (state) => state.newuserCorpAccount
     );
@@ -79,9 +81,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     }, []);
     useEffect(() => {
         if (profile !== null) {
-            setProfileCont(profile.data);
+            console.log(profileCont);
+            setProfileCont(profile.data[0].documentData);
+            setBusinessProfile(profile.data[2].documentData);
         }
-        setGender(profileCont.gender);
+        // setGender(profileCont.gender);
     }, [profile]);
     useEffect(() => {
         dispatch(businessCategoriesData());
@@ -113,7 +117,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
-    console.log(type);
+    // console.log(type);
     const [errorMes, setErrorMes] = useState();
     const handleSubmitIII = () => {
         const commpleteProfileData = {
@@ -237,6 +241,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     //     console.log(data);
     // };
     const [activeBtn, setActiveBtn] = useState(true);
+    console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
@@ -290,9 +295,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                         <div className={styles.nameDiv}>
                             <div className={styles.formGroups}>
                                 <label>Enter Full Name</label>
+                                {console.log('profile cont', businessProfile)}
+
                                 <input
                                     type="text"
-                                    placeholder={profileCont.fullName}
+                                    placeholde="name"
+                                    placeholder={profileCont.firstName}
                                     disabled
                                 />
                             </div>
@@ -311,8 +319,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <input
                                         type="text"
                                         value={
-                                            profileCont.business
-                                                ? profileCont.business.name
+                                            businessProfile
+                                                ? businessProfile.companyName
                                                 : formData.businessName
                                         }
                                         placeholder="Enter Business Full Name"
@@ -476,7 +484,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         text="Next"
                                         type="button"
                                         // onClick={handleSubmitReg}
-                                        // onClick={handleShowFourthStep}
+                                        onClick={() => {
+                                            setTitle('Other');
+                                        }}
                                     />
                                 ) : (
                                     <ButtonComp
@@ -487,7 +497,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         text="Next"
                                         type="button"
                                         // onClick={handleSubmitIII}
-                                        // onClick={handleShowFourthStep}
+                                        onClick={() => {
+                                            setTitle('Other');
+                                        }}
                                     />
                                 )}
                             </div>
@@ -619,13 +631,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         }}
                                     />
                                 </div>
-                                {type === true ? (
+                                {type === 'true' ? (
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
-                                        text="Save & Continue"
+                                        text="Save & Continue Reg"
                                         type="button"
                                         onClick={handleSubmitReg}
                                         // onClick={handleShowFourthStep}
