@@ -1,0 +1,19 @@
+.profileLayoutCont {
+    display: flex;
+    width: 100%;
+}
+
+.profileLayoutHead {
+    width: 41%;
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+}
+
+.profileLayoutBody {
+    width: 58%;
+    background: #ffffff;
+    border-radius: 16px;
+    margin-left: 20px;
+    padding: 48px 48px 0px 48px;
+}

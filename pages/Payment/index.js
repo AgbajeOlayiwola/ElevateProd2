@@ -920,7 +920,7 @@ const Payment = () => {
         setOutType(type);
     };
     return (
-        <DashLayout>
+        <DashLayout page="Payments">
             {active && (
                 <div className={styles.greencard}>
                     <div className={styles.greencardDetails}>

@@ -10,14 +10,7 @@
 //     }, []);
 
 //     console.log(height);
-//     const DashCont = styled.div`
-//         flex: 1;
-//         background-color: #f5f6fa;
-//         padding: 36px 32px 46px 32px;
-//         position: relative;
-//         height: 100vh;
-//         overflow-y: scroll;
-//     `;
+//
 
 //     const mainOverlay = {
 //         height: height,
@@ -48,21 +41,35 @@ import React from 'react';
 import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
 
-const DashLayout = ({ children }) => {
+const DashLayout = ({
+    children,
+    page,
+    text,
+    action,
+    preview,
+    previewSingle,
+    productAction
+}) => {
     return (
-        <div className={styles.dash}>
-            <Navbar />
-            <div className={styles.main}>{children}</div>
-            <Sidebar />
-        </div>
         // <div className={styles.dash}>
+        //     <Navbar page={page} />
+        //     <div className={styles.main}>{children}</div>
         //     <Sidebar />
-        //     <DashCont>
-        //         <div style={overlay ? mainOverlay : null}></div>
-        //         <Navbar />
-        //         {children}
-        //     </DashCont>
         // </div>
+        <div className={styles.dash}>
+            <Sidebar />
+            <div className={styles.dashCont}>
+                <Navbar
+                    page={page}
+                    text={text}
+                    action={action}
+                    preview={preview}
+                    previewSingle={previewSingle}
+                    productAction={productAction}
+                />
+                {children}
+            </div>
+        </div>
     );
 };
 

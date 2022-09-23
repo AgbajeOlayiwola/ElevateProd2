@@ -25,7 +25,6 @@ export const SidebarData = [
     {
         title: 'Dashboard',
         path: '/Dashboard',
-
         icon: <MdIcons.MdDashboard />,
         iconActive: <MdIcons.MdDashboard />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
@@ -33,75 +32,14 @@ export const SidebarData = [
     },
 
     {
-        // <MdIcons.MdOutlinePayments />
         title: 'Payment',
         path: '/Payment',
         modal: 'show',
         icon: <PaymentSvg fillColor={false} />,
         iconActive: <PaymentSvg fillColor={true} />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
-        iconOpened: <RiIcons.RiArrowUpSLine />,
-        subNavTitles: ['Receive Payment', 'Make Payment'],
-        subNav: [
-            {
-                title: 'Paylink',
-                path: 'Paylink',
-                icon: <BiIcons.BiLinkAlt />,
-                subNavTitle: 'Receive Payment'
-            },
-            {
-                title: 'USSD',
-                path: 'USSD only',
-                icon: <StarSharp />,
-                subNavTitle: 'Receive Payment'
-            },
-            {
-                title: 'Ecobank QR',
-                path: 'Ecobank QR Only',
-                icon: <BiIcons.BiScan />,
-                subNavTitle: 'Receive Payment'
-            },
-            {
-                title: 'mPOS',
-                path: 'Phone Pos',
-                icon: <HiIcons.HiOutlineCreditCard />,
-                subNavTitle: 'Receive Payment'
-            },
-            {
-                title: 'Single Transfer',
-                path: 'Single Transfer',
-                icon: <BiIcons.BiTransfer />,
-                subNavTitle: 'Make Payment'
-            },
-            {
-                title: 'Bulk Transfer',
-                path: 'Bulk Transfer',
-                icon: <BulkTransfer />,
-                subNavTitle: 'Make Payment'
-            },
-            {
-                title: 'Bill Payment',
-                path: 'Bills Payment',
-                icon: <NairaSvg />,
-                subNavTitle: 'Make Payment'
-            },
-            {
-                title: 'FX Transfer',
-                path: 'FX Transfer ',
-                icon: <FaIcons.FaHandHoldingUsd />,
-                subNavTitle: 'Make Payment'
-            }
-        ]
-    },
-    {
-        title: 'Transactions',
-        path: '/Transactions',
-        icon: <CgIcons.CgMoreO />,
-        iconActive: <CgIcons.CgMoreO />,
-        iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
     },
-
     {
         title: 'Tools',
         path: '/Tools',
@@ -112,21 +50,60 @@ export const SidebarData = [
         subNav: [
             {
                 title: 'Analysis',
-                path: '',
+                path: '/Analysis',
                 icon: <BiIcons.BiTransfer />
             },
             {
                 title: 'Inventory',
-                path: '',
+                path: '/Inventory',
                 icon: <BulkTransfer />
             },
             {
                 title: 'e invoice',
-                path: '',
+                path: '/invoice',
                 icon: <NairaSvg />
             },
             {
                 title: 'Others',
+                path: '/others',
+                icon: <FaIcons.FaHandHoldingUsd />
+            }
+        ]
+    },
+    {
+        title: 'Storefront',
+        path: '/Storefront',
+        icon: <CgIcons.CgMoreO />,
+        iconActive: <CgIcons.CgMoreO />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+    },
+
+    {
+        title: 'Settings',
+        path: '',
+        icon: <FiIcons.FiSettings />,
+        iconActive: <FiIcons.FiSettings />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />,
+        subNav: [
+            {
+                title: 'Profile Management',
+                path: '/Profile',
+                icon: <BiIcons.BiTransfer />
+            },
+            {
+                title: 'Customer Care Service',
+                path: '/Customer',
+                icon: <BulkTransfer />
+            },
+            {
+                title: 'Security',
+                path: '',
+                icon: <NairaSvg />
+            },
+            {
+                title: 'Legal Terms & Conditions',
                 path: '',
                 icon: <FaIcons.FaHandHoldingUsd />
             }

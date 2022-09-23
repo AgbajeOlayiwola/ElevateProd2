@@ -2,12 +2,14 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 24px 24px 24px 32px;
-    background: #ffffff;
-    box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
-    border-radius: 12px;
-    margin-top: 24px;
+    padding: 21px 24px 21px 32px;
     cursor: pointer;
+    border-bottom: 2px solid #f6f6f6;
+    align-items: center;
+}
+
+.profileSingle:last-child {
+    border-bottom: 0px;
 }
 
 .profileIcon {
@@ -16,15 +18,20 @@
 }
 
 .profileText {
-    width: 90%;
+    width: 85%;
 }
 
 .profileText p {
     margin: 0px;
     font-family: 'Inter', sans-serif;
     font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
     color: #303030;
+    text-align: left;
+}
+
+.profileSingle:last-child .profileText p {
+    color: #ff0000;
 }

@@ -11,7 +11,6 @@ import {
 import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     loadCountry,
@@ -22,16 +21,9 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import Loader from '../../components/ReusableComponents/Loader';
-import { encrypt } from '../../redux/helper/hash';
-import validator from 'validator';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
-import Omnilite from '../../components/ReusableComponents/Loginwith/omnilite';
-import Ecoonline from '../../components/ReusableComponents/Loginwith/ecoonline';
-import Ecocard from '../../components/ReusableComponents/Loginwith/ecocard';
-import Ecoacct from '../../components/ReusableComponents/Loginwith/ecoacct';
 import NewUser from './NewUser';
 import OmniliteSvg from '../../components/ReusableComponents/ReusableSvgComponents/OmniliteSvg';
-import EcobankMobileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EcobankMobileSvg';
 import AccountNumberSvg from '../../components/ReusableComponents/ReusableSvgComponents/AccountNumberSvg';
 import CardSvg from '../../components/ReusableComponents/ReusableSvgComponents/CardSvg';
 import Slider from 'react-slick';
@@ -90,7 +82,6 @@ const HomeMain = () => {
         }
     }, [countries]);
 
-    // console.log(watch('example')); // watch input value by passing the name of it
     const {
         register,
         handleSubmit,
@@ -112,10 +103,10 @@ const HomeMain = () => {
                                 {...register('username', {
                                     required: 'Username is Required'
                                 })}
-                                name="username"
+                                name="omniliteUsername"
                             />
                             <p className={styles.error}>
-                                {errors?.username?.message}
+                                {errors?.omniliteUsername?.message}
                             </p>
                         </div>
                         <div>
@@ -127,13 +118,13 @@ const HomeMain = () => {
                                     {...register('password', {
                                         required: 'Password is Required'
                                     })}
-                                    name="password"
+                                    name="omnilitePassword"
                                     type={outType ? 'text' : 'password'}
                                 />
                                 <Visbility typeSet={types} />
                             </div>
                             <p className={styles.error}>
-                                {errors?.password?.message}
+                                {errors?.omnilitePassword?.message}
                             </p>
                         </div>
                     </div>
@@ -158,7 +149,7 @@ const HomeMain = () => {
                                 }
                             />
                             <p className={styles.error}>
-                                {errors?.username?.message}
+                                {errors?.onlineUsername?.message}
                             </p>
                         </div>
                         <div>
@@ -171,7 +162,7 @@ const HomeMain = () => {
                                         required:
                                             'Ecobank Online Password is Required'
                                     })}
-                                    name="password"
+                                    name="onlinePassword"
                                     type={outType ? 'text' : 'password'}
                                     value={ecoonlinePassword}
                                     onChange={(e) =>
@@ -181,7 +172,7 @@ const HomeMain = () => {
                                 <Visbility typeSet={types} />
                             </div>
                             <p className={styles.error}>
-                                {errors?.password?.message}
+                                {errors?.onlinePassword?.message}
                             </p>
                         </div>
                     </div>
@@ -271,43 +262,6 @@ const HomeMain = () => {
                     </div>
                 );
             default:
-                return (
-                    <div className={styles.existingForm}>
-                        <div>
-                            <label>Enter Your Omnilite Username</label>
-                            <input
-                                placeholder="Omnilite Username"
-                                type="text"
-                                className={styles.idInput}
-                                {...register('username', {
-                                    required: 'Username is Required'
-                                })}
-                                name="username"
-                            />
-                        </div>
-                        <p className={styles.error}>
-                            {errors?.username?.message}
-                        </p>
-                        <div>
-                            <label>Enter Your Omnilite Password</label>
-                            <div className={styles.divs}>
-                                <input
-                                    placeholder="Omnilite Password"
-                                    className={styles.idInput}
-                                    {...register('password', {
-                                        required: 'Password is Required'
-                                    })}
-                                    name="password"
-                                    type={outType ? 'text' : 'password'}
-                                />
-                                <Visbility typeSet={types} />
-                            </div>
-                        </div>
-                        <p className={styles.error}>
-                            {errors?.password?.message}
-                        </p>
-                    </div>
-                );
         }
     };
     const onSubmit = (data) => {

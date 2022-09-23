@@ -144,7 +144,7 @@ const Dashboard = () => {
     }, [accountStatus]);
     // console.log(accountStatus.data.accountNumber);
     return (
-        <DashLayout>
+        <DashLayout page="Dashboard">
             <Levelup />
             <div className={styles.cove}>
                 <section className={styles.sectionI}>

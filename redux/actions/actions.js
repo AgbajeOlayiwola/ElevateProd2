@@ -41,7 +41,7 @@ import {
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
-import { setCookie, getCookie } from 'cookies-next';
+import { getCookie } from 'cookies-next';
 import axios from 'axios';
 
 var loginToken = '';
@@ -900,20 +900,10 @@ export const loginUserAction = (loginData) => {
             .then((response) => {
                 console.log(response.data);
                 localStorage.setItem('user', JSON.stringify(response.data));
-
-                setCookie('cookieToken', response.data.data.token, 1 / 24);
-                const cookie = getCookie('cookieToken', options);
-                console.log('login token success', cookie);
-
-                //  const getServerSideProps = ({ req, res }) => {
-                //     setCookies('test', 'value', { req, res, maxAge: });
-
-                //   return { props: {}};
-                // }
-                // localStorage.setItem(
-                //     'token',
-                //     JSON.stringify(response.data.data.token)
-                // );
+                localStorage.setItem(
+                    'token',
+                    JSON.stringify(response.data.data.token)
+                );
 
                 dispatch(userLoadStart(response.data.message));
             })
@@ -983,8 +973,6 @@ export const bvnNinData = (bvnNin) => ({
     payload: bvnNin
 });
 export const createProfileSetup = (profileData) => {
-    const cookie = getCookie('cookieToken');
-    // console.log('cookie in create profile function', cookie);
     return async (dispatch) => {
         await axios
             .post(

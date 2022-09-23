@@ -7,7 +7,7 @@
     display: flex;
     position: absolute;
     top: 3.7%;
-    left: 33%;
+    left: 27%;
     z-index: 10;
 }
 .firstDivs {
@@ -706,6 +706,10 @@
 
 .networkForm {
     margin-top: 24px;
+}
+
+.networkForm .formGroup {
+    width: 100%;
 }
 
 .networkForm button {

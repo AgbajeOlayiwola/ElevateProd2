@@ -62,7 +62,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>
                     <div className={styles.cardHeading}>
-                        <ArrowBackSvg action={action} />
+                        <ArrowBackSvg action={action} color="#102572" />
                         <div>
                             <h3 className={styles.LeftHeading}>
                                 Complete your Profile

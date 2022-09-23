@@ -118,7 +118,7 @@ const RegisteredForm = ({ handleShowSecondStep, action, move }) => {
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>
                     <div className={styles.cardHeading}>
-                        <ArrowBackSvg action={action} />
+                        <ArrowBackSvg action={action} color="#102572" />
                         <div>
                             <h3 className={styles.LeftHeading}>
                                 Profile Setup

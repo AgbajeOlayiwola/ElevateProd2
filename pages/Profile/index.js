@@ -1,12 +1,18 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import DashLayout from '../../components/layout/Dashboard';
+import ProfileLayout from '../../components/layout/ProfileLayout';
 import AppSvg from '../../components/ReusableComponents/AppSvg';
+import ArrowBackSvg from '../../components/ReusableComponents/ArrowBackSvg';
 import BeneSvg from '../../components/ReusableComponents/BeneSvg';
 import BiometricsSvg from '../../components/ReusableComponents/BiometricsSvg';
 import BvnSvg from '../../components/ReusableComponents/BvnSvg';
+import CheckedSvg from '../../components/ReusableComponents/CheckedSvg';
+import Visbility from '../../components/ReusableComponents/Eyeysvg';
+import InputTag from '../../components/ReusableComponents/Input';
 import LegalSvg from '../../components/ReusableComponents/LegalSvg';
 import Lock from '../../components/ReusableComponents/LockSvg';
+import ManageBeneSingle from '../../components/ReusableComponents/ManageBene';
 import ManageBene from '../../components/ReusableComponents/ManageBene';
 import ManageBene2 from '../../components/ReusableComponents/ManageBene2';
 import ManageLimit from '../../components/ReusableComponents/ManageLimit1';
@@ -19,91 +25,210 @@ import ProfileSingle from '../../components/ReusableComponents/ProfileSingle';
 import ResetPassSvg from '../../components/ReusableComponents/ResetPassSvg';
 import ResetPin from '../../components/ReusableComponents/ResetPin';
 import ResetPinSvg from '../../components/ReusableComponents/ResetPinSvg';
+import AddSvg from '../../components/ReusableComponents/ReusableSvgComponents/AddSvg';
+import ContactSvg from '../../components/ReusableComponents/ReusableSvgComponents/ContactSvg';
+import EditProfileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
+import LogoutSvg from '../../components/ReusableComponents/ReusableSvgComponents/LogoutSvg';
 import RmSvg from '../../components/ReusableComponents/RmSvg';
 import ShareSvg from '../../components/ReusableComponents/ShareSvg';
 import styles from './styles.module.css';
 
 const Profile = () => {
-    const [account, setAccount] = useState('true');
-    const [security, setSecurity] = useState('false');
-    const [others, setOthers] = useState('false');
+    const [type, setType] = useState('Account');
     const [overlay, setOverlay] = useState(false);
-    const [text, setText] = useState('');
+    const [text, setText] = useState('Edit Profile');
     const [count, setCount] = useState(0);
-    const profileData = {
+    const [outType, setOutType] = useState();
+    const profileData = [
+        {
+            text: 'Edit Profile',
+            icon: <EditProfileSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Manage Beneficiaries',
+            icon: <BeneSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Manage Limit',
+            icon: <ManageLimitSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Bank Verification Number (BVN)',
+            icon: <BvnSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'RM Name and Contact Details ',
+            icon: <RmSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Manage Signatories',
+            icon: <ManageSignSvg />,
+            color: '#7A7978'
+        },
+
+        {
+            text: 'Contact us',
+            icon: <ContactSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Share App/Refer a Friend',
+            icon: <ShareSvg color="#102572" />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Log Out',
+            icon: <LogoutSvg />,
+            color: '#FF0000'
+        }
+    ];
+    const bene = {
         account: [
             {
-                text: 'Bank Verification Number (BVN)',
-                icon: <BvnSvg />
+                name: 'Ayomide James',
+                account: '1234567890 (Ecobank Plc)'
             },
             {
-                text: 'RM Name and Contact Details',
-                icon: <RmSvg />
+                name: 'Ayomide James',
+                account: '1234567890 (Ecobank Plc)'
             },
             {
-                text: 'Manage Signatories',
-                icon: <ManageSignSvg />
+                name: 'Ayomide James',
+                account: '1234567890 (Ecobank Plc)'
             },
             {
-                text: 'Manage Limit',
-                icon: <ManageLimitSvg />
-            },
-            {
-                text: 'Manage Beneficiaires',
-                icon: <BeneSvg />
+                name: 'Ayomide James',
+                account: '1234567890 (Ecobank Plc)'
             }
         ],
-        security: [
+        airtime: [
             {
-                text: 'Reset and Update PIN',
-                icon: <ResetPinSvg />
+                name: 'Ayomide James',
+                account: '1234567890 (Ecobank Plc)'
             },
             {
-                text: 'Reset Password',
-                icon: <ResetPassSvg />
+                name: 'Ayomide James',
+                account: '1234567890 (Ecobank Plc)'
             }
         ],
-        others: [
+        signatories: [
             {
-                text: 'App Preference',
-                icon: <AppSvg />
+                name: 'Ayomide James',
+                mail: 'ayomide0007@gmail.com'
             },
             {
-                text: 'Legal-Terms & Condition, Data Privacy',
-                icon: <LegalSvg />
+                name: 'Ayomide James',
+                mail: 'ayomide0007@gmail.com'
             },
             {
-                text: 'Share App/Refer a Friend',
-                icon: <ShareSvg />
+                name: 'Ayomide James',
+                mail: 'ayomide0007@gmail.com'
             }
         ]
     };
-    useEffect(() => {
-        setSecurity(false);
-        setOthers(false);
-    }, []);
+    let countryName = '';
+    let countryNames;
 
+    if (typeof window !== 'undefined') {
+        countryName = window.localStorage.getItem('country');
+        if (countryName === null) {
+            countryNames = window.localStorage.getItem('country');
+        } else {
+            countryNames = JSON.parse(countryName);
+        }
+    }
+    // console.log(countryNames.flags.svg);
+    const types = (type) => {
+        setOutType(type);
+    };
     const renderForm = () => {
         switch (text) {
-            case 'Reset Password':
+            case 'Edit Profile':
                 switch (count) {
                     case 0:
                         return (
-                            <ResetPin
-                                overlay={overlay}
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                title="Reset Password"
-                                label1="Enter New Password"
-                                label2="Confirm New Password"
-                                formAction={() => setCount(count + 1)}
-                            />
+                            <>
+                                <h2 className={styles.title}>Edit Profile</h2>
+                                <div className={styles.profileBodyHead}>
+                                    <div className={styles.profileBodyHeadImg}>
+                                        <Image
+                                            src="/Assets/Images/profileImg.png"
+                                            width="100%"
+                                            height="100%"
+                                            layout="responsive"
+                                        />
+                                    </div>
+                                    <div className={styles.groupForm}>
+                                        <div className={styles.formGroup}>
+                                            <label>Full Name</label>
+                                            <InputTag
+                                                type="text"
+                                                placeholder="Babatune Abiodun"
+                                            />
+                                        </div>
+                                        <div className={styles.formGroup}>
+                                            <label>Email Address</label>
+                                            <InputTag
+                                                type="email"
+                                                placeholder="babatuneabiodun@gmail.com"
+                                            />
+                                        </div>
+                                        <div className={styles.formGroup}>
+                                            <label>Phone Number</label>
+                                            <div className={styles.phone}>
+                                                <div
+                                                    className={
+                                                        styles.phoneHeader
+                                                    }
+                                                >
+                                                    <span>
+                                                        <img
+                                                            // src={
+                                                            // countryNames
+                                                            // .flags.svg
+                                                            // }
+                                                            alt=""
+                                                        />
+                                                    </span>
+                                                    <p>
+                                                        {
+                                                            // countryNames.baseCurrency
+                                                        }
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.phoneDetails
+                                                    }
+                                                >
+                                                    <p>
+                                                        {
+                                                            // countryNames.countryCode
+                                                        }
+                                                    </p>
+                                                    <InputTag
+                                                        type="number"
+                                                        placeholder="812 345 6789"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={styles.profileBodyButton}
+                                        >
+                                            <button>Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
                         );
-                    case 1:
-                        return <OtpForm overlay={overlay} />;
+                    // case 1:
+                    //     return <OtpForm overlay={overlay} />;
                 }
 
             case 'Reset and Update PIN':
@@ -126,35 +251,210 @@ const Profile = () => {
                     case 1:
                         return <OtpForm overlay={overlay} />;
                 }
-            case 'App Preference':
-                return (
-                    <ResetPin
-                        overlay={overlay}
-                        action={() => {
-                            setOverlay(false);
-                            setText('');
-                        }}
-                        title={text}
-                        label1="Enter New Password"
-                        label2="Confirm New Password"
-                    />
-                );
-            case 'Manage Signatories':
+            case 'Manage Limit':
                 switch (count) {
                     case 0:
                         return (
-                            <ManageLimit
-                                overlay={overlay}
-                                title="Manage Signatories"
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                btnAction={() => {
-                                    setCount(count + 1);
-                                }}
-                            />
+                            <>
+                                <h2 className={styles.title}>Manage Limit</h2>
+                                <div className={styles.manageLimitBody}>
+                                    <div className={styles.manageLimit}>
+                                        <label>Ecobank to Other Banks</label>
+                                        <div
+                                            className={styles.manageLimitSingle}
+                                        >
+                                            <div
+                                                className={
+                                                    styles.manageLimitSingleHead
+                                                }
+                                            >
+                                                <p>Sending (Per Transaction)</p>
+                                                <p>
+                                                    Receicing (Per Transaction)
+                                                </p>
+                                                <p>Daily Transfer Limit</p>
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.manageLimitSingleBody
+                                                }
+                                            >
+                                                <p>N1,000,000</p>
+                                                <p>Unlimited</p>
+                                                <p>N2,500,000</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.manageLimit}>
+                                        <label>Ecobank to Ecobank</label>
+                                        <div
+                                            className={styles.manageLimitSingle}
+                                        >
+                                            <div
+                                                className={
+                                                    styles.manageLimitSingleHead
+                                                }
+                                            >
+                                                <p>Sending (Per Transaction)</p>
+                                                <p>
+                                                    Receicing (Per Transaction)
+                                                </p>
+                                                <p>Daily Transfer Limit</p>
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.manageLimitSingleBody
+                                                }
+                                            >
+                                                <p>N1,000,000</p>
+                                                <p>Unlimited</p>
+                                                <p>N2,500,000</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.manageLimit}>
+                                        <label>Account Balance</label>
+                                        <div
+                                            className={styles.manageLimitSingle}
+                                        >
+                                            <div
+                                                className={
+                                                    styles.manageLimitSingleHead
+                                                }
+                                            >
+                                                <p>Maximum Balance </p>
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.manageLimitSingleBody
+                                                }
+                                            >
+                                                <p>Unlimited</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.manageLimit}>
+                                        <label>mPOS Payments</label>
+                                        <div
+                                            className={styles.manageLimitSingle}
+                                        >
+                                            <div
+                                                className={
+                                                    styles.manageLimitSingleHead
+                                                }
+                                            >
+                                                <p>Single</p>
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.manageLimitSingleBody
+                                                }
+                                            >
+                                                <p>N1,000,000</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.profileBodyButton}>
+                                        <button
+                                            onClick={() => {
+                                                setCount(count + 1);
+                                            }}
+                                        >
+                                            Update Transfer Limit
+                                        </button>
+                                    </div>
+                                </div>
+                            </>
+                        );
+                    case 1:
+                        return (
+                            <>
+                                <h2 className={styles.title}>
+                                    <span>
+                                        <ArrowBackSvg
+                                            action={() => {
+                                                setCount(count - 1);
+                                            }}
+                                        />
+                                    </span>
+                                    Update Transfer Limit
+                                </h2>
+                                <div className={styles.manageLimitImg}>
+                                    <div className={styles.img}>
+                                        <img
+                                            src="./Assets/Images/limitMoney.png"
+                                            alt=""
+                                        />
+                                    </div>
+                                    <h3>
+                                        Update Daily Transfer Limit to other
+                                        Banks
+                                    </h3>
+                                    <h2>N2,500,000.00</h2>
+                                    <img
+                                        src="./Assets/Svgs/slider.svg"
+                                        alt=""
+                                        className={styles.slider}
+                                    />
+                                    <p>
+                                        Adjust the slider to the maximum
+                                        transfer limit you prefer.
+                                        <span>
+                                            Maximum Limit is N5,000,000.00
+                                        </span>
+                                    </p>
+                                    <div className={styles.manageLimitButton}>
+                                        <button
+                                            onClick={() => {
+                                                setCount(count - 1);
+                                            }}
+                                        >
+                                            Update Transfer Limit
+                                        </button>
+                                    </div>
+                                </div>
+                            </>
+                        );
+                }
+
+            case 'Bank Verification Number (BVN)':
+                switch (count) {
+                    case 0:
+                        return (
+                            <>
+                                <h2 className={styles.title}>View my BVN</h2>
+                                <div className={styles.bvn}>
+                                    <p>
+                                        Kindly enter your details below to view
+                                        the BVN tied to your Ellevate account.
+                                    </p>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Date of Birth</label>
+                                    <input
+                                        type="text"
+                                        placeholder="DD  |  MM  |  YYYY"
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Enter your Password</label>
+
+                                    <div className={styles.divs}>
+                                        <input
+                                            placeholder="**********"
+                                            // {...register('password', {
+                                            //     required: 'Password is Required'
+                                            // })}
+                                            name="password"
+                                            type={outType ? 'text' : 'password'}
+                                        />
+                                        <Visbility typeSet={types} />
+                                    </div>
+                                </div>
+                                <div className={styles.bvnButton}>
+                                    <button>View my BVN</button>
+                                </div>
+                            </>
                         );
                     case 1:
                         return (
@@ -188,39 +488,190 @@ const Profile = () => {
                         );
                 }
 
-            case 'Manage Limit':
+            case 'Manage Signatories':
                 switch (count) {
                     case 0:
                         return (
-                            <ManageLimit
-                                overlay={overlay}
-                                title="Manage Limit"
-                                action={() => {
-                                    setOverlay(false);
-                                    setText('');
-                                }}
-                                btnAction={() => {
-                                    setCount(count + 1);
-                                }}
-                            />
+                            <>
+                                <h2 className={styles.title}>
+                                    Manage Signatories
+                                </h2>
+                                <div className={styles.sign}>
+                                    <p>
+                                        Please see below signatories to your
+                                        Ellevate account.
+                                    </p>
+                                </div>
+                                <div className={styles.signBody}>
+                                    {bene.signatories?.map((sign, index) => {
+                                        return (
+                                            <ManageLimit
+                                                fname={sign.name}
+                                                mail={sign.mail}
+                                                key={index}
+                                            />
+                                        );
+                                    })}
+                                    <div className={styles.signButton}>
+                                        <button
+                                            onClick={() => {
+                                                setCount(count + 1);
+                                            }}
+                                        >
+                                            Add New
+                                        </button>
+                                    </div>
+                                </div>
+                            </>
                         );
                     case 1:
                         return (
-                            <ManageLimit2
-                                title="Update Limit"
-                                overlay={overlay}
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                btnAction={() => {
-                                    setCount(count + 1);
-                                }}
-                                formAction={(data) => {
-                                    console.log(data);
-                                }}
-                            />
+                            <>
+                                <h2 className={styles.title}>
+                                    <span>
+                                        <ArrowBackSvg
+                                            action={() => {
+                                                setCount(count - 1);
+                                            }}
+                                        />
+                                    </span>
+                                    Manage Signatory
+                                </h2>
+                                <div className={styles.beneForm}>
+                                    <div className={styles.signForm}>
+                                        <div className={styles.midBeneForm}>
+                                            <div className={styles.formGroup}>
+                                                <label>Enter Email</label>
+                                                <InputTag
+                                                    type="email"
+                                                    placeholder="Enter email here"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className={styles.midBeneForm}>
+                                            <div className={styles.formGroup}>
+                                                <label>
+                                                    Enter your Business Phone
+                                                    Number
+                                                </label>
+                                                <div className={styles.phone}>
+                                                    <div
+                                                        className={
+                                                            styles.phoneHeader
+                                                        }
+                                                    >
+                                                        <span>
+                                                            {/* <img
+                                                            src={
+                                                                countryNames
+                                                                    .flags.svg
+                                                            }
+                                                            alt=""
+                                                        /> */}
+                                                        </span>
+                                                        <p>
+                                                            {/* {
+                                                            countryNames.baseCurrency
+                                                        } */}
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            styles.phoneDetails
+                                                        }
+                                                    >
+                                                        {/* <p>{countryNames.countryCode}</p> */}
+                                                        <input
+                                                            type="number"
+                                                            placeholder="812 345 6789"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.signForm}>
+                                        <div className={styles.midBeneForm}>
+                                            <div className={styles.formGroup}>
+                                                <label>Enter BVN</label>
+                                                <input
+                                                    type="email"
+                                                    placeholder="Enter your BVN"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className={styles.midBeneForm}>
+                                            <div className={styles.formGroup}>
+                                                <label>Signing Mandate</label>
+                                                <select>
+                                                    <option value="">
+                                                        Select Signing Mandate
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.signRights}>
+                                    <p>
+                                        Select sigining rights to be assigned to
+                                        this user
+                                    </p>
+                                    <div className={styles.signRightSingle}>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="viewBalances"
+                                                    value="View Balances"
+                                                />
+                                                <span>
+                                                    <CheckedSvg />
+                                                </span>
+                                            </label>
+
+                                            <p>View Balances</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.signRightSingle}>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="viewBalances"
+                                                    value="Transacting (able to move money)"
+                                                />
+                                                <span>
+                                                    <CheckedSvg />
+                                                </span>
+                                            </label>
+
+                                            <p>
+                                                Transacting (able to move money)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.signRightSingle}>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="viewBalances"
+                                                    value="Manage Account"
+                                                />
+                                                <span>
+                                                    <CheckedSvg />
+                                                </span>
+                                            </label>
+
+                                            <p>Manage Account</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.profileBodyButton}>
+                                        <button>Create Signatory</button>
+                                    </div>
+                                </div>
+                            </>
                         );
                     case 2:
                         return (
@@ -237,36 +688,155 @@ const Profile = () => {
                             />
                         );
                 }
-            case 'Manage Beneficiaires':
+            case 'Manage Beneficiaries':
                 switch (count) {
                     case 0:
                         return (
-                            <ManageBene
-                                overlay={overlay}
-                                title="Manage Beneficiary"
-                                action={() => {
-                                    setOverlay(false);
-                                    setText('');
-                                }}
-                                btnAction={() => {
-                                    setCount(count + 1);
-                                }}
-                            />
+                            <>
+                                <div className={styles.beneficiaryHead}>
+                                    <h2>Manage Beneficiaries</h2>
+                                    <div
+                                        className={styles.add}
+                                        onClick={() => {
+                                            setCount(count + 1);
+                                        }}
+                                    >
+                                        <AddSvg />
+                                        <p>Add</p>
+                                    </div>
+                                </div>
+                                <div className={styles.beneficiaryHeader}>
+                                    <div
+                                        className={
+                                            type === 'Account'
+                                                ? styles.active
+                                                : styles.beneficiaryHeaderDiv
+                                        }
+                                        onClick={() => {
+                                            setType('Account');
+                                        }}
+                                    >
+                                        <p>Account</p>
+                                    </div>
+                                    <div
+                                        className={
+                                            type === 'Airtime'
+                                                ? styles.active
+                                                : styles.beneficiaryHeaderDiv
+                                        }
+                                        onClick={() => {
+                                            setType('Airtime');
+                                        }}
+                                    >
+                                        <p>Airtime/Data</p>
+                                    </div>
+                                </div>
+                                <div className={styles.search}>
+                                    <img
+                                        src="../Assets/Svgs/search.svg"
+                                        alt=""
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Search Products"
+                                    />
+                                </div>
+                                <div className={styles.beneficiaryBody}>
+                                    {type === 'Account' ? (
+                                        <>
+                                            <p className={styles.text}>A</p>
+                                            {bene.account?.map(
+                                                (account, index) => {
+                                                    return (
+                                                        <ManageBeneSingle
+                                                            beneAccount={
+                                                                account.account
+                                                            }
+                                                            beneName={
+                                                                account.name
+                                                            }
+                                                            key={index}
+                                                        />
+                                                    );
+                                                }
+                                            )}
+                                        </>
+                                    ) : type === 'Airtime' ? (
+                                        <>
+                                            <p className={styles.text}>A</p>
+                                            {bene.airtime?.map(
+                                                (account, index) => {
+                                                    return (
+                                                        <ManageBeneSingle
+                                                            beneAccount={
+                                                                account.account
+                                                            }
+                                                            beneName={
+                                                                account.name
+                                                            }
+                                                            key={index}
+                                                        />
+                                                    );
+                                                }
+                                            )}
+                                        </>
+                                    ) : null}
+                                </div>
+                            </>
                         );
                     case 1:
                         return (
-                            <ManageBene2
-                                title="Create New Beneficiary"
-                                overlay={overlay}
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                formAction={(data) => {
-                                    console.log(data);
-                                }}
-                            />
+                            <>
+                                <div className={styles.beneficiaryHead}>
+                                    <h2>
+                                        <span>
+                                            <ArrowBackSvg
+                                                action={() => {
+                                                    setCount(count - 1);
+                                                }}
+                                            />
+                                        </span>
+                                        Manage Beneficiaries
+                                    </h2>
+                                    <div
+                                        className={styles.add}
+                                        // onClick={() => {
+                                        //     setCount(count + 1);
+                                        // }}
+                                    >
+                                        <AddSvg />
+                                        <p>Add</p>
+                                    </div>
+                                </div>
+                                <div className={styles.beneForm}>
+                                    <div className={styles.formGroup}>
+                                        <label>Choose Beneficiary Type</label>
+                                        <select name="" id="">
+                                            <option value="">
+                                                Select Type
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label>Account Number</label>
+                                        <input
+                                            type="number"
+                                            placeholder="Enter Account Number"
+                                        />
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label>Choose Bank</label>
+                                        <select name="" id="">
+                                            <option value="">
+                                                Select Bank
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div className={styles.profileBodyButton}>
+                                        <button>Create Beneficiary</button>
+                                    </div>
+                                </div>
+                            </>
                         );
                     // case 2:
                     //     return (
@@ -285,160 +855,73 @@ const Profile = () => {
                 }
         }
     };
+    // const myref = useRef();
+    // useEffect(() => {
+    //     myref.current.scrollTo(0, 0);
+    //     window.scrollTo(0, 0);
+    // }, [count, text]);
     return (
-        <DashLayout>
-            <div className={styles.profileWrapper}>
-                <h2>Profile Management</h2>
-                <div className={styles.profileCont}>
-                    <div className={styles.profileHeader}>
-                        <div className={styles.profileHeaderImg}>
-                            <Image
-                                src="/Assets/Images/profileImg.png"
-                                width="100%"
-                                height="100%"
-                                layout="responsive"
-                            />
-                            <p>Change Photo</p>
+        <DashLayout page="Profile Management">
+            <ProfileLayout
+                head={
+                    <>
+                        <div className={styles.profileHeaderHead}>
+                            <div className={styles.profileHeaderImg}>
+                                <Image
+                                    src="/Assets/Images/profileImg.png"
+                                    width="100%"
+                                    height="100%"
+                                    layout="responsive"
+                                />
+                            </div>
+                            <div className={styles.profileBodyHeaderCont}>
+                                <h2>Marvelous Solutions</h2>
+                                <p>Bayo Olatunji</p>
+                            </div>
                         </div>
-                        <div className={styles.profileHeaderText}>
-                            <label
-                                htmlFor="profileName"
-                                className={styles.profileName}
-                            >
-                                Edit Profile Name
-                            </label>
-                            <input
-                                type="text"
-                                name="profileName"
-                                placeholder="Bayo Olatunji _"
-                            />
-                            <div className={styles.lockAccount}>
-                                <Lock />
+                        <div className={styles.subProfileHead}>
+                            <div className={styles.freezeAccount}>
                                 <p>Freeze Account</p>
-                                <label>
-                                    <input type="checkbox" name="" id="" />
-                                    <span>
-                                        <i></i>
-                                    </span>
-                                </label>
+                                <div className={styles.saveBene}>
+                                    <label className={styles.beneCheck}>
+                                        <input type="checkbox" />
+                                        <span>
+                                            <i></i>
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
-                            <p>
-                                Account active for 53 days. Toggle to freeze
-                                account.
-                            </p>
-                            <button>Save Changes</button>
-                        </div>
-                    </div>
-                    <div className={styles.profileBody}>
-                        <div className={styles.profileBodyHeader}>
-                            <div
-                                className={
-                                    account
-                                        ? styles.active
-                                        : styles.profileButton
-                                }
-                                onClick={() => {
-                                    setAccount(true);
-                                    setOthers(false);
-                                    setSecurity(false);
-                                }}
-                            >
-                                <p>Account</p>
-                            </div>
-                            <div
-                                className={
-                                    security
-                                        ? styles.active
-                                        : styles.profileButton
-                                }
-                                onClick={() => {
-                                    setAccount(false);
-                                    setOthers(false);
-                                    setSecurity(true);
-                                }}
-                            >
-                                <p>Security</p>
-                            </div>
-                            <div
-                                className={
-                                    others
-                                        ? styles.active
-                                        : styles.profileButton
-                                }
-                                onClick={() => {
-                                    setAccount(false);
-                                    setOthers(true);
-                                    setSecurity(false);
-                                }}
-                            >
-                                <p>Others</p>
+                            <div className={styles.accountNumber}>
+                                <h4>Account Number</h4>
+                                <div className={styles.accountNumberCopy}>
+                                    <p>2345678910 (Ecobank)</p>
+                                    <h5>copy</h5>
+                                </div>
                             </div>
                         </div>
-                        <div className={styles.profileBodyCont}>
-                            {account ? (
-                                <div>
-                                    {profileData.account.map((item, index) => {
-                                        return (
-                                            <ProfileSingle
-                                                key={index}
-                                                profileText={item.text}
-                                                icon={item.icon}
-                                                index={index}
-                                                action={() => {
-                                                    setText(item.text);
-                                                    setOverlay(true);
-                                                }}
-                                            />
-                                        );
-                                    })}
-                                </div>
-                            ) : null}
-                            {security ? (
-                                <div>
-                                    {profileData.security.map((item, index) => {
-                                        return (
-                                            <ProfileSingle
-                                                key={index}
-                                                profileText={item.text}
-                                                icon={item.icon}
-                                                index={index}
-                                                action={() => {
-                                                    setText(item.text);
-                                                    setOverlay(true);
-                                                }}
-                                            />
-                                        );
-                                    })}
-                                    {/* action={showForm} */}
-                                    {/* <ProfileSingle
-                                        profileText="Enable/Disable Biometrics"
-                                        icon={<BiometricsSvg />}
-                                    /> */}
-                                </div>
-                            ) : null}
-                            {others ? (
-                                <div>
-                                    {profileData.others.map((item, index) => {
-                                        return (
-                                            <ProfileSingle
-                                                key={index}
-                                                profileText={item.text}
-                                                icon={item.icon}
-                                                index={index}
-                                                action={() => {
-                                                    setText(item.text);
-                                                    setOverlay(true);
-                                                }}
-                                            />
-                                        );
-                                    })}
-                                </div>
-                            ) : null}
+                        <div>
+                            {profileData.map((item, index) => {
+                                return (
+                                    <ProfileSingle
+                                        key={index}
+                                        profileText={item.text}
+                                        icon={item.icon}
+                                        index={index}
+                                        action={() => {
+                                            setText(item.text);
+                                            setOverlay(true);
+                                            setCount(0);
+                                        }}
+                                        color={item.color}
+                                    />
+                                );
+                            })}
                         </div>
-                    </div>
-                </div>
-            </div>
-            {overlay ? renderForm() : null}
+                    </>
+                }
+            >
+                {renderForm()}
+            </ProfileLayout>
         </DashLayout>
     );
 };

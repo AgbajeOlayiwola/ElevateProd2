@@ -18,6 +18,7 @@ import LoginCircleSvg from '../../../components/ReusableComponents/ReusableSvgCo
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [circle, setCircle] = useState(false);
     const [error, setError] = useState('');
     const [identifier, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -143,7 +144,12 @@ const Login = () => {
                         </div>
                         <div className={styles.remForg}>
                             <div>
-                                <LoginCircleSvg />
+                                <LoginCircleSvg
+                                    action={() => {
+                                        setCircle(!circle);
+                                    }}
+                                    circleStatus={circle}
+                                />
                                 <p>Remember me</p>
                             </div>
                             <div>

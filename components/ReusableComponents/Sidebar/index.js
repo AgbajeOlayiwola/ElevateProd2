@@ -11,11 +11,13 @@ import LogoutSvg from '../LogoutSvg';
 import { SidebarData } from '../Data';
 import SideBarDrop from './sidebarcont';
 import Dropdownicon from './dropdownicon';
+import Innersubnav from './innersubnav';
 
 const Sidebar = () => {
     const router = useRouter();
 
     const [subNav, setSubNav] = useState(false);
+    const [subNavTitle, setSubNavTitle] = useState('');
 
     const handleLogOut = () => {
         localStorage.clear();
@@ -26,7 +28,6 @@ const Sidebar = () => {
 
     const showSubnav = () => {
         setSubNav((prev) => !prev);
-        console.log('clicked');
     };
 
     // fillColor={router.pathname == '/Dashboard'}
@@ -38,41 +39,43 @@ const Sidebar = () => {
                     <ElevateLogo />
                 </div>
                 <div className={styles.track}>
-                    {' '}
                     {SidebarData.map((item, index) => {
-                        return (
-                            <div key={index}>
-                                <div
-                                    className={
-                                        router.pathname == item.path
-                                            ? styles.inActive
-                                            : styles.parentDiv
-                                    }
-                                >
-                                    <div className={styles.mainDiv}>
-                                        <Link
-                                            href={item.path}
-                                            key={index}
-                                            scroll={false}
-                                        >
-                                            <div
-                                                className={styles.LinkDiv}
-                                                onClick={showSubnav}
-                                            >
-                                                {router.pathname == item.path
-                                                    ? item.iconActive
-                                                    : item.icon}
-                                                <p className={styles.link}>
-                                                    {item.title}
-                                                </p>
-                                            </div>
-                                        </Link>
-                                    </div>
+                        console.log(item);
+                        if (item.subNav) {
+                            return (<div key={index}>
+                                    <a href={null}>
+                                        {item.title}
+                                        {item.subNav && item.iconClosed}
+                                    </a>
                                 </div>
-                                <SideBarDrop item={item} />
+                            );
+                        } else {
+                            return (<div key={index}>
+                                <a href={router.pathname !== item.path ? item.path : null}>
+                                    {item.title}
+                                    {item.subNav && item.iconClosed}
+                                </a>
                             </div>
                         );
+                        }
                     })}
+                    {/* {SidebarData.map((item, index) => {
+                        return (
+                            <div
+                                className={styles.cont}
+                                key={index}
+                                onClick={item.subNav && showSubnav}
+                            >
+                                {item.icon}
+                                <p>{item.title}</p>
+                                {item.subNav && subNav
+                                    ? item.iconOpened
+                                    : item.subNav
+                                    ? item.iconClosed
+                                    : null}
+                            </div>
+                        );
+                    })} */}
                 </div>
             </div>
             <div
