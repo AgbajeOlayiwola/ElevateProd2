@@ -228,7 +228,7 @@ const BillPayment = ({
                                     <label>Amount</label>
                                     <input type="text" placeholder="0.00" />
                                 </div>
-                                <button>Next</button>{' '}
+                                <button>Get Airtime</button>{' '}
                             </div>
                             <p className={styles.schedule}>
                                 Not paying now?{' '}
@@ -341,7 +341,7 @@ const BillPayment = ({
                                     <label>Amount</label>
                                     <input type="text" placeholder="0.00" />
                                 </div>
-                                <button>Next</button>{' '}
+                                <button>Get Data</button>{' '}
                             </div>
                             <p className={styles.schedule}>
                                 Not paying now?{' '}

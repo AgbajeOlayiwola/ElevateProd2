@@ -31,6 +31,7 @@ const AccountLoading = () => {
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
+    console.log(errorMessages);
     // useEffect(() => {
     // const accountData = {
     //     affiliateCode: 'ENG',
@@ -45,13 +46,13 @@ const AccountLoading = () => {
 
     // console.log(errorMessages);
     const newUserAccountt = () => {
-        console.log(accountStatus);
+        // console.log(accountStatus);
         if (!errorMessages) {
-            if (accountStatus.message === 'Try Again') {
+            if (errorMessages === 'Pending Creation, Try Again') {
                 setTimeout(() => {
                     dispatch(newAccountStatusData());
                 }, 1000);
-            } else if (accountStatus.message === 'SUCCESS') {
+            } else if (accountStatus.message === 'success') {
                 router.push('/Succes');
             }
         }
@@ -73,7 +74,6 @@ const AccountLoading = () => {
                             <div className={styles.error}>
                                 <h2 className={styles.error}>{errorT}</h2>
                                 <br />
-                                <h2> kindly reload</h2>
                             </div>
                         ) : (
                             <svg

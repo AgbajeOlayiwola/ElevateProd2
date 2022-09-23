@@ -7,7 +7,7 @@
     display: flex;
     position: absolute;
     top: 3.7%;
-    left: 33%;
+    left: 27%;
     z-index: 10;
 }
 .firstDivs {
@@ -369,6 +369,10 @@
     left: 24px;
 }
 
+.beneCheck input:checked ~ span {
+    background: #6ccf00;
+}
+
 .saveBene p {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -706,6 +710,10 @@
 
 .networkForm {
     margin-top: 24px;
+}
+
+.networkForm .formGroup {
+    width: 100%;
 }
 
 .networkForm button {

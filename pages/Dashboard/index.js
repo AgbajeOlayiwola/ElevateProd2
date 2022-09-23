@@ -135,15 +135,16 @@ const Dashboard = () => {
     const [acctNumber, setAcctNumber] = useState('');
     useEffect(() => {
         dispatch(newAccountStatusData());
-        if (accountStatus.data) {
-            setAcctNumber(accountStatus.data.accountNumber);
+        console.log('accountStatus', accountStatus);
+        if (accountStatus) {
+            setAcctNumber(accountStatus);
         } else {
             setAcctNumber('Pending');
         }
-    }, []);
+    }, [accountStatus]);
     // console.log(accountStatus.data.accountNumber);
     return (
-        <DashLayout>
+        <DashLayout page="Dashboard">
             <Levelup />
             <div className={styles.cove}>
                 <section className={styles.sectionI}>

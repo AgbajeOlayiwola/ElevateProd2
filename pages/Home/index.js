@@ -11,26 +11,19 @@ import {
 import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     loadCountry,
-    omniliteData,
-    accountNumberData
+    omniliteDataa,
+    accountNumberData,
+    ecobankOnlineData
 } from '../../redux/actions/actions';
 import Image from 'next/image';
 import Link from 'next/link';
 import Loader from '../../components/ReusableComponents/Loader';
-import { encrypt } from '../../redux/helper/hash';
-import validator from 'validator';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
-import Omnilite from '../../components/ReusableComponents/Loginwith/omnilite';
-import Ecoonline from '../../components/ReusableComponents/Loginwith/ecoonline';
-import Ecocard from '../../components/ReusableComponents/Loginwith/ecocard';
-import Ecoacct from '../../components/ReusableComponents/Loginwith/ecoacct';
 import NewUser from './NewUser';
 import OmniliteSvg from '../../components/ReusableComponents/ReusableSvgComponents/OmniliteSvg';
-import EcobankMobileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EcobankMobileSvg';
 import AccountNumberSvg from '../../components/ReusableComponents/ReusableSvgComponents/AccountNumberSvg';
 import CardSvg from '../../components/ReusableComponents/ReusableSvgComponents/CardSvg';
 import Slider from 'react-slick';
@@ -61,15 +54,21 @@ const HomeMain = () => {
     const [loading, setLoading] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
     const dispatch = useDispatch();
+    const [ecoonlineUserName, setEconlineUsername] = useState();
+    const [ecoonlinePassword, setEcoonlinePassword] = useState();
     const { countries, errorData } = useSelector(
         (state) => state.countryReducer
     );
-    const { isLoading, omnilite, errorMessage } = useSelector(
+    const { isLoading, omniliteData, errorMessage } = useSelector(
         (state) => state.omniliteReducer
     );
-    const { accountNumber, errorMessages } = useSelector(
+    const { accountNumbers, errorMessages } = useSelector(
         (state) => state.accountNumberReducer
     );
+    const { ecobankOnline, ecoOnlineErrorMessage } = useSelector(
+        (state) => state.ecobankOnlineReducer
+    );
+    console.log(omniliteData);
 
     useEffect(() => {
         dispatch(loadCountry());
@@ -83,13 +82,13 @@ const HomeMain = () => {
         }
     }, [countries]);
 
-    // console.log(watch('example')); // watch input value by passing the name of it
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
+
     const conditionalComponent = () => {
         switch (page) {
             case 0:
@@ -104,10 +103,10 @@ const HomeMain = () => {
                                 {...register('username', {
                                     required: 'Username is Required'
                                 })}
-                                name="username"
+                                name="omniliteUsername"
                             />
                             <p className={styles.error}>
-                                {errors?.username?.message}
+                                {errors?.omniliteUsername?.message}
                             </p>
                         </div>
                         <div>
@@ -119,13 +118,13 @@ const HomeMain = () => {
                                     {...register('password', {
                                         required: 'Password is Required'
                                     })}
-                                    name="password"
+                                    name="omnilitePassword"
                                     type={outType ? 'text' : 'password'}
                                 />
                                 <Visbility typeSet={types} />
                             </div>
                             <p className={styles.error}>
-                                {errors?.password?.message}
+                                {errors?.omnilitePassword?.message}
                             </p>
                         </div>
                     </div>
@@ -144,9 +143,13 @@ const HomeMain = () => {
                                         'Ecobank Online Username is Required'
                                 })}
                                 name="username"
+                                value={ecoonlineUserName}
+                                onChange={(e) =>
+                                    setEconlineUsername(e.target.value)
+                                }
                             />
                             <p className={styles.error}>
-                                {errors?.username?.message}
+                                {errors?.onlineUsername?.message}
                             </p>
                         </div>
                         <div>
@@ -159,13 +162,17 @@ const HomeMain = () => {
                                         required:
                                             'Ecobank Online Password is Required'
                                     })}
-                                    name="password"
+                                    name="onlinePassword"
                                     type={outType ? 'text' : 'password'}
+                                    value={ecoonlinePassword}
+                                    onChange={(e) =>
+                                        setEcoonlinePassword(e.target.value)
+                                    }
                                 />
                                 <Visbility typeSet={types} />
                             </div>
                             <p className={styles.error}>
-                                {errors?.password?.message}
+                                {errors?.onlinePassword?.message}
                             </p>
                         </div>
                     </div>
@@ -255,43 +262,6 @@ const HomeMain = () => {
                     </div>
                 );
             default:
-                return (
-                    <div className={styles.existingForm}>
-                        <div>
-                            <label>Enter Your Omnilite Username</label>
-                            <input
-                                placeholder="Omnilite Username"
-                                type="text"
-                                className={styles.idInput}
-                                {...register('username', {
-                                    required: 'Username is Required'
-                                })}
-                                name="username"
-                            />
-                        </div>
-                        <p className={styles.error}>
-                            {errors?.username?.message}
-                        </p>
-                        <div>
-                            <label>Enter Your Omnilite Password</label>
-                            <div className={styles.divs}>
-                                <input
-                                    placeholder="Omnilite Password"
-                                    className={styles.idInput}
-                                    {...register('password', {
-                                        required: 'Password is Required'
-                                    })}
-                                    name="password"
-                                    type={outType ? 'text' : 'password'}
-                                />
-                                <Visbility typeSet={types} />
-                            </div>
-                        </div>
-                        <p className={styles.error}>
-                            {errors?.password?.message}
-                        </p>
-                    </div>
-                );
         }
     };
     const onSubmit = (data) => {
@@ -312,75 +282,122 @@ const HomeMain = () => {
                 username: data.username,
                 password: data.password
             };
-            dispatch(omniliteData(postData));
+            dispatch(omniliteDataa(postData));
         } else if (page === 1) {
-            alert('Ecobank Online');
+            const postData = {
+                username: ecoonlineUserName,
+                password: ecoonlinePassword
+            };
+            // console.log('ecoOnlineData', ecoonlinePassword, ecoonlineUserName);
+            // console.log(ecobankOnline);
+            dispatch(ecobankOnlineData(postData));
+            console.log(ecobankOnline.message);
+
+            if (ecobankOnline.message === 'success') {
+                const data = {
+                    email: ecobankOnline.data.user.email,
+                    // accountNumber: omniliteData.data.user.profile.firstName,
+                    fullName: ecobankOnline.data.user.profile.lastName,
+                    phoneNumber: ecobankOnline.data.user.phoneNumber
+                };
+                window.localStorage.setItem(
+                    'displayAccount',
+                    JSON.stringify(data)
+                );
+                window.localStorage.setItem(
+                    'account',
+                    JSON.stringify(ecobankOnline.data.user)
+                );
+                router.push('/Onboarding/ExistingProfileSetup');
+            }
+            //ecoBank Online Login End
+
+            if (omniliteData.message === 'success') {
+                const data = {
+                    email: omniliteData.data.user.email,
+                    // accountNumber: omniliteData.data.user.profile.firstName,
+                    fullName: omniliteData.data.user.profile.lastName,
+                    phoneNumber: omniliteData.data.user.phoneNumber
+                };
+                window.localStorage.setItem(
+                    'displayAccount',
+                    JSON.stringify(data)
+                );
+                window.localStorage.setItem(
+                    'account',
+                    JSON.stringify(omniliteData.data.user)
+                );
+                router.push('/Onboarding/ExistingProfileSetup');
+            }
+            //omnilite login end
         } else if (page === 2) {
-            setLoading(true);
+            // setLoading(true);
             const postData = {
                 accountNo: data.accountNumber
             };
+
             dispatch(accountNumberData(postData));
         }
-        console.log(data);
+        console.log(accountNumbers);
     };
     const OmniliteTest = () => {
-        console.log(omnilite);
+        console.log(omniliteData);
         console.log(errorMessage);
         if (errorMessage) {
             setError(errorMessage);
             setLoading(false);
-        } else if (omnilite.message === 'Success') {
+        } else if (omniliteData.message === 'success') {
             const data = {
-                email: omnilite.data.userInfo.email,
-                accountNumber: omnilite.data.meta.accountNumber,
-                fullName: omnilite.data.meta.fullName,
-                phoneNumber: omnilite.data.meta.phoneNumber
+                email: omniliteData.data.user.email,
+                // accountNumber: omniliteData.data.user.profile.firstName,
+                fullName: omniliteData.data.user.profile.lastName,
+                phoneNumber: omniliteData.data.user.phoneNumber
             };
             window.localStorage.setItem('displayAccount', JSON.stringify(data));
             window.localStorage.setItem(
                 'account',
-                JSON.stringify(omnilite.data.meta)
+                JSON.stringify(omniliteData.data.user)
             );
             router.push('/Onboarding/ExistingProfileSetup');
         }
     };
     useEffect(() => {
         OmniliteTest();
-    }, [omnilite, errorMessage]);
+    }, [omniliteData, errorMessage]);
+
     const acctTest = () => {
-        console.log(errorMessages);
+        console.log(accountNumbers);
         if (errorMessages === 'Account already exists with the phone') {
             router.push('/Auth/Login');
         } else if (errorMessages) {
             setError(errorMessages);
             setLoading(false);
-        } else if (accountNumber.message === 'SUCCESS') {
+        } else if (accountNumbers.message === 'success') {
             router.push('/Onboarding/ExistingProfileSetup');
             const data = {
-                email: accountNumber.data.email,
-                accountNumber: accountNumber.data.accountNumber,
-                fullName: accountNumber.data.fullName,
-                phoneNumber: accountNumber.data.phoneNumber
+                email: accountNumbers.data.email,
+                accountNumber: accountNumbers.data.accountNumber,
+                fullName: accountNumbers.data.fullName,
+                phoneNumber: accountNumbers.data.phoneNumber
             };
 
             window.localStorage.setItem('displayAccount', JSON.stringify(data));
-            if (accountNumber.data.email === null) {
-                accountNumber.data = {
-                    ...accountNumber.data,
+            if (accountNumbers.data.email === null) {
+                accountNumbers.data = {
+                    ...accountNumbers.data,
                     email: 'topeakinfe@gmail.com'
                 };
             }
 
             window.localStorage.setItem(
                 'account',
-                JSON.stringify(accountNumber.data)
+                JSON.stringify(accountNumbers.data)
             );
         }
     };
     useEffect(() => {
         acctTest();
-    }, [accountNumber, errorMessages]);
+    }, [accountNumbers, errorMessages]);
     const types = (type) => {
         setOutType(type);
     };

@@ -15,16 +15,21 @@ const SideBarDrop = ({ item }) => {
     };
     return (
         <>
-            <div className={styles.dropBtn}>
-                {item.subNav && subNav ? (
-                    <div onClick={item.subNav && showSubnav}>
-                        {item.iconOpened}
-                    </div>
-                ) : item.subNav ? (
-                    <div onClick={item.subNav && showSubnav}>
-                        {item.iconClosed}
-                    </div>
-                ) : null}
+            <div
+                className={styles.contWrapper}
+                onClick={item.subNav && showSubnav}
+            >
+                <span className={styles.titleIcon}>{item.icon}</span>
+                <div>
+                    <a className={styles.title}>{item.title}</a>
+                </div>
+                <span className={styles.dropdown}>
+                    {item.subNav && subNav
+                        ? item.iconOpened
+                        : item.subNav
+                        ? item.iconClosed
+                        : null}
+                </span>
             </div>
             <div className={styles.drops}>
                 <Innersubnav item={item} subNav={subNav} />

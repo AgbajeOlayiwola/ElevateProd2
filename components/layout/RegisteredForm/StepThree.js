@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../ReusableComponents/Button';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
+import { useDispatch, useSelector } from 'react-redux';
+import { bankAccountsData } from '../../../redux/actions/actions';
 
 const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
+    const dispatch = useDispatch();
     const account = localStorage.getItem('displayAccount');
     const accountDetails = JSON.parse(account);
     const [isRegistered, setIsRegistered] = useState(false);
@@ -41,6 +44,15 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
             countryNames = JSON.parse(countryName);
         }
     }
+
+    const { bankAccounts, errorMessage } = useSelector(
+        (state) => state.bankAccountsReducer
+    );
+    useEffect(() => {
+        dispatch(bankAccountsData());
+        console.log(bankAccounts);
+    }, []);
+
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.body}>
@@ -50,7 +62,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>
                     <div className={styles.cardHeading}>
-                        <ArrowBackSvg action={action} />
+                        <ArrowBackSvg action={action} color="#102572" />
                         <div>
                             <h3 className={styles.LeftHeading}>
                                 Complete your Profile

@@ -10,13 +10,14 @@ import { encrypt } from '../../redux/helper/hash';
 import validator from 'validator';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import { useRouter } from 'next/router';
+import InputTag from '../../components/ReusableComponents/Input';
 
 const NewUser = ({ selectCountry }) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const [error, setError] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
-    const [pName, setPname] = useState('');
+    const [preferredName, setPname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfPassword] = useState('');
@@ -69,6 +70,7 @@ const NewUser = ({ selectCountry }) => {
     };
     const userName = (e) => {
         setPname(e.target.value);
+        console.log(pName);
     };
     // display Lofg in with end
     const types = (type) => {
@@ -96,10 +98,10 @@ const NewUser = ({ selectCountry }) => {
         setError('');
         if (password === confirmPassword) {
             const postData = {
-                pName,
+                preferredName,
                 email,
-                password: encrypt(password),
-                confirmPassword: encrypt(confirmPassword),
+                password,
+                confirmPassword,
                 affiliateCode: 'ENG'
             };
             setLoading(true);
@@ -114,7 +116,7 @@ const NewUser = ({ selectCountry }) => {
         if (errorMessage !== null) {
             setError(errorMessage);
             setLoading(false);
-        } else if (user == 'Account created successfully!') {
+        } else if (user == 'User registered successfully') {
             router.push('../Verify/Loading');
         }
     };
@@ -130,13 +132,32 @@ const NewUser = ({ selectCountry }) => {
                     <input
                         type="text"
                         {...register('userName', {
-                            required: 'Preferred name  is required'
+                            required: 'Preferred name  is required',
+                            pattern: {
+                                value: /^[A-Za-z ]+$/i,
+                                message: 'Only Alphabelts allowed'
+                            }
                         })}
                         onChange={userName}
-                        value={pName}
+                        value={preferredName}
                         placeholder="Preferred Name"
                     />
-                    <p className={styles.error}>{errors.userName?.message}</p>
+                    {/* <InputTag
+                        label="Preferred Name"
+                        placeholder="Preferred Name"
+                        type="text"
+                        pattern={{
+                            value: /^[A-Za-z ]+$/i,
+                            message: 'Only Alphabelts allowed'
+                        }}
+                        value={preferredName}
+                        action={userName}
+                    /> */}
+                    {errors.userName ? (
+                        <p className={styles.error}>
+                            {errors.userName?.message}
+                        </p>
+                    ) : null}
                 </div>
                 <div className={styles.secondSectionMidYes}>
                     <label htmlFor="">Email Address</label>

@@ -11,11 +11,13 @@ import LogoutSvg from '../LogoutSvg';
 import { SidebarData } from '../Data';
 import SideBarDrop from './sidebarcont';
 import Dropdownicon from './dropdownicon';
+import Innersubnav from './innersubnav';
 
 const Sidebar = () => {
     const router = useRouter();
 
     const [subNav, setSubNav] = useState(false);
+    const [subNavTitle, setSubNavTitle] = useState('');
 
     const handleLogOut = () => {
         localStorage.clear();
@@ -26,7 +28,6 @@ const Sidebar = () => {
 
     const showSubnav = () => {
         setSubNav((prev) => !prev);
-        console.log('clicked');
     };
 
     // fillColor={router.pathname == '/Dashboard'}
@@ -38,51 +39,67 @@ const Sidebar = () => {
                     <ElevateLogo />
                 </div>
                 <div className={styles.track}>
-                    {' '}
                     {SidebarData.map((item, index) => {
-                        return (
-                            <div key={index}>
+                        console.log(item);
+                        if (item.subNav) {
+                            return (
                                 <div
+                                    key={index}
                                     className={
-                                        router.pathname == item.path
+                                        router.pathname === item.path
                                             ? styles.inActive
-                                            : styles.parentDiv
+                                            : styles.cont
                                     }
                                 >
-                                    <div className={styles.mainDiv}>
-                                        <Link
-                                            href={item.path}
-                                            key={index}
-                                            scroll={false}
-                                        >
-                                            <div
-                                                className={styles.LinkDiv}
-                                                onClick={showSubnav}
+                                    <SideBarDrop item={item} />
+                                </div>
+                            );
+                        } else {
+                            return (
+                                <div
+                                    key={index}
+                                    className={
+                                        router.pathname === item.path
+                                            ? styles.inActive
+                                            : styles.cont
+                                    }
+                                >
+                                    <div className={styles.contWrapper}>
+                                        <span className={styles.titleIcon}>
+                                            {item.icon}
+                                        </span>
+                                        <div>
+                                            <a
+                                                href={
+                                                    router.pathname !==
+                                                    item.path
+                                                        ? item.path
+                                                        : null
+                                                }
+                                                className={styles.title}
                                             >
-                                                {router.pathname == item.path
-                                                    ? item.iconActive
-                                                    : item.icon}
-                                                <p className={styles.link}>
-                                                    {item.title}
-                                                </p>
-                                            </div>
-                                        </Link>
+                                                {item.title}
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                                <SideBarDrop item={item} />
-                            </div>
-                        );
+                            );
+                        }
                     })}
                 </div>
             </div>
             <div
                 onClick={handleLogOut}
-                className={styles.parentDiv}
-                styles={{ marginTop: '48.64px' }}
+                className={styles.cont}
+                // styles={{ marginTop: '48.64px' }}
             >
-                <div className={styles.LinkDiv}>
-                    <LogoutSvg />
-                    <p className={styles.link}>Logout</p>
+                <div className={styles.contWrapper}>
+                    <span>
+                        <LogoutSvg />
+                    </span>
+                    <div>
+                        <p className={styles.title}>Logout</p>
+                    </div>
                 </div>
             </div>
         </nav>

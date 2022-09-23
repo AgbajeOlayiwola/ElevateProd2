@@ -21,11 +21,12 @@ import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchS
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import { getCookie } from 'cookies-next';
-const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
+const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // const [progress, setProgress] = useState('75%');
     const [title, setTitle] = useState('Basic');
     const [bgcolor, setBgcolor] = useState(false);
     const [profileCont, setProfileCont] = useState([]);
+    const [businessProfile, setBusinessProfile] = useState([]);
 
     const handleShowFourthStep = () => {
         setSwitchs((prev) => !prev);
@@ -35,6 +36,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const { isLoading, profile, errorMessage } = useSelector(
         (state) => state.profile
     );
+
     const { newCorpAccount, newCorpAccountErrorMMessage } = useSelector(
         (state) => state.newuserCorpAccount
     );
@@ -79,9 +81,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     }, []);
     useEffect(() => {
         if (profile !== null) {
-            setProfileCont(profile.data);
+            console.log(profileCont);
+            setProfileCont(profile.data[0].documentData);
+            setBusinessProfile(profile.data[2].documentData);
         }
-        setGender(profileCont.gender);
+        // setGender(profileCont.gender);
     }, [profile]);
     useEffect(() => {
         dispatch(businessCategoriesData());
@@ -113,35 +117,38 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
+    // console.log(type);
     const [errorMes, setErrorMes] = useState();
     const handleSubmitIII = () => {
         const commpleteProfileData = {
+            isRegistered: type,
             businessName: formData.bussinessName,
+            businessCategory: business,
             businessType: businesses,
             referralCode: formData.referralCode,
             countryCode: '+234',
-            phoneNumber: formData.phoneNumber,
-            businessAddress: formData.streetName,
+            businessPhoneNumber: formData.phoneNumber,
+            street: formData.streetName,
             state: formData.state,
             city: formData.city,
-            lga: formData.localGoverment
+            lga: formData.localGoverment,
+            refereeCode: 'string'
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         const accountData = {
             affiliateCode: 'ENG',
-            ccy: 'NGN'
+            currency: 'NGN'
         };
         dispatch(createNewUserAccount(accountData));
         console.log(
             'errorMessages from account',
-            newAccount.message,
+            newAccount,
             newAccountErrorMessage
         );
         if (
-            newAccount.message ===
-                'Your Transaction Request is Successful and Approved' ||
+            newAccount === 'Success' ||
             newAccountErrorMessage ===
                 'You already have an account with us. Please contact us for more information'
         ) {
@@ -156,6 +163,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
 
     const handleSubmitReg = () => {
         const commpleteProfileData = {
+            isRegistered: type,
             businessName: formData.bussinessName,
             businessType: businesses,
             referralCode: formData.refferalCode,
@@ -233,6 +241,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     //     console.log(data);
     // };
     const [activeBtn, setActiveBtn] = useState(true);
+    console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
@@ -286,9 +295,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                         <div className={styles.nameDiv}>
                             <div className={styles.formGroups}>
                                 <label>Enter Full Name</label>
+                                {console.log('profile cont', businessProfile)}
+
                                 <input
                                     type="text"
-                                    placeholder={profileCont.fullName}
+                                    placeholde="name"
+                                    placeholder={profileCont.firstName}
                                     disabled
                                 />
                             </div>
@@ -307,8 +319,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                     <input
                                         type="text"
                                         value={
-                                            profileCont.business
-                                                ? profileCont.business.name
+                                            businessProfile
+                                                ? businessProfile.companyName
                                                 : formData.businessName
                                         }
                                         placeholder="Enter Business Full Name"
@@ -321,54 +333,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                         }}
                                     />
                                 </div>
-                                <div className={styles.singleFormGroup}>
-                                    <label>Select your Business Category</label>
-
-                                    <div className={styles.businessCat}>
-                                        <div
-                                            className={
-                                                styles.businessCategories
-                                            }
-                                            onClick={() => {
-                                                setBusinessTest(!businessTest);
-                                            }}
-                                        >
-                                            <SearchSvg />
-                                            {business ? (
-                                                <p>{business}</p>
-                                            ) : (
-                                                <p>Search Business Category</p>
-                                            )}
-
-                                            <DropdownSvg />
-                                        </div>
-                                        {businessTest && (
-                                            <ul
-                                                className={styles.businessGroup}
-                                            >
-                                                {Object.keys(
-                                                    businessCategory
-                                                )?.map((business, index) => {
-                                                    return (
-                                                        <li
-                                                            value={business}
-                                                            key={index}
-                                                            onClick={() => {
-                                                                setBusiness(
-                                                                    business
-                                                                );
-                                                                setBusinessTest(
-                                                                    false
-                                                                );
-                                                            }}
-                                                        >
-                                                            {business}
-                                                        </li>
-                                                    );
-                                                })}
-                                            </ul>
-                                        )}
-                                    </div>
+                                <div className={styles.formGroup}>
+                                    <label>Select your Gender</label>
+                                    <select name="" id="">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
                                 </div>
                             </div>
                             <div className={styles.formGroup}>
@@ -463,13 +433,33 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                         )}
                                     </div>
                                 </div>
-                                <button
-                                    onClick={() => {
-                                        setTitle('Other');
-                                    }}
-                                >
-                                    Next
-                                </button>
+                                {type === true ? (
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Next"
+                                        type="button"
+                                        // onClick={handleSubmitReg}
+                                        onClick={() => {
+                                            setTitle('Other');
+                                        }}
+                                    />
+                                ) : (
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Next"
+                                        type="button"
+                                        // onClick={handleSubmitIII}
+                                        onClick={() => {
+                                            setTitle('Other');
+                                        }}
+                                    />
+                                )}
                             </div>
                         </div>
                     </>
@@ -599,13 +589,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                         }}
                                     />
                                 </div>
-                                {profileCont.isBusinessRegistered === true ? (
+                                {type === 'true' ? (
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
-                                        text="Save & Continue"
+                                        text="Save & Continue Reg"
                                         type="button"
                                         onClick={handleSubmitReg}
                                         // onClick={handleShowFourthStep}
@@ -629,19 +619,40 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                     <div className={styles.sign}>
                                         <p>No file chosen...</p>
                                         <label>
-                                            <input
-                                                type="file"
-                                                placeholder="Enter Code"
-                                            />
-                                            Upload
+                                            Enter Referral Code
+                                            <span>(Optional)</span>
                                         </label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter Code"
+                                        />
+                                    </div>
+                                    <button type="submit">
+                                        Save & Continue
+                                    </button>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <div className={styles.singleFormGroup}>
+                                        <label>Upload Signature</label>
+                                        <div className={styles.sign}>
+                                            <p>No file chosen...</p>
+                                            <label>
+                                                <input
+                                                    type="file"
+                                                    placeholder="Enter Code"
+                                                />
+                                                Upload
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </>
                 )}
-                {/* {switchs ? (
+            </div>
+
+            {/* {switchs ? (
                             <>
                                 <StepFourCompProfile2BizDetails
                                     formData={formData}
@@ -726,7 +737,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                 </>
                             </>
                         )} */}
-            </div>
         </div>
     );
 };

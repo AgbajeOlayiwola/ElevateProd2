@@ -11,7 +11,7 @@ const SchedulePayment = ({ overlay, closeAction, action }) => {
             <div className={styles.schedulepayment}>
                 <div className={styles.schedulepaymentCont}>
                     <div className={styles.heading}>
-                        <ArrowBackSvg action={action} />
+                        <ArrowBackSvg action={action} color="#102572" />
                         <h2>Schedule Payment</h2>
                     </div>
 

@@ -13,7 +13,7 @@ const accountStatusReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: true,
-                accountStatus: [],
+                accountStatus: payload,
                 errorMessages: ''
             };
         case accountStatus.ACCOUNTSTATUS_LOAD_SUCCESS:

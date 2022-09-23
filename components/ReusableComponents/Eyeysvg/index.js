@@ -19,7 +19,7 @@ const Visbility = ({ typeSet, color }) => {
                     zIndex: '10',
                     fontWeight: '300',
                     fontSize: '21px',
-
+                    color: '#C6C6C6',
                     cursor: 'pointer'
                 }}
                 onClick={visibilityToggle}

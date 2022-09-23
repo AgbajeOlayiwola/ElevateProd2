@@ -20,7 +20,7 @@ const ExistingMultiStep = () => {
             case 1:
                 return (
                     <SecondStep
-                        onSubmit={(e) => {
+                        move={(e) => {
                             setPage(page + 1);
                         }}
                         action={() => {

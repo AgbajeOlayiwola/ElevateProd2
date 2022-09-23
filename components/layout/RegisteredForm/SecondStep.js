@@ -6,14 +6,18 @@ import Card from '../NotRegisteredForms/Card';
 import Visbility from '../../ReusableComponents/Eyeysvg';
 import styles from './styles.module.css';
 import validator from 'validator';
-import { existingUserProfileData } from '../../../redux/actions/actions';
+import {
+    bankAccountsData,
+    existingUserProfileData
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
 import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
+import { setCookie } from 'cookies-next';
 
-const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
+const RegisteredForm = ({ handleShowSecondStep, action, move }) => {
     const dispatch = useDispatch();
     const {
         register,
@@ -23,6 +27,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
 
     const account = localStorage.getItem('displayAccount');
     const accountDetails = JSON.parse(account);
+
     const sendAccount = localStorage.getItem('account');
     const sendAccounts = JSON.parse(sendAccount);
     const [activeBtn, setActiveBtn] = useState(true);
@@ -31,9 +36,11 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
     const [passwordMatch, setPasswordMatch] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
     const [loading, setLoading] = useState(false);
-    const { existingUserProfile, errorMessage } = useSelector(
+    const [emailData, setEmailData] = useState('');
+    const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
+    console.log(existingUserProfilee);
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
         setConfPassword(e.target.value);
@@ -75,37 +82,34 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
         window.localStorage.setItem('meta', JSON.stringify(meta));
     };
 
-    // const onSubmit = (data) => {
-    // setLoading(true);
-    // console.log(data);
+    let accounts = window.localStorage.getItem('account');
+    var newAccounts = JSON.parse(accounts);
+    // console.log(newAccounts);
 
-    // const userData = {
-    //     email: data.email,
-    //     password: password,
-    //     confirmPassword: confPassword
-    // };
-    // dispatch(existingUserProfileData(userData));
-    // };
+    const onSubmit = (data) => {
+        setLoading(true);
+        console.log(data);
 
-    // const profileTest = () => {
-    //     if (errorMessage) {
-    // setError(errorMessage);
-    // console.log(errorMessage);
-    // setLoading(false);
-    // } else if (existingUserProfile.message === 'SUCCESS') {
-    //     alert('Success');
-    //     setLoading(false);
-    // router.push('/Onboarding/ExistingProfileSetup');
-    //     }
-    // };
-    // useEffect(() => {
-    //     profileTest();
-    // }, [errorMessage, existingUserProfile]);
+        const userData = {
+            userId: newAccounts.userId,
+            email: emailData,
+            password: password,
+            confirmPassword: confPassword
+        };
+        dispatch(existingUserProfileData(userData));
+    };
+
+    useEffect(() => {
+        if (errorMessage) {
+            onSubmit();
+        }
+    }, [errorMessage]);
     const types = (type) => {
         setOutType(type);
     };
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
+
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
@@ -114,7 +118,7 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>
                     <div className={styles.cardHeading}>
-                        <ArrowBackSvg action={action} />
+                        <ArrowBackSvg action={action} color="#102572" />
                         <div>
                             <h3 className={styles.LeftHeading}>
                                 Profile Setup
@@ -130,12 +134,13 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
                                 placeholder="Enter Your Email"
                                 className={styles.textInput}
                                 required
-                                readOnly
+                                // readOnly
                                 value={
                                     accountDetails.email === null
-                                        ? accountDetails.phoneNumber
+                                        ? emailData
                                         : accountDetails.email.toLowerCase()
                                 }
+                                onChange={(e) => setEmailData(e.target.value)}
                             />
                         </div>
 
@@ -187,17 +192,17 @@ const RegisteredForm = ({ handleShowSecondStep, onSubmit, action }) => {
                                 <p className={styles.error}>{passwordMatch}</p>
                             )}
                         </div>
-                        {loading ? (
+                        {/* {loading ? (
                             <Loader />
-                        ) : (
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                // onClick={handleSubmit}
-                                type="submit"
-                                text="Next"
-                            />
-                        )}
+                        ) : ( */}
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            onClick={move}
+                            type="submit"
+                            text="Next"
+                        />
+                        {/* )} */}
                     </form>
                 </div>
             </section>
