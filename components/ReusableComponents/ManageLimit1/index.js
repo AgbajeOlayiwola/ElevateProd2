@@ -33,6 +33,7 @@ const ManageLimit = ({ overlay, title, action, btnAction }) => {
                         {signData.map((item, index) => {
                             return (
                                 <SignSingle
+                                    key={index}
                                     index={index}
                                     mail={item.email}
                                     fname={item.name}
