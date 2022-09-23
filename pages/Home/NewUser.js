@@ -128,7 +128,7 @@ const NewUser = ({ selectCountry }) => {
             {error ? <p className={styles.error}>{error}</p> : null}
             <div className={styles.homeForm}>
                 <div className={styles.secondSectionMidCountry}>
-                    {/* <label htmlFor="">Preferred Name</label>
+                    <label htmlFor="">Preferred Name</label>
                     <input
                         type="text"
                         {...register('userName', {
@@ -141,7 +141,7 @@ const NewUser = ({ selectCountry }) => {
                         onChange={userName}
                         value={preferredName}
                         placeholder="Preferred Name"
-                    /> */}
+                    />
                     {/* <InputTag
                         label="Preferred Name"
                         placeholder="Preferred Name"

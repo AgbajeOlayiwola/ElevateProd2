@@ -28,7 +28,7 @@ const ExistingMultiStep = () => {
     }
     return (
         <div className={styles.cov}>
-            <Card>
+            <div className={styles.covWrapper}>
                 {conditionalComponent()}
                 {page === 1 ? null : (
                     <ButtonComp
@@ -49,7 +49,7 @@ const ExistingMultiStep = () => {
                         </p>
                     </div>
                 ) : null}
-            </Card>
+            </div>
         </div>
     );
 };

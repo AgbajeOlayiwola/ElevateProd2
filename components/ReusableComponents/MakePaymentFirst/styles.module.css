@@ -369,6 +369,10 @@
     left: 24px;
 }
 
+.beneCheck input:checked ~ span {
+    background: #6ccf00;
+}
+
 .saveBene p {
     font-family: 'Inter', sans-serif;
     font-style: normal;
