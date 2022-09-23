@@ -85,7 +85,7 @@ const Payment = () => {
     const [outType, setOutType] = useState();
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
-    const [balance, setBalance] = useState('000000.00');
+    const [balance, setBalance] = useState('# 000000.00');
     const [error, setError] = useState('');
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');
@@ -507,8 +507,8 @@ const Payment = () => {
                             <SchedulePayment
                                 overlay={overlay}
                                 action={() => {
-                                    setCount(0);
-                                    setFormType('');
+                                    setCount(count - 4);
+                                    // setFormType('');
                                 }}
                                 closeAction={handleClose}
                             />

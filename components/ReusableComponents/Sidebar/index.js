@@ -42,50 +42,64 @@ const Sidebar = () => {
                     {SidebarData.map((item, index) => {
                         console.log(item);
                         if (item.subNav) {
-                            return (<div key={index}>
-                                    <a href={null}>
-                                        {item.title}
-                                        {item.subNav && item.iconClosed}
-                                    </a>
+                            return (
+                                <div
+                                    key={index}
+                                    className={
+                                        router.pathname === item.path
+                                            ? styles.inActive
+                                            : styles.cont
+                                    }
+                                >
+                                    <SideBarDrop item={item} />
                                 </div>
                             );
                         } else {
-                            return (<div key={index}>
-                                <a href={router.pathname !== item.path ? item.path : null}>
-                                    {item.title}
-                                    {item.subNav && item.iconClosed}
-                                </a>
-                            </div>
-                        );
+                            return (
+                                <div
+                                    key={index}
+                                    className={
+                                        router.pathname === item.path
+                                            ? styles.inActive
+                                            : styles.cont
+                                    }
+                                >
+                                    <div className={styles.contWrapper}>
+                                        <span className={styles.titleIcon}>
+                                            {item.icon}
+                                        </span>
+                                        <div>
+                                            <a
+                                                href={
+                                                    router.pathname !==
+                                                    item.path
+                                                        ? item.path
+                                                        : null
+                                                }
+                                                className={styles.title}
+                                            >
+                                                {item.title}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
                         }
                     })}
-                    {/* {SidebarData.map((item, index) => {
-                        return (
-                            <div
-                                className={styles.cont}
-                                key={index}
-                                onClick={item.subNav && showSubnav}
-                            >
-                                {item.icon}
-                                <p>{item.title}</p>
-                                {item.subNav && subNav
-                                    ? item.iconOpened
-                                    : item.subNav
-                                    ? item.iconClosed
-                                    : null}
-                            </div>
-                        );
-                    })} */}
                 </div>
             </div>
             <div
                 onClick={handleLogOut}
-                className={styles.parentDiv}
-                styles={{ marginTop: '48.64px' }}
+                className={styles.cont}
+                // styles={{ marginTop: '48.64px' }}
             >
-                <div className={styles.LinkDiv}>
-                    <LogoutSvg />
-                    <p className={styles.link}>Logout</p>
+                <div className={styles.contWrapper}>
+                    <span>
+                        <LogoutSvg />
+                    </span>
+                    <div>
+                        <p className={styles.title}>Logout</p>
+                    </div>
                 </div>
             </div>
         </nav>

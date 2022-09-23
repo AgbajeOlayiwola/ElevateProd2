@@ -9,8 +9,7 @@ const InputTag = ({
     pattern,
     label,
     value,
-    action,
-    names
+    action
 }) => {
     const { register } = useForm();
     return (
@@ -21,13 +20,13 @@ const InputTag = ({
                 placeholder={placeholder}
                 name={name}
                 className={styles.inputTag}
-                {...register(names, {
-                    required: `${placeholder}  is required`,
-                    pattern: {
-                        value: pattern.value,
-                        message: pattern.message
-                    }
-                })}
+                // {...register(name, {
+                //     required: `${placeholder}  is required`,
+                //     pattern: {
+                //         value: pattern.value,
+                //         message: pattern.message
+                //     }
+                // })}
                 value={value}
                 onInput={action}
             />

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { ButtonComp } from '../../../components';
 import Card from '../../../components/layout/NotRegisteredForms/Card/index';
 import styles from './styles.module.css';
-import * as IoIcons from 'react-icons/io';
 import { useForm } from 'react-hook-form';
+import ArrowBackSvg from '../../../components/ReusableComponents/ArrowBackSvg';
+import { useRouter } from 'next/router';
 const ForgotPassword = () => {
     const [emailError, setEmailError] = useState('');
     const {
@@ -16,21 +17,28 @@ const ForgotPassword = () => {
     const onTypes = () => {
         console.log(errors.email?.message);
     };
+    const router = useRouter();
 
     return (
         <>
             <div className={styles.back}>
-                <div>
-                    <IoIcons.IoMdArrowBack />
-                </div>
+                <ArrowBackSvg
+                    action={() => {
+                        router.push('../Auth/Login');
+                    }}
+                    color="#102572"
+                />
                 <p>Reset Password</p>
             </div>
             <div className={styles.emailP}>
-                Enter the email registered with your account and instructions to
-                reset your password will be sent to your email.
+                <p>
+                    Enter the email registered with your account and
+                    instructions to reset your password will be sent to your
+                    email.
+                </p>
             </div>
             <form className={styles.form}>
-                <label htmlFor="email">Enter your Email</label>
+                <label htmlFor="email">Email Address</label>
                 <input
                     type="text"
                     name="email"
