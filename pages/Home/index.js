@@ -283,6 +283,7 @@ const HomeMain = () => {
                 password: data.password
             };
             dispatch(omniliteDataa(postData));
+            console.log('new');
         } else if (page === 1) {
             const postData = {
                 username: ecoonlineUserName,
@@ -332,6 +333,7 @@ const HomeMain = () => {
             //omnilite login end
         } else if (page === 2) {
             // setLoading(true);
+
             const postData = {
                 accountNo: data.accountNumber
             };

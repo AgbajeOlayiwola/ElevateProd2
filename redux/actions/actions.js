@@ -41,7 +41,7 @@ import {
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import axios from 'axios';
 
 var loginToken = '';
@@ -904,7 +904,10 @@ export const loginUserAction = (loginData) => {
                     'token',
                     JSON.stringify(response.data.data.token)
                 );
+                console.log(response.data);
+                localStorage.setItem('user', JSON.stringify(response.data));
 
+                setCookie('cookieToken', response.data.data.token, 1 / 24);
                 dispatch(userLoadStart(response.data.message));
             })
             .catch((error) => {
@@ -973,6 +976,7 @@ export const bvnNinData = (bvnNin) => ({
     payload: bvnNin
 });
 export const createProfileSetup = (profileData) => {
+    const cookie = getCookie('cookieToken');
     return async (dispatch) => {
         await axios
             .post(
@@ -997,7 +1001,6 @@ export const createProfileSetup = (profileData) => {
                     axiosInstance
                         .post(
                             `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatus}`,
-
                             {
                                 headers: {
                                     'Content-Type': 'application/json',

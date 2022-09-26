@@ -70,7 +70,7 @@ const NewUser = ({ selectCountry }) => {
     };
     const userName = (e) => {
         setPname(e.target.value);
-        console.log(pName);
+        // console.log(pName);
     };
     // display Lofg in with end
     const types = (type) => {

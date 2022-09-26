@@ -44,6 +44,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         (state) => state.businessCategoriesReducer
     );
     const { states } = useSelector((state) => state.statesReducer);
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
+    const { newAccount, newAccountErrorMessage } = useSelector(
+        (state) => state.newUserAccountDets
+    );
 
     const [checker, setChecker] = useState();
     const [localState, setLocalState] = useState('');
@@ -83,18 +89,37 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         if (profile !== null) {
             console.log(profileCont);
             setProfileCont(profile.data[0].documentData);
-            setBusinessProfile(profile.data[2].documentData);
+            if (profile.data[2]) {
+                setBusinessProfile(profile.data[2].documentData);
+            } else {
+                setBusinessProfile('');
+            }
         }
         // setGender(profileCont.gender);
     }, [profile]);
     useEffect(() => {
         dispatch(businessCategoriesData());
     }, []);
+    console.log(
+        'errorMessages from account',
+        newAccount,
+        newAccountErrorMessage
+    );
     useEffect(() => {
+        if (newAccount.message === 'success') {
+            console.log(errorMessages);
+            router.push('/Verify/Account/loading');
+        } else if (
+            newAccountErrorMessage ===
+            'You already have an account with us. Please contact us for more information'
+        ) {
+            router.push('/Succes');
+        }
+
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
         }
-    }, [businessCategories]);
+    }, [businessCategories, newAccountErrorMessage, newAccount]);
     useEffect(() => {
         Object.keys(businessCategory)?.filter((item) => {
             if (item === business) {
@@ -111,12 +136,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         watch,
         formState: { errors }
     } = useForm();
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
-    const { newAccount, newAccountErrorMessage } = useSelector(
-        (state) => state.newUserAccountDets
-    );
+
     // console.log(type);
     const [errorMes, setErrorMes] = useState();
     const handleSubmitIII = () => {
@@ -142,49 +162,47 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             currency: 'NGN'
         };
         dispatch(createNewUserAccount(accountData));
-        console.log(
-            'errorMessages from account',
-            newAccount,
-            newAccountErrorMessage
-        );
-        if (
-            newAccount === 'Success' ||
-            newAccountErrorMessage ===
-                'You already have an account with us. Please contact us for more information'
-        ) {
-            console.log(errorMessages);
-            router.push('/Verify/Account/loading');
-        } else if (accountStatus.message === 'Try Again') {
-            router.push('/Verify/Account/loading');
-        } else if (accountStatus.message === 'SUCCESS') {
-            router.push('/Succes');
-        }
+
+        // if (
+        //     newAccount === 'Success' ||
+        //     newAccountErrorMessage ===
+        //         'You already have an account with us. Please contact us for more information'
+        // ) {
+        //     console.log(errorMessages);
+        //     router.push('/Verify/Account/loading');
+        // } else if (accountStatus.message === 'Try Again') {
+        //     router.push('/Verify/Account/loading');
+        // } else if (accountStatus.message === 'SUCCESS') {
+        //     router.push('/Succes');
+        // }
     };
 
     const handleSubmitReg = () => {
         const commpleteProfileData = {
             isRegistered: type,
             businessName: formData.bussinessName,
+            businessCategory: business,
             businessType: businesses,
             referralCode: formData.refferalCode,
             countryCode: '+234',
-            phoneNumber: formData.bussinessName,
-            businessAddress: formData.streetName,
+            businessPhoneNumber: formData.phoneNumber,
+            street: formData.streetName,
             state: formData.state,
             city: formData.city,
-            lga: formData.localGoverment
+            lga: formData.localGoverment,
+            refereeCode: 'END'
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         const accountData = {
             affiliateCode: 'ENG',
-            ccy: 'NGN'
+            currency: 'NGN'
         };
         const cookie = getCookie('cookieToken');
         axiosInstance
             .post(
-                `https://ellevate-app.herokuapp.com${apiRoutes.corpNewUser}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.corpNewUser}`,
                 accountData,
                 {
                     headers: {
@@ -241,7 +259,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     //     console.log(data);
     // };
     const [activeBtn, setActiveBtn] = useState(true);
-    console.log(type);
+    // console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
@@ -333,12 +351,54 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         }}
                                     />
                                 </div>
-                                <div className={styles.formGroup}>
-                                    <label>Select your Gender</label>
-                                    <select name="" id="">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
+                                <div className={styles.singleFormGroup}>
+                                    <label>Select your Business Category</label>
+
+                                    <div className={styles.businessCat}>
+                                        <div
+                                            className={
+                                                styles.businessCategories
+                                            }
+                                            onClick={() => {
+                                                setBusinessTest(!businessTest);
+                                            }}
+                                        >
+                                            <SearchSvg />
+                                            {business ? (
+                                                <p>{business}</p>
+                                            ) : (
+                                                <p>Search Business Category</p>
+                                            )}
+
+                                            <DropdownSvg />
+                                        </div>
+                                        {businessTest && (
+                                            <ul
+                                                className={styles.businessGroup}
+                                            >
+                                                {Object.keys(
+                                                    businessCategory
+                                                )?.map((business, index) => {
+                                                    return (
+                                                        <li
+                                                            value={business}
+                                                            key={index}
+                                                            onClick={() => {
+                                                                setBusiness(
+                                                                    business
+                                                                );
+                                                                setBusinessTest(
+                                                                    false
+                                                                );
+                                                            }}
+                                                        >
+                                                            {business}
+                                                        </li>
+                                                    );
+                                                })}
+                                            </ul>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.formGroup}>
@@ -613,7 +673,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     />
                                 )}
                             </div>
-                            <div className={styles.formGroup}>
+                            {/* <div className={styles.formGroup}>
                                 <div className={styles.singleFormGroup}>
                                     <label>Upload Signature</label>
                                     <div className={styles.sign}>
@@ -626,28 +686,28 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             type="text"
                                             placeholder="Enter Code"
                                         />
-                                    </div>
-                                    <button type="submit">
+                                    </div> */}
+                            {/* <button type="submit">
                                         Save & Continue
-                                    </button>
-                                </div>
-                                <div className={styles.formGroup}>
-                                    <div className={styles.singleFormGroup}>
-                                        <label>Upload Signature</label>
-                                        <div className={styles.sign}>
-                                            <p>No file chosen...</p>
-                                            <label>
-                                                <input
-                                                    type="file"
-                                                    placeholder="Enter Code"
-                                                />
-                                                Upload
-                                            </label>
-                                        </div>
+                                    </button> */}
+                            {/* </div> */}
+                            <div className={styles.formGroup}>
+                                <div className={styles.singleFormGroup}>
+                                    <label>Upload Signature</label>
+                                    <div className={styles.sign}>
+                                        <p>No file chosen...</p>
+                                        <label>
+                                            <input
+                                                type="file"
+                                                placeholder="Enter Code"
+                                            />
+                                            Upload
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {/* </div> */}
                     </>
                 )}
             </div>
