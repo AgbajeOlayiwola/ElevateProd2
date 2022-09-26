@@ -100,8 +100,8 @@ const HomeMain = () => {
                                 placeholder="Omnilite Username"
                                 type="text"
                                 className={styles.idInput}
-                                {...register('username', {
-                                    required: 'Username is Required'
+                                {...register('omniliteUsername', {
+                                    required: 'Omnilite Username is Required'
                                 })}
                                 name="omniliteUsername"
                             />
@@ -115,8 +115,9 @@ const HomeMain = () => {
                                 <input
                                     placeholder="Omnilite Password"
                                     className={styles.idInput}
-                                    {...register('password', {
-                                        required: 'Password is Required'
+                                    {...register('omnilitePassword', {
+                                        required:
+                                            'Omnilite Password is Required'
                                     })}
                                     name="omnilitePassword"
                                     type={outType ? 'text' : 'password'}
@@ -138,7 +139,7 @@ const HomeMain = () => {
                                 placeholder="Ecobank Online Username"
                                 type="text"
                                 className={styles.idInput}
-                                {...register('username', {
+                                {...register('onlineUsername', {
                                     required:
                                         'Ecobank Online Username is Required'
                                 })}
@@ -158,7 +159,7 @@ const HomeMain = () => {
                                 <input
                                     placeholder="Ecobank Online Password"
                                     className={styles.idInput}
-                                    {...register('password', {
+                                    {...register('onlinePassword', {
                                         required:
                                             'Ecobank Online Password is Required'
                                     })}
@@ -265,6 +266,7 @@ const HomeMain = () => {
         }
     };
     const onSubmit = (data) => {
+        console.log(data);
         if (selectCountry === '') {
             setError('Choose a country');
         } else {
@@ -273,14 +275,15 @@ const HomeMain = () => {
                 JSON.stringify(selectCountry)
             );
         }
+
         if (page === 0) {
             if (error) {
                 setError('');
             }
             setLoading(true);
             const postData = {
-                username: data.username,
-                password: data.password
+                username: data.omniliteUsername,
+                password: data.omnilitePassword
             };
             dispatch(omniliteDataa(postData));
             console.log('new');
