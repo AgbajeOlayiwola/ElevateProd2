@@ -14,6 +14,8 @@ import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
 import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
 import LoginCircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LoginCircleSvg';
+import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
+import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
 
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -103,7 +105,8 @@ const Login = () => {
                     >
                         <div className={styles.loginForm}>
                             <label>Email Address </label>
-                            <div>
+                            <div className={styles.divs}>
+                                <MailSvg />
                                 <input
                                     type="email"
                                     name="email"
@@ -126,6 +129,7 @@ const Login = () => {
                         <div className={styles.loginForm}>
                             <label>Password </label>
                             <div className={styles.divs}>
+                                <LockSvg />
                                 <input
                                     name="password"
                                     placeholder="Enter Your Password"

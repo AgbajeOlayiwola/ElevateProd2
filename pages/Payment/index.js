@@ -85,7 +85,7 @@ const Payment = () => {
     const [outType, setOutType] = useState();
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
-    const [balance, setBalance] = useState('# 000000.00');
+    const [balance, setBalance] = useState('# 0.00');
     const [error, setError] = useState('');
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');

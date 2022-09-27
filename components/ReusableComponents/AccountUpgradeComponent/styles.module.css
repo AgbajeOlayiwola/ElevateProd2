@@ -1,5 +1,5 @@
 .accountCont {
-    background-color: #e5e5e5;
+    background-color: #c6c6c6;
     margin: 0px;
     padding: 0px;
     height: 100%;
@@ -9,9 +9,9 @@
 .accountUpgradePopup {
     background: #fefefe;
     box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-    width: 38%;
-    max-width: 575px;
+    border-radius: 50px;
+    width: 40%;
+    max-width: 600px;
     margin: 0px auto;
 }
 
