@@ -5,19 +5,15 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import ArrowBackSvg from '../../../components/ReusableComponents/ArrowBackSvg';
 import { useRouter } from 'next/router';
-const ForgotPassword = () => {
-    const [emailError, setEmailError] = useState('');
+import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
+const ForgotPassword = ({ onSubmit }) => {
+    const [activeBtn, setActiveBtn] = useState(true);
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
-
-    const onTypes = () => {
-        console.log(errors.email?.message);
-    };
-    const router = useRouter();
 
     return (
         <>
@@ -37,22 +33,31 @@ const ForgotPassword = () => {
                     email.
                 </p>
             </div>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="email">Email Address</label>
-                <input
-                    type="text"
-                    name="email"
-                    placeholder="username@gmail.com"
-                    {...register('email', {
-                        pattern: {
-                            // eslint-disable-next-line
-                            value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                            message: 'Invalid email address'
-                        }
-                    })}
-                    onChange={() => console.log(errors.email?.message)}
+                <div className={styles.divs}>
+                    <MailSvg />
+                    <input
+                        type="text"
+                        name="email"
+                        placeholder="Enter your Email"
+                        {...register('email', {
+                            required: 'Email is required',
+                            pattern: {
+                                value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                message: 'Invalid email address'
+                            }
+                        })}
+                    />
+                </div>
+                <p className={styles.errors}>{errors.email?.message}</p>
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    onClick={handleSubmit}
+                    type="submit"
+                    text="Reset Password"
                 />
-                <div className={styles.errors}>{emailError}</div>
             </form>
         </>
     );

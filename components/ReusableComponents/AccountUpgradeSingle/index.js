@@ -5,14 +5,10 @@ import styles from './styles.module.css';
 
 const AccountUpgradeSingle = ({ icon, text, index, action, statusInfo }) => {
     return (
-        <div
-            key={index}
-            className={styles.accountUpgradeSingle}
-            onClick={action}
-        >
+        <div key={index} className={styles.accountUpgradeSingle}>
             <div className={styles.accountUpgradeSingleIcon}>{icon}</div>
             <div className={styles.accountUpgradeSingleText}>
-                <h2>{text}</h2>
+                <h2 onClick={action}>{text}</h2>
                 <div>
                     <p>More Info</p>
                     <InfoSvg />

@@ -8,7 +8,7 @@ const AccountUpgradeComponent = ({ children, title, action }) => {
             <div className={styles.accountUpgradePopup}>
                 <div className={styles.accountUpgradeSingle}>
                     <div className={styles.accountUpgradeSingleHeader}>
-                        <ArrowBackSvg action={action} />
+                        <ArrowBackSvg action={action} color="#102572" />
                         <h2>{title}</h2>
                     </div>
                     {children}

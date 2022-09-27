@@ -31,9 +31,11 @@ const SideBarDrop = ({ item }) => {
                         : null}
                 </span>
             </div>
-            <div className={styles.drops}>
-                <Innersubnav item={item} subNav={subNav} />
-            </div>
+            {!subNav ? null : (
+                <div className={styles.drops}>
+                    <Innersubnav item={item} subNav={subNav} />
+                </div>
+            )}
         </>
     );
 };

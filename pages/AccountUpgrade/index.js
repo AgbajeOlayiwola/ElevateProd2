@@ -7,19 +7,22 @@ import BillSvg from '../../components/ReusableComponents/ReusableSvgComponents/B
 import IdCard from '../../components/ReusableComponents/ReusableSvgComponents/IdCardSvg';
 import AccountUpgradeComponent from '../../components/ReusableComponents/AccountUpgradeComponent';
 import { useRouter } from 'next/router';
-import CircleSvg from '../../components/ReusableComponents/ReusableSvgComponents/CircleSvg';
 import { location } from '../../components/ReusableComponents/Data';
 import DirectorsSvg from '../../components/ReusableComponents/ReusableSvgComponents/DirectorsSvg';
 import SignatureRuleSvg from '../../components/ReusableComponents/ReusableSvgComponents/SignatureRuleSvg';
+import { useEffect } from 'react';
 
 const AccountUpgrade = () => {
     const router = useRouter();
 
-    const [text, setText] = useState('Corporate');
+    const [text, setText] = useState('Individual');
     const [title, setTitle] = useState('First');
-    const [photoStatus, setPhotoStatus] = useState(false);
-    const [addressStatus, setAddressStatus] = useState(false);
     const [director, setDirector] = useState(false);
+    const test = () => {
+        useEffect(() => {
+            alert('Test');
+        });
+    };
     const AccountUpgradeData = {
         individual: [
             {
@@ -121,7 +124,7 @@ const AccountUpgrade = () => {
                               );
                           })
                         : null}
-                    <button>Done</button>
+                    <button className={styles.buttonDone}>Done</button>
                 </AccountUpgradeComponent>
             );
         case 'Verify your Address':
@@ -130,8 +133,76 @@ const AccountUpgrade = () => {
                     action={() => {
                         setTitle('First');
                     }}
-                    title="Utility"
-                ></AccountUpgradeComponent>
+                    title="Verify your Address"
+                >
+                    <div className={styles.verifyBody}>
+                        <p>
+                            Provide the address you previously entered while
+                            registering for verification.
+                        </p>
+                        <div className={styles.addressBody}>
+                            <div className={styles.addressGroup}>
+                                <label>Street </label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Street "
+                                />
+                            </div>
+                            <div className={styles.addressCont}>
+                                <div className={styles.midCont}>
+                                    <div className={styles.addressGroup}>
+                                        <label>Landmark</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter Landmark"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className={styles.midCont}>
+                                    <div className={styles.addressGroup}>
+                                        <label>State</label>
+                                        <select name="" id="">
+                                            <option value="">
+                                                Select State
+                                            </option>
+                                            {location?.map((state, index) => {
+                                                return (
+                                                    <option
+                                                        value={state.state}
+                                                        key={index}
+                                                    >
+                                                        {state.state}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.addressCont}>
+                                <div className={styles.midCont}>
+                                    <div className={styles.addressGroup}>
+                                        <label>City</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter City"
+                                        />
+                                    </div>
+                                </div>
+                                <div className={styles.midCont}>
+                                    <div className={styles.addressGroup}>
+                                        <label>Local Government Area</label>
+                                        <select name="" id="">
+                                            <option value="">Select LGA</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onClick={test}>Confirm Address</button>
+                    </div>
+                </AccountUpgradeComponent>
             );
         case 'Upload Utility BIll':
             return (
@@ -141,78 +212,78 @@ const AccountUpgrade = () => {
                     }}
                     title="Utility"
                 >
-                    <div className={styles.utilityHeader}>
-                        <CircleSvg
-                            action={() => {
-                                setPhotoStatus(!photoStatus);
-                            }}
-                            circleStatus={photoStatus}
-                        />
-                        <p>Upload Photo</p>
-                    </div>
-                    <div className={styles.uploadPhoto}>
-                        <div
-                            className={
-                                photoStatus === false ? styles.grey : null
-                            }
-                        ></div>
-                        <h2>Kindly tap to upload photo</h2>
-                        <label>
-                            <input type="file" /> Tap to Upload
-                        </label>
-                        <p>Valid period: Not more than 6 months</p>
-                    </div>
-                    <div className={styles.utilityHeader}>
-                        <CircleSvg
-                            action={() => {
-                                setAddressStatus(!addressStatus);
-                            }}
-                            circleStatus={addressStatus}
-                        />
-                        <p>Enter Address</p>
-                    </div>
-                    <div className={styles.addressBody}>
-                        <div className={styles.addressCont}>
-                            <div
-                                className={
-                                    addressStatus === false ? styles.grey : null
-                                }
-                            ></div>
+                    <div className={styles.utilityBody}>
+                        <div className={styles.signatureGroup}>
+                            <p>Upload Photo</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>No file chosen...</p>
+                                <label>
+                                    <input type="file" /> Upload
+                                </label>
+                            </div>
+                        </div>
+                        <div className={styles.addressBody}>
                             <div className={styles.addressGroup}>
-                                <label>Street Name</label>
+                                <label>Street </label>
                                 <input
                                     type="text"
-                                    placeholder="Enter Street Name"
+                                    placeholder="Enter Street "
                                 />
                             </div>
-                            <div className={styles.addressGroup}>
-                                <label>State</label>
-                                <select name="" id="">
-                                    <option value="">Select State</option>
-                                    {location?.map((state, index) => {
-                                        return (
-                                            <option
-                                                value={state.state}
-                                                key={index}
-                                            >
-                                                {state.state}
+                            <div className={styles.addressCont}>
+                                <div className={styles.midCont}>
+                                    <div className={styles.addressGroup}>
+                                        <label>Landmark</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter Landmark"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className={styles.midCont}>
+                                    <div className={styles.addressGroup}>
+                                        <label>State</label>
+                                        <select name="" id="">
+                                            <option value="">
+                                                Select State
                                             </option>
-                                        );
-                                    })}
-                                </select>
+                                            {location?.map((state, index) => {
+                                                return (
+                                                    <option
+                                                        value={state.state}
+                                                        key={index}
+                                                    >
+                                                        {state.state}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div className={styles.addressGroup}>
-                                <label>City</label>
-                                <input type="text" placeholder="Enter City" />
-                            </div>
-                            <div className={styles.addressGroup}>
-                                <label>Local Government Area (LGA)</label>
-                                <select name="" id="">
-                                    <option value="">Select LGA</option>
-                                </select>
+                            <div className={styles.addressCont}>
+                                <div className={styles.midCont}>
+                                    <div className={styles.addressGroup}>
+                                        <label>City</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter City"
+                                        />
+                                    </div>
+                                </div>
+                                <div className={styles.midCont}>
+                                    <div className={styles.addressGroup}>
+                                        <label>Local Government Area</label>
+                                        <select name="" id="">
+                                            <option value="">Select LGA</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <button>Update Profile</button>
                 </AccountUpgradeComponent>
             );
@@ -224,7 +295,6 @@ const AccountUpgrade = () => {
                     }}
                     title="Means of Identification"
                 >
-                    <div className={styles.idPhoto}></div>
                     <div className={styles.meansIdentification}>
                         <div className={styles.identificationGroup}>
                             <label>Choose Means of Identification</label>
@@ -238,18 +308,17 @@ const AccountUpgrade = () => {
                         </div>
                     </div>
                     <div className={styles.signature}>
-                        <h2>Your Signature</h2>
                         <div className={styles.signatureGroup}>
-                            <p>
-                                Kindly scan your signature or sign
-                                electronically
-                            </p>
-                            <label>
-                                <input type="file" /> Tap to Upload
-                            </label>
+                            <p>Upload Signature</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>No file chosen...</p>
+                                <label>
+                                    <input type="file" /> Upload
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <button>Update Profile</button>
+                    <button className={styles.updateBtn}>Update Profile</button>
                 </AccountUpgradeComponent>
             );
         case 'Document':
@@ -270,62 +339,62 @@ const AccountUpgrade = () => {
                         />
                     </div>
                     <div className={styles.documentSingle}>
-                        <label>
-                            Upload SCUML certificate <span>(optional)</span>
-                        </label>
-                        <div className={styles.documentCont}>
-                            <p>Kindly tap to upload your SCUML certificate</p>
-                            <label>
-                                <input type="file" /> Tap to Upload
-                            </label>
+                        <div className={styles.signatureGroup}>
+                            <p>
+                                Upload SCUML Certificate <span>(optional)</span>{' '}
+                            </p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>No file chosen...</p>
+                                <label>
+                                    <input type="file" /> Upload
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div className={styles.documentSingle}>
-                        <label>Upload MEMART</label>
-                        <div className={styles.documentCont}>
-                            <p>Kindly tap to upload your MEMART</p>
-                            <div className={styles.share}>
+                        <div className={styles.signatureGroup}>
+                            <p>Upload MEMART</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>No file chosen...</p>
                                 <div>
                                     <label>
-                                        <input type="" /> Tap to Share
+                                        <input type="file" /> Share
                                     </label>
-                                </div>
-                                <div>
                                     <label>
-                                        <input type="file" /> Tap to Upload
+                                        <input type="file" /> Upload
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className={styles.documentSingle}>
-                        <label>Share Reference Form</label>
-                        <div className={styles.documentCont}>
-                            <p>Kindly tap to share and upload your Reference</p>
-                            <div className={styles.share}>
+                        <div className={styles.signatureGroup}>
+                            <p>Share Reference Form</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>No file chosen...</p>
                                 <div>
                                     <label>
-                                        <input type="" /> Tap to Share
+                                        <input type="file" /> Share
                                     </label>
-                                </div>
-                                <div>
                                     <label>
-                                        <input type="file" /> Tap to Upload
+                                        <input type="file" /> Upload
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className={styles.documentSingle}>
-                        <label>Upload Board Resolution</label>
-                        <div className={styles.documentCont}>
-                            <p>Kindly tap to upload Board Resolution</p>
-                            <label>
-                                <input type="file" /> Click to Upload
-                            </label>
+                        <div className={styles.signatureGroup}>
+                            <p>Upload Board Resolution</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>No file chosen...</p>
+                                <label>
+                                    <input type="file" /> Upload
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <button>Update Profile</button>
+                    <button>Submit</button>
                 </AccountUpgradeComponent>
             );
         case 'Directors':
@@ -336,88 +405,30 @@ const AccountUpgrade = () => {
                     }}
                     title="Directors"
                 >
-                    <div className={styles.directorsSingle}>
-                        <p>Director 1</p>
-                        <div className={styles.directorsBody}>
-                            <div className={styles.directorsGroup}>
-                                <label>Full Name</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    placeholder="Enter Full name"
-                                />
-                            </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Email</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    placeholder="Enter Email"
-                                />
-                            </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Phone Number</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    placeholder="Enter Phone Number"
-                                />
-                            </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Make Signatory</label>
-                                <div className={styles.radio}>
-                                    <div>
-                                        <input type="radio" name="signatory" />
-                                        <p>Yes</p>
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="signatory" />
-                                        <p>No</p>
-                                    </div>
-                                </div>
-                            </div>
+                    <div className={styles.directorsBody}>
+                        <div className={styles.directorsGroup}>
+                            <label>Full Name</label>
+                            <input
+                                type="text"
+                                name=""
+                                placeholder="Enter Full name"
+                            />
                         </div>
-                    </div>
-                    <div className={styles.directorsSingle}>
-                        <p>Director 2</p>
-                        <div className={styles.directorsBody}>
-                            <div className={styles.directorsGroup}>
-                                <label>Full Name</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    placeholder="Enter Full name"
-                                />
-                            </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Email</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    placeholder="Enter Email"
-                                />
-                            </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Phone Number</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    placeholder="Enter Phone Number"
-                                />
-                            </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Make Signatory</label>
-                                <div className={styles.radio}>
-                                    <div>
-                                        <input type="radio" name="signatory" />
-                                        <p>Yes</p>
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="signatory" />
-                                        <p>No</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className={styles.directorsGroup}>
+                            <label>Email</label>
+                            <input
+                                type="text"
+                                name=""
+                                placeholder="Enter Email"
+                            />
+                        </div>
+                        <div className={styles.directorsGroup}>
+                            <label>Phone Number</label>
+                            <input
+                                type="text"
+                                name=""
+                                placeholder="Enter Phone Number"
+                            />
                         </div>
                     </div>
                     <p
@@ -429,52 +440,30 @@ const AccountUpgrade = () => {
                         + Add New
                     </p>
                     {director ? (
-                        <div className={styles.directorsSingle}>
-                            <p>Director 3</p>
-                            <div className={styles.directorsBody}>
-                                <div className={styles.directorsGroup}>
-                                    <label>Full Name</label>
-                                    <input
-                                        type="text"
-                                        name=""
-                                        placeholder="Enter Full name"
-                                    />
-                                </div>
-                                <div className={styles.directorsGroup}>
-                                    <label>Email</label>
-                                    <input
-                                        type="text"
-                                        name=""
-                                        placeholder="Enter Email"
-                                    />
-                                </div>
-                                <div className={styles.directorsGroup}>
-                                    <label>Phone Number</label>
-                                    <input
-                                        type="text"
-                                        name=""
-                                        placeholder="Enter Phone Number"
-                                    />
-                                </div>
-                                <div className={styles.directorsGroup}>
-                                    <label>Make Signatory</label>
-                                    <div className={styles.radio}>
-                                        <div>
-                                            <input
-                                                type="radio"
-                                                name="signatory"
-                                            />
-                                            <p>Yes</p>
-                                        </div>
-                                        <div>
-                                            <input
-                                                type="radio"
-                                                name="signatory"
-                                            />
-                                            <p>No</p>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div className={styles.directorsBody}>
+                            <div className={styles.directorsGroup}>
+                                <label>Full Name</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Full name"
+                                />
+                            </div>
+                            <div className={styles.directorsGroup}>
+                                <label>Email</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Email"
+                                />
+                            </div>
+                            <div className={styles.directorsGroup}>
+                                <label>Phone Number</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Phone Number"
+                                />
                             </div>
                         </div>
                     ) : null}
