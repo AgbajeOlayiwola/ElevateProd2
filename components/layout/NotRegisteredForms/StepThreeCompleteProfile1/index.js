@@ -139,6 +139,28 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     // console.log(type);
     const [errorMes, setErrorMes] = useState();
+    const [file, setFile] = useState();
+    const [fileName, setFileName] = useState('');
+
+    const saveFile = (e) => {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
+    };
+
+    // const uploadFile = async (e) => {
+    //   const formData = new FormData();
+    //   formData.append("file", file);
+    //   formData.append("fileName", fileName);
+    //   try {
+    //     const res = await axios.post(
+    //       "http://localhost:3000/upload",
+    //       formData
+    //     );
+    //     console.log(res);
+    //   } catch (ex) {
+    //     console.log(ex);
+    //   }
+    // };
 
     const handleSubmitIII = () => {
         const commpleteProfileData = {
@@ -922,6 +944,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     <input
                                                         type="file"
                                                         placeholder="Enter Code"
+                                                        onChange={saveFile}
                                                     />
                                                     Upload
                                                 </label>

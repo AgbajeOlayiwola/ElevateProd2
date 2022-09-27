@@ -40,13 +40,18 @@ const ExistingMultiStep = () => {
         switch (page) {
             case 0:
                 return (
-                    <StepFour
-                        title={pageType}
+                    <FirstStep
                         action={() => {
-                            setPage(page - 1);
-                            setPageType('');
+                            setPage(page + 1);
                         }}
                     />
+                    // <StepFour
+                    //     title={pageType}
+                    //     action={() => {
+                    //         setPage(page - 1);
+                    //         setPageType('');
+                    //     }}
+                    // />
                 );
             case 1:
                 return (
