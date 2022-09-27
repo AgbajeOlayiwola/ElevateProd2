@@ -687,3 +687,17 @@
         opacity: 1;
     }
 }
+
+@media screen and (max-width: 1025px) {
+    .firstSection .content {
+        padding: 0px 36px;
+    }
+
+    .secondSectionMidCountry,
+    .secondSectionMidYes {
+        width: 48%;
+    }
+}
+
+@media screen and (max-width: 961px) {
+}
