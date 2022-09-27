@@ -21,11 +21,12 @@ import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchS
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import { getCookie } from 'cookies-next';
-const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
+const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // const [progress, setProgress] = useState('75%');
     const [title, setTitle] = useState('Basic');
     const [bgcolor, setBgcolor] = useState(false);
     const [profileCont, setProfileCont] = useState([]);
+    const [businessProfile, setBusinessProfile] = useState([]);
 
     const handleShowFourthStep = () => {
         setSwitchs((prev) => !prev);
@@ -35,6 +36,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const { isLoading, profile, errorMessage } = useSelector(
         (state) => state.profile
     );
+
     const { newCorpAccount, newCorpAccountErrorMMessage } = useSelector(
         (state) => state.newuserCorpAccount
     );
@@ -42,6 +44,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
         (state) => state.businessCategoriesReducer
     );
     const { states } = useSelector((state) => state.statesReducer);
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
+    const { newAccount, newAccountErrorMessage } = useSelector(
+        (state) => state.newUserAccountDets
+    );
 
     const [checker, setChecker] = useState();
     const [localState, setLocalState] = useState('');
@@ -79,18 +87,39 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     }, []);
     useEffect(() => {
         if (profile !== null) {
-            setProfileCont(profile.data);
+            console.log(profileCont);
+            setProfileCont(profile.data[0].documentData);
+            if (profile.data[2]) {
+                setBusinessProfile(profile.data[2].documentData);
+            } else {
+                setBusinessProfile('');
+            }
         }
-        setGender(profileCont.gender);
+        // setGender(profileCont.gender);
     }, [profile]);
     useEffect(() => {
         dispatch(businessCategoriesData());
     }, []);
+    console.log(
+        'errorMessages from account',
+        newAccount,
+        newAccountErrorMessage
+    );
     useEffect(() => {
+        if (newAccount.message === 'success') {
+            console.log(errorMessages);
+            router.push('/Verify/Account/loading');
+        } else if (
+            newAccountErrorMessage ===
+            'You already have an account with us. Please contact us for more information'
+        ) {
+            router.push('/Succes');
+        }
+
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
         }
-    }, [businessCategories]);
+    }, [businessCategories, newAccountErrorMessage, newAccount]);
     useEffect(() => {
         Object.keys(businessCategory)?.filter((item) => {
             if (item === business) {
@@ -107,76 +136,96 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
         watch,
         formState: { errors }
     } = useForm();
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
-    const { newAccount, newAccountErrorMessage } = useSelector(
-        (state) => state.newUserAccountDets
-    );
+
+    // console.log(type);
     const [errorMes, setErrorMes] = useState();
+    const [file, setFile] = useState();
+    const [fileName, setFileName] = useState('');
+
+    const saveFile = (e) => {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
+    };
+
+    // const uploadFile = async (e) => {
+    //   const formData = new FormData();
+    //   formData.append("file", file);
+    //   formData.append("fileName", fileName);
+    //   try {
+    //     const res = await axios.post(
+    //       "http://localhost:3000/upload",
+    //       formData
+    //     );
+    //     console.log(res);
+    //   } catch (ex) {
+    //     console.log(ex);
+    //   }
+    // };
+
     const handleSubmitIII = () => {
         const commpleteProfileData = {
+            isRegistered: type,
             businessName: formData.bussinessName,
+            businessCategory: business,
             businessType: businesses,
             referralCode: formData.referralCode,
             countryCode: '+234',
-            phoneNumber: formData.phoneNumber,
-            businessAddress: formData.streetName,
+            businessPhoneNumber: formData.phoneNumber,
+            street: formData.streetName,
             state: formData.state,
             city: formData.city,
-            lga: formData.localGoverment
+            lga: formData.localGoverment,
+            refereeCode: 'string'
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         const accountData = {
             affiliateCode: 'ENG',
-            ccy: 'NGN'
+            currency: 'NGN'
         };
         dispatch(createNewUserAccount(accountData));
-        console.log(
-            'errorMessages from account',
-            newAccount.message,
-            newAccountErrorMessage
-        );
-        if (
-            newAccount.message ===
-                'Your Transaction Request is Successful and Approved' ||
-            newAccountErrorMessage ===
-                'You already have an account with us. Please contact us for more information'
-        ) {
-            console.log(errorMessages);
-            router.push('/Verify/Account/loading');
-        } else if (accountStatus.message === 'Try Again') {
-            router.push('/Verify/Account/loading');
-        } else if (accountStatus.message === 'SUCCESS') {
-            router.push('/Succes');
-        }
+
+        // if (
+        //     newAccount === 'Success' ||
+        //     newAccountErrorMessage ===
+        //         'You already have an account with us. Please contact us for more information'
+        // ) {
+        //     console.log(errorMessages);
+        //     router.push('/Verify/Account/loading');
+        // } else if (accountStatus.message === 'Try Again') {
+        //     router.push('/Verify/Account/loading');
+        // } else if (accountStatus.message === 'SUCCESS') {
+        //     router.push('/Succes');
+        // }
     };
 
     const handleSubmitReg = () => {
         const commpleteProfileData = {
+            isRegistered: type,
             businessName: formData.bussinessName,
+            businessCategory: business,
             businessType: businesses,
             referralCode: formData.refferalCode,
             countryCode: '+234',
-            phoneNumber: formData.bussinessName,
-            businessAddress: formData.streetName,
+            businessPhoneNumber: formData.phoneNumber,
+            street: formData.streetName,
             state: formData.state,
             city: formData.city,
-            lga: formData.localGoverment
+            lga: formData.localGoverment,
+            refereeCode: 'END'
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         const accountData = {
             affiliateCode: 'ENG',
-            ccy: 'NGN'
+            currency: 'NGN'
         };
         const cookie = getCookie('cookieToken');
         axiosInstance
             .post(
-                `https://ellevate-app.herokuapp.com${apiRoutes.corpNewUser}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.corpNewUser}`,
                 accountData,
                 {
                     headers: {
@@ -233,6 +282,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     //     console.log(data);
     // };
     const [activeBtn, setActiveBtn] = useState(true);
+    // console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
@@ -293,12 +343,54 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                         disabled
                                     />
                                 </div>
-                                <div className={styles.formGroup}>
-                                    <label>Select your Gender</label>
-                                    <select name="" id="">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
+                                <div className={styles.singleFormGroup}>
+                                    <label>Select your Business Category</label>
+
+                                    <div className={styles.businessCat}>
+                                        <div
+                                            className={
+                                                styles.businessCategories
+                                            }
+                                            onClick={() => {
+                                                setBusinessTest(!businessTest);
+                                            }}
+                                        >
+                                            <SearchSvg />
+                                            {business ? (
+                                                <p>{business}</p>
+                                            ) : (
+                                                <p>Search Business Category</p>
+                                            )}
+
+                                            <DropdownSvg />
+                                        </div>
+                                        {businessTest && (
+                                            <ul
+                                                className={styles.businessGroup}
+                                            >
+                                                {Object.keys(
+                                                    businessCategory
+                                                )?.map((business, index) => {
+                                                    return (
+                                                        <li
+                                                            value={business}
+                                                            key={index}
+                                                            onClick={() => {
+                                                                setBusiness(
+                                                                    business
+                                                                );
+                                                                setBusinessTest(
+                                                                    false
+                                                                );
+                                                            }}
+                                                        >
+                                                            {business}
+                                                        </li>
+                                                    );
+                                                })}
+                                            </ul>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.formCont}>
@@ -852,6 +944,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                                                     <input
                                                         type="file"
                                                         placeholder="Enter Code"
+                                                        onChange={saveFile}
                                                     />
                                                     Upload
                                                 </label>

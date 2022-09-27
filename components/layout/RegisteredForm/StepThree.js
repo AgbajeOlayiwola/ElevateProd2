@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../ReusableComponents/Button';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
+import { useDispatch, useSelector } from 'react-redux';
+import { bankAccountsData } from '../../../redux/actions/actions';
 
 const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
+    const dispatch = useDispatch();
     const account = localStorage.getItem('displayAccount');
     const accountDetails = JSON.parse(account);
     const [isRegistered, setIsRegistered] = useState(false);
@@ -34,13 +37,22 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
 
     if (typeof window !== 'undefined') {
         countryName = window.localStorage.getItem('country');
-        console.log(window.localStorage.getItem('country'));
+        // console.log(window.localStorage.getItem('country'));
         if (countryName === null) {
             countryNames = window.localStorage.getItem('country');
         } else {
             countryNames = JSON.parse(countryName);
         }
     }
+
+    const { bankAccounts, errorMessage } = useSelector(
+        (state) => state.bankAccountsReducer
+    );
+    useEffect(() => {
+        dispatch(bankAccountsData());
+        console.log(bankAccounts);
+    }, [bankAccounts]);
+
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.body}>
@@ -81,7 +93,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                     className={styles.textInput}
                                     required
                                     readOnly
-                                    value={accountDetails.accountNumber}
+                                    value={bankAccounts}
                                 />
                             </div>
                             <div>

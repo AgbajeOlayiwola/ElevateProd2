@@ -1,6 +1,6 @@
 // Payments
-const getBanks = '/banks';
-const getCountries = '/countries';
+const getBanks = '/bank-list';
+const getCountries = '/affiliates-countries';
 const getLanguages = '/languages';
 const getBillerCategories = '/billers/category';
 const getBillerType = '/billers/affiliate/';
@@ -18,36 +18,42 @@ const verifyBank = '/transfer/international/validate-bank';
 const verifyCurrency = '/transfer/international/currency';
 const internationalTransfer = '/transfer/international';
 const beneficiaries = '/account/beneficiaries';
-const register = '/auth/register';
-const login = '/auth/login';
+const register = '/authentication/register';
+const login = '/authentication/login';
 const newProfileSetup = '/auth/profile-setup';
-const profile = '/auth/profile';
-const profileSetupBus = '/auth/profile-setup';
+const profile = '/users/profile';
+const profileSetupBus = '/authentication/profile-setup/registered-business';
+const profileSetup = '/authentication/profile-setup/unregistered-business ';
 const verifyOtp = '/verification/verify/otp';
+const verifyStatusBus = '/document-verification/registered-business';
 const verifyDob = '/verification/verify/dob';
-const authProfile = '/auth/profile';
+const authProfile = '/document-verification/user-doc';
 const account = '/auth/account';
-const completesBusinessProfile = '/business';
-const newCreateAccount = '/account';
+const completesBusinessProfile = '/business/setup';
+const newCreateAccount = '/bank-account/individual/create';
 const createAccount = '/account/corp/create-for-existing-user';
-const corpNewUser = '/account/corp/create-for-new-user';
-const accountStatus = '/account/status';
-const corpAccountStatus = '/account/corp-acct';
-const verifyStatus = '/verification/document/status';
-const omnilite = '/auth/register/omnilite';
-const ecobankOnline = '/auth/register/ecobank-online';
-const accountNumber = '/auth/register/account-number';
-const existingUserProfile = '/auth/existing-user/profile-setup/personal';
+const corpNewUser = '/bank-account/corp/create';
+const accountStatus = '/bank-account/individual/status';
+const corpAccountStatus = '/bank-account/corp/status';
+const verifyStatus = '/document-verification/unregistered-business';
+const omnilite = '/authentication/register/omnilite';
+const ecobankOnline = '/authentication/register/ecobank-online';
+const accountNumber = '/authentication/register/account-number';
+const existingUserProfile =
+    '/authentication/profile-setup/unregistered-business/eco-auth';
 const businessCategories = '/business-categories';
 const states = '/lga';
 const cardLogin = '/auth/register/card';
+const banksAccounts = '/bank-account';
 export default {
     getBanks,
     getCountries,
     getBillerCategories,
     getBillerType,
+    verifyStatusBus,
     getBillerPlan,
     getLanguages,
+    profileSetup,
     airtime,
     bills,
     internalBank,
@@ -84,5 +90,6 @@ export default {
     states,
     cardLogin,
     newCreateAccount,
-    corpAccountStatus
+    corpAccountStatus,
+    banksAccounts
 };

@@ -14,8 +14,9 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     loadCountry,
-    omniliteData,
-    accountNumberData
+    omniliteDataa,
+    accountNumberData,
+    ecobankOnlineData
 } from '../../redux/actions/actions';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -53,15 +54,21 @@ const HomeMain = () => {
     const [loading, setLoading] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
     const dispatch = useDispatch();
+    const [ecoonlineUserName, setEconlineUsername] = useState();
+    const [ecoonlinePassword, setEcoonlinePassword] = useState();
     const { countries, errorData } = useSelector(
         (state) => state.countryReducer
     );
-    const { isLoading, omnilite, errorMessage } = useSelector(
+    const { isLoading, omniliteData, errorMessage } = useSelector(
         (state) => state.omniliteReducer
     );
-    const { accountNumber, errorMessages } = useSelector(
+    const { accountNumbers, errorMessages } = useSelector(
         (state) => state.accountNumberReducer
     );
+    const { ecobankOnline, ecoOnlineErrorMessage } = useSelector(
+        (state) => state.ecobankOnlineReducer
+    );
+    console.log(omniliteData);
 
     useEffect(() => {
         dispatch(loadCountry());
@@ -81,6 +88,7 @@ const HomeMain = () => {
         watch,
         formState: { errors }
     } = useForm();
+
     const conditionalComponent = () => {
         switch (page) {
             case 0:
@@ -135,7 +143,11 @@ const HomeMain = () => {
                                     required:
                                         'Ecobank Online Username is Required'
                                 })}
-                                name="onlineUsername"
+                                name="username"
+                                value={ecoonlineUserName}
+                                onChange={(e) =>
+                                    setEconlineUsername(e.target.value)
+                                }
                             />
                             <p className={styles.error}>
                                 {errors?.onlineUsername?.message}
@@ -153,6 +165,10 @@ const HomeMain = () => {
                                     })}
                                     name="onlinePassword"
                                     type={outType ? 'text' : 'password'}
+                                    value={ecoonlinePassword}
+                                    onChange={(e) =>
+                                        setEcoonlinePassword(e.target.value)
+                                    }
                                 />
                                 <Visbility typeSet={types} />
                             </div>
@@ -269,75 +285,124 @@ const HomeMain = () => {
                 username: data.omniliteUsername,
                 password: data.omnilitePassword
             };
-            dispatch(omniliteData(postData));
+            dispatch(omniliteDataa(postData));
+            console.log('new');
         } else if (page === 1) {
-            alert('Ecobank Online');
+            const postData = {
+                username: ecoonlineUserName,
+                password: ecoonlinePassword
+            };
+            // console.log('ecoOnlineData', ecoonlinePassword, ecoonlineUserName);
+            // console.log(ecobankOnline);
+            dispatch(ecobankOnlineData(postData));
+            console.log(ecobankOnline.message);
+
+            if (ecobankOnline.message === 'success') {
+                const data = {
+                    email: ecobankOnline.data.user.email,
+                    // accountNumber: omniliteData.data.user.profile.firstName,
+                    fullName: ecobankOnline.data.user.profile.lastName,
+                    phoneNumber: ecobankOnline.data.user.phoneNumber
+                };
+                window.localStorage.setItem(
+                    'displayAccount',
+                    JSON.stringify(data)
+                );
+                window.localStorage.setItem(
+                    'account',
+                    JSON.stringify(ecobankOnline.data.user)
+                );
+                router.push('/Onboarding/ExistingProfileSetup');
+            }
+            //ecoBank Online Login End
+
+            if (omniliteData.message === 'success') {
+                const data = {
+                    email: omniliteData.data.user.email,
+                    // accountNumber: omniliteData.data.user.profile.firstName,
+                    fullName: omniliteData.data.user.profile.lastName,
+                    phoneNumber: omniliteData.data.user.phoneNumber
+                };
+                window.localStorage.setItem(
+                    'displayAccount',
+                    JSON.stringify(data)
+                );
+                window.localStorage.setItem(
+                    'account',
+                    JSON.stringify(omniliteData.data.user)
+                );
+                router.push('/Onboarding/ExistingProfileSetup');
+            }
+            //omnilite login end
         } else if (page === 2) {
-            setLoading(true);
+            // setLoading(true);
+
             const postData = {
                 accountNo: data.accountNumber
             };
+
             dispatch(accountNumberData(postData));
         }
-        console.log(data);
+        console.log(accountNumbers);
     };
     const OmniliteTest = () => {
-        console.log(omnilite);
+        console.log(omniliteData);
         console.log(errorMessage);
         if (errorMessage) {
             setError(errorMessage);
             setLoading(false);
-        } else if (omnilite.message === 'Success') {
+        } else if (omniliteData.message === 'success') {
             const data = {
-                email: omnilite.data.userInfo.email,
-                accountNumber: omnilite.data.meta.accountNumber,
-                fullName: omnilite.data.meta.fullName,
-                phoneNumber: omnilite.data.meta.phoneNumber
+                email: omniliteData.data.user.email,
+                // accountNumber: omniliteData.data.user.profile.firstName,
+                fullName: omniliteData.data.user.profile.lastName,
+                phoneNumber: omniliteData.data.user.phoneNumber
             };
             window.localStorage.setItem('displayAccount', JSON.stringify(data));
             window.localStorage.setItem(
                 'account',
-                JSON.stringify(omnilite.data.meta)
+                JSON.stringify(omniliteData.data.user)
             );
             router.push('/Onboarding/ExistingProfileSetup');
         }
     };
     useEffect(() => {
         OmniliteTest();
-    }, [omnilite, errorMessage]);
+    }, [omniliteData, errorMessage]);
+
     const acctTest = () => {
-        console.log(errorMessages);
+        console.log(accountNumbers);
         if (errorMessages === 'Account already exists with the phone') {
             router.push('/Auth/Login');
         } else if (errorMessages) {
             setError(errorMessages);
             setLoading(false);
-        } else if (accountNumber.message === 'SUCCESS') {
+        } else if (accountNumbers.message === 'success') {
             router.push('/Onboarding/ExistingProfileSetup');
             const data = {
-                email: accountNumber.data.email,
-                accountNumber: accountNumber.data.accountNumber,
-                fullName: accountNumber.data.fullName,
-                phoneNumber: accountNumber.data.phoneNumber
+                email: accountNumbers.data.email,
+                accountNumber: accountNumbers.data.accountNumber,
+                fullName: accountNumbers.data.fullName,
+                phoneNumber: accountNumbers.data.phoneNumber
             };
 
             window.localStorage.setItem('displayAccount', JSON.stringify(data));
-            if (accountNumber.data.email === null) {
-                accountNumber.data = {
-                    ...accountNumber.data,
+            if (accountNumbers.data.email === null) {
+                accountNumbers.data = {
+                    ...accountNumbers.data,
                     email: 'topeakinfe@gmail.com'
                 };
             }
 
             window.localStorage.setItem(
                 'account',
-                JSON.stringify(accountNumber.data)
+                JSON.stringify(accountNumbers.data)
             );
         }
     };
     useEffect(() => {
         acctTest();
-    }, [accountNumber, errorMessages]);
+    }, [accountNumbers, errorMessages]);
     const types = (type) => {
         setOutType(type);
     };

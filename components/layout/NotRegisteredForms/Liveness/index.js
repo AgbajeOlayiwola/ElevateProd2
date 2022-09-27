@@ -6,6 +6,8 @@ import ButtonComp from '../../../ReusableComponents/Button';
 import Webcam from 'react-webcam';
 import Head from 'next/head';
 import Script from 'next/script';
+import { getCookie } from 'cookies-next';
+import axios from 'axios';
 
 const videoConstraints = {
     width: 390,
@@ -21,6 +23,27 @@ const Liveness = ({ action }) => {
     const capture = React.useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImgSrc(imageSrc);
+        const cookie = getCookie('cookieToken');
+
+        axios
+            .post(
+                `https://ellevate-test.herokuapp.com/authentication/facematch`,
+                { imageSrc },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
+                }
+            )
+            .then((response) => {
+                console.log(response.data.message);
+                // setRes(response.data.message);
+            })
+            .catch((error) => {
+                console.log(error.response.data.statusCode);
+                // setResErros(error.response.data.statusCode);
+            });
     }, [webcamRef, setImgSrc]);
 
     return (
@@ -35,25 +58,27 @@ const Liveness = ({ action }) => {
                             Finish up with a clear photo of your face to verify
                             your identity.
                         </p>
-                        {/* <div className={styles.imageInner}>
+                        <div className={styles.imageInner}>
                             <Webcam
                                 audio={false}
                                 screenshotFormat="image/jpeg"
                                 videoConstraints={videoConstraints}
                                 ref={webcamRef}
-                            /> 
-                        </div> */}
+                            />
+                        </div>
                     </div>
                 </div>
-                {/* <ButtonComp
+
+                {imgSrc && <img src={imgSrc} />}
+                <ButtonComp
                     onClick={capture}
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
                     type="submit"
                     text={'Snap'}
-                    action={action}
-                /> */}
-                <div className={styles.matiButtonSetup}>
+                    // action={action}
+                />
+                {/* <div className={styles.matiButtonSetup}>
                     <mati-button
                         clientId="622f44566ac1c1001cd1daac" // from your Mati dashboard
                         flowId="62fb9b12235dfd001ed92fec" // from your Mati dashboard
@@ -61,7 +86,7 @@ const Liveness = ({ action }) => {
                         className={styles.MatiButton}
                         metadata='{"user_id":"1234778"}'
                     />
-                </div>
+                </div> */}
             </div>
             {/* {imgSrc && <img src={imgSrc} />} */}
         </div>

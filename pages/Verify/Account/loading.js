@@ -31,38 +31,21 @@ const AccountLoading = () => {
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
-    // useEffect(() => {
-    // const accountData = {
-    //     affiliateCode: 'ENG',
-    //     ccy: 'NGN'
-    // };
-    // dispatch(createNewUserAccount(accountData));
-    // }, []);
-    // console.log(accountStatus);
+    console.log(accountStatus);
+
     useEffect(() => {
         dispatch(newAccountStatusData());
-    }, []);
+        const newUserAccountt = () => {
+            // console.log(accountStatus);
+            if (errorMessages) {
+                if (accountStatus.message === 'success') {
+                    router.push('/Succes');
+                }
+            }
+        };
+    }, [errorMessages, accountStatus]);
 
     // console.log(errorMessages);
-    const newUserAccountt = () => {
-        console.log(accountStatus);
-        if (!errorMessages) {
-            if (accountStatus.message === 'Try Again') {
-                setTimeout(() => {
-                    dispatch(newAccountStatusData());
-                }, 1000);
-            } else if (accountStatus.message === 'SUCCESS') {
-                router.push('/Succes');
-            }
-        }
-    };
-    useEffect(() => {
-        if (errorMessages) {
-            setError(errorMessages);
-        } else {
-            newUserAccountt();
-        }
-    }, [errorMessages, accountStatus]);
 
     return (
         <>
@@ -73,7 +56,6 @@ const AccountLoading = () => {
                             <div className={styles.error}>
                                 <h2 className={styles.error}>{errorT}</h2>
                                 <br />
-                                <h2> kindly reload</h2>
                             </div>
                         ) : (
                             <svg

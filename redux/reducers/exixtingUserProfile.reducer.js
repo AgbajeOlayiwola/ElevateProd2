@@ -2,7 +2,7 @@ import { existingUserProfile } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    existingUserProfile: [],
+    existingUserProfilee: [],
     errorMessage: ''
 };
 
@@ -16,14 +16,14 @@ const existingUserProfileReducer = (
             return {
                 ...state,
                 isLoading: true,
-                existingUserProfile: [],
+                existingUserProfilee: [],
                 errorMessage: ''
             };
         case existingUserProfile.EXISTINGUSERPROFILE_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                existingUserProfile: payload
+                existingUserProfilee: payload
             };
         case existingUserProfile.EXISTINGUSERPROFILE_LOAD_ERROR:
             return {

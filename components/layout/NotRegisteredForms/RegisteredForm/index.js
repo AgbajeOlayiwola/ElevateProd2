@@ -10,13 +10,20 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { loadCountry } from '../../../../redux/actions/actions';
 import Head from 'next/head';
 
-const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
+const RegisteredForm = ({
+    formData,
+    setFormData,
+    action,
+    // errorM,
+    errorI,
+    actionI
+}) => {
     // const [progress, setProgress] = useState('25%');
 
     const [switchs, setSwitch] = useState(true);
-    const [isRegistered, setIsRegistered] = useState(false);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
+    const [errorM, setErrorM] = useState('');
     // const dispatch = useDispatch();
     // const { countries } = useSelector((state) => state.countryReducer);
 
@@ -36,15 +43,14 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
         setShowFirstStep(false);
     };
     const handleRegistrationStatus = () => {
-        setIsRegistered(true);
+        console.log('true');
         setBgcolor((prevState) => !prevState);
-        setFormData({ ...formData, type: 'REGISTERED BUSINESS' });
+        setFormData({ ...formData, type: 'true' });
     };
     const switchRegistrationStatus = () => {
-        setIsRegistered(false);
+        console.log('false');
         setBgcolor((prevState) => !prevState);
-
-        setFormData({ ...formData, type: 'UNREGISTERED BUSINESS' });
+        setFormData({ ...formData, type: 'false' });
     };
     // console.log(
     //     formData.type,
@@ -68,10 +74,12 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
         (state) => state.profileSetup
     );
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
+
     // console.log('error essage', otpErrorMessage);
     useEffect(() => {
         console.log('bvnError', bvnErrorI);
         console.log(errorMessages);
+        setErrorM(errorMessages);
         //change to no error messages boss
         if (!errorMessages) {
             console.log(errorMessages);
@@ -86,6 +94,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                 <h3 className={styles.LeftHeading}>Profile Setup</h3>
             </div>
             <div className={styles.formWrapper}>
+                {errorM}
                 <InputWrapper>
                     <p className={styles.error}>{errorI}</p> <br />
                     <Label>Is your Business Registered?</Label>
@@ -104,7 +113,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                         <option value="Yes">Yes</option>
                     </select>
                 </InputWrapper>
-                {isRegistered ? (
+                {formData.type == 'true' ? (
                     <>
                         <InputWrapper>
                             <Label>
@@ -273,11 +282,18 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            onClick={actionI}
+                            type="submit"
+                            text={'Next Reg'}
+                        />
                     </>
                 ) : (
                     ''
                 )}
-                {!isRegistered ? (
+                {formData.type == 'false' ? (
                     <>
                         <InputWrapper>
                             <Label>Enter your BVN</Label>
@@ -391,15 +407,15 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            onClick={action}
+                            type="submit"
+                            text={'Nex Not Reg'}
+                        />
                     </>
                 ) : null}
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    onClick={action}
-                    type="submit"
-                    text={'Next'}
-                />
             </div>
         </div>
     );

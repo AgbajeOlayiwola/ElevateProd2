@@ -8,7 +8,8 @@ import {
     createAccountData,
     accountStatusData,
     statesData,
-    businessCategoriesData
+    businessCategoriesData,
+    bankAccountsData
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -51,69 +52,46 @@ const StepFour = ({ title, action }) => {
 
     const onSubmitNew = (data) => {
         setLoading(true);
-        console.log(data);
+        console.log('New');
 
         dispatch(existingUserProfileData(accountDetails));
     };
     const profileTest = () => {
         if (errorMessage === 'Account already exists') {
             router.push('/Succes/AccountSuccess');
-        } else if (errorMessage) {
-            setError(errorMessage);
-            console.log(errorMessage);
-            setLoading(false);
-        } else if (
-            existingUserProfile.message === 'User account created succesfully'
-        ) {
-            setLoading(false);
-            router.push('/Succes/Success');
         }
+        //  else if (errorMessage) {
+        //     setError(errorMessage);
+        //     console.log(errorMessage);
+        //     setLoading(false);
+        // } else if (
+        //     existingUserProfile.message === 'User account created succesfully'
+        // ) {
+        //     setLoading(false);
+        //     router.push('/Succes/Success');
+        // }
     };
     useEffect(() => {
         profileTest();
     }, [errorMessage, existingUserProfile]);
     const onSubmit = (data) => {
-        setLoading(true);
-        let name;
-        accountDetails.fullName === null
-            ? name === null
-            : (name = accountDetails.fullName.split(' '));
+        console.log('old');
+        // console.log('old');
         const userData = {
-            affiliateCode: 'ENG',
-            firstName: name === undefined ? 'Akinfe' : name[0],
-            middleName:
-                name === undefined
-                    ? 'I'
-                    : name[2] === undefined
-                    ? 'I'
-                    : name[2],
-            lastName: name === undefined ? 'Temitope' : name[1],
-            password: accountDetails.password,
-            dob: '1998-08-10',
-            id_type: 'IDCD',
-            idNo: '1234TTZN14',
-            idIssuingDate: '2022-06-27',
-            idExpiryDate: '2029-06-05',
-            phoneNumber:
-                accountDetails.phoneNumber === undefined
-                    ? accountDetails.phone
-                    : accountDetails.phoneNumber,
-            email:
-                accountDetails.email === null
-                    ? 'topeakinfe@gmail.com'
-                    : accountDetails.email,
-            gender: 'MALE',
-            address1: 'AKure',
-            address2: 'IKORODU',
-            countryCode: 'NG',
-            custType: 'I',
-            custCategory: 'INDIVIDUAL',
-            brnCode: 'A01',
-            ccy: 'NGN',
-            flexCustId: '',
-            accountClass: 'GHSABP'
+            isRegistered: 'true',
+            businessName: formData.bussinessName,
+            businessCategory: business,
+            businessType: businesses,
+            referralCode: formData.refferalCode,
+            countryCode: '+234',
+            businessPhoneNumber: formData.phoneNumber,
+            street: formData.streetName,
+            state: formData.state,
+            city: formData.city,
+            lga: formData.localGoverment,
+            refereeCode: 'END'
         };
-        dispatch(createAccountData(userData));
+        dispatch(ompleteBusinessProfile(userData));
     };
 
     const newAccountTest = () => {

@@ -17,7 +17,7 @@ const NewUser = ({ selectCountry }) => {
     const dispatch = useDispatch();
     const [error, setError] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
-    const [pName, setPname] = useState('');
+    const [preferredName, setPname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfPassword] = useState('');
@@ -70,7 +70,7 @@ const NewUser = ({ selectCountry }) => {
     };
     const userName = (e) => {
         setPname(e.target.value);
-        console.log(pName);
+        // console.log(pName);
     };
     // display Lofg in with end
     const types = (type) => {
@@ -98,10 +98,10 @@ const NewUser = ({ selectCountry }) => {
         setError('');
         if (password === confirmPassword) {
             const postData = {
-                pName,
+                preferredName,
                 email,
-                password: encrypt(password),
-                confirmPassword: encrypt(confirmPassword),
+                password,
+                confirmPassword,
                 affiliateCode: 'ENG'
             };
             setLoading(true);
@@ -116,7 +116,7 @@ const NewUser = ({ selectCountry }) => {
         if (errorMessage !== null) {
             setError(errorMessage);
             setLoading(false);
-        } else if (user == 'Account created successfully!') {
+        } else if (user == 'User registered successfully') {
             router.push('../Verify/Loading');
         }
     };
@@ -138,9 +138,8 @@ const NewUser = ({ selectCountry }) => {
                                 message: 'Only Alphabelts allowed'
                             }
                         })}
-                        onInput={userName}
-                        // onChange={userName}
-                        value={pName}
+                        onChange={userName}
+                        value={preferredName}
                         placeholder="Preferred Name"
                     />
                     {/* <InputTag
@@ -151,7 +150,7 @@ const NewUser = ({ selectCountry }) => {
                             value: /^[A-Za-z ]+$/i,
                             message: 'Only Alphabelts allowed'
                         }}
-                        value={pName}
+                        value={preferredName}
                         action={userName}
                     /> */}
                     {errors.userName ? (

@@ -5,7 +5,7 @@ import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { ResetOTP } from '../NotRegisteredForms/StepTwoBVNAuthenticator/styles.module';
 import styles from './styles.module.css';
 
-const FirstStep = ({ handleSubmit }) => {
+const FirstStep = ({ handleSubmit, action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.body}>
@@ -37,7 +37,7 @@ const FirstStep = ({ handleSubmit }) => {
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            onClick={handleSubmit}
+                            onClick={action}
                             type="submit"
                             text="Proceed"
                         />
