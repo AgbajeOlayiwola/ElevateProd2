@@ -64,11 +64,13 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
     const onSubmit = async (data) => {
         console.log(data);
     };
-    const { isLoading, profile, errorMessages } = useSelector(
+    const { isLoading, profile, errorMessages, bvnErrorI } = useSelector(
         (state) => state.profileSetup
     );
-
+    const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
+    // console.log('error essage', otpErrorMessage);
     useEffect(() => {
+        console.log('bvnError', bvnErrorI);
         console.log(errorMessages);
         //change to no error messages boss
         if (!errorMessages) {
@@ -136,7 +138,9 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                             {errors.rc_number?.message}
                         </div> */}
                         <InputWrapper>
-                            <Label>Enter your TIN</Label>
+                            <Label>
+                                Enter your TIN <i>(optional)</i>{' '}
+                            </Label>
                             <FormInput
                                 name="tin"
                                 type="number"

@@ -29,7 +29,7 @@ const ProfileSetups = () => {
     // router.replace(router.asPath);
 
     const cookie = getCookie('cookieToken');
-    console.log('register page', cookie);
+    // console.log('register page', cookie);
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
@@ -104,15 +104,15 @@ const ProfileSetups = () => {
         switch (page) {
             case 0:
                 return (
-                    // <RegisteredForm
-                    //     errorM={errorM}
-                    //     errorI={errorI}
-                    //     formData={formData}
-                    //     setFormData={setFormData}
-                    //     action={handleSubmit}
-                    //     // action is supposed to be handleSubmit
-                    // />
-                    <StepTwoBVNAuthenticator />
+                    <RegisteredForm
+                        errorM={errorM}
+                        errorI={errorI}
+                        formData={formData}
+                        setFormData={setFormData}
+                        action={handleSubmit}
+                        // action is supposed to be handleSubmit
+                    />
+                    // <StepTwoBVNAuthenticator />
                 );
             case 1:
                 return (
@@ -136,17 +136,17 @@ const ProfileSetups = () => {
                         }}
                     />
                 );
+            // case 2:
+            //     return (
+            //         <Liveness
+            //             // action={() => {
+            //             //     setPage(page - 1);
+            //             //     setPageType('');
+            //             // }}
+            //             action={handleSubmitt}
+            //         />
+            //     );
             case 2:
-                return (
-                    <Liveness
-                        // action={() => {
-                        //     setPage(page - 1);
-                        //     setPageType('');
-                        // }}
-                        action={handleSubmitt}
-                    />
-                );
-            case 3:
                 return (
                     <StepThreeCompleteProfile1
                         formData={formData}
@@ -207,7 +207,7 @@ const ProfileSetups = () => {
     const handleSubmitt = () => {
         setPage(page + 1);
     };
-    console.log(errorM, errorI);
+    // console.log(errorM, errorI);
 
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
@@ -227,9 +227,9 @@ const ProfileSetups = () => {
             ? (text =
                   'Input your BVN and open a Business Account in 3 minutes.')
             : page === 2
-            ? (text = 'Checkout Priceless opportunities Be ahead')
+            ? (text = 'Checkout Priceless opportunities Be ahead!')
             : page === 3
-            ? (text = 'Checkout Priceless opportunities Be ahead')
+            ? (text = 'Checkout Priceless opportunities Be ahead!')
             : null;
     }
     return (

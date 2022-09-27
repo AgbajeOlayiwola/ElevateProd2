@@ -34,6 +34,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
 
     if (typeof window !== 'undefined') {
         countryName = window.localStorage.getItem('country');
+        console.log(window.localStorage.getItem('country'));
         if (countryName === null) {
             countryNames = window.localStorage.getItem('country');
         } else {

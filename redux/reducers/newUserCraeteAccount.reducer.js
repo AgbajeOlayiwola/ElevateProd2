@@ -2,7 +2,7 @@ import { newUserCreateAccount } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    newAccount: [],
+    newAccount: ' ',
     newAccountErrorMessage: ''
 };
 

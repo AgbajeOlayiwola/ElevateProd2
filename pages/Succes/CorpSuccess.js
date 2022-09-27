@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { ButtonComp } from '../../../../components';
 import styles from './styles.module.css';
-import Image from 'next/image';
 import Link from 'next/link';
-import Success from '../../../ReusableComponents/Success';
-import apiRoutes from '../../../../redux/helper/apiRoutes';
-import axiosInstance from '../../../../redux/helper/apiClient';
-import { setCookie, getCookie } from 'cookies-next';
+import axiosInstance from '../../redux/helper/apiClient';
+import Success from '../../components/ReusableComponents/Success';
+import { ButtonComp } from '../../components';
+import { getCookie } from 'cookies-next';
+import apiRoutes from '../../redux/helper/apiRoutes';
 
 const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -15,7 +14,7 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
         const cookie = getCookie('cookieToken');
         axiosInstance
             .get(
-                `https://ellevate-app.herokuapp.com${apiRoutes.accountStatus}`,
+                `https://ellevate-app.herokuapp.com${apiRoutes.corpAccountStatus}`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
