@@ -139,6 +139,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     // console.log(type);
     const [errorMes, setErrorMes] = useState();
+
     const handleSubmitIII = () => {
         const commpleteProfileData = {
             isRegistered: type,

@@ -764,8 +764,8 @@ export const existingUserProfileData = (data) => (dispatch) => {
         .post(`${apiRoutes.existingUserProfile}`, data)
         .then((response) => {
             dispatch(existingUserProfileLoadSuccess(response));
-            console.log(existingUserProfilee.data.data.token);
-            setCookie('existingToken', existingUserProfilee.data.data.token);
+            console.log(response.data.data.token);
+            setCookie('existingToken', response.data.data.token);
         })
         .catch((error) => dispatch(existingUserProfileLoadError(error)));
 };
