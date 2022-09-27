@@ -25,8 +25,8 @@ import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 const StepFour = ({ title, action }) => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const account = localStorage.getItem('meta');
-    const accountDetails = JSON.parse(account);
+    // const account = localStorage.getItem('meta');
+    // const accountDetails = JSON.parse(account);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -208,6 +208,18 @@ const StepFour = ({ title, action }) => {
             }
         });
     }, [business]);
+    let countryName = '';
+    let countryNames;
+
+    if (typeof window !== 'undefined') {
+        countryName = window.localStorage.getItem('country');
+        console.log(window.localStorage.getItem('country'));
+        if (countryName === null) {
+            countryNames = window.localStorage.getItem('country');
+        } else {
+            countryNames = JSON.parse(countryName);
+        }
+    }
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
@@ -231,6 +243,15 @@ const StepFour = ({ title, action }) => {
                                 ) : null}
                                 <div className={styles.existingUserHead}>
                                     <div className={styles.existingUserSingle}>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>Enter Business Name</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Enter Business  Name"
+                                            />
+                                        </div>
                                         <div
                                             className={styles.existingUserCont}
                                         >
@@ -353,6 +374,49 @@ const StepFour = ({ title, action }) => {
                                         </div>
                                     </div>
                                     <div className={styles.existingUserSingle}>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Enter Business Phone Number
+                                            </label>
+                                            <div className={styles.phone}>
+                                                <div
+                                                    className={
+                                                        styles.phoneHeader
+                                                    }
+                                                >
+                                                    <span>
+                                                        <img
+                                                            src={
+                                                                countryNames
+                                                                    .flags.svg
+                                                            }
+                                                            alt=""
+                                                        />
+                                                    </span>
+                                                    <p>
+                                                        {
+                                                            countryNames.baseCurrency
+                                                        }
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.phoneDetails
+                                                    }
+                                                >
+                                                    {/* <p>{countryNames.countryCode}</p> */}
+                                                    <input
+                                                        type="number"
+                                                        placeholder="812 345 6789"
+                                                        // value={
+                                                        //     accountDetails.phoneNumber
+                                                        // }
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div
                                             className={styles.existingUserCont}
                                         >
@@ -511,13 +575,56 @@ const StepFour = ({ title, action }) => {
                                             className={styles.existingUserCont}
                                         >
                                             <label>
-                                                Enter your RC Number/Business
+                                                Enter your RC /Business
                                                 Registration Number
                                             </label>
                                             <input
                                                 type="text"
                                                 placeholder="Your RC Number"
                                             />
+                                        </div>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Enter your Business Phone Number
+                                            </label>
+                                            <div className={styles.phone}>
+                                                <div
+                                                    className={
+                                                        styles.phoneHeader
+                                                    }
+                                                >
+                                                    <span>
+                                                        <img
+                                                            src={
+                                                                countryNames
+                                                                    .flags.svg
+                                                            }
+                                                            alt=""
+                                                        />
+                                                    </span>
+                                                    <p>
+                                                        {
+                                                            countryNames.baseCurrency
+                                                        }
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.phoneDetails
+                                                    }
+                                                >
+                                                    {/* <p>{countryNames.countryCode}</p> */}
+                                                    <input
+                                                        type="number"
+                                                        placeholder="812 345 6789"
+                                                        // value={
+                                                        //     accountDetails.phoneNumber
+                                                        // }
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                         <div
                                             className={styles.existingUserCont}
@@ -588,6 +695,17 @@ const StepFour = ({ title, action }) => {
                                         </div>
                                     </div>
                                     <div className={styles.existingUserSingle}>
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Enter your Business Name
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="Enter Your Business Name"
+                                            />
+                                        </div>
                                         <div
                                             className={styles.existingUserCont}
                                         >

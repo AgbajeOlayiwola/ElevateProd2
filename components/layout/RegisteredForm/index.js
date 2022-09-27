@@ -16,7 +16,15 @@ const ExistingMultiStep = () => {
     const conditionalComponent = () => {
         switch (page) {
             case 0:
-                return <FirstStep handleSubmit={handleSubmit} />;
+                return (
+                    <StepFour
+                        title={pageType}
+                        action={() => {
+                            setPage(page - 1);
+                            setPageType('');
+                        }}
+                    />
+                );
             case 1:
                 return (
                     <SecondStep
