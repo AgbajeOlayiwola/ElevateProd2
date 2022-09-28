@@ -102,8 +102,8 @@ const RegisteredForm = ({
     // console.log('payload',emailData, password, confPassword);
 
     useEffect(() => {
-        setFormData({ ...formData, userId: newAccounts.userId });
-        // console.log(formData.userId);
+        setFormData({ ...formData, userId: newAccounts.user.userId });
+        console.log(formData.userId);
     }, []);
     const types = (type) => {
         setOutType(type);
@@ -137,9 +137,9 @@ const RegisteredForm = ({
                                 required
                                 // readOnly
                                 value={
-                                    accountDetails.email === null
+                                    newAccounts.email === null
                                         ? formData.emailData
-                                        : accountDetails.email.toLowerCase()
+                                        : newAccounts.user.email
                                 }
                                 onChange={(event) =>
                                     setFormData({

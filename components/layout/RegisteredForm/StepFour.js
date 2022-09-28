@@ -9,7 +9,8 @@ import {
     accountStatusData,
     statesData,
     businessCategoriesData,
-    bankAccountsData
+    bankAccountsData,
+    CompleteBusinessProfile
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -49,12 +50,33 @@ const StepFour = ({ title, action }) => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-
+    const [businessName, setBusinessName] = useState('');
+    const [refferalCode, setRefferalCode] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [streetName, setStreetName] = useState('');
+    const [state, setState] = useState('');
+    const [city, setCity] = useState('');
+    const [localGoverment, setLocalGoverment] = useState('');
+    const [localState, setLocalState] = useState('');
+    console.log(localGoverment);
     const onSubmitNew = (data) => {
         setLoading(true);
         console.log('New');
-
-        dispatch(existingUserProfileData(accountDetails));
+        const userData = {
+            isRegistered: 'true',
+            businessName: businessName,
+            businessCategory: business,
+            businessType: businesses,
+            referralCode: refferalCode,
+            countryCode: '+234',
+            businessPhoneNumber: phoneNumber,
+            street: streetName,
+            state: localState,
+            city: city,
+            lga: localGoverment,
+            refereeCode: 'END'
+        };
+        dispatch(CompleteBusinessProfile(userData));
     };
     const profileTest = () => {
         if (errorMessage === 'Account already exists') {
@@ -77,23 +99,23 @@ const StepFour = ({ title, action }) => {
     const onSubmit = (data) => {
         console.log('old');
         // console.log('old');
-        const userData = {
-            isRegistered: 'true',
-            businessName: formData.bussinessName,
-            businessCategory: business,
-            businessType: businesses,
-            referralCode: formData.refferalCode,
-            countryCode: '+234',
-            businessPhoneNumber: formData.phoneNumber,
-            street: formData.streetName,
-            state: formData.state,
-            city: formData.city,
-            lga: formData.localGoverment,
-            refereeCode: 'END'
-        };
-        dispatch(ompleteBusinessProfile(userData));
+        // const userData = {
+        //     isRegistered: 'true',
+        //     businessName: formData.bussinessName,
+        //     businessCategory: business,
+        //     businessType: businesses,
+        //     referralCode: formData.refferalCode,
+        //     countryCode: '+234',
+        //     businessPhoneNumber: formData.phoneNumber,
+        //     street: formData.streetName,
+        //     state: formData.state,
+        //     city: formData.city,
+        //     lga: formData.localGoverment,
+        //     refereeCode: 'END'
+        // };
+        // dispatch(ompleteBusinessProfile(userData));
     };
-
+    console.log(businessName);
     const newAccountTest = () => {
         console.log(createAccount);
         if (errorData === 'User already Exists') {
@@ -144,12 +166,12 @@ const StepFour = ({ title, action }) => {
     };
     const [activeBtn, setActiveBtn] = useState(true);
     const [location, setLocation] = useState([]);
-    const [localState, setLocalState] = useState('');
-    const [localGovernment, setLocalGovernment] = useState('');
+
     const [businessCategory, setBusinessCategory] = useState([]);
     const [businessType, setBusinessType] = useState([]);
     const [business, setBusiness] = useState('');
     const [businesses, setBusinesses] = useState('');
+    const [localGovernment, setLocalGovernment] = useState('');
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
     const { states } = useSelector((state) => state.statesReducer);
@@ -228,6 +250,12 @@ const StepFour = ({ title, action }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter Business  Name"
+                                                value={businessName}
+                                                onChange={(e) =>
+                                                    setBusinessName(
+                                                        e.target.value
+                                                    )
+                                                }
                                             />
                                         </div>
                                         <div
@@ -315,6 +343,12 @@ const StepFour = ({ title, action }) => {
                                                 <input
                                                     type="text"
                                                     placeholder="Enter Street Name"
+                                                    value={streetName}
+                                                    onChange={(e) =>
+                                                        setStreetName(
+                                                            e.target.value
+                                                        )
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -324,7 +358,13 @@ const StepFour = ({ title, action }) => {
                                             <label>
                                                 Local Government Area (LGA)
                                             </label>
-                                            <select>
+                                            <select
+                                                onChange={(e) => {
+                                                    setLocalGoverment(
+                                                        e.target.value
+                                                    );
+                                                }}
+                                            >
                                                 <option value="">
                                                     Select Local Government
                                                 </option>
@@ -388,6 +428,12 @@ const StepFour = ({ title, action }) => {
                                                     <input
                                                         type="number"
                                                         placeholder="812 345 6789"
+                                                        value={phoneNumber}
+                                                        onChange={(e) =>
+                                                            setPhoneNumber(
+                                                                e.target.value
+                                                            )
+                                                        }
                                                         // value={
                                                         //     accountDetails.phoneNumber
                                                         // }
@@ -497,6 +543,10 @@ const StepFour = ({ title, action }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter City"
+                                                value={city}
+                                                onChange={(e) =>
+                                                    setCity(e.target.value)
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -510,6 +560,10 @@ const StepFour = ({ title, action }) => {
                                     <input
                                         placeholder="Enter  Code"
                                         className={styles.textInput}
+                                        value={refferalCode}
+                                        onChange={(e) =>
+                                            setRefferalCode(e.target.value)
+                                        }
                                     />{' '}
                                     {loading ? (
                                         <Loader />

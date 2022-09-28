@@ -144,11 +144,10 @@ const ProfileSetups = () => {
             case 2:
                 return (
                     <Liveness
-                        // action={() => {
-                        //     setPage(page - 1);
-                        //     setPageType('');
-                        // }}
-                        action={handleSubmitt}
+                        action={() => {
+                            setPage(page + 1);
+                        }}
+                        // action={handleSubmitt}
                     />
                 );
             case 3:
@@ -213,7 +212,10 @@ const ProfileSetups = () => {
 
     useEffect(() => {
         // console.log('new bvn:', bvnNin.message);
-        if (bvnNin === 'verification successful') {
+        if (
+            bvnNin === 'verification successful' ||
+            errorMessages === 'you have already setup your profile'
+        ) {
             setPage(page + 1);
         } else {
             console.log('moved');

@@ -39,7 +39,7 @@ const ExistingMultiStep = () => {
     const conditionalComponent = () => {
         switch (page) {
             case 0:
-                return <FirstStep handleSubmit={handleSubmit} />;
+                return <FirstStep action={handleSubmit} />;
             case 1:
                 return (
                     <SecondStep
@@ -50,13 +50,13 @@ const ExistingMultiStep = () => {
                                 password: formData.password,
                                 confirmPassword: formData.confPassword
                             };
-                            // console.log(errorMessage);
+                            console.log(formData.userId);
                             dispatch(existingUserProfileData(userData));
                             // console.log(existingUserProfilee.data.message);
                             if (!errorMessage) {
                                 setPage(page + 1);
                             } else if (
-                                existingUserProfilee.data.message ==
+                                existingUserProfilee.message ==
                                 'Profile setup Intialization completed'
                             ) {
                                 setPage(page + 1);

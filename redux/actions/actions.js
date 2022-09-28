@@ -1219,7 +1219,12 @@ export const completeProfileLoadError = (errorMessage) => ({
 });
 
 export const CompleteBusinessProfile = (completeProfileData) => {
-    const cookie = getCookie('cookieToken');
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     return (dispatch) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
