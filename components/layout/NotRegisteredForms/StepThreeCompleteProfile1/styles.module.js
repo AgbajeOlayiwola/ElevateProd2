@@ -90,9 +90,12 @@ export const RegStatusHeading = styled.h6`
 export const ButtonWrapper = styled.div`
     border-radius: 12px;
     display: flex;
-    // flex-flow: row wrap;
     width: 100%;
     margin-top: 32px;
+
+    // @media screen and (max-width: 701px) {
+    //     flex-direction:column;
+    // }
 `;
 export const ToggleNo = styled.span`
     width: 50%;

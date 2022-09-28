@@ -343,87 +343,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         disabled
                                     />
                                 </div>
-                                <div className={styles.singleFormGroup}>
-                                    <label>Select your Business Category</label>
-
-                                    <div className={styles.businessCat}>
-                                        <div
-                                            className={
-                                                styles.businessCategories
-                                            }
-                                            onClick={() => {
-                                                setBusinessTest(!businessTest);
-                                            }}
-                                        >
-                                            <SearchSvg />
-                                            {business ? (
-                                                <p>{business}</p>
-                                            ) : (
-                                                <p>Search Business Category</p>
-                                            )}
-
-                                            <DropdownSvg />
-                                        </div>
-                                        {businessTest && (
-                                            <ul
-                                                className={styles.businessGroup}
-                                            >
-                                                {Object.keys(
-                                                    businessCategory
-                                                )?.map((business, index) => {
-                                                    return (
-                                                        <li
-                                                            value={business}
-                                                            key={index}
-                                                            onClick={() => {
-                                                                setBusiness(
-                                                                    business
-                                                                );
-                                                                setBusinessTest(
-                                                                    false
-                                                                );
-                                                            }}
-                                                        >
-                                                            {business}
-                                                        </li>
-                                                    );
-                                                })}
-                                            </ul>
-                                        )}
-                                    </div>
+                                <div className={styles.formGroup}>
+                                    <label>Select your Gender</label>
+                                    <select name="" id="">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
                                 </div>
                             </div>
                             <div className={styles.formCont}>
-                                <div className={styles.formGroup}>
-                                    <div className={styles.singleFormGroup}>
-                                        <label>Enter Business Name</label>
-                                        <input
-                                            type="text"
-                                            value={
-                                                profileCont.business
-                                                    ? profileCont.business.name
-                                                    : formData.businessName
-                                            }
-                                            placeholder="Enter Business Full Name"
-                                            onChange={(event) => {
-                                                setFormData({
-                                                    ...formData,
-                                                    bussinessName:
-                                                        event.target.value
-                                                });
-                                            }}
-                                        />
-                                    </div>
-                                    <div className={styles.formGroup}>
-                                        <label>Select your Gender</label>
-                                        <select name="" id="">
-                                            <option value="Male">Male</option>
-                                            <option value="Female">
-                                                Female
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
                                 <div className={styles.formCont}>
                                     <div className={styles.formGroup}>
                                         <div className={styles.singleFormGroup}>
@@ -923,32 +851,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         <div className={styles.sign}>
                                             <p>No file chosen...</p>
                                             <label>
-                                                Enter Referral Code
-                                                <span>(Optional)</span>
+                                                <input
+                                                    type="file"
+                                                    placeholder="Enter Code"
+                                                    onChange={saveFile}
+                                                />
+                                                Upload
                                             </label>
-                                            <input
-                                                type="text"
-                                                placeholder="Enter Code"
-                                            />
-                                        </div>
-                                        <button type="submit">
-                                            Save & Continue
-                                        </button>
-                                    </div>
-                                    <div className={styles.formGroup}>
-                                        <div className={styles.singleFormGroup}>
-                                            <label>Upload Signature</label>
-                                            <div className={styles.sign}>
-                                                <p>No file chosen...</p>
-                                                <label>
-                                                    <input
-                                                        type="file"
-                                                        placeholder="Enter Code"
-                                                        onChange={saveFile}
-                                                    />
-                                                    Upload
-                                                </label>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

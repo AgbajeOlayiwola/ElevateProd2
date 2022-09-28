@@ -31,3 +31,26 @@
     max-width: 682px;
     width: 53%;
 }
+
+@media screen and (max-width: 1186px) {
+    .sectionII {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .sectionI {
+        display: none;
+    }
+
+    .sectionII {
+        width: 100%;
+        max-width: 100%;
+        padding: 80px 0px;
+    }
+
+    .sections {
+        height: unset;
+        overflow: unset;
+    }
+}

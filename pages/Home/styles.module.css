@@ -361,6 +361,7 @@
     height: 57px;
     cursor: pointer;
     border: none;
+    margin: 0px auto;
 }
 .name {
     font-family: 'Inter', sans-serif;
@@ -392,6 +393,7 @@
     border: 1px solid #dbdbdb;
     transition: all 0.3s ease-in-out;
     filter: grayscale(100%);
+    margin: 0px auto;
 }
 
 .cov {
@@ -685,5 +687,184 @@
     }
     100% {
         opacity: 1;
+    }
+}
+
+@media screen and (max-width: 1131px) {
+    .firstSection .content {
+        padding: 0px 36px;
+    }
+
+    .secondSectionMidCountry,
+    .secondSectionMidYes {
+        width: 48%;
+    }
+
+    .existingUser {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .existingUserBody,
+    .existingUserHeader {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 16px;
+    }
+}
+
+@media screen and (max-width: 961px) {
+    .secondSectionHeaderText {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 916px) {
+    .homeBody {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 819px) {
+    .secondSection {
+        width: 58%;
+    }
+}
+
+@media screen and (max-width: 749px) {
+    .firstSection .content {
+        padding: 0px 16px;
+    }
+
+    .secondSection {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 723px) {
+    .secondSectionMid {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 0px;
+    }
+
+    .homeForm {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 0px;
+    }
+
+    .formTag {
+        height: 30vh;
+        overflow-y: scroll;
+    }
+
+    .formTag::-webkit-scrollbar {
+        display: none;
+    }
+
+    .secondSectionMidCountry,
+    .secondSectionMidYes {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 24px;
+    }
+
+    .secondSection button {
+        margin-top: 24px;
+    }
+
+    .already {
+        margin-top: 8px;
+    }
+}
+
+@media screen and (max-width: 681px) {
+    .homeBody {
+        flex-direction: column;
+        width: 100%;
+        height: unset;
+        overflow: unset;
+    }
+
+    .firstSection img {
+        margin-top: 0px;
+        height: unset;
+    }
+
+    .secondSection {
+        width: 90%;
+        margin: 0px auto;
+    }
+
+    .firstSection {
+        transform: rotate(180deg);
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .mobileBanner {
+        background: #232323;
+        border-radius: 60px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+        width: 100%;
+        transform: skew(0deg, -7deg);
+        height: 55vh;
+        overflow: hidden;
+        margin-bottom: -40px;
+    }
+
+    .mobileBannerCont {
+        transform: rotate(-180deg);
+        height: 100%;
+        padding: 24px;
+        width: 100%;
+    }
+
+    .language,
+    .svg {
+        transform: skew(0deg, 7deg);
+    }
+
+    .language {
+        margin: 30px 0px;
+        width: 100%;
+        display: flex;
+        justify-content: right;
+    }
+
+    .svg {
+        width: 80%;
+        margin: 32px auto;
+    }
+
+    .mobileBannerCont h2 {
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 30px;
+        margin: 0px;
+        color: #ffffff;
+        margin-top: 32px;
+    }
+
+    .banner {
+        display: none;
+    }
+
+    .secondSectionHeader {
+        display: none;
+    }
+
+    .formTag {
+        height: unset;
+        overflow-y: unset;
+    }
+
+    .form {
+        height: unset;
+        overflow-y: unset;
     }
 }
