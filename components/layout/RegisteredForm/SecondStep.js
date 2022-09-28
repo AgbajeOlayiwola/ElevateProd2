@@ -105,11 +105,15 @@ const RegisteredForm = ({
         setFormData({ ...formData, userId: newAccounts.userId });
         // console.log(formData.userId);
     }, []);
-    const types = (type) => {
+    const types = (types) => {
+        setOutTypes(types);
+    };
+    const type = (type) => {
         setOutType(type);
     };
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
+    const [outTypes, setOutTypes] = useState();
     // console.log(existingUserProfilee);
     return (
         <div className={styles.body}>
@@ -136,11 +140,11 @@ const RegisteredForm = ({
                                 className={styles.textInput}
                                 required
                                 // readOnly
-                                value={
-                                    accountDetails.email === null
-                                        ? formData.emailData
-                                        : accountDetails.email.toLowerCase()
-                                }
+                                // value={
+                                //     accountDetails.email === null
+                                //         ? formData.emailData
+                                //         : accountDetails.email.toLowerCase()
+                                // }
                                 onChange={(event) =>
                                     setFormData({
                                         ...formData,
@@ -157,7 +161,7 @@ const RegisteredForm = ({
                                     placeholder="Enter your Password"
                                     className={styles.textInput}
                                     required
-                                    type={outType ? 'text' : 'password'}
+                                    type={outTypes ? 'text' : 'password'}
                                     onChange={handlePwd}
                                 />
                                 <Visbility typeSet={types} />
@@ -192,7 +196,7 @@ const RegisteredForm = ({
                                     onChange={handlePaswword}
                                 />
 
-                                <Visbility typeSet={types} />
+                                <Visbility typeSet={type} />
                             </div>
                             {password === confPassword ? null : (
                                 <p className={styles.error}>{passwordMatch}</p>

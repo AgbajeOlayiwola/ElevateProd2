@@ -465,6 +465,27 @@ const HomeMain = () => {
                         </div>
                     </div>
                 </div>
+                <div className={styles.mobileBanner}>
+                    <div className={styles.mobileBannerCont}>
+                        <div className={styles.language}>
+                            <div className={styles.languageCont}>
+                                <Languages />
+                            </div>
+                        </div>
+                        <div className={styles.svg}>
+                            <div>
+                                <HomeSvg />
+                                <p className={styles.SMeApp}>
+                                    Powered by <span>Ecobank</span>
+                                </p>
+                            </div>
+                            <h2>
+                                Input your BVN and open a Business Account in 3
+                                minutes.
+                            </h2>
+                        </div>
+                    </div>
+                </div>
             </section>
             <section className={styles.secondSection}>
                 <div className={styles.secondSectionHeader}>

@@ -329,6 +329,16 @@ export const compProfile = {
 
 //complete profile action type end
 
+//complete profile action type start
+
+export const userProfile = {
+    USERPROFILE_LOAD_START: 'USERPROFILE_LOAD_START',
+    USERPROFILE_LOAD_SUCCESS: 'USERPROFILE_LOAD_SUCCESS',
+    USERPROFILE_LOAD_ERROR: 'USERPROFILE_LOAD_ERROR'
+};
+
+//complete profile action type end
+
 //ot action type start
 
 export const otp = {

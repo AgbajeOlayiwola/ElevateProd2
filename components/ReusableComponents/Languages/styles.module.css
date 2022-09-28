@@ -81,3 +81,10 @@
     color: #235b7f;
     text-transform: uppercase;
 }
+
+@media screen and (max-width: 681px) {
+    .selectCountry p {
+        color: #fff;
+        margin-right: 16px;
+    }
+}

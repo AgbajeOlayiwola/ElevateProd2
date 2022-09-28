@@ -39,7 +39,7 @@ const ExistingMultiStep = () => {
     const conditionalComponent = () => {
         switch (page) {
             case 0:
-                return <FirstStep handleSubmit={handleSubmit} />;
+                return <FirstStep action={handleSubmit} />;
             case 1:
                 return (
                     <SecondStep
