@@ -6,27 +6,71 @@ import ButtonComp from '../../../ReusableComponents/Button';
 import Webcam from 'react-webcam';
 import Head from 'next/head';
 import Script from 'next/script';
+import { getCookie } from 'cookies-next';
+import axios from 'axios';
 
 const videoConstraints = {
     width: 390,
     height: 480,
     facingMode: 'user'
 };
+const _base64ToArrayBuffer = (base64String) => {
+    if (window !== undefined) {
+        var binary_string = window.atob(base64String);
+        var len = binary_string.length;
+        var bytes = new Uint8Array(len);
+        for (var i = 0; i < len; i++) {
+            bytes[i] = binary_string.charCodeAt(i);
+        }
+        return bytes.buffer;
+    }
+};
 const Liveness = ({ action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
 
     const webcamRef = React.useRef(null);
     const [imgSrc, setImgSrc] = React.useState(null);
+    const [succes, setSuccess] = useState('');
 
     const capture = React.useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
-        setImgSrc(imageSrc);
+        let newImage = imageSrc.split(',');
+        let base64String = newImage[1];
+
+        var buf = _base64ToArrayBuffer(base64String);
+
+        console.log(buf);
+        var mimeType = 'image/jpeg';
+        var file = new File([buf], 'userface-1828438.jpg', { type: mimeType });
+
+        var formData = new FormData();
+
+        formData.append('userFace', file);
+
+        const cookie = getCookie('cookieToken');
+        axios
+            .post(
+                `https://ellevate-test.herokuapp.com/authentication/facematch`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${cookie}`
+                    }
+                }
+            )
+            .then((response) => {
+                console.log(response.data.message);
+                setSuccess(response.data.message);
+            })
+            .catch((error) => {
+                console.log(error.response.data.statusCode);
+                // setResErros(error.response.data.statusCode);
+            });
     }, [webcamRef, setImgSrc]);
 
     return (
         <div className={styles.body}>
-            <Script src="https://web-button.mati.io/button.js"></Script>
-
             <div className={styles.cover}>
                 <div className={styles.imageOut}>
                     <div>
@@ -35,25 +79,42 @@ const Liveness = ({ action }) => {
                             Finish up with a clear photo of your face to verify
                             your identity.
                         </p>
-                        {/* <div className={styles.imageInner}>
+                        <div
+                            className={
+                                succes === 'facial verification successful'
+                                    ? styles.imageOuter
+                                    : styles.imageInner
+                            }
+                        >
                             <Webcam
                                 audio={false}
                                 screenshotFormat="image/jpeg"
                                 videoConstraints={videoConstraints}
                                 ref={webcamRef}
-                            /> 
-                        </div> */}
+                            />
+                        </div>
                     </div>
                 </div>
-                {/* <ButtonComp
-                    onClick={capture}
+
+                <ButtonComp
+                    onClick={
+                        succes === 'facial verification successful'
+                            ? action
+                            : capture
+                    }
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
                     type="submit"
-                    text={'Snap'}
-                    action={action}
-                /> */}
-                <div className={styles.matiButtonSetup}>
+                    text={
+                        succes === 'facial verification successful'
+                            ? 'Success'
+                            : 'Snap'
+                    }
+                    // action={action}
+                />
+
+                {/* {imgSrc && <img src={imgSrc} />} */}
+                {/* <div className={styles.matiButtonSetup}>
                     <mati-button
                         clientId="622f44566ac1c1001cd1daac" // from your Mati dashboard
                         flowId="62fb9b12235dfd001ed92fec" // from your Mati dashboard
@@ -61,7 +122,7 @@ const Liveness = ({ action }) => {
                         className={styles.MatiButton}
                         metadata='{"user_id":"1234778"}'
                     />
-                </div>
+                </div> */}
             </div>
             {/* {imgSrc && <img src={imgSrc} />} */}
         </div>

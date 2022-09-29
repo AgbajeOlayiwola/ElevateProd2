@@ -70,7 +70,7 @@ const NewUser = ({ selectCountry }) => {
     };
     const userName = (e) => {
         setPname(e.target.value);
-        console.log(pName);
+        // console.log(pName);
     };
     // display Lofg in with end
     const types = (type) => {
@@ -124,7 +124,7 @@ const NewUser = ({ selectCountry }) => {
         sentSIgnUp();
     }, [errorMessage, user]);
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.formTag}>
             {error ? <p className={styles.error}>{error}</p> : null}
             <div className={styles.homeForm}>
                 <div className={styles.secondSectionMidCountry}>

@@ -14,7 +14,7 @@ const RegisteredForm = ({
     formData,
     setFormData,
     action,
-    errorM,
+    // errorM,
     errorI,
     actionI
 }) => {
@@ -23,6 +23,7 @@ const RegisteredForm = ({
     const [switchs, setSwitch] = useState(true);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
+    const [errorM, setErrorM] = useState('');
     // const dispatch = useDispatch();
     // const { countries } = useSelector((state) => state.countryReducer);
 
@@ -77,7 +78,8 @@ const RegisteredForm = ({
     // console.log('error essage', otpErrorMessage);
     useEffect(() => {
         console.log('bvnError', bvnErrorI);
-        console.log(errorMessages);
+        console.log(errorMessages, bvnErrorI);
+        setErrorM(errorMessages);
         //change to no error messages boss
         if (!errorMessages) {
             console.log(errorMessages);
@@ -92,6 +94,7 @@ const RegisteredForm = ({
                 <h3 className={styles.LeftHeading}>Profile Setup</h3>
             </div>
             <div className={styles.formWrapper}>
+                {errorM}
                 <InputWrapper>
                     <p className={styles.error}>{errorI}</p> <br />
                     <Label>Is your Business Registered?</Label>

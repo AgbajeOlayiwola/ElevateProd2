@@ -14,6 +14,7 @@
     background-color: #ffffff;
     border-radius: 8px;
     color: #102572;
+    padding: 0px;
 }
 .otpInps input:focus {
     border: 1px solid #6ccf00;

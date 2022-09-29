@@ -141,17 +141,16 @@ const ProfileSetups = () => {
                         }}
                     />
                 );
-            // case 2:
-            //     return (
-            //         <Liveness
-            //             // action={() => {
-            //             //     setPage(page - 1);
-            //             //     setPageType('');
-            //             // }}
-            //             action={handleSubmitt}
-            //         />
-            //     );
             case 2:
+                return (
+                    <Liveness
+                        action={() => {
+                            setPage(page + 1);
+                        }}
+                        // action={handleSubmitt}
+                    />
+                );
+            case 3:
                 return (
                     <StepThreeCompleteProfile1
                         type={formData.type}
@@ -213,7 +212,10 @@ const ProfileSetups = () => {
 
     useEffect(() => {
         // console.log('new bvn:', bvnNin.message);
-        if (bvnNin === 'verification successful') {
+        if (
+            bvnNin === 'verification successful' ||
+            errorMessages === 'you have already setup your profile'
+        ) {
             setPage(page + 1);
         } else {
             console.log('moved');
@@ -257,10 +259,10 @@ const ProfileSetups = () => {
             </section>
             <section className={styles.sectionII}>
                 {page === 0 ? (
-                    <>
-                        {/* <p className={styles.error}>{errorM}</p> <br />
-                                <p className={styles.error}>{errorI}</p> <br /> */}
-                    </>
+                    // <>
+                    //     <p className={styles.error}>{errorI}</p> <br />
+                    // </>
+                    <></>
                 ) : (
                     <></>
                 )}

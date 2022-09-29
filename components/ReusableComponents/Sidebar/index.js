@@ -66,7 +66,9 @@ const Sidebar = () => {
                                 >
                                     <div className={styles.contWrapper}>
                                         <span className={styles.titleIcon}>
-                                            {item.icon}
+                                            {router.pathname === item.path
+                                                ? item.iconActive
+                                                : item.icon}
                                         </span>
                                         <div>
                                             <a

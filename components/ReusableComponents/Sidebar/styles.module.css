@@ -37,6 +37,11 @@
     cursor: pointer;
 }
 
+.cont:hover {
+    background: rgba(108, 207, 0, 0.11);
+    border-radius: 19px;
+}
+
 .contWrapper {
     display: flex;
     align-items: center;

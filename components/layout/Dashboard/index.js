@@ -37,6 +37,7 @@
 
 // export default DashLayout;
 import React from 'react';
+import { useState } from 'react';
 // import withAuth from '../../HOC/withAuth';
 import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
@@ -50,6 +51,7 @@ const DashLayout = ({
     previewSingle,
     productAction
 }) => {
+    const [sidebarState, setSidebarState] = useState(true);
     return (
         // <div className={styles.dash}>
         //     <Navbar page={page} />
@@ -57,7 +59,7 @@ const DashLayout = ({
         //     <Sidebar />
         // </div>
         <div className={styles.dash}>
-            <Sidebar />
+            {sidebarState ? <Sidebar /> : null}
             <div className={styles.dashCont}>
                 <Navbar
                     page={page}
@@ -66,6 +68,9 @@ const DashLayout = ({
                     preview={preview}
                     previewSingle={previewSingle}
                     productAction={productAction}
+                    sideAction={() => {
+                        setSidebarState(!sidebarState);
+                    }}
                 />
                 {children}
             </div>

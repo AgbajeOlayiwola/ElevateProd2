@@ -7,13 +7,15 @@ import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    createNewUserAccount,
+    loadUserProfile,
     loginUserAction
 } from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
 import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
 import LoginCircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LoginCircleSvg';
+import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
+import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
 
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -27,8 +29,8 @@ const Login = () => {
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
     );
-    const { newAccount, newAccountErrorMessage } = useSelector(
-        (state) => state.newUserAccountDets
+    const { userProfile, errorMessage } = useSelector(
+        (state) => state.userProfileReducer
     );
 
     // const hashed = hash();
@@ -68,12 +70,22 @@ const Login = () => {
             // ) {
             // router.push('/Dashboard');,
         } else if (user === 'Login successful') {
+            dispatch(loadUserProfile());
+        }
+    };
+    const loginAction = () => {
+        if (userProfile.profileSetupStatus === ' PROFILE_SETUP_COMPLETED') {
+            router.push('../../Dashboard');
+        } else {
             router.push('../../Onboarding/ProfileSetup');
         }
     };
     useEffect(() => {
         sentLogin();
     }, [errorMessages, user]);
+    useEffect(() => {
+        loginAction();
+    }, [errorMessage, userProfile]);
 
     const [outType, setOutType] = useState();
     const types = (type) => {
@@ -103,7 +115,8 @@ const Login = () => {
                     >
                         <div className={styles.loginForm}>
                             <label>Email Address </label>
-                            <div>
+                            <div className={styles.divs}>
+                                <MailSvg />
                                 <input
                                     type="email"
                                     name="email"
@@ -126,6 +139,7 @@ const Login = () => {
                         <div className={styles.loginForm}>
                             <label>Password </label>
                             <div className={styles.divs}>
+                                <LockSvg />
                                 <input
                                     name="password"
                                     placeholder="Enter Your Password"

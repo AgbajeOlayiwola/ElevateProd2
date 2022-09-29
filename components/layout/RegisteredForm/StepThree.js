@@ -37,7 +37,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
 
     if (typeof window !== 'undefined') {
         countryName = window.localStorage.getItem('country');
-        console.log(window.localStorage.getItem('country'));
+        // console.log(window.localStorage.getItem('country'));
         if (countryName === null) {
             countryNames = window.localStorage.getItem('country');
         } else {
@@ -51,7 +51,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     useEffect(() => {
         dispatch(bankAccountsData());
         console.log(bankAccounts);
-    }, []);
+    }, [bankAccounts]);
 
     const [activeBtn, setActiveBtn] = useState(true);
     return (
@@ -93,7 +93,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                     className={styles.textInput}
                                     required
                                     readOnly
-                                    value={accountDetails.accountNumber}
+                                    value={bankAccounts}
                                 />
                             </div>
                             <div>

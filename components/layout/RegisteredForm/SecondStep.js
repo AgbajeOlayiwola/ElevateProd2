@@ -17,7 +17,13 @@ import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { setCookie } from 'cookies-next';
 
-const RegisteredForm = ({ handleShowSecondStep, action, move }) => {
+const RegisteredForm = ({
+    handleShowSecondStep,
+    action,
+    move,
+    formData,
+    setFormData
+}) => {
     const dispatch = useDispatch();
     const {
         register,
@@ -34,22 +40,30 @@ const RegisteredForm = ({ handleShowSecondStep, action, move }) => {
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
     const [passwordMatch, setPasswordMatch] = useState('');
+    // const [userId, setUserId] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
     const [loading, setLoading] = useState(false);
     const [emailData, setEmailData] = useState('');
     const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
-    console.log(existingUserProfilee);
+    // console.log(existingUserProfilee);
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
-        setConfPassword(e.target.value);
+        setFormData({
+            ...formData,
+            confPassword: e.target.value
+        });
         if (password != confPassword) {
             setPasswordMatch('Passwords do not match');
         }
     };
     const handlePwd = (e) => {
         setCount(e.target.value.length);
+        setFormData({
+            ...formData,
+            password: e.target.value
+        });
         if (
             validator.isStrongPassword(e.target.value, {
                 minLength: 8,
@@ -77,39 +91,30 @@ const RegisteredForm = ({ handleShowSecondStep, action, move }) => {
         if (e.target.value === '') {
             setErrorMessages('');
         }
-        let meta = sendAccounts;
-        meta = { ...meta, password: e.target.value };
-        window.localStorage.setItem('meta', JSON.stringify(meta));
+        // let meta = sendAccounts;
+        // meta = { ...meta, password: e.target.value };
+        // window.localStorage.setItem('meta', JSON.stringify(meta));
     };
 
     let accounts = window.localStorage.getItem('account');
     var newAccounts = JSON.parse(accounts);
-    // console.log(newAccounts);
-
-    const onSubmit = (data) => {
-        setLoading(true);
-        console.log(data);
-
-        const userData = {
-            userId: newAccounts.userId,
-            email: emailData,
-            password: password,
-            confirmPassword: confPassword
-        };
-        dispatch(existingUserProfileData(userData));
-    };
+    console.log(newAccounts);
+    // console.log('payload',emailData, password, confPassword);
 
     useEffect(() => {
-        if (errorMessage) {
-            onSubmit();
-        }
-    }, [errorMessage]);
-    const types = (type) => {
+        setFormData({ ...formData, userId: newAccounts.user.userId });
+        console.log(formData.userId);
+    }, []);
+    const types = (types) => {
+        setOutTypes(types);
+    };
+    const type = (type) => {
         setOutType(type);
     };
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
-
+    const [outTypes, setOutTypes] = useState();
+    // console.log(existingUserProfilee);
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
@@ -125,7 +130,7 @@ const RegisteredForm = ({ handleShowSecondStep, action, move }) => {
                             </h3>
                         </div>
                     </div>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={handleSubmit(move)}>
                         {/* include validation with required or other standard HTML validation rules */}
                         <div className={styles.textInput}>
                             <label>Email Address/ Phone Number </label>
@@ -136,11 +141,16 @@ const RegisteredForm = ({ handleShowSecondStep, action, move }) => {
                                 required
                                 // readOnly
                                 value={
-                                    accountDetails.email === null
-                                        ? emailData
-                                        : accountDetails.email.toLowerCase()
+                                    newAccounts.email === null
+                                        ? formData.emailData
+                                        : newAccounts.user.email
                                 }
-                                onChange={(e) => setEmailData(e.target.value)}
+                                onChange={(event) =>
+                                    setFormData({
+                                        ...formData,
+                                        emailData: event.target.value
+                                    })
+                                }
                             />
                         </div>
 
@@ -151,7 +161,7 @@ const RegisteredForm = ({ handleShowSecondStep, action, move }) => {
                                     placeholder="Enter your Password"
                                     className={styles.textInput}
                                     required
-                                    type={outType ? 'text' : 'password'}
+                                    type={outTypes ? 'text' : 'password'}
                                     onChange={handlePwd}
                                 />
                                 <Visbility typeSet={types} />
@@ -186,7 +196,7 @@ const RegisteredForm = ({ handleShowSecondStep, action, move }) => {
                                     onChange={handlePaswword}
                                 />
 
-                                <Visbility typeSet={types} />
+                                <Visbility typeSet={type} />
                             </div>
                             {password === confPassword ? null : (
                                 <p className={styles.error}>{passwordMatch}</p>
@@ -198,8 +208,7 @@ const RegisteredForm = ({ handleShowSecondStep, action, move }) => {
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            onClick={move}
-                            type="submit"
+                            // type="submit"
                             text="Next"
                         />
                         {/* )} */}

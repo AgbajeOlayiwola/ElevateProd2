@@ -433,7 +433,7 @@
 }
 
 .stepFour {
-    /* width: 67%; */
+    width: 67%;
     max-width: 500px;
     margin: 50px auto;
 }
@@ -712,4 +712,67 @@
     font-size: 14px;
     line-height: 17px;
     color: #a5a5a5;
+}
+
+@media screen and (max-width: 1250px) {
+    .existingUserSingle {
+        width: 48%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 1121px) {
+    .sectionII {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 990px) {
+    .body {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 901px) {
+    .sectionI {
+        display: none;
+    }
+
+    .sectionII {
+        width: 100%;
+        max-width: 100%;
+        padding: 40px 0px;
+    }
+
+    .body {
+        height: unset;
+        overflow: unset;
+    }
+
+    .formWrapper {
+        height: unset;
+        overflow: unset;
+    }
+
+    .lastContainer {
+        height: unset;
+        overflow: unset;
+    }
+}
+
+@media screen and (max-width: 531px) {
+    .existingUserHead {
+        flex-direction: column;
+    }
+
+    .existingUserSingle {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 501px) {
+    .secondStepForm {
+        width: 80%;
+        max-width: 100%;
+    }
 }

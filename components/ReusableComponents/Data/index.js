@@ -1,5 +1,3 @@
-import MoreSvg from '../MoreSvg';
-import PaymentSvg from '../PaymentSvg';
 import NairaSvg from '../NairaSvg';
 import BulkTransfer from '../BulkTransfSvg';
 import StarSharp from '../StarSharpSvg';
@@ -20,13 +18,22 @@ import Paylink2 from '../PaylinkSvg/paylink';
 import Ussd from '../UssdSvg';
 import MposSvg2 from '../mPOSSvg/Mpos';
 import EcobankQRSvg from '../EcobankQRSvg';
+import DashboardSvg from '../ReusableSvgComponents/DashboardSvg';
+import PaymentSvg from '../ReusableSvgComponents/PaymentSvg';
+import ToolSvg from '../ReusableSvgComponents/ToolSvg';
+import StorefrontSvg from '../ReusableSvgComponents/StorefrontSvg';
+import SettingsSvg from '../ReusableSvgComponents/SettingsSvg';
+import PaymentActiveSvg from '../ReusableSvgComponents/PaymentActiveSvg';
+import ToolsActiveSvg from '../ReusableSvgComponents/toolsActiveSvg';
+import StorefrontActiveSvg from '../ReusableSvgComponents/StorefrontActiveSvg';
+import SettingsActiveSvg from '../ReusableSvgComponents/SettingsActiveSvg';
 
 export const SidebarData = [
     {
         title: 'Dashboard',
         path: '/Dashboard',
-        icon: <MdIcons.MdDashboard />,
-        iconActive: <MdIcons.MdDashboard />,
+        icon: <DashboardSvg fill="none" stroke="black" />,
+        iconActive: <DashboardSvg fill="#6CCF00" stroke="none" />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
     },
@@ -35,16 +42,16 @@ export const SidebarData = [
         title: 'Payment',
         path: '/Payment',
         modal: 'show',
-        icon: <PaymentSvg fillColor={false} />,
-        iconActive: <PaymentSvg fillColor={true} />,
+        icon: <PaymentSvg />,
+        iconActive: <PaymentActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
     },
     {
         title: 'Tools',
         path: '/Tools',
-        icon: <FiIcons.FiSettings />,
-        iconActive: <FiIcons.FiSettings />,
+        icon: <ToolSvg />,
+        iconActive: <ToolsActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />,
         subNav: [
@@ -73,8 +80,8 @@ export const SidebarData = [
     {
         title: 'Storefront',
         path: '/Storefront',
-        icon: <CgIcons.CgMoreO />,
-        iconActive: <CgIcons.CgMoreO />,
+        icon: <StorefrontSvg />,
+        iconActive: <StorefrontActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
     },
@@ -82,8 +89,8 @@ export const SidebarData = [
     {
         title: 'Settings',
         path: '',
-        icon: <FiIcons.FiSettings />,
-        iconActive: <FiIcons.FiSettings />,
+        icon: <SettingsSvg />,
+        iconActive: <SettingsActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />,
         subNav: [

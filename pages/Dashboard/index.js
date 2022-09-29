@@ -1,7 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashLayout from '../../components/layout/Dashboard';
-import Paylink from '../../components/ReusableComponents/PaylinkSvg';
-import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
 import styles from './styles.module.css';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import PhoneSvg from '../../components/ReusableComponents/PhoneSvg';
@@ -13,8 +11,6 @@ import 'slick-carousel/slick/slick.css';
 import { useRouter } from 'next/router';
 import 'slick-carousel/slick/slick-theme.css';
 import Levelup from '../../components/ReusableComponents/LevelUp';
-import BarChart from '../../components/ReusableComponents/Chart/BarChart';
-import Chart from '../../components/ReusableComponents/Chart';
 import LineChart from '../../components/ReusableComponents/Chart/LineChart';
 import Piechart from '../../components/ReusableComponents/Chart/Piechart';
 import { OtherAccounts } from '../../components/ReusableComponents/Data';
@@ -24,6 +20,7 @@ import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymne
 import {
     getBalanceEnquiry,
     getTransactionElevate,
+    loadUserProfile,
     newAccountStatusData
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -57,12 +54,20 @@ function SamplePrevArrow(props) {
 
 const Dashboard = () => {
     const dispatch = useDispatch();
+    const [outType, setOutType] = useState();
+    const [userProfileData, setUserProfileData] = useState('');
+    const [balance, setBalance] = useState('#0.00');
+    const router = useRouter();
+    const [loaded, setLoaded] = useState(false);
     useEffect(() => {
         dispatch(getBalanceEnquiry());
     }, []);
 
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
+    );
+    const { userProfile, errorMessage } = useSelector(
+        (state) => state.userProfileReducer
     );
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
@@ -77,14 +82,16 @@ const Dashboard = () => {
             setTransactionData(transactionElevate);
         }
     }, [transactionElevate]);
+    useEffect(() => {
+        dispatch(loadUserProfile());
+    }, []);
+
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
+    }, [userProfile]);
     console.log(transactionData);
-    const [nav2, setNav2] = useState();
-    const slider1 = useRef();
-    const [outType, setOutType] = useState();
-    const [balance, setBalance] = useState('#0.00');
-    const router = useRouter();
-    const [loaded, setLoaded] = useState(false);
-    const route = router.pathname;
 
     const types = (type) => {
         setOutType(type);
