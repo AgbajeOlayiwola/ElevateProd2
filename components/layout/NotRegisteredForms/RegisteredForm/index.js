@@ -78,7 +78,7 @@ const RegisteredForm = ({
     // console.log('error essage', otpErrorMessage);
     useEffect(() => {
         console.log('bvnError', bvnErrorI);
-        console.log(errorMessages);
+        console.log(errorMessages, bvnErrorI);
         setErrorM(errorMessages);
         //change to no error messages boss
         if (!errorMessages) {

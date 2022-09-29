@@ -259,10 +259,10 @@ const ProfileSetups = () => {
             </section>
             <section className={styles.sectionII}>
                 {page === 0 ? (
-                    <>
-                        {/* <p className={styles.error}>{errorM}</p> <br />
-                                <p className={styles.error}>{errorI}</p> <br /> */}
-                    </>
+                    // <>
+                    //     <p className={styles.error}>{errorI}</p> <br />
+                    // </>
+                    <></>
                 ) : (
                     <></>
                 )}
