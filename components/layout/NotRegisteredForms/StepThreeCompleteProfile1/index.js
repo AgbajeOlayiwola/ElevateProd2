@@ -62,7 +62,16 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [businesses, setBusinesses] = useState('');
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
+    const [errorMes, setErrorMes] = useState();
+    const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState('');
     const router = useRouter();
+    const saveFile = (e) => {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
+
+        console.log(file);
+    };
     useEffect(() => {
         dispatch(statesData());
     }, []);
@@ -138,14 +147,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     } = useForm();
 
     // console.log(type);
-    const [errorMes, setErrorMes] = useState();
-    const [file, setFile] = useState();
-    const [fileName, setFileName] = useState('');
-
-    const saveFile = (e) => {
-        setFile(e.target.files[0]);
-        setFileName(e.target.files[0].name);
-    };
 
     // const uploadFile = async (e) => {
     //   const formData = new FormData();
@@ -163,6 +164,10 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // };
 
     const handleSubmitIII = () => {
+        // let newFile = file;
+        // let formData = new FormData();
+        // formData.append('image', newFile);
+        // formData.append('name', 'image');
         const commpleteProfileData = {
             isRegistered: type,
             businessName: formData.bussinessName,
@@ -175,7 +180,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             state: formData.state,
             city: formData.city,
             lga: formData.localGoverment,
-            refereeCode: 'string'
+            refereeCode: 'WO69LA',
+            signature: file
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
@@ -339,7 +345,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <label>Enter Full Name</label>
                                     <input
                                         type="text"
-                                        placeholder={profileCont.fullName}
+                                        placeholder={profileCont.firstName}
                                         disabled
                                     />
                                 </div>
@@ -359,6 +365,14 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter Business Full Name"
+                                                value={formData.bussinessName}
+                                                onChange={(event) => {
+                                                    setFormData({
+                                                        ...formData,
+                                                        bussinessName:
+                                                            event.target.value
+                                                    });
+                                                }}
                                             />
                                         </div>
                                         <div className={styles.singleFormGroup}>
@@ -683,7 +697,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                         //                 Next
                         //             </button>
                         //         </div>
-                        // </>
+                        //
                         <>
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroup}>
@@ -849,7 +863,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <div className={styles.singleFormGroup}>
                                         <label>Upload Signature</label>
                                         <div className={styles.sign}>
-                                            <p>No file chosen...</p>
+                                            <p>
+                                                {fileName
+                                                    ? fileName
+                                                    : 'No file chosen...'}
+                                            </p>
                                             <label>
                                                 <input
                                                     type="file"

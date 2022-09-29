@@ -105,7 +105,11 @@ const Liveness = ({ action }) => {
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
                     type="submit"
-                    text={'Snap'}
+                    text={
+                        succes === 'facial verification successful'
+                            ? 'Success'
+                            : 'Snap'
+                    }
                     // action={action}
                 />
 

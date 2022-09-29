@@ -1291,7 +1291,7 @@ export const CompleteBusinessProfile = (completeProfileData) => {
                 completeProfileData,
                 {
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'multipart/form-data',
                         Authorization: `Bearer ${cookie}`
                     }
                 }

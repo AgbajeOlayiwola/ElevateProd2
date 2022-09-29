@@ -222,7 +222,7 @@ const VerifyAddress = () => {
                     >
                         <button>Confirm Address</button>
                     </Link>
-                    <Link href="https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test Customer&customerEmail=boluwatobi@gmail.com&branchCode=A02&segmentId=ADB&address=25 pilot crescent off bode thomas surulere&landmark=Shoprite&state=LG&lga=211&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333">
+                    <Link href="https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test Customer&customerEmail=boluwatobi@gmail.com&branchCode=A02&segmentId=ADB&address=25 pilot crescent off bode thomas surulere&landmark=Shoprite&state=LA&lga=LA020&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333">
                         <button>Test</button>
                     </Link>
                 </div>
