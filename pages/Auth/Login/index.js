@@ -74,10 +74,12 @@ const Login = () => {
         }
     };
     const loginAction = () => {
-        if (userProfile.profileSetupStatus === ' PROFILE_SETUP_COMPLETED') {
-            router.push('../../Dashboard');
-        } else {
-            router.push('../../Onboarding/ProfileSetup');
+        if (userProfile !== null) {
+            if (userProfile.profileSetupStatus === ' PROFILE_SETUP_COMPLETED') {
+                router.push('../../Dashboard');
+            } else {
+                router.push('../../Onboarding/ProfileSetup');
+            }
         }
     };
     useEffect(() => {
@@ -143,7 +145,7 @@ const Login = () => {
                                 <input
                                     name="password"
                                     placeholder="Enter Your Password"
-                                    type={outType ? 'text' : 'password'}
+                                    type={outType ? 'password' : 'text'}
                                     className={styles.passwordInput}
                                     {...register('password', {
                                         required: 'Password is required'
