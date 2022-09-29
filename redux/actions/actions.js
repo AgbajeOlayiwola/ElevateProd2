@@ -150,9 +150,7 @@ export const loadUserProfile = () => (dispatch) => {
     dispatch(userProfileLoadStart());
     axiosInstance
         .get(`${apiRoutes.userProfile}`)
-        .then((response) =>
-            dispatch(userProfileLoadSuccess(response.data.data))
-        )
+        .then((response) => dispatch(userProfileLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(userProfileLoadError(error.response.data.message))
         );

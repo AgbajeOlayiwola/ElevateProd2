@@ -19,7 +19,6 @@ const userProfileReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: false,
-                test: 'Test',
                 userProfile: payload
             };
         case userProfile.USERPROFILE_LOAD_ERROR:

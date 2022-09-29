@@ -70,8 +70,7 @@ const Login = () => {
             // ) {
             // router.push('/Dashboard');,
         } else if (user === 'Login successful') {
-            // dispatch(loadUserProfile());
-            router.push('../../Onboarding/ProfileSetup');
+            dispatch(loadUserProfile());
         }
     };
     const loginAction = () => {
@@ -147,7 +146,7 @@ const Login = () => {
                                 <input
                                     name="password"
                                     placeholder="Enter Your Password"
-                                    type={outType ? 'password' : 'text'}
+                                    type={outType ? 'text' : 'password'}
                                     className={styles.passwordInput}
                                     {...register('password', {
                                         required: 'Password is required'
