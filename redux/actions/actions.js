@@ -136,9 +136,9 @@ export const userProfileLoadStart = () => ({
     type: userProfile.USERPROFILE_LOAD_START
 });
 
-export const userProfileLoadSuccess = (countries) => ({
+export const userProfileLoadSuccess = (userProfiles) => ({
     type: userProfile.USERPROFILE_LOAD_SUCCESS,
-    payload: countries
+    payload: userProfiles
 });
 
 export const userProfileLoadError = (errorMessage) => ({
