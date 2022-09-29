@@ -69,3 +69,23 @@
     margin: 0px;
     margin-top: 4px;
 }
+
+@media screen and (max-width: 1320px) {
+    .cove button {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 995px) {
+    .cove {
+        width: 100%;
+    }
+
+    .coveBody {
+        width: 70%;
+    }
+
+    .cove button {
+        width: 30%;
+    }
+}

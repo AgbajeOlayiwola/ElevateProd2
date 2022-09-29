@@ -39,7 +39,7 @@
     line-height: 18px;
     text-align: center;
     color: #a4a4a4;
-    width: 34%;
+    /* width: 34%; */
     max-width: 162px;
     margin: 70px auto 80px;
 }
@@ -603,5 +603,48 @@
     .recMak {
         width: 100%;
         max-width: 100%;
+    }
+
+    .moneybodyDiv {
+        width: 100%;
+    }
+
+    .name {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 1163px) {
+    .name {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 1098px) {
+    .cove {
+        flex-direction: column-reverse;
+    }
+
+    .sectionI,
+    .sectionII {
+        width: 100%;
+    }
+
+    .sectionI {
+        margin-top: 24px;
+    }
+
+    .btmI {
+        height: unset;
+    }
+
+    .name {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 995px) {
+    .level {
+        width: 50%;
     }
 }

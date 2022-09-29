@@ -148,8 +148,14 @@ export const userProfileLoadError = (errorMessage) => ({
 
 export const loadUserProfile = () => (dispatch) => {
     dispatch(userProfileLoadStart());
+    const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`${apiRoutes.userProfile}`)
+        .get(`https://ellevate-test.herokuapp.com${apiRoutes.userProfile}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) => dispatch(userProfileLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(userProfileLoadError(error.response.data.message))
