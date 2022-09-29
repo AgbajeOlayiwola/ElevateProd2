@@ -588,3 +588,20 @@
     color: #a4a4a4;
     margin: 0px;
 }
+
+@media screen and (max-width: 1376px) {
+    .recMak {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 1320px) {
+    .bagMoney {
+        display: none;
+    }
+
+    .recMak {
+        width: 100%;
+        max-width: 100%;
+    }
+}

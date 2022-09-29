@@ -70,10 +70,12 @@ const Login = () => {
             // ) {
             // router.push('/Dashboard');,
         } else if (user === 'Login successful') {
-            dispatch(loadUserProfile());
+            // dispatch(loadUserProfile());
+            router.push('../../Onboarding/ProfileSetup');
         }
     };
     const loginAction = () => {
+        console.log(userProfile);
         if (userProfile !== null) {
             if (userProfile.profileSetupStatus === ' PROFILE_SETUP_COMPLETED') {
                 router.push('../../Dashboard');
