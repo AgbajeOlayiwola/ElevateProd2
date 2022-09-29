@@ -37,6 +37,8 @@ import {
     businessCategories,
     newUserCreateCorpAccount,
     setupBusProfile,
+    userProfile,
+    accountPrimary,
     getUserBankAccounts
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
@@ -100,6 +102,62 @@ export const loadCountry = () => (dispatch) => {
         );
 };
 //country actions end
+
+//accountPrimary actions
+export const accountPrimaryLoadStart = () => ({
+    type: accountPrimary.ACCOUNTPRIMARY_LOAD_START
+});
+
+export const accountPrimaryLoadSuccess = (countries) => ({
+    type: accountPrimary.ACCOUNTPRIMARY_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const accountPrimaryLoadError = (errorMessage) => ({
+    type: accountPrimary.ACCOUNTPRIMARY_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const loadAccountPrimary = () => (dispatch) => {
+    dispatch(accountPrimaryLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.accountPrimary}`)
+        .then((response) =>
+            dispatch(accountPrimaryLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(accountPrimaryLoadError(error.response.data.message))
+        );
+};
+//accountPrimary actions end
+
+//profile actions
+export const userProfileLoadStart = () => ({
+    type: userProfile.USERPROFILE_LOAD_START
+});
+
+export const userProfileLoadSuccess = (countries) => ({
+    type: userProfile.USERPROFILE_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const userProfileLoadError = (errorMessage) => ({
+    type: userProfile.USERPROFILE_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const loadUserProfile = () => (dispatch) => {
+    dispatch(userProfileLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.userProfile}`)
+        .then((response) =>
+            dispatch(userProfileLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(userProfileLoadError(error.response.data.message))
+        );
+};
+//userprofile actions end
 
 //businessCategories actions
 export const businessCategoriesLoadStart = () => ({
@@ -219,10 +277,10 @@ export const billerTypeLoadError = (errorMessage) => ({
     type: billerType.BILLERTYPE_LOAD_ERROR,
     payload: errorMessage
 });
-export const loadbillerType = (code, category) => (dispatch) => {
+export const loadbillerType = (category) => (dispatch) => {
     dispatch(billerTypeLoadStart());
     axiosInstance
-        .get(`${apiRoutes.getBillerType}${code}?category=${category}`)
+        .get(`${apiRoutes.getBillerType}?category=${category}`)
         .then((response) => dispatch(billerTypeLoadSuccess(response.data.data)))
         .catch((error) => dispatch(billerTypeLoadError(error.message)));
 };

@@ -38,6 +38,7 @@ import cardLoginReducer from './cardLogin.reducer';
 import statesReducer from './states.reducer';
 import newUsercreateCorpAccountReducer from './newusercorporate.reducer';
 import bankAccountsReducer from './bankAccounts.reducer';
+import userProfileReducer from './userProfile.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -79,7 +80,8 @@ const rootReducer = combineReducers({
     cardLoginReducer: cardLoginReducer,
     newUserAccountDets: newUsercreateAccountReducer,
     newuserCorpAccount: newUsercreateCorpAccountReducer,
-    bankAccountsReducer: bankAccountsReducer
+    bankAccountsReducer: bankAccountsReducer,
+    userProfileReducer: userProfileReducer
 });
 
 export default rootReducer;

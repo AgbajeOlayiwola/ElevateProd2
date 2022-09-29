@@ -339,6 +339,16 @@ export const userProfile = {
 
 //complete profile action type end
 
+//complete profile action type start
+
+export const accountPrimary = {
+    ACCOUNTPRIMARY_LOAD_START: 'ACCOUNTPRIMARY_LOAD_START',
+    ACCOUNTPRIMARY_LOAD_SUCCESS: 'ACCOUNTPRIMARY_LOAD_SUCCESS',
+    ACCOUNTPRIMARY_LOAD_ERROR: 'ACCOUNTPRIMARY_LOAD_ERROR'
+};
+
+//complete profile action type end
+
 //ot action type start
 
 export const otp = {

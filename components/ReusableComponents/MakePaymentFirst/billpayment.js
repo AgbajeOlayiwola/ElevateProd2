@@ -46,17 +46,23 @@ const BillPayment = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
-    const loadbillerTypeData = (e) => {
-        dispatch(loadbillerType('ENG', e.target.value));
-        setBillerId(e.target.value);
+    const loadbillerTypeData = () => {
+        if (firstTitle !== 'Bill Payment') {
+            dispatch(loadbillerType(firstTitle));
+        }
+        // setBillerId(e.target.value);
         setBillerTypes([]);
         setBillerPlans([]);
     };
+    useEffect(() => {
+        loadbillerTypeData();
+    }, [firstTitle]);
     useEffect(() => {
         if (billerType !== null) {
             setBillerTypes(billerType);
         }
     }, [billerType]);
+    console.log(billerTypes.billerInfoList);
     const loadPlans = (e) => {
         dispatch(loadbillerPlan(e.target.value));
     };
@@ -67,7 +73,7 @@ const BillPayment = ({
         }
     }, [billerPlan]);
     const bills = [
-        'Airtime',
+        'AIRTIME',
         'Data',
         'Cable TV',
         'Government Levies',
@@ -132,7 +138,7 @@ const BillPayment = ({
                         })}
                     </div>
                 </>
-            ) : firstTitle === 'Airtime' ? (
+            ) : firstTitle === 'AIRTIME' ? (
                 <>
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     <div className={styles.body}>
@@ -216,6 +222,15 @@ const BillPayment = ({
                                     </div>
                                 </div>
                             </div>
+                            {billerTypes.billerInfoList?.map((item, index) => {
+                                return (
+                                    <img
+                                        src={item.billerLogo}
+                                        alt=""
+                                        key={index}
+                                    />
+                                );
+                            })}
                             <div className={styles.networkForm}>
                                 <div className={styles.formGroup}>
                                     <label>Phone Number</label>

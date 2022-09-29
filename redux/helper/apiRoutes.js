@@ -2,18 +2,19 @@
 const getBanks = '/bank-list';
 const getCountries = '/affiliates-countries';
 const getLanguages = '/languages';
-const getBillerCategories = '/billers/category';
-const getBillerType = '/billers/affiliate/';
+const getBillerCategories = '/payment/billers/categories';
+const getBillerType = '/payment/billers';
 const getBillerPlan = 'billers/details/';
 const airtime = '/payments/airtime-topup';
 const bills = '/payments/bill-payment';
 const internalBank = '/transfer/internal-transfer';
-const interBank = '/transfer/inter-bank-transfer';
+const interBank = '/payment/single-transfer';
 const interBankEnquiry = '/transfer/inter-bank-enquiry';
-const balanceEnquiry = '/account/balance-inquiry';
+const balanceEnquiry = '/bank-account/balance';
+const accountPrimary = '/bank-account/primary';
 const transactionHistory = '/account/transaction';
 const transactionElevate = '/account/transaction/ellevate';
-const bulkTransfer = '/transfer/bulk-transfer';
+const bulkTransfer = '/payment/bulk-transfer';
 const verifyBank = '/transfer/international/validate-bank';
 const verifyCurrency = '/transfer/international/currency';
 const internationalTransfer = '/transfer/international';
@@ -21,7 +22,7 @@ const beneficiaries = '/account/beneficiaries';
 const register = '/authentication/register';
 const login = '/authentication/login';
 const newProfileSetup = '/auth/profile-setup';
-const profile = '/users/profile';
+const userProfile = '/users/profile';
 const profileSetupBus = '/authentication/profile-setup/registered-business';
 const profileSetup = '/authentication/profile-setup/unregistered-business ';
 const verifyOtp = '/verification/verify/otp';
@@ -69,7 +70,7 @@ export default {
     verifyBank,
     verifyCurrency,
     internationalTransfer,
-    profile,
+    userProfile,
     corpNewUser,
     bulkTransfer,
     beneficiaries,
@@ -91,5 +92,6 @@ export default {
     cardLogin,
     newCreateAccount,
     corpAccountStatus,
+    accountPrimary,
     banksAccounts
 };

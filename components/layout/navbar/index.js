@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './style.module.css';
 import Link from 'next/link';
 import NotificationsSvg from '../../ReusableComponents/NotificationSvg';
@@ -6,6 +6,8 @@ import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 import SearchButtonSvg from '../../ReusableComponents/ReusableSvgComponents/SearchButtonSvg';
 import CartSvg from '../../ReusableComponents/ReusableSvgComponents/CartSvg';
+import { loadUserProfile } from '../../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Navbar = ({
     page,
@@ -13,8 +15,23 @@ const Navbar = ({
     action,
     preview,
     previewSingle,
-    productAction
+    productAction,
+    sideAction
 }) => {
+    const dispatch = useDispatch();
+    const [userProfileData, setUserProfileData] = useState('');
+    const { userProfile, errorMessage } = useSelector(
+        (state) => state.userProfileReducer
+    );
+    useEffect(() => {
+        dispatch(loadUserProfile());
+    }, []);
+
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
+    }, [userProfile]);
     return (
         <nav className={styles.navigation}>
             {preview === true ? (
@@ -74,13 +91,20 @@ const Navbar = ({
                 <>
                     <div className={styles.imageName}>
                         {page === 'Dashboard' ? (
-                            <div className={styles.userName}>
+                            <div
+                                className={styles.userName}
+                                onClick={sideAction}
+                            >
                                 <h3 className={styles.name}>
-                                    Welcome, Bayo 👍🏼
+                                    Welcome,{' '}
+                                    {userProfile
+                                        ? userProfile.prefferedName
+                                        : 'Bayo'}{' '}
+                                    👍🏼
                                 </h3>
-                                <p className={styles.company}>
+                                {/* <p className={styles.company}>
                                     Marvelous Solutions
-                                </p>
+                                </p> */}
                             </div>
                         ) : page === 'Storefront' ? (
                             <>

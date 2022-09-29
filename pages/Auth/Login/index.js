@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    createNewUserAccount,
+    loadUserProfile,
     loginUserAction
 } from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
@@ -29,8 +29,8 @@ const Login = () => {
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
     );
-    const { newAccount, newAccountErrorMessage } = useSelector(
-        (state) => state.newUserAccountDets
+    const { userProfile, errorMessage } = useSelector(
+        (state) => state.userProfileReducer
     );
 
     // const hashed = hash();
@@ -70,12 +70,22 @@ const Login = () => {
             // ) {
             // router.push('/Dashboard');,
         } else if (user === 'Login successful') {
+            dispatch(loadUserProfile());
+        }
+    };
+    const loginAction = () => {
+        if (userProfile.profileSetupStatus === ' PROFILE_SETUP_COMPLETED') {
+            router.push('../../Dashboard');
+        } else {
             router.push('../../Onboarding/ProfileSetup');
         }
     };
     useEffect(() => {
         sentLogin();
     }, [errorMessages, user]);
+    useEffect(() => {
+        loginAction();
+    }, [errorMessage, userProfile]);
 
     const [outType, setOutType] = useState();
     const types = (type) => {
