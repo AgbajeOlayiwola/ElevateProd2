@@ -18,11 +18,6 @@ const AccountUpgrade = () => {
     const [text, setText] = useState('Individual');
     const [title, setTitle] = useState('First');
     const [director, setDirector] = useState(false);
-    const test = () => {
-        useEffect(() => {
-            alert('Test');
-        });
-    };
     const AccountUpgradeData = {
         individual: [
             {
