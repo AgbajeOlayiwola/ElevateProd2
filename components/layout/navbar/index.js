@@ -16,7 +16,8 @@ const Navbar = ({
     preview,
     previewSingle,
     productAction,
-    sideAction
+    sideAction,
+    burgerState
 }) => {
     const dispatch = useDispatch();
     const [userProfileData, setUserProfileData] = useState('');
@@ -34,6 +35,15 @@ const Navbar = ({
     }, [userProfile]);
     return (
         <nav className={styles.navigation}>
+            <div onClick={sideAction} className={styles.burgerBody}>
+                <div
+                    className={
+                        burgerState
+                            ? styles.menuBurger
+                            : styles.openedMenuBurger
+                    }
+                ></div>
+            </div>
             {preview === true ? (
                 <>
                     <div className={styles.imageName}>
@@ -91,10 +101,7 @@ const Navbar = ({
                 <>
                     <div className={styles.imageName}>
                         {page === 'Dashboard' ? (
-                            <div
-                                className={styles.userName}
-                                onClick={sideAction}
-                            >
+                            <div className={styles.userName}>
                                 <h3 className={styles.name}>
                                     Welcome,{' '}
                                     {userProfile

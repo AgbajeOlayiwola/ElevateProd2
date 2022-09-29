@@ -52,6 +52,7 @@ const DashLayout = ({
     productAction
 }) => {
     const [sidebarState, setSidebarState] = useState(true);
+    const [burgerState, setburgerState] = useState(true);
     return (
         // <div className={styles.dash}>
         //     <Navbar page={page} />
@@ -70,7 +71,9 @@ const DashLayout = ({
                     productAction={productAction}
                     sideAction={() => {
                         setSidebarState(!sidebarState);
+                        setburgerState(!burgerState);
                     }}
+                    burgerState={burgerState}
                 />
                 {children}
             </div>
