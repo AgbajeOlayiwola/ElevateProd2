@@ -59,14 +59,6 @@ const Verify = () => {
                                 Your email address has been verified!
                             </h3>
                         </div>
-                        <div onClick={handleClick}>
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                type="submit"
-                                text="Continue To Login"
-                            />
-                        </div>
                     </div>
                 </div>
             ) : resError === 400 ? (
@@ -79,4 +71,3 @@ const Verify = () => {
 };
 
 export default Verify;
-

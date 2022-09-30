@@ -4,6 +4,7 @@
     padding: 0px;
     height: 100%;
     padding: 97px 0px;
+    min-height: 100vh;
 }
 
 .accountUpgradePopup {
@@ -40,4 +41,52 @@
     line-height: 24px;
     color: #005b82;
     margin-left: 16px;
+}
+
+@media screen and (max-width: 1101px) {
+    .accountUpgradePopup {
+        width: 60%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 913px) {
+    .accountUpgradePopup {
+        width: 70%;
+    }
+
+    .accountUpgradePopup .accountUpgradeSingle {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 807px) {
+    .accountCont {
+        padding: 30px 0px;
+    }
+
+    .accountUpgradePopup {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 707px) {
+    .accountUpgradePopup .accountUpgradeSingle {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 475px) {
+    .accountUpgradePopup .accountUpgradeSingle {
+        width: 90%;
+    }
+    .accountUpgradePopup {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .accountUpgradeSingleHeader h2 {
+        font-size: 17px;
+    }
 }

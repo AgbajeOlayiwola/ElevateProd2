@@ -47,3 +47,13 @@
         max-width: 100%;
     }
 }
+
+@media screen and (max-width: 731px) {
+    .body {
+        width: 100%;
+    }
+
+    .dat {
+        width: 100%;
+    }
+}

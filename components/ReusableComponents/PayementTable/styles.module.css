@@ -102,22 +102,13 @@
     width: 25%;
 }
 
-.type {
-    width: 15%;
-}
-
-.amount {
-    width: 15%;
-}
-
-.bank {
-    width: 15%;
-}
-
-.date {
-    width: 15%;
-}
-
+.type,
+.amount,
+.bank,
+.date,
 .status {
     width: 15%;
+}
+
+@media screen {
 }

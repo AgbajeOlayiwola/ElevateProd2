@@ -15,9 +15,10 @@ import { useEffect } from 'react';
 const AccountUpgrade = () => {
     const router = useRouter();
 
-    const [text, setText] = useState('Individual');
+    const [text, setText] = useState('Corporate');
     const [title, setTitle] = useState('First');
     const [director, setDirector] = useState(false);
+    const [document, setDocument] = useState(false);
     const AccountUpgradeData = {
         individual: [
             {
@@ -35,7 +36,7 @@ const AccountUpgrade = () => {
         ],
         corporate: [
             {
-                title: 'Document',
+                title: 'Documents',
                 icon: <AddressSvg />
             },
             {
@@ -51,8 +52,23 @@ const AccountUpgrade = () => {
                 icon: <DirectorsSvg />
             },
             {
+                title: 'Referee',
+                icon: <DirectorsSvg />
+            },
+            {
                 title: 'Signature Rule',
                 icon: <SignatureRuleSvg />
+            }
+        ],
+        document: [
+            {
+                title: 'CAC Registration'
+            },
+            {
+                title: 'SCUML Certificate'
+            },
+            {
+                title: 'MEMART'
             }
         ]
     };
@@ -79,7 +95,7 @@ const AccountUpgrade = () => {
                         <div className={styles.currentLeveltext}>
                             <h2>You’re currently at Level xxx</h2>
                             <div>
-                                <p>Account Limit: N1,000,000 </p> .
+                                <p>Account Limit: N1,000,000 </p>
                                 <p>Loan Limit: xxxxxx</p>
                             </div>
                         </div>
@@ -106,17 +122,53 @@ const AccountUpgrade = () => {
                           })
                         : text === 'Corporate'
                         ? AccountUpgradeData.corporate.map((item, index) => {
-                              return (
-                                  <AccountUpgradeSingle
-                                      statusInfo="Pending"
-                                      icon={item.icon}
-                                      text={item.title}
-                                      key={index}
-                                      action={() => {
-                                          setTitle(item.title);
-                                      }}
-                                  />
-                              );
+                              if (item.title === 'Documents') {
+                                  return (
+                                      <>
+                                          <AccountUpgradeSingle
+                                              statusInfo="Pending"
+                                              icon={item.icon}
+                                              text={item.title}
+                                              key={index}
+                                              action={() => {
+                                                  setDocument(!document);
+                                              }}
+                                          />
+                                          {document
+                                              ? AccountUpgradeData.document.map(
+                                                    (item, index) => {
+                                                        return (
+                                                            <AccountUpgradeSingle
+                                                                text={
+                                                                    item.title
+                                                                }
+                                                                key={index}
+                                                                statusInfo="Pending"
+                                                                action={() => {
+                                                                    setTitle(
+                                                                        item.title
+                                                                    );
+                                                                }}
+                                                            />
+                                                        );
+                                                    }
+                                                )
+                                              : null}
+                                      </>
+                                  );
+                              } else {
+                                  return (
+                                      <AccountUpgradeSingle
+                                          statusInfo="Pending"
+                                          icon={item.icon}
+                                          text={item.title}
+                                          key={index}
+                                          action={() => {
+                                              setTitle(item.title);
+                                          }}
+                                      />
+                                  );
+                              }
                           })
                         : null}
                     <button className={styles.buttonDone}>Done</button>
@@ -195,7 +247,13 @@ const AccountUpgrade = () => {
                                 </div>
                             </div>
                         </div>
-                        <button onClick={test}>Confirm Address</button>
+                        <button
+                            onClick={() => {
+                                alert('Verify my Address');
+                            }}
+                        >
+                            Confirm Address
+                        </button>
                     </div>
                 </AccountUpgradeComponent>
             );
@@ -304,7 +362,7 @@ const AccountUpgrade = () => {
                     </div>
                     <div className={styles.signature}>
                         <div className={styles.signatureGroup}>
-                            <p>Upload Signature</p>
+                            <p>Upload ID</p>
                             <div className={styles.signatureFormGroup}>
                                 <p>No file chosen...</p>
                                 <label>
@@ -462,6 +520,161 @@ const AccountUpgrade = () => {
                             </div>
                         </div>
                     ) : null}
+                    <button>Send Invite</button>
+                </AccountUpgradeComponent>
+            );
+        case 'CAC Registration':
+            return (
+                <AccountUpgradeComponent
+                    action={() => {
+                        setTitle('First');
+                        setDocument(false);
+                    }}
+                    title="CAC Registration"
+                >
+                    <div className={styles.documentBody}>
+                        <div className={styles.identificationGroup}>
+                            <label>CAC Registration Number</label>
+                            <input
+                                type="text"
+                                placeholder="Enter CAC Registration Number"
+                            />
+                        </div>
+                        <div className={styles.signature}>
+                            <div className={styles.signatureGroup}>
+                                <p>Upload CAC Certificate</p>
+                                <div className={styles.signatureFormGroup}>
+                                    <p>No file chosen...</p>
+                                    <label>
+                                        <input type="file" /> Upload
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button className={styles.updateBtn}>
+                            Update Profile
+                        </button>
+                    </div>
+                </AccountUpgradeComponent>
+            );
+        case 'SCUML Certificate':
+            return (
+                <AccountUpgradeComponent
+                    action={() => {
+                        setTitle('First');
+                        setDocument(false);
+                    }}
+                    title="SCUML Certificate"
+                >
+                    <div className={styles.documentBody}>
+                        <div className={styles.identificationGroup}>
+                            <label>SCUML Certificate Number</label>
+                            <input
+                                type="text"
+                                placeholder="Enter SCUML Certificate Number"
+                            />
+                        </div>
+                        <div className={styles.signature}>
+                            <div className={styles.signatureGroup}>
+                                <p>Upload SCUML Certificate</p>
+                                <div className={styles.signatureFormGroup}>
+                                    <p>No file chosen...</p>
+                                    <label>
+                                        <input type="file" /> Upload
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button className={styles.updateBtn}>
+                            Update Profile
+                        </button>
+                    </div>
+                </AccountUpgradeComponent>
+            );
+        case 'MEMART':
+            return (
+                <AccountUpgradeComponent
+                    action={() => {
+                        setTitle('First');
+                        setDocument(false);
+                    }}
+                    title="MEMART"
+                >
+                    <div className={styles.documentBody}>
+                        <div className={styles.signature}>
+                            <div className={styles.signatureGroup}>
+                                <p>Upload CO2</p>
+                                <div className={styles.signatureFormGroup}>
+                                    <p>No file chosen...</p>
+                                    <label>
+                                        <input type="file" /> Upload
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.signature}>
+                            <div className={styles.signatureGroup}>
+                                <p>Upload CO7</p>
+                                <div className={styles.signatureFormGroup}>
+                                    <p>No file chosen...</p>
+                                    <label>
+                                        <input type="file" /> Upload
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button className={styles.updateBtn}>
+                            Update Profile
+                        </button>
+                    </div>
+                </AccountUpgradeComponent>
+            );
+        case 'Referee':
+            return (
+                <AccountUpgradeComponent
+                    action={() => {
+                        setTitle('First');
+                    }}
+                    title="Referee"
+                >
+                    <div className={styles.directorsBody}>
+                        <h2>Reference 1</h2>
+                        <div className={styles.directorsGroup}>
+                            <label>Email</label>
+                            <input
+                                type="text"
+                                name=""
+                                placeholder="Enter Email"
+                            />
+                        </div>
+                        <div className={styles.directorsGroup}>
+                            <label>Phone Number</label>
+                            <input
+                                type="text"
+                                name=""
+                                placeholder="Enter Phone Number"
+                            />
+                        </div>
+                    </div>
+                    <div className={styles.directorsBody}>
+                        <h2>Reference 2</h2>
+                        <div className={styles.directorsGroup}>
+                            <label>Email</label>
+                            <input
+                                type="text"
+                                name=""
+                                placeholder="Enter Email"
+                            />
+                        </div>
+                        <div className={styles.directorsGroup}>
+                            <label>Phone Number</label>
+                            <input
+                                type="text"
+                                name=""
+                                placeholder="Enter Phone Number"
+                            />
+                        </div>
+                    </div>
                     <button>Send Invite</button>
                 </AccountUpgradeComponent>
             );

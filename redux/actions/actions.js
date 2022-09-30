@@ -480,10 +480,10 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
     type: balanceEnquiry.BALANCEENQUIRY_LOAD_ERROR,
     payload: balanceEnquiryerror
 });
-export const getBalanceEnquiry = () => (dispatch) => {
+export const getBalanceEnquiry = (data) => (dispatch) => {
     dispatch(balanceEnquiryLoadStart());
     axiosInstance
-        .get(`${apiRoutes.balanceEnquiry}`)
+        .post(`${apiRoutes.balanceEnquiry}`, data)
         .then((response) =>
             dispatch(balanceEnquiryLoadSuccess(response.data.data))
         )

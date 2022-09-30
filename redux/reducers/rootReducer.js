@@ -39,6 +39,7 @@ import statesReducer from './states.reducer';
 import newUsercreateCorpAccountReducer from './newusercorporate.reducer';
 import bankAccountsReducer from './bankAccounts.reducer';
 import userProfileReducer from './userProfile.reducer';
+import accountPrimary from './accountPrimary.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -81,6 +82,7 @@ const rootReducer = combineReducers({
     newUserAccountDets: newUsercreateAccountReducer,
     newuserCorpAccount: newUsercreateCorpAccountReducer,
     bankAccountsReducer: bankAccountsReducer,
+    accountPrimary: accountPrimary,
     userProfileReducer: userProfileReducer
 });
 
