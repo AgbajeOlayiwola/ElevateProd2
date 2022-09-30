@@ -100,7 +100,11 @@ const ProfileSetups = () => {
     const types = (type) => {
         setOutType(type);
     };
-
+    const [errorM, setErrorM] = useState('');
+    const [errorI, setErrorI] = useState('');
+    const [errorII, setErrorII] = useState('');
+    const [errorIII, setErrorIII] = useState('');
+    const [loading, setLoading] = useState(false);
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
     const conditionalComponent = () => {
@@ -111,6 +115,7 @@ const ProfileSetups = () => {
                         errorM={errorM}
                         errorI={errorI}
                         formData={formData}
+                        bvnError={bvnError}
                         setFormData={setFormData}
                         action={handleSubmit}
                         actionI={regsiteredBus}
@@ -173,11 +178,6 @@ const ProfileSetups = () => {
     // useEffect(() => {
     //     console.log(errorMessages, otpErrorMessages);
     // }, []);
-    const [errorM, setErrorM] = useState('');
-    const [errorI, setErrorI] = useState('');
-    const [errorII, setErrorII] = useState('');
-    const [errorIII, setErrorIII] = useState('');
-    const [loading, setLoading] = useState(false);
 
     function regsiteredBus() {
         console.log('firstAPi');
@@ -214,12 +214,12 @@ const ProfileSetups = () => {
         // console.log('new bvn:', bvnNin.message);
         if (
             bvnNin === 'verification successful' ||
-            errorMessages === 'you have already setup your profile'
+            errorM === 'you have already setup your profile'
         ) {
             setPage(page + 1);
         } else {
-            console.log('moved');
-            // setErrorM(errorMessages);
+            console.log('move');
+            setErrorM(errorMessages);
             setErrorI(bvnError);
         }
     }, [bvnNin]);
