@@ -19,6 +19,9 @@ const AccountLoading = () => {
     const [accountInfo, setAccountInfo] = useState('');
     const [profileCont, setProfileCont] = useState([]);
     const [errorT, setError] = useState();
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
 
     const router = useRouter();
 
@@ -28,10 +31,8 @@ const AccountLoading = () => {
     const dispatch = useDispatch();
 
     // console.log(profile);
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
-    console.log(accountStatus);
+
+    // console.log(accountStatus);
 
     useEffect(() => {
         dispatch(newAccountStatusData());

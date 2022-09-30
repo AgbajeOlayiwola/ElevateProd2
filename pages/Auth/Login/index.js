@@ -24,6 +24,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const [identifier, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [outType, setOutType] = useState();
     const dispatch = useDispatch();
     const router = useRouter();
     const { isLoading, user, errorMessages } = useSelector(
@@ -32,19 +33,18 @@ const Login = () => {
     const { userProfile, errorMessage } = useSelector(
         (state) => state.userProfileReducer
     );
-
-    // const hashed = hash();
-
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
+
+    //set password value
     const handlePwd = (e) => {
         setPassword(e.target.value);
     };
-
+    //set email value
     const checkDataContent = (e) => {
         setEmail(e.target.value);
     };
@@ -90,11 +90,10 @@ const Login = () => {
         loginAction();
     }, [errorMessage, userProfile]);
 
-    const [outType, setOutType] = useState();
     const types = (type) => {
         setOutType(type);
     };
-    console.log(user);
+    // console.log(user);
     // console.log(data); // watch input value by passing the name of it
 
     return (

@@ -11,11 +11,11 @@ const Verify = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [res, setRes] = useState('');
     const [resError, setResErros] = useState('');
+    const [timeInterval, setTimeInterval] = useState(0);
     const { query, isReady, push } = useRouter();
     const handleClick = () => {
         push('./Auth/Login');
     };
-    const [timeInterval, setTimeInterval] = useState(0);
 
     useEffect(() => {
         var token = query['token'];
@@ -79,4 +79,3 @@ const Verify = () => {
 };
 
 export default Verify;
-

@@ -59,9 +59,15 @@ const Dashboard = () => {
     const [balance, setBalance] = useState('#0.00');
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
+    const [items, setItems] = useState([]);
+
+    const [acctNumber, setAcctNumber] = useState('');
     useEffect(() => {
         dispatch(getBalanceEnquiry());
     }, []);
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
 
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
@@ -96,7 +102,7 @@ const Dashboard = () => {
     const types = (type) => {
         setOutType(type);
     };
-    const [items, setItems] = useState([]);
+
     useEffect(() => {
         if (balanceEnquiry !== null) {
             const formatter = new Intl.NumberFormat('en-US', {
@@ -135,11 +141,7 @@ const Dashboard = () => {
         autoplaySpeed: 2000,
         cssEase: 'linear'
     };
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
 
-    const [acctNumber, setAcctNumber] = useState('');
     useEffect(() => {
         dispatch(newAccountStatusData());
         console.log('accountStatus', accountStatus);

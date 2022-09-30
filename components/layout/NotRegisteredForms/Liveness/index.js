@@ -31,8 +31,11 @@ const Liveness = ({ action }) => {
     const webcamRef = React.useRef(null);
     const [imgSrc, setImgSrc] = React.useState(null);
     const [succes, setSuccess] = useState('');
+    const [imageSrcI, setImageSrcI] = React.useState(null);
 
     const capture = React.useCallback(() => {
+        const ImageSrcII = webcamRef.current.getScreenshot();
+        setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
         let newImage = imageSrc.split(',');
         let base64String = newImage[1];
@@ -67,7 +70,7 @@ const Liveness = ({ action }) => {
                 console.log(error.response.data.statusCode);
                 // setResErros(error.response.data.statusCode);
             });
-    }, [webcamRef, setImgSrc]);
+    }, [webcamRef, setImgSrc, setImageSrcI]);
 
     return (
         <div className={styles.body}>
@@ -86,12 +89,16 @@ const Liveness = ({ action }) => {
                                     : styles.imageInner
                             }
                         >
-                            <Webcam
-                                audio={false}
-                                screenshotFormat="image/jpeg"
-                                videoConstraints={videoConstraints}
-                                ref={webcamRef}
-                            />
+                            {imageSrcI ? (
+                                <img src={imageSrcI} />
+                            ) : (
+                                <Webcam
+                                    audio={false}
+                                    screenshotFormat="image/jpeg"
+                                    videoConstraints={videoConstraints}
+                                    ref={webcamRef}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
@@ -113,7 +120,7 @@ const Liveness = ({ action }) => {
                     // action={action}
                 />
 
-                {/* {imgSrc && <img src={imgSrc} />} */}
+                {/* {imageSrcI && <img src={imageSrcI} />} */}
                 {/* <div className={styles.matiButtonSetup}>
                     <mati-button
                         clientId="622f44566ac1c1001cd1daac" // from your Mati dashboard
