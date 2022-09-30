@@ -1059,10 +1059,13 @@ export const createProfileSetup = (profileData) => {
                     response.data.message ===
                     'profile setup intialized, sending otp'
                 ) {
+                    console.log('test1');
                     const cookie = getCookie('cookieToken');
-                    axiosInstance
+                    console.log(cookie);
+                    axios
                         .post(
                             `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatus}`,
+                            [],
                             {
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -1153,6 +1156,7 @@ export const createBusProfileSetup = (businessProfileData) => {
                     axiosInstance
                         .post(
                             `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatusBus}`,
+                            [],
 
                             {
                                 headers: {

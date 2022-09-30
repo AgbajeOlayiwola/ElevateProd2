@@ -16,6 +16,7 @@ const RegisteredForm = ({
     action,
     // errorM,
     errorI,
+    bvnError,
     actionI
 }) => {
     // const [progress, setProgress] = useState('25%');
@@ -77,7 +78,7 @@ const RegisteredForm = ({
 
     // console.log('error essage', otpErrorMessage);
     useEffect(() => {
-        console.log('bvnError', bvnErrorI);
+        // console.log('bvnError', bvnErrorI);
         console.log(errorMessages, bvnErrorI);
         setErrorM(errorMessages);
         //change to no error messages boss
@@ -94,7 +95,6 @@ const RegisteredForm = ({
                 <h3 className={styles.LeftHeading}>Profile Setup</h3>
             </div>
             <div className={styles.formWrapper}>
-                {errorM}
                 <InputWrapper>
                     <p className={styles.error}>{errorI}</p> <br />
                     <Label>Is your Business Registered?</Label>
@@ -320,6 +320,7 @@ const RegisteredForm = ({
                                 }}
                             />
                             <p className={styles.error}>{errorM}</p>
+                            <p className={styles.error}> {bvnError}</p>
                             <div className="errors">{errors.bvn?.message}</div>
                         </InputWrapper>
                         <InputWrapper>
