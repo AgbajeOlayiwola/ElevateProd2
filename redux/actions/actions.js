@@ -1156,6 +1156,7 @@ export const createBusProfileSetup = (businessProfileData) => {
                     axiosInstance
                         .post(
                             `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatusBus}`,
+                            [],
 
                             {
                                 headers: {
