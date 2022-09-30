@@ -37,6 +37,7 @@
 
 // export default DashLayout;
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 // import withAuth from '../../HOC/withAuth';
 import { Navbar, Sidebar } from '../../index';
@@ -51,32 +52,32 @@ const DashLayout = ({
     previewSingle,
     productAction
 }) => {
-    const [sidebarState, setSidebarState] = useState(true);
-    const [burgerState, setburgerState] = useState(true);
+    const [sideActive, setSideActive] = useState(false);
     return (
-        // <div className={styles.dash}>
-        //     <Navbar page={page} />
-        //     <div className={styles.main}>{children}</div>
-        //     <Sidebar />
-        // </div>
         <div className={styles.dash}>
-            {sidebarState ? <Sidebar /> : null}
-            <div className={styles.dashCont}>
-                <Navbar
-                    page={page}
-                    text={text}
-                    action={action}
-                    preview={preview}
-                    previewSingle={previewSingle}
-                    productAction={productAction}
-                    sideAction={() => {
-                        setSidebarState(!sidebarState);
-                        setburgerState(!burgerState);
+            <div className={sideActive ? styles.sidebar : styles.sidebarActive}>
+                <Sidebar
+                    showSubnav={() => {
+                        setSideActive(false);
                     }}
-                    burgerState={burgerState}
                 />
-                {children}
             </div>
+            {!sideActive ? (
+                <div className={styles.dashCont}>
+                    <Navbar
+                        page={page}
+                        text={text}
+                        action={action}
+                        preview={preview}
+                        previewSingle={previewSingle}
+                        productAction={productAction}
+                        sideAction={() => {
+                            setSideActive(true);
+                        }}
+                    />
+                    {children}
+                </div>
+            ) : null}
         </div>
     );
 };

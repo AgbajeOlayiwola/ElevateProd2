@@ -187,3 +187,21 @@
 .NFCScanner button {
     margin-top: 0px;
 }
+
+@media screen and (max-width: 1366px) {
+    .balanceButtons {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 1301px) {
+    .cov {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 1081px) {
+    .balanceButtons {
+        width: 60%;
+    }
+}

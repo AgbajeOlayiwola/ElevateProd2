@@ -34,3 +34,18 @@
 .dashCont::-webkit-scrollbar {
     display: none;
 }
+
+@media screen and (max-width: 519px) {
+    .sidebar {
+        display: block;
+        width: 100%;
+    }
+
+    .sidebarActive {
+        display: none;
+    }
+
+    .dashCont {
+        width: 100%;
+    }
+}

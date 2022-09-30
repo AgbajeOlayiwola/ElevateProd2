@@ -244,6 +244,10 @@
     width: 47%;
 }
 
+.documentBody {
+    margin-top: 48px;
+}
+
 /*Documents*/
 
 /*Directors*/
@@ -280,6 +284,17 @@
     margin-top: 8px;
 }
 
+.directorsBody h2 {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+    color: #005b82;
+    margin-bottom: 16px;
+}
+
 /*Directors*/
 
 .verifyBody p {
@@ -291,4 +306,36 @@
     margin: 0px;
     color: #a5a5a5;
     margin-top: 16px;
+}
+
+@media screen and (max-width: 611px) {
+    .currentLeveltext div {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .currentLevel {
+        flex-direction: column;
+    }
+
+    .currentLevelDonut {
+        width: 70%;
+    }
+
+    .addressCont {
+        flex-direction: column;
+    }
+
+    .midCont {
+        width: 100%;
+    }
+
+    .signatureFormGroup div {
+        width: 50%;
+    }
+
+    .signatureGroup label {
+        width: 48%;
+    }
 }

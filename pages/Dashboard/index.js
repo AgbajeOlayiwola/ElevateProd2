@@ -21,7 +21,7 @@ import {
     getBalanceEnquiry,
     getTransactionElevate,
     loadUserProfile,
-    newAccountStatusData
+    loadAccountPrimary
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
@@ -56,9 +56,10 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     const [outType, setOutType] = useState();
     const [userProfileData, setUserProfileData] = useState('');
-    const [balance, setBalance] = useState('#0.00');
+    const [balance, setBalance] = useState('#00000.00');
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
+<<<<<<< HEAD
     const [items, setItems] = useState([]);
 
     const [acctNumber, setAcctNumber] = useState('');
@@ -68,6 +69,8 @@ const Dashboard = () => {
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
+=======
+>>>>>>> f3444710d170ab5dde06a67afac25406dbc77275
 
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
@@ -95,6 +98,11 @@ const Dashboard = () => {
     useEffect(() => {
         if (userProfile !== null) {
             setUserProfileData(userProfile);
+            const balanceData = {
+                accountId: userProfile.userId
+            };
+            console.log(balanceData);
+            dispatch(getBalanceEnquiry(balanceData));
         }
     }, [userProfile]);
     console.log(transactionData);
@@ -141,16 +149,18 @@ const Dashboard = () => {
         autoplaySpeed: 2000,
         cssEase: 'linear'
     };
+    const { accountPrimary, accountPrimaryError } = useSelector(
+        (state) => state.accountStatusReducer
+    );
 
     useEffect(() => {
-        dispatch(newAccountStatusData());
-        console.log('accountStatus', accountStatus);
-        if (accountStatus) {
-            setAcctNumber(accountStatus);
+        dispatch(loadAccountPrimary());
+        if (accountPrimary) {
+            setAcctNumber(accountPrimary);
         } else {
             setAcctNumber('Pending');
         }
-    }, [accountStatus]);
+    }, [accountPrimary]);
     // console.log(accountStatus.data.accountNumber);
     return (
         <DashLayout page="Dashboard">
@@ -252,9 +262,7 @@ const Dashboard = () => {
                                                 Account Number
                                             </p>
                                             <p className={styles.accountNumber}>
-                                                {acctNumber
-                                                    ? acctNumber
-                                                    : 'Pending'}
+                                                {acctNumber}
                                             </p>
                                         </div>
                                     </div>

@@ -47,6 +47,7 @@ import shareRefReducer from './shareRefferenceForm.reducer';
 import uploadRefReducer from './uploadrefform.reducer';
 import uploadBoardResReducer from './boardresolution.reducer';
 import cacUploadReducer from './cac.reducer';
+import accountPrimary from './accountPrimary.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -97,7 +98,9 @@ const rootReducer = combineReducers({
     shareRefReducer: shareRefReducer,
     uploadRefReducer: uploadRefReducer,
     uploadBoardResReducer: uploadBoardResReducer,
-    cacUploadReducer: cacUploadReducer
+    cacUploadReducer: cacUploadReducer,
+    accountPrimary: accountPrimary,
+    userProfileReducer: userProfileReducer
 });
 
 export default rootReducer;

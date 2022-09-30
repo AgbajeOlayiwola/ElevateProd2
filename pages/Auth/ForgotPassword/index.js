@@ -19,10 +19,7 @@ const ExistingMultiStep = () => {
     function handleSubmit() {
         setPage(page + 1);
     }
-    function handleClick() {
-        setPage(page - 1);
-        console.log('back');
-    }
+    function handleClick() {}
     return (
         <div className={styles.cov}>
             <div className={styles.covWrapper}>
@@ -31,10 +28,7 @@ const ExistingMultiStep = () => {
                     <div className={styles.last}>
                         <p>
                             Didn’t receive the email? Check your spam filter or
-                            <span onClick={handleClick}>
-                                {' '}
-                                Try another email address
-                            </span>
+                            <span onClick={handleClick}>Resend Mai</span>
                         </p>
                     </div>
                 ) : null}
