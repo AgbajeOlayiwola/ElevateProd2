@@ -11,6 +11,7 @@ import { location } from '../../components/ReusableComponents/Data';
 import DirectorsSvg from '../../components/ReusableComponents/ReusableSvgComponents/DirectorsSvg';
 import SignatureRuleSvg from '../../components/ReusableComponents/ReusableSvgComponents/SignatureRuleSvg';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 const AccountUpgrade = () => {
     const router = useRouter();
@@ -18,6 +19,10 @@ const AccountUpgrade = () => {
     const [text, setText] = useState('Individual');
     const [title, setTitle] = useState('First');
     const [director, setDirector] = useState(false);
+
+    const test = () => {
+        console.log('test');
+    };
     const AccountUpgradeData = {
         individual: [
             {
@@ -195,7 +200,32 @@ const AccountUpgrade = () => {
                                 </div>
                             </div>
                         </div>
-                        <button onClick={test}>Confirm Address</button>
+                        <Link
+                            href={{
+                                pathname:
+                                    'https://ecocomonoreact.azurewebsites.net/customer-details/',
+                                query: {
+                                    workitemId: 'AO-095734358976187628-CO',
+                                    customerName: 'Kevin',
+                                    customerEmail: 'Kevin.ejiro@gmail.com',
+                                    branchCode: 'A02',
+                                    segmentId: 'ADB',
+                                    // houseNumber: '25',
+                                    address: '17 Igbobi COllege Road Yaba',
+                                    // streetName: 'Igbobi College Road',
+                                    // areaName: 'Yaba',
+                                    landmark: 'Yaba college of Technology',
+                                    state: 'LA',
+                                    lga: 'LA019',
+                                    createdBy: 'RealMg',
+                                    customerImage: '',
+                                    Latitude: '6.519366425038108',
+                                    Longitude: '3.3720303685114748'
+                                }
+                            }}
+                        >
+                            <button>Confirm Address</button>
+                        </Link>
                     </div>
                 </AccountUpgradeComponent>
             );
