@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 const ExistingAccount = () => {
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
     let user;
     let userId;
     if (typeof window !== 'undefined') {
@@ -17,9 +20,7 @@ const ExistingAccount = () => {
     }
     const dispatch = useDispatch();
     const router = useRouter();
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
+
     useEffect(() => {
         dispatch(accountStatusData(userId));
     }, []);

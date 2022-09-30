@@ -10,12 +10,10 @@ const CorporateAccount = () => {
     const [accountInfo, setAccountInfo] = useState('');
     const [profileCont, setProfileCont] = useState([]);
     const [accountDone, setAccountDone] = useState('');
-
-    const router = useRouter();
-
     const { isLoading, profile, errorMessage } = useSelector(
         (state) => state.profile
     );
+    const router = useRouter();
 
     const newUserAccountt = () => {
         const cookie = getCookie('cookieToken');
@@ -30,7 +28,7 @@ const CorporateAccount = () => {
                 }
             )
             .then((response) => {
-                console.log('Accoutn Status', response);
+                // console.log('Accoutn Status', response);
                 setAccountDone(response.data.data);
             })
             .catch((error) => {

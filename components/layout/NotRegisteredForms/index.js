@@ -219,7 +219,7 @@ const ProfileSetups = () => {
             setPage(page + 1);
         } else {
             console.log('moved');
-            setErrorM(errorMessages);
+            // setErrorM(errorMessages);
             setErrorI(bvnError);
         }
     }, [bvnNin]);

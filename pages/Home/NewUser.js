@@ -105,14 +105,14 @@ const NewUser = ({ selectCountry }) => {
                 affiliateCode: 'ENG'
             };
             setLoading(true);
-            console.log(errorMessage);
+            // console.log(errorMessage);
             dispatch(createUserAction(postData));
         } else {
             passwordMatch;
         }
     };
     const sentSIgnUp = () => {
-        console.log(errorMessage);
+        // console.log(errorMessage);
         if (errorMessage !== null) {
             setError(errorMessage);
             setLoading(false);

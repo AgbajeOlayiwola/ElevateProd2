@@ -46,6 +46,14 @@ const businessCategories = '/business-categories';
 const states = '/lga';
 const cardLogin = '/auth/register/card';
 const banksAccounts = '/bank-account';
+const uploadUtilityDocument = '/account-upgrade/utility-document/upload';
+const uploadIdentificationDoc = '/account-upgrade/utility-document/upload';
+const uploadMemart = '/account-upgrade/memart/upload';
+const uploadCacCert = '/account-upgrade/cac-cert/upload';
+const uploadScmul = '/account-upgrade/scuml/upload';
+const shareRefForm = '/account-upgrade/reference-form/share';
+const uploadRefForm = '/account-upgrade/reference-form/share';
+const uploadBoardRes = '/account-upgrade/board-resolution/upload';
 export default {
     getBanks,
     getCountries,
@@ -93,5 +101,13 @@ export default {
     newCreateAccount,
     corpAccountStatus,
     accountPrimary,
-    banksAccounts
+    banksAccounts,
+    uploadBoardRes,
+    uploadCacCert,
+    uploadIdentificationDoc,
+    uploadMemart,
+    uploadRefForm,
+    uploadScmul,
+    shareRefForm,
+    uploadUtilityDocument
 };

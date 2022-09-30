@@ -22,3 +22,5 @@ export const decrypt = (content) => {
     const decryptResult = bytes.toString(CryptoJS.enc.Utf8);
     return decryptResult.toString();
 };
+
+// dead code
