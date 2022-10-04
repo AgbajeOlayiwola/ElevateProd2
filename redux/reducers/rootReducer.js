@@ -6,6 +6,7 @@ import billerCategoryReducer from './billerCategory.reducer';
 import billerTypeReducer from './billerType.reducer';
 import billerPlanReducer from './billerPlan.reducer';
 import airtimeReducer from './airtime.reducer';
+import airtimeNetworkReducer from './airtimeNetwork.reducer';
 import billsReducer from './bills.reducer';
 import internalBankReducer from './internalBank.reducer';
 import interBankEnquiryReducer from './interBankEnquiry.reducer';
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
     billerPlanReducer: billerPlanReducer,
     billerTypeReducer: billerTypeReducer,
     airtimeReducer: airtimeReducer,
+    airtimeNetworkReducer: airtimeNetworkReducer,
     billsReducer: billsReducer,
     internalBankReducer: internalBankReducer,
     interBankReducer: interBankReducer,

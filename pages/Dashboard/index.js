@@ -20,7 +20,6 @@ import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymne
 import {
     getBalanceEnquiry,
     getTransactionElevate,
-    loadUserProfile,
     loadAccountPrimary
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -55,8 +54,7 @@ function SamplePrevArrow(props) {
 const Dashboard = () => {
     const dispatch = useDispatch();
     const [outType, setOutType] = useState();
-    const [userProfileData, setUserProfileData] = useState('');
-    const [balance, setBalance] = useState('#00000.00');
+    const [balance, setBalance] = useState('#0.00');
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -72,36 +70,41 @@ const Dashboard = () => {
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
     );
-    const { userProfile, errorMessage } = useSelector(
-        (state) => state.userProfileReducer
-    );
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
     const [transactionData, setTransactionData] = useState([]);
-    useEffect(() => {
-        dispatch(getTransactionElevate());
-    }, []);
+    let userProfile;
+    let userProfileData = {};
+    if (typeof window !== 'undefined') {
+        userProfile = window.localStorage.getItem('user');
+        userProfileData = JSON.parse(userProfile);
+    }
+    let balanceData;
+    if (userProfileData !== null) {
+        balanceData = {
+            accountId: userProfileData.userId
+        };
+    }
 
     useEffect(() => {
-        if (transactionElevate !== null) {
-            setTransactionData(transactionElevate);
-        }
-    }, [transactionElevate]);
-    useEffect(() => {
-        dispatch(loadUserProfile());
+        // dispatch(getTransactionElevate());
+        dispatch(getBalanceEnquiry(balanceData));
     }, []);
 
-    useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-            const balanceData = {
-                accountId: userProfile.userId
-            };
-            console.log(balanceData);
-            dispatch(getBalanceEnquiry(balanceData));
-        }
-    }, [userProfile]);
+    // useEffect(() => {
+    //     if (transactionElevate !== null) {
+    //         setTransactionData(transactionElevate);
+    //     }
+    // }, [transactionElevate]);
+
+    // useEffect(() => {
+    //     if (userProfile !== null) {
+    //         setUserProfileData(userProfile);
+    //
+    //         console.log(balanceData);
+    //     }
+    // }, []);
     console.log(transactionData);
 
     const types = (type) => {
