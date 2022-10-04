@@ -8,6 +8,11 @@
     justify-content: space-between;
     overflow: scroll;
 }
+
+.closeIcon {
+    display: none;
+}
+
 .sideNav::-webkit-scrollbar {
     display: none;
 }
@@ -86,4 +91,65 @@
 .drops {
     margin-left: 50px;
     margin-top: 8px;
+}
+
+@media screen and (max-width: 676px) {
+    .sideNav {
+        width: 200px;
+    }
+
+    .drops {
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 519px) {
+    .sideNav {
+        width: 100%;
+        padding: 32px 10px;
+    }
+
+    .closeIcon {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .closeIcon svg {
+        font-size: 35px;
+        cursor: pointer;
+        color: red;
+    }
+
+    /* .ellevate {
+        margin-left: 0px;
+    }
+
+    .inActive,
+    .cont {
+        padding: 16px;
+    }
+
+    .contWrapper span {
+        width: 15%;
+    } */
+
+    /* .titleIcon svg {
+        width: 100%;
+    } */
+
+    /* .contWrapper {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .contWrapper div {
+        width: 50%;
+        margin-left: 0px;
+        margin: 0px 8px;
+    }
+
+    .subMenuLink p {
+        font-size: 10px;
+    } */
 }

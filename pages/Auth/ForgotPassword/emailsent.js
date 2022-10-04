@@ -15,14 +15,6 @@ const EmailSent = () => {
             <p className={styles.recover}>
                 We have sent a password recovery instructions to your email.
             </p>
-            <Link href="../Auth/Login">
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    type="submit"
-                    text="Resend Mail"
-                />
-            </Link>
         </div>
     );
 };

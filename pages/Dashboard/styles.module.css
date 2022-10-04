@@ -589,6 +589,12 @@
     margin: 0px;
 }
 
+@media screen and (max-width: 1484px) {
+    .moneybodyDiv {
+        width: 70%;
+    }
+}
+
 @media screen and (max-width: 1376px) {
     .recMak {
         width: 70%;
@@ -643,8 +649,95 @@
     }
 }
 
-@media screen and (max-width: 995px) {
-    .level {
-        width: 50%;
+@media screen and (max-width: 731px) {
+    .moneyBody {
+        padding: 16px 12px;
+    }
+
+    .recMak {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 712px) {
+    .moneybodyDiv {
+        flex-direction: column;
+    }
+
+    .accountNumber {
+        text-align: center;
+    }
+
+    .accountDetails {
+        margin-top: 4px;
+    }
+
+    .name {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 684px) {
+    .name {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 584px) {
+    .divCover {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dinCLass {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
+
+@media screen and (max-width: 539px) {
+    .card {
+        padding: 16px;
+    }
+
+    .btmIIp p:nth-child(1) {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 496px) {
+    .avail {
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .cardMone h1 {
+        font-size: 20px;
+    }
+
+    .moneyCont {
+        padding: 32px 16px;
+    }
+}
+
+@media screen and (max-width: 433px) {
+    .moneyCont {
+        padding: 32px 8px;
+    }
+
+    .card {
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 368px) {
+    .Tpwh {
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 354px) {
+    .cardMone h1 {
+        font-size: 15px;
     }
 }

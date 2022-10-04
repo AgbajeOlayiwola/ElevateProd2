@@ -47,7 +47,8 @@ const states = '/lga';
 const cardLogin = '/auth/register/card';
 const banksAccounts = '/bank-account';
 const uploadUtilityDocument = '/account-upgrade/utility-document/upload';
-const uploadIdentificationDoc = '/account-upgrade/utility-document/upload';
+const uploadIdentificationDoc =
+    '/account-upgrade/identification-document/upload';
 const uploadMemart = '/account-upgrade/memart/upload';
 const uploadCacCert = '/account-upgrade/cac-cert/upload';
 const uploadScmul = '/account-upgrade/scuml/upload';

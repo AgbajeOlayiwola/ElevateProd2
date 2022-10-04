@@ -89,3 +89,29 @@
         width: 30%;
     }
 }
+
+@media screen and (max-width: 890px) {
+    .cove {
+        flex-direction: column;
+    }
+
+    .coveBody {
+        width: 100%;
+    }
+
+    .cove button {
+        margin-top: 16px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 439px) {
+    .coveBody {
+        flex-direction: column;
+    }
+
+    .level {
+        margin-left: 0pc;
+        margin-top: 8px;
+    }
+}

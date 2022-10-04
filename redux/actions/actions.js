@@ -39,7 +39,14 @@ import {
     setupBusProfile,
     userProfile,
     accountPrimary,
-    getUserBankAccounts
+    getUserBankAccounts,
+    uploadIdDocType,
+    uploadMemartType,
+    uploadCacCertType,
+    uploadScmulType,
+    shareRefFormtype,
+    uploadRefferenceFormType,
+    uploadUtilityDocumentype
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -480,10 +487,10 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
     type: balanceEnquiry.BALANCEENQUIRY_LOAD_ERROR,
     payload: balanceEnquiryerror
 });
-export const getBalanceEnquiry = () => (dispatch) => {
+export const getBalanceEnquiry = (data) => (dispatch) => {
     dispatch(balanceEnquiryLoadStart());
     axiosInstance
-        .get(`${apiRoutes.balanceEnquiry}`)
+        .post(`${apiRoutes.balanceEnquiry}`, data)
         .then((response) =>
             dispatch(balanceEnquiryLoadSuccess(response.data.data))
         )
@@ -1474,3 +1481,344 @@ export const bankAccountsData = () => (dispatch) => {
 };
 
 //bank accunt end
+
+//tility upload start
+export const uploadUtilityStart = () => ({
+    type: uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_START
+});
+
+export const uploadUtilitySuccess = (utilityUpload) => ({
+    type: uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_SUCCESS,
+    payload: utilityUpload
+});
+
+export const uploadUtilityError = (utilityUplodaErrorMessages) => ({
+    type: uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_ERROR,
+    payload: utilityUplodaErrorMessages
+});
+export const uploadUtilityData = (utilitydata) => (dispatch) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadUtilityDocument}`,
+            utilitydata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(uploadUtilitySuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(uploadUtilityError(error)));
+};
+
+//utility upload end
+
+//Upload identification Documentation start
+export const identificationDocStart = () => ({
+    type: uploadIdDocType.GET_ID_DOCUMENTATION_START
+});
+
+export const identificationDocSuccess = (identification) => ({
+    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_SUCCESS,
+    payload: identification
+});
+
+export const identificationDocError = (identificationErrorMessages) => ({
+    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_ERROR,
+    payload: identificationErrorMessages
+});
+export const identificationDocData = (identificationdata) => (dispatch) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadIdentificationDoc}`,
+            identificationdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(identificationDocSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(identificationDocError(error.response)));
+};
+
+//upload identification Documentation end
+
+//upload  uploadMemart start
+export const memartStart = () => ({
+    type: uploadMemartType.GET_MEMART_START
+});
+
+export const memartSuccess = (memart) => ({
+    type: uploadMemartType.GET_MEMART_SUCCESS,
+    payload: memart
+});
+
+export const memartError = (memartErrorMessages) => ({
+    type: uploadMemartType.GET_MEMART_ERROR,
+    payload: memartErrorMessages
+});
+export const memartData = (memartdata) => (dispatch) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadMemart}`,
+            memartdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(memartSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(memartError(error.response)));
+};
+
+//upload  uploadMemart end
+
+//upload cac document start
+export const cacStart = () => ({
+    type: uploadCacCertType.GET_CAC_CERIFICATE_START
+});
+
+export const cacSuccess = (cac) => ({
+    type: uploadCacCertType.GET_CAC_CERIFICATE_SUCCESS,
+    payload: cac
+});
+
+export const cacError = (cacErrorMessages) => ({
+    type: uploadCacCertType.GET_CAC_CERIFICATEERROR,
+    payload: cacErrorMessages
+});
+export const cacData = (cacdata) => (dispatch) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadCacCert}`,
+            cacdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(cacSuccess(response.data.message));
+            console.log(response);
+        })
+        .catch((error) => {
+            dispatch(cacError(error.response));
+            console.log(error.response);
+        });
+};
+//upload cac document end
+
+//upload scmul document start
+export const scmulStart = () => ({
+    type: uploadScmulType.GET_SCMUL_START
+});
+
+export const scmulSuccess = (scmul) => ({
+    type: uploadScmulType.GET_SCMUL_SUCCESS,
+    payload: scmul
+});
+
+export const scmulError = (scmulErrorMessages) => ({
+    type: uploadScmulType.GET_SCMUL_ERROR,
+    payload: scmulErrorMessages
+});
+export const scmulData = (scmuldata) => (dispatch) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadScmul}`,
+            scmuldata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(scmulSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(scmulError(error.response)));
+};
+//upload scmul document end
+
+//upload share reffernce form start
+export const shareRefFormStart = () => ({
+    type: shareRefFormtype.GET_SHARE_REFFERENCE_START
+});
+
+export const shareRefFormSuccess = (shareRefForm) => ({
+    type: shareRefFormtype.GET_SHARE_REFFERENCE_SUCCESS,
+    payload: shareRefForm
+});
+
+export const shareRefFormError = (shareRefFormErrorMessages) => ({
+    type: shareRefFormtype.GET_SHARE_REFFERENCE_ERROR,
+    payload: shareRefFormErrorMessages
+});
+export const shareRefFormData = (sharerefformdata) => (dispatch) => {
+    let cookie;
+    r;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.shareRefForm}`,
+            sharerefformdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(shareRefFormSuccess(response.data[0].accountNumber));
+            console.log(response.data.accountNumber);
+        })
+        .catch((error) =>
+            dispatch(shareRefFormError(error.response.data.message))
+        );
+};
+//upload hare reffernce formt end
+
+//upload  refference form start
+export const uploadRefFormStart = () => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_START
+});
+
+export const uploadRefFormSuccess = (uploadRefForm) => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_SUCCESS,
+    payload: uploadRefForm
+});
+
+export const uploadRefFormError = (uploadRefFormErrorMessages) => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_ERROR,
+    payload: uploadRefFormErrorMessages
+});
+export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadRefForm}`,
+            uploadrefformdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(uploadRefFormSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(uploadRefFormError(error.response)));
+};
+//upload refference form end
+
+//upload  board resolution start
+export const uploadBoardResStart = () => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_START
+});
+
+export const uploadBoardResSuccess = (uploadBoardRes) => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_SUCCESS,
+    payload: uploadBoardRes
+});
+
+export const uploadBoardResError = (uploadBoardResErrorMessages) => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_ERROR,
+    payload: uploadBoardResErrorMessages
+});
+export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
+    let cookie;
+    r;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadBoardRes}`,
+            uploadboardresdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(uploadBoardResSuccess(response.data[0].accountNumber));
+            console.log(response.data.accountNumber);
+        })
+        .catch((error) =>
+            dispatch(uploadBoardResError(error.response.data.message))
+        );
+};
+//upload board resolution end

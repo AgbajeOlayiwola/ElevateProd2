@@ -8,6 +8,7 @@ import SearchButtonSvg from '../../ReusableComponents/ReusableSvgComponents/Sear
 import CartSvg from '../../ReusableComponents/ReusableSvgComponents/CartSvg';
 import { loadUserProfile } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { FaBars } from 'react-icons/fa';
 
 const Navbar = ({
     page,
@@ -16,8 +17,7 @@ const Navbar = ({
     preview,
     previewSingle,
     productAction,
-    sideAction,
-    burgerState
+    sideAction
 }) => {
     const dispatch = useDispatch();
     const [userProfileData, setUserProfileData] = useState('');
@@ -35,15 +35,6 @@ const Navbar = ({
     }, [userProfile]);
     return (
         <nav className={styles.navigation}>
-            <div onClick={sideAction} className={styles.burgerBody}>
-                <div
-                    className={
-                        burgerState
-                            ? styles.menuBurger
-                            : styles.openedMenuBurger
-                    }
-                ></div>
-            </div>
             {preview === true ? (
                 <>
                     <div className={styles.imageName}>
@@ -99,14 +90,15 @@ const Navbar = ({
                 </>
             ) : (
                 <>
+                    <FaBars onClick={sideAction} className={styles.bars} />
                     <div className={styles.imageName}>
                         {page === 'Dashboard' ? (
                             <div className={styles.userName}>
                                 <h3 className={styles.name}>
                                     Welcome,{' '}
                                     {userProfile
-                                        ? userProfile.prefferedName
-                                        : 'Bayo'}{' '}
+                                        ? userProfileData.preferredName
+                                        : null}
                                     👍🏼
                                 </h3>
                                 {/* <p className={styles.company}>
@@ -138,11 +130,13 @@ const Navbar = ({
                     <div className={styles.rightNav}>
                         {page === 'Payments' ? null : (
                             <form>
-                                <input
-                                    className={styles.srch}
-                                    type="text"
-                                    placeholder="Search ellevate"
-                                />
+                                <div className={styles.navSearchWrapper}>
+                                    <SearchSvg color="#CCCCCC" />
+                                    <input
+                                        type="text"
+                                        placeholder="Search Products"
+                                    />
+                                </div>
                             </form>
                         )}
                         <div className={styles.notificationBar}>

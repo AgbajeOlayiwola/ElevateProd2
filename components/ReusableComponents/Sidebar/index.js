@@ -12,11 +12,12 @@ import { SidebarData } from '../Data';
 import SideBarDrop from './sidebarcont';
 import Dropdownicon from './dropdownicon';
 import Innersubnav from './innersubnav';
+import { FaTimes } from 'react-icons/fa';
 
-const Sidebar = () => {
+const Sidebar = ({ showSubnav }) => {
     const router = useRouter();
 
-    const [subNav, setSubNav] = useState(false);
+    const [Nav, setNav] = useState(false);
     const [subNavTitle, setSubNavTitle] = useState('');
 
     const handleLogOut = () => {
@@ -26,21 +27,19 @@ const Sidebar = () => {
         }
     };
 
-    const showSubnav = () => {
-        setSubNav((prev) => !prev);
-    };
-
     // fillColor={router.pathname == '/Dashboard'}
 
     return (
         <nav className={styles.sideNav}>
+            <div className={styles.closeIcon} onClick={showSubnav}>
+                <FaTimes />
+            </div>
             <div className={styles.top}>
                 <div className={styles.ellevate}>
                     <ElevateLogo />
                 </div>
                 <div className={styles.track}>
                     {SidebarData.map((item, index) => {
-                        console.log(item);
                         if (item.subNav) {
                             return (
                                 <div

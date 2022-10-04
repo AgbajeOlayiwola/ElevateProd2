@@ -39,6 +39,15 @@ import statesReducer from './states.reducer';
 import newUsercreateCorpAccountReducer from './newusercorporate.reducer';
 import bankAccountsReducer from './bankAccounts.reducer';
 import userProfileReducer from './userProfile.reducer';
+import utilityUploadReducer from './utilityupload.reducer';
+import documentIdentificationReducer from './uploadIdDco.reducer';
+import uploadScmulReducer from './uploadScmul.reducer';
+import uploadMemartReducer from './memart.reducer';
+import shareRefReducer from './shareRefferenceForm.reducer';
+import uploadRefReducer from './uploadrefform.reducer';
+import uploadBoardResReducer from './boardresolution.reducer';
+import cacUploadReducer from './cac.reducer';
+import accountPrimary from './accountPrimary.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -81,6 +90,16 @@ const rootReducer = combineReducers({
     newUserAccountDets: newUsercreateAccountReducer,
     newuserCorpAccount: newUsercreateCorpAccountReducer,
     bankAccountsReducer: bankAccountsReducer,
+    userProfileReducer: userProfileReducer,
+    uploadUtilityReducer: utilityUploadReducer,
+    documentIdentificationReducer: documentIdentificationReducer,
+    uploadScmulReducer: uploadScmulReducer,
+    uploadMemartReducer: uploadMemartReducer,
+    shareRefReducer: shareRefReducer,
+    uploadRefReducer: uploadRefReducer,
+    uploadBoardResReducer: uploadBoardResReducer,
+    cacUploadReducer: cacUploadReducer,
+    accountPrimary: accountPrimary,
     userProfileReducer: userProfileReducer
 });
 

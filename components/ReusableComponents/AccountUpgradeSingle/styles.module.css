@@ -61,3 +61,21 @@
     margin: 0px;
     margin-right: 8px;
 }
+
+@media screen and (max-width: 606px) {
+    .accountUpgradeSingle {
+        padding: 16px 24px 16px 24px;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .accountUpgradeSingleChecked p {
+        margin-left: 8px;
+    }
+}
+
+@media screen and (max-width: 495px) {
+    .accountUpgradeSingleText h2 {
+        font-size: 12px;
+    }
+}
