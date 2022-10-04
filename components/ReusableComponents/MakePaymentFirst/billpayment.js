@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadbillerCategory } from '../../../redux/actions/actions';
-import { loadbillerType } from '../../../redux/actions/actions';
-import { loadbillerPlan } from '../../../redux/actions/actions';
+import {
+    loadbillerCategory,
+    loadbillerType,
+    loadbillerPlan,
+    postAirtimeNetwork
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import ArrowRightSvg from '../ReusableSvgComponents/ArrowRightSvg';
@@ -19,9 +22,10 @@ const BillPayment = ({
     scheduleLater,
     dataAction
 }) => {
-    const [network, setNetwork] = useState('mtn');
+    const [network, setNetwork] = useState('MTN Nigeria');
     const [activeBtn, setActiveBtn] = useState(false);
     const [billerCategories, setBillerCategories] = useState([]);
+    const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const [billerTypes, setBillerTypes] = useState([]);
     const [billerPlans, setBillerPlans] = useState([]);
     const [billerId, setBillerId] = useState('');
@@ -29,6 +33,9 @@ const BillPayment = ({
     const dispatch = useDispatch();
     const { billerCategory } = useSelector(
         (state) => state.billerCategoryReducer
+    );
+    const { airtimeNetwork } = useSelector(
+        (state) => state.airtimeNetworkReducer
     );
     const { billerType } = useSelector((state) => state.billerTypeReducer);
     const { billerPlan } = useSelector((state) => state.billerPlanReducer);
@@ -48,11 +55,18 @@ const BillPayment = ({
     } = useForm();
     const loadbillerTypeData = () => {
         if (firstTitle !== 'Bill Payment') {
-            dispatch(loadbillerType(firstTitle));
+            if (firstTitle === 'Cable Tv') {
+                dispatch(loadbillerType('CABLETV'));
+            } else {
+                dispatch(loadbillerType(firstTitle));
+            }
         }
         // setBillerId(e.target.value);
         setBillerTypes([]);
         setBillerPlans([]);
+        if (firstTitle === 'AIRTIME') {
+            dispatch(postAirtimeNetwork());
+        }
     };
     useEffect(() => {
         loadbillerTypeData();
@@ -62,7 +76,11 @@ const BillPayment = ({
             setBillerTypes(billerType);
         }
     }, [billerType]);
-    console.log(billerTypes.billerInfoList);
+    useEffect(() => {
+        if (airtimeNetwork !== null) {
+            setAirtimeNetworkData(airtimeNetwork);
+        }
+    }, [airtimeNetwork]);
     const loadPlans = (e) => {
         dispatch(loadbillerPlan(e.target.value));
     };
@@ -76,7 +94,7 @@ const BillPayment = ({
         'AIRTIME',
         'Data',
         'Cable TV',
-        'Government Levies',
+        'UTILITY',
         'Airtime and Data'
     ];
     return (
@@ -152,85 +170,62 @@ const BillPayment = ({
                             <div className={styles.networkCarrier}>
                                 <h2>Network</h2>
                                 <div className={styles.networkBody}>
-                                    <div
-                                        className={
-                                            network === 'mtn'
-                                                ? styles.networkActive
-                                                : styles.networkSingle
+                                    {airtimeNetworkData.networks?.map(
+                                        (networks, index) => {
+                                            if (
+                                                networks.name === 'SOCHIENGMTN'
+                                            ) {
+                                                return null;
+                                            } else {
+                                                return (
+                                                    <div
+                                                        className={
+                                                            network ===
+                                                            networks.name
+                                                                ? styles.networkActive
+                                                                : styles.networkSingle
+                                                        }
+                                                        onClick={() => {
+                                                            setNetwork(
+                                                                networks.name
+                                                            );
+                                                        }}
+                                                        key={index}
+                                                    >
+                                                        <div>
+                                                            {networks.name ===
+                                                            'MTN Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/mtn.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : networks.name ===
+                                                              'Airtel Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/airtel.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : networks.name ===
+                                                              'GLO Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/glo.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : networks.name ===
+                                                              'Etisalat Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/9mobile.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : null}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            }
                                         }
-                                        onClick={() => {
-                                            setNetwork('mtn');
-                                        }}
-                                    >
-                                        <div>
-                                            <img
-                                                src="../../Assets/Svgs/mtn.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        className={
-                                            network === 'airtel'
-                                                ? styles.networkActive
-                                                : styles.networkSingle
-                                        }
-                                        onClick={() => {
-                                            setNetwork('airtel');
-                                        }}
-                                    >
-                                        <div>
-                                            <img
-                                                src="../../Assets/Svgs/airtel.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        className={
-                                            network === 'glo'
-                                                ? styles.networkActive
-                                                : styles.networkSingle
-                                        }
-                                        onClick={() => {
-                                            setNetwork('glo');
-                                        }}
-                                    >
-                                        <div>
-                                            <img
-                                                src="../../Assets/Svgs/glo.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        className={
-                                            network === '9mobile'
-                                                ? styles.networkActive
-                                                : styles.networkSingle
-                                        }
-                                        onClick={() => {
-                                            setNetwork('9mobile');
-                                        }}
-                                    >
-                                        <div>
-                                            <img
-                                                src="../../Assets/Svgs/9mobile.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </div>
+                                    )}
                                 </div>
                             </div>
-                            {billerTypes.billerInfoList?.map((item, index) => {
-                                return (
-                                    <img
-                                        src={item.billerLogo}
-                                        alt=""
-                                        key={index}
-                                    />
-                                );
-                            })}
                             <div className={styles.networkForm}>
                                 <div className={styles.formGroup}>
                                     <label>Phone Number</label>
@@ -243,7 +238,7 @@ const BillPayment = ({
                                     <label>Amount</label>
                                     <input type="text" placeholder="0.00" />
                                 </div>
-                                <button>Get Airtime</button>{' '}
+                                <button>Get Airtime</button>
                             </div>
                             <p className={styles.schedule}>
                                 Not paying now?{' '}

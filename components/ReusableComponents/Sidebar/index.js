@@ -21,7 +21,8 @@ const Sidebar = ({ showSubnav }) => {
     const [subNavTitle, setSubNavTitle] = useState('');
 
     const handleLogOut = () => {
-        localStorage.clear();
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
         if (!localStorage.getItem('user')) {
             router.replace('../Auth/Login');
         }

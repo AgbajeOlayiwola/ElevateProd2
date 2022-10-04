@@ -18,13 +18,13 @@ const documentIdentificationReducer = (
                 identification: null,
                 identificationErrorMessages: null
             };
-        case uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_SUCCESS:
+        case uploadIdDocType.GET_UTILITY_DOCUMENT_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 identification: payload
             };
-        case uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_ERROR:
+        case uploadIdDocType.GET_UTILITY_DOCUMENT_ERROR:
             return {
                 ...state,
                 isLoading: false,

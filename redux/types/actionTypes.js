@@ -56,6 +56,16 @@ export const airtime = {
 
 //Airtime action type ends
 
+//AirtimeNetwork action types
+
+export const airtimeNetwork = {
+    AIRTIMENETWORK_LOAD_START: 'AIRTIMENETWORK_LOAD_START',
+    AIRTIMENETWORK_LOAD_SUCCESS: 'AIRTIMENETWORK_LOAD_SUCCESS',
+    AIRTIMENETWORK_LOAD_ERROR: 'AIRTIMENETWORK_LOAD_ERROR'
+};
+
+//AirtimeNetwork action type ends
+
 //Bills action types
 
 export const bills = {

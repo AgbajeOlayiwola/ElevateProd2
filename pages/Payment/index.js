@@ -659,27 +659,28 @@ const Payment = () => {
                                 airtimeAction={(data) => {
                                     setCount(count + 1);
                                     setPaymentDetails(data);
-                                    const billerdata = {
-                                        amount: '100.00',
-                                        ccy: 'NGN',
-                                        billerCode: 'Glo TOPUP',
-                                        billerID: '3280',
-                                        sourceAccount: '8100467021',
-                                        sourceAccountType: 'X',
-                                        productCode: 'GLO-ANY',
-                                        mobileNo: '2348111380591',
-                                        formDataValue: [
-                                            {
-                                                fieldName: 'BEN_PHONE_NO',
-                                                fieldValue: '2348111380591',
-                                                dataType: 'string'
-                                            }
-                                        ],
-                                        beneficiaryName: 'optional',
-                                        paymentDescription: 'optional'
-                                    };
+                                    console.log(data);
+                                    // const billerdata = {
+                                    //     amount: '100.00',
+                                    //     ccy: 'NGN',
+                                    //     billerCode: 'Glo TOPUP',
+                                    //     billerID: '3280',
+                                    //     sourceAccount: '8100467021',
+                                    //     sourceAccountType: 'X',
+                                    //     productCode: 'GLO-ANY',
+                                    //     mobileNo: '2348111380591',
+                                    //     formDataValue: [
+                                    //         {
+                                    //             fieldName: 'BEN_PHONE_NO',
+                                    //             fieldValue: '2348111380591',
+                                    //             dataType: 'string'
+                                    //         }
+                                    //     ],
+                                    //     beneficiaryName: 'optional',
+                                    //     paymentDescription: 'optional'
+                                    // };
 
-                                    dispatch(postAirtime(billerdata));
+                                    // dispatch(postAirtime(billerdata));
                                 }}
                                 // scheduleLater={() => {
                                 //     setCount(count + 3);

@@ -6,8 +6,6 @@ import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 import SearchButtonSvg from '../../ReusableComponents/ReusableSvgComponents/SearchButtonSvg';
 import CartSvg from '../../ReusableComponents/ReusableSvgComponents/CartSvg';
-import { loadUserProfile } from '../../../redux/actions/actions';
-import { useDispatch, useSelector } from 'react-redux';
 import { FaBars } from 'react-icons/fa';
 
 const Navbar = ({
@@ -19,18 +17,16 @@ const Navbar = ({
     productAction,
     sideAction
 }) => {
-    const dispatch = useDispatch();
-    const [userProfileData, setUserProfileData] = useState('');
-    const { userProfile, errorMessage } = useSelector(
-        (state) => state.userProfileReducer
-    );
+    const [userProfile, setUserProfile] = useState();
+    const [userProfileData, setUserProfileData] = useState();
     useEffect(() => {
-        dispatch(loadUserProfile());
+        if (typeof window !== 'undefined') {
+            setUserProfile(window.localStorage.getItem('user'));
+        }
     }, []);
-
     useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
+        if (userProfile !== undefined) {
+            setUserProfileData(JSON.parse(userProfile));
         }
     }, [userProfile]);
     return (
@@ -95,10 +91,10 @@ const Navbar = ({
                         {page === 'Dashboard' ? (
                             <div className={styles.userName}>
                                 <h3 className={styles.name}>
-                                    Welcome,{' '}
-                                    {userProfile
-                                        ? userProfileData.preferredName
-                                        : null}
+                                    Welcome,
+                                    {userProfileData
+                                        ? userProfileData.profile.preferredName
+                                        : null}{' '}
                                     👍🏼
                                 </h3>
                                 {/* <p className={styles.company}>

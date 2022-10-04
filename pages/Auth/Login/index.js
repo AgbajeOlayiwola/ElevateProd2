@@ -6,10 +6,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    loadUserProfile,
-    loginUserAction
-} from '../../../redux/actions/actions';
+import { loginUserAction } from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
 import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
@@ -59,6 +56,7 @@ const Login = () => {
         dispatch(loginUserAction(loginData));
         // dispatch(createNewUserAccount());
     };
+    console.log(user);
     const sentLogin = () => {
         if (errorMessages !== null) {
             setError(errorMessages);
@@ -69,26 +67,22 @@ const Login = () => {
             //     'You already have an account with us. Please contact us for more information'
             // ) {
             // router.push('/Dashboard');,
-        } else if (user === 'Login successful') {
-            dispatch(loadUserProfile());
-        }
-    };
-    const loginAction = () => {
-        console.log(userProfile);
-        if (userProfile !== null) {
-            if (userProfile.profileSetupStatus === ' PROFILE_SETUP_COMPLETED') {
-                router.push('../../Dashboard');
-            } else {
-                router.push('../../Onboarding/ProfileSetup');
+        } else if (user !== null) {
+            if (user.statusCode === 200) {
+                if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'PROFILE_SETUP_COMPLETED'
+                ) {
+                    router.push('../../Dashboard');
+                } else {
+                    router.push('../../Onboarding/ProfileSetup');
+                }
             }
         }
     };
     useEffect(() => {
         sentLogin();
     }, [errorMessages, user]);
-    useEffect(() => {
-        loginAction();
-    }, [errorMessage, userProfile]);
 
     const types = (type) => {
         setOutType(type);
@@ -159,15 +153,6 @@ const Login = () => {
                             </p>
                         </div>
                         <div className={styles.remForg}>
-                            <div>
-                                <LoginCircleSvg
-                                    action={() => {
-                                        setCircle(!circle);
-                                    }}
-                                    circleStatus={circle}
-                                />
-                                <p>Remember me</p>
-                            </div>
                             <div>
                                 <Link href="../Auth/ForgotPassword">
                                     <p className={styles.forget}>

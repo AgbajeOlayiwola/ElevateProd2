@@ -6,6 +6,7 @@ const getBillerCategories = '/payment/billers/categories';
 const getBillerType = '/payment/billers';
 const getBillerPlan = 'billers/details/';
 const airtime = '/payments/airtime-topup';
+const airtimeNetwork = '/payment/airtime-topup/networks';
 const bills = '/payments/bill-payment';
 const internalBank = '/transfer/internal-transfer';
 const interBank = '/payment/single-transfer';
@@ -64,6 +65,7 @@ export default {
     getLanguages,
     profileSetup,
     airtime,
+    airtimeNetwork,
     bills,
     internalBank,
     interBank,
