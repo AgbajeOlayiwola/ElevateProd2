@@ -45,7 +45,8 @@ import {
     uploadCacCertType,
     uploadScmulType,
     shareRefFormtype,
-    uploadRefferenceFormType
+    uploadRefferenceFormType,
+    uploadUtilityDocumentype
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -1483,16 +1484,16 @@ export const bankAccountsData = () => (dispatch) => {
 
 //tility upload start
 export const uploadUtilityStart = () => ({
-    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_START
+    type: uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_START
 });
 
 export const uploadUtilitySuccess = (utilityUpload) => ({
-    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_SUCCESS,
+    type: uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_SUCCESS,
     payload: utilityUpload
 });
 
 export const uploadUtilityError = (utilityUplodaErrorMessages) => ({
-    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_ERROR,
+    type: uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_ERROR,
     payload: utilityUplodaErrorMessages
 });
 export const uploadUtilityData = (utilitydata) => (dispatch) => {
@@ -1509,18 +1510,16 @@ export const uploadUtilityData = (utilitydata) => (dispatch) => {
             utilitydata,
             {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${cookie}`
                 }
             }
         )
         .then((response) => {
-            dispatch(uploadUtilitySuccess(response.data[0].accountNumber));
-            console.log(response.data.accountNumber);
+            dispatch(uploadUtilitySuccess(response));
+            console.log(response);
         })
-        .catch((error) =>
-            dispatch(uploadUtilityLoadError(error.response.data.message))
-        );
+        .catch((error) => dispatch(uploadUtilityError(error)));
 };
 
 //utility upload end
@@ -1548,23 +1547,21 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .get(
+        .post(
             `https://ellevate-test.herokuapp.com${apiRoutes.uploadIdentificationDoc}`,
             identificationdata,
             {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${cookie}`
                 }
             }
         )
         .then((response) => {
-            dispatch(identificationDocSuccess(response.data[0].accountNumber));
-            console.log(response.data.accountNumber);
+            dispatch(identificationDocSuccess(response));
+            console.log(response);
         })
-        .catch((error) =>
-            dispatch(identificationDocError(error.response.data.message))
-        );
+        .catch((error) => dispatch(identificationDocError(error.response)));
 };
 
 //upload identification Documentation end
@@ -1592,21 +1589,21 @@ export const memartData = (memartdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .get(
+        .post(
             `https://ellevate-test.herokuapp.com${apiRoutes.uploadMemart}`,
             memartdata,
             {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${cookie}`
                 }
             }
         )
         .then((response) => {
-            dispatch(memartSuccess(response.data[0].accountNumber));
-            console.log(response.data.accountNumber);
+            dispatch(memartSuccess(response));
+            console.log(response);
         })
-        .catch((error) => dispatch(memartError(error.response.data.message)));
+        .catch((error) => dispatch(memartError(error.response)));
 };
 
 //upload  uploadMemart end
@@ -1634,21 +1631,24 @@ export const cacData = (cacdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .get(
+        .post(
             `https://ellevate-test.herokuapp.com${apiRoutes.uploadCacCert}`,
-            memartdata,
+            cacdata,
             {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${cookie}`
                 }
             }
         )
         .then((response) => {
-            dispatch(cacSuccess(response.data[0].accountNumber));
-            console.log(response.data.accountNumber);
+            dispatch(cacSuccess(response.data.message));
+            console.log(response);
         })
-        .catch((error) => dispatch(cacError(error.response.data.message)));
+        .catch((error) => {
+            dispatch(cacError(error.response));
+            console.log(error.response);
+        });
 };
 //upload cac document end
 
@@ -1675,21 +1675,21 @@ export const scmulData = (scmuldata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .get(
+        .post(
             `https://ellevate-test.herokuapp.com${apiRoutes.uploadScmul}`,
             scmuldata,
             {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${cookie}`
                 }
             }
         )
         .then((response) => {
-            dispatch(scmulSuccess(response.data[0].accountNumber));
-            console.log(response.data.accountNumber);
+            dispatch(scmulSuccess(response));
+            console.log(response);
         })
-        .catch((error) => dispatch(scmulError(error.response.data.message)));
+        .catch((error) => dispatch(scmulError(error.response)));
 };
 //upload scmul document end
 
@@ -1717,12 +1717,12 @@ export const shareRefFormData = (sharerefformdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .get(
+        .post(
             `https://ellevate-test.herokuapp.com${apiRoutes.shareRefForm}`,
             sharerefformdata,
             {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -1753,7 +1753,7 @@ export const uploadRefFormError = (uploadRefFormErrorMessages) => ({
 });
 export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
     let cookie;
-    r;
+
     if (getCookie('cookieToken') == undefined) {
         cookie = getCookie('existingToken');
     } else {
@@ -1761,23 +1761,21 @@ export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .get(
+        .post(
             `https://ellevate-test.herokuapp.com${apiRoutes.uploadRefForm}`,
             uploadrefformdata,
             {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${cookie}`
                 }
             }
         )
         .then((response) => {
-            dispatch(uploadRefFormSuccess(response.data[0].accountNumber));
-            console.log(response.data.accountNumber);
+            dispatch(uploadRefFormSuccess(response));
+            console.log(response);
         })
-        .catch((error) =>
-            dispatch(uploadRefFormError(error.response.data.message))
-        );
+        .catch((error) => dispatch(uploadRefFormError(error.response)));
 };
 //upload refference form end
 
@@ -1805,12 +1803,12 @@ export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .get(
+        .post(
             `https://ellevate-test.herokuapp.com${apiRoutes.uploadBoardRes}`,
             uploadboardresdata,
             {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${cookie}`
                 }
             }

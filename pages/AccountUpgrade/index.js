@@ -7,19 +7,190 @@ import BillSvg from '../../components/ReusableComponents/ReusableSvgComponents/B
 import IdCard from '../../components/ReusableComponents/ReusableSvgComponents/IdCardSvg';
 import AccountUpgradeComponent from '../../components/ReusableComponents/AccountUpgradeComponent';
 import { useRouter } from 'next/router';
-import { location } from '../../components/ReusableComponents/Data';
+// import { location } from '../../components/ReusableComponents/Data';
 import DirectorsSvg from '../../components/ReusableComponents/ReusableSvgComponents/DirectorsSvg';
 import SignatureRuleSvg from '../../components/ReusableComponents/ReusableSvgComponents/SignatureRuleSvg';
 import { useEffect } from 'react';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    cacData,
+    identificationDocData,
+    memartData,
+    scmulData,
+    uploadUtilityData,
+    statesData,
+    uploadRefFormData
+} from '../../redux/actions/actions';
 
 const AccountUpgrade = () => {
     const router = useRouter();
-
+    const dispatch = useDispatch();
     const [text, setText] = useState('Corporate');
+    const [localState, setLocalState] = useState('');
+    const [location, setLocation] = useState([]);
+    const [localGovernment, setLocalGovernment] = useState('');
     const [title, setTitle] = useState('First');
+    const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState('');
     const [director, setDirector] = useState(false);
+    const [scmulfile, setScmulFile] = useState('');
+    const [scmulfileName, setScmulFileName] = useState('');
+    const [co2file, setCo2File] = useState('');
+    const [co2FileName, setCo2FileName] = useState('');
+    const [co7file, setCo7File] = useState('');
+    const [co7FileName, setCo7FileName] = useState('');
+    const [utilityFile, setUtilityFile] = useState('');
+    const [utilityFileName, setUtilityFileName] = useState('');
+    const [landMark, setLandMark] = useState('');
+    const [selstate, setState] = useState('');
+    const [city, setCity] = useState('');
+    const [streetName, setStreetName] = useState('');
+    const [localGovernmane, setLocalGovernmment] = useState('');
+    const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
+    const [idNumber, setIdNumber] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        ''
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
+    const [refoneno, setRefoneNo] = useState('');
+    const [refoneemail, setRefoneEmail] = useState('');
+    const [reftwono, setReftTwoNo] = useState('');
+    const [reftwoemail, setRefTwoEmail] = useState('');
+    const { cac, cacErrorMessages } = useSelector(
+        (state) => state.cacUploadReducer
+    );
+    const { scmul, scmulErrorMessages } = useSelector(
+        (state) => state.uploadScmulReducer
+    );
+    const { memart, memartErrorMessages } = useSelector(
+        (state) => state.uploadMemartReducer
+    );
+    const { uploadRefForm, uploadRefFormErrorMessages } = useSelector(
+        (state) => state.uploadMemartReducer
+    );
+    const { utilityUpload, utilityUplodaErrorMessages } = useSelector(
+        (state) => state.uploadUtilityReducer
+    );
+    //Cac Registratiom
+    const saveFile = (e) => {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
 
+        // console.log(file);
+    };
+    const cacRegistration = () => {
+        // console.log('test');
+        const cacDatas = {
+            cacCert: file
+        };
+        dispatch(cacData(cacDatas));
+    };
+    useEffect(() => {
+        console.log(cac);
+        console.log(cacErrorMessages);
+    }, [cac, cacErrorMessages]);
+
+    //CAC Registration end
+
+    //SMUL Certyificate
+    const saveScmulFile = (e) => {
+        setScmulFile(e.target.files[0]);
+        setScmulFileName(e.target.files[0].name);
+    };
+    const uploadScmul = () => {
+        console.log('test');
+        const scmulDatas = {
+            scumlCert: scmulfile
+        };
+        dispatch(scmulData(scmulDatas));
+    };
+    useEffect(() => {
+        console.log(scmul);
+        console.log(scmulErrorMessages);
+    }, [scmul, scmulErrorMessages]);
+
+    //SCMUL Certificate end
+
+    //Memart Submit
+    const saveMemart2lFile = (e) => {
+        setCo2File(e.target.files[0]);
+        setCo2FileName(e.target.files[0].name);
+    };
+    const saveMemart7lFile = (e) => {
+        setCo7File(e.target.files[0]);
+        setCo7FileName(e.target.files[0].name);
+    };
+    // console.log(co2file);
+    const memartUpload = () => {
+        const mmemmartDatas = {
+            co2: co2file,
+            co7: co7file
+        };
+        dispatch(memartData(mmemmartDatas));
+    };
+    useEffect(() => {
+        console.log(memart);
+        console.log(memartErrorMessages);
+    }, [memart, memartErrorMessages]);
+    //Memart Submit ENd
+
+    //utility Upload
+    const saveUtilityFile = (e) => {
+        setUtilityFile(e.target.files[0]);
+        setUtilityFileName(e.target.files[0].name);
+    };
+    const utilityUploads = () => {
+        // console.log(utilityFile);
+        const utilityThingd = {
+            streetName: streetName,
+            lga: localGovernmane,
+            state: localState,
+            utilityDocument: utilityFile
+        };
+        dispatch(uploadUtilityData(utilityThingd));
+        // console.log('state', localState, localGovernment, utilityFile);
+    };
+    useEffect(() => {
+        console.log(utilityUpload);
+        console.log(utilityUplodaErrorMessages);
+    }, [utilityUpload, utilityUplodaErrorMessages]);
+    //Utility Upload End
+
+    //Identification Upload
+    const saveIdentificationFile = (e) => {
+        setIdentificationDocument(e.target.files[0]);
+        setIdentificationDocumentName(e.target.files[0].name);
+    };
+    const IdentificationyUpload = () => {
+        const identificationThings = {
+            meansOfIdentification: 'Name',
+            idNumber: idNumber,
+            identificationDocument: identificationDocumentFile
+        };
+        dispatch(identificationDocData(identificationThings));
+    };
+
+    //Identification Upload End
+
+    //Refference
+    const reffernceUpload = () => {
+        // const identificationThings = {
+        //     meansOfIdentification: meansOfIdentification,
+        //     idNumber: idNumber,
+        //     identificationDocument: identificationDocumentFile
+        // };
+
+        const emailToshareData = {
+            emailsToShare: [refoneemail, refoneno]
+        };
+        dispatch(uploadRefFormData(emailToshareData));
+    };
+
+    //Refference
     const test = () => {
         console.log('test');
     };
@@ -77,6 +248,25 @@ const AccountUpgrade = () => {
             }
         ]
     };
+    const { states } = useSelector((state) => state.statesReducer);
+    const newStates = () => {
+        if (states !== null) {
+            setLocation(states);
+        }
+    };
+    useEffect(() => {
+        dispatch(statesData());
+    }, []);
+    useEffect(() => {
+        newStates();
+    }, [states]);
+    useEffect(() => {
+        location?.filter((item) => {
+            if (item.state === localState) {
+                setLocalGovernment(item.localGoverment);
+            }
+        });
+    }, [localState]);
     switch (title) {
         case 'First':
             return (
@@ -214,7 +404,15 @@ const AccountUpgrade = () => {
                                 <div className={styles.midCont}>
                                     <div className={styles.addressGroup}>
                                         <label>State</label>
-                                        <select name="" id="">
+                                        <select
+                                            name=""
+                                            id=""
+                                            value={selstate}
+                                            onChange={(event) => {
+                                                setState(event.target.value);
+                                                // console.log(selstate);
+                                            }}
+                                        >
                                             <option value="">
                                                 Select State
                                             </option>
@@ -245,8 +443,32 @@ const AccountUpgrade = () => {
                                 <div className={styles.midCont}>
                                     <div className={styles.addressGroup}>
                                         <label>Local Government Area</label>
-                                        <select name="" id="">
+                                        <select
+                                            name=""
+                                            id=""
+                                            onChange={(event) => {
+                                                setLocalGovernment(
+                                                    event.target.value
+                                                );
+                                            }}
+                                        >
                                             <option value="">Select LGA</option>
+                                            {localGovernment
+                                                ? localGovernment?.map(
+                                                      (item, index) => {
+                                                          return (
+                                                              <option
+                                                                  value={
+                                                                      item.lgaName
+                                                                  }
+                                                                  key={index}
+                                                              >
+                                                                  {item.lgaName}
+                                                              </option>
+                                                          );
+                                                      }
+                                                  )
+                                                : null}
                                         </select>
                                     </div>
                                 </div>
@@ -293,9 +515,18 @@ const AccountUpgrade = () => {
                         <div className={styles.signatureGroup}>
                             <p>Upload Photo</p>
                             <div className={styles.signatureFormGroup}>
-                                <p>No file chosen...</p>
+                                <p>
+                                    {' '}
+                                    {utilityFileName
+                                        ? utilityFileName
+                                        : 'No file chosen...'}
+                                </p>
                                 <label>
-                                    <input type="file" /> Upload
+                                    <input
+                                        type="file"
+                                        onChange={saveUtilityFile}
+                                    />{' '}
+                                    Upload
                                 </label>
                             </div>
                         </div>
@@ -303,6 +534,10 @@ const AccountUpgrade = () => {
                             <div className={styles.addressGroup}>
                                 <label>Street </label>
                                 <input
+                                    value={streetName}
+                                    onChange={(e) =>
+                                        setStreetName(e.target.value)
+                                    }
                                     type="text"
                                     placeholder="Enter Street "
                                 />
@@ -312,6 +547,10 @@ const AccountUpgrade = () => {
                                     <div className={styles.addressGroup}>
                                         <label>Landmark</label>
                                         <input
+                                            value={landMark}
+                                            onChange={(e) =>
+                                                setLandMark(e.target.value)
+                                            }
                                             type="text"
                                             placeholder="Enter Landmark"
                                         />
@@ -321,7 +560,15 @@ const AccountUpgrade = () => {
                                 <div className={styles.midCont}>
                                     <div className={styles.addressGroup}>
                                         <label>State</label>
-                                        <select name="" id="">
+                                        <select
+                                            name=""
+                                            id=""
+                                            onChange={(event) =>
+                                                setLocalState(
+                                                    event.target.value
+                                                )
+                                            }
+                                        >
                                             <option value="">
                                                 Select State
                                             </option>
@@ -344,6 +591,10 @@ const AccountUpgrade = () => {
                                     <div className={styles.addressGroup}>
                                         <label>City</label>
                                         <input
+                                            value={city}
+                                            onChange={(e) =>
+                                                setCity(e.target.value)
+                                            }
                                             type="text"
                                             placeholder="Enter City"
                                         />
@@ -352,16 +603,43 @@ const AccountUpgrade = () => {
                                 <div className={styles.midCont}>
                                     <div className={styles.addressGroup}>
                                         <label>Local Government Area</label>
-                                        <select name="" id="">
+                                        <select
+                                            name=""
+                                            id=""
+                                            onChange={(event) => {
+                                                setLocalGovernmment(
+                                                    event.target.value
+                                                );
+                                            }}
+                                        >
                                             <option value="">Select LGA</option>
+                                            {localGovernment
+                                                ? localGovernment?.map(
+                                                      (item, index) => {
+                                                          return (
+                                                              <option
+                                                                  value={
+                                                                      item.lgaName
+                                                                  }
+                                                                  key={index}
+                                                              >
+                                                                  {item.lgaName}
+                                                              </option>
+                                                          );
+                                                      }
+                                                  )
+                                                : null}
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <button>Update Profile</button>
+                    {utilityUpload ? (
+                        utilityUpload.data.message
+                    ) : (
+                        <button onClick={utilityUploads}>Update Profile</button>
+                    )}
                 </AccountUpgradeComponent>
             );
         case 'Upload ID Card':
@@ -381,21 +659,39 @@ const AccountUpgrade = () => {
                         </div>
                         <div className={styles.identificationGroup}>
                             <label>ID Number</label>
-                            <input type="text" placeholder="Enter ID  Number" />
+                            <input
+                                type="text"
+                                onChange={(e) => setIdNumber(e.target.value)}
+                                placeholder="Enter ID  Number"
+                            />
                         </div>
                     </div>
                     <div className={styles.signature}>
                         <div className={styles.signatureGroup}>
                             <p>Upload ID</p>
                             <div className={styles.signatureFormGroup}>
-                                <p>No file chosen...</p>
+                                <p>
+                                    {' '}
+                                    {identificationDocumentFileName
+                                        ? identificationDocumentFileName
+                                        : 'No file chosen...'}
+                                </p>
                                 <label>
-                                    <input type="file" /> Upload
+                                    <input
+                                        onChange={saveIdentificationFile}
+                                        type="file"
+                                    />{' '}
+                                    Upload
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <button className={styles.updateBtn}>Update Profile</button>
+                    <button
+                        onClick={IdentificationyUpload}
+                        className={styles.updateBtn}
+                    >
+                        Update Profiles
+                    </button>
                 </AccountUpgradeComponent>
             );
         case 'Document':
@@ -568,16 +864,34 @@ const AccountUpgrade = () => {
                             <div className={styles.signatureGroup}>
                                 <p>Upload CAC Certificate</p>
                                 <div className={styles.signatureFormGroup}>
-                                    <p>No file chosen...</p>
+                                    <p>
+                                        {' '}
+                                        {fileName
+                                            ? fileName
+                                            : 'No file chosen...'}
+                                    </p>
                                     <label>
-                                        <input type="file" /> Upload
+                                        <input
+                                            type="file"
+                                            onChange={saveFile}
+                                        />{' '}
+                                        Upload
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <button className={styles.updateBtn}>
-                            Update Profile
-                        </button>
+                        {cac === 'success' ? (
+                            <>
+                                <p>Document Upload SUccessful</p>
+                            </>
+                        ) : (
+                            <button
+                                className={styles.updateBtn}
+                                onClick={cacRegistration}
+                            >
+                                Update Profile
+                            </button>
+                        )}
                     </div>
                 </AccountUpgradeComponent>
             );
@@ -602,16 +916,32 @@ const AccountUpgrade = () => {
                             <div className={styles.signatureGroup}>
                                 <p>Upload SCUML Certificate</p>
                                 <div className={styles.signatureFormGroup}>
-                                    <p>No file chosen...</p>
+                                    <p>
+                                        {' '}
+                                        {scmulfileName
+                                            ? scmulfileName
+                                            : 'No file chosen...'}
+                                    </p>
                                     <label>
-                                        <input type="file" /> Upload
+                                        <input
+                                            onChange={saveScmulFile}
+                                            type="file"
+                                        />{' '}
+                                        Upload
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <button className={styles.updateBtn}>
-                            Update Profile
-                        </button>
+                        {scmul ? (
+                            scmul.data.message
+                        ) : (
+                            <button
+                                className={styles.updateBtn}
+                                onClick={uploadScmul}
+                            >
+                                Update Profile
+                            </button>
+                        )}
                     </div>
                 </AccountUpgradeComponent>
             );
@@ -629,9 +959,18 @@ const AccountUpgrade = () => {
                             <div className={styles.signatureGroup}>
                                 <p>Upload CO2</p>
                                 <div className={styles.signatureFormGroup}>
-                                    <p>No file chosen...</p>
+                                    <p>
+                                        {' '}
+                                        {co2FileName
+                                            ? co2FileName
+                                            : 'No file chosen...'}
+                                    </p>
                                     <label>
-                                        <input type="file" /> Upload
+                                        <input
+                                            onChange={saveMemart2lFile}
+                                            type="file"
+                                        />{' '}
+                                        Upload
                                     </label>
                                 </div>
                             </div>
@@ -640,16 +979,31 @@ const AccountUpgrade = () => {
                             <div className={styles.signatureGroup}>
                                 <p>Upload CO7</p>
                                 <div className={styles.signatureFormGroup}>
-                                    <p>No file chosen...</p>
+                                    <p>
+                                        {co7FileName
+                                            ? co7FileName
+                                            : 'No file chosen...'}
+                                    </p>
                                     <label>
-                                        <input type="file" /> Upload
+                                        <input
+                                            onChange={saveMemart7lFile}
+                                            type="file"
+                                        />{' '}
+                                        Upload
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <button className={styles.updateBtn}>
-                            Update Profile
-                        </button>
+                        {memart ? (
+                            memart.data.message
+                        ) : (
+                            <button
+                                onClick={memartUpload}
+                                className={styles.updateBtn}
+                            >
+                                Update Profile
+                            </button>
+                        )}
                     </div>
                 </AccountUpgradeComponent>
             );
@@ -669,11 +1023,15 @@ const AccountUpgrade = () => {
                                 type="text"
                                 name=""
                                 placeholder="Enter Email"
+                                value={refoneemail}
+                                onChange={(e) => setRefoneEmail(e.target.value)}
                             />
                         </div>
                         <div className={styles.directorsGroup}>
                             <label>Phone Number</label>
                             <input
+                                value={refoneno}
+                                onChange={(e) => setRefoneNo(e.target.value)}
                                 type="text"
                                 name=""
                                 placeholder="Enter Phone Number"
@@ -699,7 +1057,7 @@ const AccountUpgrade = () => {
                             />
                         </div>
                     </div>
-                    <button>Send Invite</button>
+                    <button onClick={reffernceUpload}>Send Invite</button>
                 </AccountUpgradeComponent>
             );
     }

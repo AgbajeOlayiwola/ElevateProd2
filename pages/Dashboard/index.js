@@ -59,7 +59,6 @@ const Dashboard = () => {
     const [balance, setBalance] = useState('#00000.00');
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
-<<<<<<< HEAD
     const [items, setItems] = useState([]);
 
     const [acctNumber, setAcctNumber] = useState('');
@@ -69,8 +68,6 @@ const Dashboard = () => {
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
-=======
->>>>>>> f3444710d170ab5dde06a67afac25406dbc77275
 
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
