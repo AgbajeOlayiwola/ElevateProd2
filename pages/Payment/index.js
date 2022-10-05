@@ -375,7 +375,6 @@ const Payment = () => {
                                     setIsLoading(true);
                                     if (data.bankName === 'Ecobank') {
                                         setEcobank(true);
-
                                         const interCheckDetails = {
                                             accountNumber: data.accountNumber
                                         };
@@ -447,7 +446,10 @@ const Payment = () => {
                                         beneficiaryName: 'Aderohunmu Matthew',
                                         destinationAccountNo:
                                             paymentDetails.accountNumber,
-                                        transactionAmount: 10,
+                                        transactionAmount: parseInt(
+                                            paymentDetails.amount,
+                                            10
+                                        ),
                                         narration: paymentDetails.narration,
                                         transactionPin: Object.values(data)
                                             .toString()
