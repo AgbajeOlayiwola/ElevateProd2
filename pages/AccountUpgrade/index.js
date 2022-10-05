@@ -24,7 +24,6 @@ import {
 } from '../../redux/actions/actions';
 
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import { loadsetTransactionPin } from '../../redux/actions/actions';
 
 const AccountUpgrade = () => {
