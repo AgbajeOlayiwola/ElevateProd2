@@ -105,4 +105,24 @@ button {
     line-height: 19px;
     text-align: center;
     color: #ffffff;
+    transition: all 0.5s ease-in-out;
+}
+button:hover {
+    transition: all 0.5s ease-in-out;
+    padding: var(--global-button-padding);
+    color: var(--global-button-color);
+    background-color: #305608;
+    border: var(--global-button-border);
+    border-radius: var(--global-button-borderRadius);
+    margin-top: 16px;
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #ffffff;
 }

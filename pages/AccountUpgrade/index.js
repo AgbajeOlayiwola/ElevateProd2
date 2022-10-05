@@ -167,7 +167,7 @@ const AccountUpgrade = () => {
     };
     const IdentificationyUpload = () => {
         const identificationThings = {
-            meansOfIdentification: 'Name',
+            meansOfIdentification: 'Drivers Licence',
             idNumber: idNumber,
             identificationDocument: identificationDocumentFile
         };

@@ -299,6 +299,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                     src="/width" 
                     alt="lineImage" /> */}
                 </CardHeadingBVN>
+
                 {/* <Progressbar
                             bgcolor="#6CCF00"
                             progressCount={progress}
@@ -306,6 +307,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                             progWidth="27%"
                         /> */}
             </div>
+            <p className={styles.error}> {newAccountErrorMessage}</p>
             {/* The small card that wraps the form */}
             <div className={styles.businessCont}>
                 <ButtonWrapper>

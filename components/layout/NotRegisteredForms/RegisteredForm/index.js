@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 // import { loadCountry } from '../../../../redux/actions/actions';
 import Head from 'next/head';
+import Loader from '../../../ReusableComponents/Loader';
 
 const RegisteredForm = ({
     formData,
@@ -20,7 +21,7 @@ const RegisteredForm = ({
     actionI
 }) => {
     // const [progress, setProgress] = useState('25%');
-
+    const [loading, setLoading] = useState(false);
     const [switchs, setSwitch] = useState(true);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
@@ -408,13 +409,17 @@ const RegisteredForm = ({
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            onClick={action}
-                            type="submit"
-                            text={'Next'}
-                        />
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                onClick={action}
+                                type="submit"
+                                text={'Next'}
+                            />
+                        )}
                     </>
                 ) : null}
             </div>
