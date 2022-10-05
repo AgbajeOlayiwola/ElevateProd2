@@ -57,6 +57,7 @@ const uploadScmul = '/account-upgrade/scuml/upload';
 const shareRefForm = '/account-upgrade/reference-form/share';
 const uploadRefForm = '/account-upgrade/reference-form/share';
 const uploadBoardRes = '/account-upgrade/board-resolution/upload';
+const forgotPassword = '/authentication/forget-password';
 export default {
     getBanks,
     getCountries,
@@ -114,5 +115,6 @@ export default {
     uploadRefForm,
     uploadScmul,
     shareRefForm,
-    uploadUtilityDocument
+    uploadUtilityDocument,
+    forgotPassword
 };

@@ -109,10 +109,7 @@ const SingleTransfer = ({
                         <option value="Ecobank">Ecobank</option>
                         {bank?.map((bank, index) => {
                             return (
-                                <option
-                                    value={bank.institutionName}
-                                    key={index}
-                                >
+                                <option value={bank.institutionId} key={index}>
                                     {bank.institutionName}
                                 </option>
                             );

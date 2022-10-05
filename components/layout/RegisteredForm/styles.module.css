@@ -103,6 +103,20 @@
     height: 0;
     font-weight: 500;
 }
+
+.clr:hover {
+    width: 40px;
+    margin: 0px;
+    background-color: white;
+    width: 40px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #a5a5a5;
+}
+
 .header {
     font-family: 'Inter', sans-serif;
     font-style: normal;
