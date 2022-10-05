@@ -50,6 +50,7 @@ import uploadBoardResReducer from './boardresolution.reducer';
 import cacUploadReducer from './cac.reducer';
 import accountPrimaryReducer from './accountPrimary.reducer';
 import setTransactionPinReducer from './setTransactionPin.reducer';
+import fogrotPasswordReducer from './forgotpassword.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -104,7 +105,8 @@ const rootReducer = combineReducers({
     cacUploadReducer: cacUploadReducer,
     accountPrimaryReducer: accountPrimaryReducer,
     setTransactionPinReducer: setTransactionPinReducer,
-    userProfileReducer: userProfileReducer
+    userProfileReducer: userProfileReducer,
+    fogrotPasswordReducer: fogrotPasswordReducer
 });
 
 export default rootReducer;

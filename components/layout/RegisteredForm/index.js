@@ -71,6 +71,15 @@ const ExistingMultiStep = () => {
                         //
                     />
                 );
+            // case 2:
+            //     return (
+            //     <Liveness
+            //     action={() => {
+            //         setPage(page + 1);
+            //     }}
+            //     // action={handleSubmitt}
+            // />
+            //     );
             case 2:
                 return (
                     <StepThree

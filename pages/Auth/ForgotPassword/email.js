@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ButtonComp } from '../../../components';
 import Card from '../../../components/layout/NotRegisteredForms/Card/index';
 import styles from './styles.module.css';
@@ -6,7 +6,9 @@ import { useForm } from 'react-hook-form';
 import ArrowBackSvg from '../../../components/ReusableComponents/ArrowBackSvg';
 import { useRouter } from 'next/router';
 import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
-const ForgotPassword = ({ onSubmit }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPasswordData } from '../../../redux/actions/actions';
+const ForgotPassword = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const {
         register,
@@ -14,9 +16,42 @@ const ForgotPassword = ({ onSubmit }) => {
         watch,
         formState: { errors }
     } = useForm();
+    const checkDataContent = (e) => {
+        setEmail(e.target.value);
+    };
+    const [email, setEmail] = useState('');
+    const { forgotPassword, forgotPasswordErrorMessages } = useSelector(
+        (state) => state.fogrotPasswordReducer
+    );
+    const dispatch = useDispatch();
+    const router = useRouter();
+    const onSubmit = (data) => {
+        const forgotPassworEmail = {
+            email
+        };
+
+        dispatch(forgotPasswordData(forgotPassworEmail));
+
+        console.log(forgotPassword, forgotPasswordErrorMessages);
+        // fogrotPasswordReducer
+    };
+    useEffect(() => {
+        console.log(forgotPassword);
+        console.log(forgotPasswordErrorMessages);
+    }, [forgotPassword, forgotPasswordErrorMessages]);
+    // if (forgotPassword) {
+    //     if (forgotPassword.data.message === 'password reset email sent') {
+    //         router.push('./ForgotPassword/emailsent');
+    //     } else {
+    //         router.push('../../Onboarding/ProfileSetup');
+    //     }
+    // } else {
+    //     console.log('hg');
+    // }
 
     return (
         <>
+            {forgotPassword ? <p>{forgotPassword.data.message}</p> : null}
             <div className={styles.back}>
                 <ArrowBackSvg
                     action={() => {
@@ -48,6 +83,7 @@ const ForgotPassword = ({ onSubmit }) => {
                                 message: 'Invalid email address'
                             }
                         })}
+                        onChange={checkDataContent}
                     />
                 </div>
                 <p className={styles.errors}>{errors.email?.message}</p>

@@ -48,7 +48,8 @@ import {
     uploadScmulType,
     shareRefFormtype,
     uploadRefferenceFormType,
-    uploadUtilityDocumentype
+    uploadUtilityDocumentype,
+    forgotPasswordtype
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -1880,3 +1881,45 @@ export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
         );
 };
 //upload board resolution end
+
+//forgot password resolution start
+export const forgotPasswordStart = () => ({
+    type: forgotPasswordtype.GET_FORGOT_PASSWORD_START
+});
+
+export const forgotPasswordSuccess = (forgotPassword) => ({
+    type: forgotPasswordtype.GET_FORGOT_PASSWORD_SUCCESS,
+    payload: forgotPassword
+});
+
+export const forgotPasswordError = (forgotPasswordErrorMessages) => ({
+    type: forgotPasswordtype.GET_FORGOT_PASSWORD_ERROR,
+    payload: forgotPasswordErrorMessages
+});
+export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.forgotPassword}`,
+            forgotPassworddata,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(forgotPasswordSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(forgotPasswordError(error)));
+};
+//forgot password resolution end
