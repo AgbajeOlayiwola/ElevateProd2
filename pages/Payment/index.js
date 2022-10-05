@@ -656,25 +656,6 @@ const Payment = () => {
                                     setCount(count + 1);
                                     setPaymentDetails(data);
                                     console.log(data);
-                                    const billerdata = {
-                                        amount: 100,
-                                        accountId: string,
-                                        billerCode: 'Glo TOPUP',
-                                        billerId: 3280,
-                                        productCode: GLO - ANY,
-                                        mobileNo: 2348111380591,
-                                        formDataValue: [
-                                            {
-                                                fieldName: BEN_PHONE_NO,
-                                                fieldValue: 2348111380591,
-                                                dataType: string
-                                            }
-                                        ],
-                                        beneficiaryName: optional,
-                                        paymentDescription: optional
-                                    };
-
-                                    dispatch(postAirtime(billerdata));
                                 }}
                                 // scheduleLater={() => {
                                 //     setCount(count + 3);
@@ -696,52 +677,27 @@ const Payment = () => {
                                 overlay={overlay}
                                 transferAction={() => {
                                     setIsLoading(true);
-                                    if (
-                                        paymentDetails.billerType === 'AIRTIME'
-                                    ) {
+                                    if (bill === 'AIRTIME') {
                                         setIsLoading(true);
-                                        dispatch(
-                                            loadbillerPlan(
-                                                paymentDetails.billerCategory
-                                            )
-                                        );
-                                        if (billerPlan !== null) {
-                                            console.log(
-                                                billerPlan.billerDetail.billerID
-                                            );
-                                            const billerData = {
-                                                amount: paymentDetails.amount,
-                                                ccy: billerPlan
-                                                    .billerProductInfo[0].ccy,
-                                                billerCode:
-                                                    billerPlan.billerDetail
-                                                        .billerCode,
-                                                billerID: String(
-                                                    billerPlan.billerDetail
-                                                        .billerID
-                                                ),
-                                                sourceAccount: '1382002892',
-                                                sourceAccountType: 'A',
-                                                productCode:
-                                                    billerPlan
-                                                        .billerProductInfo[0]
-                                                        .productCode,
-                                                customerName: String(
-                                                    paymentDetails.acountDebit
-                                                ),
-                                                mobileNo: '2348111380591',
-                                                formDataValue: [
-                                                    {
-                                                        fieldName:
-                                                            'BEN_PHONE_NO',
-                                                        fieldValue:
-                                                            paymentDetails.phoneNumber,
-                                                        dataType: 'string'
-                                                    }
-                                                ]
-                                            };
-                                            dispatch(postAirtime(billerData));
-                                        }
+                                        const billerdata = {
+                                            amount: 100,
+                                            accountId: string,
+                                            billerCode: 'Glo TOPUP',
+                                            billerId: 3280,
+                                            productCode: GLO - ANY,
+                                            mobileNo: 2348111380591,
+                                            formDataValue: [
+                                                {
+                                                    fieldName: BEN_PHONE_NO,
+                                                    fieldValue: 2348111380591,
+                                                    dataType: string
+                                                }
+                                            ],
+                                            beneficiaryName: optional,
+                                            paymentDescription: optional
+                                        };
+
+                                        dispatch(postAirtime(billerdata));
                                     } else {
                                         dispatch(
                                             loadbillerPlan(

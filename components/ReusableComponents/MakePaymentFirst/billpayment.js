@@ -240,11 +240,42 @@ const BillPayment = ({
                                     <input
                                         type="text"
                                         placeholder="0801 234 5678"
+                                        name="phoneNumber"
+                                        {...register('phoneNumber', {
+                                            required:
+                                                'Phone Number is required',
+                                            minLength: {
+                                                value: 11,
+                                                message: 'Min length is 11'
+                                            },
+                                            maxLength: {
+                                                value: 11,
+                                                message: 'Max length is 11'
+                                            },
+                                            pattern: {
+                                                value: /^[0-9]/i,
+                                                message:
+                                                    'Phone Number can only be number '
+                                            }
+                                        })}
                                     />
                                 </div>
                                 <div className={styles.formGroup}>
                                     <label>Amount</label>
-                                    <input type="text" placeholder="0.00" />
+                                    <input
+                                        type="text"
+                                        placeholder="0.00"
+                                        name="amount"
+                                        {...register('amount', {
+                                            required: 'Amount  is required',
+
+                                            pattern: {
+                                                value: /^[0-9]/i,
+                                                message:
+                                                    'Amount can only be number '
+                                            }
+                                        })}
+                                    />
                                 </div>
                                 <button>Get Airtime</button>
                             </div>
