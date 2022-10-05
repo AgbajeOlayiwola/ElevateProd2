@@ -13,6 +13,9 @@ const Reference = () => {
                     height="100%"
                 />
             </div>
+            <div className={styles.referenceHeader}>
+                <div className=""></div>
+            </div>
         </div>
     );
 };

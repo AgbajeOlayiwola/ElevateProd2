@@ -20,7 +20,8 @@ const MakePaymentFirst = ({
     dataAction,
     airtimeAction,
     type,
-    secondAction
+    secondAction,
+    isLoading
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -45,6 +46,7 @@ const MakePaymentFirst = ({
                             firstTitle="Single Transfer Payment"
                             buttonText={buttonText}
                             scheduleLater={scheduleLater}
+                            isLoading={isLoading}
                         />
                     ) : firstTitle === 'Foreign Transfer' ? (
                         <ForeignTransfer
