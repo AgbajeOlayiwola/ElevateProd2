@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 // import { loadCountry } from '../../../../redux/actions/actions';
 import Head from 'next/head';
+import Loader from '../../../ReusableComponents/Loader';
 
 const RegisteredForm = ({
     formData,
@@ -20,7 +21,7 @@ const RegisteredForm = ({
     actionI
 }) => {
     // const [progress, setProgress] = useState('25%');
-
+    const [loading, setLoading] = useState(false);
     const [switchs, setSwitch] = useState(true);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
@@ -124,12 +125,16 @@ const RegisteredForm = ({
                         <FormInput
                             type="text"
                             placeholder="Your Business Registration number"
-                            name="rc_number"
-                            {...register('rc_number', {
-                                required: 'BVN is required',
+                            name="rcNumber"
+                            {...register('rcNumber', {
+                                required: 'RC Number is required',
                                 minLength: {
                                     value: 10,
                                     message: 'Min length is 10'
+                                },
+                                pattern: {
+                                    value: /^[A-Za-z0-9 ]+$/i,
+                                    message: 'Only Alphabelts/Number allowed'
                                 }
                             })}
                             value={formData.rcnumber}
@@ -143,9 +148,9 @@ const RegisteredForm = ({
                                 //setRcnumber(event?.target.value); //saving input to state
                             }}
                         />
-                        {/* <div className="errors">
+                        <div className="errors">
                             {errors.rc_number?.message}
-                        </div> */}
+                        </div>
                         <InputWrapper>
                             <Label>
                                 Enter your TIN <i>(optional)</i>{' '}
@@ -178,8 +183,12 @@ const RegisteredForm = ({
                                 {...register('bvn', {
                                     required: 'BVN is required',
                                     minLength: {
-                                        value: 10,
-                                        message: 'Min length is 10'
+                                        value: 11,
+                                        message: 'Min length is 11'
+                                    },
+                                    maxLength: {
+                                        value: 11,
+                                        message: 'Max length is 11'
                                     }
                                 })}
                                 value={formData.bvNumber}
@@ -408,13 +417,17 @@ const RegisteredForm = ({
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            onClick={action}
-                            type="submit"
-                            text={'Next'}
-                        />
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                onClick={action}
+                                type="submit"
+                                text={'Next'}
+                            />
+                        )}
                     </>
                 ) : null}
             </div>

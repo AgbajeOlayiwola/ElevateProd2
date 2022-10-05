@@ -43,7 +43,7 @@ const Langauges = () => {
             <div className={styles.selectCont}>
                 <div className={styles.selectCountry} onClick={displayLanguage}>
                     <p>{selectLanguage}</p>
-                    <img src="/../../Assets/Svgs/languageDropdown.svg" />
+                    <img src="/../../Assets/Svgs/dropdownSvg.svg" />
                 </div>
                 {languageState && (
                     <ul className={styles.selectOption}>

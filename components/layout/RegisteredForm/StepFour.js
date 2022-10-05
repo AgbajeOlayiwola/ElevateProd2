@@ -428,6 +428,18 @@ const StepFour = ({ title, action }) => {
                                                     <input
                                                         type="number"
                                                         placeholder="812 345 6789"
+                                                        {...register(
+                                                            'countryCode_number',
+                                                            {
+                                                                required:
+                                                                    'Country Code is required',
+                                                                minLength: {
+                                                                    value: 9,
+                                                                    message:
+                                                                        'Min length is 9'
+                                                                }
+                                                            }
+                                                        )}
                                                         value={phoneNumber}
                                                         onChange={(e) =>
                                                             setPhoneNumber(
@@ -613,6 +625,21 @@ const StepFour = ({ title, action }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Your RC Number"
+                                                name="rcNumber"
+                                                {...register('rcNumber', {
+                                                    required:
+                                                        'RC Number is required',
+                                                    minLength: {
+                                                        value: 10,
+                                                        message:
+                                                            'Min length is 10'
+                                                    },
+                                                    pattern: {
+                                                        value: /^[A-Za-z0-9 ]+$/i,
+                                                        message:
+                                                            'Only Alphabelts/Number allowed'
+                                                    }
+                                                })}
                                             />
                                         </div>
                                         <div
@@ -651,6 +678,18 @@ const StepFour = ({ title, action }) => {
                                                     <input
                                                         type="number"
                                                         placeholder="812 345 6789"
+                                                        {...register(
+                                                            'countryCode_number',
+                                                            {
+                                                                required:
+                                                                    'Country Code is required',
+                                                                minLength: {
+                                                                    value: 9,
+                                                                    message:
+                                                                        'Min length is 9'
+                                                                }
+                                                            }
+                                                        )}
                                                         // value={
                                                         //     accountDetails.phoneNumber
                                                         // }

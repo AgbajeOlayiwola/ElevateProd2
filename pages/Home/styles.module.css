@@ -690,6 +690,10 @@
     }
 }
 
+.slick-arrow {
+    display: none;
+}
+
 @media screen and (max-width: 1131px) {
     .firstSection .content {
         padding: 0px 36px;

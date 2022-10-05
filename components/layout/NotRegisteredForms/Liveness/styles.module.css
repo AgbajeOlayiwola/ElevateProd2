@@ -31,6 +31,13 @@
     height: 43vh;
     border: solid 20px #8a8888;
 }
+.errorInner{
+    overflow: hidden;
+    border-radius: 50%;
+    height: 43vh;
+    border: solid 20px red;
+} 
+
 .imageInnerActive {
     overflow: hidden;
     border-radius: 50%;

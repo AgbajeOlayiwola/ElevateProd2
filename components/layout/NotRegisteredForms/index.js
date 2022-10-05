@@ -247,9 +247,9 @@ const ProfileSetups = () => {
             ? (text =
                   'Input your BVN and open a Business Account in 3 minutes.')
             : page === 2
-            ? (text = 'Checkout Priceless opportunities Be ahead!')
+            ? (text = 'Checkout Priceless opportunities, Be ahead!')
             : page === 3
-            ? (text = 'Checkout Priceless opportunities Be ahead!')
+            ? (text = 'Checkout Priceless opportunities, Be ahead!')
             : null;
     }
     return (

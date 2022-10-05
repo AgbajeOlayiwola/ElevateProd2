@@ -16,6 +16,11 @@
     width: 100%;
     object-fit: scale-down;
 }
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: -1rem;
+}
 
 .sectionII {
     flex: 1;

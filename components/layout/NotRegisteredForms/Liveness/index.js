@@ -32,6 +32,7 @@ const Liveness = ({ action }) => {
     const [imgSrc, setImgSrc] = React.useState(null);
     const [succes, setSuccess] = useState('');
     const [imageSrcI, setImageSrcI] = React.useState(null);
+    const [error, setError] = React.useState('');
 
     const capture = React.useCallback(() => {
         const ImageSrcII = webcamRef.current.getScreenshot();
@@ -67,8 +68,9 @@ const Liveness = ({ action }) => {
                 setSuccess(response.data.message);
             })
             .catch((error) => {
-                console.log(error.response.data.statusCode);
+                console.log(error.response.data.message);
                 // setResErros(error.response.data.statusCode);
+                setError(error.response.data.message);
             });
     }, [webcamRef, setImgSrc, setImageSrcI]);
 
@@ -82,23 +84,22 @@ const Liveness = ({ action }) => {
                             Finish up with a clear photo of your face to verify
                             your identity.
                         </p>
+                        {error ? <p>{error}</p> : null}
                         <div
                             className={
                                 succes === 'facial verification successful'
                                     ? styles.imageOuter
+                                    : error
+                                    ? styles.errorInner
                                     : styles.imageInner
                             }
                         >
-                            {imageSrcI ? (
-                                <img src={imageSrcI} />
-                            ) : (
-                                <Webcam
-                                    audio={false}
-                                    screenshotFormat="image/jpeg"
-                                    videoConstraints={videoConstraints}
-                                    ref={webcamRef}
-                                />
-                            )}
+                            <Webcam
+                                audio={false}
+                                screenshotFormat="image/jpeg"
+                                videoConstraints={videoConstraints}
+                                ref={webcamRef}
+                            />
                         </div>
                     </div>
                 </div>
