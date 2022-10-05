@@ -277,7 +277,7 @@ const BillPayment = ({
                                         })}
                                     />
                                 </div>
-                                <button>Get Airtime</button>
+                                <button type="submit">Get Airtime</button>
                             </div>
                             <p className={styles.schedule}>
                                 Not paying now?{' '}

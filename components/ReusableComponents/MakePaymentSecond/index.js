@@ -194,7 +194,7 @@ const MakePaymentSecond = ({
                                 </div>
                                 <div className={styles.transactionsingle}>
                                     <p className={styles.transactionTitle}>
-                                        Beneficiary Bank
+                                        Platform
                                     </p>
                                     <h3>
                                         <span></span> {recieverBank}
