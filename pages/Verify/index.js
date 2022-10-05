@@ -39,7 +39,7 @@ const Verify = () => {
 
     return (
         <>
-            {res === 'Email verified successfully' ? (
+            {res === 'Email Successfully verified' ? (
                 <div className={styles.verifyCov}>
                     <div className={styles.body}>
                         <svg>

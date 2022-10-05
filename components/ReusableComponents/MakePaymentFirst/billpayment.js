@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import ArrowRightSvg from '../ReusableSvgComponents/ArrowRightSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
+import { getCookie, setCookie } from 'cookies-next';
 
 const BillPayment = ({
     action,
@@ -23,6 +24,7 @@ const BillPayment = ({
     dataAction
 }) => {
     const [network, setNetwork] = useState('MTN Nigeria');
+    const [networkData, setNetworkData] = useState({});
     const [activeBtn, setActiveBtn] = useState(false);
     const [billerCategories, setBillerCategories] = useState([]);
     const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
@@ -79,6 +81,8 @@ const BillPayment = ({
     useEffect(() => {
         if (airtimeNetwork !== null) {
             setAirtimeNetworkData(airtimeNetwork);
+            setCookie('Airtime', networkData);
+            console.log(networkData);
         }
     }, [airtimeNetwork]);
     const loadPlans = (e) => {
@@ -97,6 +101,10 @@ const BillPayment = ({
         'UTILITY',
         'Airtime and Data'
     ];
+    useEffect(() => {
+        const loginToken = getCookie('Airtime');
+        console.log(loginToken);
+    }, [networkData]);
     return (
         <div>
             {firstTitle === 'Bill Payment' ? (
@@ -188,6 +196,9 @@ const BillPayment = ({
                                                         onClick={() => {
                                                             setNetwork(
                                                                 networks.name
+                                                            );
+                                                            setNetworkData(
+                                                                networks
                                                             );
                                                         }}
                                                         key={index}

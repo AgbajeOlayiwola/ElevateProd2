@@ -12,10 +12,40 @@ import DirectorsSvg from '../../components/ReusableComponents/ReusableSvgCompone
 import SignatureRuleSvg from '../../components/ReusableComponents/ReusableSvgComponents/SignatureRuleSvg';
 import { useEffect } from 'react';
 import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadsetTransactionPin } from '../../redux/actions/actions';
 
 const AccountUpgrade = () => {
     const router = useRouter();
+    const { setTransactionPin, setTransactionPinError } = useSelector(
+        (state) => state.setTransactionPinReducer
+    );
 
+    const dispatch = useDispatch();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+
+    const onSubmit = (data) => {
+        console.log(data);
+        dispatch(loadsetTransactionPin(data));
+    };
+
+    const transactionPin = () => {
+        if (setTransactionPin !== null) {
+            alert('Transaction Pin Set');
+            setTitle('First');
+        } else if (setTransactionPinError !== null) {
+            console.log(setTransactionPinError);
+        }
+    };
+
+    useEffect(() => {
+        transactionPin();
+    }, [setTransactionPin, setTransactionPinError]);
     const [text, setText] = useState('Corporate');
     const [title, setTitle] = useState('First');
     const [director, setDirector] = useState(false);
@@ -31,6 +61,10 @@ const AccountUpgrade = () => {
                 icon: <AddressSvg />
             },
             {
+                title: 'Transaction Pin',
+                icon: <SignatureRuleSvg />
+            },
+            {
                 title: 'Upload Utility BIll',
                 icon: <BillSvg />
             },
@@ -43,6 +77,10 @@ const AccountUpgrade = () => {
             {
                 title: 'Documents',
                 icon: <AddressSvg />
+            },
+            {
+                title: 'Transaction Pin',
+                icon: <SignatureRuleSvg />
             },
             {
                 title: 'Upload Utility BIll',
@@ -700,6 +738,48 @@ const AccountUpgrade = () => {
                         </div>
                     </div>
                     <button>Send Invite</button>
+                </AccountUpgradeComponent>
+            );
+        case 'Transaction Pin':
+            return (
+                <AccountUpgradeComponent
+                    action={() => {
+                        setTitle('First');
+                    }}
+                    title="Transaction Pin"
+                >
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className={styles.documentBody}>
+                            <div className={styles.directorsGroup}>
+                                <label>Transaction Pin</label>
+                                <input
+                                    type="text"
+                                    name="transactionPin"
+                                    {...register('transactionPin', {
+                                        required: 'Transaction Pin is required',
+                                        minLength: {
+                                            value: 6,
+                                            message: 'Min length is 6'
+                                        },
+                                        maxLength: {
+                                            value: 6,
+                                            message: 'Max length is 6'
+                                        },
+                                        pattern: {
+                                            value: /^[0-9]/i,
+                                            message:
+                                                'Transaction Pin can only be number '
+                                        }
+                                    })}
+                                    placeholder="Enter Transaction Pin"
+                                />
+                                <p className={styles.error}>
+                                    {errors.transactionPin?.message}
+                                </p>
+                            </div>
+                        </div>
+                        <button type="submit">Submit</button>
+                    </form>
                 </AccountUpgradeComponent>
             );
     }

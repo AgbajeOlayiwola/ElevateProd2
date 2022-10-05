@@ -32,6 +32,7 @@ import {
     accountStatus,
     completeProfile,
     newUserCreateAccount,
+    setTransactionPin,
     getNewUserAccount,
     states,
     cardLogin,
@@ -129,9 +130,7 @@ export const loadAccountPrimary = () => (dispatch) => {
     dispatch(accountPrimaryLoadStart());
     axiosInstance
         .get(`${apiRoutes.accountPrimary}`)
-        .then((response) =>
-            dispatch(accountPrimaryLoadSuccess(response.data.data))
-        )
+        .then((response) => dispatch(accountPrimaryLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(accountPrimaryLoadError(error.response.data.message))
         );
@@ -319,6 +318,31 @@ export const loadbillerPlan = (code) => (dispatch) => {
         .catch((error) => dispatch(billerPlanLoadError(error.message)));
 };
 //country actions end
+
+//setTransactionPin actions
+export const setTransactionPinLoadStart = () => ({
+    type: setTransactionPin.SETTRANSACTIONPIN_LOAD_START
+});
+
+export const setTransactionPinLoadSuccess = (billers) => ({
+    type: setTransactionPin.SETTRANSACTIONPIN_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const setTransactionPinLoadError = (errorMessage) => ({
+    type: setTransactionPin.SETTRANSACTIONPIN_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadsetTransactionPin = (code) => (dispatch) => {
+    dispatch(setTransactionPinLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.setTransactionPin}`, code)
+        .then((response) =>
+            dispatch(setTransactionPinLoadSuccess(response.data))
+        )
+        .catch((error) => dispatch(setTransactionPinLoadError(error.message)));
+};
+//setTransactionPin actions end
 
 //languages action
 

@@ -12,6 +12,7 @@ import Image from 'next/image';
 import Overlay from '../../components/ReusableComponents/Overlay';
 import SchedulePayment from '../../components/ReusableComponents/Schedulepayment';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
+import { getCookie } from 'cookies-next';
 import {
     postAirtime,
     postInterBank,
@@ -25,7 +26,7 @@ import {
     getVerifyCurrency,
     getverifyBank,
     postBeneficiariesData,
-    loadbank
+    loadAccountPrimary
 } from '../../redux/actions/actions';
 import ChartDiv from './chartDivStyled';
 import ChartContent from './chartContentStyled';
@@ -42,6 +43,9 @@ const Payment = () => {
 
     const { airtime, errorMessageAirtime } = useSelector(
         (state) => state.airtimeReducer
+    );
+    const { accountPrimary, accountPrimaryError } = useSelector(
+        (state) => state.accountPrimaryReducer
     );
     const { bills, errorMessageBills } = useSelector(
         (state) => state.billsReducer
@@ -78,6 +82,7 @@ const Payment = () => {
 
     const dispatch = useDispatch();
     const [formType, setFormType] = useState('');
+    const [ecobank, setEcobank] = useState('true');
     const [overlay, setOverlay] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [count, setCount] = useState(0);
@@ -92,6 +97,24 @@ const Payment = () => {
     const [bill, setBill] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
     const [bank, setBank] = useState({});
+    let userProfile;
+    let userProfileData = {};
+    if (typeof window !== 'undefined') {
+        userProfile = window.localStorage.getItem('user');
+        userProfileData = JSON.parse(userProfile);
+    }
+    const loginToken = getCookie('Airtime');
+    console.log(loginToken);
+    useEffect(() => {
+        dispatch(loadAccountPrimary());
+    }, []);
+
+    useEffect(() => {
+        if (accountPrimary !== null) {
+            setSenderDetails(accountPrimary);
+            setBalance(accountPrimary.accountBalance);
+        }
+    }, [accountPrimary]);
     const interBankCheck = () => {
         if (interBank !== null) {
             console.log(interBank);
@@ -157,42 +180,6 @@ const Payment = () => {
     useEffect(() => {
         airtimeCheck();
     }, [airtime, errorMessageAirtime]);
-    const internalBankCheck = () => {
-        if (internalBank !== null) {
-            console.log(internalBank);
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setStatus('success');
-        } else if (errorMessageInternalBank !== null) {
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setError(errorMessageInternalBank);
-            setStatus(error);
-        }
-    };
-    useEffect(() => {
-        internalBankCheck();
-    }, [internalBank, errorMessageInternalBank]);
-
-    useEffect(() => {
-        dispatch(getBalanceEnquiry());
-    }, []);
-
-    useEffect(() => {
-        if (balanceEnquiry !== null) {
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'NGN',
-                currencyDisplay: 'narrowSymbol'
-            });
-            const formattedAmount = formatter.format(
-                balanceEnquiry[0].availableBalance
-            );
-            setBalance(formattedAmount);
-            setSenderDetails(balanceEnquiry[0]);
-        }
-    }, [balanceEnquiry]);
-
     useEffect(() => {
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
@@ -379,12 +366,17 @@ const Payment = () => {
                                 buttonText="Next"
                                 othersaction={(data) => {
                                     if (data.bankName !== 'Ecobank') {
-                                        const enquiry = {
+                                        setEcobank(false);
+
+                                        const interCheckDetails = {
                                             destinationBankCode: data.bankName,
-                                            beneficiaryAccountNo:
-                                                data.accountNumber
+                                            accountNo: data.accountNumber
                                         };
-                                        dispatch(postInterBankEnquiry(enquiry));
+                                        dispatch(
+                                            postInterBankEnquiry(
+                                                interCheckDetails
+                                            )
+                                        );
                                     }
 
                                     console.log(data);
@@ -406,7 +398,7 @@ const Payment = () => {
                                 sender={paymentDetails.accountName}
                                 recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
-                                transferAction={() => {
+                                transferAction={(data) => {
                                     setIsLoading(true);
                                     if (paymentDetails.bene === true) {
                                         const newBene = {
@@ -431,37 +423,27 @@ const Payment = () => {
                                             postBeneficiariesData(newBene)
                                         );
                                     }
-                                    if (paymentDetails.bankName === 'Ecobank') {
-                                        const paymentData = {
-                                            debitAccountNo:
-                                                senderDetails.accountNo,
-                                            debitAccountType: 'A',
-                                            creditAccountNo: '1382002892',
-                                            creditAccountType: 'A',
-                                            amount: paymentDetails.amount,
-                                            ccy: senderDetails.ccy
-                                        };
-                                        dispatch(postInternalBank(paymentData));
-                                    } else {
-                                        console.log(interEnquiry);
+                                    console.log(interEnquiry);
 
-                                        const paymentData = {
-                                            destinationBankCode:
-                                                paymentDetails.bankName,
-                                            senderAccountNo: '',
-                                            senderAccountType: 'A',
-                                            senderName: 'Aderohunmu Matthew',
-                                            senderPhone: '2348039219191',
-                                            beneficiaryAccountNo:
-                                                interEnquiry.accountNumber,
-                                            beneficiaryName:
-                                                interEnquiry.accountName,
-                                            narration: paymentDetails.narration,
-                                            amount: paymentDetails.amount,
-                                            ccy: senderDetails.ccy
-                                        };
-                                        dispatch(postInterBank(paymentData));
-                                    }
+                                    const paymentData = {
+                                        isEcobankToEcobankTransaction: ecobank,
+                                        destinationBank:
+                                            paymentDetails.bankName,
+                                        destinationBankCode:
+                                            paymentDetails.bankName,
+                                        beneficiaryName: 'Aderohunmu Matthew',
+                                        destinationAccountNo:
+                                            paymentDetails.accountNumber,
+                                        transactionAmount: 10,
+                                        narration: paymentDetails.narration,
+                                        transactionPin: Object.values(data)
+                                            .toString()
+                                            .replaceAll(',', ''),
+                                        accountId: senderDetails.accountId
+                                    };
+                                    console.log(paymentData);
+
+                                    dispatch(postInterBank(paymentData));
                                 }}
                             />
                         );
@@ -660,27 +642,25 @@ const Payment = () => {
                                     setCount(count + 1);
                                     setPaymentDetails(data);
                                     console.log(data);
-                                    // const billerdata = {
-                                    //     amount: '100.00',
-                                    //     ccy: 'NGN',
-                                    //     billerCode: 'Glo TOPUP',
-                                    //     billerID: '3280',
-                                    //     sourceAccount: '8100467021',
-                                    //     sourceAccountType: 'X',
-                                    //     productCode: 'GLO-ANY',
-                                    //     mobileNo: '2348111380591',
-                                    //     formDataValue: [
-                                    //         {
-                                    //             fieldName: 'BEN_PHONE_NO',
-                                    //             fieldValue: '2348111380591',
-                                    //             dataType: 'string'
-                                    //         }
-                                    //     ],
-                                    //     beneficiaryName: 'optional',
-                                    //     paymentDescription: 'optional'
-                                    // };
+                                    const billerdata = {
+                                        amount: 100,
+                                        accountId: string,
+                                        billerCode: 'Glo TOPUP',
+                                        billerId: 3280,
+                                        productCode: GLO - ANY,
+                                        mobileNo: 2348111380591,
+                                        formDataValue: [
+                                            {
+                                                fieldName: BEN_PHONE_NO,
+                                                fieldValue: 2348111380591,
+                                                dataType: string
+                                            }
+                                        ],
+                                        beneficiaryName: optional,
+                                        paymentDescription: optional
+                                    };
 
-                                    // dispatch(postAirtime(billerdata));
+                                    dispatch(postAirtime(billerdata));
                                 }}
                                 // scheduleLater={() => {
                                 //     setCount(count + 3);

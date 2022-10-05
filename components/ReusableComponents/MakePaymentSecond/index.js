@@ -6,6 +6,7 @@ import Overlay from '../Overlay';
 import Loader from '../Loader';
 import ConfirmLockSvg from '../ReusableSvgComponents/ConfirmLockSvg';
 import CloseButton from '../CloseButtonSvg';
+import { useForm } from 'react-hook-form';
 const numOfFields = 6;
 
 const useSSNFields = () => {
@@ -70,6 +71,11 @@ const MakePaymentSecond = ({
         setNewAmount(formattedAmount);
     }, []);
     const { handleChange } = useSSNFields();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
     return (
         <Overlay overlay={overlay}>
             {title === 'Bills Payment' ? (
@@ -310,54 +316,65 @@ const MakePaymentSecond = ({
                             </div>
                             <h4>Enter Transaction Pin</h4>
                             <div className={styles.otpInps}>
-                                <input
-                                    type="password"
-                                    name="ssn-1"
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-2"
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-3"
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-4"
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-5"
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-6"
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
+                                <form onSubmit={handleSubmit(transferAction)}>
+                                    <input
+                                        type="password"
+                                        name="ssn-1"
+                                        {...register('ssn-1')}
+                                        maxLength={1}
+                                        onChange={handleChange}
+                                    />
+                                    <input
+                                        type="password"
+                                        name="ssn-2"
+                                        {...register('ssn-2')}
+                                        maxLength={1}
+                                        onChange={handleChange}
+                                    />
+                                    <input
+                                        type="password"
+                                        name="ssn-3"
+                                        {...register('ssn-3')}
+                                        maxLength={1}
+                                        onChange={handleChange}
+                                    />
+                                    <input
+                                        type="password"
+                                        name="ssn-4"
+                                        {...register('ssn-4')}
+                                        maxLength={1}
+                                        onChange={handleChange}
+                                    />
+                                    <input
+                                        type="password"
+                                        name="ssn-5"
+                                        {...register('ssn-5')}
+                                        maxLength={1}
+                                        onChange={handleChange}
+                                    />
+                                    <input
+                                        type="password"
+                                        name="ssn-6"
+                                        {...register('ssn-6')}
+                                        maxLength={1}
+                                        onChange={handleChange}
+                                    />
+                                    {isLoading ? (
+                                        <Loader />
+                                    ) : (
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            text="Make Transfer"
+                                            type="submit"
+                                        />
+                                    )}
+                                </form>
                             </div>
-                            {isLoading ? (
-                                <Loader />
-                            ) : (
-                                <ButtonComp
-                                    disabled={activeBtn}
-                                    active={activeBtn ? 'active' : 'inactive'}
-                                    text="Make Transfer"
-                                    type="submit"
-                                    onClick={transferAction}
-                                />
-                            )}
                         </div>
                     </div>
                 </div>
