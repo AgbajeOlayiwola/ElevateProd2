@@ -23,9 +23,6 @@ import {
     uploadRefFormData
 } from '../../redux/actions/actions';
 
-const AccountUpgrade = () => {
-    const router = useRouter();
-    const dispatch = useDispatch();
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadsetTransactionPin } from '../../redux/actions/actions';
@@ -290,25 +287,25 @@ const AccountUpgrade = () => {
             }
         ]
     };
-    const { states } = useSelector((state) => state.statesReducer);
-    const newStates = () => {
-        if (states !== null) {
-            setLocation(states);
-        }
-    };
-    useEffect(() => {
-        dispatch(statesData());
-    }, []);
-    useEffect(() => {
-        newStates();
-    }, [states]);
-    useEffect(() => {
-        location?.filter((item) => {
-            if (item.state === localState) {
-                setLocalGovernment(item.localGoverment);
-            }
-        });
-    }, [localState]);
+    // const { states } = useSelector((state) => state.statesReducer);
+    // const newStates = () => {
+    //     if (states !== null) {
+    //         setLocation(states);
+    //     }
+    // };
+    // useEffect(() => {
+    //     dispatch(statesData());
+    // }, []);
+    // useEffect(() => {
+    //     newStates();
+    // }, [states]);
+    // useEffect(() => {
+    //     location?.filter((item) => {
+    //         if (item.state === localState) {
+    //             setLocalGovernment(item.localGoverment);
+    //         }
+    //     });
+    // }, [localState]);
     switch (title) {
         case 'First':
             return (
