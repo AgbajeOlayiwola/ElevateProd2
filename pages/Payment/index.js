@@ -180,11 +180,17 @@ const Payment = () => {
     useEffect(() => {
         airtimeCheck();
     }, [airtime, errorMessageAirtime]);
-    useEffect(() => {
+    const interBankEnquiryCheck = () => {
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
+            setCount(count + 1);
+            setIsLoading(false);
         }
+    };
+    useEffect(() => {
+        interBankEnquiryCheck();
     }, [interBankEnquiry]);
+    console.log(interBankEnquiry);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -362,26 +368,33 @@ const Payment = () => {
                             <MakePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Single Transfer Payment"
+                                isLoading={isLoading}
                                 closeAction={handleClose}
                                 buttonText="Next"
                                 othersaction={(data) => {
-                                    if (data.bankName !== 'Ecobank') {
-                                        setEcobank(false);
+                                    setIsLoading(true);
+                                    if (data.bankName === 'Ecobank') {
+                                        setEcobank(true);
 
                                         const interCheckDetails = {
-                                            destinationBankCode: data.bankName,
-                                            accountNo: data.accountNumber
+                                            accountNumber: data.accountNumber
                                         };
                                         dispatch(
                                             postInterBankEnquiry(
                                                 interCheckDetails
                                             )
                                         );
+                                    } else {
+                                        setEcobank(false);
+                                        setInterEnquiry({
+                                            accountName: 'Akinfe Temitope'
+                                        });
+                                        setIsLoading(false);
+                                        setCount(count + 1);
                                     }
 
                                     console.log(data);
                                     setPaymentDetails(data);
-                                    setCount(count + 1);
                                 }}
                                 scheduleLater={() => {
                                     setCount(count + 4);
@@ -394,7 +407,7 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 isLoading={isLoading}
                                 amount={paymentDetails.amount}
-                                recieverName={paymentDetails.accountNumber}
+                                recieverName={interEnquiry.accountName}
                                 sender={paymentDetails.accountName}
                                 recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
@@ -441,7 +454,6 @@ const Payment = () => {
                                             .replaceAll(',', ''),
                                         accountId: senderDetails.accountId
                                     };
-                                    console.log(paymentData);
 
                                     dispatch(postInterBank(paymentData));
                                 }}
@@ -460,7 +472,7 @@ const Payment = () => {
                                 }}
                                 title="Single Transfer Payment"
                                 amount={paymentDetails.amount}
-                                beneName={paymentDetails.accountNumber}
+                                beneName={interEnquiry.accountName}
                                 repeatAction={() => {
                                     setCount(count + 1);
                                 }}

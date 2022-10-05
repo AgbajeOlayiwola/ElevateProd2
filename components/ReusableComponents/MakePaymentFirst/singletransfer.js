@@ -10,12 +10,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Beneficiary from '../Beneficiary';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
+import Loader from '../Loader';
 
 const SingleTransfer = ({
     othersaction,
     firstTitle,
     buttonText,
-    scheduleLater
+    scheduleLater,
+    isLoading
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);
@@ -107,7 +109,10 @@ const SingleTransfer = ({
                         <option value="Ecobank">Ecobank</option>
                         {bank?.map((bank, index) => {
                             return (
-                                <option value={bank.institutionId} key={index}>
+                                <option
+                                    value={bank.institutionName}
+                                    key={index}
+                                >
                                     {bank.institutionName}
                                 </option>
                             );
@@ -171,13 +176,16 @@ const SingleTransfer = ({
                     </label>
                     <p>Save Beneficiary</p>
                 </div>
-
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    text={buttonText}
-                    type="submit"
-                />
+                {isLoading ? (
+                    <Loader />
+                ) : (
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        text={buttonText}
+                        type="submit"
+                    />
+                )}
                 <p className={styles.schedule}>
                     Not paying now?{' '}
                     <span onClick={scheduleLater}>Schedule for Later</span>

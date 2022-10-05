@@ -494,7 +494,9 @@ export const postInterBank = (data) => (dispatch) => {
     axiosInstance
         .post(`${apiRoutes.interBank}`, data)
         .then((response) => dispatch(interBankLoadSuccess(response.data)))
-        .catch((error) => dispatch(interBankLoadError(error.message)));
+        .catch((error) =>
+            dispatch(interBankLoadError(error.response.data.message))
+        );
 };
 
 //interBank action end
