@@ -36,12 +36,12 @@ import styles from './styles.module.css';
 const Profile = () => {
     const [type, setType] = useState('Account');
     const [overlay, setOverlay] = useState(false);
-    const [text, setText] = useState('Edit Profile');
+    const [text, setText] = useState('View Profile');
     const [count, setCount] = useState(0);
     const [outType, setOutType] = useState();
     const profileData = [
         {
-            text: 'Edit Profile',
+            text: 'View Profile',
             icon: <EditProfileSvg />,
             color: '#7A7978'
         },
@@ -142,25 +142,30 @@ const Profile = () => {
             countryNames = JSON.parse(countryName);
         }
     }
+    let userProfile;
+    let userProfileData = {};
+    if (typeof window !== 'undefined') {
+        userProfile = window.localStorage.getItem('user');
+        userProfileData = JSON.parse(userProfile);
+    }
     // console.log(countryNames.flags.svg);
     const types = (type) => {
         setOutType(type);
     };
     const renderForm = () => {
         switch (text) {
-            case 'Edit Profile':
+            case 'View Profile':
                 switch (count) {
                     case 0:
                         return (
                             <>
-                                <h2 className={styles.title}>Edit Profile</h2>
+                                <h2 className={styles.title}>View Profile</h2>
                                 <div className={styles.profileBodyHead}>
                                     <div className={styles.profileBodyHeadImg}>
                                         <Image
-                                            src="/Assets/Images/profileImg.png"
+                                            src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
                                             width="100%"
                                             height="100%"
-                                            layout="responsive"
                                         />
                                     </div>
                                     <div className={styles.groupForm}>
@@ -169,6 +174,7 @@ const Profile = () => {
                                             <InputTag
                                                 type="text"
                                                 placeholder="Babatune Abiodun"
+                                                value={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
                                             />
                                         </div>
                                         <div className={styles.formGroup}>
@@ -176,6 +182,7 @@ const Profile = () => {
                                             <InputTag
                                                 type="email"
                                                 placeholder="babatuneabiodun@gmail.com"
+                                                value={userProfileData.email}
                                             />
                                         </div>
                                         <div className={styles.formGroup}>
@@ -214,14 +221,12 @@ const Profile = () => {
                                                     <InputTag
                                                         type="number"
                                                         placeholder="812 345 6789"
+                                                        value={
+                                                            userProfileData.phoneNumber
+                                                        }
                                                     />
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div
-                                            className={styles.profileBodyButton}
-                                        >
-                                            <button>Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
@@ -868,15 +873,14 @@ const Profile = () => {
                         <div className={styles.profileHeaderHead}>
                             <div className={styles.profileHeaderImg}>
                                 <Image
-                                    src="/Assets/Images/profileImg.png"
+                                    src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
                                     width="100%"
                                     height="100%"
-                                    layout="responsive"
                                 />
                             </div>
                             <div className={styles.profileBodyHeaderCont}>
                                 <h2>Marvelous Solutions</h2>
-                                <p>Bayo Olatunji</p>
+                                <p>{`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}</p>
                             </div>
                         </div>
                         <div className={styles.subProfileHead}>

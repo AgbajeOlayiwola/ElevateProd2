@@ -385,10 +385,10 @@ export const airtimeLoadError = (errorMessageAirtime) => ({
     type: airtime.AIRTIME_LOAD_ERROR,
     payload: errorMessageAirtime
 });
-export const postAirtime = (billerdata) => (dispatch) => {
+export const postAirtime = (data) => (dispatch) => {
     dispatch(airtimeLoadStart());
     axiosInstance
-        .post(`${apiRoutes.airtime}`, billerdata)
+        .post(`${apiRoutes.airtime}`, data)
         .then((response) => dispatch(airtimeLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(airtimeLoadError(error.response.data.message))

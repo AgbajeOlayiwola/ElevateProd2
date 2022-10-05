@@ -79,13 +79,10 @@ const AccountUpgrade = () => {
     const [localGovernmane, setLocalGovernmment] = useState('');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState('');
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -282,7 +279,7 @@ const AccountUpgrade = () => {
                 title: 'SCUML Certificate'
             },
             {
-                title: 'MEMART'
+                title: 'MEMAT'
             }
         ]
     };
@@ -764,7 +761,7 @@ const AccountUpgrade = () => {
                     </div>
                     <div className={styles.documentSingle}>
                         <div className={styles.signatureGroup}>
-                            <p>Upload MEMART</p>
+                            <p>Upload MEMAT</p>
                             <div className={styles.signatureFormGroup}>
                                 <p>No file chosen...</p>
                                 <div>
@@ -983,14 +980,14 @@ const AccountUpgrade = () => {
                     </div>
                 </AccountUpgradeComponent>
             );
-        case 'MEMART':
+        case 'MEMAT':
             return (
                 <AccountUpgradeComponent
                     action={() => {
                         setTitle('First');
                         setDocument(false);
                     }}
-                    title="MEMART"
+                    title="MEMAT"
                 >
                     <div className={styles.documentBody}>
                         <div className={styles.signature}>

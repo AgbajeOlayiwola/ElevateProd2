@@ -12,6 +12,14 @@
     height: 50px;
 }
 
+.profileHeaderImg img {
+    border-radius: 50%;
+}
+
+.profileBodyHeadImg img {
+    border-radius: 50%;
+}
+
 .profileBodyHeaderCont {
     flex: 1;
     margin-left: 24px;
@@ -35,6 +43,7 @@
     line-height: 17px;
     color: #ffffff;
     margin: 0px;
+    text-transform: capitalize;
 }
 
 .saveBene {
