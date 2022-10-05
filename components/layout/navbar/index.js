@@ -7,6 +7,7 @@ import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg'
 import SearchButtonSvg from '../../ReusableComponents/ReusableSvgComponents/SearchButtonSvg';
 import CartSvg from '../../ReusableComponents/ReusableSvgComponents/CartSvg';
 import { FaBars } from 'react-icons/fa';
+import Image from 'next/image';
 
 const Navbar = ({
     page,
@@ -141,11 +142,13 @@ const Navbar = ({
                             </div>
                             <Link href="/Profile">
                                 <div>
-                                    <img
-                                        src="/Assets/Images/UserImage.png"
-                                        width="50"
-                                        height="50"
-                                    />
+                                    {userProfileData ? (
+                                        <Image
+                                            src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
+                                            width="50"
+                                            height="50"
+                                        />
+                                    ) : null}
                                 </div>
                             </Link>
                         </div>

@@ -27,8 +27,8 @@ const ExistingMultiStep = () => {
                 {page === 1 ? (
                     <div className={styles.last}>
                         <p>
-                            Didn’t receive the email? Check your spam filter or
-                            <span onClick={handleClick}>Resend Mai</span>
+                            Didn’t receive the email? Check your spam filter or{' '}
+                            <span onClick={handleClick}>Resend Mail</span>
                         </p>
                     </div>
                 ) : null}

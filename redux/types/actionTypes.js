@@ -66,6 +66,16 @@ export const airtimeNetwork = {
 
 //AirtimeNetwork action type ends
 
+//setTransactionPin action types
+
+export const setTransactionPin = {
+    SETTRANSACTIONPIN_LOAD_START: 'SETTRANSACTIONPIN_LOAD_START',
+    SETTRANSACTIONPIN_LOAD_SUCCESS: 'SETTRANSACTIONPIN_LOAD_SUCCESS',
+    SETTRANSACTIONPIN_LOAD_ERROR: 'SETTRANSACTIONPIN_LOAD_ERROR'
+};
+
+//setTransactionPin action type ends
+
 //Bills action types
 
 export const bills = {

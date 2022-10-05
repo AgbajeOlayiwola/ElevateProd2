@@ -150,18 +150,21 @@ const Dashboard = () => {
         cssEase: 'linear'
     };
     const { accountPrimary, accountPrimaryError } = useSelector(
-        (state) => state.accountStatusReducer
+        (state) => state.accountPrimaryReducer
     );
 
     useEffect(() => {
         dispatch(loadAccountPrimary());
-        if (accountPrimary) {
+    }, []);
+
+    useEffect(() => {
+        if (accountPrimary !== null) {
             setAcctNumber(accountPrimary);
         } else {
             setAcctNumber('Pending');
         }
     }, [accountPrimary]);
-    // console.log(accountStatus.data.accountNumber);
+    console.log(accountPrimary);
     return (
         <DashLayout page="Dashboard">
             <Levelup />
@@ -262,7 +265,7 @@ const Dashboard = () => {
                                                 Account Number
                                             </p>
                                             <p className={styles.accountNumber}>
-                                                {acctNumber}
+                                                {acctNumber.accountNumber}
                                             </p>
                                         </div>
                                     </div>

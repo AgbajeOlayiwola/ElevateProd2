@@ -10,10 +10,11 @@ const airtimeNetwork = '/payment/airtime-topup/networks';
 const bills = '/payments/bill-payment';
 const internalBank = '/transfer/internal-transfer';
 const interBank = '/payment/single-transfer';
-const interBankEnquiry = '/transfer/inter-bank-enquiry';
+const interBankEnquiry = '/bank-account/inter-bank/info';
 const balanceEnquiry = '/bank-account/balance';
 const accountPrimary = '/bank-account/primary';
 const transactionHistory = '/account/transaction';
+const setTransactionPin = '/account-upgrade/transaction-pin/set';
 const transactionElevate = '/account/transaction/ellevate';
 const bulkTransfer = '/payment/bulk-transfer';
 const verifyBank = '/transfer/international/validate-bank';
@@ -77,6 +78,7 @@ export default {
     login,
     newProfileSetup,
     transactionHistory,
+    setTransactionPin,
     transactionElevate,
     verifyBank,
     verifyCurrency,

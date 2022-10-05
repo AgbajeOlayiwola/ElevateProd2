@@ -125,12 +125,16 @@ const RegisteredForm = ({
                         <FormInput
                             type="text"
                             placeholder="Your Business Registration number"
-                            name="rc_number"
-                            {...register('rc_number', {
-                                required: 'BVN is required',
+                            name="rcNumber"
+                            {...register('rcNumber', {
+                                required: 'RC Number is required',
                                 minLength: {
                                     value: 10,
                                     message: 'Min length is 10'
+                                },
+                                pattern: {
+                                    value: /^[A-Za-z0-9 ]+$/i,
+                                    message: 'Only Alphabelts/Number allowed'
                                 }
                             })}
                             value={formData.rcnumber}
@@ -144,9 +148,9 @@ const RegisteredForm = ({
                                 //setRcnumber(event?.target.value); //saving input to state
                             }}
                         />
-                        {/* <div className="errors">
+                        <div className="errors">
                             {errors.rc_number?.message}
-                        </div> */}
+                        </div>
                         <InputWrapper>
                             <Label>
                                 Enter your TIN <i>(optional)</i>{' '}
@@ -179,8 +183,12 @@ const RegisteredForm = ({
                                 {...register('bvn', {
                                     required: 'BVN is required',
                                     minLength: {
-                                        value: 10,
-                                        message: 'Min length is 10'
+                                        value: 11,
+                                        message: 'Min length is 11'
+                                    },
+                                    maxLength: {
+                                        value: 11,
+                                        message: 'Max length is 11'
                                     }
                                 })}
                                 value={formData.bvNumber}

@@ -414,9 +414,9 @@ const HomeMain = () => {
         autoplay: true,
         autoplaySpeed: 2000,
         speed: 500,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        cssEase: 'linear'
+        dots: false,
+        cssEase: 'linear',
+        arrows: false
     };
     return (
         <div className={styles.homeBody}>

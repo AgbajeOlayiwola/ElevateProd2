@@ -48,7 +48,8 @@ import shareRefReducer from './shareRefferenceForm.reducer';
 import uploadRefReducer from './uploadrefform.reducer';
 import uploadBoardResReducer from './boardresolution.reducer';
 import cacUploadReducer from './cac.reducer';
-import accountPrimary from './accountPrimary.reducer';
+import accountPrimaryReducer from './accountPrimary.reducer';
+import setTransactionPinReducer from './setTransactionPin.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -101,7 +102,8 @@ const rootReducer = combineReducers({
     uploadRefReducer: uploadRefReducer,
     uploadBoardResReducer: uploadBoardResReducer,
     cacUploadReducer: cacUploadReducer,
-    accountPrimary: accountPrimary,
+    accountPrimaryReducer: accountPrimaryReducer,
+    setTransactionPinReducer: setTransactionPinReducer,
     userProfileReducer: userProfileReducer
 });
 
