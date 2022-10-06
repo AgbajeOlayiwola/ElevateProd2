@@ -211,7 +211,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         console.log(compBusprofile);
 
         if (
-            compBusprofile === 'Success'
+            compBusprofile.message === 'Successful'
             // ||
             // comperrorMessage.response.data.message ===
             // 'your have already setup your business'
@@ -240,10 +240,10 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
     useEffect(() => {
-        console.log(comperrorMessage);
+        console.log(compBusprofile);
 
         if (
-            compBusprofile === 'Success'
+            compBusprofile.message === 'Successful'
             // ||
             // comperrorMessage.response.data.message ===
             //     'your have already setup your business'
