@@ -59,7 +59,10 @@ const SingleTransfer = ({
                         beneficiaries.beneficiaries?.map(
                             (beneficiaries, index) => {
                                 return (
-                                    <div className={styles.beneficiarySingle}>
+                                    <div
+                                        key={index}
+                                        className={styles.beneficiarySingle}
+                                    >
                                         <BeneficiaryAvatarSvg />
                                         <p className={styles.name}>
                                             {beneficiaries.beneficiaryName}
