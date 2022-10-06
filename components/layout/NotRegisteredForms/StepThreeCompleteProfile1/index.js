@@ -243,8 +243,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
         if (
             newAccount === 'Success' ||
-            comperrorMessage.response.data.message ===
-                'your have already setup your business'
+            // comperrorMessage.response.data.message ===
+            //     'your have already setup your business'
         ) {
             router.push('/Verify/CorportateAccount');
         }
