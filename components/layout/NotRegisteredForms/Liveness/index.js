@@ -28,7 +28,7 @@ const _base64ToArrayBuffer = (base64String) => {
 };
 const Liveness = ({ action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const webcamRef = React.useRef(null);
     const [imgSrc, setImgSrc] = React.useState(null);
     const [succes, setSuccess] = useState('');
@@ -36,7 +36,7 @@ const Liveness = ({ action }) => {
     const [error, setError] = React.useState('');
 
     const capture = React.useCallback(() => {
-        setLoading((prev) => !prev);
+        // setLoading((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
@@ -108,26 +108,23 @@ const Liveness = ({ action }) => {
                         </div>
                     </div>
                 </div>
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <ButtonComp
-                        onClick={
-                            succes === 'facial verification successful'
-                                ? action
-                                : capture
-                        }
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        type="submit"
-                        text={
-                            succes === 'facial verification successful'
-                                ? 'Success'
-                                : 'Snap'
-                        }
-                        // action={action}
-                    />
-                )}
+
+                <ButtonComp
+                    onClick={
+                        succes === 'facial verification successful'
+                            ? action
+                            : capture
+                    }
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    type="submit"
+                    text={
+                        succes === 'facial verification successful'
+                            ? 'Success'
+                            : 'Snap'
+                    }
+                    // action={action}
+                />
                 {/* {imageSrcI && <img src={imageSrcI} />} */}
                 {/* <div className={styles.matiButtonSetup}>
                     <mati-button
