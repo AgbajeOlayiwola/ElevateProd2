@@ -211,9 +211,10 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         console.log(comperrorMessage);
 
         if (
-            newAccount === 'Success' ||
-            comperrorMessage.response.data.message ===
-                'your have already setup your business'
+            newAccount === 'Success'
+            // ||
+            // comperrorMessage.response.data.message ===
+            // 'your have already setup your business'
         ) {
             router.push('/Verify/Account/loading');
         }
