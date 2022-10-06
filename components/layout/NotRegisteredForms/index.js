@@ -111,12 +111,17 @@ const ProfileSetups = () => {
         switch (page) {
             case 0:
                 return (
-                    <Liveness
-                        action={() => {
-                            setPage(page + 1);
-                        }}
-                        // action={handleSubmitt}
+                    <RegisteredForm
+                        errorM={errorM}
+                        errorI={errorI}
+                        formData={formData}
+                        bvnError={bvnError}
+                        setFormData={setFormData}
+                        action={handleSubmit}
+                        actionI={regsiteredBus}
+                        // action is supposed to be handleSubmit
                     />
+                    // <StepTwoBVNAuthenticator />
                 );
             case 1:
                 return (
