@@ -262,9 +262,9 @@ const HomeMain = () => {
                                         className={styles.passwordInput}
                                         maxLength="3"
                                         type="password"
-                                        {...register('cvv', {
-                                            required: 'CVV is Required'
-                                        })}
+                                        // {...register('cvv', {
+                                        //     required: 'CVV is Required'
+                                        // })}
                                         onChange={(e) => setCVV(e.target.value)}
                                         value={cvv}
                                         name="cvv"
@@ -386,6 +386,7 @@ const HomeMain = () => {
                 );
                 router.push('/Onboarding/ExistingProfileSetup');
             }
+            setError(cardLoginerrorMessages);
         }
         console.log(accountNumbers);
     };
