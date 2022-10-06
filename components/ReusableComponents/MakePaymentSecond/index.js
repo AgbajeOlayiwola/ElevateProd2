@@ -7,6 +7,7 @@ import Loader from '../Loader';
 import ConfirmLockSvg from '../ReusableSvgComponents/ConfirmLockSvg';
 import CloseButton from '../CloseButtonSvg';
 import { useForm } from 'react-hook-form';
+import ArrowBackSvg from '../ArrowBackSvg';
 const numOfFields = 6;
 
 const useSSNFields = () => {
@@ -57,7 +58,8 @@ const MakePaymentSecond = ({
     refNuber,
     number,
     isLoading,
-    closeAction
+    closeAction,
+    backAction
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [newAmount, setNewAmount] = useState('');
@@ -80,12 +82,17 @@ const MakePaymentSecond = ({
         <Overlay overlay={overlay}>
             <div>
                 <div className={styles.PaymentSecond}>
-                    <div className={styles.closeCont}>
-                        <CloseButton
-                            color="#A5A5A5"
-                            classes={styles.closeBtn}
-                            action={closeAction}
-                        />
+                    <div className={styles.icons}>
+                        <div className={styles.backIcon}>
+                            <ArrowBackSvg color="#102572" action={backAction} />
+                        </div>
+                        <div className={styles.closeCont}>
+                            <CloseButton
+                                color="#A5A5A5"
+                                classes={styles.closeBtn}
+                                action={closeAction}
+                            />
+                        </div>
                     </div>
                     <div className={styles.PaymentSecondCont}>
                         <div className={styles.svgLock}>
@@ -202,12 +209,6 @@ const MakePaymentSecond = ({
                                 </div>
                                 <div className={styles.transactionsingle}>
                                     <p className={styles.transactionTitle}>
-                                        Charges
-                                    </p>
-                                    <h3>N50.50</h3>
-                                </div>
-                                <div className={styles.transactionsingle}>
-                                    <p className={styles.transactionTitle}>
                                         From
                                     </p>
                                     <h3>{sender}</h3>
@@ -229,12 +230,15 @@ const MakePaymentSecond = ({
                                         <span></span> {recieverBank}
                                     </h3>
                                 </div>
-                                <div className={styles.transactionsingle}>
-                                    <p className={styles.transactionTitle}>
-                                        Charges
-                                    </p>
-                                    <h3>N50.50</h3>
-                                </div>
+                                {recieverBank === 'Ecobank' ? null : (
+                                    <div className={styles.transactionsingle}>
+                                        <p className={styles.transactionTitle}>
+                                            Charges
+                                        </p>
+                                        <h3>N50.50</h3>
+                                    </div>
+                                )}
+
                                 <div className={styles.transactionsingle}>
                                     <p className={styles.transactionTitle}>
                                         From
@@ -244,8 +248,8 @@ const MakePaymentSecond = ({
                             </div>
                         )}
                         <h4>Enter Transaction Pin</h4>
-                        <div className={styles.otpInps}>
-                            <form onSubmit={handleSubmit(transferAction)}>
+                        <form onSubmit={handleSubmit(transferAction)}>
+                            <div className={styles.otpInps}>
                                 <input
                                     type="password"
                                     name="ssn-1"
@@ -288,20 +292,18 @@ const MakePaymentSecond = ({
                                     maxLength={1}
                                     onChange={handleChange}
                                 />
-                                {isLoading ? (
-                                    <Loader />
-                                ) : (
-                                    <ButtonComp
-                                        disabled={activeBtn}
-                                        active={
-                                            activeBtn ? 'active' : 'inactive'
-                                        }
-                                        text="Make Transfer"
-                                        type="submit"
-                                    />
-                                )}
-                            </form>
-                        </div>
+                            </div>
+                            {isLoading ? (
+                                <Loader />
+                            ) : (
+                                <ButtonComp
+                                    disabled={activeBtn}
+                                    active={activeBtn ? 'active' : 'inactive'}
+                                    text="Make Transfer"
+                                    type="submit"
+                                />
+                            )}
+                        </form>
                     </div>
                 </div>
             </div>

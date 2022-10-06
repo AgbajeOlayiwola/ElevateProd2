@@ -7,17 +7,23 @@ import { ButtonComp } from '../../../components';
 
 const ExistingSuccess = ({ handleShowSuccessStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
-    let accountDetails;
-    let accountNumber;
-    if (typeof window !== 'undefined') {
-        accountDetails = window.localStorage.getItem('accountNumber');
-        if (accountDetails === null) {
-            accountNumber = '';
-        } else {
-            accountNumber = JSON.parse(accountDetails);
-        }
-    }
-
+    // let accountDetails;
+    // let accountNumber;
+    // if (typeof window !== 'undefined') {
+    //     accountDetails = window.localStorage.getItem('accountNumber');
+    //     if (accountDetails === null) {
+    //         accountNumber = '';
+    //     } else {
+    //         accountNumber = JSON.parse(accountDetails);
+    //     }
+    // }
+    const { bankAccounts, errorMessage } = useSelector(
+        (state) => state.bankAccountsReducer
+    );
+    useEffect(() => {
+        dispatch(bankAccountsData());
+        console.log(bankAccounts);
+    }, [bankAccounts]);
     return (
         <div className={styles.cover}>
             <>
@@ -29,13 +35,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                         Your Business account is ready!
                     </h2>
                     <h3>
-                        Your Account Number is{' '}
-                        <span>
-                            {' '}
-                            {accountNumber === undefined
-                                ? null
-                                : accountNumber.accountNumber}
-                        </span>
+                        Your Account Number is <span>{bankAccounts}</span>
                     </h3>
                     <Link href="/Dashboard">
                         <ButtonComp

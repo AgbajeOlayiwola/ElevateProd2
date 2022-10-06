@@ -8,6 +8,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
+import Loader from '../../../ReusableComponents/Loader';
 
 const videoConstraints = {
     width: 390,
@@ -27,7 +28,7 @@ const _base64ToArrayBuffer = (base64String) => {
 };
 const Liveness = ({ action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
-
+    const [loading, setLoading] = useState(false);
     const webcamRef = React.useRef(null);
     const [imgSrc, setImgSrc] = React.useState(null);
     const [succes, setSuccess] = useState('');
@@ -35,6 +36,7 @@ const Liveness = ({ action }) => {
     const [error, setError] = React.useState('');
 
     const capture = React.useCallback(() => {
+        setLoading((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
@@ -73,6 +75,9 @@ const Liveness = ({ action }) => {
                 setError(error.response.data.message);
             });
     }, [webcamRef, setImgSrc, setImageSrcI]);
+    useEffect(() => {
+        setLoading((prev) => !prev);
+    }, [webcamRef, setImgSrc, setImageSrcI]);
 
     return (
         <div className={styles.body}>
@@ -103,24 +108,26 @@ const Liveness = ({ action }) => {
                         </div>
                     </div>
                 </div>
-
-                <ButtonComp
-                    onClick={
-                        succes === 'facial verification successful'
-                            ? action
-                            : capture
-                    }
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    type="submit"
-                    text={
-                        succes === 'facial verification successful'
-                            ? 'Success'
-                            : 'Snap'
-                    }
-                    // action={action}
-                />
-
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <ButtonComp
+                        onClick={
+                            succes === 'facial verification successful'
+                                ? action
+                                : capture
+                        }
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        type="submit"
+                        text={
+                            succes === 'facial verification successful'
+                                ? 'Success'
+                                : 'Snap'
+                        }
+                        // action={action}
+                    />
+                )}
                 {/* {imageSrcI && <img src={imageSrcI} />} */}
                 {/* <div className={styles.matiButtonSetup}>
                     <mati-button

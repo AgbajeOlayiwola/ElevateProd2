@@ -88,48 +88,9 @@ const Profile = () => {
         }
     ];
     const bene = {
-        account: [
-            {
-                name: 'Ayomide James',
-                account: '1234567890 (Ecobank Plc)'
-            },
-            {
-                name: 'Ayomide James',
-                account: '1234567890 (Ecobank Plc)'
-            },
-            {
-                name: 'Ayomide James',
-                account: '1234567890 (Ecobank Plc)'
-            },
-            {
-                name: 'Ayomide James',
-                account: '1234567890 (Ecobank Plc)'
-            }
-        ],
-        airtime: [
-            {
-                name: 'Ayomide James',
-                account: '1234567890 (Ecobank Plc)'
-            },
-            {
-                name: 'Ayomide James',
-                account: '1234567890 (Ecobank Plc)'
-            }
-        ],
-        signatories: [
-            {
-                name: 'Ayomide James',
-                mail: 'ayomide0007@gmail.com'
-            },
-            {
-                name: 'Ayomide James',
-                mail: 'ayomide0007@gmail.com'
-            },
-            {
-                name: 'Ayomide James',
-                mail: 'ayomide0007@gmail.com'
-            }
-        ]
+        account: [],
+        airtime: [],
+        signatories: []
     };
     let countryName = '';
     let countryNames;
@@ -142,12 +103,18 @@ const Profile = () => {
             countryNames = JSON.parse(countryName);
         }
     }
-    let userProfile;
-    let userProfileData = {};
-    if (typeof window !== 'undefined') {
-        userProfile = window.localStorage.getItem('user');
-        userProfileData = JSON.parse(userProfile);
-    }
+    const [userProfile, setUserProfile] = useState();
+    const [userProfileData, setUserProfileData] = useState();
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setUserProfile(window.localStorage.getItem('user'));
+        }
+    }, []);
+    useEffect(() => {
+        if (userProfile !== undefined) {
+            setUserProfileData(JSON.parse(userProfile));
+        }
+    }, [userProfile]);
     // console.log(countryNames.flags.svg);
     const types = (type) => {
         setOutType(type);
@@ -155,272 +122,107 @@ const Profile = () => {
     const renderForm = () => {
         switch (text) {
             case 'View Profile':
-                switch (count) {
-                    case 0:
-                        return (
-                            <>
-                                <h2 className={styles.title}>View Profile</h2>
-                                <div className={styles.profileBodyHead}>
-                                    <div className={styles.profileBodyHeadImg}>
-                                        <Image
-                                            src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
-                                            width="100%"
-                                            height="100%"
-                                        />
-                                    </div>
-                                    <div className={styles.groupForm}>
-                                        <div className={styles.formGroup}>
-                                            <label>Full Name</label>
-                                            <InputTag
-                                                type="text"
-                                                placeholder="Babatune Abiodun"
-                                                value={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
-                                            />
-                                        </div>
-                                        <div className={styles.formGroup}>
-                                            <label>Email Address</label>
-                                            <InputTag
-                                                type="email"
-                                                placeholder="babatuneabiodun@gmail.com"
-                                                value={userProfileData.email}
-                                            />
-                                        </div>
-                                        <div className={styles.formGroup}>
-                                            <label>Phone Number</label>
-                                            <div className={styles.phone}>
-                                                <div
-                                                    className={
-                                                        styles.phoneHeader
-                                                    }
-                                                >
-                                                    <span>
-                                                        <img
-                                                            // src={
-                                                            // countryNames
-                                                            // .flags.svg
-                                                            // }
-                                                            alt=""
-                                                        />
-                                                    </span>
-                                                    <p>
-                                                        {
-                                                            // countryNames.baseCurrency
-                                                        }
-                                                    </p>
-                                                </div>
-                                                <div
-                                                    className={
-                                                        styles.phoneDetails
-                                                    }
-                                                >
-                                                    <p>
-                                                        {
-                                                            // countryNames.countryCode
-                                                        }
-                                                    </p>
-                                                    <InputTag
-                                                        type="number"
-                                                        placeholder="812 345 6789"
-                                                        value={
-                                                            userProfileData.phoneNumber
-                                                        }
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
-                        );
-                    // case 1:
-                    //     return <OtpForm overlay={overlay} />;
-                }
-
-            case 'Reset and Update PIN':
-                switch (count) {
-                    case 0:
-                        return (
-                            <ResetPin
-                                overlay={overlay}
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                title="Reset/Update Pin"
-                                label1="Enter New Transacntion  Pin (6-Digit)"
-                                label2="Confirm Transacntion  Pin (6-Digit)"
-                                formAction={() => setCount(count + 1)}
-                            />
-                        );
-                    case 1:
-                        return <OtpForm overlay={overlay} />;
-                }
-            case 'Manage Limit':
-                switch (count) {
-                    case 0:
-                        return (
-                            <>
-                                <h2 className={styles.title}>Manage Limit</h2>
-                                <div className={styles.manageLimitBody}>
-                                    <div className={styles.manageLimit}>
-                                        <label>Ecobank to Other Banks</label>
-                                        <div
-                                            className={styles.manageLimitSingle}
-                                        >
-                                            <div
-                                                className={
-                                                    styles.manageLimitSingleHead
-                                                }
-                                            >
-                                                <p>Sending (Per Transaction)</p>
-                                                <p>
-                                                    Receicing (Per Transaction)
-                                                </p>
-                                                <p>Daily Transfer Limit</p>
-                                            </div>
-                                            <div
-                                                className={
-                                                    styles.manageLimitSingleBody
-                                                }
-                                            >
-                                                <p>N1,000,000</p>
-                                                <p>Unlimited</p>
-                                                <p>N2,500,000</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.manageLimit}>
-                                        <label>Ecobank to Ecobank</label>
-                                        <div
-                                            className={styles.manageLimitSingle}
-                                        >
-                                            <div
-                                                className={
-                                                    styles.manageLimitSingleHead
-                                                }
-                                            >
-                                                <p>Sending (Per Transaction)</p>
-                                                <p>
-                                                    Receicing (Per Transaction)
-                                                </p>
-                                                <p>Daily Transfer Limit</p>
-                                            </div>
-                                            <div
-                                                className={
-                                                    styles.manageLimitSingleBody
-                                                }
-                                            >
-                                                <p>N1,000,000</p>
-                                                <p>Unlimited</p>
-                                                <p>N2,500,000</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.manageLimit}>
-                                        <label>Account Balance</label>
-                                        <div
-                                            className={styles.manageLimitSingle}
-                                        >
-                                            <div
-                                                className={
-                                                    styles.manageLimitSingleHead
-                                                }
-                                            >
-                                                <p>Maximum Balance </p>
-                                            </div>
-                                            <div
-                                                className={
-                                                    styles.manageLimitSingleBody
-                                                }
-                                            >
-                                                <p>Unlimited</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.manageLimit}>
-                                        <label>mPOS Payments</label>
-                                        <div
-                                            className={styles.manageLimitSingle}
-                                        >
-                                            <div
-                                                className={
-                                                    styles.manageLimitSingleHead
-                                                }
-                                            >
-                                                <p>Single</p>
-                                            </div>
-                                            <div
-                                                className={
-                                                    styles.manageLimitSingleBody
-                                                }
-                                            >
-                                                <p>N1,000,000</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.profileBodyButton}>
-                                        <button
-                                            onClick={() => {
-                                                setCount(count + 1);
-                                            }}
-                                        >
-                                            Update Transfer Limit
-                                        </button>
-                                    </div>
-                                </div>
-                            </>
-                        );
-                    case 1:
-                        return (
-                            <>
-                                <h2 className={styles.title}>
-                                    <span>
-                                        <ArrowBackSvg
-                                            action={() => {
-                                                setCount(count - 1);
-                                            }}
-                                        />
-                                    </span>
-                                    Update Transfer Limit
-                                </h2>
-                                <div className={styles.manageLimitImg}>
-                                    <div className={styles.img}>
-                                        <img
-                                            src="./Assets/Images/limitMoney.png"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <h3>
-                                        Update Daily Transfer Limit to other
-                                        Banks
-                                    </h3>
-                                    <h2>N2,500,000.00</h2>
-                                    <img
-                                        src="./Assets/Svgs/slider.svg"
-                                        alt=""
-                                        className={styles.slider}
+                return (
+                    <>
+                        <h2 className={styles.title}>View Profile</h2>
+                        <div className={styles.profileBodyHead}>
+                            <div className={styles.profileBodyHeadImg}>
+                                {!userProfileData ? null : (
+                                    <Image
+                                        src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
+                                        width="100%"
+                                        height="100%"
                                     />
-                                    <p>
-                                        Adjust the slider to the maximum
-                                        transfer limit you prefer.
-                                        <span>
-                                            Maximum Limit is N5,000,000.00
-                                        </span>
-                                    </p>
-                                    <div className={styles.manageLimitButton}>
-                                        <button
-                                            onClick={() => {
-                                                setCount(count - 1);
-                                            }}
-                                        >
-                                            Update Transfer Limit
-                                        </button>
+                                )}
+                            </div>
+                            <div className={styles.groupForm}>
+                                <div className={styles.formGroup}>
+                                    <label>Full Name</label>
+                                    <InputTag
+                                        type="text"
+                                        placeholder="Babatune Abiodun"
+                                        value={
+                                            !userProfileData
+                                                ? null
+                                                : `${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`
+                                        }
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Email Address</label>
+                                    <InputTag
+                                        type="email"
+                                        placeholder="babatuneabiodun@gmail.com"
+                                        value={
+                                            !userProfileData
+                                                ? null
+                                                : userProfileData.email
+                                        }
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Phone Number</label>
+                                    <div className={styles.phone}>
+                                        <div className={styles.phoneHeader}>
+                                            <span>
+                                                <img
+                                                    // src={
+                                                    // countryNames
+                                                    // .flags.svg
+                                                    // }
+                                                    alt=""
+                                                />
+                                            </span>
+                                            <p>
+                                                {
+                                                    // countryNames.baseCurrency
+                                                }
+                                            </p>
+                                        </div>
+                                        <div className={styles.phoneDetails}>
+                                            <p>
+                                                {
+                                                    // countryNames.countryCode
+                                                }
+                                            </p>
+                                            <InputTag
+                                                type="number"
+                                                placeholder="812 345 6789"
+                                                value={
+                                                    !userProfileData
+                                                        ? null
+                                                        : userProfileData.phoneNumber
+                                                }
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </>
-                        );
-                }
+                            </div>
+                        </div>
+                    </>
+                );
+            case 'Manage Limit':
+                return (
+                    <>
+                        <h2 className={styles.title}>Manage Limit</h2>
+                        <div className={styles.formGroup}>
+                            <label>Limit Type </label>
+                            <select>
+                                <option value="Mpos Limit">Mpos Limit</option>
+                                <option value="Transaction Limit">
+                                    Transaction Limit
+                                </option>
+                            </select>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Add Limit </label>
+                            <InputTag type="text" placeholder="Add Limit" />
+                        </div>
+                        <div className={styles.profileBody}>
+                            <button>Add Limit</button>
+                        </div>
+                    </>
+                );
 
             case 'Bank Verification Number (BVN)':
                 switch (count) {
@@ -508,15 +310,26 @@ const Profile = () => {
                                     </p>
                                 </div>
                                 <div className={styles.signBody}>
-                                    {bene.signatories?.map((sign, index) => {
-                                        return (
-                                            <ManageLimit
-                                                fname={sign.name}
-                                                mail={sign.mail}
-                                                key={index}
-                                            />
-                                        );
-                                    })}
+                                    {!bene.signatories.length ? (
+                                        <h2 className={styles.dontHave}>
+                                            You don't have signatories yet
+                                        </h2>
+                                    ) : (
+                                        <>
+                                            {bene.signatories?.map(
+                                                (sign, index) => {
+                                                    return (
+                                                        <ManageLimit
+                                                            fname={sign.name}
+                                                            mail={sign.mail}
+                                                            key={index}
+                                                        />
+                                                    );
+                                                }
+                                            )}
+                                        </>
+                                    )}
+
                                     <div className={styles.signButton}>
                                         <button
                                             onClick={() => {
@@ -538,6 +351,7 @@ const Profile = () => {
                                             action={() => {
                                                 setCount(count - 1);
                                             }}
+                                            color="#102572"
                                         />
                                     </span>
                                     Manage Signatory
@@ -605,16 +419,6 @@ const Profile = () => {
                                                 />
                                             </div>
                                         </div>
-                                        <div className={styles.midBeneForm}>
-                                            <div className={styles.formGroup}>
-                                                <label>Signing Mandate</label>
-                                                <select>
-                                                    <option value="">
-                                                        Select Signing Mandate
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div className={styles.signRights}>
@@ -622,6 +426,22 @@ const Profile = () => {
                                         Select sigining rights to be assigned to
                                         this user
                                     </p>
+                                    <div className={styles.signRightSingle}>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="toSign"
+                                                    value="To Sign"
+                                                />
+                                                <span>
+                                                    <CheckedSvg />
+                                                </span>
+                                            </label>
+
+                                            <p>To Sign</p>
+                                        </div>
+                                    </div>
                                     <div className={styles.signRightSingle}>
                                         <div>
                                             <label>
@@ -743,46 +563,64 @@ const Profile = () => {
                                     />
                                     <input
                                         type="text"
-                                        placeholder="Search Products"
+                                        placeholder="Search Beneficiaries"
                                     />
                                 </div>
                                 <div className={styles.beneficiaryBody}>
                                     {type === 'Account' ? (
                                         <>
-                                            <p className={styles.text}>A</p>
-                                            {bene.account?.map(
-                                                (account, index) => {
-                                                    return (
-                                                        <ManageBeneSingle
-                                                            beneAccount={
-                                                                account.account
-                                                            }
-                                                            beneName={
-                                                                account.name
-                                                            }
-                                                            key={index}
-                                                        />
-                                                    );
-                                                }
+                                            {/* <p className={styles.text}>A</p> */}
+                                            {!bene.account.length ? (
+                                                <h2 className={styles.dontHave}>
+                                                    You don't have any
+                                                    Beneficiary at the moment
+                                                </h2>
+                                            ) : (
+                                                <>
+                                                    {bene.account?.map(
+                                                        (account, index) => {
+                                                            return (
+                                                                <ManageBeneSingle
+                                                                    beneAccount={
+                                                                        account.account
+                                                                    }
+                                                                    beneName={
+                                                                        account.name
+                                                                    }
+                                                                    key={index}
+                                                                />
+                                                            );
+                                                        }
+                                                    )}
+                                                </>
                                             )}
                                         </>
                                     ) : type === 'Airtime' ? (
                                         <>
-                                            <p className={styles.text}>A</p>
-                                            {bene.airtime?.map(
-                                                (account, index) => {
-                                                    return (
-                                                        <ManageBeneSingle
-                                                            beneAccount={
-                                                                account.account
-                                                            }
-                                                            beneName={
-                                                                account.name
-                                                            }
-                                                            key={index}
-                                                        />
-                                                    );
-                                                }
+                                            {/* <p className={styles.text}>A</p> */}
+                                            {!bene.airtime.length ? (
+                                                <h2 className={styles.dontHave}>
+                                                    You don't have any
+                                                    Beneficiary at the moment
+                                                </h2>
+                                            ) : (
+                                                <>
+                                                    {bene.airtime?.map(
+                                                        (account, index) => {
+                                                            return (
+                                                                <ManageBeneSingle
+                                                                    beneAccount={
+                                                                        account.account
+                                                                    }
+                                                                    beneName={
+                                                                        account.name
+                                                                    }
+                                                                    key={index}
+                                                                />
+                                                            );
+                                                        }
+                                                    )}
+                                                </>
                                             )}
                                         </>
                                     ) : null}
@@ -799,6 +637,7 @@ const Profile = () => {
                                                 action={() => {
                                                     setCount(count - 1);
                                                 }}
+                                                color="#102572"
                                             />
                                         </span>
                                         Manage Beneficiaries
@@ -872,15 +711,21 @@ const Profile = () => {
                     <>
                         <div className={styles.profileHeaderHead}>
                             <div className={styles.profileHeaderImg}>
-                                <Image
-                                    src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
-                                    width="100%"
-                                    height="100%"
-                                />
+                                {!userProfileData ? null : (
+                                    <Image
+                                        src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
+                                        width="100%"
+                                        height="100%"
+                                    />
+                                )}
                             </div>
                             <div className={styles.profileBodyHeaderCont}>
                                 <h2>Marvelous Solutions</h2>
-                                <p>{`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}</p>
+                                <p>
+                                    {!userProfileData
+                                        ? null
+                                        : `${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
+                                </p>
                             </div>
                         </div>
                         <div className={styles.subProfileHead}>

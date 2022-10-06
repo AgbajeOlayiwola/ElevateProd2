@@ -51,6 +51,7 @@ import cacUploadReducer from './cac.reducer';
 import accountPrimaryReducer from './accountPrimary.reducer';
 import setTransactionPinReducer from './setTransactionPin.reducer';
 import fogrotPasswordReducer from './forgotpassword.reducer';
+import resetOtpReducer from './resetotp.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -87,7 +88,7 @@ const rootReducer = combineReducers({
     accountStatusReducer: accountStatusReducer,
     createAccountReducer: createAccountReducer,
     businessCategoriesReducer: businessCategoriesReducer,
-    completeBusProfile: completeBusinessprofileReducer,
+    completeBusProfileReducer: completeBusinessprofileReducer,
     newUserAccountDetails: getNewUserAccountReducer,
     statesReducer: statesReducer,
     cardLoginReducer: cardLoginReducer,
@@ -106,7 +107,8 @@ const rootReducer = combineReducers({
     accountPrimaryReducer: accountPrimaryReducer,
     setTransactionPinReducer: setTransactionPinReducer,
     userProfileReducer: userProfileReducer,
-    fogrotPasswordReducer: fogrotPasswordReducer
+    fogrotPasswordReducer: fogrotPasswordReducer,
+    resetOtpReducer: resetOtpReducer
 });
 
 export default rootReducer;

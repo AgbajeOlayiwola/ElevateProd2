@@ -27,6 +27,7 @@ const NewUser = ({ selectCountry }) => {
     const [outTyped, setOutTyped] = useState();
     const [activeBtn, setActiveBtn] = useState(true);
     const [passwordMatch, setPasswordMatch] = useState('');
+
     const { user, errorMessage } = useSelector((state) => state.registered);
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
@@ -138,7 +139,7 @@ const NewUser = ({ selectCountry }) => {
                                 message: 'Only Alphabelts allowed'
                             }
                         })}
-                        onChange={userName}
+                        onInput={userName}
                         value={preferredName}
                         placeholder="Preferred Name"
                     />
@@ -170,7 +171,7 @@ const NewUser = ({ selectCountry }) => {
                                 message: 'Invalid email address'
                             }
                         })}
-                        onChange={handleEmail}
+                        onInput={handleEmail}
                         value={email}
                         placeholder="Enter your Email"
                     />
@@ -184,7 +185,7 @@ const NewUser = ({ selectCountry }) => {
                         <input
                             type={outType ? 'text' : 'password'}
                             placeholder="Enter Password"
-                            onChange={handlePwd}
+                            onInput={handlePwd}
                         />
                         <Visbility typeSet={types} />
                     </div>

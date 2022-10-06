@@ -11,10 +11,11 @@ const LineChart = () => {
                 fill: true,
                 backgroundColor: 'rgba(75,192,192,0.1)',
                 borderColor: 'rgba(75,192,192,1)',
-                tension: 0.6
+                tension: 0.6,
+                label: 'Inflow'
             },
             {
-                label: false,
+                label: 'Outflow',
                 data: [150, 100, 150, 100, 150, 100],
                 fill: false,
                 borderColor: '#742774',
