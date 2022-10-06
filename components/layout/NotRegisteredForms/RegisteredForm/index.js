@@ -425,17 +425,14 @@ const RegisteredForm = ({
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
-                        {loading ? (
-                            <Loader />
-                        ) : (
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                onClick={action}
-                                type="submit"
-                                text={'Next'}
-                            />
-                        )}
+
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            onClick={action}
+                            type="submit"
+                            text={'Next'}
+                        />
                     </>
                 ) : null}
             </div>
