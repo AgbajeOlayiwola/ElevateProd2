@@ -242,7 +242,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         console.log(comperrorMessage);
 
         if (
-            newAccount === 'Success' ||
+            newAccount === 'Success'
+            // ||
             // comperrorMessage.response.data.message ===
             //     'your have already setup your business'
         ) {
