@@ -138,7 +138,7 @@ const NewUser = ({ selectCountry }) => {
                                 message: 'Only Alphabelts allowed'
                             }
                         })}
-                        onChange={userName}
+                        onInput={userName}
                         value={preferredName}
                         placeholder="Preferred Name"
                     />
@@ -170,7 +170,7 @@ const NewUser = ({ selectCountry }) => {
                                 message: 'Invalid email address'
                             }
                         })}
-                        onChange={handleEmail}
+                        onInput={handleEmail}
                         value={email}
                         placeholder="Enter your Email"
                     />
@@ -184,7 +184,7 @@ const NewUser = ({ selectCountry }) => {
                         <input
                             type={outType ? 'text' : 'password'}
                             placeholder="Enter Password"
-                            onChange={handlePwd}
+                            onInput={handlePwd}
                         />
                         <Visbility typeSet={types} />
                     </div>

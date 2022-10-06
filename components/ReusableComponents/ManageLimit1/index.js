@@ -81,7 +81,7 @@ const SignSingle = ({ mail, fname, index }) => {
             </div>
             <div className={styles.action}>
                 <div className={styles.status}></div>
-                <p>Signed</p>
+                <p>To sign</p>
                 <ThreeDotsSvg />
             </div>
         </div>

@@ -78,14 +78,17 @@
     width: 100%;
 }
 
-.subMenuLink p {
+.subMenuLink a {
+    margin: 0px;
+    display: block;
+    text-align: left;
     font-family: 'Inter', sans-serif;
     font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 300%;
-    color: #000000;
-    margin: 0px;
+    font-weight: 600;
+    font-size: 11px;
+    padding: 8px 0px;
+    line-height: 17px;
+    color: #878787;
 }
 
 .drops {

@@ -15,6 +15,7 @@ import styles from './styles.module.css';
 
 const Customer = () => {
     const [text, setText] = useState('Manage Cards');
+    const [pickupMode, setPickupMode] = useState('');
     const [type, setType] = useState('');
     const [count, setCount] = useState(0);
     const profileData = [
@@ -63,7 +64,7 @@ const Customer = () => {
                         return (
                             <>
                                 <h2 className={styles.title}>Manage Cards</h2>
-                                <div className={styles.profileBodyHead}>
+                                {/* <div className={styles.profileBodyHead}>
                                     <div className={styles.profileBodyHeadImg}>
                                         <Image
                                             src="/Assets/Images/profileImg.png"
@@ -96,18 +97,18 @@ const Customer = () => {
                                                     }
                                                 >
                                                     <span>
-                                                        {/* <img
+                                                        <img
                                                             src={
                                                                 countryNames
                                                                     .flags.svg
                                                             }
                                                             alt=""
-                                                        /> */}
+                                                        />
                                                     </span>
                                                     <p>
-                                                        {/* {
+                                                        {
                                                             countryNames.baseCurrency
-                                                        } */}
+                                                        }
                                                     </p>
                                                 </div>
                                                 <div
@@ -115,7 +116,7 @@ const Customer = () => {
                                                         styles.phoneDetails
                                                     }
                                                 >
-                                                    {/* <p>{countryNames.countryCode}</p> */}
+                                                    <p>{countryNames.countryCode}</p>
                                                     <input
                                                         type="number"
                                                         placeholder="812 345 6789"
@@ -129,7 +130,7 @@ const Customer = () => {
                                             <button>Save Changes</button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </>
                         );
                     // case 1:
@@ -215,27 +216,6 @@ const Customer = () => {
                                                         }
                                                     >
                                                         <label>
-                                                            Choose Cheque Book
-                                                            Type
-                                                        </label>
-                                                        <select name="" id="">
-                                                            <option value="">
-                                                                Select Type
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    className={
-                                                        styles.customerFormGroup
-                                                    }
-                                                >
-                                                    <div
-                                                        className={
-                                                            styles.formGroup
-                                                        }
-                                                    >
-                                                        <label>
                                                             Choose No. of Cheque
                                                             Book
                                                         </label>
@@ -243,21 +223,6 @@ const Customer = () => {
                                                             <option value="">
                                                                 Select No. of
                                                                 Cheque Book
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <div
-                                                        className={
-                                                            styles.formGroup
-                                                        }
-                                                    >
-                                                        <label>
-                                                            Choose Pickup Branch
-                                                        </label>
-                                                        <select name="" id="">
-                                                            <option value="">
-                                                                Select Pickup
-                                                                Branch
                                                             </option>
                                                         </select>
                                                     </div>
@@ -275,30 +240,76 @@ const Customer = () => {
                                                         <label>
                                                             Choose PickUp Mode
                                                         </label>
-                                                        <select name="" id="">
+                                                        <select
+                                                            name=""
+                                                            id=""
+                                                            onChange={(e) => {
+                                                                setPickupMode(
+                                                                    e.target
+                                                                        .value
+                                                                );
+                                                            }}
+                                                        >
                                                             <option value="">
                                                                 Select Pickup
                                                                 Mode
                                                             </option>
-                                                        </select>
-                                                    </div>
-                                                    <div
-                                                        className={
-                                                            styles.formGroup
-                                                        }
-                                                    >
-                                                        <label>
-                                                            Total Amount of
-                                                            Charge
-                                                        </label>
-                                                        <select name="" id="">
-                                                            <option value="">
-                                                                Select Amount of
-                                                                Charge
+                                                            <option value="In Branch">
+                                                                In Branch
+                                                            </option>
+                                                            <option value="Doorstep Delivery">
+                                                                Doorstep
+                                                                Delivery
                                                             </option>
                                                         </select>
                                                     </div>
+                                                    {pickupMode ===
+                                                    'Doorstep Delivery' ? (
+                                                        <div
+                                                            className={
+                                                                styles.formGroup
+                                                            }
+                                                        >
+                                                            <label>
+                                                                Total Amount of
+                                                                Charge
+                                                            </label>
+                                                            <select
+                                                                name=""
+                                                                id=""
+                                                            >
+                                                                <option value="">
+                                                                    Select
+                                                                    Amount of
+                                                                    Charge
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    ) : pickupMode ===
+                                                      'In Branch' ? (
+                                                        <div
+                                                            className={
+                                                                styles.formGroup
+                                                            }
+                                                        >
+                                                            <label>
+                                                                Choose Pickup
+                                                                Branch
+                                                            </label>
+                                                            <select
+                                                                name=""
+                                                                id=""
+                                                            >
+                                                                <option value="">
+                                                                    Select
+                                                                    Pickup
+                                                                    Branch
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    ) : null}
                                                 </div>
+
                                                 <div
                                                     className={
                                                         styles.profileBodyButton
