@@ -17,7 +17,7 @@ const Innersubnav = ({ item, subNav }) => {
                           return (
                               <div className={styles.subMenuLink} key={index}>
                                   <Link href={item.path}>
-                                      <p>{item.title}</p>
+                                      <a>{item.title}</a>
                                   </Link>
                               </div>
                           );

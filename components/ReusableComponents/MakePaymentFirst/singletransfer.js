@@ -2,12 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import {
-    loadbank,
-    postBeneficiariesData
-} from '../../../redux/actions/actions';
+import { loadbank, getBeneficiariesData } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import Beneficiary from '../Beneficiary';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import Loader from '../Loader';
@@ -21,17 +17,28 @@ const SingleTransfer = ({
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);
+    const [beneficiaries, setBeneficiaries] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
+    const { getBeneficiaries } = useSelector(
+        (state) => state.getBeneficiariesReducer
+    );
 
     useEffect(() => {
         dispatch(loadbank('ENG'));
+        dispatch(getBeneficiariesData());
     }, []);
     useEffect(() => {
         if (banks !== null) {
             setBank(banks);
         }
     }, [banks]);
+    useEffect(() => {
+        if (getBeneficiaries !== null) {
+            setBeneficiaries(getBeneficiaries);
+        }
+    }, [getBeneficiaries]);
+    console.log(beneficiaries.beneficiaries);
     const {
         register,
         handleSubmit,
@@ -46,31 +53,25 @@ const SingleTransfer = ({
                     <p>View all</p>
                 </div>
                 <div className={styles.beneficiaryBody}>
-                    <div className={styles.beneficiarySingle}>
-                        <BeneficiaryAvatarSvg />
-                        <p className={styles.name}>Babalola</p>
-                        <p className={styles.benebank}>Wema Bank</p>
-                    </div>
-                    <div className={styles.beneficiarySingle}>
-                        <BeneficiaryAvatarSvg />
-                        <p className={styles.name}>Babalola</p>
-                        <p className={styles.benebank}>Wema Bank</p>
-                    </div>
-                    <div className={styles.beneficiarySingle}>
-                        <BeneficiaryAvatarSvg />
-                        <p className={styles.name}>Babalola</p>
-                        <p className={styles.benebank}>Wema Bank</p>
-                    </div>
-                    <div className={styles.beneficiarySingle}>
-                        <BeneficiaryAvatarSvg />
-                        <p className={styles.name}>Babalola</p>
-                        <p className={styles.benebank}>Wema Bank</p>
-                    </div>
-                    <div className={styles.beneficiarySingle}>
-                        <BeneficiaryAvatarSvg />
-                        <p className={styles.name}>Babalola</p>
-                        <p className={styles.benebank}>Wema Bank</p>
-                    </div>
+                    {!beneficiaries.beneficiaries?.length ? (
+                        <h2>You dont' have any Beneficiaries at the Moment</h2>
+                    ) : (
+                        beneficiaries.beneficiaries?.map(
+                            (beneficiaries, index) => {
+                                return (
+                                    <div className={styles.beneficiarySingle}>
+                                        <BeneficiaryAvatarSvg />
+                                        <p className={styles.name}>
+                                            {beneficiaries.beneficiaryName}
+                                        </p>
+                                        <p className={styles.benebank}>
+                                            {beneficiaries.bankName}
+                                        </p>
+                                    </div>
+                                );
+                            }
+                        )
+                    )}
                 </div>
             </div>
             <form onSubmit={handleSubmit(othersaction)}>
@@ -166,7 +167,11 @@ const SingleTransfer = ({
                 </div> */}
                 <div className={styles.saveBene}>
                     <label className={styles.beneCheck}>
-                        <input type="checkbox" />
+                        <input
+                            type="checkbox"
+                            name="beneficiary"
+                            {...register('beneficiary')}
+                        />
                         <span>
                             <i></i>
                         </span>

@@ -24,6 +24,9 @@ import {
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
+import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
+import Ussd from '../../components/ReusableComponents/UssdSvg';
+import SingleTrans from '../../components/ReusableComponents/SingleTransSvg';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -207,21 +210,21 @@ const Dashboard = () => {
                         </div>
                         <div className={styles.dinCLass}>
                             <div className={styles.svg}>
-                                <LoansSvg />
+                                <EcobankQRSvg />
                             </div>
-                            <p className={styles.name}> Loans</p>
+                            <p className={styles.name}>Ecobank QR Code</p>
                         </div>
                         <div className={styles.dinCLass}>
                             <div className={styles.svg}>
-                                <Invoice />
+                                <Ussd />
                             </div>
-                            <p className={styles.name}>Send e-invoice</p>
+                            <p className={styles.name}>USSD</p>
                         </div>
                         <div className={styles.dinCLass}>
                             <div className={styles.svg}>
-                                <MposSvg />
+                                <SingleTrans />
                             </div>
-                            <p className={styles.name}>Logistics</p>
+                            <p className={styles.name}>Single Transfer</p>
                         </div>
                     </div>
                     <div className={styles.btmI}>

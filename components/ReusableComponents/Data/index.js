@@ -106,12 +106,12 @@ export const SidebarData = [
             },
             {
                 title: 'Security',
-                path: '',
+                path: '/Security',
                 icon: <NairaSvg />
             },
             {
                 title: 'Legal Terms & Conditions',
-                path: '',
+                path: '/Legal',
                 icon: <FaIcons.FaHandHoldingUsd />
             }
         ]

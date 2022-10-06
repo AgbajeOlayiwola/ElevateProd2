@@ -131,13 +131,24 @@
     width: 100%;
 }
 
+.beneficiaryBody h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    color: #7a7978;
+    margin: 0px;
+    margin-top: 8px;
+}
+
 .beneficiarySingle:first-child {
     margin-left: 0px;
 }
 
 .beneficiarySingle {
-    width: 15%;
-    max-width: 60px;
+    width: 25%;
+    max-width: 100px;
     margin-left: 24px;
     display: inline-block;
 }

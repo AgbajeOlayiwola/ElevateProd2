@@ -93,6 +93,10 @@
     left: 24px;
 }
 
+.beneCheck input:checked ~ span {
+    background-color: #6ccf00;
+}
+
 .subProfileHead {
     display: flex;
     background: #f5f8ee;
@@ -546,6 +550,16 @@
     padding: 0px 24px;
 }
 
+.dontHave {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 135.52%;
+    color: #3e3e3e;
+    margin: 0px;
+}
+
 .search input {
     border: 0px;
     padding-left: 0px;
@@ -577,10 +591,6 @@
     margin-top: 48px;
     font-size: 14px;
     line-height: 17px;
-}
-
-.sign {
-    width: 324px;
 }
 
 .sign p {

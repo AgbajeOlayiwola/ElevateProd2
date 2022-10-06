@@ -222,6 +222,7 @@ const Payment = () => {
         setOverlay(false);
         setFormType('');
         setCount(0);
+        setIsLoading(false);
     };
 
     const buttonHandleClose = () => {
@@ -389,10 +390,24 @@ const Payment = () => {
                                     } else {
                                         setEcobank(false);
                                         setInterEnquiry({
-                                            accountName: 'Akinfe Temitope'
+                                            accountName: 'Aderohunmu Matthew'
                                         });
                                         setIsLoading(false);
                                         setCount(count + 1);
+                                    }
+                                    if (data.beneficiary === true) {
+                                        const beneficiaryData = {
+                                            beneficiaryName:
+                                                'Aderohunmu Matthew',
+                                            accountNumber: data.accountNumber,
+                                            bankName: data.bankName,
+                                            bankCode: data.bankName
+                                        };
+                                        dispatch(
+                                            postBeneficiariesData(
+                                                beneficiaryData
+                                            )
+                                        );
                                     }
 
                                     console.log(data);
@@ -410,9 +425,12 @@ const Payment = () => {
                                 isLoading={isLoading}
                                 amount={paymentDetails.amount}
                                 recieverName={interEnquiry.accountName}
-                                sender={userProfileData.profile.preferredName}
+                                sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
                                 recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
+                                backAction={() => {
+                                    setCount(count - 1);
+                                }}
                                 transferAction={(data) => {
                                     setIsLoading(true);
                                     if (paymentDetails.bene === true) {
@@ -471,9 +489,14 @@ const Payment = () => {
                                 error={error}
                                 overlay={overlay}
                                 action={() => {
-                                    setCount(0);
-                                    setOverlay(false);
-                                    setFormType('');
+                                    if (status === 'error') {
+                                        setCount(count - 1);
+                                        setIsLoading(false);
+                                    } else {
+                                        setCount(0);
+                                        setOverlay(false);
+                                        setFormType('');
+                                    }
                                 }}
                                 title="Single Transfer Payment"
                                 amount={paymentDetails.amount}
