@@ -57,6 +57,10 @@ const HomeMain = () => {
     const dispatch = useDispatch();
     const [ecoonlineUserName, setEconlineUsername] = useState();
     const [ecoonlinePassword, setEcoonlinePassword] = useState();
+
+    const [cardPan, setCardPanMatch] = useState('');
+    const [cardExp, setCardExp] = useState('');
+    const [cvv, setCVV] = useState('');
     const { countries, errorData } = useSelector(
         (state) => state.countryReducer
     );
@@ -214,6 +218,10 @@ const HomeMain = () => {
                                 {...register('cardNumber', {
                                     required: 'Card Number is Required'
                                 })}
+                                value={cardPan}
+                                onChange={(e) =>
+                                    setCardPanMatch(e.target.value)
+                                }
                                 name="cardNumber"
                             />
                             <p className={styles.error}>
@@ -236,8 +244,9 @@ const HomeMain = () => {
                                             if (e.target.value.length === 2) {
                                                 e.target.value += '/';
                                             }
-                                            setExpiryDate(e.target.value);
+                                            setCardExp(e.target.value);
                                         }}
+                                        value={cardExp}
                                         maxLength="5"
                                     />
                                     <p className={styles.error}>
@@ -256,6 +265,8 @@ const HomeMain = () => {
                                         {...register('cvv', {
                                             required: 'CVV is Required'
                                         })}
+                                        onChange={(e) => setCVV(e.target.value)}
+                                        value={cvv}
                                         name="cvv"
                                     />
                                     <p className={styles.error}>
@@ -350,18 +361,18 @@ const HomeMain = () => {
             // setLoading(true);
 
             const postData = {
-                pan: encrypt(data.cardNumber),
+                pan: cardPan,
                 affiliateCode: 'ENG',
-                expiry: newTemp,
-                cvv: encrypt(data.cvv)
+                expiry: cardExp,
+                cvv: cvv
             };
 
             dispatch(cardLoginData(postData));
 
-            if (omniliteData.message === 'success') {
+            if (cardLogin.message === 'success') {
                 const data = {
                     email: omniliteData.data.user.email,
-                    accountNumber: omniliteData.data.user.profile.firstName,
+                    // accountNumber: omniliteData.data.user.profile.firstName,
                     fullName: omniliteData.data.user.profile.lastName,
                     phoneNumber: omniliteData.data.user.phoneNumber
                 };

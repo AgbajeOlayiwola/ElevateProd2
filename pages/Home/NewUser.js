@@ -27,6 +27,7 @@ const NewUser = ({ selectCountry }) => {
     const [outTyped, setOutTyped] = useState();
     const [activeBtn, setActiveBtn] = useState(true);
     const [passwordMatch, setPasswordMatch] = useState('');
+
     const { user, errorMessage } = useSelector((state) => state.registered);
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
