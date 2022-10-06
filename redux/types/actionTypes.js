@@ -155,6 +155,26 @@ export const getBeneficiaries = {
 
 //getBeneficiaries action type ends
 
+//ussdgen action types
+
+export const ussdGen = {
+    USSDGEN_LOAD_START: 'USSDGEN_LOAD_START',
+    USSDGEN_LOAD_SUCCESS: 'USSDGEN_LOAD_SUCCESS',
+    USSDGEN_LOAD_ERROR: 'USSDGEN_LOAD_ERROR'
+};
+
+//ussdgen action type ends
+
+//ussdStatus action types
+
+export const ussdStatus = {
+    USSDSTATUS_LOAD_START: 'USSDSTATUS_LOAD_START',
+    USSDSTATUS_LOAD_SUCCESS: 'USSDSTATUS_LOAD_SUCCESS',
+    USSDSTATUS_LOAD_ERROR: 'USSDSTATUS_LOAD_ERROR'
+};
+
+//ussdStatus action type ends
+
 //postBeneficiaries action types
 
 export const postBeneficiaries = {
