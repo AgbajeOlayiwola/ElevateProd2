@@ -125,7 +125,7 @@ const Login = () => {
                                             message: 'Invalid email address'
                                         }
                                     })}
-                                    onChange={checkDataContent}
+                                    onInput={checkDataContent}
                                 />
                             </div>
                             <p className={styles.errors}>
@@ -144,7 +144,7 @@ const Login = () => {
                                     {...register('password', {
                                         required: 'Password is required'
                                     })}
-                                    onChange={handlePwd}
+                                    onInput={handlePwd}
                                 />
                                 <Visbility typeSet={types} />
                             </div>

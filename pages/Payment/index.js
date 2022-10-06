@@ -16,10 +16,11 @@ import { getCookie } from 'cookies-next';
 import {
     postAirtime,
     postInterBank,
+    loadussdGen,
+    loadussdStatus,
     postBills,
     loadbillerPlan,
     postInternalBank,
-    postInterBankEnquiry,
     getBalanceEnquiry,
     getBulkTransfer,
     getInternationalTransfer,
@@ -56,8 +57,11 @@ const Payment = () => {
     const { interBank, errorMessageInterBank } = useSelector(
         (state) => state.interBankReducer
     );
-    const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
-        (state) => state.interBankEnquiryReducer
+    const { ussdGen, errorMessageussdGen } = useSelector(
+        (state) => state.ussdGenReducer
+    );
+    const { ussdStatus, errorMessageussdStatus } = useSelector(
+        (state) => state.ussdStatusReducer
     );
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
@@ -90,10 +94,12 @@ const Payment = () => {
     const [outType, setOutType] = useState();
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
-    const [balance, setBalance] = useState('# 0.00');
+    const [balance, setBalance] = useState('₦ 0.00');
     const [error, setError] = useState('');
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');
+    const [track, setTrack] = useState('');
+    const [recieveLink, setRecieveLink] = useState('');
     const [bill, setBill] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
     const [bank, setBank] = useState({});
@@ -135,6 +141,44 @@ const Payment = () => {
     useEffect(() => {
         interBankCheck();
     }, [interBank, errorMessageInterBank]);
+    const ussdGenCheck = () => {
+        if (ussdGen !== null) {
+            console.log(ussdGen);
+            setRecieveLink(ussdGen.paymentReference);
+            setTrack(ussdGen.transactionId);
+            setCount((count) => count + 1);
+            // const ussdStatus = {
+            //     transactionRef: ussdGen.transactionId
+            // };
+            // dispatch(loadussdStatus(ussdStatus));
+            setIsLoading(false);
+            // setStatus('success');
+        } else if (errorMessageussdGen !== null) {
+            // setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessageussdGen);
+            // setStatus('error');
+        }
+    };
+    useEffect(() => {
+        ussdGenCheck();
+    }, [ussdGen, errorMessageussdGen]);
+    const ussdStatusCheck = () => {
+        if (ussdStatus !== null) {
+            console.log(ussdStatus);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            // setStatus('success');
+        } else if (errorMessageussdStatus !== null) {
+            // setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(errorMessageussdStatus);
+            // setStatus('error');
+        }
+    };
+    useEffect(() => {
+        ussdStatusCheck();
+    }, [ussdStatus, errorMessageussdStatus]);
     const billsCheck = () => {
         if (bills !== null) {
             console.log(bills);
@@ -184,16 +228,6 @@ const Payment = () => {
     useEffect(() => {
         airtimeCheck();
     }, [airtime, errorMessageAirtime]);
-    const interBankEnquiryCheck = () => {
-        if (interBankEnquiry !== null) {
-            setInterEnquiry(interBankEnquiry);
-            setCount(count + 1);
-            setIsLoading(false);
-        }
-    };
-    useEffect(() => {
-        interBankEnquiryCheck();
-    }, [interBankEnquiry]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -271,12 +305,21 @@ const Payment = () => {
                         return (
                             <ReceivePaymentFirst
                                 overlay={overlay}
+                                isLoading={isLoading}
                                 firstTitle="Create USSD Payment Code"
                                 buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     console.log(data);
-                                    setCount(count + 1);
+                                    setPaymentDetails(data);
+                                    const ussdData = {
+                                        amount: parseInt(data.amount, 10),
+                                        accountId: senderDetails.accountId,
+                                        nameOfPayment: data.accountName,
+                                        paymentDescription: data.description
+                                    };
+                                    setIsLoading(true);
+                                    dispatch(loadussdGen(ussdData));
                                 }}
                             />
                         );
@@ -284,6 +327,9 @@ const Payment = () => {
                         return (
                             <ReceivePaymentSecond
                                 overlay={overlay}
+                                amount={paymentDetails.amount}
+                                link={recieveLink}
+                                track={track}
                                 title=" USSD "
                                 action={buttonHandleClose}
                                 buttonText="Share USSD Code"
@@ -311,10 +357,10 @@ const Payment = () => {
                         return (
                             <ReceivePaymentSecond
                                 overlay={overlay}
-                                title=" Ecobank QR Code"
+                                title="Ecobank QR Code"
                                 action={buttonHandleClose}
                                 buttonText="Next"
-                                type=" Ecobank QR Codes"
+                                type=" Ecobank QR Code"
                                 closeAction={buttonHandleClose}
                             />
                         );
@@ -376,17 +422,8 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 buttonText="Next"
                                 othersaction={(data) => {
-                                    setIsLoading(true);
                                     if (data.bankName === 'Ecobank') {
                                         setEcobank(true);
-                                        const interCheckDetails = {
-                                            accountNumber: data.accountNumber
-                                        };
-                                        dispatch(
-                                            postInterBankEnquiry(
-                                                interCheckDetails
-                                            )
-                                        );
                                     } else {
                                         setEcobank(false);
                                         setInterEnquiry({
@@ -397,8 +434,7 @@ const Payment = () => {
                                     }
                                     if (data.beneficiary === true) {
                                         const beneficiaryData = {
-                                            beneficiaryName:
-                                                'Aderohunmu Matthew',
+                                            beneficiaryName: data.accountName,
                                             accountNumber: data.accountNumber,
                                             bankName: data.bankName,
                                             bankCode: data.bankName
@@ -464,7 +500,8 @@ const Payment = () => {
                                             paymentDetails.bankName,
                                         destinationBankCode:
                                             paymentDetails.bankName,
-                                        beneficiaryName: 'Aderohunmu Matthew',
+                                        beneficiaryName:
+                                            paymentDetails.accountName,
                                         destinationAccountNo:
                                             paymentDetails.accountNumber,
                                         transactionAmount: parseInt(

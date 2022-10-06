@@ -333,7 +333,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                 </ButtonWrapper>
                 <form onSubmit={handleSubmit(action)}>
                     {title === 'Basic' ? (
-                        <>
+                        <form
+                            onSubmit={handleSubmit(() => {
+                                setTitle('Other');
+                            })}
+                        >
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroups}>
                                     <label>Enter Full Name</label>
@@ -345,10 +349,19 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                 </div>
                                 <div className={styles.formGroup}>
                                     <label>Select your Gender</label>
-                                    <select name="" id="">
+                                    <select
+                                        name=""
+                                        id=""
+                                        {...register('gender', {
+                                            required: 'Gender is required'
+                                        })}
+                                    >
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
+                                    <div className="errors">
+                                        {errors.gender?.message}
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.formCont}>
@@ -359,8 +372,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter Business Full Name"
+                                                {...register('businessName', {
+                                                    required:
+                                                        'Business Name is required'
+                                                })}
                                                 value={formData.bussinessName}
-                                                onChange={(event) => {
+                                                onInput={(event) => {
                                                     setFormData({
                                                         ...formData,
                                                         bussinessName:
@@ -368,6 +385,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     });
                                                 }}
                                             />
+                                            <div className="errors">
+                                                {errors.businessName?.message}
+                                            </div>
                                         </div>
                                         <div className={styles.singleFormGroup}>
                                             <label>
@@ -486,7 +506,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                         value={
                                                             formData.phoneNumber
                                                         }
-                                                        onChange={(event) => {
+                                                        onInput={(event) => {
                                                             setFormData({
                                                                 ...formData,
                                                                 phoneNumber:
@@ -496,6 +516,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                         }}
                                                     />
                                                 </div>
+                                            </div>
+                                            <div className="errors">
+                                                {
+                                                    errors.countryCode_number
+                                                        ?.message
+                                                }
                                             </div>
                                         </div>
                                         <div className={styles.singleFormGroup}>
@@ -563,136 +589,19 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 )}
                                             </div>
                                         </div>
-                                        <button
-                                            onClick={() => {
-                                                setTitle('Other');
-                                            }}
-                                        >
-                                            Next
-                                        </button>
+                                        <button type="submit">Next</button>
                                     </div>
                                 </div>
                             </div>
-                        </>
+                        </form>
                     ) : (
-                        // ) : (
-                        //     <>
-                        //         <div className={styles.nameDiv}>
-                        //             <div className={styles.formGroup}>
-                        //                 <div>
-                        //                     <label>Street Name</label>
-                        //                     <div className={styles.addressNumber}>
-                        //                         <input
-                        //                             type="number"
-                        //                             placeholder="101"
-                        //                             className={styles.number}
-                        //                         />
-                        //                         <input
-                        //                             type="text"
-                        //                             placeholder="Enter Street Name"
-                        //                         />
-                        //                     </div>
-                        //                 </div>
-                        //                 <div className={styles.singleFormGroup}>
-                        //                     <label>
-                        //                         Local Government Area (LGA)
-                        //                     </label>
-                        //                     <select
-                        //                         name=""
-                        //                         id=""
-                        //                         {...register('localGoverment')}
-                        //                         onChange={(event) => {
-                        //                             setFormData({
-                        //                                 ...formData,
-                        //                                 localGoverment:
-                        //                                     event.target.value
-                        //                             });
-                        //                             //     if (event.target.value.length == 15)
-                        //                             //         return false; //limits to 10 digit entry
-                        //                             //     setPhoneNumber(event?.target.value); //saving input to state
-                        //                             // }}
-                        //                         }}
-                        //                     >
-                        //                         <option value="">Select LGA</option>
-                        //                         {localGovernment
-                        //                             ? localGovernment?.map(
-                        //                                   (item, index) => {
-                        //                                       return (
-                        //                                           <option
-                        //                                               value={
-                        //                                                   item.lgaName
-                        //                                               }
-                        //                                               key={index}
-                        //                                           >
-                        //                                               {item.lgaName}
-                        //                                           </option>
-                        //                                       );
-                        //                                   }
-                        //                               )
-                        //                             : null}
-                        //                     </select>
-                        //                 </div>
-                        //             </div>
-                        //             <div className={styles.formGroup}>
-                        //                 <div
-                        //                     className={styles.singleFormGroup}
-                        //                     style={{
-                        //                         marginTop: '0px'
-                        //                     }}
-                        //                 >
-                        //                     <label>State</label>
-                        //                     <select
-                        //                         name=""
-                        //                         id=""
-                        //                         {...register('State')}
-                        //                         value={formData.state}
-                        //                         onChange={(event) => {
-                        //                             setLocalState(
-                        //                                 event.target.value
-                        //                             );
-                        //                             setFormData({
-                        //                                 ...formData,
-                        //                                 state: event.target.value
-                        //                             });
-                        //                         }}
-                        //                     >
-                        //                         <option value="">
-                        //                             Select State
-                        //                         </option>
-                        //                         {location.map((item, index) => {
-                        //                             return (
-                        //                                 <option
-                        //                                     value={item.state}
-                        //                                     key={index}
-                        //                                 >
-                        //                                     {item.state}
-                        //                                 </option>
-                        //                             );
-                        //                         })}
-                        //                     </select>
-                        //                 </div>
-                        //                 <div className={styles.singleFormGroup}>
-                        //                     <label>City/Town</label>
-                        //                     <input
-                        //                         type="text"
-                        //                         placeholder="Enter City/Town"
-                        //                     />
-                        //                 </div>
-                        //             </div>
-                        //         </div>
-                        //         <div className={styles.formCont}>
-                        //             <div className={styles.formGroup}>
-                        //                 <div className={styles.singleFormGroup}>
-                        //             <button
-                        //                 onClick={() => {
-                        //                     setTitle('Other');
-                        //                 }}
-                        //             >
-                        //                 Next
-                        //             </button>
-                        //         </div>
-                        //
-                        <>
+                        <form
+                            onSubmit={handleSubmit(
+                                profileCont.isBusinessRegistered === true
+                                    ? handleSubmitReg
+                                    : handleSubmitIII
+                            )}
+                        >
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroup}>
                                     <div>
@@ -706,7 +615,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter Street Name"
-                                                onChange={(event) => {
+                                                {...register('streetName', {
+                                                    required:
+                                                        'Street Name is required'
+                                                })}
+                                                onInput={(event) => {
                                                     setFormData({
                                                         ...formData,
                                                         streetName:
@@ -714,6 +627,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     });
                                                 }}
                                             />
+                                        </div>
+                                        <div className="errors">
+                                            {errors.streetName?.message}
                                         </div>
                                     </div>
                                     <div className={styles.singleFormGroup}>
@@ -723,8 +639,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         <select
                                             name=""
                                             id=""
-                                            {...register('localGoverment')}
-                                            onChange={(event) => {
+                                            {...register('localGoverment', {
+                                                required:
+                                                    'Local Government is required'
+                                            })}
+                                            onInput={(event) => {
                                                 setFormData({
                                                     ...formData,
                                                     localGoverment:
@@ -750,6 +669,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                   )
                                                 : null}
                                         </select>
+                                        <div className="errors">
+                                            {errors.localGoverment?.message}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className={styles.formGroup}>
@@ -763,9 +685,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         <select
                                             name=""
                                             id=""
-                                            {...register('State')}
+                                            {...register('state', {
+                                                required: 'State is required'
+                                            })}
                                             value={formData.state}
-                                            onChange={(event) => {
+                                            onInput={(event) => {
                                                 setLocalState(
                                                     event.target.value
                                                 );
@@ -789,19 +713,29 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 );
                                             })}
                                         </select>
+                                        <div className="errors">
+                                            {errors.state?.message}
+                                        </div>
                                     </div>
                                     <div className={styles.singleFormGroup}>
                                         <label>City/Town</label>
                                         <input
                                             type="text"
                                             placeholder="Enter City/Town"
-                                            onChange={(event) => {
+                                            {...register('city', {
+                                                required:
+                                                    'City/Town is required'
+                                            })}
+                                            onInput={(event) => {
                                                 setFormData({
                                                     ...formData,
                                                     city: event.target.value
                                                 });
                                             }}
                                         />
+                                        <div className="errors">
+                                            {errors.city?.message}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -824,7 +758,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             }}
                                         />
                                     </div>
-                                    {profileCont.isBusinessRegistered ===
+                                    {/* {profileCont.isBusinessRegistered ===
                                     true ? (
                                         <ButtonComp
                                             disabled={activeBtn}
@@ -851,7 +785,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             onClick={handleSubmitIII}
                                             // onClick={handleShowFourthStep}
                                         />
-                                    )}
+                                    )} */}
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Save & Continue"
+                                        type="button"
+                                    />
                                 </div>
                                 <div className={styles.formGroup}>
                                     <div className={styles.singleFormGroup}>
@@ -874,7 +816,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     </div>
                                 </div>
                             </div>
-                        </>
+                        </form>
                     )}
                 </form>
             </div>
