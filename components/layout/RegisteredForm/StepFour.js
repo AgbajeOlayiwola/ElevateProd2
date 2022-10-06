@@ -58,7 +58,16 @@ const StepFour = ({ title, action }) => {
     const [city, setCity] = useState('');
     const [localGoverment, setLocalGoverment] = useState('');
     const [localState, setLocalState] = useState('');
+    const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState('');
     console.log(localGoverment);
+
+    const saveFile = (e) => {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
+
+        console.log(file);
+    };
     const onSubmitNew = (data) => {
         setLoading(true);
         console.log('New');
@@ -74,7 +83,8 @@ const StepFour = ({ title, action }) => {
             state: localState,
             city: city,
             lga: localGoverment,
-            refereeCode: 'END'
+            refereeCode: 'END',
+            signature: file
         };
         dispatch(CompleteBusinessProfile(userData));
     };

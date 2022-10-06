@@ -19,7 +19,7 @@ import {
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import Card from '../../NotRegisteredForms/Card';
 import OtpInput from '../../../ReusableComponents/Otpinput';
-import { verifyOtp } from '../../../../redux/actions/actions';
+import { resetOtpData, verifyOtp } from '../../../../redux/actions/actions';
 import { otp } from '../../../../redux/types/actionTypes';
 
 const StepTwoBVNAuthenticator = ({
@@ -44,8 +44,24 @@ const StepTwoBVNAuthenticator = ({
     const sendOTP = (data) => {
         console.log(data);
     };
+    const { resetOtp, resetOtpErrorMessages } = useSelector(
+        (state) => state.resetOtpReducer
+    );
+    console.log(formData.phoneNumber);
 
     const [activeBtn, setActiveBtn] = useState(true);
+
+    const ResetOtp = () => {
+        const data = {
+            phoneNumber: formData.phoneNumber
+        };
+        dispatch(resetOtpData(data));
+        console.log(resetOtp, resetOtpErrorMessages);
+    };
+    useEffect(() => {
+        console.log(resetOtp);
+        console.log(resetOtpErrorMessages);
+    }, [resetOtp, resetOtpErrorMessages]);
     return (
         <form>
             <div className={styles.bvnBody}>
@@ -68,13 +84,19 @@ const StepTwoBVNAuthenticator = ({
                             A one time Password has been sent to your registered
                             phone number please enter digits below.
                         </SmallInstructionText>
+                        {resetOtpErrorMessages ? (
+                            <p>
+                                {' '}
+                                {resetOtpErrorMessages.response.data.message}
+                            </p>
+                        ) : null}
                         <p className={styles.inp}>Input OTP</p>
                         <OtpInput
                             formData={formData}
                             setFormData={setFormData}
                         />
                         <ResetOTP>
-                            <p>Resend OTP</p>
+                            <p onClick={ResetOtp}>Resend OTP</p>
 
                             <button
                                 style={{ cursor: 'pointer' }}

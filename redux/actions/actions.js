@@ -49,7 +49,8 @@ import {
     shareRefFormtype,
     uploadRefferenceFormType,
     uploadUtilityDocumentype,
-    forgotPasswordtype
+    forgotPasswordtype,
+    resetOtpType
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -848,14 +849,14 @@ export const cardLoginLoadStart = () => ({
     type: cardLogin.CARDLOGIN_LOAD_START
 });
 
-export const cardLoginLoadSuccess = (bill) => ({
+export const cardLoginLoadSuccess = (cardLogin) => ({
     type: cardLogin.CARDLOGIN_LOAD_SUCCESS,
-    payload: bill
+    payload: cardLogin
 });
 
-export const cardLoginLoadError = (errorMessages) => ({
+export const cardLoginLoadError = (cardLoginerrorMessages) => ({
     type: cardLogin.CARDLOGIN_LOAD_ERROR,
-    payload: errorMessages
+    payload: cardLoginerrorMessages
 });
 export const cardLoginData = (data) => (dispatch) => {
     dispatch(cardLoginLoadStart());
@@ -1345,9 +1346,9 @@ export const completeProfileLoadSuccess = (compBusprofile) => ({
     type: completeProfile.COMP_PROFILE_LOAD_SUCCESS,
     payload: compBusprofile
 });
-export const completeProfileLoadError = (errorMessage) => ({
+export const completeProfileLoadError = (comperrorMessage) => ({
     type: completeProfile.COMP_PROFILE_LOAD_ERROR,
-    payload: errorMessage
+    payload: comperrorMessage
 });
 
 export const CompleteBusinessProfile = (completeProfileData) => {
@@ -1376,11 +1377,7 @@ export const CompleteBusinessProfile = (completeProfileData) => {
             })
             .catch((error) => {
                 console.log(error);
-                dispatch(
-                    completeProfileLoadError(
-                        'error check the fields and try again'
-                    )
-                );
+                dispatch(completeProfileLoadError(error));
             });
     };
 };
@@ -1923,3 +1920,45 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
         .catch((error) => dispatch(forgotPasswordError(error)));
 };
 //forgot password resolution end
+
+//RESET OTP resolution start
+export const resetOtpStart = () => ({
+    type: resetOtpType.RESET_OTP_START
+});
+
+export const resetOtpSuccess = (resetOtp) => ({
+    type: resetOtpType.RESET_OTP_SUCCESS,
+    payload: resetOtp
+});
+
+export const resetOtpError = (resetOtpErrorMessages) => ({
+    type: resetOtpType.RESET_OTP_PASSWORD_ERROR,
+    payload: resetOtpErrorMessages
+});
+export const resetOtpData = (resetOtpdata) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.resetOtp}`,
+            resetOtpdata,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(resetOtpSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(resetOtpError(error)));
+};
+//RESET OTP resolution end

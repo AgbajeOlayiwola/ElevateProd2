@@ -16,7 +16,8 @@ import {
     loadCountry,
     omniliteDataa,
     accountNumberData,
-    ecobankOnlineData
+    ecobankOnlineData,
+    cardLoginData
 } from '../../redux/actions/actions';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -67,6 +68,9 @@ const HomeMain = () => {
     );
     const { ecobankOnline, ecoOnlineErrorMessage } = useSelector(
         (state) => state.ecobankOnlineReducer
+    );
+    const { cardLogin, cardLoginerrorMessages } = useSelector(
+        (state) => state.cardLoginReducer
     );
     console.log(omniliteData);
 
@@ -232,7 +236,7 @@ const HomeMain = () => {
                                             if (e.target.value.length === 2) {
                                                 e.target.value += '/';
                                             }
-                                            // setExpiryDate(e.target.value);
+                                            setExpiryDate(e.target.value);
                                         }}
                                         maxLength="5"
                                     />
@@ -342,6 +346,35 @@ const HomeMain = () => {
             };
 
             dispatch(accountNumberData(postData));
+        } else if (page === 3) {
+            // setLoading(true);
+
+            const postData = {
+                pan: encrypt(data.cardNumber),
+                affiliateCode: 'ENG',
+                expiry: newTemp,
+                cvv: encrypt(data.cvv)
+            };
+
+            dispatch(cardLoginData(postData));
+
+            if (omniliteData.message === 'success') {
+                const data = {
+                    email: omniliteData.data.user.email,
+                    accountNumber: omniliteData.data.user.profile.firstName,
+                    fullName: omniliteData.data.user.profile.lastName,
+                    phoneNumber: omniliteData.data.user.phoneNumber
+                };
+                window.localStorage.setItem(
+                    'displayAccount',
+                    JSON.stringify(data)
+                );
+                window.localStorage.setItem(
+                    'account',
+                    JSON.stringify(omniliteData.data.user)
+                );
+                router.push('/Onboarding/ExistingProfileSetup');
+            }
         }
         console.log(accountNumbers);
     };

@@ -35,7 +35,7 @@ const account = '/auth/account';
 const completesBusinessProfile = '/business/setup';
 const newCreateAccount = '/bank-account/create/individual';
 const createAccount = '/account/corp/create-for-existing-user';
-const corpNewUser = '/bank-account/corp/create';
+const corpNewUser = '/bank-account/create/corperate';
 const accountStatus = '/bank-account/individual/status';
 const corpAccountStatus = '/bank-account/corp/status';
 const verifyStatus = '/document-verification/unregistered-business';
@@ -46,7 +46,7 @@ const existingUserProfile =
     '/authentication/profile-setup/unregistered-business/eco-auth';
 const businessCategories = '/business-categories';
 const states = '/lga';
-const cardLogin = '/auth/register/card';
+const cardLogin = '/authentication/register/card';
 const banksAccounts = '/bank-account';
 const uploadUtilityDocument = '/account-upgrade/utility-document/upload';
 const uploadIdentificationDoc =
@@ -58,6 +58,7 @@ const shareRefForm = '/account-upgrade/reference-form/share';
 const uploadRefForm = '/account-upgrade/reference-form/share';
 const uploadBoardRes = '/account-upgrade/board-resolution/upload';
 const forgotPassword = '/authentication/forget-password';
+const resetOtp = '/authentication/otp/re-send';
 export default {
     getBanks,
     getCountries,
@@ -116,5 +117,6 @@ export default {
     uploadScmul,
     shareRefForm,
     uploadUtilityDocument,
-    forgotPassword
+    forgotPassword,
+    resetOtp
 };

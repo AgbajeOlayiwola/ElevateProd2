@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     accountStatusData,
     CompProfile,
+    createNewUserAccount,
     getNewUserAccountDetails,
     newAccountStatusData
 } from '../../../redux/actions/actions';
@@ -33,18 +34,34 @@ const AccountLoading = () => {
     // console.log(profile);
 
     // console.log(accountStatus);
+    const { newAccount, newAccountErrorMessage } = useSelector(
+        (state) => state.newUserAccountDets
+    );
 
     useEffect(() => {
+        const accountData = {
+            affiliateCode: 'ENG',
+            currency: 'NGN'
+        };
+        dispatch(createNewUserAccount(accountData));
         dispatch(newAccountStatusData());
         const newUserAccountt = () => {
             // console.log(accountStatus);
+        };
+
+        if (newAccount.message === 'success') {
             if (errorMessages) {
                 if (accountStatus.message === 'success') {
                     router.push('/Succes');
                 }
             }
-        };
-    }, [errorMessages, accountStatus]);
+        } else if (
+            newAccountErrorMessage ===
+            'Sorry, we could not process your request. Please chat with us to get this sorted.'
+        ) {
+            setError(newAccountErrorMessage);
+        }
+    }, [errorMessages, accountStatus, newAccountErrorMessage]);
 
     // console.log(errorMessages);
 

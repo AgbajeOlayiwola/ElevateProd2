@@ -33,6 +33,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         setBgcolor((prevState) => !prevState);
     };
     const dispatch = useDispatch();
+    const { compBusprofile, comperrorMessage } = useSelector(
+        (state) => state.completeBusProfileReducer
+    );
     const { isLoading, profile, errorMessage } = useSelector(
         (state) => state.profile
     );
@@ -186,12 +189,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
-        const accountData = {
-            affiliateCode: 'ENG',
-            currency: 'NGN'
-        };
-        dispatch(createNewUserAccount(accountData));
-
+        // const accountData = {
+        //     affiliateCode: 'ENG',
+        //     currency: 'NGN'
+        // };
+        // dispatch(createNewUserAccount(accountData));
         // if (
         //     newAccount === 'Success' ||
         //     newAccountErrorMessage ===
@@ -205,6 +207,17 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         //     router.push('/Succes');
         // }
     };
+    useEffect(() => {
+        console.log(comperrorMessage);
+
+        if (
+            newAccount === 'Success' ||
+            comperrorMessage.response.data.message ===
+                'your have already setup your business'
+        ) {
+            router.push('/Verify/Account/loading');
+        }
+    }, [newAccount, comperrorMessage]);
 
     const handleSubmitReg = () => {
         const commpleteProfileData = {
@@ -224,41 +237,18 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
-
-        const accountData = {
-            affiliateCode: 'ENG',
-            currency: 'NGN'
-        };
-        const cookie = getCookie('cookieToken');
-        axiosInstance
-            .post(
-                `https://ellevate-test.herokuapp.com${apiRoutes.corpNewUser}`,
-                accountData,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
-                }
-            )
-            .then((response) => {
-                console.log('create New Account', response.data);
-            })
-            .catch((error) => {
-                console.log(
-                    'create new account Error:',
-                    error.response.data.message
-                );
-                setErrorMes(error.response.data.message);
-            });
+    };
+    useEffect(() => {
+        console.log(comperrorMessage);
 
         if (
-            errorMes ===
-            'You already have an account with us. Please contact us for more information'
+            newAccount === 'Success' ||
+            comperrorMessage.response.data.message ===
+                'your have already setup your business'
         ) {
-            router.push('/Succes/CorpSuccess');
+            router.push('/Verify/CorportateAccount');
         }
-    };
+    }, [newCorpAccount, newCorpAccountErrorMMessage]);
     // useEffect(() => {
     //     handleSubmitIII();
     // }, [newAccountErrorMessage]);
@@ -289,6 +279,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     //     console.log(data);
     // };
     const [activeBtn, setActiveBtn] = useState(true);
+
     // console.log(type);
     return (
         <div className={styles.bodyWrapper}>
