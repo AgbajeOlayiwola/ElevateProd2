@@ -75,9 +75,9 @@ const Liveness = ({ action }) => {
                 setError(error.response.data.message);
             });
     }, [webcamRef, setImgSrc, setImageSrcI]);
-    useEffect(() => {
-        setLoading((prev) => !prev);
-    }, [webcamRef, setImgSrc, setImageSrcI]);
+    // useEffect(() => {
+    // setLoading((prev) => !prev);
+    // }, [webcamRef, setImgSrc, setImageSrcI]);
 
     return (
         <div className={styles.body}>
