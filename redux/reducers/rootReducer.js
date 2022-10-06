@@ -52,6 +52,8 @@ import accountPrimaryReducer from './accountPrimary.reducer';
 import setTransactionPinReducer from './setTransactionPin.reducer';
 import fogrotPasswordReducer from './forgotpassword.reducer';
 import resetOtpReducer from './resetotp.reducer';
+import ussdGenReducer from './ussdGen.reducer';
+import ussdStatusReducer from './ussdStatus.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -104,6 +106,8 @@ const rootReducer = combineReducers({
     uploadRefReducer: uploadRefReducer,
     uploadBoardResReducer: uploadBoardResReducer,
     cacUploadReducer: cacUploadReducer,
+    ussdGenReducer: ussdGenReducer,
+    ussdStatusReducer: ussdStatusReducer,
     accountPrimaryReducer: accountPrimaryReducer,
     setTransactionPinReducer: setTransactionPinReducer,
     userProfileReducer: userProfileReducer,

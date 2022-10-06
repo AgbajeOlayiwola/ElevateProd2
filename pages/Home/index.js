@@ -17,7 +17,8 @@ import {
     omniliteDataa,
     accountNumberData,
     ecobankOnlineData,
-    cardLoginData
+    cardLoginData,
+    loadLanguageAsync
 } from '../../redux/actions/actions';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -57,10 +58,17 @@ const HomeMain = () => {
     const dispatch = useDispatch();
     const [ecoonlineUserName, setEconlineUsername] = useState();
     const [ecoonlinePassword, setEcoonlinePassword] = useState();
+    const [languages, setLanguages] = useState([]);
+    const [languageState, setLanguageState] = useState(false);
 
     const [cardPan, setCardPanMatch] = useState('');
     const [cardExp, setCardExp] = useState('');
     const [cvv, setCVV] = useState('');
+    const displayLanguage = () => {
+        setLanguageState(!languageState);
+        setError('');
+    };
+    const [selectLanguage, setSelectLanguage] = useState('Eng');
     const { countries, errorData } = useSelector(
         (state) => state.countryReducer
     );
@@ -77,6 +85,16 @@ const HomeMain = () => {
         (state) => state.cardLoginReducer
     );
     console.log(omniliteData);
+    const { language } = useSelector((state) => state.languages);
+
+    useEffect(() => {
+        dispatch(loadLanguageAsync());
+    }, []);
+    useEffect(() => {
+        if (language !== null) {
+            setLanguages(language);
+        }
+    }, [language]);
 
     useEffect(() => {
         dispatch(loadCountry());
@@ -533,6 +551,7 @@ const HomeMain = () => {
                 </div>
             </section>
             <section className={styles.secondSection}>
+                {error && <p className={styles.error}>{error}</p>}
                 <div className={styles.secondSectionHeader}>
                     <div className={styles.secondSectionHeaderText}>
                         <h2>Create an Account</h2>
@@ -542,12 +561,54 @@ const HomeMain = () => {
                         </p>
                     </div>
                     <div className={styles.languages}>
-                        <Languages />
+                        <div className={styles.select2}>
+                            {/* {error ? <p className={styles.error}>{error}</p> : null} */}
+                            <div className={styles.selectLanguage}>
+                                <div
+                                    className={styles.selectLanguageBody}
+                                    onClick={displayLanguage}
+                                >
+                                    <p>{selectLanguage}</p>
+                                    <img src="/../../Assets/Svgs/dropdownSvg.svg" />
+                                </div>
+                                {languageState && (
+                                    <ul className={styles.selectLanguageSingle}>
+                                        {languages.map((item, index) => {
+                                            return (
+                                                <li
+                                                    key={index}
+                                                    onClick={() => {
+                                                        if (
+                                                            item.name !==
+                                                            'English'
+                                                        ) {
+                                                            setError(
+                                                                'This App is available in English currently'
+                                                            );
+                                                            setLanguageState(
+                                                                false
+                                                            );
+                                                        } else {
+                                                            setLanguageState(
+                                                                false
+                                                            );
+                                                        }
+                                                    }}
+                                                >
+                                                    <p>
+                                                        {item.name.slice(0, 3)}
+                                                    </p>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.secondSectionMid}>
                     <div className={styles.secondSectionMidCountry}>
-                        {error && <p className={styles.error}>{error}</p>}
                         <label>Choose your Business Location</label>
                         <Countries
                             displayCountry={() => {
