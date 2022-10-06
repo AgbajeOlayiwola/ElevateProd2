@@ -209,14 +209,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     };
     useEffect(() => {
         console.log(compBusprofile);
-
-        if (
-            compBusprofile.message === 'Successful'
-            // ||
-            // comperrorMessage.response.data.message ===
-            // 'your have already setup your business'
-        ) {
-            router.push('/Verify/Account/loading');
+        if (compBusprofile) {
+            if (
+                compBusprofile.message === 'Successful'
+                // ||
+                // comperrorMessage.response.data.message ===
+                // 'your have already setup your business'
+            ) {
+                router.push('/Verify/Account/loading');
+            }
         }
     }, [newAccount, comperrorMessage]);
 
@@ -241,14 +242,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     };
     useEffect(() => {
         console.log(compBusprofile);
-
-        if (
-            compBusprofile.message === 'Successful'
-            // ||
-            // comperrorMessage.response.data.message ===
-            //     'your have already setup your business'
-        ) {
-            router.push('/Verify/CorportateAccount');
+        if (compBusprofile) {
+            if (
+                compBusprofile.message === 'Successful'
+                // ||
+                // comperrorMessage.response.data.message ===
+                //     'your have already setup your business'
+            ) {
+                router.push('/Verify/CorportateAccount');
+            }
         }
     }, [newCorpAccount, newCorpAccountErrorMMessage]);
     // useEffect(() => {
