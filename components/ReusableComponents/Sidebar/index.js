@@ -13,6 +13,7 @@ import SideBarDrop from './sidebarcont';
 import Dropdownicon from './dropdownicon';
 import Innersubnav from './innersubnav';
 import { FaTimes } from 'react-icons/fa';
+import { deleteCookie, getCookie } from 'cookies-next';
 
 const Sidebar = ({ showSubnav }) => {
     const router = useRouter();
@@ -25,6 +26,12 @@ const Sidebar = ({ showSubnav }) => {
         localStorage.removeItem('token');
         if (!localStorage.getItem('user')) {
             router.replace('../Auth/Login');
+        }
+
+        if (getCookie('cookieToken') == undefined) {
+            deleteCookie('existingToken');
+        } else {
+            deleteCookie('cookieToken');
         }
     };
 

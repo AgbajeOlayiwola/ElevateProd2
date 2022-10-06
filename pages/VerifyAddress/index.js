@@ -208,7 +208,7 @@ const VerifyAddress = () => {
                             query: {
                                 workitemId: 'AO-095734358976187628-CO',
                                 customerName: 'Kevin',
-                                customerEmail: 'Kevin.ejiro@gmail.com',
+                                customerEmail: 'agbajeolaiwola@gmail.com',
                                 branchCode: 'A02',
                                 segmentId: 'ADB',
                                 // houseNumber: '25',

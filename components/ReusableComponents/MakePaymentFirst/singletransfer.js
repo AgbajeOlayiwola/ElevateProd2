@@ -54,7 +54,7 @@ const SingleTransfer = ({
                 </div>
                 <div className={styles.beneficiaryBody}>
                     {!beneficiaries.beneficiaries?.length ? (
-                        <h2>You dont' have any Beneficiaries at the Moment</h2>
+                        <h2>You do not have any Beneficiaries at the Moment</h2>
                     ) : (
                         beneficiaries.beneficiaries?.map(
                             (beneficiaries, index) => {

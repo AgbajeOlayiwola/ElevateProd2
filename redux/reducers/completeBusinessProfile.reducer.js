@@ -4,7 +4,7 @@ import { completeProfile } from '../types/actionTypes';
 const initialState = {
     isLoading: false,
     compBusprofile: null,
-    errorMessage: ''
+    comperrorMessage: ''
 };
 
 const completeBusinessprofileReducer = (
@@ -18,14 +18,14 @@ const completeBusinessprofileReducer = (
                 ...state,
                 isLoading: true,
                 compBusprofile: payload,
-                errorMessage: null
+                comperrorMessage: null
             };
         case completeProfile.COMP_PROFILE_LOAD_ERROR:
             return {
                 ...state,
                 isLoading: true,
                 compBusprofile: null,
-                errorMessage: payload
+                comperrorMessage: payload
             };
         default:
             return state;

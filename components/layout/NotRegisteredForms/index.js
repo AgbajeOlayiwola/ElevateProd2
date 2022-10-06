@@ -190,7 +190,7 @@ const ProfileSetups = () => {
             taxNumber: formData.tinNumber,
             registerationNumber: formData.rcnumber
         };
-        setLoading((prev) => !prev);
+        // setLoading((prev) => !prev);
 
         dispatch(createBusProfileSetup(businessProfileData));
     }
@@ -214,7 +214,7 @@ const ProfileSetups = () => {
         // console.log('new bvn:', bvnNin.message);
         if (
             bvnNin === 'verification successful' ||
-            errorM === 'you have already setup your profile'
+            errorMessages === 'you have already setup your profile'
         ) {
             setPage(page + 1);
         } else {
@@ -222,7 +222,7 @@ const ProfileSetups = () => {
             setErrorM(errorMessages);
             setErrorI(bvnError);
         }
-    }, [bvnNin]);
+    }, [bvnNin, errorMessages]);
 
     const handleSubmitt = () => {
         setPage(page + 1);

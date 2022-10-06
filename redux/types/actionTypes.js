@@ -515,3 +515,11 @@ export const forgotPasswordtype = {
     GET_FORGOT_PASSWORD_ERROR: 'GET_FORGOT_PASSWORD_ERROR'
 };
 // Forgot Password ENDS
+
+//Reset otp TYPE STARTE
+export const resetOtpType = {
+    RESET_OTP_START: 'RESET_OTP_START',
+    RESET_OTP_SUCCESS: 'RESET_OTP_SUCCESS',
+    RESET_OTP_PASSWORD_ERROR: 'RESET_OTP_ERROR'
+};
+// FReset otp End
