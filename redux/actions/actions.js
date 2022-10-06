@@ -49,6 +49,8 @@ import {
     shareRefFormtype,
     uploadRefferenceFormType,
     uploadUtilityDocumentype,
+    ussdGen,
+    ussdStatus,
     forgotPasswordtype,
     resetOtpType
 } from '../types/actionTypes';
@@ -88,6 +90,52 @@ const axiosInstance = axios.create({
         Authorization: `Bearer ${Token}`
     }
 });
+//uusdGen actions
+export const ussdGenLoadStart = () => ({
+    type: ussdGen.USSDGEN_LOAD_START
+});
+
+export const ussdGenLoadSuccess = (billers) => ({
+    type: ussdGen.USSDGEN_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const ussdGenLoadError = (errorMessage) => ({
+    type: ussdGen.USSDGEN_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadussdGen = (code) => (dispatch) => {
+    dispatch(ussdGenLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.ussdGen}${code}`)
+        .then((response) => dispatch(ussdGenLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(ussdGenLoadError(error.message)));
+};
+//uusdGen actions end
+
+//uusdStatus actions
+export const ussdStatusLoadStart = () => ({
+    type: ussdStatus.USSDSTATUS_LOAD_START
+});
+
+export const ussdStatusLoadSuccess = (billers) => ({
+    type: ussdStatus.USSDSTATUS_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const ussdStatusLoadError = (errorMessage) => ({
+    type: ussdStatus.USSDSTATUS_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadussdStatus = (code) => (dispatch) => {
+    dispatch(ussdStatusLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.ussdStatus}${code}`)
+        .then((response) => dispatch(ussdStatusLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(ussdStatusLoadError(error.message)));
+};
+//uusdStatus actions end
+
 //country actions
 export const countryLoadStart = () => ({
     type: country.COUNTRY_LOAD_START

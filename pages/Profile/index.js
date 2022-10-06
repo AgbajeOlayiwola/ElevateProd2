@@ -312,7 +312,7 @@ const Profile = () => {
                                 <div className={styles.signBody}>
                                     {!bene.signatories.length ? (
                                         <h2 className={styles.dontHave}>
-                                            You don't have signatories yet
+                                            You do not have signatories yet
                                         </h2>
                                     ) : (
                                         <>
@@ -572,7 +572,7 @@ const Profile = () => {
                                             {/* <p className={styles.text}>A</p> */}
                                             {!bene.account.length ? (
                                                 <h2 className={styles.dontHave}>
-                                                    You don't have any
+                                                    You do not have any
                                                     Beneficiary at the moment
                                                 </h2>
                                             ) : (
@@ -600,7 +600,7 @@ const Profile = () => {
                                             {/* <p className={styles.text}>A</p> */}
                                             {!bene.airtime.length ? (
                                                 <h2 className={styles.dontHave}>
-                                                    You don't have any
+                                                    You do not have any
                                                     Beneficiary at the moment
                                                 </h2>
                                             ) : (

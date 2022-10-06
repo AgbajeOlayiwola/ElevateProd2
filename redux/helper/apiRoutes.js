@@ -119,6 +119,8 @@ export default {
     uploadScmul,
     shareRefForm,
     uploadUtilityDocument,
+    ussdGen,
+    ussdStatus,
     forgotPassword,
     resetOtp
 };
