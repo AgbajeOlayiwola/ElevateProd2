@@ -279,7 +279,7 @@ const RegisteredForm = ({
                             <FormInput
                                 type="date"
                                 placeholder="dd-mm-yyyy"
-                                max="2002-12-31"
+                                max="2004-12-31"
                                 {...register('date_of_birth', {
                                     required: 'Date of birth is required',
                                     minLength: {
@@ -304,6 +304,7 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text={'Next'}
+                            onClick={actionI}
                         />
                     </form>
                 ) : (
@@ -432,6 +433,7 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text={'Next'}
+                            onClick={action}
                         />
                     </form>
                 ) : null}
