@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Overlay from '../Overlay';
 import CloseButton from '../CloseButtonSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
+import Loader from '../Loader';
 // import axios from 'axios';
 
 const ReceivePaymentFirst = ({
@@ -13,6 +14,7 @@ const ReceivePaymentFirst = ({
     buttonText,
     closeAction,
     action,
+    isLoading,
     overlay
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
@@ -128,12 +130,16 @@ const ReceivePaymentFirst = ({
                                     {errors?.description?.message}
                                 </p>
                             </div>
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text={buttonText}
-                                type="submit"
-                            />
+                            {isLoading ? (
+                                <Loader />
+                            ) : (
+                                <ButtonComp
+                                    disabled={activeBtn}
+                                    active={activeBtn ? 'active' : 'inactive'}
+                                    text={buttonText}
+                                    type="submit"
+                                />
+                            )}
                         </form>
                         <p className={styles.later}>
                             Not paying now? <span>Schedule for Later</span>

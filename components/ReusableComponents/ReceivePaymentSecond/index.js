@@ -10,10 +10,23 @@ const ReceivePaymentSecond = ({
     buttonText,
     type,
     overlay,
-    closeAction
+    closeAction,
+    link,
+    track,
+    amount
 }) => {
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
+    const [newAmount, setNewAmount] = useState('');
+    useEffect(() => {
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'NGN',
+            currencyDisplay: 'narrowSymbol'
+        });
+        const formattedAmount = formatter.format(amount);
+        setNewAmount(formattedAmount);
+    }, []);
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -32,7 +45,7 @@ const ReceivePaymentSecond = ({
                     <p className={styles.intro}>
                         Payment for Eraclitus purchase on Instagram
                     </p>
-                    {title === 'Create Ecobank QR Code' ? (
+                    {title === 'Ecobank QR Code' ? (
                         <div className={styles.secondCopyCode}>
                             <div>
                                 <img
@@ -45,21 +58,21 @@ const ReceivePaymentSecond = ({
                     ) : (
                         <div className={styles.secondCopy}>
                             <LinkSvg />
-                            <p>ellevate.com/qyweywbdbsdfsds/ei...</p>
+                            <p>{link}</p>
                             <button>Copy</button>
                         </div>
                     )}
 
-                    <div className={styles.deadlines}>
+                    {/* <div className={styles.deadlines}>
                         <p>Valid Till</p>
                         <div className={styles.deadlineValues}>
                             <p>Saturday 22 June, 2022 . 12:53 PM</p>
                         </div>
-                    </div>
-                    <div className={styles.deadline}>
+                    </div> */}
+                    <div className={styles.deadlines}>
                         <p>Amount</p>
                         <div className={styles.deadlineValues}>
-                            <p>N54,000.00</p>
+                            <p>{newAmount}</p>
                         </div>
                     </div>
                     <div className={styles.deadline}>
@@ -71,7 +84,7 @@ const ReceivePaymentSecond = ({
                     <div className={styles.deadline}>
                         <p>Tracking ID</p>
 
-                        <p>refdbg47t34jn2j35m6777rt</p>
+                        <p>{track}</p>
                         <p className={styles.copy}>
                             <span>
                                 <img src="../../Assets/Svgs/copy.svg" alt="" />

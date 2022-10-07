@@ -107,7 +107,7 @@ export const ussdGenLoadError = (errorMessage) => ({
 export const loadussdGen = (code) => (dispatch) => {
     dispatch(ussdGenLoadStart());
     axiosInstance
-        .get(`${apiRoutes.ussdGen}${code}`)
+        .post(`${apiRoutes.ussdGen}`, code)
         .then((response) => dispatch(ussdGenLoadSuccess(response.data.data)))
         .catch((error) => dispatch(ussdGenLoadError(error.message)));
 };
@@ -130,7 +130,7 @@ export const ussdStatusLoadError = (errorMessage) => ({
 export const loadussdStatus = (code) => (dispatch) => {
     dispatch(ussdStatusLoadStart());
     axiosInstance
-        .get(`${apiRoutes.ussdStatus}${code}`)
+        .post(`${apiRoutes.ussdStatus}`, code)
         .then((response) => dispatch(ussdStatusLoadSuccess(response.data.data)))
         .catch((error) => dispatch(ussdStatusLoadError(error.message)));
 };

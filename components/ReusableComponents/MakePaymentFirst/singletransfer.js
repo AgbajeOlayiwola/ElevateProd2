@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadbank, getBeneficiariesData } from '../../../redux/actions/actions';
+import {
+    loadbank,
+    getBeneficiariesData,
+    postInterBankEnquiry
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
@@ -17,13 +21,24 @@ const SingleTransfer = ({
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);
+    const [interEnquiry, setInterEnquiry] = useState('');
     const [beneficiaries, setBeneficiaries] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
     const { getBeneficiaries } = useSelector(
         (state) => state.getBeneficiariesReducer
     );
-
+    const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
+        (state) => state.interBankEnquiryReducer
+    );
+    const interBankEnquiryCheck = () => {
+        if (interBankEnquiry !== null) {
+            setInterEnquiry(interBankEnquiry);
+        }
+    };
+    useEffect(() => {
+        interBankEnquiryCheck();
+    }, [interBankEnquiry]);
     useEffect(() => {
         dispatch(loadbank('ENG'));
         dispatch(getBeneficiariesData());
@@ -38,7 +53,6 @@ const SingleTransfer = ({
             setBeneficiaries(getBeneficiaries);
         }
     }, [getBeneficiaries]);
-    console.log(beneficiaries.beneficiaries);
     const {
         register,
         handleSubmit,
@@ -92,8 +106,25 @@ const SingleTransfer = ({
                             pattern: {
                                 value: /^[0-9 ]/i,
                                 message: 'Account Number must be a number'
+                            },
+                            minLength: {
+                                value: 10,
+                                message: 'Min length is 10'
+                            },
+                            maxLength: {
+                                value: 10,
+                                message: 'Max length is 10'
                             }
                         })}
+                        onInput={(e) => {
+                            if (e.target.value.length === 10) {
+                                const details = {
+                                    accountNumber: e.target.value
+                                };
+                                dispatch(postInterBankEnquiry(details));
+                                console.log();
+                            }
+                        }}
                         type="number"
                         placeholder="Enter account number here"
                     />
@@ -101,6 +132,20 @@ const SingleTransfer = ({
                         {errors?.accountNumber?.message}
                     </p>
                 </div>
+                {interEnquiry ? (
+                    <div className={styles.narration}>
+                        <label> Account Name</label>
+                        <input
+                            {...register('accountName')}
+                            type="text"
+                            value={interEnquiry.accountName}
+                        />
+                        <p className={styles.error}>
+                            {errors?.accountNumber?.message}
+                        </p>
+                    </div>
+                ) : null}
+
                 <div className={styles.narration}>
                     <label>Choose Bank</label>
                     <select

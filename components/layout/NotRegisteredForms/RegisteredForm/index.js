@@ -123,7 +123,7 @@ const RegisteredForm = ({
                     </select>
                 </InputWrapper>
                 {formData.type == 'true' ? (
-                    <>
+                    <form onSubmit={handleSubmit(actionI)}>
                         <InputWrapper>
                             <Label>
                                 Enter your RC Number/Business Registration
@@ -302,23 +302,22 @@ const RegisteredForm = ({
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            onClick={actionI}
                             type="submit"
                             text={'Next'}
                         />
-                    </>
+                    </form>
                 ) : (
                     ''
                 )}
                 {formData.type == 'false' ? (
-                    <>
+                    <form onSubmit={handleSubmit(action)}>
                         <InputWrapper>
                             <Label>Enter your BVN</Label>
                             <FormInput
                                 type="number"
                                 placeholder="Your BVN"
                                 name="bvn"
-                                {...register('bvn', {
+                                {...register('bvnFalse', {
                                     required: 'BVN is required',
                                     minLength: {
                                         value: 10,
@@ -338,7 +337,9 @@ const RegisteredForm = ({
                             />
                             <p className={styles.error}>{errorM}</p>
                             <p className={styles.error}> {bvnError}</p>
-                            <div className="errors">{errors.bvn?.message}</div>
+                            <div className="errors">
+                                {errors.bvnFalse?.message}
+                            </div>
                         </InputWrapper>
                         <InputWrapper>
                             <Label>Phone Number</Label>
@@ -397,7 +398,7 @@ const RegisteredForm = ({
                                 </div>
                             </div>
                             <div className="errors">
-                                {errors.phone_number?.message}
+                                {errors.countryCode_number?.message}
                             </div>
                         </InputWrapper>
                         <InputWrapper>
@@ -429,11 +430,10 @@ const RegisteredForm = ({
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            onClick={action}
                             type="submit"
                             text={'Next'}
                         />
-                    </>
+                    </form>
                 ) : null}
             </div>
         </div>

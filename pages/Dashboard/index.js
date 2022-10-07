@@ -57,7 +57,7 @@ function SamplePrevArrow(props) {
 const Dashboard = () => {
     const dispatch = useDispatch();
     const [outType, setOutType] = useState();
-    const [balance, setBalance] = useState('#0.00');
+    const [balance, setBalance] = useState('₦0.00');
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -83,17 +83,6 @@ const Dashboard = () => {
         userProfile = window.localStorage.getItem('user');
         userProfileData = JSON.parse(userProfile);
     }
-    let balanceData;
-    if (userProfileData !== null) {
-        balanceData = {
-            accountId: userProfileData.userId
-        };
-    }
-
-    useEffect(() => {
-        // dispatch(getTransactionElevate());
-        dispatch(getBalanceEnquiry(balanceData));
-    }, []);
 
     // useEffect(() => {
     //     if (transactionElevate !== null) {
@@ -163,10 +152,17 @@ const Dashboard = () => {
     useEffect(() => {
         if (accountPrimary !== null) {
             setAcctNumber(accountPrimary);
+            let balanceData;
+            balanceData = {
+                accountId: accountPrimary.accountId
+            };
+
+            dispatch(getBalanceEnquiry(balanceData));
         } else {
             setAcctNumber('Pending');
         }
     }, [accountPrimary]);
+
     console.log(accountPrimary);
     return (
         <DashLayout page="Dashboard">
