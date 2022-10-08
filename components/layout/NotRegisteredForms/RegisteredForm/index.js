@@ -124,6 +124,8 @@ const RegisteredForm = ({
                 </InputWrapper>
                 {formData.type == 'true' ? (
                     <form onSubmit={handleSubmit(actionI)}>
+                        <p className={styles.error}>{errorM}</p>
+                        <p className={styles.error}> {bvnError}</p>
                         <InputWrapper>
                             <Label>
                                 Enter your RC Number/Business Registration
@@ -136,17 +138,14 @@ const RegisteredForm = ({
                             name="rcNumber"
                             {...register('rcNumber', {
                                 required: 'RC Number is required',
-                                minLength: {
-                                    value: 10,
-                                    message: 'Min length is 10'
-                                },
+
                                 pattern: {
                                     value: /^[A-Za-z0-9 ]+$/i,
                                     message: 'Only Alphabelts/Number allowed'
                                 }
                             })}
                             value={formData.rcnumber}
-                            onChange={(event) => {
+                            onInput={(event) => {
                                 setFormData({
                                     ...formData,
                                     rcnumber: event.target.value
@@ -169,7 +168,7 @@ const RegisteredForm = ({
                                 placeholder="Your Tax Identification number"
                                 {...register('tin')}
                                 value={formData.tinNumber}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         tinNumber: event.target.value
@@ -200,7 +199,7 @@ const RegisteredForm = ({
                                     }
                                 })}
                                 value={formData.bvNumber}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         bvNumber: event.target.value
@@ -258,7 +257,7 @@ const RegisteredForm = ({
                                             }
                                         })}
                                         value={formData.phoneNumber}
-                                        onChange={(event) => {
+                                        onInput={(event) => {
                                             setFormData({
                                                 ...formData,
                                                 phoneNumber: event.target.value
@@ -288,7 +287,7 @@ const RegisteredForm = ({
                                     }
                                 })}
                                 vallue={formData.dateOfBirth}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         dateOfBirth: event.target.value
@@ -326,7 +325,7 @@ const RegisteredForm = ({
                                     }
                                 })}
                                 value={formData.bvNumber}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         bvNumber: event.target.value
@@ -416,7 +415,7 @@ const RegisteredForm = ({
                                     }
                                 })}
                                 value={formData.dateOfBirth}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         dateOfBirth: event.target.value

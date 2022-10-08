@@ -2,29 +2,19 @@ import Image from 'next/image';
 import React, { useEffect, useState, useRef } from 'react';
 import DashLayout from '../../components/layout/Dashboard';
 import ProfileLayout from '../../components/layout/ProfileLayout';
-import AppSvg from '../../components/ReusableComponents/AppSvg';
 import ArrowBackSvg from '../../components/ReusableComponents/ArrowBackSvg';
 import BeneSvg from '../../components/ReusableComponents/BeneSvg';
-import BiometricsSvg from '../../components/ReusableComponents/BiometricsSvg';
 import BvnSvg from '../../components/ReusableComponents/BvnSvg';
 import CheckedSvg from '../../components/ReusableComponents/CheckedSvg';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import InputTag from '../../components/ReusableComponents/Input';
-import LegalSvg from '../../components/ReusableComponents/LegalSvg';
-import Lock from '../../components/ReusableComponents/LockSvg';
 import ManageBeneSingle from '../../components/ReusableComponents/ManageBene';
-import ManageBene from '../../components/ReusableComponents/ManageBene';
-import ManageBene2 from '../../components/ReusableComponents/ManageBene2';
 import ManageLimit from '../../components/ReusableComponents/ManageLimit1';
 import ManageLimit2 from '../../components/ReusableComponents/ManageLimit2';
 import ManageLimitSvg from '../../components/ReusableComponents/ManageLimitSvg';
 import ManageSignSvg from '../../components/ReusableComponents/ManageSignSvg';
-import OtpForm from '../../components/ReusableComponents/OtpForm';
 import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess';
 import ProfileSingle from '../../components/ReusableComponents/ProfileSingle';
-import ResetPassSvg from '../../components/ReusableComponents/ResetPassSvg';
-import ResetPin from '../../components/ReusableComponents/ResetPin';
-import ResetPinSvg from '../../components/ReusableComponents/ResetPinSvg';
 import AddSvg from '../../components/ReusableComponents/ReusableSvgComponents/AddSvg';
 import ContactSvg from '../../components/ReusableComponents/ReusableSvgComponents/ContactSvg';
 import EditProfileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
@@ -32,13 +22,72 @@ import LogoutSvg from '../../components/ReusableComponents/ReusableSvgComponents
 import RmSvg from '../../components/ReusableComponents/RmSvg';
 import ShareSvg from '../../components/ReusableComponents/ShareSvg';
 import styles from './styles.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    getBeneficiariesData,
+    deleteBeneficiariesData,
+    loadViewBvn
+} from '../../redux/actions/actions';
+import { set, useForm } from 'react-hook-form';
+import Loader from '../../components/ReusableComponents/Loader';
 
 const Profile = () => {
     const [type, setType] = useState('Account');
     const [overlay, setOverlay] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [text, setText] = useState('View Profile');
+    const [error, setError] = useState('');
+    const [bvn, setBvn] = useState('');
     const [count, setCount] = useState(0);
     const [outType, setOutType] = useState();
+    const [beneficiaries, setBeneficiaries] = useState([]);
+    const dispatch = useDispatch();
+    const { getBeneficiaries } = useSelector(
+        (state) => state.getBeneficiariesReducer
+    );
+    const { deleteBeneficiaries } = useSelector(
+        (state) => state.deleteBeneficiariesReducer
+    );
+    const { viewBvn, errorMessageviewBvn } = useSelector(
+        (state) => state.viewBvnReducer
+    );
+    useEffect(() => {
+        dispatch(getBeneficiariesData());
+    }, []);
+    useEffect(() => {
+        if (getBeneficiaries !== null) {
+            setBeneficiaries(getBeneficiaries);
+        }
+    }, [getBeneficiaries, deleteBeneficiaries]);
+    useEffect(() => {
+        if (deleteBeneficiaries !== null) {
+            dispatch(getBeneficiariesData());
+        }
+    }, [deleteBeneficiaries]);
+    const bvnAction = (data) => {
+        setLoading(true);
+        setError('');
+        setBvn('');
+        const bvnData = {
+            dateOfBirth: data.date,
+            password: data.bvnPassword
+        };
+        dispatch(loadViewBvn(bvnData));
+    };
+
+    const viewBvnAction = () => {
+        if (viewBvn !== null) {
+            setLoading(false);
+            setBvn(viewBvn.data.bvn);
+        } else if (errorMessageviewBvn !== null) {
+            setLoading(false);
+            setError(errorMessageviewBvn);
+        }
+    };
+
+    useEffect(() => {
+        viewBvnAction();
+    }, [viewBvn, errorMessageviewBvn]);
     const profileData = [
         {
             text: 'View Profile',
@@ -119,6 +168,11 @@ const Profile = () => {
     const types = (type) => {
         setOutType(type);
     };
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
     const renderForm = () => {
         switch (text) {
             case 'View Profile':
@@ -165,27 +219,16 @@ const Profile = () => {
                                     <div className={styles.phone}>
                                         <div className={styles.phoneHeader}>
                                             <span>
-                                                <img
-                                                    // src={
-                                                    // countryNames
-                                                    // .flags.svg
-                                                    // }
+                                                {/* <img
+                                                    src={countryNames.flags.svg}
                                                     alt=""
-                                                />
+                                                /> */}
                                             </span>
-                                            <p>
-                                                {
-                                                    // countryNames.baseCurrency
-                                                }
-                                            </p>
+                                            {/* <p>{countryNames.baseCurrency}</p> */}
                                         </div>
                                         <div className={styles.phoneDetails}>
-                                            <p>
-                                                {
-                                                    // countryNames.countryCode
-                                                }
-                                            </p>
-                                            <InputTag
+                                            {/* <p>{countryNames.countryCode}</p> */}
+                                            <input
                                                 type="number"
                                                 placeholder="812 345 6789"
                                                 value={
@@ -228,7 +271,7 @@ const Profile = () => {
                 switch (count) {
                     case 0:
                         return (
-                            <>
+                            <form onSubmit={handleSubmit(bvnAction)}>
                                 <h2 className={styles.title}>View my BVN</h2>
                                 <div className={styles.bvn}>
                                     <p>
@@ -236,32 +279,54 @@ const Profile = () => {
                                         the BVN tied to your Ellevate account.
                                     </p>
                                 </div>
+                                {error ? (
+                                    <p className={styles.error}>{error}</p>
+                                ) : null}
                                 <div className={styles.formGroup}>
                                     <label>Date of Birth</label>
                                     <input
-                                        type="text"
+                                        type="date"
                                         placeholder="DD  |  MM  |  YYYY"
+                                        {...register('date', {
+                                            required: 'DOB is Required'
+                                        })}
                                     />
+                                    <p className={styles.error}>
+                                        {errors?.date?.message}
+                                    </p>
                                 </div>
                                 <div className={styles.formGroup}>
                                     <label>Enter your Password</label>
-
                                     <div className={styles.divs}>
                                         <input
                                             placeholder="**********"
-                                            // {...register('password', {
-                                            //     required: 'Password is Required'
-                                            // })}
-                                            name="password"
+                                            {...register('bvnPassword', {
+                                                required: 'Password is Required'
+                                            })}
+                                            name="bvnPassword"
                                             type={outType ? 'text' : 'password'}
                                         />
                                         <Visbility typeSet={types} />
                                     </div>
+                                    <p className={styles.error}>
+                                        {errors?.bvnPassword?.message}
+                                    </p>
                                 </div>
+                                {bvn ? (
+                                    <p className={styles.bvns}>
+                                        Your bvn is {bvn}
+                                    </p>
+                                ) : null}
                                 <div className={styles.bvnButton}>
-                                    <button>View my BVN</button>
+                                    {loading ? (
+                                        <Loader />
+                                    ) : (
+                                        <button type="submit">
+                                            View my BVN
+                                        </button>
+                                    )}
                                 </div>
-                            </>
+                            </form>
                         );
                     case 1:
                         return (
@@ -570,24 +635,32 @@ const Profile = () => {
                                     {type === 'Account' ? (
                                         <>
                                             {/* <p className={styles.text}>A</p> */}
-                                            {!bene.account.length ? (
+                                            {!beneficiaries.beneficiaries
+                                                ?.length ? (
                                                 <h2 className={styles.dontHave}>
                                                     You do not have any
                                                     Beneficiary at the moment
                                                 </h2>
                                             ) : (
                                                 <>
-                                                    {bene.account?.map(
+                                                    {beneficiaries.beneficiaries?.map(
                                                         (account, index) => {
                                                             return (
                                                                 <ManageBeneSingle
                                                                     beneAccount={
-                                                                        account.account
+                                                                        account.bankName
                                                                     }
                                                                     beneName={
-                                                                        account.name
+                                                                        account.beneficiaryName
                                                                     }
                                                                     key={index}
+                                                                    deleteAction={() => {
+                                                                        dispatch(
+                                                                            deleteBeneficiariesData(
+                                                                                account.beneficiaryId
+                                                                            )
+                                                                        );
+                                                                    }}
                                                                 />
                                                             );
                                                         }

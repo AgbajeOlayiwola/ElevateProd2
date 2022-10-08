@@ -301,6 +301,14 @@
     width: 35%;
 }
 
+.error {
+    color: red !important;
+    font-size: 12px !important;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
 .manageLimitBody {
     margin-top: 48px;
 }
@@ -449,7 +457,6 @@
     line-height: 27px;
     color: #7a7978;
     margin: 0px;
-    width: 376px;
     margin-bottom: 48px;
 }
 

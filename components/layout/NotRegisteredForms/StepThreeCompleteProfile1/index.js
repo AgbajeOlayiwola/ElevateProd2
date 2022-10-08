@@ -27,12 +27,29 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [bgcolor, setBgcolor] = useState(false);
     const [profileCont, setProfileCont] = useState([]);
     const [businessProfile, setBusinessProfile] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleShowFourthStep = () => {
         setSwitchs((prev) => !prev);
         setBgcolor((prevState) => !prevState);
     };
     const dispatch = useDispatch();
+
+    const [checker, setChecker] = useState();
+    const [localState, setLocalState] = useState('');
+    const [localGovernment, setLocalGovernment] = useState('');
+    const [location, setLocation] = useState([]);
+    const [gender, setGender] = useState('');
+    const [businessCategory, setBusinessCategory] = useState([]);
+    const [businessType, setBusinessType] = useState([]);
+    const [business, setBusiness] = useState('');
+    const [businesses, setBusinesses] = useState('');
+    const [businessTest, setBusinessTest] = useState(false);
+    const [businessText, setBusinessText] = useState(false);
+    const [businessError, setBusinessError] = useState(false);
+    const [errorMes, setErrorMes] = useState();
+    const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState('');
     const { compBusprofile, comperrorMessage } = useSelector(
         (state) => state.completeBusProfileReducer
     );
@@ -54,20 +71,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         (state) => state.newUserAccountDets
     );
 
-    const [checker, setChecker] = useState();
-    const [localState, setLocalState] = useState('');
-    const [localGovernment, setLocalGovernment] = useState('');
-    const [location, setLocation] = useState([]);
-    const [gender, setGender] = useState('');
-    const [businessCategory, setBusinessCategory] = useState([]);
-    const [businessType, setBusinessType] = useState([]);
-    const [business, setBusiness] = useState('');
-    const [businesses, setBusinesses] = useState('');
-    const [businessTest, setBusinessTest] = useState(false);
-    const [businessText, setBusinessText] = useState(false);
-    const [errorMes, setErrorMes] = useState();
-    const [file, setFile] = useState(null);
-    const [fileName, setFileName] = useState('');
     const router = useRouter();
     const saveFile = (e) => {
         setFile(e.target.files[0]);
@@ -99,8 +102,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     }, []);
     useEffect(() => {
         if (profile !== null) {
-            console.log(profileCont);
-            setProfileCont(profile.data[0].documentData);
+            console.log(profileCont.companyName);
+            setProfileCont(profile);
             if (profile.data[2]) {
                 setBusinessProfile(profile.data[2].documentData);
             } else {
@@ -167,10 +170,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // };
 
     const handleSubmitIII = () => {
-        // let newFile = file;
-        // let formData = new FormData();
-        // formData.append('image', newFile);
-        // formData.append('name', 'image');
+        setLoading((prev) => !prev);
         const commpleteProfileData = {
             isRegistered: type,
             businessName: formData.bussinessName,
@@ -188,40 +188,19 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
-
-        // const accountData = {
-        //     affiliateCode: 'ENG',
-        //     currency: 'NGN'
-        // };
-        // dispatch(createNewUserAccount(accountData));
-        // if (
-        //     newAccount === 'Success' ||
-        //     newAccountErrorMessage ===
-        //         'You already have an account with us. Please contact us for more information'
-        // ) {
-        //     console.log(errorMessages);
-        //     router.push('/Verify/Account/loading');
-        // } else if (accountStatus.message === 'Try Again') {
-        //     router.push('/Verify/Account/loading');
-        // } else if (accountStatus.message === 'SUCCESS') {
-        //     router.push('/Succes');
-        // }
     };
     useEffect(() => {
+        setLoading((prev) => !prev);
         console.log(compBusprofile);
         if (compBusprofile) {
-            if (
-                compBusprofile.message === 'Successful'
-                // ||
-                // comperrorMessage.response.data.message ===
-                // 'your have already setup your business'
-            ) {
+            if (compBusprofile.message === 'Successful') {
                 router.push('/Verify/Account/loading');
             }
         }
     }, [newAccount, comperrorMessage]);
 
     const handleSubmitReg = () => {
+        setLoading((prev) => !prev);
         const commpleteProfileData = {
             isRegistered: type,
             businessName: formData.bussinessName,
@@ -241,47 +220,14 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
     useEffect(() => {
+        setLoading((prev) => !prev);
         console.log(compBusprofile);
         if (compBusprofile) {
-            if (
-                compBusprofile.message === 'Successful'
-                // ||
-                // comperrorMessage.response.data.message ===
-                //     'your have already setup your business'
-            ) {
+            if (compBusprofile.message === 'Successful') {
                 router.push('/Verify/CorportateAccount');
             }
         }
     }, [newCorpAccount, newCorpAccountErrorMMessage]);
-    // useEffect(() => {
-    //     handleSubmitIII();
-    // }, [newAccountErrorMessage]);
-
-    // const businessProfileAction = () => {
-    //     const commpleteProfileData = {
-    //         businessName: formData.bussinessName,
-    //         businessType: formData.businessType,
-    //         referralCode: formData.refferalCode,
-    //         countryCode: '+234',
-    //         phoneNumber: formData.bussinessName,
-    //         businessAddress: formData.streetName,
-    //         state: formData.state,
-    //         city: formData.city,
-    //         lga: formData.localGoverment
-    //     };
-    //     console.log(commpleteProfileData);
-    //     dispatch(CompleteBusinessProfile(commpleteProfileData));
-
-    //     const accountData = {
-    //         affiliateCode: 'ENG',
-    //         ccy: 'NGN'
-    //     };
-    //     dispatch(createNewUserAccount(accountData));
-    // };
-
-    // const sendOTP = (data) => {
-    //     console.log(data);
-    // };
     const [activeBtn, setActiveBtn] = useState(true);
 
     // console.log(type);
@@ -335,10 +281,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                         <p>Other Details</p>
                     </div>
                 </ButtonWrapper>
-                <form onSubmit={handleSubmit(action)}>
+                <>
                     {title === 'Basic' ? (
                         <form
                             onSubmit={handleSubmit(() => {
+                                if (!business) {
+                                    setBusinessError(true);
+                                }
                                 setTitle('Other');
                             })}
                         >
@@ -347,7 +296,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <label>Enter Full Name</label>
                                     <input
                                         type="text"
-                                        placeholder={profileCont.firstName}
+                                        value={`${profileCont.lastName} ${profileCont.firstName}`}
                                         disabled
                                     />
                                 </div>
@@ -363,9 +312,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
-                                    <div className="errors">
+                                    <p className={styles.error}>
                                         {errors.gender?.message}
-                                    </div>
+                                    </p>
                                 </div>
                             </div>
                             <div className={styles.formCont}>
@@ -389,9 +338,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     });
                                                 }}
                                             />
-                                            <div className="errors">
+                                            <p className={styles.error}>
                                                 {errors.businessName?.message}
-                                            </div>
+                                            </p>
                                         </div>
                                         <div className={styles.singleFormGroup}>
                                             <label>
@@ -449,6 +398,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                                             setBusinessTest(
                                                                                 false
                                                                             );
+                                                                            setBusinessError(
+                                                                                false
+                                                                            );
                                                                         }}
                                                                     >
                                                                         {
@@ -461,6 +413,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     </ul>
                                                 )}
                                             </div>
+                                            {businessError ? (
+                                                <p className={styles.error}>
+                                                    Busuness Category is
+                                                    Required
+                                                </p>
+                                            ) : null}
                                         </div>
                                     </div>
                                     <div className={styles.formGroup}>
@@ -521,12 +479,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="errors">
+                                            <p className={styles.error}>
                                                 {
                                                     errors.countryCode_number
                                                         ?.message
                                                 }
-                                            </div>
+                                            </p>
                                         </div>
                                         <div className={styles.singleFormGroup}>
                                             <label>
@@ -591,6 +549,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                         )}
                                                     </ul>
                                                 )}
+                                                {businessError ? (
+                                                    <p className={styles.error}>
+                                                        Busuness Type is
+                                                        Required
+                                                    </p>
+                                                ) : null}
                                             </div>
                                         </div>
                                         <button type="submit">Next</button>
@@ -632,9 +596,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 }}
                                             />
                                         </div>
-                                        <div className="errors">
+                                        <p className={styles.error}>
                                             {errors.streetName?.message}
-                                        </div>
+                                        </p>
                                     </div>
                                     <div className={styles.singleFormGroup}>
                                         <label>
@@ -673,9 +637,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                   )
                                                 : null}
                                         </select>
-                                        <div className="errors">
+                                        <p className={styles.error}>
                                             {errors.localGoverment?.message}
-                                        </div>
+                                        </p>
                                     </div>
                                 </div>
                                 <div className={styles.formGroup}>
@@ -717,9 +681,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 );
                                             })}
                                         </select>
-                                        <div className="errors">
+                                        <p className={styles.error}>
                                             {errors.state?.message}
-                                        </div>
+                                        </p>
                                     </div>
                                     <div className={styles.singleFormGroup}>
                                         <label>City/Town</label>
@@ -737,9 +701,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 });
                                             }}
                                         />
-                                        <div className="errors">
+                                        <p className={styles.error}>
                                             {errors.city?.message}
-                                        </div>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -762,7 +726,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             }}
                                         />
                                     </div>
-                                    {profileCont.isBusinessRegistered ===
+                                    {/* {profileCont.isBusinessRegistered ===
                                     true ? (
                                         <ButtonComp
                                             disabled={activeBtn}
@@ -789,15 +753,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             onClick={handleSubmitIII}
                                             // onClick={handleShowFourthStep}
                                         />
-                                    )}
-                                    {/* <ButtonComp
+                                    )} */}
+                                    <ButtonComp
                                         disabled={activeBtn}
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
                                         text="Save & Continue"
-                                        type="button"
-                                    /> */}
+                                        type="submit"
+                                    />
                                 </div>
                                 <div className={styles.formGroup}>
                                     <div className={styles.singleFormGroup}>
@@ -822,7 +786,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                             </div>
                         </form>
                     )}
-                </form>
+                </>
             </div>
         </div>
     );

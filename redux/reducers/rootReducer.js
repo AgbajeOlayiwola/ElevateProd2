@@ -20,6 +20,7 @@ import verifyBankReducer from './verifyBank.reducer';
 import verifyCurrencyReducer from './verifyCurrency.reducer';
 import postBeneficiariesReducer from './postBeneficiary.reducer';
 import getBeneficiariesReducer from './getBeneficiaries.reducer';
+import deleteBeneficiariesReducer from './deleteBeneficiary.reducer';
 import authReducer from './auth.reducer';
 import registerReducer from './register.reducer';
 import profileReducer from './completeprofile.reducer';
@@ -54,6 +55,9 @@ import fogrotPasswordReducer from './forgotpassword.reducer';
 import resetOtpReducer from './resetotp.reducer';
 import ussdGenReducer from './ussdGen.reducer';
 import ussdStatusReducer from './ussdStatus.reducer';
+import viewBvnReducer from './viewBvn.reducer';
+import resetPasswordReducer from './resetPassword.reducer';
+import bankStatementReducer from './bankStatement.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -77,6 +81,7 @@ const rootReducer = combineReducers({
     verifyBankReducer: verifyBankReducer,
     verifyCurrencyReducer: verifyCurrencyReducer,
     getBeneficiariesReducer: getBeneficiariesReducer,
+    deleteBeneficiariesReducer: deleteBeneficiariesReducer,
     postBeneficiariesReducer: postBeneficiariesReducer,
     auth: authReducer,
     registered: registerReducer,
@@ -112,6 +117,9 @@ const rootReducer = combineReducers({
     setTransactionPinReducer: setTransactionPinReducer,
     userProfileReducer: userProfileReducer,
     fogrotPasswordReducer: fogrotPasswordReducer,
+    viewBvnReducer: viewBvnReducer,
+    resetPasswordReducer: resetPasswordReducer,
+    bankStatementReducer: bankStatementReducer,
     resetOtpReducer: resetOtpReducer
 });
 

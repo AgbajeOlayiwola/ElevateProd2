@@ -155,6 +155,46 @@ export const getBeneficiaries = {
 
 //getBeneficiaries action type ends
 
+//deleteBeneficiaries action types
+
+export const deleteBeneficiaries = {
+    DELETEBENEFICIARIES_LOAD_START: 'DELETEBENEFICIARIES_LOAD_START',
+    DELETEBENEFICIARIES_LOAD_SUCCESS: 'DELETEBENEFICIARIES_LOAD_SUCCESS',
+    DELETEBENEFICIARIES_LOAD_ERROR: 'DELETEBENEFICIARIES_LOAD_ERROR'
+};
+
+//deleteBeneficiaries action type ends
+
+//viewBvn action types
+
+export const viewBvn = {
+    VIEWBVN_LOAD_START: 'VIEWBVN_LOAD_START',
+    VIEWBVN_LOAD_SUCCESS: 'VIEWBVN_LOAD_SUCCESS',
+    VIEWBVN_LOAD_ERROR: 'VIEWBVN_LOAD_ERROR'
+};
+
+//viewBvn action type ends
+
+//resetPassword action types
+
+export const resetPassword = {
+    RESETPASSWORD_LOAD_START: 'RESETPASSWORD_LOAD_START',
+    RESETPASSWORD_LOAD_SUCCESS: 'RESETPASSWORD_LOAD_SUCCESS',
+    RESETPASSWORD_LOAD_ERROR: 'RESETPASSWORD_LOAD_ERROR'
+};
+
+//resetPassword action type ends
+
+//bankStatement action types
+
+export const bankStatement = {
+    BANKSTATEMENT_LOAD_START: 'BANKSTATEMENT_LOAD_START',
+    BANKSTATEMENT_LOAD_SUCCESS: 'BANKSTATEMENT_LOAD_SUCCESS',
+    BANKSTATEMENT_LOAD_ERROR: 'BANKSTATEMENT_LOAD_ERROR'
+};
+
+//bankStatement action type ends
+
 //ussdgen action types
 
 export const ussdGen = {
