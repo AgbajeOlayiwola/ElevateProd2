@@ -33,7 +33,9 @@ const AccountLoading = () => {
 
     // console.log(profile);
 
-    // console.log(accountStatus);
+    console.log(accountStatus, errorMessages);
+    //error message
+    //Bank Account has not been created for this user
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
