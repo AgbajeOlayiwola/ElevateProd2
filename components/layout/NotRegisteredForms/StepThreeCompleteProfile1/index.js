@@ -102,7 +102,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     useEffect(() => {
         if (profile !== null) {
             console.log(profileCont.companyName);
-            // setProfileCont(profile.data[0].documentData);
+            setProfileCont(profile);
             if (profile.data[2]) {
                 setBusinessProfile(profile.data[2].documentData);
             } else {

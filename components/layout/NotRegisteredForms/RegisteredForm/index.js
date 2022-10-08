@@ -124,6 +124,8 @@ const RegisteredForm = ({
                 </InputWrapper>
                 {formData.type == 'true' ? (
                     <form onSubmit={handleSubmit(actionI)}>
+                        <p className={styles.error}>{errorM}</p>
+                        <p className={styles.error}> {bvnError}</p>
                         <InputWrapper>
                             <Label>
                                 Enter your RC Number/Business Registration
