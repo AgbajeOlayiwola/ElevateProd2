@@ -183,15 +183,9 @@ const ManageBene = ({ overlay, title, action, btnAction }) => {
     );
 };
 
-const ManageBeneSingle = ({ beneAccount, beneName, action, index }) => {
+const ManageBeneSingle = ({ beneAccount, beneName, index, deleteAction }) => {
     return (
-        <div
-            className={styles.manageBeneSingle}
-            onClick={(e) => {
-                action(e);
-            }}
-            key={index}
-        >
+        <div className={styles.manageBeneSingle} key={index}>
             <div className={styles.manageBeneDetails}>
                 <BeneUserSvg />
                 <div>
@@ -199,7 +193,7 @@ const ManageBeneSingle = ({ beneAccount, beneName, action, index }) => {
                     <p>{beneAccount}</p>
                 </div>
             </div>
-            <ThreeDotsSvg />
+            <ThreeDotsSvg action={deleteAction} />
         </div>
     );
 };

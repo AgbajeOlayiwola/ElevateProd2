@@ -15,12 +15,13 @@ const balanceEnquiry = '/bank-account/balance';
 const accountPrimary = '/bank-account/primary';
 const transactionHistory = '/account/transaction';
 const setTransactionPin = '/account-upgrade/transaction-pin/set';
-const transactionElevate = '/account/transaction/ellevate';
+const transactionElevate = '/transactions';
 const bulkTransfer = '/payment/bulk-transfer';
 const verifyBank = '/transfer/international/validate-bank';
 const verifyCurrency = '/transfer/international/currency';
 const internationalTransfer = '/transfer/international';
 const beneficiaries = '/beneficiaries';
+const deleteBeneficiaries = '/beneficiaries/delete/';
 const ussdGen = '/payment/ussd/generate';
 const ussdStatus = '/payment/ussd/status';
 const register = '/authentication/register';
@@ -61,6 +62,9 @@ const uploadRefForm = '/account-upgrade/reference-form/share';
 const uploadBoardRes = '/account-upgrade/board-resolution/upload';
 const forgotPassword = '/authentication/forget-password';
 const resetOtp = '/authentication/otp/re-send';
+const viewBvn = '/users/bvn/view';
+const resetPassword = '/authentication/reset-password';
+const bankStatement = '/bank-account/statement';
 export default {
     getBanks,
     getCountries,
@@ -91,6 +95,7 @@ export default {
     corpNewUser,
     bulkTransfer,
     beneficiaries,
+    deleteBeneficiaries,
     profileSetupBus,
     verifyOtp,
     verifyDob,
@@ -122,5 +127,8 @@ export default {
     ussdGen,
     ussdStatus,
     forgotPassword,
+    viewBvn,
+    resetPassword,
+    bankStatement,
     resetOtp
 };

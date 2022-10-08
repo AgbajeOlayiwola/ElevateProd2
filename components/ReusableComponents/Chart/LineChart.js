@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2';
 const LineChart = () => {
     // set data
     const [lineData, setLineData] = useState({
-        labels: ['Sun', 'Mon', 'Tue', 'Thr', 'Fri', 'Sat'],
+        labels: ['Sun', 'Mon', 'Tue', 'Thr', 'Fri', 'Sat', 1, 2],
         datasets: [
             {
                 data: [250, 200, 250, 200, 250, 200],

@@ -20,17 +20,19 @@ import {
     scmulData,
     uploadUtilityData,
     statesData,
+    loadsetTransactionPin,
+    loadUserProfile,
     uploadRefFormData
 } from '../../redux/actions/actions';
 
 import { useForm } from 'react-hook-form';
-import { loadsetTransactionPin } from '../../redux/actions/actions';
 
 const AccountUpgrade = () => {
     const router = useRouter();
     const { setTransactionPin, setTransactionPinError } = useSelector(
         (state) => state.setTransactionPinReducer
     );
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     const dispatch = useDispatch();
     const {
@@ -56,7 +58,16 @@ const AccountUpgrade = () => {
     useEffect(() => {
         transactionPin();
     }, [setTransactionPin, setTransactionPinError]);
-    const [text, setText] = useState('Corporate');
+    useEffect(() => {
+        dispatch(loadUserProfile());
+    }, []);
+
+    useEffect(() => {
+        if (userProfile !== null) {
+            setText(userProfile.customerCategory);
+        }
+    }, [userProfile]);
+    const [text, setText] = useState('');
     const [localState, setLocalState] = useState('');
     const [location, setLocation] = useState([]);
     const [localGovernment, setLocalGovernment] = useState('');
@@ -214,6 +225,7 @@ const AccountUpgrade = () => {
         const emailToshareData = {
             emailsToShare: [refoneemail, refoneno]
         };
+        console.log(emailToshareData);
         dispatch(uploadRefFormData(emailToshareData));
     };
 
@@ -307,7 +319,7 @@ const AccountUpgrade = () => {
             return (
                 <AccountUpgradeComponent
                     title={
-                        text === 'Individual'
+                        text === 'INDIVIDUAL'
                             ? 'Individual Account Upgrade'
                             : text === 'Corporate'
                             ? 'Corporate Account Upgrade'
@@ -336,7 +348,7 @@ const AccountUpgrade = () => {
                             the documents below to process your account upgrade.
                         </p>
                     </div>
-                    {text === 'Individual'
+                    {text === 'INDIVIDUAL'
                         ? AccountUpgradeData.individual.map((item, index) => {
                               return (
                                   <AccountUpgradeSingle
@@ -1065,8 +1077,6 @@ const AccountUpgrade = () => {
                         <div className={styles.directorsGroup}>
                             <label>Phone Number</label>
                             <input
-                                value={refoneno}
-                                onChange={(e) => setRefoneNo(e.target.value)}
                                 type="text"
                                 name=""
                                 placeholder="Enter Phone Number"
@@ -1081,6 +1091,8 @@ const AccountUpgrade = () => {
                                 type="text"
                                 name=""
                                 placeholder="Enter Email"
+                                value={refoneno}
+                                onChange={(e) => setRefoneNo(e.target.value)}
                             />
                         </div>
                         <div className={styles.directorsGroup}>
