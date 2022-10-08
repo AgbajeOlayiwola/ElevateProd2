@@ -34,9 +34,12 @@ const Liveness = ({ action }) => {
     const [succes, setSuccess] = useState('');
     const [imageSrcI, setImageSrcI] = React.useState(null);
     const [error, setError] = React.useState('');
+    const [loading, setLoading] = useState(false);
+    const [verifying, setVerifying] = useState('');
 
     const capture = React.useCallback(() => {
-        // setLoading((prev) => !prev);
+        setLoading((prev) => !prev);
+        setVerifying('Verifying...');
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
@@ -108,7 +111,7 @@ const Liveness = ({ action }) => {
                         </div>
                     </div>
                 </div>
-
+                {verifying ? verifying : null}
                 <ButtonComp
                     onClick={
                         succes === 'facial verification successful'

@@ -27,12 +27,28 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [bgcolor, setBgcolor] = useState(false);
     const [profileCont, setProfileCont] = useState([]);
     const [businessProfile, setBusinessProfile] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleShowFourthStep = () => {
         setSwitchs((prev) => !prev);
         setBgcolor((prevState) => !prevState);
     };
     const dispatch = useDispatch();
+
+    const [checker, setChecker] = useState();
+    const [localState, setLocalState] = useState('');
+    const [localGovernment, setLocalGovernment] = useState('');
+    const [location, setLocation] = useState([]);
+    const [gender, setGender] = useState('');
+    const [businessCategory, setBusinessCategory] = useState([]);
+    const [businessType, setBusinessType] = useState([]);
+    const [business, setBusiness] = useState('');
+    const [businesses, setBusinesses] = useState('');
+    const [businessTest, setBusinessTest] = useState(false);
+    const [businessText, setBusinessText] = useState(false);
+    const [errorMes, setErrorMes] = useState();
+    const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState('');
     const { compBusprofile, comperrorMessage } = useSelector(
         (state) => state.completeBusProfileReducer
     );
@@ -54,21 +70,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         (state) => state.newUserAccountDets
     );
 
-    const [checker, setChecker] = useState();
-    const [localState, setLocalState] = useState('');
-    const [localGovernment, setLocalGovernment] = useState('');
-    const [location, setLocation] = useState([]);
-    const [gender, setGender] = useState('');
-    const [businessCategory, setBusinessCategory] = useState([]);
-    const [businessType, setBusinessType] = useState([]);
-    const [business, setBusiness] = useState('');
-    const [businesses, setBusinesses] = useState('');
-    const [businessTest, setBusinessTest] = useState(false);
-    const [businessText, setBusinessText] = useState(false);
-    const [businessError, setBusinessError] = useState(false);
-    const [errorMes, setErrorMes] = useState();
-    const [file, setFile] = useState(null);
-    const [fileName, setFileName] = useState('');
     const router = useRouter();
     const saveFile = (e) => {
         setFile(e.target.files[0]);
@@ -100,8 +101,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     }, []);
     useEffect(() => {
         if (profile !== null) {
-            console.log(profileCont);
-            setProfileCont(profile.data[0].documentData);
+            console.log(profileCont.companyName);
+            // setProfileCont(profile.data[0].documentData);
             if (profile.data[2]) {
                 setBusinessProfile(profile.data[2].documentData);
             } else {
@@ -168,10 +169,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // };
 
     const handleSubmitIII = () => {
-        // let newFile = file;
-        // let formData = new FormData();
-        // formData.append('image', newFile);
-        // formData.append('name', 'image');
+        setLoading((prev) => !prev);
         const commpleteProfileData = {
             isRegistered: type,
             businessName: formData.bussinessName,
@@ -189,40 +187,19 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
-
-        // const accountData = {
-        //     affiliateCode: 'ENG',
-        //     currency: 'NGN'
-        // };
-        // dispatch(createNewUserAccount(accountData));
-        // if (
-        //     newAccount === 'Success' ||
-        //     newAccountErrorMessage ===
-        //         'You already have an account with us. Please contact us for more information'
-        // ) {
-        //     console.log(errorMessages);
-        //     router.push('/Verify/Account/loading');
-        // } else if (accountStatus.message === 'Try Again') {
-        //     router.push('/Verify/Account/loading');
-        // } else if (accountStatus.message === 'SUCCESS') {
-        //     router.push('/Succes');
-        // }
     };
     useEffect(() => {
+        setLoading((prev) => !prev);
         console.log(compBusprofile);
         if (compBusprofile) {
-            if (
-                compBusprofile.message === 'Successful'
-                // ||
-                // comperrorMessage.response.data.message ===
-                // 'your have already setup your business'
-            ) {
+            if (compBusprofile.message === 'Successful') {
                 router.push('/Verify/Account/loading');
             }
         }
     }, [newAccount, comperrorMessage]);
 
     const handleSubmitReg = () => {
+        setLoading((prev) => !prev);
         const commpleteProfileData = {
             isRegistered: type,
             businessName: formData.bussinessName,
@@ -242,47 +219,14 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
     useEffect(() => {
+        setLoading((prev) => !prev);
         console.log(compBusprofile);
         if (compBusprofile) {
-            if (
-                compBusprofile.message === 'Successful'
-                // ||
-                // comperrorMessage.response.data.message ===
-                //     'your have already setup your business'
-            ) {
+            if (compBusprofile.message === 'Successful') {
                 router.push('/Verify/CorportateAccount');
             }
         }
     }, [newCorpAccount, newCorpAccountErrorMMessage]);
-    // useEffect(() => {
-    //     handleSubmitIII();
-    // }, [newAccountErrorMessage]);
-
-    // const businessProfileAction = () => {
-    //     const commpleteProfileData = {
-    //         businessName: formData.bussinessName,
-    //         businessType: formData.businessType,
-    //         referralCode: formData.refferalCode,
-    //         countryCode: '+234',
-    //         phoneNumber: formData.bussinessName,
-    //         businessAddress: formData.streetName,
-    //         state: formData.state,
-    //         city: formData.city,
-    //         lga: formData.localGoverment
-    //     };
-    //     console.log(commpleteProfileData);
-    //     dispatch(CompleteBusinessProfile(commpleteProfileData));
-
-    //     const accountData = {
-    //         affiliateCode: 'ENG',
-    //         ccy: 'NGN'
-    //     };
-    //     dispatch(createNewUserAccount(accountData));
-    // };
-
-    // const sendOTP = (data) => {
-    //     console.log(data);
-    // };
     const [activeBtn, setActiveBtn] = useState(true);
 
     // console.log(type);
