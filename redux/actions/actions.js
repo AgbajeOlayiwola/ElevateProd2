@@ -238,9 +238,7 @@ export const loadCountry = () => (dispatch) => {
     axiosInstance
         .get(`${apiRoutes.getCountries}`)
         .then((response) => dispatch(countryLoadSuccess(response.data.data)))
-        .catch((error) =>
-            dispatch(countryLoadError(error.response.data.message))
-        );
+        .catch((error) => dispatch(countryLoadError(error.response.message)));
 };
 //country actions end
 

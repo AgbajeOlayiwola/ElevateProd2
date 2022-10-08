@@ -136,10 +136,7 @@ const RegisteredForm = ({
                             name="rcNumber"
                             {...register('rcNumber', {
                                 required: 'RC Number is required',
-                                minLength: {
-                                    value: 10,
-                                    message: 'Min length is 10'
-                                },
+
                                 pattern: {
                                     value: /^[A-Za-z0-9 ]+$/i,
                                     message: 'Only Alphabelts/Number allowed'

@@ -46,6 +46,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [businesses, setBusinesses] = useState('');
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
+    const [businessError, setBusinessError] = useState(false);
     const [errorMes, setErrorMes] = useState();
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
