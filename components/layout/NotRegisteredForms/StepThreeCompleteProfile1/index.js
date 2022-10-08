@@ -65,6 +65,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [businesses, setBusinesses] = useState('');
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
+    const [businessError, setBusinessError] = useState(false);
     const [errorMes, setErrorMes] = useState();
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
@@ -339,6 +340,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                     {title === 'Basic' ? (
                         <form
                             onSubmit={handleSubmit(() => {
+                                if (!business) {
+                                    setBusinessError(true);
+                                }
                                 setTitle('Other');
                             })}
                         >
@@ -449,6 +453,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                                             setBusinessTest(
                                                                                 false
                                                                             );
+                                                                            setBusinessError(
+                                                                                false
+                                                                            );
                                                                         }}
                                                                     >
                                                                         {
@@ -461,6 +468,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     </ul>
                                                 )}
                                             </div>
+                                            {businessError ? (
+                                                <p className={styles.error}>
+                                                    Busuness Category is
+                                                    Required
+                                                </p>
+                                            ) : null}
                                         </div>
                                     </div>
                                     <div className={styles.formGroup}>
@@ -591,6 +604,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                         )}
                                                     </ul>
                                                 )}
+                                                {businessError ? (
+                                                    <p className={styles.error}>
+                                                        Busuness Type is
+                                                        Required
+                                                    </p>
+                                                ) : null}
                                             </div>
                                         </div>
                                         <button type="submit">Next</button>
