@@ -15,6 +15,7 @@ import {
     transactionHistory,
     transactionElevate,
     postBeneficiaries,
+    deleteBeneficiaries,
     getBeneficiaries,
     bulkTransfer,
     internationalTransfer,
@@ -52,6 +53,9 @@ import {
     ussdGen,
     ussdStatus,
     forgotPasswordtype,
+    resetPassword,
+    bankStatement,
+    viewBvn,
     resetOtpType
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
@@ -90,6 +94,7 @@ const axiosInstance = axios.create({
         Authorization: `Bearer ${Token}`
     }
 });
+
 //uusdGen actions
 export const ussdGenLoadStart = () => ({
     type: ussdGen.USSDGEN_LOAD_START
@@ -112,6 +117,83 @@ export const loadussdGen = (code) => (dispatch) => {
         .catch((error) => dispatch(ussdGenLoadError(error.message)));
 };
 //uusdGen actions end
+
+//resetPassword actions
+export const resetPasswordLoadStart = () => ({
+    type: resetPassword.RESETPASSWORD_LOAD_START
+});
+
+export const resetPasswordLoadSuccess = (billers) => ({
+    type: resetPassword.RESETPASSWORD_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const resetPasswordLoadError = (errorMessage) => ({
+    type: resetPassword.RESETPASSWORD_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadresetPassword = (code) => (dispatch) => {
+    dispatch(resetPasswordLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.resetPassword}`, code)
+        .then((response) =>
+            dispatch(resetPasswordLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(resetPasswordLoadError(error.response.data.message))
+        );
+};
+//resetPassword actions end
+
+//bankStatement actions
+export const bankStatementLoadStart = () => ({
+    type: bankStatement.BANKSTATEMENT_LOAD_START
+});
+
+export const bankStatementLoadSuccess = (billers) => ({
+    type: bankStatement.BANKSTATEMENT_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const bankStatementLoadError = (errorMessage) => ({
+    type: bankStatement.BANKSTATEMENT_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadbankStatement = (code) => (dispatch) => {
+    dispatch(bankStatementLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.bankStatement}`, code)
+        .then((response) =>
+            dispatch(bankStatementLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(bankStatementLoadError(error.message)));
+};
+//bankStatement actions end
+
+//viewBvn actions
+export const viewBvnLoadStart = () => ({
+    type: viewBvn.VIEWBVN_LOAD_START
+});
+
+export const viewBvnLoadSuccess = (billers) => ({
+    type: viewBvn.VIEWBVN_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const viewBvnLoadError = (errorMessage) => ({
+    type: viewBvn.VIEWBVN_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadViewBvn = (code) => (dispatch) => {
+    dispatch(viewBvnLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.viewBvn}`, code)
+        .then((response) => dispatch(viewBvnLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(viewBvnLoadError(error.response.data.message))
+        );
+};
+//viewBvn actions end
 
 //uusdStatus actions
 export const ussdStatusLoadStart = () => ({
@@ -183,7 +265,7 @@ export const loadAccountPrimary = () => (dispatch) => {
         .get(`${apiRoutes.accountPrimary}`)
         .then((response) => dispatch(accountPrimaryLoadSuccess(response.data)))
         .catch((error) =>
-            dispatch(accountPrimaryLoadError(error.response.data.message))
+            dispatch(accountPrimaryLoadError(error.response.message))
         );
 };
 //accountPrimary actions end
@@ -215,7 +297,7 @@ export const loadUserProfile = () => (dispatch) => {
         })
         .then((response) => dispatch(userProfileLoadSuccess(response.data)))
         .catch((error) =>
-            dispatch(userProfileLoadError(error.response.data.message))
+            dispatch(userProfileLoadError(error.response.message))
         );
 };
 //userprofile actions end
@@ -787,6 +869,34 @@ export const getBeneficiariesData = () => (dispatch) => {
 };
 
 //getBeneficiaries action end
+
+//deleteBeneficiaries action
+export const deleteBeneficiariesLoadStart = () => ({
+    type: deleteBeneficiaries.DELETEBENEFICIARIES_LOAD_START
+});
+
+export const deleteBeneficiariesLoadSuccess = (bill) => ({
+    type: deleteBeneficiaries.DELETEBENEFICIARIES_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const deleteBeneficiariesLoadError = (deleteBeneficiarieserror) => ({
+    type: deleteBeneficiaries.DELETEBENEFICIARIES_LOAD_ERROR,
+    payload: deleteBeneficiarieserror
+});
+export const deleteBeneficiariesData = (data) => (dispatch) => {
+    dispatch(deleteBeneficiariesLoadStart());
+    axiosInstance
+        .delete(`${apiRoutes.deleteBeneficiaries}${data}`)
+        .then((response) =>
+            dispatch(deleteBeneficiariesLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(deleteBeneficiariesLoadError(error.message))
+        );
+};
+
+//deleteBeneficiaries action end
 
 //postBeneficiaries action
 export const postBeneficiariesLoadStart = () => ({

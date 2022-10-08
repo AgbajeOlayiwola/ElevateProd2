@@ -280,7 +280,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                         <p>Other Details</p>
                     </div>
                 </ButtonWrapper>
-                <form onSubmit={handleSubmit(action)}>
+                <>
                     {title === 'Basic' ? (
                         <form
                             onSubmit={handleSubmit(() => {
@@ -292,7 +292,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <label>Enter Full Name</label>
                                     <input
                                         type="text"
-                                        placeholder={profileCont.firstName}
+                                        value={`${profileCont.lastName} ${profileCont.firstName}`}
                                         disabled
                                     />
                                 </div>
@@ -308,9 +308,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
-                                    <div className="errors">
+                                    <p className={styles.error}>
                                         {errors.gender?.message}
-                                    </div>
+                                    </p>
                                 </div>
                             </div>
                             <div className={styles.formCont}>
@@ -334,9 +334,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     });
                                                 }}
                                             />
-                                            <div className="errors">
+                                            <p className={styles.error}>
                                                 {errors.businessName?.message}
-                                            </div>
+                                            </p>
                                         </div>
                                         <div className={styles.singleFormGroup}>
                                             <label>
@@ -466,12 +466,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="errors">
+                                            <p className={styles.error}>
                                                 {
                                                     errors.countryCode_number
                                                         ?.message
                                                 }
-                                            </div>
+                                            </p>
                                         </div>
                                         <div className={styles.singleFormGroup}>
                                             <label>
@@ -577,9 +577,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 }}
                                             />
                                         </div>
-                                        <div className="errors">
+                                        <p className={styles.error}>
                                             {errors.streetName?.message}
-                                        </div>
+                                        </p>
                                     </div>
                                     <div className={styles.singleFormGroup}>
                                         <label>
@@ -618,9 +618,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                   )
                                                 : null}
                                         </select>
-                                        <div className="errors">
+                                        <p className={styles.error}>
                                             {errors.localGoverment?.message}
-                                        </div>
+                                        </p>
                                     </div>
                                 </div>
                                 <div className={styles.formGroup}>
@@ -662,9 +662,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 );
                                             })}
                                         </select>
-                                        <div className="errors">
+                                        <p className={styles.error}>
                                             {errors.state?.message}
-                                        </div>
+                                        </p>
                                     </div>
                                     <div className={styles.singleFormGroup}>
                                         <label>City/Town</label>
@@ -682,9 +682,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 });
                                             }}
                                         />
-                                        <div className="errors">
+                                        <p className={styles.error}>
                                             {errors.city?.message}
-                                        </div>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -707,7 +707,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             }}
                                         />
                                     </div>
-                                    {profileCont.isBusinessRegistered ===
+                                    {/* {profileCont.isBusinessRegistered ===
                                     true ? (
                                         <ButtonComp
                                             disabled={activeBtn}
@@ -734,15 +734,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             onClick={handleSubmitIII}
                                             // onClick={handleShowFourthStep}
                                         />
-                                    )}
-                                    {/* <ButtonComp
+                                    )} */}
+                                    <ButtonComp
                                         disabled={activeBtn}
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
                                         text="Save & Continue"
-                                        type="button"
-                                    /> */}
+                                        type="submit"
+                                    />
                                 </div>
                                 <div className={styles.formGroup}>
                                     <div className={styles.singleFormGroup}>
@@ -767,7 +767,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                             </div>
                         </form>
                     )}
-                </form>
+                </>
             </div>
         </div>
     );

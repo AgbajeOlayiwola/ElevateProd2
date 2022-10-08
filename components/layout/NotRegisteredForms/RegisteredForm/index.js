@@ -146,7 +146,7 @@ const RegisteredForm = ({
                                 }
                             })}
                             value={formData.rcnumber}
-                            onChange={(event) => {
+                            onInput={(event) => {
                                 setFormData({
                                     ...formData,
                                     rcnumber: event.target.value
@@ -169,7 +169,7 @@ const RegisteredForm = ({
                                 placeholder="Your Tax Identification number"
                                 {...register('tin')}
                                 value={formData.tinNumber}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         tinNumber: event.target.value
@@ -200,7 +200,7 @@ const RegisteredForm = ({
                                     }
                                 })}
                                 value={formData.bvNumber}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         bvNumber: event.target.value
@@ -258,7 +258,7 @@ const RegisteredForm = ({
                                             }
                                         })}
                                         value={formData.phoneNumber}
-                                        onChange={(event) => {
+                                        onInput={(event) => {
                                             setFormData({
                                                 ...formData,
                                                 phoneNumber: event.target.value
@@ -288,7 +288,7 @@ const RegisteredForm = ({
                                     }
                                 })}
                                 vallue={formData.dateOfBirth}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         dateOfBirth: event.target.value
@@ -304,7 +304,7 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text={'Next'}
-                            onClick={actionI}
+                            // onClick={actionI}
                         />
                     </form>
                 ) : (
@@ -326,7 +326,7 @@ const RegisteredForm = ({
                                     }
                                 })}
                                 value={formData.bvNumber}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         bvNumber: event.target.value
@@ -416,7 +416,7 @@ const RegisteredForm = ({
                                     }
                                 })}
                                 value={formData.dateOfBirth}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         dateOfBirth: event.target.value
@@ -433,7 +433,7 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text={'Next'}
-                            onClick={action}
+                            // onClick={action}
                         />
                     </form>
                 ) : null}
