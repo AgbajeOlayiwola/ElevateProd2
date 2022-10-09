@@ -51,7 +51,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [errorMes, setErrorMes] = useState();
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
-    const [userProfile, setUserProfile] = useState('');
+    const [userProfiles, setUserProfiles] = useState('');
     const { compBusprofile, comperrorMessage } = useSelector(
         (state) => state.completeBusProfileReducer
     );
@@ -72,7 +72,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
-    const { userProfiles } = useSelector((state) => state.userProfileReducer);
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     const router = useRouter();
     const saveFile = (e) => {
@@ -106,8 +106,10 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     }, []);
     useEffect(() => {
         if (profile !== null) {
-            console.log(userProfiles);
-            setProfileCont(userProfiles);
+            if (userProfile !== null) {
+                console.log(userProfile);
+                setProfileCont(userProfile);
+            }
             if (profile.data[2]) {
                 setBusinessProfile(profile.data[2].documentData);
             } else {
@@ -115,7 +117,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             }
         }
         // setGender(profileCont.gender);
-    }, [profile]);
+    }, [profile, userProfile]);
 
     useEffect(() => {
         dispatch(businessCategoriesData());
