@@ -43,6 +43,7 @@ const ExistingMultiStep = () => {
             case 1:
                 return (
                     <SecondStep
+                        errorMessage={errorMessage}
                         move={() => {
                             const userData = {
                                 userId: formData.userId,
@@ -53,14 +54,6 @@ const ExistingMultiStep = () => {
                             console.log(formData.userId);
                             dispatch(existingUserProfileData(userData));
                             // console.log(existingUserProfilee.data.message);
-                            if (!errorMessage) {
-                                setPage(page + 1);
-                            } else if (
-                                existingUserProfilee.message ==
-                                'Profile setup Intialization completed'
-                            ) {
-                                setPage(page + 1);
-                            }
                         }}
                         formData={formData}
                         setFormData={setFormData}
@@ -111,6 +104,17 @@ const ExistingMultiStep = () => {
         setPage(page + 1);
         setPageType('New');
     }
+    useEffect(() => {
+        // console.log('new bvn:', bvnNin.message);
+        if (existingUserProfilee.data) {
+            if (
+                existingUserProfilee.data.message ==
+                'Profile setup Intialization completed'
+            ) {
+                setPage(page + 1);
+            }
+        }
+    }, [existingUserProfilee]);
     return (
         <>
             <>{conditionalComponent()}</>

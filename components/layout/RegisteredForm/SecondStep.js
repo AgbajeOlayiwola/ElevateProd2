@@ -23,6 +23,7 @@ const RegisteredForm = ({
     move,
     formData,
     setFormData
+    // errorMessage
 }) => {
     const dispatch = useDispatch();
     const {
@@ -119,7 +120,8 @@ const RegisteredForm = ({
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     const [outTypes, setOutTypes] = useState();
-    // console.log(existingUserProfilee);
+    console.log(errorMessage);
+    console.log(existingUserProfilee);
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
@@ -128,6 +130,9 @@ const RegisteredForm = ({
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>
                     <div className={styles.cardHeading}>
+                        {errorMessage
+                            ? errorMessage.response.data.message
+                            : null}
                         <ArrowBackSvg action={action} color="#102572" />
                         <div>
                             <h3 className={styles.LeftHeading}>

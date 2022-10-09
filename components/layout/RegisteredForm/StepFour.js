@@ -44,6 +44,9 @@ const StepFour = ({ title, action }) => {
     const { businessCategories, errorDatas } = useSelector(
         (state) => state.businessCategoriesReducer
     );
+    const { compBusprofile, comperrorMessage } = useSelector(
+        (state) => state.completeBusinessprofileReducer
+    );
 
     const {
         register,
@@ -61,6 +64,7 @@ const StepFour = ({ title, action }) => {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
     console.log(localGoverment);
+    const [phones, setPhones] = useState();
 
     const saveFile = (e) => {
         setFile(e.target.files[0]);
@@ -68,9 +72,16 @@ const StepFour = ({ title, action }) => {
 
         console.log(file);
     };
+    useEffect(() => {
+        if (window.typeof !== 'undefined') {
+            setPhones(JSON.parse(window.localStorage.getItem('account')));
+            console.log(phones);
+        }
+    }, []);
+
     const onSubmitNew = (data) => {
-        setLoading(true);
-        console.log('New');
+        setLoading((prev) => !prev);
+        console.log(data);
         const userData = {
             isRegistered: 'true',
             businessName: businessName,
@@ -78,34 +89,36 @@ const StepFour = ({ title, action }) => {
             businessType: businesses,
             referralCode: refferalCode,
             countryCode: '+234',
-            businessPhoneNumber: phoneNumber,
+            businessPhoneNumber: phones.phoneNumber,
             street: streetName,
             state: localState,
             city: city,
             lga: localGoverment,
-            refereeCode: 'END',
+            refereeCode: '',
             signature: file
         };
         dispatch(CompleteBusinessProfile(userData));
     };
+
     const profileTest = () => {
-        if (errorMessage === 'Account already exists') {
-            router.push('/Succes/AccountSuccess');
+        setLoading((prev) => !prev);
+        if (compBusprofile) {
+            console.log(errorMessages);
+            router.push('/Verify/Account/loading');
+        } else if (
+            comperrorMessage.response.data.message ===
+            'You already have an account with us. Please contact us for more information'
+        ) {
+            router.push('/Succes');
         }
-        //  else if (errorMessage) {
-        //     setError(errorMessage);
-        //     console.log(errorMessage);
-        //     setLoading(false);
-        // } else if (
-        //     existingUserProfile.message === 'User account created succesfully'
-        // ) {
-        //     setLoading(false);
-        //     router.push('/Succes/Success');
-        // }
+
+        if (businessCategories !== null) {
+            setBusinessCategory(businessCategories);
+        }
     };
     useEffect(() => {
         profileTest();
-    }, [errorMessage, existingUserProfile]);
+    }, [compBusprofile, comperrorMessage]);
     const onSubmit = (data) => {
         console.log('old');
         // console.log('old');
@@ -223,7 +236,7 @@ const StepFour = ({ title, action }) => {
 
     if (typeof window !== 'undefined') {
         countryName = window.localStorage.getItem('country');
-        console.log(window.localStorage.getItem('country'));
+
         if (countryName === null) {
             countryNames = window.localStorage.getItem('country');
         } else {
@@ -239,6 +252,11 @@ const StepFour = ({ title, action }) => {
                 <div className={styles.lastStep}>
                     <div className={styles.cardHeading}>
                         <ArrowBackSvg action={action} color="#102572" />
+                        <p>
+                            {comperrorMessage
+                                ? comperrorMessage.response.data.message
+                                : null}
+                        </p>
                         <div>
                             <h3 className={styles.LeftHeading}>
                                 Complete your Profile
@@ -247,7 +265,7 @@ const StepFour = ({ title, action }) => {
                     </div>
                     {title === 'New' ? (
                         <div className={styles.lastContainer}>
-                            <form onSubmit={handleSubmit(onSubmitNew)}>
+                            <form>
                                 {error ? (
                                     <p className={styles.error}>{error}</p>
                                 ) : null}
@@ -438,6 +456,9 @@ const StepFour = ({ title, action }) => {
                                                     <input
                                                         type="number"
                                                         placeholder="812 345 6789"
+                                                        // value={
+                                                        //     phones.phoneNumber
+                                                        // }
                                                         {...register(
                                                             'countryCode_number',
                                                             {
@@ -450,7 +471,7 @@ const StepFour = ({ title, action }) => {
                                                                 }
                                                             }
                                                         )}
-                                                        value={phoneNumber}
+                                                        // value={phoneNumber}
                                                         onChange={(e) =>
                                                             setPhoneNumber(
                                                                 e.target.value
@@ -599,7 +620,7 @@ const StepFour = ({ title, action }) => {
                                             }
                                             text="Save and Continue"
                                             type="submit"
-                                            // onClick={handleShowSuccessStep}
+                                            onClick={onSubmitNew}
                                             // onClick={handleShowFourthStep}
                                         />
                                     )}

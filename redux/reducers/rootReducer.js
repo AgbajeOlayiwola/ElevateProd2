@@ -120,7 +120,9 @@ const rootReducer = combineReducers({
     viewBvnReducer: viewBvnReducer,
     resetPasswordReducer: resetPasswordReducer,
     bankStatementReducer: bankStatementReducer,
-    resetOtpReducer: resetOtpReducer
+    resetOtpReducer: resetOtpReducer,
+    completeBusinessprofileReducer,
+    completeBusinessprofileReducer
 });
 
 export default rootReducer;
