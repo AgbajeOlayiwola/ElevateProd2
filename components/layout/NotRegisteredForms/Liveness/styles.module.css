@@ -8,6 +8,10 @@
     overflow: scroll;
 }
 
+.body::-webkit-scrollbar {
+    display: none;
+}
+
 .cover {
     /* display: flex;
     justify-content: center;
