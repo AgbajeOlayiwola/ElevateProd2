@@ -51,6 +51,7 @@ const RegisteredForm = ({
     // console.log(existingUserProfilee);
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
+        setConfPassword(e.target.value);
         setFormData({
             ...formData,
             confPassword: e.target.value
@@ -130,11 +131,13 @@ const RegisteredForm = ({
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>
                     <div className={styles.cardHeading}>
-                        {errorMessage
-                            ? errorMessage.response.data.message
-                            : null}
                         <ArrowBackSvg action={action} color="#102572" />
                         <div>
+                            {errorMessage ? (
+                                <p className={styles.error}>
+                                    {errorMessage.response.data.message}
+                                </p>
+                            ) : null}
                             <h3 className={styles.LeftHeading}>
                                 Profile Setup
                             </h3>
@@ -143,7 +146,7 @@ const RegisteredForm = ({
                     <form onSubmit={handleSubmit(move)}>
                         {/* include validation with required or other standard HTML validation rules */}
                         <div className={styles.textInput}>
-                            <label>Email Address/ Phone Number </label>
+                            <label>Email Address </label>
                             {errors.email?.message}
                             <input
                                 placeholder="Enter Your Email"
