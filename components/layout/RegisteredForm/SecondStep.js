@@ -102,7 +102,12 @@ const RegisteredForm = ({
     // console.log('payload',emailData, password, confPassword);
 
     useEffect(() => {
-        setFormData({ ...formData, userId: newAccounts.user.userId });
+        if (newAccounts.userId) {
+            setFormData({ ...formData, userId: newAccounts.userId });
+        } else if (newAccounts.user.userId) {
+            setFormData({ ...formData, userId: newAccounts.user.userId });
+        }
+
         console.log(formData.userId);
     }, []);
     const types = (types) => {
