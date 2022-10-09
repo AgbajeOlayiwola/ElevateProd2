@@ -4,6 +4,8 @@
     border-radius: 20px;
     max-width: 600px;
     padding: 60px 0px;
+    height: 75vh;
+    overflow: scroll;
 }
 
 .cover {
@@ -14,11 +16,11 @@
     max-width: 400px;
     margin: 0px auto;
 }
-.imageOuter{
+.imageOuter {
     overflow: hidden;
     border-radius: 50%;
     height: 43vh;
-    border: solid 20px #6CCF00;
+    border: solid 20px #6ccf00;
     transition: all 0.8s ease-in-out;
 }
 .imageOut {
@@ -31,12 +33,12 @@
     height: 43vh;
     border: solid 20px #8a8888;
 }
-.errorInner{
+.errorInner {
     overflow: hidden;
     border-radius: 50%;
     height: 43vh;
     border: solid 20px red;
-} 
+}
 
 .imageInnerActive {
     overflow: hidden;
@@ -66,9 +68,8 @@
 .cover button {
     margin-top: 64px;
 }
-.matiButtonSetup{
+.matiButtonSetup {
     display: flex;
     justify-content: center;
     margin-top: 20%;
 }
-  
