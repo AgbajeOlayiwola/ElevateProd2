@@ -51,6 +51,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [errorMes, setErrorMes] = useState();
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
+    const [userProfile, setUserProfile] = useState('');
     const { compBusprofile, comperrorMessage } = useSelector(
         (state) => state.completeBusProfileReducer
     );
@@ -115,6 +116,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         }
         // setGender(profileCont.gender);
     }, [profile]);
+
     useEffect(() => {
         dispatch(businessCategoriesData());
     }, []);
