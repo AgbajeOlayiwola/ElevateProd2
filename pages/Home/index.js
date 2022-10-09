@@ -58,6 +58,7 @@ const HomeMain = () => {
     const dispatch = useDispatch();
     const [ecoonlineUserName, setEconlineUsername] = useState();
     const [ecoonlinePassword, setEcoonlinePassword] = useState();
+    const [accountNo, setAccountNo] = useState();
     const [languages, setLanguages] = useState([]);
     const [languageState, setLanguageState] = useState(false);
 
@@ -169,7 +170,7 @@ const HomeMain = () => {
                                     required:
                                         'Ecobank Online Username is Required'
                                 })}
-                                name="username"
+                                name="onlineUsername"
                                 value={ecoonlineUserName}
                                 onInput={(e) =>
                                     setEconlineUsername(e.target.value)
@@ -216,6 +217,10 @@ const HomeMain = () => {
                                 {...register('accountNumber', {
                                     required: 'Account Number is Required'
                                 })}
+                                value={accountNo}
+                                onInput={(e) => {
+                                    setAccountNo(e.target.value);
+                                }}
                                 name="accountNumber"
                             />
                             <p className={styles.error}>
@@ -331,8 +336,8 @@ const HomeMain = () => {
             if (ecobankOnline.message === 'success') {
                 const data = {
                     email: ecobankOnline.data.user.email,
-                    // accountNumber: omniliteData.data.user.profile.firstName,
-                    fullName: ecobankOnline.data.user.profile.lastName,
+                    firstName: omniliteData.data.user.profile.firstName,
+                    lastName: ecobankOnline.data.user.profile.lastName,
                     phoneNumber: ecobankOnline.data.user.phoneNumber
                 };
                 window.localStorage.setItem(
@@ -662,6 +667,7 @@ const HomeMain = () => {
                                             }
                                             onClick={() => {
                                                 setPage(0);
+                                                setError('');
                                                 setOmnilite(true);
                                                 setEcobank(false);
                                                 setCard(false);
@@ -690,10 +696,13 @@ const HomeMain = () => {
                                             }
                                             onClick={() => {
                                                 setPage(1);
+                                                setError('');
                                                 setOmnilite(false);
                                                 setEcobank(true);
                                                 setCard(false);
                                                 setAcct(false);
+                                                setEconlineUsername('');
+                                                setEcoonlinePassword('');
                                             }}
                                         >
                                             <Image
@@ -724,10 +733,12 @@ const HomeMain = () => {
                                             }
                                             onClick={() => {
                                                 setPage(2);
+                                                setError('');
                                                 setOmnilite(false);
                                                 setEcobank(false);
                                                 setCard(false);
                                                 setAcct(true);
+                                                setAccountNo('');
                                             }}
                                         >
                                             <AccountNumberSvg />
@@ -751,10 +762,12 @@ const HomeMain = () => {
                                             }
                                             onClick={() => {
                                                 setPage(3);
+                                                setError('');
                                                 setOmnilite(false);
                                                 setEcobank(false);
                                                 setCard(true);
                                                 setAcct(false);
+                                                setCVV('');
                                             }}
                                         >
                                             <CardSvg />
