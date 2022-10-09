@@ -417,8 +417,8 @@ const HomeMain = () => {
         } else if (omniliteData.message === 'success') {
             const data = {
                 email: omniliteData.data.user.email,
-                // accountNumber: omniliteData.data.user.profile.firstName,
-                fullName: omniliteData.data.user.profile.lastName,
+                firstName: omniliteData.data.user.profile.firstName,
+                lastName: omniliteData.data.user.profile.lastName,
                 phoneNumber: omniliteData.data.user.phoneNumber
             };
             window.localStorage.setItem('displayAccount', JSON.stringify(data));
