@@ -13,6 +13,7 @@ import {
     CompProfile,
     createNewCorpUserAccount,
     createNewUserAccount,
+    loadUserProfile,
     statesData
 } from '../../../../redux/actions/actions';
 import { useRouter } from 'next/router';
@@ -70,6 +71,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
+    const { userProfiles } = useSelector((state) => state.userProfileReducer);
 
     const router = useRouter();
     const saveFile = (e) => {
@@ -99,11 +101,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     useEffect(() => {
         dispatch(CompProfile());
+        dispatch(loadUserProfile());
     }, []);
     useEffect(() => {
         if (profile !== null) {
-            console.log(profileCont.companyName);
-            setProfileCont(profile);
+            console.log(userProfiles);
+            setProfileCont(userProfiles);
             if (profile.data[2]) {
                 setBusinessProfile(profile.data[2].documentData);
             } else {
@@ -296,7 +299,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <label>Enter Full Name</label>
                                     <input
                                         type="text"
-                                        value={`${profileCont.lastName} ${profileCont.firstName}`}
+                                        value={
+                                            profileCont
+                                                ? `${profileCont.lastName} ${profileCont.firstName}`
+                                                : null
+                                        }
                                         disabled
                                     />
                                 </div>

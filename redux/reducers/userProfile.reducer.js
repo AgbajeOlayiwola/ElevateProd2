@@ -2,7 +2,7 @@ import { userProfile } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    userProfile: null,
+    userProfiles: null,
     errorMessage: null
 };
 
@@ -12,14 +12,14 @@ const userProfileReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: true,
-                userProfile: null,
+                userProfiles: null,
                 errorMessage: null
             };
         case userProfile.USERPROFILE_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                userProfile: payload
+                userProfiles: payload
             };
         case userProfile.USERPROFILE_LOAD_ERROR:
             return {

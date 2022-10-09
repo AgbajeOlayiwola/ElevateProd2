@@ -171,7 +171,7 @@ const HomeMain = () => {
                                 })}
                                 name="username"
                                 value={ecoonlineUserName}
-                                onChange={(e) =>
+                                onInput={(e) =>
                                     setEconlineUsername(e.target.value)
                                 }
                             />
@@ -192,7 +192,7 @@ const HomeMain = () => {
                                     name="onlinePassword"
                                     type={outType ? 'text' : 'password'}
                                     value={ecoonlinePassword}
-                                    onChange={(e) =>
+                                    onInput={(e) =>
                                         setEcoonlinePassword(e.target.value)
                                     }
                                 />
@@ -237,9 +237,7 @@ const HomeMain = () => {
                                     required: 'Card Number is Required'
                                 })}
                                 value={cardPan}
-                                onChange={(e) =>
-                                    setCardPanMatch(e.target.value)
-                                }
+                                onInput={(e) => setCardPanMatch(e.target.value)}
                                 name="cardNumber"
                             />
                             <p className={styles.error}>
@@ -258,7 +256,7 @@ const HomeMain = () => {
                                             required: 'Expiry Date is Required'
                                         })}
                                         name="expiryDate"
-                                        onChange={(e) => {
+                                        onInput={(e) => {
                                             if (e.target.value.length === 2) {
                                                 e.target.value += '/';
                                             }
@@ -283,7 +281,7 @@ const HomeMain = () => {
                                         // {...register('cvv', {
                                         //     required: 'CVV is Required'
                                         // })}
-                                        onChange={(e) => setCVV(e.target.value)}
+                                        onInput={(e) => setCVV(e.target.value)}
                                         value={cvv}
                                         name="cvv"
                                     />
@@ -629,7 +627,7 @@ const HomeMain = () => {
                             Do you have an Ecobank Account?
                         </label>
                         <select
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 if (e.target.value === 'No') {
                                     setEcobankAccount('No');
                                 } else if (e.target.value === 'Yes') {
