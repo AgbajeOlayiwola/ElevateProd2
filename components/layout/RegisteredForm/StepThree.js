@@ -104,7 +104,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                     className={styles.textInput}
                                     required
                                     readOnly
-                                    value={accountDetails.fullName}
+                                    value={`${accountDetails.lastname}  ${accountDetails.lastname}`}
                                 />
                             </div>
                             <div>

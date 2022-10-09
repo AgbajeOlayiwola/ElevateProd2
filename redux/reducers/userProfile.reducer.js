@@ -2,7 +2,7 @@ import { userProfile } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    userProfiles: null,
+    userProfiles: [],
     errorMessage: null
 };
 

@@ -9,6 +9,8 @@ import Script from 'next/script';
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
+import { loadUserProfile } from '../../../../redux/actions/actions';
+// import { useDispatch, useSelector } from 'react-redux';
 
 const videoConstraints = {
     width: 390,
@@ -27,6 +29,7 @@ const _base64ToArrayBuffer = (base64String) => {
     }
 };
 const Liveness = ({ action }) => {
+    // const dispatch = useDispatch();
     const [activeBtn, setActiveBtn] = useState(true);
     // const [loading, setLoading] = useState(false);
     const webcamRef = React.useRef(null);
@@ -38,6 +41,7 @@ const Liveness = ({ action }) => {
     const [verifying, setVerifying] = useState(false);
 
     const capture = React.useCallback(() => {
+        // dispatch(loadUserProfile());
         setLoading((prev) => !prev);
         setVerifying((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
@@ -111,7 +115,11 @@ const Liveness = ({ action }) => {
                         </div>
                     </div>
                 </div>
-                {verifying ? <p>verifying</p> : null}
+                {verifying ? (
+                    <p>verifying</p>
+                ) : succes === 'facial verification successful' ? (
+                    <p>facial Recognition Successful </p>
+                ) : null}
                 <ButtonComp
                     onClick={
                         succes === 'facial verification successful'
