@@ -34,6 +34,9 @@ import {
     completeProfile,
     newUserCreateAccount,
     setTransactionPin,
+    changeTransactionPin,
+    freezeTransactions,
+    unfreezeTransactions,
     getNewUserAccount,
     states,
     cardLogin,
@@ -135,7 +138,7 @@ export const resetPasswordLoadError = (errorMessage) => ({
 export const loadresetPassword = (code) => (dispatch) => {
     dispatch(resetPasswordLoadStart());
     axiosInstance
-        .post(`${apiRoutes.resetPassword}`, code)
+        .patch(`${apiRoutes.resetPassword}`, code)
         .then((response) =>
             dispatch(resetPasswordLoadSuccess(response.data.data))
         )
@@ -241,6 +244,62 @@ export const loadCountry = () => (dispatch) => {
         .catch((error) => dispatch(countryLoadError(error.response.message)));
 };
 //country actions end
+
+//freezeTransactions actions
+export const freezeTransactionsLoadStart = () => ({
+    type: freezeTransactions.FREEZETRANSACTIONS_LOAD_START
+});
+
+export const freezeTransactionsLoadSuccess = (countries) => ({
+    type: freezeTransactions.FREEZETRANSACTIONS_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const freezeTransactionsLoadError = (errorMessage) => ({
+    type: freezeTransactions.FREEZETRANSACTIONS_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const loadfreezeTransactions = () => (dispatch) => {
+    dispatch(freezeTransactionsLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.freezeTransactions}`)
+        .then((response) =>
+            dispatch(freezeTransactionsLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(freezeTransactionsLoadError(error.response.message))
+        );
+};
+//freezeTransactions actions end
+
+//unfreezeTransactions actions
+export const unfreezeTransactionsLoadStart = () => ({
+    type: unfreezeTransactions.UNFREEZETRANSACTIONS_LOAD_START
+});
+
+export const unfreezeTransactionsLoadSuccess = (countries) => ({
+    type: unfreezeTransactions.UNFREEZETRANSACTIONS_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const unfreezeTransactionsLoadError = (errorMessage) => ({
+    type: unfreezeTransactions.UNFREEZETRANSACTIONS_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const loadunfreezeTransactions = () => (dispatch) => {
+    dispatch(unfreezeTransactionsLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.unfreezeTransactions}`)
+        .then((response) =>
+            dispatch(unfreezeTransactionsLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(unfreezeTransactionsLoadError(error.response.message))
+        );
+};
+//unfreezeTransactions actions end
 
 //accountPrimary actions
 export const accountPrimaryLoadStart = () => ({
@@ -449,6 +508,33 @@ export const loadbillerPlan = (code) => (dispatch) => {
         .catch((error) => dispatch(billerPlanLoadError(error.message)));
 };
 //country actions end
+
+//changeTransactionPin actions
+export const changeTransactionPinLoadStart = () => ({
+    type: changeTransactionPin.CHANGETRANSACTIONPIN_LOAD_START
+});
+
+export const changeTransactionPinLoadSuccess = (billers) => ({
+    type: changeTransactionPin.CHANGETRANSACTIONPIN_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const changeTransactionPinLoadError = (errorMessage) => ({
+    type: changeTransactionPin.CHANGETRANSACTIONPIN_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadchangeTransactionPin = (code) => (dispatch) => {
+    dispatch(changeTransactionPinLoadStart());
+    axiosInstance
+        .patch(`${apiRoutes.changeTransactionPin}`, code)
+        .then((response) =>
+            dispatch(changeTransactionPinLoadSuccess(response.data))
+        )
+        .catch((error) =>
+            dispatch(changeTransactionPinLoadError(error.response.data.message))
+        );
+};
+//changeTransactionPin actions end
 
 //setTransactionPin actions
 export const setTransactionPinLoadStart = () => ({

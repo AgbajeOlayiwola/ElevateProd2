@@ -15,6 +15,7 @@ const balanceEnquiry = '/bank-account/balance';
 const accountPrimary = '/bank-account/primary';
 const transactionHistory = '/account/transaction';
 const setTransactionPin = '/account-upgrade/transaction-pin/set';
+const changeTransactionPin = '/users/transaction-pin';
 const transactionElevate = '/transactions';
 const bulkTransfer = '/payment/bulk-transfer';
 const verifyBank = '/transfer/international/validate-bank';
@@ -63,8 +64,10 @@ const uploadBoardRes = '/account-upgrade/board-resolution/upload';
 const forgotPassword = '/authentication/forget-password';
 const resetOtp = '/authentication/otp/re-send';
 const viewBvn = '/users/bvn/view';
-const resetPassword = '/authentication/reset-password';
+const resetPassword = '/users/password';
 const bankStatement = '/bank-account/statement';
+const freezeTransactions = '/users/freeze-transactions';
+const unfreezeTransactions = '/users/unfreeze-transactions';
 export default {
     getBanks,
     getCountries,
@@ -87,6 +90,7 @@ export default {
     newProfileSetup,
     transactionHistory,
     setTransactionPin,
+    changeTransactionPin,
     transactionElevate,
     verifyBank,
     verifyCurrency,
@@ -130,5 +134,7 @@ export default {
     viewBvn,
     resetPassword,
     bankStatement,
+    freezeTransactions,
+    unfreezeTransactions,
     resetOtp
 };
