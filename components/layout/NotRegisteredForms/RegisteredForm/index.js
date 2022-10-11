@@ -99,9 +99,7 @@ const RegisteredForm = ({
         <div className={styles.bodyWrapper}>
             <div className={styles.cardHeading}>
                 <h3 className={styles.LeftHeading}>Profile Setup</h3>
-                <p>
-                    We recommend you enter the phone number linked to your BVN
-                </p>
+                <p>We recommend you use a phone number linked to NIN</p>
             </div>
             <div className={styles.formWrapper}>
                 <InputWrapper>

@@ -52,6 +52,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
     const [userProfiles, setUserProfiles] = useState('');
+    const [alluserData, setAllUserData] = useState('');
     const { compBusprofile, comperrorMessage } = useSelector(
         (state) => state.completeBusProfileReducer
     );
@@ -103,7 +104,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     useEffect(() => {
         dispatch(CompProfile());
         dispatch(loadUserProfile());
-        console.log(userProfiles);
+        console.log(profile.data[1].documentData);
+        setAllUserData(profile.data[1].documentData);
         setProfileCont(userProfiles);
     }, []);
     useEffect(() => {
@@ -203,7 +205,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         console.log(compBusprofile);
         if (compBusprofile) {
             if (compBusprofile.message === 'Successful') {
-                router.push('/Verify/Account/loading');
+                if (profile.data[1].documentData) {
+                    router.push('/Verify/CorportateAccount');
+                } else {
+                    router.push('/Verify/Account/loading');
+                }
             }
         }
     }, [newAccount, comperrorMessage]);
@@ -313,6 +319,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         disabled
                                     />
                                 </div>
+                                {/* {alluserData[1].documentData.map(
+                                    (usersData, index) => {
+                                        console.log(alluserData);
+                                        return <></>;
+                                    }
+                                )} */}
                                 <div className={styles.formGroup}>
                                     <label>Select your Gender</label>
                                     <select
@@ -342,7 +354,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     required:
                                                         'Business Name is required'
                                                 })}
-                                                value={formData.bussinessName}
+                                                value={
+                                                    alluserData
+                                                        ? alluserData.companyName
+                                                        : formData.bussinessName
+                                                }
                                                 onInput={(event) => {
                                                     setFormData({
                                                         ...formData,
