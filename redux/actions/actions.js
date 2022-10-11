@@ -352,7 +352,10 @@ export const loadUserProfile = () => (dispatch) => {
                 Authorization: `Bearer ${cookie}`
             }
         })
-        .then((response) => dispatch(userProfileLoadSuccess(response.data)))
+        .then((response) => {
+            dispatch(userProfileLoadSuccess(response.data)),
+                console.log(response.data);
+        })
         .catch((error) =>
             dispatch(userProfileLoadError(error.response.message))
         );
