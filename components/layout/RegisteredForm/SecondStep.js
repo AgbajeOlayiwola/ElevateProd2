@@ -19,7 +19,9 @@ const RegisteredForm = ({
     action,
     move,
     formData,
-    setFormData
+    setFormData,
+    loading,
+    setLoading
     // errorMessage
 }) => {
     const dispatch = useDispatch();
@@ -40,7 +42,7 @@ const RegisteredForm = ({
     const [passwordMatch, setPasswordMatch] = useState('');
     // const [userId, setUserId] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [emailData, setEmailData] = useState('');
     const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
@@ -115,6 +117,10 @@ const RegisteredForm = ({
     const type = (type) => {
         setOutType(type);
     };
+    useEffect(() => {
+        setLoading((prev) => !prev);
+    }, [errorMessage]);
+
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     const [outTypes, setOutTypes] = useState();
@@ -212,9 +218,7 @@ const RegisteredForm = ({
                                 <p className={styles.error}>{passwordMatch}</p>
                             )}
                         </div>
-                        {/* {loading ? (
-                            <Loader />
-                        ) : ( */}
+                        {loading ? <Loader /> : null}
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}

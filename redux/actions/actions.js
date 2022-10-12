@@ -1624,7 +1624,7 @@ export const CompleteBusinessProfile = (completeProfileData) => {
             })
             .catch((error) => {
                 console.log(error);
-                dispatch(completeProfileLoadError(error));
+                dispatch(completeProfileLoadError(error.response.data));
             });
     };
 };

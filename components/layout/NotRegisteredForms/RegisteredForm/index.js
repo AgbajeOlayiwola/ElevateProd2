@@ -18,10 +18,12 @@ const RegisteredForm = ({
     // errorM,
     errorI,
     bvnError,
-    actionI
+    actionI,
+    loading,
+    setLoading
 }) => {
     // const [progress, setProgress] = useState('25%');
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [switchs, setSwitch] = useState(true);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
@@ -424,7 +426,7 @@ const RegisteredForm = ({
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
-
+                        {loading ? <Loader /> : null}
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}

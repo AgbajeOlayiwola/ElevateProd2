@@ -28,7 +28,7 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ action }) => {
+const Liveness = ({ action, loading, setLoading }) => {
     // const dispatch = useDispatch();
     const [activeBtn, setActiveBtn] = useState(true);
     // const [loading, setLoading] = useState(false);
@@ -37,13 +37,13 @@ const Liveness = ({ action }) => {
     const [succes, setSuccess] = useState('');
     const [imageSrcI, setImageSrcI] = React.useState(null);
     const [error, setError] = React.useState('');
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [verifying, setVerifying] = useState(false);
 
     const capture = React.useCallback(() => {
         // dispatch(loadUserProfile());
+
         setLoading((prev) => !prev);
-        setVerifying((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
@@ -82,9 +82,9 @@ const Liveness = ({ action }) => {
                 setError(error.response.data.message);
             });
     }, [webcamRef, setImgSrc, setImageSrcI]);
-    // useEffect(() => {
-    // setLoading((prev) => !prev);
-    // }, [webcamRef, setImgSrc, setImageSrcI]);
+    useEffect(() => {
+        setLoading((prev) => !prev);
+    }, [succes, error]);
 
     return (
         <div className={styles.body}>
@@ -115,11 +115,7 @@ const Liveness = ({ action }) => {
                         </div>
                     </div>
                 </div>
-                {verifying ? (
-                    <p>verifying</p>
-                ) : succes === 'facial verification successful' ? (
-                    <p>facial Recognition Successful </p>
-                ) : null}
+                {loading ? <Loader /> : null}
                 <ButtonComp
                     onClick={
                         succes === 'facial verification successful'
