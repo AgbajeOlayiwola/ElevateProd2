@@ -260,7 +260,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         }
     }, [newCorpAccount, comperrorMessage]);
     const [activeBtn, setActiveBtn] = useState(true);
-
+    //console.log(test)
     // console.log(type);
     return (
         <div className={styles.bodyWrapper}>
