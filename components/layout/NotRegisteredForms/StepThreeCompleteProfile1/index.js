@@ -763,7 +763,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         />
                                     </div>
                                     {loading ? <Loader /> : null}
-                                    {profileCont.isBusinessRegistered ===
+                                    {/* {profileCont.isBusinessRegistered ===
                                     true ? (
                                         <ButtonComp
                                             disabled={activeBtn}
@@ -790,16 +790,16 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             onClick={handleSubmitIII}
                                             // onClick={handleShowFourthStep}
                                         />
-                                    )}
+                                    )} */}
 
-                                    {/* <ButtonComp
+                                    <ButtonComp
                                         disabled={activeBtn}
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
                                         text="Save & Continue"
                                         type="submit"
-                                    /> */}
+                                    />
                                 </div>
                                 <div className={styles.formGroup}>
                                     <div className={styles.singleFormGroup}>
@@ -810,14 +810,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     ? fileName
                                                     : 'No file chosen...'}
                                             </p>
-                                            <label>
-                                                <input
-                                                    type="file"
-                                                    placeholder="Enter Code"
-                                                    onChange={saveFile}
-                                                />
-                                                Upload
-                                            </label>
+                                            <label>Upload</label>
+                                            <input
+                                                type="file"
+                                                placeholder="Enter Code"
+                                                onChange={saveFile}
+                                            />
                                         </div>
                                     </div>
                                 </div>

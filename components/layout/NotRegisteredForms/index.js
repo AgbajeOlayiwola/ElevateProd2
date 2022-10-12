@@ -104,7 +104,7 @@ const ProfileSetups = () => {
     const [errorI, setErrorI] = useState('');
     const [errorII, setErrorII] = useState('');
     const [errorIII, setErrorIII] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
     const conditionalComponent = () => {
