@@ -107,7 +107,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     useEffect(() => {
         dispatch(CompProfile());
         dispatch(loadUserProfile());
-        console.log(profile.data[1].documentData);
+        console.log(profile.data);
         setAllUserData(profile.data[1].documentData);
         setProfileCont(userProfiles);
     }, []);
