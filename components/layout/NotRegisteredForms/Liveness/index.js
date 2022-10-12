@@ -40,6 +40,9 @@ const Liveness = ({ action, loading, setLoading }) => {
     // const [loading, setLoading] = useState(false);
     const [verifying, setVerifying] = useState(false);
 
+    useEffect(() => {
+        setLoading(false);
+    }, []);
     const capture = React.useCallback(() => {
         // dispatch(loadUserProfile());
 
@@ -116,7 +119,7 @@ const Liveness = ({ action, loading, setLoading }) => {
                         </div>
                     </div>
                 </div>
-                {loading ? <Loader /> : null}
+                {/* {loading ? <Loader /> : null} */}
                 <ButtonComp
                     onClick={succes === 'success' ? action : capture}
                     disabled={activeBtn}

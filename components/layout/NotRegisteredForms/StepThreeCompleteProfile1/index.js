@@ -812,7 +812,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     : 'No file chosen...'}
                                             </p>
                                             <label>
-                                                Upload
+                                                Upload{' '}
                                                 <input
                                                     type="file"
                                                     placeholder="Enter Code"
