@@ -9,7 +9,6 @@ import {
     accountStatusData,
     statesData,
     businessCategoriesData,
-    bankAccountsData,
     CompleteBusinessProfile
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';

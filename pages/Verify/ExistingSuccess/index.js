@@ -36,7 +36,8 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                         Your Business account is ready!
                     </h2>
                     <h3>
-                        Your Account Number is <span>{bankAccounts}</span>
+                        Your Account Number is{' '}
+                        <span>{bankAccounts[0].accountNumber}</span>
                     </h3>
                     <Link href="/Dashboard">
                         <ButtonComp

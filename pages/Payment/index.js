@@ -605,6 +605,7 @@ const Payment = () => {
 
                                     console.log(data);
                                     setCount(count + 1);
+                                    console.log(paymentDetails.details);
                                 }}
                             />
                         );
@@ -614,56 +615,70 @@ const Payment = () => {
                                 isLoading={isLoading}
                                 closeAction={handleClose}
                                 amount={paymentDetails.amount}
-                                recieverName={paymentDetails.accountNumber}
+                                title="Bulk Payments"
+                                // recieverName={paymentDetails.accountNumber}
                                 sender={paymentDetails.accountName}
-                                recieverBank={paymentDetails.bankName}
+                                // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
-                                transferAction={() => {
+                                number={
+                                    paymentDetails.details === undefined
+                                        ? 1
+                                        : paymentDetails.details.length + 1
+                                }
+                                transferAction={(data) => {
                                     setIsLoading(true);
                                     const paymentData = {
-                                        senderAccountNo: '1823020500',
-                                        senderAccountType: 'A',
-                                        senderName: 'Aderohunmu Matthew',
-                                        senderPhone: '2348039219191',
-                                        destinations: [
+                                        accountId: paymentDetails.sourceAccount,
+                                        transactionPin: Object.values(data)
+                                            .toString()
+                                            .replaceAll(',', ''),
+                                        transactions: [
                                             {
+                                                isEcobankToEcobankTransaction:
+                                                    paymentDetails.firstBank ===
+                                                    'Ecobank'
+                                                        ? true
+                                                        : false,
+                                                destinationBank:
+                                                    paymentDetails.firstBank,
                                                 destinationBankCode:
-                                                    'ZENITH-ACC',
-                                                beneficiaryAccountNo:
-                                                    '2252999745',
+                                                    paymentDetails.firstBank,
                                                 beneficiaryName:
-                                                    'CHIJIOKE NWANKWO',
-                                                narration: 'salary',
-                                                // amount: paymentDetails.amount,
-                                                amount: '1.00',
-                                                ccy: 'NGN'
-                                            },
-                                            {
-                                                destinationBankCode:
-                                                    'ZENITH-ACC',
-                                                beneficiaryAccountNo:
-                                                    '2252999740',
-                                                beneficiaryName:
-                                                    'CHIJIOKE NWANKWO',
-                                                narration: 'salary',
-                                                amount: '2.00',
-                                                ccy: 'NGN'
+                                                    'HIJIOKE   NWANKWO',
+                                                destinationAccountNo:
+                                                    paymentDetails.firstAccountNumber,
+                                                transactionAmount:
+                                                    paymentDetails.amount,
+                                                narration: ''
                                             }
                                         ]
                                     };
-                                    if (
-                                        paymentDetails.accountNumber3 !== '' &&
-                                        paymentDetails.bankName3 !== ''
-                                    ) {
-                                        paymentData.destinations.push({
-                                            destinationBankCode: 'ZENITH-ACC',
-                                            beneficiaryAccountNo: '2252999740',
-                                            beneficiaryName: 'CHIJIOKE NWANKWO',
-                                            narration: 'salary',
-                                            amount: '3.00',
-                                            ccy: 'NGN'
-                                        });
-                                    }
+                                    paymentDetails.details === undefined
+                                        ? null
+                                        : paymentDetails.details?.map(
+                                              (details, index) => {
+                                                  paymentData.transactions.push(
+                                                      {
+                                                          isEcobankToEcobankTransaction:
+                                                              details.bankName ===
+                                                              'Ecobank'
+                                                                  ? true
+                                                                  : false,
+                                                          destinationBank:
+                                                              details.bankName,
+                                                          destinationBankCode:
+                                                              details.bankName,
+                                                          beneficiaryName:
+                                                              'HIJIOKE   NWANKWO',
+                                                          destinationAccountNo:
+                                                              details.accountNumber,
+                                                          transactionAmount:
+                                                              paymentDetails.amount,
+                                                          narration: ''
+                                                      }
+                                                  );
+                                              }
+                                          );
                                     dispatch(getBulkTransfer(paymentData));
                                 }}
                             />

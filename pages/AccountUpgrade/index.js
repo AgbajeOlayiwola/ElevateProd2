@@ -295,25 +295,25 @@ const AccountUpgrade = () => {
             }
         ]
     };
-    // const { states } = useSelector((state) => state.statesReducer);
-    // const newStates = () => {
-    //     if (states !== null) {
-    //         setLocation(states);
-    //     }
-    // };
-    // useEffect(() => {
-    //     dispatch(statesData());
-    // }, []);
-    // useEffect(() => {
-    //     newStates();
-    // }, [states]);
-    // useEffect(() => {
-    //     location?.filter((item) => {
-    //         if (item.state === localState) {
-    //             setLocalGovernment(item.localGoverment);
-    //         }
-    //     });
-    // }, [localState]);
+    const { states } = useSelector((state) => state.statesReducer);
+    const newStates = () => {
+        if (states !== null) {
+            setLocation(states);
+        }
+    };
+    useEffect(() => {
+        dispatch(statesData());
+    }, []);
+    useEffect(() => {
+        newStates();
+    }, [states]);
+    useEffect(() => {
+        location?.filter((item) => {
+            if (item.code === selstate) {
+                setLocalGovernment(item.localGoverment);
+            }
+        });
+    }, [selstate]);
     switch (title) {
         case 'First':
             return (
@@ -431,10 +431,14 @@ const AccountUpgrade = () => {
                         </p>
                         <div className={styles.addressBody}>
                             <div className={styles.addressGroup}>
-                                <label>Street </label>
+                                <label>Address </label>
                                 <input
+                                    value={streetName}
+                                    onChange={(e) =>
+                                        setStreetName(e.target.value)
+                                    }
                                     type="text"
-                                    placeholder="Enter Street "
+                                    placeholder="Enter Address "
                                 />
                             </div>
                             <div className={styles.addressCont}>
@@ -444,6 +448,10 @@ const AccountUpgrade = () => {
                                         <input
                                             type="text"
                                             placeholder="Enter Landmark"
+                                            value={landMark}
+                                            onInput={(e) => {
+                                                setLandMark(e.target.value);
+                                            }}
                                         />
                                     </div>
                                 </div>
@@ -466,7 +474,7 @@ const AccountUpgrade = () => {
                                             {location?.map((state, index) => {
                                                 return (
                                                     <option
-                                                        value={state.state}
+                                                        value={state.code}
                                                         key={index}
                                                     >
                                                         {state.state}
@@ -482,6 +490,10 @@ const AccountUpgrade = () => {
                                     <div className={styles.addressGroup}>
                                         <label>City</label>
                                         <input
+                                            value={city}
+                                            onChange={(e) =>
+                                                setCity(e.target.value)
+                                            }
                                             type="text"
                                             placeholder="Enter City"
                                         />
@@ -506,7 +518,7 @@ const AccountUpgrade = () => {
                                                           return (
                                                               <option
                                                                   value={
-                                                                      item.lgaName
+                                                                      item.lgaCode
                                                                   }
                                                                   key={index}
                                                               >
@@ -532,12 +544,12 @@ const AccountUpgrade = () => {
                                     branchCode: 'A02',
                                     segmentId: 'ADB',
                                     // houseNumber: '25',
-                                    address: '17 Igbobi COllege Road Yaba',
+                                    address: { streetName },
                                     // streetName: 'Igbobi College Road',
                                     // areaName: 'Yaba',
-                                    landmark: 'Yaba college of Technology',
-                                    state: 'LA',
-                                    lga: 'LA019',
+                                    landmark: { landMark },
+                                    state: { selstate },
+                                    lga: { localGovernment },
                                     createdBy: 'RealMg',
                                     customerImage: '',
                                     Latitude: '6.519366425038108',

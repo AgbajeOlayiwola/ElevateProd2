@@ -1750,7 +1750,7 @@ export const getNewUserAccountDetails = (accountData) => {
 //end corp account status
 
 //bank accounts start
-
+// I change what was been dispatched for existing user and also changed the axios to axios instance
 export const bankAccountsStart = () => ({
     type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_START
 });
@@ -1767,16 +1767,10 @@ export const bankAccountsLoadError = (bankAccountErrorMessages) => ({
 export const bankAccountsData = () => (dispatch) => {
     const exToken = getCookie('existingToken');
     dispatch(accountNumberLoadStart());
-    axios
-        .get(`https://ellevate-test.herokuapp.com${apiRoutes.banksAccounts}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${exToken}`
-            }
-        })
+    axiosInstance
+        .get(`https://ellevate-test.herokuapp.com${apiRoutes.banksAccounts}`)
         .then((response) => {
-            dispatch(bankAccountsSuccess(response.data[0].accountNumber));
-            console.log(response.data.accountNumber);
+            dispatch(bankAccountsSuccess(response.data));
         })
         .catch((error) =>
             dispatch(bankAccountsLoadError(error.response.data.message))

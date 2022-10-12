@@ -79,6 +79,7 @@ const Profile = () => {
             console.log(freeze);
         }
     }, [userProfile]);
+    console.log(userProfileData);
     useEffect(() => {
         if (deleteBeneficiaries !== null) {
             dispatch(getBeneficiariesData());
@@ -243,15 +244,28 @@ const Profile = () => {
                                     <div className={styles.phone}>
                                         <div className={styles.phoneHeader}>
                                             <span>
-                                                {/* <img
-                                                    src={countryNames.flags.svg}
+                                                <img
+                                                    src={
+                                                        countryNames
+                                                            ? countryNames.flags
+                                                                  .svg
+                                                            : null
+                                                    }
                                                     alt=""
-                                                /> */}
+                                                />
                                             </span>
-                                            {/* <p>{countryNames.baseCurrency}</p> */}
+                                            <p>
+                                                {countryNames
+                                                    ? countryNames.baseCurrency
+                                                    : null}
+                                            </p>
                                         </div>
                                         <div className={styles.phoneDetails}>
-                                            {/* <p>{countryNames.countryCode}</p> */}
+                                            <p>
+                                                {countryNames
+                                                    ? countryNames.countryCode
+                                                    : null}
+                                            </p>
                                             <input
                                                 type="number"
                                                 placeholder="812 345 6789"

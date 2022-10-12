@@ -6,6 +6,8 @@ import BillPayment from './billpayment';
 import SingleTransfer from './singletransfer';
 import Overlay from '../Overlay';
 import CloseButton from '../CloseButtonSvg';
+import { bankAccountsData } from '../../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MakePaymentFirst = ({
     firstTitle,
@@ -29,6 +31,17 @@ const MakePaymentFirst = ({
         window.scrollTo(0, 0);
     }, []);
 
+    const dispatch = useDispatch();
+    const [bankAccounts, setBankAccounts] = useState([]);
+    const { bankAccount } = useSelector((state) => state.banksReducer);
+    useEffect(() => {
+        dispatch(bankAccountsData());
+    }, []);
+    useEffect(() => {
+        if (bankAccount !== null) {
+            setBankAccounts(bankAccount);
+        }
+    }, [bankAccount]);
     return (
         <Overlay overlay={overlay}>
             <div className={styles.firstDiv} ref={myref}>
@@ -47,6 +60,7 @@ const MakePaymentFirst = ({
                             buttonText={buttonText}
                             scheduleLater={scheduleLater}
                             isLoading={isLoading}
+                            bankAccounts={bankAccounts}
                         />
                     ) : firstTitle === 'Foreign Transfer' ? (
                         <ForeignTransfer
@@ -56,12 +70,14 @@ const MakePaymentFirst = ({
                             type={type}
                             secondAction={secondAction}
                             scheduleLater={scheduleLater}
+                            bankAccounts={bankAccounts}
                         />
                     ) : firstTitle === 'Bulk Payments' ? (
                         <BulkTransfer
                             action={action}
                             firstTitle={firstTitle}
                             buttonText={buttonText}
+                            bankAccounts={bankAccounts}
                         />
                     ) : (
                         <BillPayment
@@ -72,6 +88,7 @@ const MakePaymentFirst = ({
                             scheduleLater={scheduleLater}
                             dataAction={dataAction}
                             airtimeAction={airtimeAction}
+                            bankAccounts={bankAccounts}
                         />
                     )}
                 </div>

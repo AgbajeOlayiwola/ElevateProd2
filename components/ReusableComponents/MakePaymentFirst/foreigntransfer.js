@@ -14,7 +14,8 @@ const ForeignTransfer = ({
     buttonText,
     type,
     action,
-    scheduleLater
+    scheduleLater,
+    bankAccounts
 }) => {
     const [countrys, setCountry] = useState([]);
     const [bank, setBank] = useState([]);
@@ -49,11 +50,17 @@ const ForeignTransfer = ({
             {type === 'two' ? (
                 <form onSubmit={handleSubmit(secondAction)}>
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
-                    <div className={styles.source}>
-                        <h2>
-                            Source <span>- Marvelous N******</span>
-                        </h2>
-                        <SourceSvg />
+                    <div className={styles.narration}>
+                        <label>Source Account</label>
+                        <select name="" id="" {...register('sourceAccount')}>
+                            {bankAccounts?.map((accounts, index) => {
+                                return (
+                                    <option value={accounts.name} key={index}>
+                                        account.name
+                                    </option>
+                                );
+                            })}
+                        </select>
                     </div>
                     <div className={styles.foreignBodyTwo}>
                         <div className={styles.amountCont}>
