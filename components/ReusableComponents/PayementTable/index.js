@@ -18,7 +18,8 @@ const PaymentTable = ({ title }) => {
 
     useEffect(() => {
         if (transactionElevate !== null) {
-            setTableDetails(transactionElevate);
+            setTableDetails(transactionElevate.transactions);
+            console.log(transactionElevate.transactions);
         }
     }, [transactionElevate]);
     return (
@@ -65,8 +66,8 @@ const PaymentTable = ({ title }) => {
                 <p className={styles.date}>Date</p>
                 <p className={styles.status}>Status</p>
             </div>
-            {tableDetails === null
-                ? 'No transaction available'
+            {!tableDetails.length
+                ? 'No Recent transaction'
                 : tableDetails
                       ?.filter((item) => {
                           if (searchValue === '') {

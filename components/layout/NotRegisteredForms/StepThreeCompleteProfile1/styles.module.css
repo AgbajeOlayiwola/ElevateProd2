@@ -16,6 +16,11 @@
     width: 100%;
     object-fit: scale-down;
 }
+.error {
+    color: red;
+    font-size: 12px;
+    /* margin-top: -1rem; */
+}
 
 .sectionII {
     flex: 1;
@@ -412,4 +417,35 @@
     font-size: 14px;
     line-height: 17px;
     color: #a5a5a5;
+}
+
+@media screen and (max-width: 1110px) {
+    .formGroup,
+    .formGroups {
+        width: 48%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 901px) {
+    .businessCont {
+        height: unset;
+        overflow: unset;
+    }
+}
+
+@media screen and (max-width: 701px) {
+    .nameDiv,
+    .formCont {
+        flex-direction: column;
+    }
+
+    .formGroups,
+    .formGroup {
+        width: 100%;
+    }
+
+    .formGroup {
+        margin-top: 24px;
+    }
 }

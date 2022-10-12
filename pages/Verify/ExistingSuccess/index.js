@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import Card from '../../../components/layout/NotRegisteredForms/Card';
 import Link from 'next/link';
 import Success from '../../../components/ReusableComponents/Success';
 import { ButtonComp } from '../../../components';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ExistingSuccess = ({ handleShowSuccessStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
-    let accountDetails;
-    let accountNumber;
-    if (typeof window !== 'undefined') {
-        accountDetails = window.localStorage.getItem('accountNumber');
-        if (accountDetails === null) {
-            accountNumber = '';
-        } else {
-            accountNumber = JSON.parse(accountDetails);
-        }
-    }
-
+    // let accountDetails;
+    // let accountNumber;
+    // if (typeof window !== 'undefined') {
+    //     accountDetails = window.localStorage.getItem('accountNumber');
+    //     if (accountDetails === null) {
+    //         accountNumber = '';
+    //     } else {
+    //         accountNumber = JSON.parse(accountDetails);
+    //     }
+    // }
+    const { bankAccounts, errorMessage } = useSelector(
+        (state) => state.bankAccountsReducer
+    );
+    useEffect(() => {
+        dispatch(bankAccountsData());
+        console.log(bankAccounts);
+    }, [bankAccounts]);
     return (
         <div className={styles.cover}>
             <>
@@ -29,13 +36,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                         Your Business account is ready!
                     </h2>
                     <h3>
-                        Your Account Number is{' '}
-                        <span>
-                            {' '}
-                            {accountNumber === undefined
-                                ? null
-                                : accountNumber.accountNumber}
-                        </span>
+                        Your Account Number is <span>{bankAccounts}</span>
                     </h3>
                     <Link href="/Dashboard">
                         <ButtonComp

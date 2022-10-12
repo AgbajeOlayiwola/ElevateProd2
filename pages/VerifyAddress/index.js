@@ -15,14 +15,16 @@ const VerifyAddress = () => {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [lga, setlga] = useState('');
+
     const [localGovernment, setLocalGovernment] = useState([]);
+    const { states } = useSelector((state) => state.statesReducer);
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             setLatitude(position.coords.latitude);
             setLongitude(position.coords.longitude);
         });
     }, []);
-
+    console.log(address);
     const { profile } = useSelector((state) => state.profile);
     useEffect(() => {
         dispatch(CompProfile());
@@ -36,7 +38,7 @@ const VerifyAddress = () => {
     useEffect(() => {
         newAccountTest1();
     }, [profile]);
-    const { states } = useSelector((state) => state.statesReducer);
+
     useEffect(() => {
         dispatch(statesData());
     }, []);
@@ -83,12 +85,14 @@ const VerifyAddress = () => {
                             <input
                                 type="text"
                                 placeholder="Enter Street Name"
-                                value={details.address}
-                                readOnly
+                                onChange={(e) => {
+                                    setAddress(e.target.value);
+                                }}
+                                value={address}
+                                // readOnly
                             />
                         </div>
                     )}
-
                     <div className={styles.jointGroup}>
                         {details.state === null ? (
                             <div className={styles.addressJointGroup}>
@@ -202,6 +206,32 @@ const VerifyAddress = () => {
                             pathname:
                                 'https://ecocomonoreact.azurewebsites.net/customer-details/',
                             query: {
+                                workitemId: 'AO-095734358976187628-CO',
+                                customerName: 'Kevin',
+                                customerEmail: 'agbajeolaiwola@gmail.com',
+                                branchCode: 'A02',
+                                segmentId: 'ADB',
+                                // houseNumber: '25',
+                                address: '17 Igbobi COllege Road Yaba',
+                                // streetName: 'Igbobi College Road',
+                                // areaName: 'Yaba',
+                                landmark: 'Yaba college of Technology',
+                                state: 'LA',
+                                lga: 'LA019',
+                                createdBy: 'RealMg',
+                                customerImage: '',
+                                Latitude: '6.519366425038108',
+                                Longitude: '3.3720303685114748'
+                            }
+                        }}
+                    >
+                        <button>Confirm Address</button>
+                    </Link>
+                    {/* <Link
+                        href={{
+                            pathname:
+                                'https://ecocomonoreact.azurewebsites.net/customer-details/',
+                            query: {
                                 workitemId: details.customerID,
                                 customerName: details.fullName,
                                 customerEmail: details.email,
@@ -221,8 +251,8 @@ const VerifyAddress = () => {
                         }}
                     >
                         <button>Confirm Address</button>
-                    </Link>
-                    <Link href=" https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test%20Customer&customerEmail=boluwatobi%40gmail.com&branchCode=007&segmentId=ADB&houseNumber=25&streetName=Pilot%20Crescent&areaName=Surulere&landmark=Shoprite&state=LG&lga=694&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333">
+                    </Link> */}
+                    <Link href="https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test Customer&customerEmail=boluwatobi@gmail.com&branchCode=A02&segmentId=ADB&address=25 pilot crescent off bode thomas surulere&landmark=Shoprite&state=LA&lga=LA020&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333">
                         <button>Test</button>
                     </Link>
                 </div>

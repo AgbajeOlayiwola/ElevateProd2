@@ -1,160 +1,332 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import DashLayout from '../../components/layout/Dashboard';
-import AppSvg from '../../components/ReusableComponents/AppSvg';
+import ProfileLayout from '../../components/layout/ProfileLayout';
+import ArrowBackSvg from '../../components/ReusableComponents/ArrowBackSvg';
 import BeneSvg from '../../components/ReusableComponents/BeneSvg';
-import BiometricsSvg from '../../components/ReusableComponents/BiometricsSvg';
 import BvnSvg from '../../components/ReusableComponents/BvnSvg';
-import LegalSvg from '../../components/ReusableComponents/LegalSvg';
-import Lock from '../../components/ReusableComponents/LockSvg';
-import ManageBene from '../../components/ReusableComponents/ManageBene';
-import ManageBene2 from '../../components/ReusableComponents/ManageBene2';
+import CheckedSvg from '../../components/ReusableComponents/CheckedSvg';
+import Visbility from '../../components/ReusableComponents/Eyeysvg';
+import InputTag from '../../components/ReusableComponents/Input';
+import ManageBeneSingle from '../../components/ReusableComponents/ManageBene';
 import ManageLimit from '../../components/ReusableComponents/ManageLimit1';
 import ManageLimit2 from '../../components/ReusableComponents/ManageLimit2';
 import ManageLimitSvg from '../../components/ReusableComponents/ManageLimitSvg';
 import ManageSignSvg from '../../components/ReusableComponents/ManageSignSvg';
-import OtpForm from '../../components/ReusableComponents/OtpForm';
 import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess';
 import ProfileSingle from '../../components/ReusableComponents/ProfileSingle';
-import ResetPassSvg from '../../components/ReusableComponents/ResetPassSvg';
-import ResetPin from '../../components/ReusableComponents/ResetPin';
-import ResetPinSvg from '../../components/ReusableComponents/ResetPinSvg';
+import AddSvg from '../../components/ReusableComponents/ReusableSvgComponents/AddSvg';
+import ContactSvg from '../../components/ReusableComponents/ReusableSvgComponents/ContactSvg';
+import EditProfileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
+import LogoutSvg from '../../components/ReusableComponents/ReusableSvgComponents/LogoutSvg';
 import RmSvg from '../../components/ReusableComponents/RmSvg';
 import ShareSvg from '../../components/ReusableComponents/ShareSvg';
 import styles from './styles.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    getBeneficiariesData,
+    deleteBeneficiariesData,
+    loadViewBvn
+} from '../../redux/actions/actions';
+import { set, useForm } from 'react-hook-form';
+import Loader from '../../components/ReusableComponents/Loader';
 
 const Profile = () => {
-    const [account, setAccount] = useState('true');
-    const [security, setSecurity] = useState('false');
-    const [others, setOthers] = useState('false');
+    const [type, setType] = useState('Account');
     const [overlay, setOverlay] = useState(false);
-    const [text, setText] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [text, setText] = useState('View Profile');
+    const [error, setError] = useState('');
+    const [bvn, setBvn] = useState('');
     const [count, setCount] = useState(0);
-    const profileData = {
-        account: [
-            {
-                text: 'Bank Verification Number (BVN)',
-                icon: <BvnSvg />
-            },
-            {
-                text: 'RM Name and Contact Details',
-                icon: <RmSvg />
-            },
-            {
-                text: 'Manage Signatories',
-                icon: <ManageSignSvg />
-            },
-            {
-                text: 'Manage Limit',
-                icon: <ManageLimitSvg />
-            },
-            {
-                text: 'Manage Beneficiaires',
-                icon: <BeneSvg />
-            }
-        ],
-        security: [
-            {
-                text: 'Reset and Update PIN',
-                icon: <ResetPinSvg />
-            },
-            {
-                text: 'Reset Password',
-                icon: <ResetPassSvg />
-            }
-        ],
-        others: [
-            {
-                text: 'App Preference',
-                icon: <AppSvg />
-            },
-            {
-                text: 'Legal-Terms & Condition, Data Privacy',
-                icon: <LegalSvg />
-            },
-            {
-                text: 'Share App/Refer a Friend',
-                icon: <ShareSvg />
-            }
-        ]
-    };
+    const [outType, setOutType] = useState();
+    const [beneficiaries, setBeneficiaries] = useState([]);
+    const dispatch = useDispatch();
+    const { getBeneficiaries } = useSelector(
+        (state) => state.getBeneficiariesReducer
+    );
+    const { deleteBeneficiaries } = useSelector(
+        (state) => state.deleteBeneficiariesReducer
+    );
+    const { viewBvn, errorMessageviewBvn } = useSelector(
+        (state) => state.viewBvnReducer
+    );
     useEffect(() => {
-        setSecurity(false);
-        setOthers(false);
+        dispatch(getBeneficiariesData());
     }, []);
+    useEffect(() => {
+        if (getBeneficiaries !== null) {
+            setBeneficiaries(getBeneficiaries);
+        }
+    }, [getBeneficiaries, deleteBeneficiaries]);
+    useEffect(() => {
+        if (deleteBeneficiaries !== null) {
+            dispatch(getBeneficiariesData());
+        }
+    }, [deleteBeneficiaries]);
+    const bvnAction = (data) => {
+        setLoading(true);
+        setError('');
+        setBvn('');
+        const bvnData = {
+            dateOfBirth: data.date,
+            password: data.bvnPassword
+        };
+        dispatch(loadViewBvn(bvnData));
+    };
 
+    const viewBvnAction = () => {
+        if (viewBvn !== null) {
+            setLoading(false);
+            setBvn(viewBvn.data.bvn);
+        } else if (errorMessageviewBvn !== null) {
+            setLoading(false);
+            setError(errorMessageviewBvn);
+        }
+    };
+
+    useEffect(() => {
+        viewBvnAction();
+    }, [viewBvn, errorMessageviewBvn]);
+    const profileData = [
+        {
+            text: 'View Profile',
+            icon: <EditProfileSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Manage Beneficiaries',
+            icon: <BeneSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Manage Limit',
+            icon: <ManageLimitSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Bank Verification Number (BVN)',
+            icon: <BvnSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'RM Name and Contact Details ',
+            icon: <RmSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Manage Signatories',
+            icon: <ManageSignSvg />,
+            color: '#7A7978'
+        },
+
+        {
+            text: 'Contact us',
+            icon: <ContactSvg />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Share App/Refer a Friend',
+            icon: <ShareSvg color="#102572" />,
+            color: '#7A7978'
+        },
+        {
+            text: 'Log Out',
+            icon: <LogoutSvg />,
+            color: '#FF0000'
+        }
+    ];
+    const bene = {
+        account: [],
+        airtime: [],
+        signatories: []
+    };
+    let countryName = '';
+    let countryNames;
+
+    if (typeof window !== 'undefined') {
+        countryName = window.localStorage.getItem('country');
+        if (countryName === null) {
+            countryNames = window.localStorage.getItem('country');
+        } else {
+            countryNames = JSON.parse(countryName);
+        }
+    }
+    const [userProfile, setUserProfile] = useState();
+    const [userProfileData, setUserProfileData] = useState();
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setUserProfile(window.localStorage.getItem('user'));
+        }
+    }, []);
+    useEffect(() => {
+        if (userProfile !== undefined) {
+            setUserProfileData(JSON.parse(userProfile));
+        }
+    }, [userProfile]);
+    // console.log(countryNames.flags.svg);
+    const types = (type) => {
+        setOutType(type);
+    };
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
     const renderForm = () => {
         switch (text) {
-            case 'Reset Password':
-                switch (count) {
-                    case 0:
-                        return (
-                            <ResetPin
-                                overlay={overlay}
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                title="Reset Password"
-                                label1="Enter New Password"
-                                label2="Confirm New Password"
-                                formAction={() => setCount(count + 1)}
-                            />
-                        );
-                    case 1:
-                        return <OtpForm overlay={overlay} />;
-                }
-
-            case 'Reset and Update PIN':
-                switch (count) {
-                    case 0:
-                        return (
-                            <ResetPin
-                                overlay={overlay}
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                title="Reset/Update Pin"
-                                label1="Enter New Transacntion  Pin (6-Digit)"
-                                label2="Confirm Transacntion  Pin (6-Digit)"
-                                formAction={() => setCount(count + 1)}
-                            />
-                        );
-                    case 1:
-                        return <OtpForm overlay={overlay} />;
-                }
-            case 'App Preference':
+            case 'View Profile':
                 return (
-                    <ResetPin
-                        overlay={overlay}
-                        action={() => {
-                            setOverlay(false);
-                            setText('');
-                        }}
-                        title={text}
-                        label1="Enter New Password"
-                        label2="Confirm New Password"
-                    />
+                    <>
+                        <h2 className={styles.title}>View Profile</h2>
+                        <div className={styles.profileBodyHead}>
+                            <div className={styles.profileBodyHeadImg}>
+                                {!userProfileData ? null : (
+                                    <Image
+                                        src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
+                                        width="100%"
+                                        height="100%"
+                                    />
+                                )}
+                            </div>
+                            <div className={styles.groupForm}>
+                                <div className={styles.formGroup}>
+                                    <label>Full Name</label>
+                                    <InputTag
+                                        type="text"
+                                        placeholder="Babatune Abiodun"
+                                        value={
+                                            !userProfileData
+                                                ? null
+                                                : `${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`
+                                        }
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Email Address</label>
+                                    <InputTag
+                                        type="email"
+                                        placeholder="babatuneabiodun@gmail.com"
+                                        value={
+                                            !userProfileData
+                                                ? null
+                                                : userProfileData.email
+                                        }
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Phone Number</label>
+                                    <div className={styles.phone}>
+                                        <div className={styles.phoneHeader}>
+                                            <span>
+                                                {/* <img
+                                                    src={countryNames.flags.svg}
+                                                    alt=""
+                                                /> */}
+                                            </span>
+                                            {/* <p>{countryNames.baseCurrency}</p> */}
+                                        </div>
+                                        <div className={styles.phoneDetails}>
+                                            {/* <p>{countryNames.countryCode}</p> */}
+                                            <input
+                                                type="number"
+                                                placeholder="812 345 6789"
+                                                value={
+                                                    !userProfileData
+                                                        ? null
+                                                        : userProfileData.phoneNumber
+                                                }
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </>
                 );
-            case 'Manage Signatories':
+            case 'Manage Limit':
+                return (
+                    <>
+                        <h2 className={styles.title}>Manage Limit</h2>
+                        <div className={styles.formGroup}>
+                            <label>Limit Type </label>
+                            <select>
+                                <option value="Mpos Limit">Mpos Limit</option>
+                                <option value="Transaction Limit">
+                                    Transaction Limit
+                                </option>
+                            </select>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Add Limit </label>
+                            <InputTag type="text" placeholder="Add Limit" />
+                        </div>
+                        <div className={styles.profileBody}>
+                            <button>Add Limit</button>
+                        </div>
+                    </>
+                );
+
+            case 'Bank Verification Number (BVN)':
                 switch (count) {
                     case 0:
                         return (
-                            <ManageLimit
-                                overlay={overlay}
-                                title="Manage Signatories"
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                btnAction={() => {
-                                    setCount(count + 1);
-                                }}
-                            />
+                            <form onSubmit={handleSubmit(bvnAction)}>
+                                <h2 className={styles.title}>View my BVN</h2>
+                                <div className={styles.bvn}>
+                                    <p>
+                                        Kindly enter your details below to view
+                                        the BVN tied to your Ellevate account.
+                                    </p>
+                                </div>
+                                {error ? (
+                                    <p className={styles.error}>{error}</p>
+                                ) : null}
+                                <div className={styles.formGroup}>
+                                    <label>Date of Birth</label>
+                                    <input
+                                        type="date"
+                                        placeholder="DD  |  MM  |  YYYY"
+                                        {...register('date', {
+                                            required: 'DOB is Required'
+                                        })}
+                                    />
+                                    <p className={styles.error}>
+                                        {errors?.date?.message}
+                                    </p>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Enter your Password</label>
+                                    <div className={styles.divs}>
+                                        <input
+                                            placeholder="**********"
+                                            {...register('bvnPassword', {
+                                                required: 'Password is Required'
+                                            })}
+                                            name="bvnPassword"
+                                            type={outType ? 'text' : 'password'}
+                                        />
+                                        <Visbility typeSet={types} />
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors?.bvnPassword?.message}
+                                    </p>
+                                </div>
+                                {bvn ? (
+                                    <p className={styles.bvns}>
+                                        Your bvn is {bvn}
+                                    </p>
+                                ) : null}
+                                <div className={styles.bvnButton}>
+                                    {loading ? (
+                                        <Loader />
+                                    ) : (
+                                        <button type="submit">
+                                            View my BVN
+                                        </button>
+                                    )}
+                                </div>
+                            </form>
                         );
                     case 1:
                         return (
@@ -188,39 +360,208 @@ const Profile = () => {
                         );
                 }
 
-            case 'Manage Limit':
+            case 'Manage Signatories':
                 switch (count) {
                     case 0:
                         return (
-                            <ManageLimit
-                                overlay={overlay}
-                                title="Manage Limit"
-                                action={() => {
-                                    setOverlay(false);
-                                    setText('');
-                                }}
-                                btnAction={() => {
-                                    setCount(count + 1);
-                                }}
-                            />
+                            <>
+                                <h2 className={styles.title}>
+                                    Manage Signatories
+                                </h2>
+                                <div className={styles.sign}>
+                                    <p>
+                                        Please see below signatories to your
+                                        Ellevate account.
+                                    </p>
+                                </div>
+                                <div className={styles.signBody}>
+                                    {!bene.signatories.length ? (
+                                        <h2 className={styles.dontHave}>
+                                            You do not have signatories yet
+                                        </h2>
+                                    ) : (
+                                        <>
+                                            {bene.signatories?.map(
+                                                (sign, index) => {
+                                                    return (
+                                                        <ManageLimit
+                                                            fname={sign.name}
+                                                            mail={sign.mail}
+                                                            key={index}
+                                                        />
+                                                    );
+                                                }
+                                            )}
+                                        </>
+                                    )}
+
+                                    <div className={styles.signButton}>
+                                        <button
+                                            onClick={() => {
+                                                setCount(count + 1);
+                                            }}
+                                        >
+                                            Add New
+                                        </button>
+                                    </div>
+                                </div>
+                            </>
                         );
                     case 1:
                         return (
-                            <ManageLimit2
-                                title="Update Limit"
-                                overlay={overlay}
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                btnAction={() => {
-                                    setCount(count + 1);
-                                }}
-                                formAction={(data) => {
-                                    console.log(data);
-                                }}
-                            />
+                            <>
+                                <h2 className={styles.title}>
+                                    <span>
+                                        <ArrowBackSvg
+                                            action={() => {
+                                                setCount(count - 1);
+                                            }}
+                                            color="#102572"
+                                        />
+                                    </span>
+                                    Manage Signatory
+                                </h2>
+                                <div className={styles.beneForm}>
+                                    <div className={styles.signForm}>
+                                        <div className={styles.midBeneForm}>
+                                            <div className={styles.formGroup}>
+                                                <label>Enter Email</label>
+                                                <InputTag
+                                                    type="email"
+                                                    placeholder="Enter email here"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className={styles.midBeneForm}>
+                                            <div className={styles.formGroup}>
+                                                <label>
+                                                    Enter your Business Phone
+                                                    Number
+                                                </label>
+                                                <div className={styles.phone}>
+                                                    <div
+                                                        className={
+                                                            styles.phoneHeader
+                                                        }
+                                                    >
+                                                        <span>
+                                                            {/* <img
+                                                            src={
+                                                                countryNames
+                                                                    .flags.svg
+                                                            }
+                                                            alt=""
+                                                        /> */}
+                                                        </span>
+                                                        <p>
+                                                            {/* {
+                                                            countryNames.baseCurrency
+                                                        } */}
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            styles.phoneDetails
+                                                        }
+                                                    >
+                                                        {/* <p>{countryNames.countryCode}</p> */}
+                                                        <input
+                                                            type="number"
+                                                            placeholder="812 345 6789"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.signForm}>
+                                        <div className={styles.midBeneForm}>
+                                            <div className={styles.formGroup}>
+                                                <label>Enter BVN</label>
+                                                <input
+                                                    type="email"
+                                                    placeholder="Enter your BVN"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.signRights}>
+                                    <p>
+                                        Select sigining rights to be assigned to
+                                        this user
+                                    </p>
+                                    <div className={styles.signRightSingle}>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="toSign"
+                                                    value="To Sign"
+                                                />
+                                                <span>
+                                                    <CheckedSvg />
+                                                </span>
+                                            </label>
+
+                                            <p>To Sign</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.signRightSingle}>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="viewBalances"
+                                                    value="View Balances"
+                                                />
+                                                <span>
+                                                    <CheckedSvg />
+                                                </span>
+                                            </label>
+
+                                            <p>View Balances</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.signRightSingle}>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="viewBalances"
+                                                    value="Transacting (able to move money)"
+                                                />
+                                                <span>
+                                                    <CheckedSvg />
+                                                </span>
+                                            </label>
+
+                                            <p>
+                                                Transacting (able to move money)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.signRightSingle}>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="viewBalances"
+                                                    value="Manage Account"
+                                                />
+                                                <span>
+                                                    <CheckedSvg />
+                                                </span>
+                                            </label>
+
+                                            <p>Manage Account</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.profileBodyButton}>
+                                        <button>Create Signatory</button>
+                                    </div>
+                                </div>
+                            </>
                         );
                     case 2:
                         return (
@@ -237,36 +578,182 @@ const Profile = () => {
                             />
                         );
                 }
-            case 'Manage Beneficiaires':
+            case 'Manage Beneficiaries':
                 switch (count) {
                     case 0:
                         return (
-                            <ManageBene
-                                overlay={overlay}
-                                title="Manage Beneficiary"
-                                action={() => {
-                                    setOverlay(false);
-                                    setText('');
-                                }}
-                                btnAction={() => {
-                                    setCount(count + 1);
-                                }}
-                            />
+                            <>
+                                <div className={styles.beneficiaryHead}>
+                                    <h2>Manage Beneficiaries</h2>
+                                    <div
+                                        className={styles.add}
+                                        onClick={() => {
+                                            setCount(count + 1);
+                                        }}
+                                    >
+                                        <AddSvg />
+                                        <p>Add</p>
+                                    </div>
+                                </div>
+                                <div className={styles.beneficiaryHeader}>
+                                    <div
+                                        className={
+                                            type === 'Account'
+                                                ? styles.active
+                                                : styles.beneficiaryHeaderDiv
+                                        }
+                                        onClick={() => {
+                                            setType('Account');
+                                        }}
+                                    >
+                                        <p>Account</p>
+                                    </div>
+                                    <div
+                                        className={
+                                            type === 'Airtime'
+                                                ? styles.active
+                                                : styles.beneficiaryHeaderDiv
+                                        }
+                                        onClick={() => {
+                                            setType('Airtime');
+                                        }}
+                                    >
+                                        <p>Airtime/Data</p>
+                                    </div>
+                                </div>
+                                <div className={styles.search}>
+                                    <img
+                                        src="../Assets/Svgs/search.svg"
+                                        alt=""
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Search Beneficiaries"
+                                    />
+                                </div>
+                                <div className={styles.beneficiaryBody}>
+                                    {type === 'Account' ? (
+                                        <>
+                                            {/* <p className={styles.text}>A</p> */}
+                                            {!beneficiaries.beneficiaries
+                                                ?.length ? (
+                                                <h2 className={styles.dontHave}>
+                                                    You do not have any
+                                                    Beneficiary at the moment
+                                                </h2>
+                                            ) : (
+                                                <>
+                                                    {beneficiaries.beneficiaries?.map(
+                                                        (account, index) => {
+                                                            return (
+                                                                <ManageBeneSingle
+                                                                    beneAccount={
+                                                                        account.bankName
+                                                                    }
+                                                                    beneName={
+                                                                        account.beneficiaryName
+                                                                    }
+                                                                    key={index}
+                                                                    deleteAction={() => {
+                                                                        dispatch(
+                                                                            deleteBeneficiariesData(
+                                                                                account.beneficiaryId
+                                                                            )
+                                                                        );
+                                                                    }}
+                                                                />
+                                                            );
+                                                        }
+                                                    )}
+                                                </>
+                                            )}
+                                        </>
+                                    ) : type === 'Airtime' ? (
+                                        <>
+                                            {/* <p className={styles.text}>A</p> */}
+                                            {!bene.airtime.length ? (
+                                                <h2 className={styles.dontHave}>
+                                                    You do not have any
+                                                    Beneficiary at the moment
+                                                </h2>
+                                            ) : (
+                                                <>
+                                                    {bene.airtime?.map(
+                                                        (account, index) => {
+                                                            return (
+                                                                <ManageBeneSingle
+                                                                    beneAccount={
+                                                                        account.account
+                                                                    }
+                                                                    beneName={
+                                                                        account.name
+                                                                    }
+                                                                    key={index}
+                                                                />
+                                                            );
+                                                        }
+                                                    )}
+                                                </>
+                                            )}
+                                        </>
+                                    ) : null}
+                                </div>
+                            </>
                         );
                     case 1:
                         return (
-                            <ManageBene2
-                                title="Create New Beneficiary"
-                                overlay={overlay}
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                formAction={(data) => {
-                                    console.log(data);
-                                }}
-                            />
+                            <>
+                                <div className={styles.beneficiaryHead}>
+                                    <h2>
+                                        <span>
+                                            <ArrowBackSvg
+                                                action={() => {
+                                                    setCount(count - 1);
+                                                }}
+                                                color="#102572"
+                                            />
+                                        </span>
+                                        Manage Beneficiaries
+                                    </h2>
+                                    <div
+                                        className={styles.add}
+                                        // onClick={() => {
+                                        //     setCount(count + 1);
+                                        // }}
+                                    >
+                                        <AddSvg />
+                                        <p>Add</p>
+                                    </div>
+                                </div>
+                                <div className={styles.beneForm}>
+                                    <div className={styles.formGroup}>
+                                        <label>Choose Beneficiary Type</label>
+                                        <select name="" id="">
+                                            <option value="">
+                                                Select Type
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label>Account Number</label>
+                                        <input
+                                            type="number"
+                                            placeholder="Enter Account Number"
+                                        />
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label>Choose Bank</label>
+                                        <select name="" id="">
+                                            <option value="">
+                                                Select Bank
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div className={styles.profileBodyButton}>
+                                        <button>Create Beneficiary</button>
+                                    </div>
+                                </div>
+                            </>
                         );
                     // case 2:
                     //     return (
@@ -285,160 +772,78 @@ const Profile = () => {
                 }
         }
     };
+    // const myref = useRef();
+    // useEffect(() => {
+    //     myref.current.scrollTo(0, 0);
+    //     window.scrollTo(0, 0);
+    // }, [count, text]);
     return (
-        <DashLayout>
-            <div className={styles.profileWrapper}>
-                <h2>Profile Management</h2>
-                <div className={styles.profileCont}>
-                    <div className={styles.profileHeader}>
-                        <div className={styles.profileHeaderImg}>
-                            <Image
-                                src="/Assets/Images/profileImg.png"
-                                width="100%"
-                                height="100%"
-                                layout="responsive"
-                            />
-                            <p>Change Photo</p>
+        <DashLayout page="Profile Management">
+            <ProfileLayout
+                head={
+                    <>
+                        <div className={styles.profileHeaderHead}>
+                            <div className={styles.profileHeaderImg}>
+                                {!userProfileData ? null : (
+                                    <Image
+                                        src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
+                                        width="100%"
+                                        height="100%"
+                                    />
+                                )}
+                            </div>
+                            <div className={styles.profileBodyHeaderCont}>
+                                <h2>Marvelous Solutions</h2>
+                                <p>
+                                    {!userProfileData
+                                        ? null
+                                        : `${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
+                                </p>
+                            </div>
                         </div>
-                        <div className={styles.profileHeaderText}>
-                            <label
-                                htmlFor="profileName"
-                                className={styles.profileName}
-                            >
-                                Edit Profile Name
-                            </label>
-                            <input
-                                type="text"
-                                name="profileName"
-                                placeholder="Bayo Olatunji _"
-                            />
-                            <div className={styles.lockAccount}>
-                                <Lock />
+                        <div className={styles.subProfileHead}>
+                            <div className={styles.freezeAccount}>
                                 <p>Freeze Account</p>
-                                <label>
-                                    <input type="checkbox" name="" id="" />
-                                    <span>
-                                        <i></i>
-                                    </span>
-                                </label>
+                                <div className={styles.saveBene}>
+                                    <label className={styles.beneCheck}>
+                                        <input type="checkbox" />
+                                        <span>
+                                            <i></i>
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
-                            <p>
-                                Account active for 53 days. Toggle to freeze
-                                account.
-                            </p>
-                            <button>Save Changes</button>
-                        </div>
-                    </div>
-                    <div className={styles.profileBody}>
-                        <div className={styles.profileBodyHeader}>
-                            <div
-                                className={
-                                    account
-                                        ? styles.active
-                                        : styles.profileButton
-                                }
-                                onClick={() => {
-                                    setAccount(true);
-                                    setOthers(false);
-                                    setSecurity(false);
-                                }}
-                            >
-                                <p>Account</p>
-                            </div>
-                            <div
-                                className={
-                                    security
-                                        ? styles.active
-                                        : styles.profileButton
-                                }
-                                onClick={() => {
-                                    setAccount(false);
-                                    setOthers(false);
-                                    setSecurity(true);
-                                }}
-                            >
-                                <p>Security</p>
-                            </div>
-                            <div
-                                className={
-                                    others
-                                        ? styles.active
-                                        : styles.profileButton
-                                }
-                                onClick={() => {
-                                    setAccount(false);
-                                    setOthers(true);
-                                    setSecurity(false);
-                                }}
-                            >
-                                <p>Others</p>
+                            <div className={styles.accountNumber}>
+                                <h4>Account Number</h4>
+                                <div className={styles.accountNumberCopy}>
+                                    <p>2345678910 (Ecobank)</p>
+                                    <h5>copy</h5>
+                                </div>
                             </div>
                         </div>
-                        <div className={styles.profileBodyCont}>
-                            {account ? (
-                                <div>
-                                    {profileData.account.map((item, index) => {
-                                        return (
-                                            <ProfileSingle
-                                                key={index}
-                                                profileText={item.text}
-                                                icon={item.icon}
-                                                index={index}
-                                                action={() => {
-                                                    setText(item.text);
-                                                    setOverlay(true);
-                                                }}
-                                            />
-                                        );
-                                    })}
-                                </div>
-                            ) : null}
-                            {security ? (
-                                <div>
-                                    {profileData.security.map((item, index) => {
-                                        return (
-                                            <ProfileSingle
-                                                key={index}
-                                                profileText={item.text}
-                                                icon={item.icon}
-                                                index={index}
-                                                action={() => {
-                                                    setText(item.text);
-                                                    setOverlay(true);
-                                                }}
-                                            />
-                                        );
-                                    })}
-                                    {/* action={showForm} */}
-                                    {/* <ProfileSingle
-                                        profileText="Enable/Disable Biometrics"
-                                        icon={<BiometricsSvg />}
-                                    /> */}
-                                </div>
-                            ) : null}
-                            {others ? (
-                                <div>
-                                    {profileData.others.map((item, index) => {
-                                        return (
-                                            <ProfileSingle
-                                                key={index}
-                                                profileText={item.text}
-                                                icon={item.icon}
-                                                index={index}
-                                                action={() => {
-                                                    setText(item.text);
-                                                    setOverlay(true);
-                                                }}
-                                            />
-                                        );
-                                    })}
-                                </div>
-                            ) : null}
+                        <div>
+                            {profileData.map((item, index) => {
+                                return (
+                                    <ProfileSingle
+                                        key={index}
+                                        profileText={item.text}
+                                        icon={item.icon}
+                                        index={index}
+                                        action={() => {
+                                            setText(item.text);
+                                            setOverlay(true);
+                                            setCount(0);
+                                        }}
+                                        color={item.color}
+                                    />
+                                );
+                            })}
                         </div>
-                    </div>
-                </div>
-            </div>
-            {overlay ? renderForm() : null}
+                    </>
+                }
+            >
+                {renderForm()}
+            </ProfileLayout>
         </DashLayout>
     );
 };

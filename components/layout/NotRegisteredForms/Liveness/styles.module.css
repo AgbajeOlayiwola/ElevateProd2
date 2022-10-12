@@ -14,6 +14,13 @@
     max-width: 400px;
     margin: 0px auto;
 }
+.imageOuter{
+    overflow: hidden;
+    border-radius: 50%;
+    height: 43vh;
+    border: solid 20px #6CCF00;
+    transition: all 0.8s ease-in-out;
+}
 .imageOut {
     display: flex;
     justify-content: center;
@@ -24,6 +31,13 @@
     height: 43vh;
     border: solid 20px #8a8888;
 }
+.errorInner{
+    overflow: hidden;
+    border-radius: 50%;
+    height: 43vh;
+    border: solid 20px red;
+} 
+
 .imageInnerActive {
     overflow: hidden;
     border-radius: 50%;

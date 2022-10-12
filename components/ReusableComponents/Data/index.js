@@ -1,5 +1,3 @@
-import MoreSvg from '../MoreSvg';
-import PaymentSvg from '../PaymentSvg';
 import NairaSvg from '../NairaSvg';
 import BulkTransfer from '../BulkTransfSvg';
 import StarSharp from '../StarSharpSvg';
@@ -20,114 +18,100 @@ import Paylink2 from '../PaylinkSvg/paylink';
 import Ussd from '../UssdSvg';
 import MposSvg2 from '../mPOSSvg/Mpos';
 import EcobankQRSvg from '../EcobankQRSvg';
+import DashboardSvg from '../ReusableSvgComponents/DashboardSvg';
+import PaymentSvg from '../ReusableSvgComponents/PaymentSvg';
+import ToolSvg from '../ReusableSvgComponents/ToolSvg';
+import StorefrontSvg from '../ReusableSvgComponents/StorefrontSvg';
+import SettingsSvg from '../ReusableSvgComponents/SettingsSvg';
+import PaymentActiveSvg from '../ReusableSvgComponents/PaymentActiveSvg';
+import ToolsActiveSvg from '../ReusableSvgComponents/toolsActiveSvg';
+import StorefrontActiveSvg from '../ReusableSvgComponents/StorefrontActiveSvg';
+import SettingsActiveSvg from '../ReusableSvgComponents/SettingsActiveSvg';
 
 export const SidebarData = [
     {
         title: 'Dashboard',
         path: '/Dashboard',
-
-        icon: <MdIcons.MdDashboard />,
-        iconActive: <MdIcons.MdDashboard />,
+        icon: <DashboardSvg fill="none" stroke="black" />,
+        iconActive: <DashboardSvg fill="#6CCF00" stroke="none" />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
     },
 
     {
-        // <MdIcons.MdOutlinePayments />
         title: 'Payment',
         path: '/Payment',
         modal: 'show',
-        icon: <PaymentSvg fillColor={false} />,
-        iconActive: <PaymentSvg fillColor={true} />,
-        iconClosed: <RiIcons.RiArrowDownSLine />,
-        iconOpened: <RiIcons.RiArrowUpSLine />,
-        subNavTitles: ['Receive Payment', 'Make Payment'],
-        subNav: [
-            {
-                title: 'Paylink',
-                path: 'Paylink',
-                icon: <BiIcons.BiLinkAlt />,
-                subNavTitle: 'Receive Payment'
-            },
-            {
-                title: 'USSD',
-                path: 'USSD only',
-                icon: <StarSharp />,
-                subNavTitle: 'Receive Payment'
-            },
-            {
-                title: 'Ecobank QR',
-                path: 'Ecobank QR Only',
-                icon: <BiIcons.BiScan />,
-                subNavTitle: 'Receive Payment'
-            },
-            {
-                title: 'mPOS',
-                path: 'Phone Pos',
-                icon: <HiIcons.HiOutlineCreditCard />,
-                subNavTitle: 'Receive Payment'
-            },
-            {
-                title: 'Single Transfer',
-                path: 'Single Transfer',
-                icon: <BiIcons.BiTransfer />,
-                subNavTitle: 'Make Payment'
-            },
-            {
-                title: 'Bulk Transfer',
-                path: 'Bulk Transfer',
-                icon: <BulkTransfer />,
-                subNavTitle: 'Make Payment'
-            },
-            {
-                title: 'Bill Payment',
-                path: 'Bills Payment',
-                icon: <NairaSvg />,
-                subNavTitle: 'Make Payment'
-            },
-            {
-                title: 'FX Transfer',
-                path: 'FX Transfer ',
-                icon: <FaIcons.FaHandHoldingUsd />,
-                subNavTitle: 'Make Payment'
-            }
-        ]
-    },
-    {
-        title: 'Transactions',
-        path: '/Transactions',
-        icon: <CgIcons.CgMoreO />,
-        iconActive: <CgIcons.CgMoreO />,
+        icon: <PaymentSvg />,
+        iconActive: <PaymentActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
     },
-
     {
         title: 'Tools',
         path: '/Tools',
-        icon: <FiIcons.FiSettings />,
-        iconActive: <FiIcons.FiSettings />,
+        icon: <ToolSvg />,
+        iconActive: <ToolsActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />,
         subNav: [
             {
                 title: 'Analysis',
-                path: '',
+                path: '/Analysis',
                 icon: <BiIcons.BiTransfer />
             },
             {
                 title: 'Inventory',
-                path: '',
+                path: '/Inventory',
                 icon: <BulkTransfer />
             },
             {
                 title: 'e invoice',
-                path: '',
+                path: '/invoice',
                 icon: <NairaSvg />
             },
             {
                 title: 'Others',
-                path: '',
+                path: '/others',
+                icon: <FaIcons.FaHandHoldingUsd />
+            }
+        ]
+    },
+    {
+        title: 'Storefront',
+        path: '/Storefront',
+        icon: <StorefrontSvg />,
+        iconActive: <StorefrontActiveSvg />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+    },
+
+    {
+        title: 'Settings',
+        path: '',
+        icon: <SettingsSvg />,
+        iconActive: <SettingsActiveSvg />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />,
+        subNav: [
+            {
+                title: 'Profile Management',
+                path: '/Profile',
+                icon: <BiIcons.BiTransfer />
+            },
+            {
+                title: 'Customer Care Service',
+                path: '/Customer',
+                icon: <BulkTransfer />
+            },
+            {
+                title: 'Security',
+                path: '/Security',
+                icon: <NairaSvg />
+            },
+            {
+                title: 'Legal Terms & Conditions',
+                path: '/Legal',
                 icon: <FaIcons.FaHandHoldingUsd />
             }
         ]

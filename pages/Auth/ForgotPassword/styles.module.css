@@ -2,136 +2,174 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    margin: 7% auto;
+    width: 40%;
+    max-width: 600px;
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 50px;
 }
+
+.covWrapper {
+    width: 67%;
+    max-width: 400px;
+    margin: 64px auto;
+}
+
 .back {
     display: flex;
     align-items: center;
-    font-family: 'Inter';
+    margin-bottom: 32px;
+}
+
+.back p {
+    margin: 0px;
+    margin-left: 12px;
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
-    line-height: 29px;
-    /* identical to box height */
-
-    color: #005b82;
-    margin-bottom: 14px;
+    line-height: 33px;
+    color: #102572;
 }
-.back p {
-    margin-left: 12px;
-    margin-top: 16px;
-}
-.emailP {
-    margin-bottom: 48px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 21px;
-
-    color: #3e3e3e;
-}
-.form label {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 19px;
-    color: #3e3e3e;
-}
-.form input {
-    margin-bottom: 45px;
-    margin-top: 8px;
-}
-.emailSent div:nth-child(1) {
-    text-align: center;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 19px;
-    margin-bottom: 8px;
-
-    color: #005b82;
-}
-.emailSent div:nth-child(2) p {
-    width: 54%;
-    margin-top: 8px;
-    max-width: 313px;
-}
-.emailSent div:nth-child(2) {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 23px;
-    display: flex;
-    justify-content: center;
-
-    /* or 161% */
-    margin-bottom: 32px;
-    text-align: center;
-
-    color: #a5a5a5;
-}
-.last {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 23px;
-    /* or 161% */
-    margin-top: 32px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    color: #a5a5a5;
-    margin: 0px auto;
-}
-.last {
-    max-width: 325px;
-}
-.last span {
-    color: #005b82;
+.back svg {
     cursor: pointer;
 }
-.create div:nth-child(1) {
-    font-family: 'Inter';
+
+.emailP p {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 27px;
+    color: #7a7978;
+    margin-bottom: 48px;
+}
+
+.form label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
+}
+.divs {
+    display: flex;
+    align-items: center;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding: 16px 24px 16px 16px;
+}
+
+.divs input {
+    height: 100%;
+    padding: 0px;
+    border: 0px;
+    background-color: transparent;
+    padding-left: 24px;
+}
+
+.form button {
+    margin-top: 48px;
+}
+
+.last {
+    max-width: 315px;
+    margin: 24px auto 0px;
+}
+
+.last p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #3e3e3e;
+    margin: 0px;
+}
+
+.last span {
+    color: #102572;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.emailSent {
+    width: 100%;
+    text-align: center;
+}
+
+.check {
+    margin: 0px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
     line-height: 29px;
-    /* identical to box height */
-    margin-bottom: 14px;
-    color: #005b82;
-}
-.create div:nth-child(2) {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 21px;
-    margin-bottom: 48px;
-    color: #3e3e3e;
-}
-.formCre div label {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 19px;
-
-    color: #3e3e3e;
-}
-.formCre div input {
-    margin-top: 8px;
-}
-.formCre div:nth-child(2) {
+    color: #102572;
     margin-top: 24px;
-    margin-bottom: 30px;
 }
+
+.recover {
+    margin: 16px auto 0px;
+    width: 70%;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    color: #a5a5a5;
+}
+
+.emailSent button {
+    margin-top: 48px;
+}
+
+.create h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    margin: 0px;
+    color: #102572;
+    margin-bottom: 32px;
+}
+
+.create p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 27px;
+    margin: 0px;
+    color: #7a7978;
+    margin-bottom: 32px;
+}
+
+.formCre label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
+}
+
+.formCre > div {
+    margin-bottom: 24px;
+}
+
 .errors {
     color: red;
     font-size: 12px;
-    margin-top: -1rem;
+    margin: 0px;
 }

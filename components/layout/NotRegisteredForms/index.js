@@ -10,7 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     createProfileSetup,
     verifyOtp,
-    loadCountry
+    loadCountry,
+    createBusProfileSetup,
+    CompProfile
 } from '../../../redux/actions/actions';
 import { Router, useRouter } from 'next/router';
 import Loader from '../../ReusableComponents/Loader';
@@ -33,7 +35,7 @@ const ProfileSetups = () => {
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
-        type: 'UNREGISTERED BUSINESS',
+        type: 'false',
         rcnumber: '',
         tinNumber: '',
         bvNumber: '',
@@ -55,6 +57,7 @@ const ProfileSetups = () => {
         referralCode: '',
         signatory: 1
     });
+    // console.log(formData.type);
     let countryName = '';
     let countryNames;
 
@@ -92,12 +95,16 @@ const ProfileSetups = () => {
         bvnErrorI,
         bvnErrorII,
         bvnErrorIII,
-        bvnNinPend
+        bvnNin
     } = useSelector((state) => state.profileSetup);
     const types = (type) => {
         setOutType(type);
     };
-
+    const [errorM, setErrorM] = useState('');
+    const [errorI, setErrorI] = useState('');
+    const [errorII, setErrorII] = useState('');
+    const [errorIII, setErrorIII] = useState('');
+    const [loading, setLoading] = useState(false);
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
     const conditionalComponent = () => {
@@ -108,10 +115,13 @@ const ProfileSetups = () => {
                         errorM={errorM}
                         errorI={errorI}
                         formData={formData}
+                        bvnError={bvnError}
                         setFormData={setFormData}
                         action={handleSubmit}
+                        actionI={regsiteredBus}
                         // action is supposed to be handleSubmit
                     />
+                    // <StepTwoBVNAuthenticator />
                 );
             case 1:
                 return (
@@ -127,6 +137,7 @@ const ProfileSetups = () => {
                                 otp: '123456'
                             };
                             dispatch(verifyOtp(otpData));
+                            dispatch(CompProfile());
                             if (otpErrorMessage) {
                                 console.log('otpError');
                             } else if (!otpErrorMessage) {
@@ -135,19 +146,19 @@ const ProfileSetups = () => {
                         }}
                     />
                 );
-            // case 2:
-            //     return (
-            //         <Liveness
-            //             // action={() => {
-            //             //     setPage(page - 1);
-            //             //     setPageType('');
-            //             // }}
-            //             action={handleSubmitt}
-            //         />
-            //     );
             case 2:
                 return (
+                    <Liveness
+                        action={() => {
+                            setPage(page + 1);
+                        }}
+                        // action={handleSubmitt}
+                    />
+                );
+            case 3:
+                return (
                     <StepThreeCompleteProfile1
+                        type={formData.type}
                         formData={formData}
                         setFormData={setFormData}
                         action={() => {
@@ -167,24 +178,31 @@ const ProfileSetups = () => {
     // useEffect(() => {
     //     console.log(errorMessages, otpErrorMessages);
     // }, []);
-    const [errorM, setErrorM] = useState('');
-    const [errorI, setErrorI] = useState('');
-    const [errorII, setErrorII] = useState('');
-    const [errorIII, setErrorIII] = useState('');
-    const [loading, setLoading] = useState(false);
+
+    function regsiteredBus() {
+        console.log('firstAPi');
+
+        const businessProfileData = {
+            bvnNumber: formData.bvNumber,
+            phoneNumber: formData.phoneNumber,
+            countryCode: formData.countryCode,
+            dateOfBirth: formData.dateOfBirth,
+            taxNumber: formData.tinNumber,
+            registerationNumber: formData.rcnumber
+        };
+        // setLoading((prev) => !prev);
+
+        dispatch(createBusProfileSetup(businessProfileData));
+    }
 
     function handleSubmit() {
         // console.log('firstAPi');
 
         const profileData = {
-            type: formData.type,
-            registrationNumber: formData.rcnumber,
-            tin: formData.tinNumber,
-            bvn: formData.bvNumber,
-            phoneNumber: formData.countryCode + formData.phoneNumber,
+            bvnNumber: formData.bvNumber,
+            phoneNumber: formData.phoneNumber,
             countryCode: formData.countryCode,
-            dob: formData.dateOfBirth,
-            signatoryCount: 1
+            dateOfBirth: formData.dateOfBirth
         };
         setLoading((prev) => !prev);
 
@@ -193,15 +211,18 @@ const ProfileSetups = () => {
     }
 
     useEffect(() => {
-        console.log('new bvn:', bvnError);
-        if (errorMessages === null && bvnError === null && bvnErrorI === null) {
+        // console.log('new bvn:', bvnNin.message);
+        if (
+            bvnNin === 'verification successful' ||
+            errorMessages === 'you have already setup your profile'
+        ) {
             setPage(page + 1);
         } else {
-            console.log('moved');
+            console.log('move');
             setErrorM(errorMessages);
             setErrorI(bvnError);
         }
-    }, [errorMessages, bvnError, bvnErrorI, bvnNinPend]);
+    }, [bvnNin, errorMessages]);
 
     const handleSubmitt = () => {
         setPage(page + 1);
@@ -226,9 +247,9 @@ const ProfileSetups = () => {
             ? (text =
                   'Input your BVN and open a Business Account in 3 minutes.')
             : page === 2
-            ? (text = 'Checkout Priceless opportunities Be ahead')
+            ? (text = 'Checkout Priceless opportunities, Be ahead!')
             : page === 3
-            ? (text = 'Checkout Priceless opportunities Be ahead')
+            ? (text = 'Checkout Priceless opportunities, Be ahead!')
             : null;
     }
     return (
@@ -238,10 +259,10 @@ const ProfileSetups = () => {
             </section>
             <section className={styles.sectionII}>
                 {page === 0 ? (
-                    <>
-                        {/* <p className={styles.error}>{errorM}</p> <br />
-                                <p className={styles.error}>{errorI}</p> <br /> */}
-                    </>
+                    // <>
+                    //     <p className={styles.error}>{errorI}</p> <br />
+                    // </>
+                    <></>
                 ) : (
                     <></>
                 )}

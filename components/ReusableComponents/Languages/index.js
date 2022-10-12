@@ -69,34 +69,6 @@ const Langauges = () => {
                     </ul>
                 )}
             </div>
-            {/* <select
-                {...register('first_name', {
-                    required: 'Language is required',
-                    minLength: {
-                        value: 2,
-                        message: 'Min length is 2'
-                    }
-                })}
-                id="languages"
-                className={styles.selectI}
-                name="languages"
-                value={languageValue}
-                onChange={(e) => {
-                    if (e.target.value !== 'English') {
-                        setLanguagevalue(languages[0]);
-                        setError('This App is available in English currently');
-                    }
-                }}
-            >
-                {languages.map((item, index) => {
-                    return (
-                        <option value={item.name} key={index}>
-                            {item.name}
-                        </option>
-                    );
-                })}
-            </select> */}
-            {/* <div>error</div> */}
         </div>
     );
 };

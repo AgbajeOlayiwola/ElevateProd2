@@ -34,6 +34,7 @@ const PaymentSuccess = ({
         window.scrollTo(0, 0);
     }, []);
     const [activeBtn, setActiveBtn] = useState(true);
+    const current = Date().toLocaleString();
     return (
         <Overlay overlay={overlay}>
             <div ref={myref} className={styles.successcont}>
@@ -83,27 +84,26 @@ const PaymentSuccess = ({
                                         <h6 className={styles.elevateSuccess}>
                                             Your recharge of
                                             <span>{amount} </span> for Airtime
-                                            on June 12, 2022 by 12:02pm
+                                            on {current}
                                         </h6>
                                     ) : title ===
                                       'Foreign Transfer Payments' ? (
                                         <h6 className={styles.elevateSuccess}>
-                                            <span>{amount} </span> will be
-                                            transferred to
-                                            <span>{beneName}</span> on June 12,
-                                            2022 by 12:02pm
+                                            <span>{amount} </span> has been
+                                            successfully transferred to
+                                            <span>{beneName}</span> on {current}
                                         </h6>
                                     ) : title === 'Bulk Payment' ? (
                                         <h6 className={styles.elevateSuccess}>
                                             {amount} was transferred to 3
-                                            Accounts on June 12, 2022 by 12:02pm
+                                            Accounts on {current}
                                         </h6>
                                     ) : title === 'Single Transfer Payment' ? (
                                         <h6 className={styles.elevateSuccess}>
-                                            <span>₦{amount}</span> will be
-                                            transferred to
-                                            <span> {beneName}</span> on June 12,
-                                            2022 by 12:02pm
+                                            <span>₦{amount}</span> has been
+                                            successfully transferred to
+                                            <span> {beneName}</span> on{' '}
+                                            {current}
                                         </h6>
                                     ) : null}
 

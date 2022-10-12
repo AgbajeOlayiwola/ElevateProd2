@@ -38,6 +38,16 @@
     margin-top: 48px;
 }
 
+.cardHeading p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 33px;
+    color: #102572;
+    margin: 0px;
+}
+
 .phone {
     display: flex;
     margin-top: 8px;
@@ -97,7 +107,26 @@
     color: #6ccf00;
     margin-top: 2px;
 }
-.error{
+.error {
     color: red;
     font-size: 16px;
+}
+
+@media screen and (max-width: 1070px) {
+    .bodyWrapper {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 901px) {
+    .formWrapper {
+        height: unset;
+        overflow: unset;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .bodyWrapper {
+        width: 90%;
+    }
 }

@@ -7,7 +7,7 @@
     display: flex;
     position: absolute;
     top: 3.7%;
-    left: 33%;
+    left: 27%;
     z-index: 10;
 }
 .firstDivs {
@@ -131,13 +131,24 @@
     width: 100%;
 }
 
+.beneficiaryBody h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 15px;
+    color: #7a7978;
+    margin: 0px;
+    margin-top: 8px;
+}
+
 .beneficiarySingle:first-child {
     margin-left: 0px;
 }
 
 .beneficiarySingle {
-    width: 15%;
-    max-width: 60px;
+    width: 25%;
+    max-width: 100px;
     margin-left: 24px;
     display: inline-block;
 }
@@ -369,6 +380,10 @@
     left: 24px;
 }
 
+.beneCheck input:checked ~ span {
+    background: #6ccf00;
+}
+
 .saveBene p {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -532,7 +547,7 @@
 
 .formGroup {
     margin-bottom: 16px;
-    width: 49%;
+    width: 100%;
 }
 
 .formGroup select {
@@ -593,8 +608,30 @@
     margin-top: 48px;
 }
 
+.foreignBody .formGroup {
+    width: 100%;
+}
+
 .foreignBody button {
     margin-top: 70%;
+}
+
+.foreignBodyTwo {
+    margin-top: 24px;
+}
+
+.foreignBodyTwo .formGroup {
+    width: 100%;
+}
+
+.foreignBodyTwo button {
+    margin-top: 48px;
+}
+
+.amountCont {
+    padding-bottom: 24px;
+    border-bottom: 2px solid #f6f6f6;
+    margin-bottom: 24px;
 }
 
 .billSingle {
@@ -684,6 +721,10 @@
 
 .networkForm {
     margin-top: 24px;
+}
+
+.networkForm .formGroup {
+    width: 100%;
 }
 
 .networkForm button {

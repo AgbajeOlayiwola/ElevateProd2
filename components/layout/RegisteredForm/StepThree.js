@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../ReusableComponents/Button';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
+import { useDispatch, useSelector } from 'react-redux';
+import { bankAccountsData } from '../../../redux/actions/actions';
 
 const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
+    const dispatch = useDispatch();
     const account = localStorage.getItem('displayAccount');
     const accountDetails = JSON.parse(account);
     const [isRegistered, setIsRegistered] = useState(false);
@@ -34,12 +37,22 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
 
     if (typeof window !== 'undefined') {
         countryName = window.localStorage.getItem('country');
+        // console.log(window.localStorage.getItem('country'));
         if (countryName === null) {
             countryNames = window.localStorage.getItem('country');
         } else {
             countryNames = JSON.parse(countryName);
         }
     }
+
+    const { bankAccounts, errorMessage } = useSelector(
+        (state) => state.bankAccountsReducer
+    );
+    useEffect(() => {
+        dispatch(bankAccountsData());
+        console.log(bankAccounts);
+    }, [bankAccounts]);
+
     const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.body}>
@@ -49,75 +62,13 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>
                     <div className={styles.cardHeading}>
-                        <ArrowBackSvg action={action} />
+                        <ArrowBackSvg action={action} color="#102572" />
                         <div>
                             <h3 className={styles.LeftHeading}>
                                 Complete your Profile
                             </h3>
                         </div>
-                        {/* <Imag
-                    src="/width"
-                    alt="lineImage" /> */}
                     </div>
-                    {/* <Imag
-                    src="/width"
-                    alt="lineImage" /> */}
-                    {/* <p
-                style={{
-                    fontWeight: '400',
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: '#3E3E3E'
-                }}
-            >
-                Is your business registered?
-            </p>
-            <div className={styles.ButtonWrapper}>
-                <span
-                    className={styles.ToggleNo}
-                    onClick={switchRegistrationStatus}
-                    style={
-                        bgcolor
-                            ? { background: '#f8f8f8' }
-                            : { background: '#6ccf00' }
-                    }
-                >
-                    <p
-                        className={styles.ToggleNoText}
-                        style={
-                            bgcolor
-                                ? { color: '#a5a5a5' }
-                                : { color: '#ffffff' }
-                        }
-                    >
-                        No
-                    </p>
-                </span>
-                <span
-                    className={styles.ToggleYes}
-                    onClick={handleRegistrationStatus}
-                    style={
-                        bgcolor
-                            ? { background: '#6ccf00' }
-                            : { background: '#f8f8f8' }
-                    }
-                >
-                    <p
-                        className={styles.ToggleYesText}
-                        style={
-                            bgcolor
-                                ? { color: '#ffffff' }
-                                : { color: '#a5a5a5' }
-                        }
-                    >
-                        Yes
-                    </p>
-                </span>
-            </div> */}
-                    {/* <p>
-                Contine with your personal account or open a new business
-                account
-            </p> */}
                     <div className={styles.formWrapper}>
                         <div className={styles.formInner}>
                             {accountDetails.email === null ? null : (
@@ -142,7 +93,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                     className={styles.textInput}
                                     required
                                     readOnly
-                                    value={accountDetails.accountNumber}
+                                    value={bankAccounts}
                                 />
                             </div>
                             <div>
@@ -182,7 +133,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                 className={styles.genBtm}
                                 style={{ marginBottom: '0px' }}
                             >
-                                <label>Your Gender </label>
+                                <label> Gender </label>
 
                                 <select name="" id="">
                                     <option value="Male">Male</option>

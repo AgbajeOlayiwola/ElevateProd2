@@ -3,7 +3,6 @@
     background: #ffffff;
     border-radius: 16px;
     width: 100%;
-    margin-top: 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -187,4 +186,22 @@
 
 .NFCScanner button {
     margin-top: 0px;
+}
+
+@media screen and (max-width: 1366px) {
+    .balanceButtons {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 1301px) {
+    .cov {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 1081px) {
+    .balanceButtons {
+        width: 60%;
+    }
 }

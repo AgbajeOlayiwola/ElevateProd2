@@ -13,6 +13,17 @@
     text-align: center;
     color: #ffffff;
 }
+
+.make:hover {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #005b82;
+}
 .comp {
     display: flex;
     font-family: 'Inter', sans-serif;
@@ -24,6 +35,11 @@
     text-align: center;
     color: #005b82;
 }
+
+.comp a {
+    margin-left: 10px;
+}
+
 .dontshow {
     display: none;
 }
@@ -40,4 +56,20 @@
     background: #ffffff;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
+}
+
+@media screen and (max-width: 1320px) {
+    .body {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 731px) {
+    .body {
+        width: 100%;
+    }
+
+    .dat {
+        width: 100%;
+    }
 }

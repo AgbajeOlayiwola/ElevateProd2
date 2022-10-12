@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../ReusableComponents/Button';
 import Card from '../NotRegisteredForms/Card';
 import FirstStep from './FirstStep';
@@ -8,26 +8,78 @@ import StepFour from './StepFour';
 import Link from 'next/link';
 import styles from './styles.module.css';
 import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticator';
+import { existingUserProfileData } from '../../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
     const [pageType, setPageType] = useState('');
+    const dispatch = useDispatch();
+    const { existingUserProfilee, errorMessage } = useSelector(
+        (state) => state.existingUserProfileReducer
+    );
+
+    const [formData, setFormData] = useState({
+        userId: '',
+        emailData: '',
+        password: '',
+        confPassword: ''
+    });
+    // useEffect(() => {
+    //     if (!errorMessage) {
+    //         setPage(page + 1);
+    //     } else if (
+    //         existingUserProfilee.data.message ==
+    //         'Profile setup Intialization completed'
+    //     ) {
+    //         setPage(page + 1);
+    //     }
+    // }, [errorMessage]);
 
     const conditionalComponent = () => {
         switch (page) {
             case 0:
-                return <FirstStep handleSubmit={handleSubmit} />;
+                return <FirstStep action={handleSubmit} />;
             case 1:
                 return (
                     <SecondStep
-                        onSubmit={(e) => {
-                            setPage(page + 1);
+                        move={() => {
+                            const userData = {
+                                userId: formData.userId,
+                                email: formData.emailData,
+                                password: formData.password,
+                                confirmPassword: formData.confPassword
+                            };
+                            console.log(formData.userId);
+                            dispatch(existingUserProfileData(userData));
+                            // console.log(existingUserProfilee.data.message);
+                            if (!errorMessage) {
+                                setPage(page + 1);
+                            } else if (
+                                existingUserProfilee.message ==
+                                'Profile setup Intialization completed'
+                            ) {
+                                setPage(page + 1);
+                            }
                         }}
+                        formData={formData}
+                        setFormData={setFormData}
                         action={() => {
                             setPage(page - 1);
                         }}
+
+                        //
                     />
                 );
+            // case 2:
+            //     return (
+            //     <Liveness
+            //     action={() => {
+            //         setPage(page + 1);
+            //     }}
+            //     // action={handleSubmitt}
+            // />
+            //     );
             case 2:
                 return (
                     <StepThree

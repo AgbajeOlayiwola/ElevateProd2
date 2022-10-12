@@ -70,7 +70,7 @@ export const ResetOTP = styled.div`
         font-size: 16px;
         line-height: 19px;
         text-align: center;
-        color: #a5a5a5;
+        color: #102572;
         margin: 0px;
         cursor: pointer;
     }

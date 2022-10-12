@@ -15,7 +15,7 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
         const cookie = getCookie('cookieToken');
         axiosInstance
             .get(
-                `https://ellevate-app.herokuapp.com${apiRoutes.accountStatus}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.accountStatus}`,
                 {
                     headers: {
                         'Content-Type': 'application/json',

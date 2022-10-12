@@ -7,14 +7,14 @@ import { ButtonComp } from '../../components';
 import { getCookie } from 'cookies-next';
 import apiRoutes from '../../redux/helper/apiRoutes';
 
-const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
+const CorporateSuccess = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [accountDone, setAccountDone] = useState('');
     useEffect(() => {
         const cookie = getCookie('cookieToken');
         axiosInstance
             .get(
-                `https://ellevate-app.herokuapp.com${apiRoutes.corpAccountStatus}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.corpAccountStatus}`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -63,4 +63,4 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     );
 };
 
-export default StepFiveSuccessPage;
+export default CorporateSuccess;

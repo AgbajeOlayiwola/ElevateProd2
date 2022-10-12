@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import Popup from '../../layout/Popup';
+import BeneUserSvg from '../ReusableSvgComponents/BeneUserSvg';
 import ThreeDotsSvg from '../ThreeDotSvg';
 import styles from './styles.module.css';
 
@@ -33,6 +34,7 @@ const ManageLimit = ({ overlay, title, action, btnAction }) => {
                             return (
                                 <SignSingle
                                     key={index}
+                                    index={index}
                                     mail={item.email}
                                     fname={item.name}
                                 />
@@ -67,20 +69,22 @@ const ManageLimit = ({ overlay, title, action, btnAction }) => {
     );
 };
 
-export default ManageLimit;
-
-const SignSingle = ({ mail, fname }) => {
+const SignSingle = ({ mail, fname, index }) => {
     return (
-        <div className={styles.signSingle}>
-            <div className={styles.name}>
-                <h2>{fname}</h2>
-                <p>{mail}</p>
+        <div className={styles.signSingle} key={index}>
+            <div className={styles.user}>
+                <BeneUserSvg />
+                <div className={styles.name}>
+                    <h3>{fname}</h3>
+                    <p>{mail}</p>
+                </div>
             </div>
             <div className={styles.action}>
                 <div className={styles.status}></div>
-                <p>Signed</p>
+                <p>To sign</p>
                 <ThreeDotsSvg />
             </div>
         </div>
     );
 };
+export default SignSingle;

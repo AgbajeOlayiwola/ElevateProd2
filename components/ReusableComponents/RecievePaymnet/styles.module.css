@@ -12,6 +12,18 @@
     text-align: center;
     color: #ffffff;
 }
+
+.rec:hover {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #6ccf00;
+}
+
 .comp {
     display: flex;
     font-family: 'Inter', sans-serif;
@@ -22,6 +34,10 @@
     line-height: 11px;
     text-align: center;
     color: #005b82;
+}
+
+.comp a {
+    margin-left: 10px;
 }
 .comp p:nth-child(2) {
     margin-left: 13.16px;
@@ -39,4 +55,20 @@
     background: #ffffff;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
+}
+
+@media screen and (max-width: 1320px) {
+    .body {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 731px) {
+    .body {
+        width: 100%;
+    }
+
+    .dat {
+        width: 100%;
+    }
 }

@@ -9,14 +9,23 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 // import { loadCountry } from '../../../../redux/actions/actions';
 import Head from 'next/head';
+import Loader from '../../../ReusableComponents/Loader';
 
-const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
+const RegisteredForm = ({
+    formData,
+    setFormData,
+    action,
+    // errorM,
+    errorI,
+    bvnError,
+    actionI
+}) => {
     // const [progress, setProgress] = useState('25%');
-
+    const [loading, setLoading] = useState(false);
     const [switchs, setSwitch] = useState(true);
-    const [isRegistered, setIsRegistered] = useState(false);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
+    const [errorM, setErrorM] = useState('');
     // const dispatch = useDispatch();
     // const { countries } = useSelector((state) => state.countryReducer);
 
@@ -36,15 +45,14 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
         setShowFirstStep(false);
     };
     const handleRegistrationStatus = () => {
-        setIsRegistered(true);
+        console.log('true');
         setBgcolor((prevState) => !prevState);
-        setFormData({ ...formData, type: 'REGISTERED BUSINESS' });
+        setFormData({ ...formData, type: 'true' });
     };
     const switchRegistrationStatus = () => {
-        setIsRegistered(false);
+        console.log('false');
         setBgcolor((prevState) => !prevState);
-
-        setFormData({ ...formData, type: 'UNREGISTERED BUSINESS' });
+        setFormData({ ...formData, type: 'false' });
     };
     // console.log(
     //     formData.type,
@@ -68,10 +76,17 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
         (state) => state.profileSetup
     );
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
+
     // console.log('error essage', otpErrorMessage);
     useEffect(() => {
-        console.log('bvnError', bvnErrorI);
+        setLoading((prev) => !prev);
+    }, [isLoading, profile, errorMessages]);
+
+    useEffect(() => {
+        // console.log('bvnError', bvnErrorI);
         console.log(errorMessages);
+        setErrorM(errorMessages);
+
         //change to no error messages boss
         if (!errorMessages) {
             console.log(errorMessages);
@@ -84,6 +99,9 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
         <div className={styles.bodyWrapper}>
             <div className={styles.cardHeading}>
                 <h3 className={styles.LeftHeading}>Profile Setup</h3>
+                <p>
+                    We recommend you enter the phone number linked to your BVN
+                </p>
             </div>
             <div className={styles.formWrapper}>
                 <InputWrapper>
@@ -104,8 +122,10 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                         <option value="Yes">Yes</option>
                     </select>
                 </InputWrapper>
-                {isRegistered ? (
-                    <>
+                {formData.type == 'true' ? (
+                    <form onSubmit={handleSubmit(actionI)}>
+                        <p className={styles.error}>{errorM}</p>
+                        <p className={styles.error}> {bvnError}</p>
                         <InputWrapper>
                             <Label>
                                 Enter your RC Number/Business Registration
@@ -115,16 +135,17 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                         <FormInput
                             type="text"
                             placeholder="Your Business Registration number"
-                            name="rc_number"
-                            {...register('rc_number', {
-                                required: 'BVN is required',
-                                minLength: {
-                                    value: 10,
-                                    message: 'Min length is 10'
+                            name="rcNumber"
+                            {...register('rcNumber', {
+                                required: 'RC Number is required',
+
+                                pattern: {
+                                    value: /^[A-Za-z0-9 ]+$/i,
+                                    message: 'Only Alphabelts/Number allowed'
                                 }
                             })}
                             value={formData.rcnumber}
-                            onChange={(event) => {
+                            onInput={(event) => {
                                 setFormData({
                                     ...formData,
                                     rcnumber: event.target.value
@@ -134,18 +155,20 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                 //setRcnumber(event?.target.value); //saving input to state
                             }}
                         />
-                        {/* <div className="errors">
+                        <div className="errors">
                             {errors.rc_number?.message}
-                        </div> */}
+                        </div>
                         <InputWrapper>
-                            <Label>Enter your TIN</Label>
+                            <Label>
+                                Enter your TIN <i>(optional)</i>{' '}
+                            </Label>
                             <FormInput
                                 name="tin"
                                 type="number"
                                 placeholder="Your Tax Identification number"
                                 {...register('tin')}
                                 value={formData.tinNumber}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         tinNumber: event.target.value
@@ -167,12 +190,16 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                 {...register('bvn', {
                                     required: 'BVN is required',
                                     minLength: {
-                                        value: 10,
-                                        message: 'Min length is 10'
+                                        value: 11,
+                                        message: 'Min length is 11'
+                                    },
+                                    maxLength: {
+                                        value: 11,
+                                        message: 'Max length is 11'
                                     }
                                 })}
                                 value={formData.bvNumber}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         bvNumber: event.target.value
@@ -230,7 +257,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                             }
                                         })}
                                         value={formData.phoneNumber}
-                                        onChange={(event) => {
+                                        onInput={(event) => {
                                             setFormData({
                                                 ...formData,
                                                 phoneNumber: event.target.value
@@ -251,7 +278,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                             <FormInput
                                 type="date"
                                 placeholder="dd-mm-yyyy"
-                                max="2002-12-31"
+                                max="2004-12-31"
                                 {...register('date_of_birth', {
                                     required: 'Date of birth is required',
                                     minLength: {
@@ -260,7 +287,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                     }
                                 })}
                                 vallue={formData.dateOfBirth}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         dateOfBirth: event.target.value
@@ -271,19 +298,26 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
-                    </>
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            type="submit"
+                            text={'Next'}
+                            onClick={actionI}
+                        />
+                    </form>
                 ) : (
                     ''
                 )}
-                {!isRegistered ? (
-                    <>
+                {formData.type == 'false' ? (
+                    <form onSubmit={handleSubmit(action)}>
                         <InputWrapper>
                             <Label>Enter your BVN</Label>
                             <FormInput
                                 type="number"
                                 placeholder="Your BVN"
                                 name="bvn"
-                                {...register('bvn', {
+                                {...register('bvnFalse', {
                                     required: 'BVN is required',
                                     minLength: {
                                         value: 10,
@@ -291,7 +325,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                     }
                                 })}
                                 value={formData.bvNumber}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         bvNumber: event.target.value
@@ -302,7 +336,10 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                 }}
                             />
                             <p className={styles.error}>{errorM}</p>
-                            <div className="errors">{errors.bvn?.message}</div>
+                            <p className={styles.error}> {bvnError}</p>
+                            <div className="errors">
+                                {errors.bvnFalse?.message}
+                            </div>
                         </InputWrapper>
                         <InputWrapper>
                             <Label>Phone Number</Label>
@@ -361,7 +398,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                 </div>
                             </div>
                             <div className="errors">
-                                {errors.phone_number?.message}
+                                {errors.countryCode_number?.message}
                             </div>
                         </InputWrapper>
                         <InputWrapper>
@@ -378,7 +415,7 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                     }
                                 })}
                                 value={formData.dateOfBirth}
-                                onChange={(event) => {
+                                onInput={(event) => {
                                     setFormData({
                                         ...formData,
                                         dateOfBirth: event.target.value
@@ -389,15 +426,16 @@ const RegisteredForm = ({ formData, setFormData, action, errorM, errorI }) => {
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
-                    </>
+
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            type="submit"
+                            text={'Next'}
+                            onClick={action}
+                        />
+                    </form>
                 ) : null}
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    onClick={action}
-                    type="submit"
-                    text={'Next'}
-                />
             </div>
         </div>
     );

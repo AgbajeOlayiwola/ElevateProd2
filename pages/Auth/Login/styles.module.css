@@ -80,20 +80,6 @@
     margin-bottom: 24px;
 }
 
-.emailInput {
-    background-image: url('/Assets/Svgs/mail.svg');
-    background-position: 8%;
-    background-repeat: no-repeat;
-    padding-left: 65px;
-}
-.passwordInput {
-    background-image: url('/Assets/Svgs/lock.svg');
-    background-position: 8%;
-    background-repeat: no-repeat;
-    padding-left: 65px;
-    position: relative;
-}
-
 .form button {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -123,7 +109,8 @@
 .errors {
     color: red;
     font-size: 12px;
-    margin-top: -1rem;
+    margin: 0px;
+    margin-top: 5px;
 }
 .spacing {
     margin-top: 1rem;
@@ -131,7 +118,17 @@
 .divs {
     display: flex;
     align-items: center;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding: 16px 24px 16px 16px;
+}
+
+.divs input {
+    height: 100%;
     padding: 0px;
+    border: 0px;
+    background-color: transparent;
+    padding-left: 24px;
 }
 .remForg {
     display: flex;
@@ -160,5 +157,59 @@
 .error {
     color: red;
     font-size: 12px;
-    margin-top: -1rem;
+    margin: 0px;
+    /* margin-top: -1rem; */
+}
+
+@media screen and (max-width: 1070px) {
+    .loginCont {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 901px) {
+    .sectionCove {
+        width: 100%;
+        overflow: unset;
+        height: unset;
+    }
+
+    .sectionI {
+        display: none;
+    }
+
+    .sectionII {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 353px) {
+    .welc h2 {
+        font-size: 25px;
+    }
+
+    .remForg {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .remForg div:nth-child(1) {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .remForg div:nth-child(2) {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 281px) {
+    .welc h2 {
+        font-size: 20px;
+    }
+
+    .welc p {
+        font-size: 12px;
+    }
 }

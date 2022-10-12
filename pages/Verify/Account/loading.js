@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     accountStatusData,
     CompProfile,
+    createNewUserAccount,
     getNewUserAccountDetails,
     newAccountStatusData
 } from '../../../redux/actions/actions';
@@ -19,6 +20,9 @@ const AccountLoading = () => {
     const [accountInfo, setAccountInfo] = useState('');
     const [profileCont, setProfileCont] = useState([]);
     const [errorT, setError] = useState();
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
 
     const router = useRouter();
 
@@ -28,41 +32,40 @@ const AccountLoading = () => {
     const dispatch = useDispatch();
 
     // console.log(profile);
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
+
+    console.log(accountStatus, errorMessages);
+    //error message
+    //Bank Account has not been created for this user
+    const { newAccount, newAccountErrorMessage } = useSelector(
+        (state) => state.newUserAccountDets
     );
-    // useEffect(() => {
-    // const accountData = {
-    //     affiliateCode: 'ENG',
-    //     ccy: 'NGN'
-    // };
-    // dispatch(createNewUserAccount(accountData));
-    // }, []);
-    // console.log(accountStatus);
+
     useEffect(() => {
+        const accountData = {
+            affiliateCode: 'ENG',
+            currency: 'NGN'
+        };
+        dispatch(createNewUserAccount(accountData));
         dispatch(newAccountStatusData());
-    }, []);
+        const newUserAccountt = () => {
+            // console.log(accountStatus);
+        };
+
+        if (newAccount.message === 'success') {
+            if (errorMessages) {
+                if (accountStatus.message === 'success') {
+                    router.push('/Succes');
+                }
+            }
+        } else if (
+            newAccountErrorMessage ===
+            'Sorry, we could not process your request. Please chat with us to get this sorted.'
+        ) {
+            setError(newAccountErrorMessage);
+        }
+    }, [errorMessages, accountStatus, newAccountErrorMessage]);
 
     // console.log(errorMessages);
-    const newUserAccountt = () => {
-        console.log(accountStatus);
-        if (!errorMessages) {
-            if (accountStatus.message === 'Try Again') {
-                setTimeout(() => {
-                    dispatch(newAccountStatusData());
-                }, 1000);
-            } else if (accountStatus.message === 'SUCCESS') {
-                router.push('/Succes');
-            }
-        }
-    };
-    useEffect(() => {
-        if (errorMessages) {
-            setError(errorMessages);
-        } else {
-            newUserAccountt();
-        }
-    }, [errorMessages, accountStatus]);
 
     return (
         <>
@@ -73,7 +76,6 @@ const AccountLoading = () => {
                             <div className={styles.error}>
                                 <h2 className={styles.error}>{errorT}</h2>
                                 <br />
-                                <h2> kindly reload</h2>
                             </div>
                         ) : (
                             <svg

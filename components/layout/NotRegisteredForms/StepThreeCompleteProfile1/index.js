@@ -18,27 +18,22 @@ import {
 import { useRouter } from 'next/router';
 import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
-const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
+import axiosInstance from '../../../../redux/helper/apiClient';
+import apiRoutes from '../../../../redux/helper/apiRoutes';
+import { getCookie } from 'cookies-next';
+const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // const [progress, setProgress] = useState('75%');
     const [title, setTitle] = useState('Basic');
     const [bgcolor, setBgcolor] = useState(false);
     const [profileCont, setProfileCont] = useState([]);
+    const [businessProfile, setBusinessProfile] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleShowFourthStep = () => {
         setSwitchs((prev) => !prev);
         setBgcolor((prevState) => !prevState);
     };
     const dispatch = useDispatch();
-    const { isLoading, profile, errorMessage } = useSelector(
-        (state) => state.profile
-    );
-    const { newCorpAccount, newCorpAccountErrorMMessage } = useSelector(
-        (state) => state.newuserCorpAccount
-    );
-    const { businessCategories, errorDatas } = useSelector(
-        (state) => state.businessCategoriesReducer
-    );
-    const { states } = useSelector((state) => state.statesReducer);
 
     const [checker, setChecker] = useState();
     const [localState, setLocalState] = useState('');
@@ -51,7 +46,38 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     const [businesses, setBusinesses] = useState('');
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
+    const [businessError, setBusinessError] = useState(false);
+    const [errorMes, setErrorMes] = useState();
+    const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState('');
+    const { compBusprofile, comperrorMessage } = useSelector(
+        (state) => state.completeBusProfileReducer
+    );
+    const { isLoading, profile, errorMessage } = useSelector(
+        (state) => state.profile
+    );
+
+    const { newCorpAccount, newCorpAccountErrorMMessage } = useSelector(
+        (state) => state.newuserCorpAccount
+    );
+    const { businessCategories, errorDatas } = useSelector(
+        (state) => state.businessCategoriesReducer
+    );
+    const { states } = useSelector((state) => state.statesReducer);
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
+    const { newAccount, newAccountErrorMessage } = useSelector(
+        (state) => state.newUserAccountDets
+    );
+
     const router = useRouter();
+    const saveFile = (e) => {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
+
+        console.log(file);
+    };
     useEffect(() => {
         dispatch(statesData());
     }, []);
@@ -76,18 +102,39 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
     }, []);
     useEffect(() => {
         if (profile !== null) {
-            setProfileCont(profile.data);
+            console.log(profileCont.companyName);
+            setProfileCont(profile);
+            if (profile.data[2]) {
+                setBusinessProfile(profile.data[2].documentData);
+            } else {
+                setBusinessProfile('');
+            }
         }
-        setGender(profileCont.gender);
+        // setGender(profileCont.gender);
     }, [profile]);
     useEffect(() => {
         dispatch(businessCategoriesData());
     }, []);
+    console.log(
+        'errorMessages from account',
+        newAccount,
+        newAccountErrorMessage
+    );
     useEffect(() => {
+        if (newAccount.message === 'success') {
+            console.log(errorMessages);
+            router.push('/Verify/Account/loading');
+        } else if (
+            newAccountErrorMessage ===
+            'You already have an account with us. Please contact us for more information'
+        ) {
+            router.push('/Succes');
+        }
+
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
         }
-    }, [businessCategories]);
+    }, [businessCategories, newAccountErrorMessage, newAccount]);
     useEffect(() => {
         Object.keys(businessCategory)?.filter((item) => {
             if (item === business) {
@@ -104,122 +151,86 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
         watch,
         formState: { errors }
     } = useForm();
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
-    const { newAccount, newAccountErrorMessage } = useSelector(
-        (state) => state.newUserAccountDets
-    );
-    const [errorMes, setErrorMes] = useState();
+
+    // console.log(type);
+
+    // const uploadFile = async (e) => {
+    //   const formData = new FormData();
+    //   formData.append("file", file);
+    //   formData.append("fileName", fileName);
+    //   try {
+    //     const res = await axios.post(
+    //       "http://localhost:3000/upload",
+    //       formData
+    //     );
+    //     console.log(res);
+    //   } catch (ex) {
+    //     console.log(ex);
+    //   }
+    // };
+
     const handleSubmitIII = () => {
+        setLoading((prev) => !prev);
         const commpleteProfileData = {
+            isRegistered: type,
             businessName: formData.bussinessName,
+            businessCategory: business,
             businessType: businesses,
             referralCode: formData.referralCode,
             countryCode: '+234',
-            phoneNumber: formData.phoneNumber,
-            businessAddress: formData.streetName,
+            businessPhoneNumber: formData.phoneNumber,
+            street: formData.streetName,
             state: formData.state,
             city: formData.city,
-            lga: formData.localGoverment
+            lga: formData.localGoverment,
+            refereeCode: '',
+            signature: file
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
-
-        const accountData = {
-            affiliateCode: 'ENG',
-            ccy: 'NGN'
-        };
-        dispatch(createNewUserAccount(accountData));
-        console.log(
-            'errorMessages from account',
-            newAccount.message,
-            newAccountErrorMessage
-        );
-        if (
-            newAccount.message ===
-                'Your Transaction Request is Successful and Approved' ||
-            newAccountErrorMessage ===
-                'You already have an account with us. Please contact us for more information'
-        ) {
-            console.log(errorMessages);
-            router.push('/Verify/CorportateAccount');
-        } else if (accountStatus.message === 'Try Again') {
-            router.push('/Verify/CorportateAccount');
-        } else if (accountStatus.message === 'SUCCESS') {
-            router.push('/Succes/CorpSuccess');
-        }
     };
+    useEffect(() => {
+        setLoading((prev) => !prev);
+        console.log(compBusprofile);
+        if (compBusprofile) {
+            if (compBusprofile.message === 'Successful') {
+                router.push('/Verify/Account/loading');
+            }
+        }
+    }, [newAccount, comperrorMessage]);
 
     const handleSubmitReg = () => {
+        setLoading((prev) => !prev);
         const commpleteProfileData = {
+            isRegistered: type,
             businessName: formData.bussinessName,
-            businessType: formData.businessType,
+            businessCategory: business,
+            businessType: businesses,
             referralCode: formData.refferalCode,
             countryCode: '+234',
-            phoneNumber: formData.bussinessName,
-            businessAddress: formData.streetName,
+            businessPhoneNumber: formData.phoneNumber,
+            street: formData.streetName,
             state: formData.state,
             city: formData.city,
-            lga: formData.localGoverment
+            lga: formData.localGoverment,
+            refereeCode: 'WO69LA',
+            signature: file
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
-
-        const accountData = {
-            affiliateCode: 'ENG',
-            ccy: 'NGN'
-        };
-        axiosInstance
-            .post(`${apiRoutes.corpNewUser}`, accountData)
-            .then((response) => {
-                console.log('create New Account', response.data);
-            })
-            .catch((error) => {
-                console.log(
-                    'create new account Error:',
-                    error.response.data.message
-                );
-                setErrorMes(error.response.data.message);
-            });
-
-        if (
-            errorMes ===
-            'You already have an account with us. Please contact us for more information'
-        ) {
-            router.push('/Succes/CorpSuccess');
-        }
     };
-    // useEffect(() => {
-    //     handleSubmitIII();
-    // }, [newAccountErrorMessage]);
-
-    // const businessProfileAction = () => {
-    //     const commpleteProfileData = {
-    //         businessName: formData.bussinessName,
-    //         businessType: formData.businessType,
-    //         referralCode: formData.refferalCode,
-    //         countryCode: '+234',
-    //         phoneNumber: formData.bussinessName,
-    //         businessAddress: formData.streetName,
-    //         state: formData.state,
-    //         city: formData.city,
-    //         lga: formData.localGoverment
-    //     };
-    //     console.log(commpleteProfileData);
-    //     dispatch(CompleteBusinessProfile(commpleteProfileData));
-
-    //     const accountData = {
-    //         affiliateCode: 'ENG',
-    //         ccy: 'NGN'
-    //     };
-    //     dispatch(createNewUserAccount(accountData));
-    // };
-
-    // const sendOTP = (data) => {
-    //     console.log(data);
-    // };
+    useEffect(() => {
+        setLoading((prev) => !prev);
+        console.log(compBusprofile);
+        if (compBusprofile) {
+            if (compBusprofile.message === 'Successful') {
+                router.push('/Verify/CorportateAccount');
+            }
+        }
+    }, [newCorpAccount, newCorpAccountErrorMMessage]);
     const [activeBtn, setActiveBtn] = useState(true);
+
+    // console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
@@ -229,6 +240,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                     src="/width" 
                     alt="lineImage" /> */}
                 </CardHeadingBVN>
+
                 {/* <Progressbar
                             bgcolor="#6CCF00"
                             progressCount={progress}
@@ -236,6 +248,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                             progWidth="27%"
                         /> */}
             </div>
+            <p className={styles.error}> {newAccountErrorMessage}</p>
             {/* The small card that wraps the form */}
             <div className={styles.businessCont}>
                 <ButtonWrapper>
@@ -268,446 +281,512 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action }) => {
                         <p>Other Details</p>
                     </div>
                 </ButtonWrapper>
-                {title === 'Basic' ? (
-                    <>
-                        <div className={styles.nameDiv}>
-                            <div className={styles.formGroups}>
-                                <label>Enter Full Name</label>
-                                <input
-                                    type="text"
-                                    placeholder={profileCont.fullName}
-                                    disabled
-                                />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label>Select your Gender</label>
-                                <select name="" id="">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className={styles.formCont}>
-                            <div className={styles.formGroup}>
-                                <div className={styles.singleFormGroup}>
-                                    <label>Enter Business Name</label>
+                <>
+                    {title === 'Basic' ? (
+                        <form
+                            onSubmit={handleSubmit(() => {
+                                if (!business) {
+                                    setBusinessError(true);
+                                }
+                                setTitle('Other');
+                            })}
+                        >
+                            <div className={styles.nameDiv}>
+                                <div className={styles.formGroups}>
+                                    <label>Enter Full Name</label>
                                     <input
                                         type="text"
-                                        placeholder="Enter Business Full Name"
-                                        onChange={(event) => {
-                                            setFormData({
-                                                ...formData,
-                                                bussinessName:
-                                                    event.target.value
-                                            });
-                                        }}
+                                        value={`${profileCont.lastName} ${profileCont.firstName}`}
+                                        disabled
                                     />
                                 </div>
-                                <div className={styles.singleFormGroup}>
-                                    <label>Select your Business Category</label>
-
-                                    <div className={styles.businessCat}>
-                                        <div
-                                            className={
-                                                styles.businessCategories
-                                            }
-                                            onClick={() => {
-                                                setBusinessTest(!businessTest);
-                                            }}
-                                        >
-                                            <SearchSvg />
-                                            {business ? (
-                                                <p>{business}</p>
-                                            ) : (
-                                                <p>Search Business Category</p>
-                                            )}
-
-                                            <DropdownSvg />
-                                        </div>
-                                        {businessTest && (
-                                            <ul
-                                                className={styles.businessGroup}
-                                            >
-                                                {Object.keys(
-                                                    businessCategory
-                                                )?.map((business, index) => {
-                                                    return (
-                                                        <li
-                                                            value={business}
-                                                            key={index}
-                                                            onClick={() => {
-                                                                setBusiness(
-                                                                    business
-                                                                );
-                                                                setBusinessTest(
-                                                                    false
-                                                                );
-                                                            }}
-                                                        >
-                                                            {business}
-                                                        </li>
-                                                    );
+                                <div className={styles.formGroup}>
+                                    <label>Select your Gender</label>
+                                    <select
+                                        name=""
+                                        id=""
+                                        {...register('gender', {
+                                            required: 'Gender is required'
+                                        })}
+                                    >
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                    <p className={styles.error}>
+                                        {errors.gender?.message}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className={styles.formCont}>
+                                <div className={styles.formCont}>
+                                    <div className={styles.formGroup}>
+                                        <div className={styles.singleFormGroup}>
+                                            <label>Enter Business Name</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Enter Business Full Name"
+                                                {...register('businessName', {
+                                                    required:
+                                                        'Business Name is required'
                                                 })}
-                                            </ul>
-                                        )}
+                                                value={formData.bussinessName}
+                                                onInput={(event) => {
+                                                    setFormData({
+                                                        ...formData,
+                                                        bussinessName:
+                                                            event.target.value
+                                                    });
+                                                }}
+                                            />
+                                            <p className={styles.error}>
+                                                {errors.businessName?.message}
+                                            </p>
+                                        </div>
+                                        <div className={styles.singleFormGroup}>
+                                            <label>
+                                                Select your Business Category
+                                            </label>
+
+                                            <div className={styles.businessCat}>
+                                                <div
+                                                    className={
+                                                        styles.businessCategories
+                                                    }
+                                                    onClick={() => {
+                                                        setBusinessTest(
+                                                            !businessTest
+                                                        );
+                                                    }}
+                                                >
+                                                    <SearchSvg color="#005B82" />
+                                                    {business ? (
+                                                        <p>{business}</p>
+                                                    ) : (
+                                                        <p>
+                                                            Search Business
+                                                            Category
+                                                        </p>
+                                                    )}
+
+                                                    <DropdownSvg />
+                                                </div>
+                                                {businessTest && (
+                                                    <ul
+                                                        className={
+                                                            styles.businessGroup
+                                                        }
+                                                    >
+                                                        {Object.keys(
+                                                            businessCategory
+                                                        )?.map(
+                                                            (
+                                                                business,
+                                                                index
+                                                            ) => {
+                                                                return (
+                                                                    <li
+                                                                        value={
+                                                                            business
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        onClick={() => {
+                                                                            setBusiness(
+                                                                                business
+                                                                            );
+                                                                            setBusinessTest(
+                                                                                false
+                                                                            );
+                                                                            setBusinessError(
+                                                                                false
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            business
+                                                                        }
+                                                                    </li>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                            {businessError ? (
+                                                <p className={styles.error}>
+                                                    Busuness Category is
+                                                    Required
+                                                </p>
+                                            ) : null}
+                                        </div>
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <div className={styles.singleFormGroup}>
+                                            <label>
+                                                Enter your Business Phone Number
+                                            </label>
+                                            <div className={styles.phone}>
+                                                <div
+                                                    className={
+                                                        styles.phoneHeader
+                                                    }
+                                                >
+                                                    <span>
+                                                        <img
+                                                            src={formData.flag}
+                                                            alt=""
+                                                        />
+                                                    </span>
+                                                    <p>
+                                                        {formData.baseCurrency}
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.phoneDetails
+                                                    }
+                                                >
+                                                    <p>
+                                                        {formData.countryCode}
+                                                    </p>
+                                                    <input
+                                                        type="number"
+                                                        placeholder="812 345 6789"
+                                                        {...register(
+                                                            'countryCode_number',
+                                                            {
+                                                                required:
+                                                                    'Country Code is required',
+                                                                minLength: {
+                                                                    value: 9,
+                                                                    message:
+                                                                        'Min length is 9'
+                                                                }
+                                                            }
+                                                        )}
+                                                        value={
+                                                            formData.phoneNumber
+                                                        }
+                                                        onInput={(event) => {
+                                                            setFormData({
+                                                                ...formData,
+                                                                phoneNumber:
+                                                                    event.target
+                                                                        .value
+                                                            });
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <p className={styles.error}>
+                                                {
+                                                    errors.countryCode_number
+                                                        ?.message
+                                                }
+                                            </p>
+                                        </div>
+                                        <div className={styles.singleFormGroup}>
+                                            <label>
+                                                Select your Business Type
+                                            </label>
+                                            <div className={styles.businessCat}>
+                                                <div
+                                                    className={
+                                                        styles.businessCategories
+                                                    }
+                                                    onClick={() => {
+                                                        setBusinessText(
+                                                            !businessText
+                                                        );
+                                                    }}
+                                                >
+                                                    <SearchSvg color="#005B82" />
+                                                    {businesses ? (
+                                                        <p>{businesses}</p>
+                                                    ) : (
+                                                        <p>
+                                                            Search Business Type
+                                                        </p>
+                                                    )}
+
+                                                    <DropdownSvg />
+                                                </div>
+                                                {businessText && (
+                                                    <ul
+                                                        className={
+                                                            styles.businessGroup
+                                                        }
+                                                    >
+                                                        {businessType?.map(
+                                                            (
+                                                                business,
+                                                                index
+                                                            ) => {
+                                                                return (
+                                                                    <li
+                                                                        value={
+                                                                            business
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        onClick={() => {
+                                                                            setBusinesses(
+                                                                                business
+                                                                            );
+                                                                            setBusinessText(
+                                                                                false
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            business
+                                                                        }
+                                                                    </li>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </ul>
+                                                )}
+                                                {businessError ? (
+                                                    <p className={styles.error}>
+                                                        Busuness Type is
+                                                        Required
+                                                    </p>
+                                                ) : null}
+                                            </div>
+                                        </div>
+                                        <button type="submit">Next</button>
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.formGroup}>
-                                <div className={styles.singleFormGroup}>
-                                    <label>
-                                        Enter your Business Phone Number
-                                    </label>
-                                    <div className={styles.phone}>
-                                        <div className={styles.phoneHeader}>
-                                            <span>
-                                                <img
-                                                    src={formData.flag}
-                                                    alt=""
-                                                />
-                                            </span>
-                                            <p>{formData.baseCurrency}</p>
-                                        </div>
-                                        <div className={styles.phoneDetails}>
-                                            <p>{formData.countryCode}</p>
+                        </form>
+                    ) : (
+                        <form
+                            onSubmit={handleSubmit(
+                                profileCont.isBusinessRegistered === true
+                                    ? handleSubmitReg
+                                    : handleSubmitIII
+                            )}
+                        >
+                            <div className={styles.nameDiv}>
+                                <div className={styles.formGroup}>
+                                    <div>
+                                        <label>Number | Street Name</label>
+                                        <div className={styles.addressNumber}>
                                             <input
                                                 type="number"
-                                                placeholder="812 345 6789"
-                                                {...register(
-                                                    'countryCode_number',
-                                                    {
-                                                        required:
-                                                            'Country Code is required',
-                                                        minLength: {
-                                                            value: 9,
-                                                            message:
-                                                                'Min length is 9'
-                                                        }
-                                                    }
-                                                )}
-                                                value={formData.phoneNumber}
-                                                onChange={(event) => {
+                                                placeholder="101"
+                                                className={styles.number}
+                                            />
+                                            <input
+                                                type="text"
+                                                placeholder="Enter Street Name"
+                                                {...register('streetName', {
+                                                    required:
+                                                        'Street Name is required'
+                                                })}
+                                                onInput={(event) => {
                                                     setFormData({
                                                         ...formData,
-                                                        phoneNumber:
+                                                        streetName:
                                                             event.target.value
                                                     });
                                                 }}
                                             />
                                         </div>
+                                        <p className={styles.error}>
+                                            {errors.streetName?.message}
+                                        </p>
                                     </div>
-                                </div>
-                                <div className={styles.singleFormGroup}>
-                                    <label>Select your Business Type</label>
-                                    <div className={styles.businessCat}>
-                                        <div
-                                            className={
-                                                styles.businessCategories
-                                            }
-                                            onClick={() => {
-                                                setBusinessText(!businessText);
+                                    <div className={styles.singleFormGroup}>
+                                        <label>
+                                            Local Government Area (LGA)
+                                        </label>
+                                        <select
+                                            name=""
+                                            id=""
+                                            {...register('localGoverment', {
+                                                required:
+                                                    'Local Government is required'
+                                            })}
+                                            onInput={(event) => {
+                                                setFormData({
+                                                    ...formData,
+                                                    localGoverment:
+                                                        event.target.value
+                                                });
                                             }}
                                         >
-                                            <SearchSvg />
-                                            {businesses ? (
-                                                <p>{businesses}</p>
-                                            ) : (
-                                                <p>Search Business Type</p>
-                                            )}
-
-                                            <DropdownSvg />
-                                        </div>
-                                        {businessText && (
-                                            <ul
-                                                className={styles.businessGroup}
-                                            >
-                                                {businessType?.map(
-                                                    (business, index) => {
-                                                        return (
-                                                            <li
-                                                                value={business}
-                                                                key={index}
-                                                                onClick={() => {
-                                                                    setBusinesses(
-                                                                        business
-                                                                    );
-                                                                    setBusinessText(
-                                                                        false
-                                                                    );
-                                                                }}
-                                                            >
-                                                                {business}
-                                                            </li>
-                                                        );
-                                                    }
-                                                )}
-                                            </ul>
-                                        )}
+                                            <option value="">Select LGA</option>
+                                            {localGovernment
+                                                ? localGovernment?.map(
+                                                      (item, index) => {
+                                                          return (
+                                                              <option
+                                                                  value={
+                                                                      item.lgaName
+                                                                  }
+                                                                  key={index}
+                                                              >
+                                                                  {item.lgaName}
+                                                              </option>
+                                                          );
+                                                      }
+                                                  )
+                                                : null}
+                                        </select>
+                                        <p className={styles.error}>
+                                            {errors.localGoverment?.message}
+                                        </p>
                                     </div>
                                 </div>
-                                <button
-                                    onClick={() => {
-                                        setTitle('Other');
-                                    }}
-                                >
-                                    Next
-                                </button>
-                            </div>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <div className={styles.nameDiv}>
-                            <div className={styles.formGroup}>
-                                <div>
-                                    <label>Street Name</label>
-                                    <div className={styles.addressNumber}>
+                                <div className={styles.formGroup}>
+                                    <div
+                                        className={styles.singleFormGroup}
+                                        style={{
+                                            marginTop: '0px'
+                                        }}
+                                    >
+                                        <label>State</label>
+                                        <select
+                                            name=""
+                                            id=""
+                                            {...register('state', {
+                                                required: 'State is required'
+                                            })}
+                                            value={formData.state}
+                                            onInput={(event) => {
+                                                setLocalState(
+                                                    event.target.value
+                                                );
+                                                setFormData({
+                                                    ...formData,
+                                                    state: event.target.value
+                                                });
+                                            }}
+                                        >
+                                            <option value="">
+                                                Select State
+                                            </option>
+                                            {location.map((item, index) => {
+                                                return (
+                                                    <option
+                                                        value={item.state}
+                                                        key={index}
+                                                    >
+                                                        {item.state}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                        <p className={styles.error}>
+                                            {errors.state?.message}
+                                        </p>
+                                    </div>
+                                    <div className={styles.singleFormGroup}>
+                                        <label>City/Town</label>
                                         <input
                                             type="text"
-                                            placeholder="101"
-                                            className={styles.number}
+                                            placeholder="Enter City/Town"
+                                            {...register('city', {
+                                                required:
+                                                    'City/Town is required'
+                                            })}
+                                            onInput={(event) => {
+                                                setFormData({
+                                                    ...formData,
+                                                    city: event.target.value
+                                                });
+                                            }}
                                         />
+                                        <p className={styles.error}>
+                                            {errors.city?.message}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.formCont}>
+                                <div className={styles.formGroup}>
+                                    <div className={styles.singleFormGroup}>
+                                        <label>
+                                            Enter Referral Code{' '}
+                                            <span>(Optional)</span>
+                                        </label>
                                         <input
                                             type="text"
-                                            placeholder="Enter Street Name"
+                                            placeholder="Enter Code"
                                             onChange={(event) => {
                                                 setFormData({
                                                     ...formData,
-                                                    streetName:
+                                                    referralCode:
                                                         event.target.value
                                                 });
                                             }}
                                         />
                                     </div>
-                                </div>
-                                <div className={styles.singleFormGroup}>
-                                    <label>Local Government Area (LGA)</label>
-                                    <select
-                                        name=""
-                                        id=""
-                                        {...register('localGoverment')}
-                                        onChange={(event) => {
-                                            setFormData({
-                                                ...formData,
-                                                localGoverment:
-                                                    event.target.value
-                                            });
-                                        }}
-                                    >
-                                        <option value="">Select LGA</option>
-                                        {localGovernment
-                                            ? localGovernment?.map(
-                                                  (item, index) => {
-                                                      return (
-                                                          <option
-                                                              value={
-                                                                  item.lgaName
-                                                              }
-                                                              key={index}
-                                                          >
-                                                              {item.lgaName}
-                                                          </option>
-                                                      );
-                                                  }
-                                              )
-                                            : null}
-                                    </select>
-                                </div>
-                            </div>
-                            <div className={styles.formGroup}>
-                                <div
-                                    className={styles.singleFormGroup}
-                                    style={{
-                                        marginTop: '0px'
-                                    }}
-                                >
-                                    <label>State</label>
-                                    <select
-                                        name=""
-                                        id=""
-                                        {...register('State')}
-                                        value={formData.state}
-                                        onChange={(event) => {
-                                            setLocalState(event.target.value);
-                                            setFormData({
-                                                ...formData,
-                                                state: event.target.value
-                                            });
-                                        }}
-                                    >
-                                        <option value="">Select State</option>
-                                        {location.map((item, index) => {
-                                            return (
-                                                <option
-                                                    value={item.state}
-                                                    key={index}
-                                                >
-                                                    {item.state}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </div>
-                                <div className={styles.singleFormGroup}>
-                                    <label>City/Town</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Enter City/Town"
-                                        onChange={(event) => {
-                                            setFormData({
-                                                ...formData,
-                                                city: event.target.value
-                                            });
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.formCont}>
-                            <div className={styles.formGroup}>
-                                <div className={styles.singleFormGroup}>
-                                    <label>
-                                        Enter Referral Code{' '}
-                                        <span>(Optional)</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        placeholder="Enter Code"
-                                        onChange={(event) => {
-                                            setFormData({
-                                                ...formData,
-                                                referralCode: event.target.value
-                                            });
-                                        }}
-                                    />
-                                </div>
-                                {profileCont.isBusinessRegistered === true ? (
-                                    <ButtonComp
-                                        disabled={activeBtn}
-                                        active={
-                                            activeBtn ? 'active' : 'inactive'
-                                        }
-                                        text="Save & Continue"
-                                        type="button"
-                                        onClick={handleSubmitReg}
-                                        // onClick={handleShowFourthStep}
-                                    />
-                                ) : (
-                                    <ButtonComp
-                                        disabled={activeBtn}
-                                        active={
-                                            activeBtn ? 'active' : 'inactive'
-                                        }
-                                        text="Save & Continue"
-                                        type="button"
-                                        onClick={handleSubmitIII}
-                                        // onClick={handleShowFourthStep}
-                                    />
-                                )}
-                            </div>
-                            <div className={styles.formGroup}>
-                                <div className={styles.singleFormGroup}>
-                                    <label>Upload Signature</label>
-                                    <div className={styles.sign}>
-                                        <p>No file chosen...</p>
-                                        <label>
-                                            <input
-                                                type="file"
-                                                placeholder="Enter Code"
-                                            />
-                                            Upload
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </>
-                )}
-                {/* {switchs ? (
-                            <>
-                                <StepFourCompProfile2BizDetails
-                                    formData={formData}
-                                    setFormData={setFormData}
-                                />
-                            </>
-                        ) : (
-                            <>
-                                <>
-                                    <div
-                                        className={styles.dets}
-                                        style={{ marginTop: '2rem' }}
-                                    >
-                                        <Label className={styles.label}>
-                                            Enter your Full Name
-                                        </Label>
-                                        <br />
-                                        <FormInput
-                                            type="text"
-                                            placeholder=""
-                                            value={profileCont.fullName}
-                                            disabled
-                                            {...register('bvn')}
+                                    {/* {profileCont.isBusinessRegistered ===
+                                    true ? (
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            text="Save & Continue"
+                                            type="button"
+                                            onClick={handleSubmitReg}
+                                            // onClick={handleShowFourthStep}
                                         />
-
-                                        <GenderWrapper>
-                                            <Label className={styles.label}>
-                                                Select your Gender
-                                            </Label>
-                                            <br />
-                                            <div className={styles.genderInps}>
-                                                <div className={styles.male}>
-                                                    <FormInput
-                                                        style={{
-                                                            width: '15px'
-                                                        }}
-                                                        type="radio"
-                                                        name="gender"
-                                                        value="male"
-                                                        {...register('bvn')}
-                                                    />
-                                                    <label
-                                                        className={
-                                                            styles.fmLabel
-                                                        }
-                                                    >
-                                                        Male
-                                                    </label>
-                                                </div>
-                                                <div className={styles.female}>
-                                                    <FormInput
-                                                        style={{
-                                                            width: '15px'
-                                                        }}
-                                                        type="radio"
-                                                        name="gender"
-                                                        value="female"
-                                                        {...register('bvn')}
-                                                    />
-                                                    <label
-                                                        className={
-                                                            styles.fmLabel
-                                                        }
-                                                    >
-                                                        Female
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </GenderWrapper>
-                                    </div>
-
+                                    ) : (
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            text="Save & Continue"
+                                            type="button"
+                                            onClick={handleSubmitIII}
+                                            // onClick={handleShowFourthStep}
+                                        />
+                                    )} */}
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
-                                        text="Next"
-                                        type="button"
-                                        // onClick={handleShowSuccessStep}
-                                        onClick={handleShowFourthStep}
+                                        text="Save & Continue"
+                                        type="submit"
                                     />
-                                </>
-                            </>
-                        )} */}
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <div className={styles.singleFormGroup}>
+                                        <label>Upload Signature</label>
+                                        <div className={styles.sign}>
+                                            <p>
+                                                {fileName
+                                                    ? fileName
+                                                    : 'No file chosen...'}
+                                            </p>
+                                            <label>
+                                                <input
+                                                    type="file"
+                                                    placeholder="Enter Code"
+                                                    onChange={saveFile}
+                                                />
+                                                Upload
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    )}
+                </>
             </div>
         </div>
     );

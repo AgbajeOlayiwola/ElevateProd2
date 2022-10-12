@@ -55,20 +55,30 @@
 
 .manageBeneSingle {
     width: 100%;
-    background: #ffffff;
-    box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
-    border-radius: 12px;
-    padding: 16px 24px;
+    border: 1.5px solid #ededed;
+    border-radius: 8px;
+    padding: 12px 30px 12px 16px;
     margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
 }
 
-.manageBeneSingle h2 {
+.manageBeneDetails {
+    display: flex;
+    align-items: center;
+}
+
+.manageBeneSingle h3 {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
     color: #102572;
+    margin: 0px;
+    margin-bottom: 4px;
 }
 
 .manageBeneSingle p {
@@ -81,17 +91,6 @@
     color: #8b8b8b;
 }
 
-.searchCont {
-    display: flex;
-    border: 1px solid #c9c9c9;
-    border-radius: 8px;
-    background-color: #ffffff;
-    padding-left: 24px;
-    margin-top: 24px;
-}
-
-.searchCont input {
-    border: none;
-    width: 90%;
-    background-color: transparent;
+.manageBeneDetails div {
+    margin-left: 8px;
 }

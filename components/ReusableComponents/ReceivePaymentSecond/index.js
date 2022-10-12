@@ -1,22 +1,51 @@
 import React, { useEffect, useState } from 'react';
+import CloseButton from '../CloseButtonSvg';
 import Overlay from '../Overlay';
+import LinkSvg from '../ReusableSvgComponents/LinkSvg';
 import styles from './styles.module.css';
 
-const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
+const ReceivePaymentSecond = ({
+    title,
+    action,
+    buttonText,
+    type,
+    overlay,
+    closeAction,
+    link,
+    track,
+    amount
+}) => {
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
+    const [newAmount, setNewAmount] = useState('');
+    useEffect(() => {
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'NGN',
+            currencyDisplay: 'narrowSymbol'
+        });
+        const formattedAmount = formatter.format(amount);
+        setNewAmount(formattedAmount);
+    }, []);
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
     return (
         <Overlay overlay={overlay}>
             <div className={styles.secondBody}>
+                <div className={styles.closeCont}>
+                    <CloseButton
+                        color="#A5A5A5"
+                        classes={styles.closeBtn}
+                        action={closeAction}
+                    />
+                </div>
                 <div className={styles.secondCont}>
                     <h2>{title}</h2>
                     <p className={styles.intro}>
                         Payment for Eraclitus purchase on Instagram
                     </p>
-                    {title === 'Create Ecobank QR Code' ? (
+                    {title === 'Ecobank QR Code' ? (
                         <div className={styles.secondCopyCode}>
                             <div>
                                 <img
@@ -28,22 +57,22 @@ const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
                         </div>
                     ) : (
                         <div className={styles.secondCopy}>
-                            <img src="../../Assets/Svgs/Vector.svg" alt="" />
-                            <p>ellevate.com/qyweywbdbsdfsds/ei...</p>
+                            <LinkSvg />
+                            <p>{link}</p>
                             <button>Copy</button>
                         </div>
                     )}
 
-                    <div className={styles.deadlines}>
+                    {/* <div className={styles.deadlines}>
                         <p>Valid Till</p>
                         <div className={styles.deadlineValues}>
                             <p>Saturday 22 June, 2022 . 12:53 PM</p>
                         </div>
-                    </div>
-                    <div className={styles.deadline}>
+                    </div> */}
+                    <div className={styles.deadlines}>
                         <p>Amount</p>
                         <div className={styles.deadlineValues}>
-                            <p>N54,000.00</p>
+                            <p>{newAmount}</p>
                         </div>
                     </div>
                     <div className={styles.deadline}>
@@ -55,8 +84,8 @@ const ReceivePaymentSecond = ({ title, action, buttonText, type, overlay }) => {
                     <div className={styles.deadline}>
                         <p>Tracking ID</p>
 
-                        <p>refdbg47t34jn2j35m6777rt</p>
-                        <p>
+                        <p>{track}</p>
+                        <p className={styles.copy}>
                             <span>
                                 <img src="../../Assets/Svgs/copy.svg" alt="" />
                             </span>

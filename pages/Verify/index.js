@@ -11,11 +11,11 @@ const Verify = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [res, setRes] = useState('');
     const [resError, setResErros] = useState('');
+    const [timeInterval, setTimeInterval] = useState(0);
     const { query, isReady, push } = useRouter();
     const handleClick = () => {
         push('./Auth/Login');
     };
-    const [timeInterval, setTimeInterval] = useState(0);
 
     useEffect(() => {
         var token = query['token'];
@@ -24,7 +24,7 @@ const Verify = () => {
         if (token) {
             axios
                 .get(
-                    `https://ellevate-app.herokuapp.com/verification/email/${token}`
+                    `https://ellevate-test.herokuapp.com/authentication/email-verification/${token}`
                 )
                 .then((response) => {
                     console.log(response.data.message);
@@ -39,7 +39,7 @@ const Verify = () => {
 
     return (
         <>
-            {res === 'Email verified successfully' ? (
+            {res === 'Email Successfully verified' ? (
                 <div className={styles.verifyCov}>
                     <div className={styles.body}>
                         <svg>
@@ -58,14 +58,6 @@ const Verify = () => {
                             <h3 className={styles.verifyEmail}>
                                 Your email address has been verified!
                             </h3>
-                        </div>
-                        <div onClick={handleClick}>
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                type="submit"
-                                text="Continue To Login"
-                            />
                         </div>
                     </div>
                 </div>

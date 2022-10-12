@@ -25,7 +25,23 @@
 .resendFlex {
     display: flex;
     justify-content: space-between;
+    margin-top: 24px;
+    width: 100%;
+    align-items: center;
 }
+
+.resendFlex p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #102572;
+    margin: 0px;
+    cursor: pointer;
+}
+
 .busInp {
     background: #ffffff;
     border: 1px solid #dbdbdb;
@@ -87,6 +103,20 @@
     height: 0;
     font-weight: 500;
 }
+
+.clr:hover {
+    width: 40px;
+    margin: 0px;
+    background-color: white;
+    width: 40px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #a5a5a5;
+}
+
 .header {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -335,6 +365,16 @@
 .divs {
     display: flex;
     align-items: center;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding-right: 16px;
+}
+
+.divs input {
+    height: 100%;
+    padding: 0px;
+    border: 0px;
+    padding: 16px 16px 16px 24px;
 }
 .error {
     color: red;
@@ -407,7 +447,7 @@
 }
 
 .stepFour {
-    /* width: 67%; */
+    width: 67%;
     max-width: 500px;
     margin: 50px auto;
 }
@@ -471,7 +511,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #c6c6c6;
+    color: #3e3e3e;
 }
 
 .phone {
@@ -488,6 +528,7 @@
     background-color: transparent;
     border: 0px;
     padding-left: 12px;
+    color: #3e3e3e;
 }
 
 .phone .phoneHeader {
@@ -537,10 +578,10 @@
 .phoneDetails input::placeholder {
     font-family: 'Inter', sans-serif;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #a5a5a5;
+    color: #3e3e3e;
 }
 
 .lastStep {
@@ -685,4 +726,67 @@
     font-size: 14px;
     line-height: 17px;
     color: #a5a5a5;
+}
+
+@media screen and (max-width: 1250px) {
+    .existingUserSingle {
+        width: 48%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 1121px) {
+    .sectionII {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 990px) {
+    .body {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 901px) {
+    .sectionI {
+        display: none;
+    }
+
+    .sectionII {
+        width: 100%;
+        max-width: 100%;
+        padding: 40px 0px;
+    }
+
+    .body {
+        height: unset;
+        overflow: unset;
+    }
+
+    .formWrapper {
+        height: unset;
+        overflow: unset;
+    }
+
+    .lastContainer {
+        height: unset;
+        overflow: unset;
+    }
+}
+
+@media screen and (max-width: 531px) {
+    .existingUserHead {
+        flex-direction: column;
+    }
+
+    .existingUserSingle {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 501px) {
+    .secondStepForm {
+        width: 80%;
+        max-width: 100%;
+    }
 }

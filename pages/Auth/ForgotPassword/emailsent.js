@@ -10,21 +10,11 @@ const EmailSent = () => {
         <div className={styles.emailSent}>
             <div>
                 <ResetPasswordSvg />
-                <p>Password Reset</p>
             </div>
-            <div>
-                <p>
-                    We have sent a password recover instructions to your email.
-                </p>
-            </div>
-            <Link href="../Auth/Login">
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    type="submit"
-                    text="Close"
-                />
-            </Link>
+            <h2 className={styles.check}>Check your Email</h2>
+            <p className={styles.recover}>
+                We have sent a password recovery instructions to your email.
+            </p>
         </div>
     );
 };

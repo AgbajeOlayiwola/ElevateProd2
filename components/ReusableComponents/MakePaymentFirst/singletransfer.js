@@ -4,32 +4,55 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import {
     loadbank,
-    postBeneficiariesData
+    getBeneficiariesData,
+    postInterBankEnquiry
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import Beneficiary from '../Beneficiary';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
+import Loader from '../Loader';
 
 const SingleTransfer = ({
     othersaction,
     firstTitle,
     buttonText,
-    scheduleLater
+    scheduleLater,
+    isLoading
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);
+    const [interEnquiry, setInterEnquiry] = useState('');
+    const [beneficiaries, setBeneficiaries] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
-
+    const { getBeneficiaries } = useSelector(
+        (state) => state.getBeneficiariesReducer
+    );
+    const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
+        (state) => state.interBankEnquiryReducer
+    );
+    const interBankEnquiryCheck = () => {
+        if (interBankEnquiry !== null) {
+            setInterEnquiry(interBankEnquiry);
+        }
+    };
+    useEffect(() => {
+        interBankEnquiryCheck();
+    }, [interBankEnquiry]);
     useEffect(() => {
         dispatch(loadbank('ENG'));
+        dispatch(getBeneficiariesData());
     }, []);
     useEffect(() => {
         if (banks !== null) {
             setBank(banks);
         }
     }, [banks]);
+    useEffect(() => {
+        if (getBeneficiaries !== null) {
+            setBeneficiaries(getBeneficiaries);
+        }
+    }, [getBeneficiaries]);
     const {
         register,
         handleSubmit,
@@ -44,31 +67,28 @@ const SingleTransfer = ({
                     <p>View all</p>
                 </div>
                 <div className={styles.beneficiaryBody}>
-                    <div className={styles.beneficiarySingle}>
-                        <BeneficiaryAvatarSvg />
-                        <p className={styles.name}>Babalola</p>
-                        <p className={styles.benebank}>Wema Bank</p>
-                    </div>
-                    <div className={styles.beneficiarySingle}>
-                        <BeneficiaryAvatarSvg />
-                        <p className={styles.name}>Babalola</p>
-                        <p className={styles.benebank}>Wema Bank</p>
-                    </div>
-                    <div className={styles.beneficiarySingle}>
-                        <BeneficiaryAvatarSvg />
-                        <p className={styles.name}>Babalola</p>
-                        <p className={styles.benebank}>Wema Bank</p>
-                    </div>
-                    <div className={styles.beneficiarySingle}>
-                        <BeneficiaryAvatarSvg />
-                        <p className={styles.name}>Babalola</p>
-                        <p className={styles.benebank}>Wema Bank</p>
-                    </div>
-                    <div className={styles.beneficiarySingle}>
-                        <BeneficiaryAvatarSvg />
-                        <p className={styles.name}>Babalola</p>
-                        <p className={styles.benebank}>Wema Bank</p>
-                    </div>
+                    {!beneficiaries.beneficiaries?.length ? (
+                        <h2>You do not have any Beneficiaries at the Moment</h2>
+                    ) : (
+                        beneficiaries.beneficiaries?.map(
+                            (beneficiaries, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className={styles.beneficiarySingle}
+                                    >
+                                        <BeneficiaryAvatarSvg />
+                                        <p className={styles.name}>
+                                            {beneficiaries.beneficiaryName}
+                                        </p>
+                                        <p className={styles.benebank}>
+                                            {beneficiaries.bankName}
+                                        </p>
+                                    </div>
+                                );
+                            }
+                        )
+                    )}
                 </div>
             </div>
             <form onSubmit={handleSubmit(othersaction)}>
@@ -86,8 +106,25 @@ const SingleTransfer = ({
                             pattern: {
                                 value: /^[0-9 ]/i,
                                 message: 'Account Number must be a number'
+                            },
+                            minLength: {
+                                value: 10,
+                                message: 'Min length is 10'
+                            },
+                            maxLength: {
+                                value: 10,
+                                message: 'Max length is 10'
                             }
                         })}
+                        onInput={(e) => {
+                            if (e.target.value.length === 10) {
+                                const details = {
+                                    accountNumber: e.target.value
+                                };
+                                dispatch(postInterBankEnquiry(details));
+                                console.log();
+                            }
+                        }}
                         type="number"
                         placeholder="Enter account number here"
                     />
@@ -95,6 +132,20 @@ const SingleTransfer = ({
                         {errors?.accountNumber?.message}
                     </p>
                 </div>
+                {interEnquiry ? (
+                    <div className={styles.narration}>
+                        <label> Account Name</label>
+                        <input
+                            {...register('accountName')}
+                            type="text"
+                            value={interEnquiry.accountName}
+                        />
+                        <p className={styles.error}>
+                            {errors?.accountNumber?.message}
+                        </p>
+                    </div>
+                ) : null}
+
                 <div className={styles.narration}>
                     <label>Choose Bank</label>
                     <select
@@ -164,20 +215,27 @@ const SingleTransfer = ({
                 </div> */}
                 <div className={styles.saveBene}>
                     <label className={styles.beneCheck}>
-                        <input type="checkbox" />
+                        <input
+                            type="checkbox"
+                            name="beneficiary"
+                            {...register('beneficiary')}
+                        />
                         <span>
                             <i></i>
                         </span>
                     </label>
                     <p>Save Beneficiary</p>
                 </div>
-
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    text={buttonText}
-                    type="submit"
-                />
+                {isLoading ? (
+                    <Loader />
+                ) : (
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        text={buttonText}
+                        type="submit"
+                    />
+                )}
                 <p className={styles.schedule}>
                     Not paying now?{' '}
                     <span onClick={scheduleLater}>Schedule for Later</span>

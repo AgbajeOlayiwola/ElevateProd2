@@ -3,7 +3,7 @@ import { ecobankOnline } from '../types/actionTypes';
 const initialState = {
     isLoading: false,
     ecobankOnline: [],
-    errorMessage: ''
+    ecoOnlineErrorMessage: ''
 };
 
 const ecobankOnlineReducer = (state = initialState, { type, payload }) => {
@@ -14,7 +14,7 @@ const ecobankOnlineReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 isLoading: true,
                 ecobankOnline: [],
-                errorMessage: ''
+                ecoOnlineErrorMessage: ''
             };
         case ecobankOnline.ECOBANKONLINE_LOAD_SUCCESS:
             return {

@@ -6,6 +6,7 @@ import {
     billerType,
     billerPlan,
     airtime,
+    airtimeNetwork,
     bills,
     internalBank,
     interBank,
@@ -14,6 +15,7 @@ import {
     transactionHistory,
     transactionElevate,
     postBeneficiaries,
+    deleteBeneficiaries,
     getBeneficiaries,
     bulkTransfer,
     internationalTransfer,
@@ -31,15 +33,34 @@ import {
     accountStatus,
     completeProfile,
     newUserCreateAccount,
+    setTransactionPin,
     getNewUserAccount,
     states,
     cardLogin,
     businessCategories,
-    newUserCreateCorpAccount
+    newUserCreateCorpAccount,
+    setupBusProfile,
+    userProfile,
+    accountPrimary,
+    getUserBankAccounts,
+    uploadIdDocType,
+    uploadMemartType,
+    uploadCacCertType,
+    uploadScmulType,
+    shareRefFormtype,
+    uploadRefferenceFormType,
+    uploadUtilityDocumentype,
+    ussdGen,
+    ussdStatus,
+    forgotPasswordtype,
+    resetPassword,
+    bankStatement,
+    viewBvn,
+    resetOtpType
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
-import { setCookie, getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import axios from 'axios';
 
 var loginToken = '';
@@ -67,12 +88,136 @@ if (loginToken === null) {
 //     };
 // };
 const axiosInstance = axios.create({
-    baseURL: 'https://ellevate-app.herokuapp.com/',
+    baseURL: 'https://ellevate-test.herokuapp.com',
     headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Token}`
     }
 });
+
+//uusdGen actions
+export const ussdGenLoadStart = () => ({
+    type: ussdGen.USSDGEN_LOAD_START
+});
+
+export const ussdGenLoadSuccess = (billers) => ({
+    type: ussdGen.USSDGEN_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const ussdGenLoadError = (errorMessage) => ({
+    type: ussdGen.USSDGEN_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadussdGen = (code) => (dispatch) => {
+    dispatch(ussdGenLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.ussdGen}`, code)
+        .then((response) => dispatch(ussdGenLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(ussdGenLoadError(error.message)));
+};
+//uusdGen actions end
+
+//resetPassword actions
+export const resetPasswordLoadStart = () => ({
+    type: resetPassword.RESETPASSWORD_LOAD_START
+});
+
+export const resetPasswordLoadSuccess = (billers) => ({
+    type: resetPassword.RESETPASSWORD_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const resetPasswordLoadError = (errorMessage) => ({
+    type: resetPassword.RESETPASSWORD_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadresetPassword = (code) => (dispatch) => {
+    dispatch(resetPasswordLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.resetPassword}`, code)
+        .then((response) =>
+            dispatch(resetPasswordLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(resetPasswordLoadError(error.response.data.message))
+        );
+};
+//resetPassword actions end
+
+//bankStatement actions
+export const bankStatementLoadStart = () => ({
+    type: bankStatement.BANKSTATEMENT_LOAD_START
+});
+
+export const bankStatementLoadSuccess = (billers) => ({
+    type: bankStatement.BANKSTATEMENT_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const bankStatementLoadError = (errorMessage) => ({
+    type: bankStatement.BANKSTATEMENT_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadbankStatement = (code) => (dispatch) => {
+    dispatch(bankStatementLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.bankStatement}`, code)
+        .then((response) =>
+            dispatch(bankStatementLoadSuccess(response.data.data))
+        )
+        .catch((error) => dispatch(bankStatementLoadError(error.message)));
+};
+//bankStatement actions end
+
+//viewBvn actions
+export const viewBvnLoadStart = () => ({
+    type: viewBvn.VIEWBVN_LOAD_START
+});
+
+export const viewBvnLoadSuccess = (billers) => ({
+    type: viewBvn.VIEWBVN_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const viewBvnLoadError = (errorMessage) => ({
+    type: viewBvn.VIEWBVN_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadViewBvn = (code) => (dispatch) => {
+    dispatch(viewBvnLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.viewBvn}`, code)
+        .then((response) => dispatch(viewBvnLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(viewBvnLoadError(error.response.data.message))
+        );
+};
+//viewBvn actions end
+
+//uusdStatus actions
+export const ussdStatusLoadStart = () => ({
+    type: ussdStatus.USSDSTATUS_LOAD_START
+});
+
+export const ussdStatusLoadSuccess = (billers) => ({
+    type: ussdStatus.USSDSTATUS_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const ussdStatusLoadError = (errorMessage) => ({
+    type: ussdStatus.USSDSTATUS_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadussdStatus = (code) => (dispatch) => {
+    dispatch(ussdStatusLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.ussdStatus}`, code)
+        .then((response) => dispatch(ussdStatusLoadSuccess(response.data.data)))
+        .catch((error) => dispatch(ussdStatusLoadError(error.message)));
+};
+//uusdStatus actions end
+
 //country actions
 export const countryLoadStart = () => ({
     type: country.COUNTRY_LOAD_START
@@ -93,11 +238,67 @@ export const loadCountry = () => (dispatch) => {
     axiosInstance
         .get(`${apiRoutes.getCountries}`)
         .then((response) => dispatch(countryLoadSuccess(response.data.data)))
-        .catch((error) =>
-            dispatch(countryLoadError(error.response.data.message))
-        );
+        .catch((error) => dispatch(countryLoadError(error.response.message)));
 };
 //country actions end
+
+//accountPrimary actions
+export const accountPrimaryLoadStart = () => ({
+    type: accountPrimary.ACCOUNTPRIMARY_LOAD_START
+});
+
+export const accountPrimaryLoadSuccess = (countries) => ({
+    type: accountPrimary.ACCOUNTPRIMARY_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const accountPrimaryLoadError = (errorMessage) => ({
+    type: accountPrimary.ACCOUNTPRIMARY_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const loadAccountPrimary = () => (dispatch) => {
+    dispatch(accountPrimaryLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.accountPrimary}`)
+        .then((response) => dispatch(accountPrimaryLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(accountPrimaryLoadError(error.response.message))
+        );
+};
+//accountPrimary actions end
+
+//profile actions
+export const userProfileLoadStart = () => ({
+    type: userProfile.USERPROFILE_LOAD_START
+});
+
+export const userProfileLoadSuccess = (userProfiles) => ({
+    type: userProfile.USERPROFILE_LOAD_SUCCESS,
+    payload: userProfiles
+});
+
+export const userProfileLoadError = (errorMessage) => ({
+    type: userProfile.USERPROFILE_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const loadUserProfile = () => (dispatch) => {
+    dispatch(userProfileLoadStart());
+    const cookie = getCookie('cookieToken');
+    axiosInstance
+        .get(`https://ellevate-test.herokuapp.com${apiRoutes.userProfile}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => dispatch(userProfileLoadSuccess(response.data)))
+        .catch((error) =>
+            dispatch(userProfileLoadError(error.response.message))
+        );
+};
+//userprofile actions end
 
 //businessCategories actions
 export const businessCategoriesLoadStart = () => ({
@@ -217,10 +418,10 @@ export const billerTypeLoadError = (errorMessage) => ({
     type: billerType.BILLERTYPE_LOAD_ERROR,
     payload: errorMessage
 });
-export const loadbillerType = (code, category) => (dispatch) => {
+export const loadbillerType = (category) => (dispatch) => {
     dispatch(billerTypeLoadStart());
     axiosInstance
-        .get(`${apiRoutes.getBillerType}${code}?category=${category}`)
+        .get(`${apiRoutes.getBillerType}?category=${category}`)
         .then((response) => dispatch(billerTypeLoadSuccess(response.data.data)))
         .catch((error) => dispatch(billerTypeLoadError(error.message)));
 };
@@ -248,6 +449,31 @@ export const loadbillerPlan = (code) => (dispatch) => {
         .catch((error) => dispatch(billerPlanLoadError(error.message)));
 };
 //country actions end
+
+//setTransactionPin actions
+export const setTransactionPinLoadStart = () => ({
+    type: setTransactionPin.SETTRANSACTIONPIN_LOAD_START
+});
+
+export const setTransactionPinLoadSuccess = (billers) => ({
+    type: setTransactionPin.SETTRANSACTIONPIN_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const setTransactionPinLoadError = (errorMessage) => ({
+    type: setTransactionPin.SETTRANSACTIONPIN_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadsetTransactionPin = (code) => (dispatch) => {
+    dispatch(setTransactionPinLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.setTransactionPin}`, code)
+        .then((response) =>
+            dispatch(setTransactionPinLoadSuccess(response.data))
+        )
+        .catch((error) => dispatch(setTransactionPinLoadError(error.message)));
+};
+//setTransactionPin actions end
 
 //languages action
 
@@ -299,6 +525,34 @@ export const postAirtime = (data) => (dispatch) => {
 };
 
 //airtime action end
+
+//airtimeNetwork action
+export const airtimeNetworkLoadStart = () => ({
+    type: airtimeNetwork.AIRTIMENETWORK_LOAD_START
+});
+
+export const airtimeNetworkLoadSuccess = (airtimeNetworks) => ({
+    type: airtimeNetwork.AIRTIMENETWORK_LOAD_SUCCESS,
+    payload: airtimeNetworks
+});
+
+export const airtimeNetworkLoadError = (errorMessageAirtimeNetwork) => ({
+    type: airtimeNetwork.AIRTIMENETWORK_LOAD_ERROR,
+    payload: errorMessageAirtimeNetwork
+});
+export const postAirtimeNetwork = () => (dispatch) => {
+    dispatch(airtimeNetworkLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.airtimeNetwork}?affiliateCode=ENG`)
+        .then((response) =>
+            dispatch(airtimeNetworkLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(airtimeNetworkLoadError(error.response.data.message))
+        );
+};
+
+//airtimeNetwork action end
 
 //bills action
 export const billsLoadStart = () => ({
@@ -371,7 +625,9 @@ export const postInterBank = (data) => (dispatch) => {
     axiosInstance
         .post(`${apiRoutes.interBank}`, data)
         .then((response) => dispatch(interBankLoadSuccess(response.data)))
-        .catch((error) => dispatch(interBankLoadError(error.message)));
+        .catch((error) =>
+            dispatch(interBankLoadError(error.response.data.message))
+        );
 };
 
 //interBank action end
@@ -416,10 +672,10 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
     type: balanceEnquiry.BALANCEENQUIRY_LOAD_ERROR,
     payload: balanceEnquiryerror
 });
-export const getBalanceEnquiry = () => (dispatch) => {
+export const getBalanceEnquiry = (data) => (dispatch) => {
     dispatch(balanceEnquiryLoadStart());
     axiosInstance
-        .get(`${apiRoutes.balanceEnquiry}`)
+        .post(`${apiRoutes.balanceEnquiry}`, data)
         .then((response) =>
             dispatch(balanceEnquiryLoadSuccess(response.data.data))
         )
@@ -612,6 +868,34 @@ export const getBeneficiariesData = () => (dispatch) => {
 
 //getBeneficiaries action end
 
+//deleteBeneficiaries action
+export const deleteBeneficiariesLoadStart = () => ({
+    type: deleteBeneficiaries.DELETEBENEFICIARIES_LOAD_START
+});
+
+export const deleteBeneficiariesLoadSuccess = (bill) => ({
+    type: deleteBeneficiaries.DELETEBENEFICIARIES_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const deleteBeneficiariesLoadError = (deleteBeneficiarieserror) => ({
+    type: deleteBeneficiaries.DELETEBENEFICIARIES_LOAD_ERROR,
+    payload: deleteBeneficiarieserror
+});
+export const deleteBeneficiariesData = (data) => (dispatch) => {
+    dispatch(deleteBeneficiariesLoadStart());
+    axiosInstance
+        .delete(`${apiRoutes.deleteBeneficiaries}${data}`)
+        .then((response) =>
+            dispatch(deleteBeneficiariesLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(deleteBeneficiariesLoadError(error.message))
+        );
+};
+
+//deleteBeneficiaries action end
+
 //postBeneficiaries action
 export const postBeneficiariesLoadStart = () => ({
     type: postBeneficiaries.POSTBENEFICIARIES_LOAD_START
@@ -631,7 +915,9 @@ export const postBeneficiariesData = (data) => (dispatch) => {
     axiosInstance
         .post(`${apiRoutes.beneficiaries}`, data)
         .then((response) =>
-            dispatch(postBeneficiariesLoadSuccess(response.data.data))
+            dispatch(
+                postBeneficiariesLoadSuccess(response.data.data.beneficiaries)
+            )
         )
         .catch((error) => dispatch(postBeneficiariesLoadError(error.message)));
 };
@@ -643,16 +929,16 @@ export const omniliteLoadStart = () => ({
     type: omnilite.OMNILITE_LOAD_START
 });
 
-export const omniliteLoadSuccess = (bill) => ({
+export const omniliteLoadSuccess = (omniliteData) => ({
     type: omnilite.OMNILITE_LOAD_SUCCESS,
-    payload: bill
+    payload: omniliteData
 });
 
 export const omniliteLoadError = (errorMessage) => ({
     type: omnilite.OMNILITE_LOAD_ERROR,
     payload: errorMessage
 });
-export const omniliteData = (data) => (dispatch) => {
+export const omniliteDataa = (data) => (dispatch) => {
     dispatch(omniliteLoadStart());
     axiosInstance
         .post(`${apiRoutes.omnilite}`, data)
@@ -674,9 +960,9 @@ export const ecobankOnlineLoadSuccess = (bill) => ({
     payload: bill
 });
 
-export const ecobankOnlineLoadError = (errorMessage) => ({
+export const ecobankOnlineLoadError = (ecoOnlineErrorMessage) => ({
     type: ecobankOnline.ECOBANKONLINE_LOAD_ERROR,
-    payload: errorMessage
+    payload: ecoOnlineErrorMessage
 });
 export const ecobankOnlineData = (data) => (dispatch) => {
     dispatch(ecobankOnlineLoadStart());
@@ -695,9 +981,9 @@ export const accountNumberLoadStart = () => ({
     type: accountNumber.ACCOUNTNUMBER_LOAD_START
 });
 
-export const accountNumberLoadSuccess = (bill) => ({
+export const accountNumberLoadSuccess = (accountNumbers) => ({
     type: accountNumber.ACCOUNTNUMBER_LOAD_SUCCESS,
-    payload: bill
+    payload: accountNumbers
 });
 
 export const accountNumberLoadError = (errorMessages) => ({
@@ -721,14 +1007,14 @@ export const cardLoginLoadStart = () => ({
     type: cardLogin.CARDLOGIN_LOAD_START
 });
 
-export const cardLoginLoadSuccess = (bill) => ({
+export const cardLoginLoadSuccess = (cardLogin) => ({
     type: cardLogin.CARDLOGIN_LOAD_SUCCESS,
-    payload: bill
+    payload: cardLogin
 });
 
-export const cardLoginLoadError = (errorMessages) => ({
+export const cardLoginLoadError = (cardLoginerrorMessages) => ({
     type: cardLogin.CARDLOGIN_LOAD_ERROR,
-    payload: errorMessages
+    payload: cardLoginerrorMessages
 });
 export const cardLoginData = (data) => (dispatch) => {
     dispatch(cardLoginLoadStart());
@@ -747,9 +1033,9 @@ export const existingUserProfileLoadStart = () => ({
     type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_START
 });
 
-export const existingUserProfileLoadSuccess = (bill) => ({
+export const existingUserProfileLoadSuccess = (existingUserProfilee) => ({
     type: existingUserProfile.EXISTINGUSERPROFILE_LOAD_SUCCESS,
-    payload: bill
+    payload: existingUserProfilee
 });
 
 export const existingUserProfileLoadError = (errorMessage) => ({
@@ -760,12 +1046,12 @@ export const existingUserProfileData = (data) => (dispatch) => {
     dispatch(existingUserProfileLoadStart());
     axiosInstance
         .post(`${apiRoutes.existingUserProfile}`, data)
-        .then((response) =>
-            dispatch(existingUserProfileLoadSuccess(response.data))
-        )
-        .catch((error) =>
-            dispatch(existingUserProfileLoadError(error.response.data.message))
-        );
+        .then((response) => {
+            dispatch(existingUserProfileLoadSuccess(response));
+            console.log(response.data.data.token);
+            setCookie('existingToken', response.data.data.token);
+        })
+        .catch((error) => dispatch(existingUserProfileLoadError(error)));
 };
 
 //accountNumber action end
@@ -814,7 +1100,10 @@ export const accountStatusData = (data) => (dispatch) => {
     dispatch(accountStatusLoadStart());
     axiosInstance
         .get(`${apiRoutes.accountStatus}/${data}`)
-        .then((response) => dispatch(accountStatusLoadSuccess(response.data)))
+        .then((response) => {
+            console.log(response);
+            dispatch(accountStatusLoadSuccess(response));
+        })
         .catch((error) =>
             dispatch(accountStatusLoadError(error.response.data.message))
         );
@@ -824,9 +1113,9 @@ export const newAccountStatusLoadStart = () => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_START
 });
 
-export const newAccountStatusLoadSuccess = (bill) => ({
+export const newAccountStatusLoadSuccess = (accountStatus) => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_SUCCESS,
-    payload: bill
+    payload: accountStatus
 });
 
 export const newAccountStatusLoadError = (errorMessages) => ({
@@ -835,15 +1124,18 @@ export const newAccountStatusLoadError = (errorMessages) => ({
 });
 export const newAccountStatusData = () => (dispatch) => {
     const cookie = getCookie('cookieToken');
-    dispatch(accountStatusLoadStart());
+    // dispatch(accountStatusLoadStart());
     axiosInstance
-        .get(`https://ellevate-app.herokuapp.com${apiRoutes.accountStatus}`, {
+        .get(`https://ellevate-test.herokuapp.com${apiRoutes.accountStatus}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
             }
         })
-        .then((response) => dispatch(accountStatusLoadSuccess(response.data)))
+        .then((response) => {
+            dispatch(accountStatusLoadSuccess(response.data));
+            console.log(response.data.message);
+        })
         .catch((error) =>
             dispatch(accountStatusLoadError(error.response.data.message))
         );
@@ -892,22 +1184,18 @@ export const loginUserAction = (loginData) => {
             .then((response) => {
                 console.log(response.data);
                 localStorage.setItem('user', JSON.stringify(response.data));
+                localStorage.setItem(
+                    'token',
+                    JSON.stringify(response.data.data.token)
+                );
+                console.log(response.data);
+                localStorage.setItem(
+                    'user',
+                    JSON.stringify(response.data.data.user)
+                );
 
                 setCookie('cookieToken', response.data.data.token, 1 / 24);
-                const cookie = getCookie('cookieToken', options);
-                console.log('login token success', cookie);
-
-                //  const getServerSideProps = ({ req, res }) => {
-                //     setCookies('test', 'value', { req, res, maxAge: });
-
-                //   return { props: {}};
-                // }
-                // localStorage.setItem(
-                //     'token',
-                //     JSON.stringify(response.data.data.token)
-                // );
-
-                dispatch(userLoadStart(response.data.message));
+                dispatch(userLoadStart(response.data));
             })
             .catch((error) => {
                 console.log(error);
@@ -976,11 +1264,10 @@ export const bvnNinData = (bvnNin) => ({
 });
 export const createProfileSetup = (profileData) => {
     const cookie = getCookie('cookieToken');
-    // console.log('cookie in create profile function', cookie);
     return async (dispatch) => {
         await axios
             .post(
-                `https://ellevate-app.herokuapp.com${apiRoutes.profileSetupBus}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.profileSetup}`,
                 profileData,
                 {
                     headers: {
@@ -993,10 +1280,17 @@ export const createProfileSetup = (profileData) => {
                 dispatch(setupProfileSucces(response.data));
 
                 console.log('data from profile', response.data);
-                if (response.data.message === 'Profile setup successful') {
-                    axiosInstance
-                        .get(
-                            `https://ellevate-app.herokuapp.com${apiRoutes.verifyStatus}`,
+                if (
+                    response.data.message ===
+                    'profile setup intialized, sending otp'
+                ) {
+                    console.log('test1');
+                    const cookie = getCookie('cookieToken');
+                    console.log(cookie);
+                    axios
+                        .post(
+                            `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatus}`,
+                            [],
                             {
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -1005,41 +1299,12 @@ export const createProfileSetup = (profileData) => {
                             }
                         )
                         .then((response) => {
-                            dispatch(bvnNinData(response.data));
-                            if (
-                                response.data.data[0].reason ||
-                                response.data.data[1].reason ||
-                                response.data.data[1].status === 'PENDING' ||
-                                response.data.data[0].status === 'PENDING'
-                            ) {
-                                dispatch(
-                                    bvnNinError(
-                                        'We are unable to verify your details at the momemnt. Try again later'
-                                    )
-                                ),
-                                    dispatch(
-                                        bvnNinErrorI(
-                                            'We are unable to verify your details at the momemnt. Try again later'
-                                        )
-                                    );
-                            } else if (
-                                response.data.data[1].status === 'PENDING' ||
-                                response.data.data[0].status === 'PENDING'
-                            ) {
-                                bvnNinErrorI(
-                                    'We are unable to verify your details at the momemnt. Try again later'
-                                );
-                            } else if (
-                                response.data.data[1].status === 'SUCCESS' &&
-                                response.data.data[0].status === 'SUCCESS'
-                            ) {
-                                dispatch(bvnNinError(null)),
-                                    dispatch(bvnNinErrorI(null));
-                            }
+                            dispatch(bvnNinData(response.data.message));
+                            console.log('profile otp dispatch', response);
                         })
                         .catch((error) => {
                             console.log('profile otp dispatch', error);
-                            dispatch(bvnNinError(error.response.message));
+                            dispatch(bvnNinError(error.response.data.message));
                         });
                 }
             })
@@ -1054,6 +1319,98 @@ export const createProfileSetup = (profileData) => {
 };
 
 // profile setuo action end
+
+//business profile setup action start
+export const setupBusProfileStart = (busErrorMessages) => ({
+    type: setupBusProfile.BUS_PROFILESETUP_LOAD_START,
+    payload: busErrorMessages
+});
+export const setupBusProfileSucces = (busProfileSetup) => ({
+    type: setupBusProfile.BUS_PROFILESETUP_LOAD_SUCCESS,
+    payload: busProfileSetup
+});
+export const setupBusProfileError = (busErrorMessages) => ({
+    type: setupBusProfile.BUS_PROFILESETUP_LOAD_ERROR,
+    payload: busErrorMessages
+});
+export const bvnBusNinError = (busBvnError) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_ERROR,
+    payload: busBvnError
+});
+export const bvnBusNinErrorI = (busBvnErrorI) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_ERRORI,
+    payload: busBvnErrorI
+});
+export const bvnBusNinErrorII = (busBvnErrorII) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_ERRORII,
+    payload: busBvnErrorII
+});
+export const bvnBusNinErrorIII = (busBvnErrorIII) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_ERRORIII,
+    payload: busBvnErrorIII
+});
+export const bvnBusNinPending = (busBvnNinPend) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_PENDING,
+    payload: busBvnNinPend
+});
+export const bvnBusNinData = (busBvnNin) => ({
+    type: setupBusProfile.BUS_BVN_NIN_LOAD_SUCCESS,
+    payload: busBvnNin
+});
+export const createBusProfileSetup = (businessProfileData) => {
+    const cookie = getCookie('cookieToken');
+    // console.log('cookie in create profile function', cookie);
+    return async (dispatch) => {
+        await axios
+            .post(
+                `https://ellevate-test.herokuapp.com${apiRoutes.profileSetupBus}`,
+                businessProfileData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
+                }
+            )
+            .then((response) => {
+                dispatch(setupProfileSucces(response.data));
+
+                console.log('data from Business profile', response.data);
+                if (response.data.message === 'Success') {
+                    const cookie = getCookie('cookieToken');
+                    axiosInstance
+                        .post(
+                            `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatusBus}`,
+                            [],
+
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${cookie}`
+                                }
+                            }
+                        )
+                        .then((response) => {
+                            dispatch(bvnNinData(response.data.message));
+                            console.log('profile otp dispatch', response);
+                        })
+                        .catch((error) => {
+                            console.log('profile otp dispatch', error);
+                            dispatch(bvnNinError(error.response.data.message));
+                        });
+                }
+            })
+            .catch((error) => {
+                console.log(
+                    'profile setup dispatch',
+                    error.response.data.message
+                );
+                dispatch(setupProfileError(error.response.data.message));
+            });
+    };
+};
+
+// business profile setuo action end
 //BVN Otp
 export const otpLoadStart = (errorMessages) => ({
     type: otp.OTP_LOAD_START,
@@ -1073,7 +1430,7 @@ export const verifyOtp = (otpData) => {
     return async (dispatch) => {
         await axiosInstance
             .post(
-                `https://ellevate-app.herokuapp.com${apiRoutes.verifyOtp}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.verifyOtp}`,
                 otpData,
                 {
                     headers: {
@@ -1118,14 +1475,17 @@ export const CompProfile = () => {
     return (dispatch) => {
         dispatch(profileLoadStart());
         axiosInstance
-            .get(`https://ellevate-app.herokuapp.com${apiRoutes.authProfile}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${cookie}`
+            .get(
+                `https://ellevate-test.herokuapp.com${apiRoutes.authProfile}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
                 }
-            })
+            )
             .then((response) => {
-                dispatch(profileLoadSuccess(response.data));
+                dispatch(profileLoadSuccess(response));
             })
             .catch((error) => {
                 console.log(error);
@@ -1144,22 +1504,27 @@ export const completeProfileLoadSuccess = (compBusprofile) => ({
     type: completeProfile.COMP_PROFILE_LOAD_SUCCESS,
     payload: compBusprofile
 });
-export const completeProfileLoadError = (errorMessage) => ({
+export const completeProfileLoadError = (comperrorMessage) => ({
     type: completeProfile.COMP_PROFILE_LOAD_ERROR,
-    payload: errorMessage
+    payload: comperrorMessage
 });
 
 export const CompleteBusinessProfile = (completeProfileData) => {
-    const cookie = getCookie('cookieToken');
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     return (dispatch) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
-            .patch(
-                `https://ellevate-app.herokuapp.com${apiRoutes.completesBusinessProfile}`,
+            .post(
+                `https://ellevate-test.herokuapp.com${apiRoutes.completesBusinessProfile}`,
                 completeProfileData,
                 {
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'multipart/form-data',
                         Authorization: `Bearer ${cookie}`
                     }
                 }
@@ -1170,11 +1535,7 @@ export const CompleteBusinessProfile = (completeProfileData) => {
             })
             .catch((error) => {
                 console.log(error);
-                dispatch(
-                    completeProfileLoadError(
-                        'error check the fields and try again'
-                    )
-                );
+                dispatch(completeProfileLoadError(error));
             });
     };
 };
@@ -1200,7 +1561,7 @@ export const createNewUserAccount = (accountData) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
             .post(
-                `https://ellevate-app.herokuapp.com${apiRoutes.newCreateAccount}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.newCreateAccount}`,
                 accountData,
                 {
                     headers: {
@@ -1214,8 +1575,9 @@ export const createNewUserAccount = (accountData) => {
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
-                // console.log('create new account:', error.response.data.message);
+                console.log('create new account:', error.response.data.message);
                 dispatch(createNewAccountError(error.response.data.message));
+                // console.log(error);
             });
     };
 };
@@ -1253,7 +1615,7 @@ export const createNewCorpUserAccount = (accountData) => {
             )
             .then((response) => {
                 console.log('create New Account', response.data);
-                console.log('create new account:', error.response.data.message);
+                // console.log('create new account:', error.response.data.message);
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
@@ -1297,3 +1659,464 @@ export const getNewUserAccountDetails = (accountData) => {
     };
 };
 //end corp account status
+
+//bank accounts start
+
+export const bankAccountsStart = () => ({
+    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_START
+});
+
+export const bankAccountsSuccess = (bankAccounts) => ({
+    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_SUCCESS,
+    payload: bankAccounts
+});
+
+export const bankAccountsLoadError = (bankAccountErrorMessages) => ({
+    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_ERROR,
+    payload: bankAccountErrorMessages
+});
+export const bankAccountsData = () => (dispatch) => {
+    const exToken = getCookie('existingToken');
+    dispatch(accountNumberLoadStart());
+    axios
+        .get(`https://ellevate-test.herokuapp.com${apiRoutes.banksAccounts}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${exToken}`
+            }
+        })
+        .then((response) => {
+            dispatch(bankAccountsSuccess(response.data[0].accountNumber));
+            console.log(response.data.accountNumber);
+        })
+        .catch((error) =>
+            dispatch(bankAccountsLoadError(error.response.data.message))
+        );
+};
+
+//bank accunt end
+
+//tility upload start
+export const uploadUtilityStart = () => ({
+    type: uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_START
+});
+
+export const uploadUtilitySuccess = (utilityUpload) => ({
+    type: uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_SUCCESS,
+    payload: utilityUpload
+});
+
+export const uploadUtilityError = (utilityUplodaErrorMessages) => ({
+    type: uploadUtilityDocumentype.GET_UTILITY_DOCUMENT_ERROR,
+    payload: utilityUplodaErrorMessages
+});
+export const uploadUtilityData = (utilitydata) => (dispatch) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadUtilityDocument}`,
+            utilitydata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(uploadUtilitySuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(uploadUtilityError(error)));
+};
+
+//utility upload end
+
+//Upload identification Documentation start
+export const identificationDocStart = () => ({
+    type: uploadIdDocType.GET_ID_DOCUMENTATION_START
+});
+
+export const identificationDocSuccess = (identification) => ({
+    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_SUCCESS,
+    payload: identification
+});
+
+export const identificationDocError = (identificationErrorMessages) => ({
+    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_ERROR,
+    payload: identificationErrorMessages
+});
+export const identificationDocData = (identificationdata) => (dispatch) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadIdentificationDoc}`,
+            identificationdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(identificationDocSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(identificationDocError(error.response)));
+};
+
+//upload identification Documentation end
+
+//upload  uploadMemart start
+export const memartStart = () => ({
+    type: uploadMemartType.GET_MEMART_START
+});
+
+export const memartSuccess = (memart) => ({
+    type: uploadMemartType.GET_MEMART_SUCCESS,
+    payload: memart
+});
+
+export const memartError = (memartErrorMessages) => ({
+    type: uploadMemartType.GET_MEMART_ERROR,
+    payload: memartErrorMessages
+});
+export const memartData = (memartdata) => (dispatch) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadMemart}`,
+            memartdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(memartSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(memartError(error.response)));
+};
+
+//upload  uploadMemart end
+
+//upload cac document start
+export const cacStart = () => ({
+    type: uploadCacCertType.GET_CAC_CERIFICATE_START
+});
+
+export const cacSuccess = (cac) => ({
+    type: uploadCacCertType.GET_CAC_CERIFICATE_SUCCESS,
+    payload: cac
+});
+
+export const cacError = (cacErrorMessages) => ({
+    type: uploadCacCertType.GET_CAC_CERIFICATEERROR,
+    payload: cacErrorMessages
+});
+export const cacData = (cacdata) => (dispatch) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadCacCert}`,
+            cacdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(cacSuccess(response.data.message));
+            console.log(response);
+        })
+        .catch((error) => {
+            dispatch(cacError(error.response));
+            console.log(error.response);
+        });
+};
+//upload cac document end
+
+//upload scmul document start
+export const scmulStart = () => ({
+    type: uploadScmulType.GET_SCMUL_START
+});
+
+export const scmulSuccess = (scmul) => ({
+    type: uploadScmulType.GET_SCMUL_SUCCESS,
+    payload: scmul
+});
+
+export const scmulError = (scmulErrorMessages) => ({
+    type: uploadScmulType.GET_SCMUL_ERROR,
+    payload: scmulErrorMessages
+});
+export const scmulData = (scmuldata) => (dispatch) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadScmul}`,
+            scmuldata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(scmulSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(scmulError(error.response)));
+};
+//upload scmul document end
+
+//upload share reffernce form start
+export const shareRefFormStart = () => ({
+    type: shareRefFormtype.GET_SHARE_REFFERENCE_START
+});
+
+export const shareRefFormSuccess = (shareRefForm) => ({
+    type: shareRefFormtype.GET_SHARE_REFFERENCE_SUCCESS,
+    payload: shareRefForm
+});
+
+export const shareRefFormError = (shareRefFormErrorMessages) => ({
+    type: shareRefFormtype.GET_SHARE_REFFERENCE_ERROR,
+    payload: shareRefFormErrorMessages
+});
+export const shareRefFormData = (sharerefformdata) => (dispatch) => {
+    let cookie;
+    r;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.shareRefForm}`,
+            sharerefformdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(shareRefFormSuccess(response.data[0].accountNumber));
+            console.log(response.data.accountNumber);
+        })
+        .catch((error) =>
+            dispatch(shareRefFormError(error.response.data.message))
+        );
+};
+//upload hare reffernce formt end
+
+//upload  refference form start
+export const uploadRefFormStart = () => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_START
+});
+
+export const uploadRefFormSuccess = (uploadRefForm) => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_SUCCESS,
+    payload: uploadRefForm
+});
+
+export const uploadRefFormError = (uploadRefFormErrorMessages) => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_ERROR,
+    payload: uploadRefFormErrorMessages
+});
+export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadRefForm}`,
+            uploadrefformdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(uploadRefFormSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(uploadRefFormError(error.response)));
+};
+//upload refference form end
+
+//upload  board resolution start
+export const uploadBoardResStart = () => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_START
+});
+
+export const uploadBoardResSuccess = (uploadBoardRes) => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_SUCCESS,
+    payload: uploadBoardRes
+});
+
+export const uploadBoardResError = (uploadBoardResErrorMessages) => ({
+    type: uploadRefferenceFormType.GET_REFFERENCE_FORM_ERROR,
+    payload: uploadBoardResErrorMessages
+});
+export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
+    let cookie;
+    r;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.uploadBoardRes}`,
+            uploadboardresdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(uploadBoardResSuccess(response.data[0].accountNumber));
+            console.log(response.data.accountNumber);
+        })
+        .catch((error) =>
+            dispatch(uploadBoardResError(error.response.data.message))
+        );
+};
+//upload board resolution end
+
+//forgot password resolution start
+export const forgotPasswordStart = () => ({
+    type: forgotPasswordtype.GET_FORGOT_PASSWORD_START
+});
+
+export const forgotPasswordSuccess = (forgotPassword) => ({
+    type: forgotPasswordtype.GET_FORGOT_PASSWORD_SUCCESS,
+    payload: forgotPassword
+});
+
+export const forgotPasswordError = (forgotPasswordErrorMessages) => ({
+    type: forgotPasswordtype.GET_FORGOT_PASSWORD_ERROR,
+    payload: forgotPasswordErrorMessages
+});
+export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.forgotPassword}`,
+            forgotPassworddata,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(forgotPasswordSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(forgotPasswordError(error)));
+};
+//forgot password resolution end
+
+//RESET OTP resolution start
+export const resetOtpStart = () => ({
+    type: resetOtpType.RESET_OTP_START
+});
+
+export const resetOtpSuccess = (resetOtp) => ({
+    type: resetOtpType.RESET_OTP_SUCCESS,
+    payload: resetOtp
+});
+
+export const resetOtpError = (resetOtpErrorMessages) => ({
+    type: resetOtpType.RESET_OTP_PASSWORD_ERROR,
+    payload: resetOtpErrorMessages
+});
+export const resetOtpData = (resetOtpdata) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.resetOtp}`,
+            resetOtpdata,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(resetOtpSuccess(response));
+            console.log(response);
+        })
+        .catch((error) => dispatch(resetOtpError(error)));
+};
+//RESET OTP resolution end

@@ -10,14 +10,7 @@
 //     }, []);
 
 //     console.log(height);
-//     const DashCont = styled.div`
-//         flex: 1;
-//         background-color: #f5f6fa;
-//         padding: 36px 32px 46px 32px;
-//         position: relative;
-//         height: 100vh;
-//         overflow-y: scroll;
-//     `;
+//
 
 //     const mainOverlay = {
 //         height: height,
@@ -44,25 +37,48 @@
 
 // export default DashLayout;
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 // import withAuth from '../../HOC/withAuth';
 import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
 
-const DashLayout = ({ children }) => {
+const DashLayout = ({
+    children,
+    page,
+    text,
+    action,
+    preview,
+    previewSingle,
+    productAction
+}) => {
+    const [sideActive, setSideActive] = useState(false);
     return (
         <div className={styles.dash}>
-            <Navbar />
-            <div className={styles.main}>{children}</div>
-            <Sidebar />
+            <div className={sideActive ? styles.sidebar : styles.sidebarActive}>
+                <Sidebar
+                    showSubnav={() => {
+                        setSideActive(false);
+                    }}
+                />
+            </div>
+            {!sideActive ? (
+                <div className={styles.dashCont}>
+                    <Navbar
+                        page={page}
+                        text={text}
+                        action={action}
+                        preview={preview}
+                        previewSingle={previewSingle}
+                        productAction={productAction}
+                        sideAction={() => {
+                            setSideActive(true);
+                        }}
+                    />
+                    {children}
+                </div>
+            ) : null}
         </div>
-        // <div className={styles.dash}>
-        //     <Sidebar />
-        //     <DashCont>
-        //         <div style={overlay ? mainOverlay : null}></div>
-        //         <Navbar />
-        //         {children}
-        //     </DashCont>
-        // </div>
     );
 };
 

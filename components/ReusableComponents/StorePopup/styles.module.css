@@ -1,0 +1,17 @@
+.storefrontPopup {
+    width: 48%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 50px;
+    margin: 32px auto;
+    position: absolute;
+    top: 3%;
+    left: 33%;
+    z-index: 10;
+}
+
+.innerDiv {
+    margin: 80px auto;
+    width: 66%;
+    max-width: 398px;
+}

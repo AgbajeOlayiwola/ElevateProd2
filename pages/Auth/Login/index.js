@@ -6,42 +6,42 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    createNewUserAccount,
-    loginUserAction
-} from '../../../redux/actions/actions';
+import { loginUserAction } from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
-import CircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/CircleSvg';
 import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
+import LoginCircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LoginCircleSvg';
+import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
+import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
 
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [circle, setCircle] = useState(false);
     const [error, setError] = useState('');
-    const [id, setEmail] = useState('');
+    const [identifier, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [outType, setOutType] = useState();
     const dispatch = useDispatch();
     const router = useRouter();
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
     );
-    const { newAccount, newAccountErrorMessage } = useSelector(
-        (state) => state.newUserAccountDets
+    const { userProfile, errorMessage } = useSelector(
+        (state) => state.userProfileReducer
     );
-
-    // const hashed = hash();
-
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
+
+    //set password value
     const handlePwd = (e) => {
         setPassword(e.target.value);
     };
-
+    //set email value
     const checkDataContent = (e) => {
         setEmail(e.target.value);
     };
@@ -50,12 +50,13 @@ const Login = () => {
         setError('');
         setLoading((prev) => !prev);
         const loginData = {
-            id,
-            password: encrypt(password)
+            identifier,
+            password
         };
         dispatch(loginUserAction(loginData));
         // dispatch(createNewUserAccount());
     };
+    console.log(user);
     const sentLogin = () => {
         if (errorMessages !== null) {
             setError(errorMessages);
@@ -66,19 +67,27 @@ const Login = () => {
             //     'You already have an account with us. Please contact us for more information'
             // ) {
             // router.push('/Dashboard');,
-        } else if (user === 'Login successful') {
-            router.push('../../Onboarding/ProfileSetup');
+        } else if (user !== null) {
+            if (user.statusCode === 200) {
+                if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'PROFILE_SETUP_COMPLETED'
+                ) {
+                    router.push('../../Dashboard');
+                } else {
+                    router.push('../../Onboarding/ProfileSetup');
+                }
+            }
         }
     };
     useEffect(() => {
         sentLogin();
     }, [errorMessages, user]);
 
-    const [outType, setOutType] = useState();
     const types = (type) => {
         setOutType(type);
     };
-    console.log(user);
+    // console.log(user);
     // console.log(data); // watch input value by passing the name of it
 
     return (
@@ -102,48 +111,48 @@ const Login = () => {
                     >
                         <div className={styles.loginForm}>
                             <label>Email Address </label>
-                            <div>
+                            <div className={styles.divs}>
+                                <MailSvg />
                                 <input
                                     type="email"
                                     name="email"
                                     placeholder="Enter Your Email"
                                     className={styles.emailInput}
                                     {...register('email', {
+                                        required: 'Email is required',
                                         pattern: {
                                             value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                                             message: 'Invalid email address'
                                         }
                                     })}
-                                    onChange={checkDataContent}
+                                    onInput={checkDataContent}
                                 />
                             </div>
-                            <div className={styles.errors}>
+                            <p className={styles.errors}>
                                 {errors.email?.message}
-                            </div>
+                            </p>
                         </div>
                         <div className={styles.loginForm}>
                             <label>Password </label>
                             <div className={styles.divs}>
+                                <LockSvg />
                                 <input
                                     name="password"
                                     placeholder="Enter Your Password"
                                     type={outType ? 'text' : 'password'}
                                     className={styles.passwordInput}
-                                    required
                                     {...register('password', {
                                         required: 'Password is required'
                                     })}
-                                    onChange={handlePwd}
+                                    onInput={handlePwd}
                                 />
                                 <Visbility typeSet={types} />
                             </div>
-                            <div className={styles.errors}></div>
+                            <p className={styles.errors}>
+                                {errors?.password?.message}
+                            </p>
                         </div>
                         <div className={styles.remForg}>
-                            <div>
-                                <CircleSvg />
-                                <p>Remember me</p>
-                            </div>
                             <div>
                                 <Link href="../Auth/ForgotPassword">
                                     <p className={styles.forget}>

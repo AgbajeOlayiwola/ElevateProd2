@@ -1,0 +1,121 @@
+.title {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 135.52%;
+    margin: 0px;
+    color: #3e3e3e;
+}
+
+.title span {
+    margin-right: 21px;
+    cursor: pointer;
+}
+
+.formGroup {
+    margin-top: 24px;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
+}
+
+.formGroup input {
+    background: #f4f4f4;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+}
+
+.profileBody button {
+    font-family: 'Inter' sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    margin-top: 48px;
+    margin-bottom: 32px;
+}
+
+.divs {
+    display: flex;
+    align-items: center;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding-right: 16px;
+}
+
+.divs input {
+    height: 100%;
+    padding: 0px;
+    border: 0px;
+    padding: 16px 16px 16px 24px;
+}
+
+.errorCont {
+    width: 100%;
+    margin-top: 0.5rem;
+    background-color: white;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.errorCont p {
+    margin: 0px;
+}
+
+.errors {
+    background-color: red;
+    color: white;
+    width: 30%;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    border-radius: 12px;
+    padding: 1px 0px;
+    transition: 2s all ease;
+}
+
+.medium {
+    background-color: blue;
+    color: white;
+    width: 70%;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    border-radius: 12px;
+    padding: 1px 0px;
+    transition: 2s all ease;
+}
+
+.strong {
+    background-color: green;
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    border-radius: 12px;
+    padding: 1px 0px;
+    transition: 2s all ease;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin: 0px;
+    margin-top: 0.5rem;
+}

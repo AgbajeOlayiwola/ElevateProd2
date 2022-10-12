@@ -6,6 +6,7 @@ import billerCategoryReducer from './billerCategory.reducer';
 import billerTypeReducer from './billerType.reducer';
 import billerPlanReducer from './billerPlan.reducer';
 import airtimeReducer from './airtime.reducer';
+import airtimeNetworkReducer from './airtimeNetwork.reducer';
 import billsReducer from './bills.reducer';
 import internalBankReducer from './internalBank.reducer';
 import interBankEnquiryReducer from './interBankEnquiry.reducer';
@@ -19,6 +20,7 @@ import verifyBankReducer from './verifyBank.reducer';
 import verifyCurrencyReducer from './verifyCurrency.reducer';
 import postBeneficiariesReducer from './postBeneficiary.reducer';
 import getBeneficiariesReducer from './getBeneficiaries.reducer';
+import deleteBeneficiariesReducer from './deleteBeneficiary.reducer';
 import authReducer from './auth.reducer';
 import registerReducer from './register.reducer';
 import profileReducer from './completeprofile.reducer';
@@ -37,6 +39,25 @@ import newUsercreateAccountReducer from './newUserCraeteAccount.reducer';
 import cardLoginReducer from './cardLogin.reducer';
 import statesReducer from './states.reducer';
 import newUsercreateCorpAccountReducer from './newusercorporate.reducer';
+import bankAccountsReducer from './bankAccounts.reducer';
+import userProfileReducer from './userProfile.reducer';
+import utilityUploadReducer from './utilityupload.reducer';
+import documentIdentificationReducer from './uploadIdDco.reducer';
+import uploadScmulReducer from './uploadScmul.reducer';
+import uploadMemartReducer from './memart.reducer';
+import shareRefReducer from './shareRefferenceForm.reducer';
+import uploadRefReducer from './uploadrefform.reducer';
+import uploadBoardResReducer from './boardresolution.reducer';
+import cacUploadReducer from './cac.reducer';
+import accountPrimaryReducer from './accountPrimary.reducer';
+import setTransactionPinReducer from './setTransactionPin.reducer';
+import fogrotPasswordReducer from './forgotpassword.reducer';
+import resetOtpReducer from './resetotp.reducer';
+import ussdGenReducer from './ussdGen.reducer';
+import ussdStatusReducer from './ussdStatus.reducer';
+import viewBvnReducer from './viewBvn.reducer';
+import resetPasswordReducer from './resetPassword.reducer';
+import bankStatementReducer from './bankStatement.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -46,6 +67,7 @@ const rootReducer = combineReducers({
     billerPlanReducer: billerPlanReducer,
     billerTypeReducer: billerTypeReducer,
     airtimeReducer: airtimeReducer,
+    airtimeNetworkReducer: airtimeNetworkReducer,
     billsReducer: billsReducer,
     internalBankReducer: internalBankReducer,
     interBankReducer: interBankReducer,
@@ -59,6 +81,7 @@ const rootReducer = combineReducers({
     verifyBankReducer: verifyBankReducer,
     verifyCurrencyReducer: verifyCurrencyReducer,
     getBeneficiariesReducer: getBeneficiariesReducer,
+    deleteBeneficiariesReducer: deleteBeneficiariesReducer,
     postBeneficiariesReducer: postBeneficiariesReducer,
     auth: authReducer,
     registered: registerReducer,
@@ -72,12 +95,32 @@ const rootReducer = combineReducers({
     accountStatusReducer: accountStatusReducer,
     createAccountReducer: createAccountReducer,
     businessCategoriesReducer: businessCategoriesReducer,
-    completeBusProfile: completeBusinessprofileReducer,
+    completeBusProfileReducer: completeBusinessprofileReducer,
     newUserAccountDetails: getNewUserAccountReducer,
     statesReducer: statesReducer,
     cardLoginReducer: cardLoginReducer,
     newUserAccountDets: newUsercreateAccountReducer,
-    newuserCorpAccount: newUsercreateCorpAccountReducer
+    newuserCorpAccount: newUsercreateCorpAccountReducer,
+    bankAccountsReducer: bankAccountsReducer,
+    userProfileReducer: userProfileReducer,
+    uploadUtilityReducer: utilityUploadReducer,
+    documentIdentificationReducer: documentIdentificationReducer,
+    uploadScmulReducer: uploadScmulReducer,
+    uploadMemartReducer: uploadMemartReducer,
+    shareRefReducer: shareRefReducer,
+    uploadRefReducer: uploadRefReducer,
+    uploadBoardResReducer: uploadBoardResReducer,
+    cacUploadReducer: cacUploadReducer,
+    ussdGenReducer: ussdGenReducer,
+    ussdStatusReducer: ussdStatusReducer,
+    accountPrimaryReducer: accountPrimaryReducer,
+    setTransactionPinReducer: setTransactionPinReducer,
+    userProfileReducer: userProfileReducer,
+    fogrotPasswordReducer: fogrotPasswordReducer,
+    viewBvnReducer: viewBvnReducer,
+    resetPasswordReducer: resetPasswordReducer,
+    bankStatementReducer: bankStatementReducer,
+    resetOtpReducer: resetOtpReducer
 });
 
 export default rootReducer;

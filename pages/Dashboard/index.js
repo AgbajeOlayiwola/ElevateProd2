@@ -1,7 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashLayout from '../../components/layout/Dashboard';
-import Paylink from '../../components/ReusableComponents/PaylinkSvg';
-import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
 import styles from './styles.module.css';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import PhoneSvg from '../../components/ReusableComponents/PhoneSvg';
@@ -13,8 +11,6 @@ import 'slick-carousel/slick/slick.css';
 import { useRouter } from 'next/router';
 import 'slick-carousel/slick/slick-theme.css';
 import Levelup from '../../components/ReusableComponents/LevelUp';
-import BarChart from '../../components/ReusableComponents/Chart/BarChart';
-import Chart from '../../components/ReusableComponents/Chart';
 import LineChart from '../../components/ReusableComponents/Chart/LineChart';
 import Piechart from '../../components/ReusableComponents/Chart/Piechart';
 import { OtherAccounts } from '../../components/ReusableComponents/Data';
@@ -24,10 +20,13 @@ import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymne
 import {
     getBalanceEnquiry,
     getTransactionElevate,
-    newAccountStatusData
+    loadAccountPrimary
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
+import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
+import Ussd from '../../components/ReusableComponents/UssdSvg';
+import SingleTrans from '../../components/ReusableComponents/SingleTransSvg';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -57,9 +56,19 @@ function SamplePrevArrow(props) {
 
 const Dashboard = () => {
     const dispatch = useDispatch();
+    const [outType, setOutType] = useState();
+    const [balance, setBalance] = useState('₦0.00');
+    const router = useRouter();
+    const [loaded, setLoaded] = useState(false);
+    const [items, setItems] = useState([]);
+
+    const [acctNumber, setAcctNumber] = useState('');
     useEffect(() => {
         dispatch(getBalanceEnquiry());
     }, []);
+    const { accountStatus, errorMessages } = useSelector(
+        (state) => state.accountStatusReducer
+    );
 
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
@@ -68,28 +77,32 @@ const Dashboard = () => {
         (state) => state.transactionElevateReducer
     );
     const [transactionData, setTransactionData] = useState([]);
-    useEffect(() => {
-        dispatch(getTransactionElevate());
-    }, []);
+    let userProfile;
+    let userProfileData = {};
+    if (typeof window !== 'undefined') {
+        userProfile = window.localStorage.getItem('user');
+        userProfileData = JSON.parse(userProfile);
+    }
 
-    useEffect(() => {
-        if (transactionElevate !== null) {
-            setTransactionData(transactionElevate);
-        }
-    }, [transactionElevate]);
+    // useEffect(() => {
+    //     if (transactionElevate !== null) {
+    //         setTransactionData(transactionElevate);
+    //     }
+    // }, [transactionElevate]);
+
+    // useEffect(() => {
+    //     if (userProfile !== null) {
+    //         setUserProfileData(userProfile);
+    //
+    //         console.log(balanceData);
+    //     }
+    // }, []);
     console.log(transactionData);
-    const [nav2, setNav2] = useState();
-    const slider1 = useRef();
-    const [outType, setOutType] = useState();
-    const [balance, setBalance] = useState('#0.00');
-    const router = useRouter();
-    const [loaded, setLoaded] = useState(false);
-    const route = router.pathname;
 
     const types = (type) => {
         setOutType(type);
     };
-    const [items, setItems] = useState([]);
+
     useEffect(() => {
         if (balanceEnquiry !== null) {
             const formatter = new Intl.NumberFormat('en-US', {
@@ -128,18 +141,31 @@ const Dashboard = () => {
         autoplaySpeed: 2000,
         cssEase: 'linear'
     };
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
+    const { accountPrimary, accountPrimaryError } = useSelector(
+        (state) => state.accountPrimaryReducer
     );
 
-    const [acctNumber, setAcctNumber] = useState('');
     useEffect(() => {
-        dispatch(newAccountStatusData());
-        setAcctNumber(accountStatus.data.accountNumber);
+        dispatch(loadAccountPrimary());
     }, []);
-    // console.log(accountStatus.data.accountNumber);
+
+    useEffect(() => {
+        if (accountPrimary !== null) {
+            setAcctNumber(accountPrimary);
+            let balanceData;
+            balanceData = {
+                accountId: accountPrimary.accountId
+            };
+
+            dispatch(getBalanceEnquiry(balanceData));
+        } else {
+            setAcctNumber('Pending');
+        }
+    }, [accountPrimary]);
+
+    console.log(accountPrimary);
     return (
-        <DashLayout>
+        <DashLayout page="Dashboard">
             <Levelup />
             <div className={styles.cove}>
                 <section className={styles.sectionI}>
@@ -180,21 +206,21 @@ const Dashboard = () => {
                         </div>
                         <div className={styles.dinCLass}>
                             <div className={styles.svg}>
-                                <LoansSvg />
+                                <EcobankQRSvg />
                             </div>
-                            <p className={styles.name}> Loans</p>
+                            <p className={styles.name}>Ecobank QR Code</p>
                         </div>
                         <div className={styles.dinCLass}>
                             <div className={styles.svg}>
-                                <Invoice />
+                                <Ussd />
                             </div>
-                            <p className={styles.name}>Send e-invoice</p>
+                            <p className={styles.name}>USSD</p>
                         </div>
                         <div className={styles.dinCLass}>
                             <div className={styles.svg}>
-                                <MposSvg />
+                                <SingleTrans />
                             </div>
-                            <p className={styles.name}>Logistics</p>
+                            <p className={styles.name}>Single Transfer</p>
                         </div>
                     </div>
                     <div className={styles.btmI}>
@@ -238,9 +264,7 @@ const Dashboard = () => {
                                                 Account Number
                                             </p>
                                             <p className={styles.accountNumber}>
-                                                {acctNumber
-                                                    ? acctNumber
-                                                    : 'Pending'}
+                                                {acctNumber.accountNumber}
                                             </p>
                                         </div>
                                     </div>

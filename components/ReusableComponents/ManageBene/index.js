@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Popup from '../../layout/Popup';
+import BeneUserSvg from '../ReusableSvgComponents/BeneUserSvg';
+import ThreeDotsSvg from '../ThreeDotSvg';
 import styles from './styles.module.css';
 
 const ManageBene = ({ overlay, title, action, btnAction }) => {
@@ -181,21 +183,18 @@ const ManageBene = ({ overlay, title, action, btnAction }) => {
     );
 };
 
-export default ManageBene;
-
-const ManageBeneSingle = ({ beneAccount, beneName, action, index }) => {
+const ManageBeneSingle = ({ beneAccount, beneName, index, deleteAction }) => {
     return (
-        <div
-            className={styles.manageBeneSingle}
-            onClick={(e) => {
-                action(e);
-            }}
-            key={index}
-        >
+        <div className={styles.manageBeneSingle} key={index}>
             <div className={styles.manageBeneDetails}>
-                <h2>{beneName}</h2>
-                <p>{beneAccount}</p>
+                <BeneUserSvg />
+                <div>
+                    <h3>{beneName}</h3>
+                    <p>{beneAccount}</p>
+                </div>
             </div>
+            <ThreeDotsSvg action={deleteAction} />
         </div>
     );
 };
+export default ManageBeneSingle;

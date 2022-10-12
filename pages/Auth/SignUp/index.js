@@ -25,13 +25,14 @@ const Signup = ({ type }) => {
     const [loading, setLoading] = useState(false);
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
+    const [passwordMatch, setPasswordMatch] = useState('');
+    const [bgcolor, setBgcolor] = useState(false);
     const dispatch = useDispatch();
 
     const { isLoading, user, errorMessage } = useSelector(
         (state) => state.registered
     );
 
-    const [passwordMatch, setPasswordMatch] = useState('');
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
         setConfPassword(e.target.value);
@@ -99,7 +100,7 @@ const Signup = ({ type }) => {
                 affiliateCode: 'ENG'
             };
             setLoading(true);
-            console.log(errorMessage);
+            // console.log(errorMessage);
             dispatch(createUserAction(postData));
         } else {
             passwordMatch;
@@ -116,8 +117,6 @@ const Signup = ({ type }) => {
     useEffect(() => {
         sentSIgnUp();
     }, [errorMessage, user]);
-
-    const [bgcolor, setBgcolor] = useState(false);
 
     // console.log(confPassword);
     return (
