@@ -14,7 +14,8 @@ import {
     createNewCorpUserAccount,
     createNewUserAccount,
     loadUserProfile,
-    statesData
+    statesData,
+    type
 } from '../../../../redux/actions/actions';
 import { useRouter } from 'next/router';
 import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
@@ -600,7 +601,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                     ) : (
                         <form
                             onSubmit={handleSubmit(
-                                profileCont.isBusinessRegistered === true
+                                type === 'true'
                                     ? handleSubmitReg
                                     : handleSubmitIII
                             )}
