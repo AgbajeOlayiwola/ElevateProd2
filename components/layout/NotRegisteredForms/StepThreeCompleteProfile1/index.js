@@ -108,7 +108,16 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         dispatch(CompProfile());
         dispatch(loadUserProfile());
         console.log(profile.data);
-        setAllUserData(profile.data[1].documentData);
+        {
+            profile.data?.map((item) => {
+                if (item.documentType === 'CAC') {
+                    setFormData({
+                        ...formData,
+                        bussinessName: item.documentData.companyName
+                    });
+                }
+            });
+        }
         setProfileCont(userProfiles);
     }, []);
     useEffect(() => {
@@ -166,7 +175,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         formState: { errors }
     } = useForm();
 
-    // console.log(type);
+    console.log(type);
 
     // const uploadFile = async (e) => {
     //   const formData = new FormData();
@@ -361,11 +370,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     required:
                                                         'Business Name is required'
                                                 })}
-                                                value={
-                                                    alluserData
-                                                        ? alluserData.companyName
-                                                        : formData.bussinessName
-                                                }
+                                                value={formData.bussinessName}
                                                 onInput={(event) => {
                                                     setFormData({
                                                         ...formData,
