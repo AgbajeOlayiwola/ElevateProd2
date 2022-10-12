@@ -811,12 +811,14 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     ? fileName
                                                     : 'No file chosen...'}
                                             </p>
-                                            <label>Upload</label>
-                                            <input
-                                                type="file"
-                                                placeholder="Enter Code"
-                                                onChange={saveFile}
-                                            />
+                                            <label>
+                                                Upload{' '}
+                                                <input
+                                                    type="file"
+                                                    placeholder="Enter Code"
+                                                    onChange={saveFile}
+                                                />
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
