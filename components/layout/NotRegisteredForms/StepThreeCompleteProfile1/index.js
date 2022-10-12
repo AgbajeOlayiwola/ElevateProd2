@@ -235,7 +235,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             state: formData.state,
             city: formData.city,
             lga: formData.localGoverment,
-            refereeCode: 'WO69LA',
+            refereeCode: '',
             signature: file
         };
         console.log(commpleteProfileData);
