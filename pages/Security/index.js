@@ -1,4 +1,3 @@
-import { getCookie } from 'cookies-next';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import DashLayout from '../../components/layout/Dashboard';
@@ -8,7 +7,10 @@ import CustomerSingle from '../../components/ReusableComponents/CustomerSingle';
 import EditProfileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadresetPassword } from '../../redux/actions/actions';
+import {
+    loadresetPassword,
+    loadchangeTransactionPin
+} from '../../redux/actions/actions';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import Loader from '../../components/ReusableComponents/Loader';
 import validator from 'validator';
@@ -19,10 +21,17 @@ const Security = () => {
     const { resetPassword, errorMessageresetPassword } = useSelector(
         (state) => state.resetPasswordReducer
     );
+    const { changeTransactionPin, changeTransactionPinError } = useSelector(
+        (state) => state.changeTransactionPinReducer
+    );
     const [error, setError] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
+    const [statusState, setStatusState] = useState('');
+    const [statusMessage, setStatusMessage] = useState('');
     const [text, setText] = useState('Change Transaction Pin');
     const [password, setPassword] = useState('');
+    const [pin, setPin] = useState('');
+    const [confirmPin, setConfPin] = useState('');
     const [confirmPassword, setConfPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [count, setCount] = useState([]);
@@ -72,6 +81,16 @@ const Security = () => {
             setErrorMessages('');
         }
     };
+    const handleNewPin = (e) => {
+        setCount(e.target.value.length);
+        setConfPin(e.target.value);
+        if (pin != confirmPin) {
+            setPasswordMatch('Passwords do not match');
+        }
+    };
+    const handlePin = (e) => {
+        setPassword(e.target.value);
+    };
     const profileData = [
         {
             text: 'Change Transaction Pin',
@@ -89,13 +108,40 @@ const Security = () => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-    const changePassword = (data) => {
+    const changePin = (data) => {
+        setStatusState('');
         setLoading(true);
-        const loginToken = getCookie('cookieToken');
-        console.log(loginToken);
+        const changePinData = {
+            oldPin: data.oldPin,
+            newPin: data.newPin,
+            confirmPin: data.confirmPin
+        };
+        dispatch(loadchangeTransactionPin(changePinData));
+    };
+
+    const resetPinCheck = () => {
+        if (changeTransactionPin !== null) {
+            console.log(changeTransactionPin);
+            setLoading(false);
+            setStatusMessage('Pin Changed Successfully');
+            setStatusState('Success');
+        } else if (changeTransactionPinError !== null) {
+            console.log(changeTransactionPinError);
+            setLoading(false);
+            setStatusMessage(changeTransactionPinError);
+            setStatusState('Error');
+        }
+    };
+
+    useEffect(() => {
+        resetPinCheck();
+    }, [changeTransactionPinError, changeTransactionPin]);
+    const changePassword = (data) => {
+        setStatusState('');
+        setLoading(true);
         const changePasswordData = {
-            token: loginToken,
-            password: data.newPassword,
+            oldPassword: data.oldPassword,
+            newPassword: data.newPassword,
             confirmPassword: data.confirmPassword
         };
         dispatch(loadresetPassword(changePasswordData));
@@ -105,9 +151,13 @@ const Security = () => {
         if (resetPassword !== null) {
             console.log(resetPassword);
             setLoading(false);
+            setStatusMessage('Password Changed Successfully');
+            setStatusState('Success');
         } else if (errorMessageresetPassword !== null) {
             console.log(errorMessageresetPassword);
             setLoading(false);
+            setStatusMessage(errorMessageresetPassword);
+            setStatusState('Error');
         }
     };
 
@@ -118,7 +168,7 @@ const Security = () => {
         switch (text) {
             case 'Change Transaction Pin':
                 return (
-                    <form>
+                    <form onSubmit={handleSubmit(changePin)}>
                         <h2 className={styles.title}>Transaction Pin</h2>
                         <div className={styles.groupForm}>
                             <div className={styles.formGroup}>
@@ -126,25 +176,61 @@ const Security = () => {
                                 <input
                                     type="password"
                                     placeholder="Old Transaction Pin"
+                                    {...register('oldPin', {
+                                        required:
+                                            'Old Transaction Pin is Required'
+                                    })}
                                 />
+                                <p className={styles.error}>
+                                    {errors?.oldPin?.message}
+                                </p>
                             </div>
                             <div className={styles.formGroup}>
                                 <label>New Transaction Pin</label>
-                                <input
-                                    type="text"
-                                    placeholder="New Transaction Pin"
-                                />
+                                <div className={styles.divs}>
+                                    <input
+                                        type={outType ? 'text' : 'password'}
+                                        placeholder="New Transaction Pin"
+                                        {...register('newPin', {
+                                            required: 'New Pin is Required'
+                                        })}
+                                        onInput={handlePin}
+                                    />
+                                    <Visbility typeSet={types} />
+                                </div>
+                                <p className={styles.error}>
+                                    {errors?.newPin?.message}
+                                </p>
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Confirm Transaction Pin</label>
-                                <input
-                                    type="text"
-                                    placeholder="Confirm Transaction Pin"
-                                />
+                                <div className={styles.divs}>
+                                    <input
+                                        type={outTyped ? 'text' : 'password'}
+                                        placeholder="Confirm Transaction Pin"
+                                        {...register('confirmPin', {
+                                            required: 'Confirm Pin is Required'
+                                        })}
+                                        onChange={handleNewPin}
+                                    />
+                                    <Visbility typeSet={typed} />
+                                </div>
+                                {pin == confirmPin ? null : (
+                                    <p className={styles.error}>
+                                        {passwordMatch}
+                                    </p>
+                                )}
+                                <p className={styles.error}>
+                                    {errors?.confirmPin?.message}
+                                </p>
                             </div>
                         </div>
                         <div className={styles.profileBody}>
-                            <button type="submit">Update</button>
+                            {loading ? (
+                                <Loader />
+                            ) : (
+                                <button type="submit">Update</button>
+                            )}
                         </div>
                     </form>
                 );
@@ -156,7 +242,7 @@ const Security = () => {
                             <div className={styles.formGroup}>
                                 <label>Old Password</label>
                                 <input
-                                    type="text"
+                                    type="password"
                                     placeholder="Old Password"
                                     {...register('oldPassword', {
                                         required: 'Old Password is Required'
@@ -236,7 +322,7 @@ const Security = () => {
         }
     };
     return (
-        <DashLayout text="Security">
+        <DashLayout page="Security">
             <ProfileLayout
                 head={profileData?.map((profile, index) => {
                     return (
@@ -248,11 +334,25 @@ const Security = () => {
                             action={() => {
                                 setText(profile.text);
                                 setCount(0);
+                                setStatusState('');
                             }}
                         />
                     );
                 })}
             >
+                {statusState ? (
+                    <p
+                        className={
+                            statusState === 'Success'
+                                ? styles.statusTrue
+                                : statusState === 'Error'
+                                ? styles.error
+                                : null
+                        }
+                    >
+                        {statusMessage}
+                    </p>
+                ) : null}
                 {renderForm()}
             </ProfileLayout>
         </DashLayout>

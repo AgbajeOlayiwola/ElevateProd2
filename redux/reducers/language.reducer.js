@@ -7,7 +7,6 @@ const initialState = {
 };
 
 const languageReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
     switch (type) {
         case languages.LANGUAGE_LOAD_START:
             return {

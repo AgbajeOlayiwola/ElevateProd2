@@ -111,7 +111,7 @@ const Dashboard = () => {
                 currencyDisplay: 'narrowSymbol'
             });
             const formattedAmount = formatter.format(
-                balanceEnquiry[0].availableBalance
+                balanceEnquiry.availableBalance
             );
             setBalance(formattedAmount);
         }

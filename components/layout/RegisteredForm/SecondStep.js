@@ -6,10 +6,7 @@ import Card from '../NotRegisteredForms/Card';
 import Visbility from '../../ReusableComponents/Eyeysvg';
 import styles from './styles.module.css';
 import validator from 'validator';
-import {
-    bankAccountsData,
-    existingUserProfileData
-} from '../../../redux/actions/actions';
+import { existingUserProfileData } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
 import Progressbar from '../../ReusableComponents/Progressbar';

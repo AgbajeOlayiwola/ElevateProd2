@@ -220,14 +220,21 @@ const MakePaymentSecond = ({
                                     <p className={styles.transactionTitle}>
                                         To
                                     </p>
-                                    <h3>{recieverName}</h3>
+                                    <h3>
+                                        {title === 'Bulk Payments'
+                                            ? `${number} Recipient`
+                                            : recieverName}
+                                    </h3>
                                 </div>
                                 <div className={styles.transactionsingle}>
                                     <p className={styles.transactionTitle}>
                                         Beneficiary Bank
                                     </p>
                                     <h3>
-                                        <span></span> {recieverBank}
+                                        <span></span>{' '}
+                                        {title === 'Bulk Payments'
+                                            ? `${number} banks`
+                                            : recieverBank}
                                     </h3>
                                 </div>
                                 {recieverBank === 'Ecobank' ? null : (
