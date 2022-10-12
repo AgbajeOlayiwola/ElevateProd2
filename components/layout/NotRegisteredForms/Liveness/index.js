@@ -58,12 +58,12 @@ const Liveness = ({ action, loading, setLoading }) => {
 
         var formData = new FormData();
 
-        formData.append('userFace', file);
+        formData.append('photo', file);
 
         const cookie = getCookie('cookieToken');
         axios
             .post(
-                `https://ellevate-test.herokuapp.com/authentication/facematch`,
+                `https://ellevate-test.herokuapp.com/users/profile/image`,
                 formData,
                 {
                     headers: {
@@ -99,7 +99,8 @@ const Liveness = ({ action, loading, setLoading }) => {
                         {error ? <p>{error}</p> : null}
                         <div
                             className={
-                                succes === 'facial verification successful'
+                                // succes === 'facial verification successful'
+                                succes === 'success'
                                     ? styles.imageOuter
                                     : error
                                     ? styles.errorInner
@@ -117,18 +118,13 @@ const Liveness = ({ action, loading, setLoading }) => {
                 </div>
                 {loading ? <Loader /> : null}
                 <ButtonComp
-                    onClick={
-                        succes === 'facial verification successful'
-                            ? action
-                            : capture
-                    }
+                    onClick={succes === 'success' ? action : capture}
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
                     type="submit"
                     text={
-                        succes === 'facial verification successful'
-                            ? 'Continue'
-                            : 'Snap'
+                        // succes === 'facial verification successful'
+                        succes === 'success' ? 'Continue' : 'Snap'
                     }
                     // action={action}
                 />
