@@ -111,7 +111,10 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         {
             profile.data?.map((item) => {
                 if (item.documentType === 'CAC') {
-                    setAllUserData(item.documentData);
+                    setFormData({
+                        ...formData,
+                        bussinessName: item.documentData.companyName
+                    });
                 }
             });
         }
@@ -367,11 +370,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     required:
                                                         'Business Name is required'
                                                 })}
-                                                value={
-                                                    alluserData
-                                                        ? alluserData.companyName
-                                                        : formData.bussinessName
-                                                }
+                                                value={formData.bussinessName}
                                                 onInput={(event) => {
                                                     setFormData({
                                                         ...formData,
