@@ -263,7 +263,7 @@ const StepFour = ({ title, action }) => {
                     </div>
                     {title === 'New' ? (
                         <div className={styles.lastContainer}>
-                            <form>
+                            <form onSubmit={handleSubmit(onSubmitNew)}>
                                 {error ? (
                                     <p className={styles.error}>{error}</p>
                                 ) : null}
@@ -614,7 +614,6 @@ const StepFour = ({ title, action }) => {
                                         }
                                         text="Save and Continue"
                                         type="submit"
-                                        onClick={onSubmitNew}
                                         // onClick={handleShowFourthStep}
                                     />
                                 </div>
