@@ -119,9 +119,9 @@ const ProfileSetups = () => {
                         setFormData={setFormData}
                         action={handleSubmit}
                         actionI={regsiteredBus}
-                        // action is supposed to be handleSubmit
+                        loading={loading}
+                        setLoading={setLoading}
                     />
-                    // <StepTwoBVNAuthenticator />
                 );
             case 1:
                 return (
@@ -152,6 +152,8 @@ const ProfileSetups = () => {
                         action={() => {
                             setPage(page + 1);
                         }}
+                        loading={loading}
+                        setLoading={setLoading}
                         // action={handleSubmitt}
                     />
                 );
@@ -164,6 +166,8 @@ const ProfileSetups = () => {
                         action={() => {
                             alert('Hello');
                         }}
+                        loading={loading}
+                        setLoading={setLoading}
                     />
                 );
             default:

@@ -18,7 +18,7 @@ const ExistingMultiStep = () => {
     const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
-
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         userId: '',
         emailData: '',
@@ -53,6 +53,7 @@ const ExistingMultiStep = () => {
                             };
                             console.log(formData.userId);
                             dispatch(existingUserProfileData(userData));
+                            setLoading((prev) => !prev);
                             // console.log(existingUserProfilee.data.message);
                         }}
                         formData={formData}
@@ -60,8 +61,8 @@ const ExistingMultiStep = () => {
                         action={() => {
                             setPage(page - 1);
                         }}
-
-                        //
+                        loading={loading}
+                        setLoading={setLoading}
                     />
                 );
             // case 2:

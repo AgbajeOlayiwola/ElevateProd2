@@ -28,7 +28,7 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ action }) => {
+const Liveness = ({ action, loading, setLoading }) => {
     // const dispatch = useDispatch();
     const [activeBtn, setActiveBtn] = useState(true);
     // const [loading, setLoading] = useState(false);
@@ -37,13 +37,13 @@ const Liveness = ({ action }) => {
     const [succes, setSuccess] = useState('');
     const [imageSrcI, setImageSrcI] = React.useState(null);
     const [error, setError] = React.useState('');
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [verifying, setVerifying] = useState(false);
 
     const capture = React.useCallback(() => {
         // dispatch(loadUserProfile());
+
         setLoading((prev) => !prev);
-        setVerifying((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
@@ -58,12 +58,12 @@ const Liveness = ({ action }) => {
 
         var formData = new FormData();
 
-        formData.append('userFace', file);
+        formData.append('photo', file);
 
         const cookie = getCookie('cookieToken');
         axios
             .post(
-                `https://ellevate-test.herokuapp.com/authentication/facematch`,
+                `https://ellevate-test.herokuapp.com/users/profile/image`,
                 formData,
                 {
                     headers: {
@@ -82,9 +82,9 @@ const Liveness = ({ action }) => {
                 setError(error.response.data.message);
             });
     }, [webcamRef, setImgSrc, setImageSrcI]);
-    // useEffect(() => {
-    // setLoading((prev) => !prev);
-    // }, [webcamRef, setImgSrc, setImageSrcI]);
+    useEffect(() => {
+        setLoading((prev) => !prev);
+    }, [succes, error]);
 
     return (
         <div className={styles.body}>
@@ -99,7 +99,8 @@ const Liveness = ({ action }) => {
                         {error ? <p>{error}</p> : null}
                         <div
                             className={
-                                succes === 'facial verification successful'
+                                // succes === 'facial verification successful'
+                                succes === 'success'
                                     ? styles.imageOuter
                                     : error
                                     ? styles.errorInner
@@ -115,24 +116,15 @@ const Liveness = ({ action }) => {
                         </div>
                     </div>
                 </div>
-                {verifying ? (
-                    <p>verifying</p>
-                ) : succes === 'facial verification successful' ? (
-                    <p>facial Recognition Successful </p>
-                ) : null}
+                {loading ? <Loader /> : null}
                 <ButtonComp
-                    onClick={
-                        succes === 'facial verification successful'
-                            ? action
-                            : capture
-                    }
+                    onClick={succes === 'success' ? action : capture}
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
                     type="submit"
                     text={
-                        succes === 'facial verification successful'
-                            ? 'Continue'
-                            : 'Snap'
+                        // succes === 'facial verification successful'
+                        succes === 'success' ? 'Continue' : 'Snap'
                     }
                     // action={action}
                 />

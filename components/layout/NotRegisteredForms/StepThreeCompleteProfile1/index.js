@@ -22,6 +22,7 @@ import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchS
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import { getCookie } from 'cookies-next';
+import Loader from '../../../ReusableComponents/Loader';
 const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // const [progress, setProgress] = useState('75%');
     const [title, setTitle] = useState('Basic');
@@ -73,6 +74,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
+
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     const router = useRouter();
@@ -197,16 +199,20 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             refereeCode: '',
             signature: file
         };
-        console.log(commpleteProfileData);
+        // console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
     useEffect(() => {
         setLoading((prev) => !prev);
         console.log(compBusprofile);
         if (compBusprofile) {
-            if (compBusprofile.message === 'Successful') {
+            if (
+                compBusprofile.message === 'Successful' ||
+                comperrorMessage.message ===
+                    'your have already setup your business'
+            ) {
                 if (profile.data[1].documentData) {
-                    router.push('/Verify/CorportateAccount');
+                    router.push('/Verify/Account/loading');
                 } else {
                     router.push('/Verify/Account/loading');
                 }
@@ -236,13 +242,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     };
     useEffect(() => {
         setLoading((prev) => !prev);
-        console.log(compBusprofile);
+        console.log(compBusprofile, comperrorMessage);
         if (compBusprofile) {
             if (compBusprofile.message === 'Successful') {
                 router.push('/Verify/CorportateAccount');
             }
         }
-    }, [newCorpAccount, newCorpAccountErrorMMessage]);
+    }, [newCorpAccount, comperrorMessage]);
     const [activeBtn, setActiveBtn] = useState(true);
 
     // console.log(type);
@@ -599,6 +605,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     : handleSubmitIII
                             )}
                         >
+                            {comperrorMessage ? comperrorMessage.message : null}
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroup}>
                                     <div>
@@ -755,7 +762,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             }}
                                         />
                                     </div>
-                                    {/* {profileCont.isBusinessRegistered ===
+                                    {loading ? <Loader /> : null}
+                                    {profileCont.isBusinessRegistered ===
                                     true ? (
                                         <ButtonComp
                                             disabled={activeBtn}
@@ -782,15 +790,16 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             onClick={handleSubmitIII}
                                             // onClick={handleShowFourthStep}
                                         />
-                                    )} */}
-                                    <ButtonComp
+                                    )}
+
+                                    {/* <ButtonComp
                                         disabled={activeBtn}
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
                                         text="Save & Continue"
                                         type="submit"
-                                    />
+                                    /> */}
                                 </div>
                                 <div className={styles.formGroup}>
                                     <div className={styles.singleFormGroup}>
