@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBeneficiariesData } from '../../../redux/actions/actions';
+import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 
 const Beneficiary = () => {
     const { getBeneficiaries } = useSelector(

@@ -32,16 +32,17 @@ const MakePaymentFirst = ({
     }, []);
 
     const dispatch = useDispatch();
-    const [bankAccounts, setBankAccounts] = useState([]);
-    const { bankAccount } = useSelector((state) => state.banksReducer);
+    const [bankAccount, setBankAccount] = useState([]);
+    const { bankAccounts } = useSelector((state) => state.bankAccountsReducer);
+    console.log(bankAccount);
     useEffect(() => {
         dispatch(bankAccountsData());
     }, []);
     useEffect(() => {
-        if (bankAccount !== null) {
-            setBankAccounts(bankAccount);
+        if (bankAccounts !== null) {
+            setBankAccount(bankAccounts);
         }
-    }, [bankAccount]);
+    }, [bankAccounts]);
     return (
         <Overlay overlay={overlay}>
             <div className={styles.firstDiv} ref={myref}>
@@ -60,7 +61,7 @@ const MakePaymentFirst = ({
                             buttonText={buttonText}
                             scheduleLater={scheduleLater}
                             isLoading={isLoading}
-                            bankAccounts={bankAccounts}
+                            bankAccounts={bankAccount}
                         />
                     ) : firstTitle === 'Foreign Transfer' ? (
                         <ForeignTransfer
@@ -70,14 +71,14 @@ const MakePaymentFirst = ({
                             type={type}
                             secondAction={secondAction}
                             scheduleLater={scheduleLater}
-                            bankAccounts={bankAccounts}
+                            bankAccounts={bankAccount}
                         />
                     ) : firstTitle === 'Bulk Payments' ? (
                         <BulkTransfer
                             action={action}
                             firstTitle={firstTitle}
                             buttonText={buttonText}
-                            bankAccounts={bankAccounts}
+                            bankAccounts={bankAccount}
                         />
                     ) : (
                         <BillPayment
@@ -88,7 +89,7 @@ const MakePaymentFirst = ({
                             scheduleLater={scheduleLater}
                             dataAction={dataAction}
                             airtimeAction={airtimeAction}
-                            bankAccounts={bankAccounts}
+                            bankAccounts={bankAccount}
                         />
                     )}
                 </div>

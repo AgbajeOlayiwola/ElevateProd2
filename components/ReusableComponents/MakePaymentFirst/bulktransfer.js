@@ -38,11 +38,20 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
                     <Beneficiary />
                     <div className={styles.narration}>
                         <label>Source Account</label>
-                        <select name="" id="" {...register('sourceAccount')}>
+                        <select
+                            name="sourceAccount"
+                            {...register('sourceAccount')}
+                        >
+                            {/* <option defaultValue={bankAccounts[0]?.accountId}>
+                                {bankAccounts[0]?.accountNumber}
+                            </option> */}
                             {bankAccounts?.map((accounts, index) => {
                                 return (
-                                    <option value={accounts.name} key={index}>
-                                        account.name
+                                    <option
+                                        value={accounts.accountId}
+                                        key={index}
+                                    >
+                                        {accounts.accountNumber}
                                     </option>
                                 );
                             })}

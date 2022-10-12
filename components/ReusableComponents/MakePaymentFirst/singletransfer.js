@@ -47,6 +47,7 @@ const SingleTransfer = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
+    console.log(bankAccounts);
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
@@ -57,8 +58,8 @@ const SingleTransfer = ({
                     <select name="" id="" {...register('sourceAccount')}>
                         {bankAccounts?.map((accounts, index) => {
                             return (
-                                <option value={accounts.name} key={index}>
-                                    account.name
+                                <option value={accounts.accountId} key={index}>
+                                    {accounts.accountNumber}
                                 </option>
                             );
                         })}

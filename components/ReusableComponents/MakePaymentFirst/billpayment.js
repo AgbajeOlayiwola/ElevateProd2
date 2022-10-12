@@ -174,10 +174,10 @@ const BillPayment = ({
                                     {bankAccounts?.map((accounts, index) => {
                                         return (
                                             <option
-                                                value={accounts.name}
+                                                value={accounts.accountId}
                                                 key={index}
                                             >
-                                                account.name
+                                                {accounts.accountNumber}
                                             </option>
                                         );
                                     })}

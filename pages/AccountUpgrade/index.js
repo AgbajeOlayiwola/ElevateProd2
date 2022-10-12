@@ -71,6 +71,8 @@ const AccountUpgrade = () => {
     const [localState, setLocalState] = useState('');
     const [location, setLocation] = useState([]);
     const [localGovernment, setLocalGovernment] = useState('');
+    const [latitude, setLatitude] = useState('');
+    const [longitude, setLongitude] = useState('');
     const [title, setTitle] = useState('First');
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
@@ -87,7 +89,7 @@ const AccountUpgrade = () => {
     const [selstate, setState] = useState('');
     const [city, setCity] = useState('');
     const [streetName, setStreetName] = useState('');
-    const [localGovernmane, setLocalGovernmment] = useState('');
+    const [localGovernmane, setLocalGovernmane] = useState('');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
     const [identificationDocumentFile, setIdentificationDocument] =
@@ -113,6 +115,12 @@ const AccountUpgrade = () => {
     const { utilityUpload, utilityUplodaErrorMessages } = useSelector(
         (state) => state.uploadUtilityReducer
     );
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
+        });
+    }, []);
     //Cac Registratiom
     const saveFile = (e) => {
         setFile(e.target.files[0]);
@@ -506,7 +514,7 @@ const AccountUpgrade = () => {
                                             name=""
                                             id=""
                                             onChange={(event) => {
-                                                setLocalGovernment(
+                                                setLocalGovernmane(
                                                     event.target.value
                                                 );
                                             }}
@@ -539,21 +547,21 @@ const AccountUpgrade = () => {
                                     'https://ecocomonoreact.azurewebsites.net/customer-details/',
                                 query: {
                                     workitemId: 'AO-095734358976187628-CO',
-                                    customerName: 'Kevin',
-                                    customerEmail: 'Kevin.ejiro@gmail.com',
+                                    customerName: userProfile?.preferredName,
+                                    customerEmail: userProfile?.email,
                                     branchCode: 'A02',
                                     segmentId: 'ADB',
                                     // houseNumber: '25',
-                                    address: { streetName },
+                                    address: streetName,
                                     // streetName: 'Igbobi College Road',
                                     // areaName: 'Yaba',
-                                    landmark: { landMark },
-                                    state: { selstate },
-                                    lga: { localGovernment },
+                                    landmark: landMark,
+                                    state: selstate,
+                                    lga: localGovernmane,
                                     createdBy: 'RealMg',
                                     customerImage: '',
-                                    Latitude: '6.519366425038108',
-                                    Longitude: '3.3720303685114748'
+                                    Latitude: latitude,
+                                    Longitude: longitude
                                 }
                             }}
                         >

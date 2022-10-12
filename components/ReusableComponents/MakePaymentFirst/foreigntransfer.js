@@ -55,8 +55,11 @@ const ForeignTransfer = ({
                         <select name="" id="" {...register('sourceAccount')}>
                             {bankAccounts?.map((accounts, index) => {
                                 return (
-                                    <option value={accounts.name} key={index}>
-                                        account.name
+                                    <option
+                                        value={accounts.accountId}
+                                        key={index}
+                                    >
+                                        {accounts.accountNumber}
                                     </option>
                                 );
                             })}

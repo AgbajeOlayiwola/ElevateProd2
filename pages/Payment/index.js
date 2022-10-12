@@ -424,12 +424,9 @@ const Payment = () => {
                                 othersaction={(data) => {
                                     if (data.bankName === 'Ecobank') {
                                         setEcobank(true);
+                                        setCount(count + 1);
                                     } else {
                                         setEcobank(false);
-                                        setInterEnquiry({
-                                            accountName: 'Aderohunmu Matthew'
-                                        });
-                                        setIsLoading(false);
                                         setCount(count + 1);
                                     }
                                     if (data.beneficiary === true) {
@@ -460,7 +457,7 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 isLoading={isLoading}
                                 amount={paymentDetails.amount}
-                                recieverName={interEnquiry.accountName}
+                                recieverName={paymentDetails.accountName}
                                 sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
                                 recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
@@ -617,7 +614,7 @@ const Payment = () => {
                                 amount={paymentDetails.amount}
                                 title="Bulk Payments"
                                 // recieverName={paymentDetails.accountNumber}
-                                sender={paymentDetails.accountName}
+                                sender={paymentDetails.sourceAccount}
                                 // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
                                 number={
