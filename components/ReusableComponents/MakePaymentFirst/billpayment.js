@@ -19,7 +19,8 @@ const BillPayment = ({
     arrowAction,
     airtimeAction,
     scheduleLater,
-    dataAction
+    dataAction,
+    bankAccounts
 }) => {
     const [network, setNetwork] = useState('MTN Nigeria');
     const [networkData, setNetworkData] = useState({});
@@ -163,11 +164,24 @@ const BillPayment = ({
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     <div className={styles.body}>
                         <form onSubmit={handleSubmit(airtimeAction)}>
-                            <div className={styles.source}>
-                                <h2>
-                                    Source <span>- Marvelous N******</span>
-                                </h2>
-                                <SourceSvg />
+                            <div className={styles.narration}>
+                                <label>Source Account</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    {...register('sourceAccount')}
+                                >
+                                    {bankAccounts?.map((accounts, index) => {
+                                        return (
+                                            <option
+                                                value={accounts.accountId}
+                                                key={index}
+                                            >
+                                                {accounts.accountNumber}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
                             </div>
                             <div className={styles.networkCarrier}>
                                 <h2>Network</h2>

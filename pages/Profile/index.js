@@ -26,7 +26,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     getBeneficiariesData,
     deleteBeneficiariesData,
-    loadViewBvn
+    loadViewBvn,
+    loadfreezeTransactions,
+    loadunfreezeTransactions,
+    loadUserProfile
 } from '../../redux/actions/actions';
 import { set, useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
@@ -35,12 +38,14 @@ const Profile = () => {
     const [type, setType] = useState('Account');
     const [overlay, setOverlay] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [freeze, setFreeze] = useState();
     const [text, setText] = useState('View Profile');
     const [error, setError] = useState('');
     const [bvn, setBvn] = useState('');
     const [count, setCount] = useState(0);
     const [outType, setOutType] = useState();
     const [beneficiaries, setBeneficiaries] = useState([]);
+    const [userProfileData, setUserProfileData] = useState([]);
     const dispatch = useDispatch();
     const { getBeneficiaries } = useSelector(
         (state) => state.getBeneficiariesReducer
@@ -51,8 +56,16 @@ const Profile = () => {
     const { viewBvn, errorMessageviewBvn } = useSelector(
         (state) => state.viewBvnReducer
     );
+    const { freezeTransactions, errormessageFreeze } = useSelector(
+        (state) => state.freezeTransactionsReducer
+    );
+    const { unfreezeTransactions, errormessage } = useSelector(
+        (state) => state.unfreezeTransactionsReducer
+    );
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
     useEffect(() => {
         dispatch(getBeneficiariesData());
+        dispatch(loadUserProfile());
     }, []);
     useEffect(() => {
         if (getBeneficiaries !== null) {
@@ -60,10 +73,33 @@ const Profile = () => {
         }
     }, [getBeneficiaries, deleteBeneficiaries]);
     useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+            setFreeze(userProfile.freezeTransactions);
+            console.log(freeze);
+        }
+    }, [userProfile]);
+    console.log(userProfileData);
+    useEffect(() => {
         if (deleteBeneficiaries !== null) {
             dispatch(getBeneficiariesData());
         }
     }, [deleteBeneficiaries]);
+
+    useEffect(() => {
+        if (freezeTransactions !== null) {
+            setFreeze(true);
+        } else if (errormessageFreeze !== null) {
+            setFreeze(false);
+        }
+    }, [freezeTransactions]);
+    useEffect(() => {
+        if (unfreezeTransactions !== null) {
+            setFreeze(false);
+        } else if (errormessage !== null) {
+            setFreeze(true);
+        }
+    }, [unfreezeTransactions]);
     const bvnAction = (data) => {
         setLoading(true);
         setError('');
@@ -141,29 +177,18 @@ const Profile = () => {
         airtime: [],
         signatories: []
     };
-    let countryName = '';
-    let countryNames;
-
-    if (typeof window !== 'undefined') {
-        countryName = window.localStorage.getItem('country');
-        if (countryName === null) {
-            countryNames = window.localStorage.getItem('country');
-        } else {
-            countryNames = JSON.parse(countryName);
-        }
-    }
-    const [userProfile, setUserProfile] = useState();
-    const [userProfileData, setUserProfileData] = useState();
+    const [countryName, setCountryName] = useState();
+    const [countryNames, setCountryNames] = useState();
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            setUserProfile(window.localStorage.getItem('user'));
+            setCountryName(window.localStorage.getItem('country'));
         }
     }, []);
     useEffect(() => {
-        if (userProfile !== undefined) {
-            setUserProfileData(JSON.parse(userProfile));
+        if (countryName !== undefined) {
+            setCountryNames(JSON.parse(countryName));
         }
-    }, [userProfile]);
+    }, [countryName]);
     // console.log(countryNames.flags.svg);
     const types = (type) => {
         setOutType(type);
@@ -183,7 +208,7 @@ const Profile = () => {
                             <div className={styles.profileBodyHeadImg}>
                                 {!userProfileData ? null : (
                                     <Image
-                                        src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
+                                        src={`data:image/png;base64,${userProfileData.profileImg}`}
                                         width="100%"
                                         height="100%"
                                     />
@@ -198,7 +223,7 @@ const Profile = () => {
                                         value={
                                             !userProfileData
                                                 ? null
-                                                : `${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`
+                                                : `${userProfileData.lastName} ${userProfileData.firstName}`
                                         }
                                     />
                                 </div>
@@ -219,15 +244,28 @@ const Profile = () => {
                                     <div className={styles.phone}>
                                         <div className={styles.phoneHeader}>
                                             <span>
-                                                {/* <img
-                                                    src={countryNames.flags.svg}
+                                                <img
+                                                    src={
+                                                        countryNames
+                                                            ? countryNames.flags
+                                                                  .svg
+                                                            : null
+                                                    }
                                                     alt=""
-                                                /> */}
+                                                />
                                             </span>
-                                            {/* <p>{countryNames.baseCurrency}</p> */}
+                                            <p>
+                                                {countryNames
+                                                    ? countryNames.baseCurrency
+                                                    : null}
+                                            </p>
                                         </div>
                                         <div className={styles.phoneDetails}>
-                                            {/* <p>{countryNames.countryCode}</p> */}
+                                            <p>
+                                                {countryNames
+                                                    ? countryNames.countryCode
+                                                    : null}
+                                            </p>
                                             <input
                                                 type="number"
                                                 placeholder="812 345 6789"
@@ -772,11 +810,6 @@ const Profile = () => {
                 }
         }
     };
-    // const myref = useRef();
-    // useEffect(() => {
-    //     myref.current.scrollTo(0, 0);
-    //     window.scrollTo(0, 0);
-    // }, [count, text]);
     return (
         <DashLayout page="Profile Management">
             <ProfileLayout
@@ -786,7 +819,7 @@ const Profile = () => {
                             <div className={styles.profileHeaderImg}>
                                 {!userProfileData ? null : (
                                     <Image
-                                        src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
+                                        src={`data:image/png;base64,${userProfileData.profileImg}`}
                                         width="100%"
                                         height="100%"
                                     />
@@ -797,7 +830,7 @@ const Profile = () => {
                                 <p>
                                     {!userProfileData
                                         ? null
-                                        : `${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
+                                        : `${userProfileData.lastName} ${userProfileData.firstName}`}
                                 </p>
                             </div>
                         </div>
@@ -805,8 +838,27 @@ const Profile = () => {
                             <div className={styles.freezeAccount}>
                                 <p>Freeze Account</p>
                                 <div className={styles.saveBene}>
-                                    <label className={styles.beneCheck}>
-                                        <input type="checkbox" />
+                                    <label
+                                        className={
+                                            freeze
+                                                ? styles.beneChecked
+                                                : styles.beneCheck
+                                        }
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            onChange={(e) => {
+                                                if (!freeze) {
+                                                    dispatch(
+                                                        loadfreezeTransactions()
+                                                    );
+                                                } else if (freeze) {
+                                                    dispatch(
+                                                        loadunfreezeTransactions()
+                                                    );
+                                                }
+                                            }}
+                                        />
                                         <span>
                                             <i></i>
                                         </span>

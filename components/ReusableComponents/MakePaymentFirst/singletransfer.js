@@ -2,22 +2,20 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import {
-    loadbank,
-    getBeneficiariesData,
-    postInterBankEnquiry
-} from '../../../redux/actions/actions';
+import { loadbank, postInterBankEnquiry } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import Loader from '../Loader';
+import Beneficiary from '../Beneficiary';
 
 const SingleTransfer = ({
     othersaction,
     firstTitle,
     buttonText,
     scheduleLater,
-    isLoading
+    isLoading,
+    bankAccounts
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);
@@ -25,9 +23,6 @@ const SingleTransfer = ({
     const [beneficiaries, setBeneficiaries] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
-    const { getBeneficiaries } = useSelector(
-        (state) => state.getBeneficiariesReducer
-    );
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
@@ -41,63 +36,41 @@ const SingleTransfer = ({
     }, [interBankEnquiry]);
     useEffect(() => {
         dispatch(loadbank('ENG'));
-        dispatch(getBeneficiariesData());
     }, []);
     useEffect(() => {
         if (banks !== null) {
             setBank(banks);
         }
     }, [banks]);
-    useEffect(() => {
-        if (getBeneficiaries !== null) {
-            setBeneficiaries(getBeneficiaries);
-        }
-    }, [getBeneficiaries]);
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
+    console.log(bankAccounts);
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
-            <div className={styles.beneficiary}>
-                <div className={styles.beneficiaryHeader}>
-                    <h2>Beneficiaries</h2>
-                    <p>View all</p>
-                </div>
-                <div className={styles.beneficiaryBody}>
-                    {!beneficiaries.beneficiaries?.length ? (
-                        <h2>You do not have any Beneficiaries at the Moment</h2>
-                    ) : (
-                        beneficiaries.beneficiaries?.map(
-                            (beneficiaries, index) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        className={styles.beneficiarySingle}
-                                    >
-                                        <BeneficiaryAvatarSvg />
-                                        <p className={styles.name}>
-                                            {beneficiaries.beneficiaryName}
-                                        </p>
-                                        <p className={styles.benebank}>
-                                            {beneficiaries.bankName}
-                                        </p>
-                                    </div>
-                                );
-                            }
-                        )
-                    )}
-                </div>
-            </div>
+            <Beneficiary />
             <form onSubmit={handleSubmit(othersaction)}>
-                <div className={styles.source}>
+                <div className={styles.narration}>
+                    <label>Source Account</label>
+                    <select name="" id="" {...register('sourceAccount')}>
+                        {bankAccounts?.map((accounts, index) => {
+                            return (
+                                <option value={accounts.accountId} key={index}>
+                                    {accounts.accountNumber}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </div>
+                {/* <div className={styles.source}>
                     <h2>
                         Source <span>- Marvelous N******</span>
                     </h2>
                     <SourceSvg />
-                </div>
+                </div> */}
                 <div className={styles.narration}>
                     <label> Account Number</label>
                     <input

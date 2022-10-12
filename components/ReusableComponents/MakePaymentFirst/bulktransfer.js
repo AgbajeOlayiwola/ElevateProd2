@@ -6,15 +6,15 @@ import { loadbank } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import PlusSvg from '../ReusableSvgComponents/PlusSvg';
+import Beneficiary from '../Beneficiary';
 
-const BulkTransfer = ({ action, firstTitle, buttonText }) => {
+const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
     const count = 0;
     const [number, setNumber] = useState([]);
-    console.log(number);
     useEffect(() => {}, [number]);
 
     useEffect(() => {
@@ -35,13 +35,30 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
             <form onSubmit={handleSubmit(action)}>
                 <div className={styles.bulkHeader}>
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
-                    <div className={styles.source}>
-                        <h2>
-                            Source <span>- Marvelous N******</span>
-                        </h2>
-                        <SourceSvg />
+                    <Beneficiary />
+                    <div className={styles.narration}>
+                        <label>Source Account</label>
+                        <select
+                            name="sourceAccount"
+                            {...register('sourceAccount')}
+                        >
+                            {/* <option defaultValue={bankAccounts[0]?.accountId}>
+                                {bankAccounts[0]?.accountNumber}
+                            </option> */}
+                            {bankAccounts?.map((accounts, index) => {
+                                return (
+                                    <option
+                                        value={accounts.accountId}
+                                        key={index}
+                                    >
+                                        {accounts.accountNumber}
+                                    </option>
+                                );
+                            })}
+                        </select>
                     </div>
                     {number?.map((e, index) => {
+                        const fieldName = `details[${index}]`;
                         return (
                             <div className={styles.addedFormCont} key={index}>
                                 <div className={styles.formNumber}>
@@ -49,8 +66,21 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                                         Account Number
                                     </label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         placeholder="Enter Account Number"
+                                        {...register(
+                                            `${fieldName}.accountNumber`,
+                                            {
+                                                required:
+                                                    'Account Number  is required',
+                                                pattern: {
+                                                    value: /^[0-9]/i,
+                                                    message:
+                                                        'Account Number can only be number '
+                                                }
+                                            }
+                                        )}
+                                        name={`${fieldName}.accountNumber`}
                                     />
                                 </div>
                                 <div className={styles.formBank}>
@@ -58,12 +88,13 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                                         Choose Bank
                                     </label>
                                     <select
-                                        {...register('bankName' + { index }, {
+                                        {...register(`${fieldName}.bankName`, {
                                             required: 'Bank name is required'
                                         })}
-                                        name={'bankName' + { index }}
+                                        name={`${fieldName}.bankName`}
                                     >
                                         <option value="">Select Bank</option>
+                                        <option value="Ecobank">Ecobank</option>
                                         {banks?.map((item, index) => {
                                             return (
                                                 <option
@@ -112,6 +143,7 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                                     name="firstBank"
                                 >
                                     <option value="">Select Bank</option>
+                                    <option value="Ecobank">Ecobank</option>
                                     {banks?.map((item, index) => {
                                         return (
                                             <option
@@ -129,7 +161,17 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                         <div
                             className={styles.plus}
                             onClick={() => {
-                                setNumber((arr) => [...arr, `${arr.length}`]);
+                                console.log(number.length);
+                                if (number.length === 8 || number.length > 8) {
+                                    alert(
+                                        'You can only carry out 10 transactions at the same time. Use CSV file instead'
+                                    );
+                                } else {
+                                    setNumber((arr) => [
+                                        ...arr,
+                                        `${arr.length}`
+                                    ]);
+                                }
                             }}
                         >
                             <PlusSvg />
@@ -164,7 +206,7 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                             }}
                         />
                     </div>
-                    <div className={styles.saveBene}>
+                    {/* <div className={styles.saveBene}>
                         <label className={styles.beneCheck}>
                             <input type="checkbox" />
                             <span>
@@ -172,7 +214,7 @@ const BulkTransfer = ({ action, firstTitle, buttonText }) => {
                             </span>
                         </label>
                         <p>Input Different Amount</p>
-                    </div>
+                    </div> */}
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}

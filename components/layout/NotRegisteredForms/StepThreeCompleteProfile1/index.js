@@ -14,7 +14,8 @@ import {
     createNewCorpUserAccount,
     createNewUserAccount,
     loadUserProfile,
-    statesData
+    statesData,
+    type
 } from '../../../../redux/actions/actions';
 import { useRouter } from 'next/router';
 import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
@@ -106,7 +107,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     useEffect(() => {
         dispatch(CompProfile());
         dispatch(loadUserProfile());
-        console.log(profile.data[1].documentData);
+        console.log(profile.data);
         setAllUserData(profile.data[1].documentData);
         setProfileCont(userProfiles);
     }, []);
@@ -234,7 +235,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             state: formData.state,
             city: formData.city,
             lga: formData.localGoverment,
-            refereeCode: 'WO69LA',
+            refereeCode: '',
             signature: file
         };
         console.log(commpleteProfileData);
@@ -600,7 +601,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                     ) : (
                         <form
                             onSubmit={handleSubmit(
-                                profileCont.isBusinessRegistered === true
+                                type === 'true'
                                     ? handleSubmitReg
                                     : handleSubmitIII
                             )}
@@ -763,7 +764,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         />
                                     </div>
                                     {loading ? <Loader /> : null}
-                                    {profileCont.isBusinessRegistered ===
+                                    {/* {profileCont.isBusinessRegistered ===
                                     true ? (
                                         <ButtonComp
                                             disabled={activeBtn}
@@ -790,16 +791,16 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             onClick={handleSubmitIII}
                                             // onClick={handleShowFourthStep}
                                         />
-                                    )}
+                                    )} */}
 
-                                    {/* <ButtonComp
+                                    <ButtonComp
                                         disabled={activeBtn}
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
                                         text="Save & Continue"
                                         type="submit"
-                                    /> */}
+                                    />
                                 </div>
                                 <div className={styles.formGroup}>
                                     <div className={styles.singleFormGroup}>
@@ -811,12 +812,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     : 'No file chosen...'}
                                             </p>
                                             <label>
+                                                Upload{' '}
                                                 <input
                                                     type="file"
                                                     placeholder="Enter Code"
                                                     onChange={saveFile}
                                                 />
-                                                Upload
                                             </label>
                                         </div>
                                     </div>
