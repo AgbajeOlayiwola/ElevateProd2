@@ -212,7 +212,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                     'your have already setup your business'
             ) {
                 if (profile.data[1].documentData) {
-                    router.push('/Verify/CorportateAccount');
+                    router.push('/Verify/Account/loading');
                 } else {
                     router.push('/Verify/Account/loading');
                 }
@@ -244,11 +244,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         setLoading((prev) => !prev);
         console.log(compBusprofile, comperrorMessage);
         if (compBusprofile) {
-            if (
-                compBusprofile.message === 'Successful' ||
-                comperrorMessage.message ===
-                    'your have already setup your business'
-            ) {
+            if (compBusprofile.message === 'Successful') {
                 router.push('/Verify/CorportateAccount');
             }
         }
