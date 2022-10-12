@@ -53,6 +53,14 @@ const StepFour = ({ title, action }) => {
         handleSubmit,
         formState: { errors }
     } = useForm();
+    const [businessCategory, setBusinessCategory] = useState([]);
+    const [businessType, setBusinessType] = useState([]);
+    const [business, setBusiness] = useState('');
+    const [businesses, setBusinesses] = useState('');
+    const [localGovernment, setLocalGovernment] = useState('');
+    const [businessTest, setBusinessTest] = useState(false);
+    const [businessText, setBusinessText] = useState(false);
+    const { states } = useSelector((state) => state.statesReducer);
     const [businessName, setBusinessName] = useState('');
     const [refferalCode, setRefferalCode] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -81,7 +89,7 @@ const StepFour = ({ title, action }) => {
 
     const onSubmitNew = (data) => {
         setLoading((prev) => !prev);
-        console.log(data);
+        // console.log(data);
         const userData = {
             isRegistered: 'true',
             businessName: businessName,
@@ -104,85 +112,86 @@ const StepFour = ({ title, action }) => {
         setLoading((prev) => !prev);
         if (compBusprofile) {
             console.log(errorMessages);
-            router.push('/Verify/Account/loading');
+            router.push('/Verify/ExistingSuccess');
         } else if (
-            comperrorMessage.response.data.message ===
+            comperrorMessage.message ===
             'You already have an account with us. Please contact us for more information'
         ) {
-            router.push('/Succes');
+            router.push('/Verify/ExistingSuccess');
         }
 
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
         }
     };
-    useEffect(() => {
-        profileTest();
-    }, [compBusprofile, comperrorMessage]);
-    const onSubmit = (data) => {
-        console.log('old');
-        // console.log('old');
-        // const userData = {
-        //     isRegistered: 'true',
-        //     businessName: formData.bussinessName,
-        //     businessCategory: business,
-        //     businessType: businesses,
-        //     referralCode: formData.refferalCode,
-        //     countryCode: '+234',
-        //     businessPhoneNumber: formData.phoneNumber,
-        //     street: formData.streetName,
-        //     state: formData.state,
-        //     city: formData.city,
-        //     lga: formData.localGoverment,
-        //     refereeCode: 'END'
-        // };
-        // dispatch(ompleteBusinessProfile(userData));
-    };
-    console.log(businessName);
-    const newAccountTest = () => {
-        console.log(createAccount);
-        if (errorData === 'User already Exists') {
-            router.push('/Succes/AccountSuccess');
-        } else if (errorData) {
-            setError(errorData);
-            console.log(errorData);
-            setLoading(false);
-        } else if (createAccount.statusCode === 200) {
-            console.log(createAccount);
-            dispatch(accountStatusData(createAccount.data.userId));
-            localStorage.setItem(
-                'userId',
-                JSON.stringify(createAccount.data.userId)
-            );
-            localStorage.setItem(
-                'token',
-                JSON.stringify(createAccount.data.token)
-            );
-        }
-    };
-    useEffect(() => {
-        newAccountTest();
-    }, [errorData, createAccount]);
+    // useEffect(() => {
+    //     profileTest();
+    // }, [compBusprofile, comperrorMessage]);
 
-    const newAccountTest1 = () => {
-        console.log(accountStatus);
-        if (errorMessages) {
-            setError(errorMessages);
-            console.log(errorMessages);
-            setLoading(false);
-        } else if (accountStatus.message === 'Try Again') {
-            router.push('/Verify/ExistingAccount');
-        } else if (accountStatus.message === 'SUCCESS') {
-            window.localStorage.setItem(
-                'accountNumber',
-                JSON.stringify(accountStatus.data)
-            );
-            router.push('/Verify/ExistingSuccess');
-        }
-    };
-    useEffect(() => {
-        newAccountTest1();
-    }, [errorMessages, accountStatus]);
+    // const onSubmit = (data) => {
+    //     console.log('old');
+    // console.log('old');
+    // const userData = {
+    //     isRegistered: 'true',
+    //     businessName: formData.bussinessName,
+    //     businessCategory: business,
+    //     businessType: businesses,
+    //     referralCode: formData.refferalCode,
+    //     countryCode: '+234',
+    //     businessPhoneNumber: formData.phoneNumber,
+    //     street: formData.streetName,
+    //     state: formData.state,
+    //     city: formData.city,
+    //     lga: formData.localGoverment,
+    //     refereeCode: 'END'
+    // };
+    // dispatch(ompleteBusinessProfile(userData));
+    // };
+    // console.log(businessName);
+    // const newAccountTest = () => {
+    //     console.log(createAccount);
+    //     if (errorData === 'User already Exists') {
+    //         router.push('/Succes/AccountSuccess');
+    //     } else if (errorData) {
+    //         setError(errorData);
+    //         console.log(errorData);
+    //         setLoading(false);
+    //     } else if (createAccount.statusCode === 200) {
+    //         console.log(createAccount);
+    //         dispatch(accountStatusData(createAccount.data.userId));
+    //         localStorage.setItem(
+    //             'userId',
+    //             JSON.stringify(createAccount.data.userId)
+    //         );
+    //         localStorage.setItem(
+    //             'token',
+    //             JSON.stringify(createAccount.data.token)
+    //         );
+    //     }
+    // };
+    // useEffect(() => {
+    //     newAccountTest();
+    // }, [errorData, createAccount]);
+
+    // const newAccountTest1 = () => {
+    //     console.log(accountStatus);
+    //     if (errorMessages) {
+    //         setError(errorMessages);
+    //         console.log(errorMessages);
+    //         setLoading(false);
+    //     } else if (accountStatus.message === 'Try Again') {
+    //         router.push('/Verify/ExistingAccount');
+    //     } else if (accountStatus.message === 'SUCCESS') {
+    //         window.localStorage.setItem(
+    //             'accountNumber',
+    //             JSON.stringify(accountStatus.data)
+    //         );
+    //         router.push('/Verify/ExistingSuccess');
+    //     }
+    // };
+    // useEffect(() => {
+    //     newAccountTest1();
+    // }, [errorMessages, accountStatus]);
 
     const types = (type) => {
         setOutType(type);
@@ -190,14 +199,6 @@ const StepFour = ({ title, action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [location, setLocation] = useState([]);
 
-    const [businessCategory, setBusinessCategory] = useState([]);
-    const [businessType, setBusinessType] = useState([]);
-    const [business, setBusiness] = useState('');
-    const [businesses, setBusinesses] = useState('');
-    const [localGovernment, setLocalGovernment] = useState('');
-    const [businessTest, setBusinessTest] = useState(false);
-    const [businessText, setBusinessText] = useState(false);
-    const { states } = useSelector((state) => state.statesReducer);
     useEffect(() => {
         dispatch(statesData());
     }, []);
@@ -253,9 +254,7 @@ const StepFour = ({ title, action }) => {
                     <div className={styles.cardHeading}>
                         <ArrowBackSvg action={action} color="#102572" />
                         <p>
-                            {comperrorMessage
-                                ? comperrorMessage.response.data.message
-                                : null}
+                            {comperrorMessage ? comperrorMessage.message : null}
                         </p>
                         <div>
                             <h3 className={styles.LeftHeading}>
@@ -608,22 +607,17 @@ const StepFour = ({ title, action }) => {
                                             setRefferalCode(e.target.value)
                                         }
                                     />{' '}
-                                    {loading ? (
-                                        <Loader />
-                                    ) : (
-                                        <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            text="Save and Continue"
-                                            type="submit"
-                                            onClick={onSubmitNew}
-                                            // onClick={handleShowFourthStep}
-                                        />
-                                    )}
+                                    {loading ? <Loader /> : null}
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Save and Continue"
+                                        type="submit"
+                                        onClick={onSubmitNew}
+                                        // onClick={handleShowFourthStep}
+                                    />
                                 </div>
                                 {/* <div>
                                     <div className={styles.terms}>
@@ -983,22 +977,17 @@ const StepFour = ({ title, action }) => {
                                         placeholder="Enter  Code"
                                         className={styles.textInput}
                                     />{' '}
-                                    {loading ? (
-                                        <Loader />
-                                    ) : (
-                                        <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            text="Save and Continue"
-                                            type="submit"
-                                            // onClick={handleShowSuccessStep}
-                                            // onClick={handleShowFourthStep}
-                                        />
-                                    )}
+                                    {loading ? <Loader /> : null}
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Save and Continue"
+                                        type="submit"
+                                        // onClick={handleShowSuccessStep}
+                                        // onClick={handleShowFourthStep}
+                                    />
                                 </div>
                             </form>
                         </div>
