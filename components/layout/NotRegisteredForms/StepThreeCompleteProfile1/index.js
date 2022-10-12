@@ -166,7 +166,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         formState: { errors }
     } = useForm();
 
-    // console.log(type);
+    console.log(type);
 
     // const uploadFile = async (e) => {
     //   const formData = new FormData();
