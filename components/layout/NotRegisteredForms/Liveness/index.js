@@ -110,31 +110,33 @@ const Liveness = ({ action, loading, setLoading }) => {
                                     : styles.imageInner
                             }
                         >
-                            <Webcam
-                                audio={false}
-                                screenshotFormat="image/jpeg"
-                                videoConstraints={videoConstraints}
-                                ref={webcamRef}
-                            />
+                            {imageSrcI ? (
+                                <img src={imageSrcI} />
+                            ) : (
+                                <Webcam
+                                    audio={false}
+                                    screenshotFormat="image/jpeg"
+                                    videoConstraints={videoConstraints}
+                                    ref={webcamRef}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
                 {/* {loading ? <Loader /> : null} */}
-                {imageSrcI ? (
-                    <img src={imageSrcI} />
-                ) : (
-                    <ButtonComp
-                        onClick={succes === 'success' ? action : capture}
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        type="submit"
-                        text={
-                            // succes === 'facial verification successful'
-                            succes === 'success' ? 'Continue' : 'Snap'
-                        }
-                        // action={action}
-                    />
-                )}
+
+                <ButtonComp
+                    onClick={succes === 'success' ? action : capture}
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    type="submit"
+                    text={
+                        // succes === 'facial verification successful'
+                        succes === 'success' ? 'Continue' : 'Snap'
+                    }
+                    // action={action}
+                />
+
                 {/* {imageSrcI && <img src={imageSrcI} />} */}
                 {/* <div className={styles.matiButtonSetup}>
                     <mati-button
