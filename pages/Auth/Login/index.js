@@ -93,7 +93,7 @@ const Login = () => {
     return (
         <div className={styles.sectionCove}>
             <section className={styles.sectionI}>
-                <ProfileSetupSide text="The world is your Canvas Explore " />
+                <ProfileSetupSide text="The world is your Canvas. Explore! " />
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.loginCont}>

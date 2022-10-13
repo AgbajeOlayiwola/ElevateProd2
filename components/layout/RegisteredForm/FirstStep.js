@@ -10,7 +10,7 @@ const FirstStep = ({ handleSubmit, action }) => {
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
-                <ProfileSetupSide text="The world is your Canvas Explore" />
+                <ProfileSetupSide text="The world is your Canvas. Explore!" />
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.existingBody}>
