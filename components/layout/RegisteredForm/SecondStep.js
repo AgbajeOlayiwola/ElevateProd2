@@ -59,6 +59,8 @@ const RegisteredForm = ({
             setPasswordMatch('Passwords do not match');
         }
     };
+    //how to write states in functional componenet in reactjs
+
     const handlePwd = (e) => {
         setCount(e.target.value.length);
         setFormData({
@@ -151,39 +153,23 @@ const RegisteredForm = ({
                         <div className={styles.textInput}>
                             <label>Email Address </label>
                             {errors.email?.message}
-                            {newAccounts.user.email ? (
-                                <input
-                                    placeholder="Enter Your Email"
-                                    className={styles.textInput}
-                                    required
-                                    // readOnly
-                                    value={
-                                        newAccounts.email === null
-                                            ? formData.emailData
-                                            : newAccounts.user.email
-                                    }
-                                    onChange={(event) =>
-                                        setFormData({
-                                            ...formData,
-                                            emailData: event.target.value
-                                        })
-                                    }
-                                />
-                            ) : (
-                                <input
-                                    placeholder="Enter Your Email"
-                                    className={styles.textInput}
-                                    required
-                                    // readOnly
-                                    value={formData.emailData}
-                                    onChange={(event) =>
-                                        setFormData({
-                                            ...formData,
-                                            emailData: event.target.value
-                                        })
-                                    }
-                                />
-                            )}
+                            <input
+                                placeholder="Enter Your Email"
+                                className={styles.textInput}
+                                required
+                                // readOnly
+                                value={
+                                    newAccounts.email === null
+                                        ? formData.emailData
+                                        : newAccounts.user.email
+                                }
+                                onChange={(event) =>
+                                    setFormData({
+                                        ...formData,
+                                        emailData: event.target.value
+                                    })
+                                }
+                            />
                         </div>
 
                         <div className={styles.textInput}>

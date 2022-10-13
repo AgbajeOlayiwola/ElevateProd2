@@ -35,6 +35,9 @@ const ExistingMultiStep = () => {
     //         setPage(page + 1);
     //     }
     // }, [errorMessage]);
+    let accounts = window.localStorage.getItem('account');
+    var newAccounts = JSON.parse(accounts);
+    console.log(newAccounts.user.email);
 
     const conditionalComponent = () => {
         switch (page) {
@@ -47,7 +50,10 @@ const ExistingMultiStep = () => {
                         move={() => {
                             const userData = {
                                 userId: formData.userId,
-                                email: formData.emailData,
+                                email:
+                                    newAccounts.user.email !== null
+                                        ? newAccounts.user.email
+                                        : formData.emailData,
                                 password: formData.password,
                                 confirmPassword: formData.confPassword
                             };
