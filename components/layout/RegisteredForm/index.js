@@ -35,7 +35,7 @@ const ExistingMultiStep = () => {
     //         setPage(page + 1);
     //     }
     // }, [errorMessage]);
-    if (window !== 'undefined') {
+    if (typeof window !== 'undefined') {
         let accounts = window.localStorage.getItem('account');
         var newAccounts = JSON.parse(accounts);
         console.log(newAccounts.user.email);
