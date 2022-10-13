@@ -31,53 +31,11 @@ import PaymentSuccess from '../../components/ReusableComponents/SuccessPage';
 
 const AccountUpgrade = () => {
     const router = useRouter();
-    const { setTransactionPin, setTransactionPinError } = useSelector(
-        (state) => state.setTransactionPinReducer
-    );
-    const { userProfile } = useSelector((state) => state.userProfileReducer);
-
-    const dispatch = useDispatch();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
-
-    const onSubmit = (data) => {
-        console.log(data);
-        setLoading(true);
-        dispatch(loadsetTransactionPin(data));
-    };
-
-    const transactionPin = () => {
-        if (setTransactionPin !== null) {
-            setMessage('Transaction Pin Set Successfully');
-            setStatusbar('success');
-            setTitle('Success');
-            // setTitle('First');
-        } else if (setTransactionPinError !== null) {
-            setMessage(setTransactionPinError);
-            setStatusbar('error');
-            setTitle('Success');
-        }
-    };
-
-    useEffect(() => {
-        transactionPin();
-    }, [setTransactionPin, setTransactionPinError]);
-    useEffect(() => {
-        dispatch(loadUserProfile());
-    }, []);
-
-    useEffect(() => {
-        if (userProfile !== null) {
-            setText(userProfile.customerCategory);
-        }
-    }, [userProfile]);
     const [text, setText] = useState('');
     const [message, setMessage] = useState('');
     const [localState, setLocalState] = useState('');
     const [location, setLocation] = useState([]);
+    const [profile, setProfile] = useState({});
     const [localGovernment, setLocalGovernment] = useState('');
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
@@ -129,6 +87,57 @@ const AccountUpgrade = () => {
     const { utilityUpload, utilityUplodaErrorMessages } = useSelector(
         (state) => state.uploadUtilityReducer
     );
+    const { setTransactionPin, setTransactionPinError } = useSelector(
+        (state) => state.setTransactionPinReducer
+    );
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
+
+    const dispatch = useDispatch();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+
+    const onSubmit = (data) => {
+        console.log(data);
+        setLoading(true);
+        dispatch(loadsetTransactionPin(data));
+    };
+
+    const transactionPin = () => {
+        if (setTransactionPin !== null) {
+            setMessage('Transaction Pin Set Successfully');
+            setStatusbar('success');
+            setTitle('Success');
+            setLoading(false);
+            // setTitle('First');
+        } else if (setTransactionPinError !== null) {
+            setMessage(setTransactionPinError);
+            setStatusbar('error');
+            setTitle('Success');
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        transactionPin();
+    }, [setTransactionPin, setTransactionPinError]);
+    useEffect(() => {
+        dispatch(loadUserProfile());
+    }, []);
+
+    useEffect(() => {
+        if (userProfile !== null) {
+            setText(userProfile.customerCategory);
+            setStreetName(userProfile.address);
+            setCity(userProfile.city);
+            setState(userProfile.state);
+            setLocalGovernmane(userProfile.lga);
+        }
+    }, [userProfile]);
+    console.log(userProfile);
+
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             setLatitude(position.coords.latitude);
@@ -487,8 +496,8 @@ const AccountUpgrade = () => {
                                                 // console.log(selstate);
                                             }}
                                         >
-                                            <option value="">
-                                                Select State
+                                            <option value={selstate}>
+                                                {selstate}
                                             </option>
                                             {location?.map((state, index) => {
                                                 return (
@@ -509,7 +518,7 @@ const AccountUpgrade = () => {
                                     <div className={styles.addressGroup}>
                                         <label>City</label>
                                         <input
-                                            value={city}
+                                            value={city === null ? '' : city}
                                             onChange={(e) =>
                                                 setCity(e.target.value)
                                             }
@@ -530,7 +539,9 @@ const AccountUpgrade = () => {
                                                 );
                                             }}
                                         >
-                                            <option value="">Select LGA</option>
+                                            <option value={localGovernmane}>
+                                                {localGovernmane}
+                                            </option>
                                             {localGovernment
                                                 ? localGovernment?.map(
                                                       (item, index) => {
@@ -646,8 +657,8 @@ const AccountUpgrade = () => {
                                                 // console.log(selstate);
                                             }}
                                         >
-                                            <option value="">
-                                                Select State
+                                            <option value={selstate}>
+                                                {selstate}
                                             </option>
                                             {location?.map((state, index) => {
                                                 return (
@@ -689,7 +700,9 @@ const AccountUpgrade = () => {
                                                 );
                                             }}
                                         >
-                                            <option value="">Select LGA</option>
+                                            <option value={localGovernmane}>
+                                                {localGovernmane}
+                                            </option>
                                             {localGovernment
                                                 ? localGovernment?.map(
                                                       (item, index) => {
@@ -1226,10 +1239,21 @@ const AccountUpgrade = () => {
         case 'Success':
             return (
                 <PaymentSuccess
-                    type="profile"
                     heading={message}
                     error={message}
                     statusbar={statusbar}
+                    overlay="true"
+                    action={
+                        statusbar === 'error'
+                            ? () => {
+                                  setTitle('Transaction Pin');
+                              }
+                            : statusbar === 'success'
+                            ? () => {
+                                  setTitle('First');
+                              }
+                            : null
+                    }
                 />
                 // <PaymentSuccess/>
             );
