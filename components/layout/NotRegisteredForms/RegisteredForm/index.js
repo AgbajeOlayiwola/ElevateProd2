@@ -155,7 +155,7 @@ const RegisteredForm = ({
                                 //setRcnumber(event?.target.value); //saving input to state
                             }}
                         />
-                        <div className="errors">
+                        <div className={styles.errors}>
                             {errors.rc_number?.message}
                         </div>
                         <InputWrapper>
@@ -178,7 +178,9 @@ const RegisteredForm = ({
                                     //setTinumber(event?.target.value); //saving input to state
                                 }}
                             />
-                            <div className="errors">{errors.tin?.message}</div>
+                            <div className={styles.errors}>
+                                {errors.tin?.message}
+                            </div>
                         </InputWrapper>
 
                         <InputWrapper>
@@ -210,7 +212,9 @@ const RegisteredForm = ({
                                 }}
                             />
                             <p className={styles.error}>{errorM}</p>
-                            <div className="errors">{errors.bvn?.message}</div>
+                            <div className={styles.errors}>
+                                {errors.bvn?.message}
+                            </div>
                         </InputWrapper>
 
                         <InputWrapper>
@@ -269,7 +273,7 @@ const RegisteredForm = ({
                                     />
                                 </div>
                             </div>
-                            <div className="errors">
+                            <div className={styles.errors}>
                                 {errors.phone_number?.message}
                             </div>
                         </InputWrapper>
@@ -294,7 +298,7 @@ const RegisteredForm = ({
                                     });
                                 }}
                             />
-                            <div className="errors">
+                            <div className={styles.errors}>
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
@@ -337,7 +341,7 @@ const RegisteredForm = ({
                             />
                             <p className={styles.error}>{errorM}</p>
                             <p className={styles.error}> {bvnError}</p>
-                            <div className="errors">
+                            <div className={styles.errors}>
                                 {errors.bvnFalse?.message}
                             </div>
                         </InputWrapper>
@@ -397,7 +401,7 @@ const RegisteredForm = ({
                                     />
                                 </div>
                             </div>
-                            <div className="errors">
+                            <div className={styles.errors}>
                                 {errors.countryCode_number?.message}
                             </div>
                         </InputWrapper>
@@ -422,7 +426,7 @@ const RegisteredForm = ({
                                     });
                                 }}
                             />
-                            <div className="errors">
+                            <div className={styles.errors}>
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>

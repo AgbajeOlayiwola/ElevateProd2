@@ -477,7 +477,7 @@
 }
 
 .sectionII {
-    padding: 120px 0px;
+    padding: 70px 0px;
     max-width: 682px;
     width: 53%;
 }
@@ -511,7 +511,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #3e3e3e;
+    /* color: #3e3e3e; */
 }
 
 .phone {

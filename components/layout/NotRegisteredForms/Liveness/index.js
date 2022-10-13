@@ -110,16 +110,21 @@ const Liveness = ({ action, loading, setLoading }) => {
                                     : styles.imageInner
                             }
                         >
-                            <Webcam
-                                audio={false}
-                                screenshotFormat="image/jpeg"
-                                videoConstraints={videoConstraints}
-                                ref={webcamRef}
-                            />
+                            {imageSrcI ? (
+                                <img src={imageSrcI} />
+                            ) : (
+                                <Webcam
+                                    audio={false}
+                                    screenshotFormat="image/jpeg"
+                                    videoConstraints={videoConstraints}
+                                    ref={webcamRef}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
                 {/* {loading ? <Loader /> : null} */}
+
                 <ButtonComp
                     onClick={succes === 'success' ? action : capture}
                     disabled={activeBtn}
@@ -131,6 +136,7 @@ const Liveness = ({ action, loading, setLoading }) => {
                     }
                     // action={action}
                 />
+
                 {/* {imageSrcI && <img src={imageSrcI} />} */}
                 {/* <div className={styles.matiButtonSetup}>
                     <mati-button

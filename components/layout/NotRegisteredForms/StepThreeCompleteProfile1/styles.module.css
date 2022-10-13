@@ -24,7 +24,7 @@
 
 .sectionII {
     flex: 1;
-    padding: 120px 0px 120px 131px;
+    padding: 70px 0px 120px 131px;
 }
 
 .bodyWrapper {
@@ -284,7 +284,7 @@
 .sign label {
     width: 32%;
     max-width: 95px;
-    background: #e6e6e6;
+    background: #6ccf00;
     border-radius: 8px;
     text-align: center;
     padding: 8px 0px;
@@ -294,7 +294,7 @@
     font-weight: 700;
     font-size: 12px;
     line-height: 15px;
-    color: #bdbdbd;
+    color: #ffffff;
     cursor: pointer;
 }
 
