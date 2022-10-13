@@ -208,8 +208,9 @@ const ProfileSetups = () => {
             countryCode: formData.countryCode,
             dateOfBirth: formData.dateOfBirth
         };
-        setLoading((prev) => !prev);
-
+        setLoading(true);
+        setErrorM('');
+        setErrorI('');
         dispatch(createProfileSetup(profileData));
         // console.log('lol');
     }
@@ -225,8 +226,9 @@ const ProfileSetups = () => {
             console.log('move');
             setErrorM(errorMessages);
             setErrorI(bvnError);
+            setLoading(false);
         }
-    }, [bvnNin, errorMessages]);
+    }, [bvnNin, errorMessages, bvnError]);
 
     const handleSubmitt = () => {
         setPage(page + 1);

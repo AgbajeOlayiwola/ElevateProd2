@@ -108,7 +108,11 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    color: #bdbdbd;
+    color: #3e3e3e;
+}
+
+.addressGroup input::placeholder {
+    color: #3e3e3e;
 }
 
 /*Utility End*/
@@ -304,6 +308,26 @@
     font-weight: 400;
     line-height: 24px;
     margin-top: -20px;
+}
+
+.errors {
+    color: red;
+    font-size: 12px;
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.success {
+    color: green;
+    font-size: 20px;
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
 }
 
 /*Directors*/

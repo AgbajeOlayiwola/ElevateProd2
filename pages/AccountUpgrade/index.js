@@ -26,53 +26,20 @@ import {
 } from '../../redux/actions/actions';
 
 import { useForm } from 'react-hook-form';
+import Loader from '../../components/ReusableComponents/Loader';
+import PaymentSuccess from '../../components/ReusableComponents/SuccessPage';
 
 const AccountUpgrade = () => {
     const router = useRouter();
-    const { setTransactionPin, setTransactionPinError } = useSelector(
-        (state) => state.setTransactionPinReducer
-    );
-    const { userProfile } = useSelector((state) => state.userProfileReducer);
-
-    const dispatch = useDispatch();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
-
-    const onSubmit = (data) => {
-        console.log(data);
-        dispatch(loadsetTransactionPin(data));
-    };
-
-    const transactionPin = () => {
-        if (setTransactionPin !== null) {
-            alert('Transaction Pin Set');
-            setTitle('First');
-        } else if (setTransactionPinError !== null) {
-            console.log(setTransactionPinError);
-        }
-    };
-
-    useEffect(() => {
-        transactionPin();
-    }, [setTransactionPin, setTransactionPinError]);
-    useEffect(() => {
-        dispatch(loadUserProfile());
-    }, []);
-
-    useEffect(() => {
-        if (userProfile !== null) {
-            setText(userProfile.customerCategory);
-        }
-    }, [userProfile]);
     const [text, setText] = useState('');
+    const [message, setMessage] = useState('');
     const [localState, setLocalState] = useState('');
     const [location, setLocation] = useState([]);
+    const [profile, setProfile] = useState({});
     const [localGovernment, setLocalGovernment] = useState('');
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
+    const [loading, setLoading] = useState('');
     const [title, setTitle] = useState('First');
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
@@ -90,12 +57,17 @@ const AccountUpgrade = () => {
     const [city, setCity] = useState('');
     const [streetName, setStreetName] = useState('');
     const [localGovernmane, setLocalGovernmane] = useState('');
+    const [statusbar, setStatusbar] = useState('');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState('');
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
+    const [IDType, setIDType] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        ''
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -115,6 +87,57 @@ const AccountUpgrade = () => {
     const { utilityUpload, utilityUplodaErrorMessages } = useSelector(
         (state) => state.uploadUtilityReducer
     );
+    const { setTransactionPin, setTransactionPinError } = useSelector(
+        (state) => state.setTransactionPinReducer
+    );
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
+
+    const dispatch = useDispatch();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+
+    const onSubmit = (data) => {
+        console.log(data);
+        setLoading(true);
+        dispatch(loadsetTransactionPin(data));
+    };
+
+    const transactionPin = () => {
+        if (setTransactionPin !== null) {
+            setMessage('Transaction Pin Set Successfully');
+            setStatusbar('success');
+            setTitle('Success');
+            setLoading(false);
+            // setTitle('First');
+        } else if (setTransactionPinError !== null) {
+            setMessage(setTransactionPinError);
+            setStatusbar('error');
+            setTitle('Success');
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        transactionPin();
+    }, [setTransactionPin, setTransactionPinError]);
+    useEffect(() => {
+        dispatch(loadUserProfile());
+    }, []);
+
+    useEffect(() => {
+        if (userProfile !== null) {
+            setText(userProfile.customerCategory);
+            setStreetName(userProfile.address);
+            setCity(userProfile.city);
+            setState(userProfile.state);
+            setLocalGovernmane(userProfile.lga);
+        }
+    }, [userProfile]);
+    console.log(userProfile);
+
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             setLatitude(position.coords.latitude);
@@ -213,7 +236,7 @@ const AccountUpgrade = () => {
     };
     const IdentificationyUpload = () => {
         const identificationThings = {
-            meansOfIdentification: 'Drivers Licence',
+            meansOfIdentification: IDType,
             idNumber: idNumber,
             identificationDocument: identificationDocumentFile
         };
@@ -238,9 +261,7 @@ const AccountUpgrade = () => {
     };
 
     //Refference
-    const test = () => {
-        console.log('test');
-    };
+
     const [document, setDocument] = useState(false);
     const AccountUpgradeData = {
         individual: [
@@ -329,7 +350,7 @@ const AccountUpgrade = () => {
                     title={
                         text === 'INDIVIDUAL'
                             ? 'Individual Account Upgrade'
-                            : text === 'Corporate'
+                            : text === 'CORPORATE'
                             ? 'Corporate Account Upgrade'
                             : null
                     }
@@ -470,14 +491,13 @@ const AccountUpgrade = () => {
                                         <select
                                             name=""
                                             id=""
-                                            value={selstate}
                                             onChange={(event) => {
                                                 setState(event.target.value);
                                                 // console.log(selstate);
                                             }}
                                         >
-                                            <option value="">
-                                                Select State
+                                            <option value={selstate}>
+                                                {selstate}
                                             </option>
                                             {location?.map((state, index) => {
                                                 return (
@@ -498,7 +518,7 @@ const AccountUpgrade = () => {
                                     <div className={styles.addressGroup}>
                                         <label>City</label>
                                         <input
-                                            value={city}
+                                            value={city === null ? '' : city}
                                             onChange={(e) =>
                                                 setCity(e.target.value)
                                             }
@@ -519,7 +539,9 @@ const AccountUpgrade = () => {
                                                 );
                                             }}
                                         >
-                                            <option value="">Select LGA</option>
+                                            <option value={localGovernmane}>
+                                                {localGovernmane}
+                                            </option>
                                             {localGovernment
                                                 ? localGovernment?.map(
                                                       (item, index) => {
@@ -630,19 +652,18 @@ const AccountUpgrade = () => {
                                         <select
                                             name=""
                                             id=""
-                                            onChange={(event) =>
-                                                setLocalState(
-                                                    event.target.value
-                                                )
-                                            }
+                                            onChange={(event) => {
+                                                setState(event.target.value);
+                                                // console.log(selstate);
+                                            }}
                                         >
-                                            <option value="">
-                                                Select State
+                                            <option value={selstate}>
+                                                {selstate}
                                             </option>
                                             {location?.map((state, index) => {
                                                 return (
                                                     <option
-                                                        value={state.state}
+                                                        value={state.code}
                                                         key={index}
                                                     >
                                                         {state.state}
@@ -674,12 +695,14 @@ const AccountUpgrade = () => {
                                             name=""
                                             id=""
                                             onChange={(event) => {
-                                                setLocalGovernmment(
+                                                setLocalGovernmane(
                                                     event.target.value
                                                 );
                                             }}
                                         >
-                                            <option value="">Select LGA</option>
+                                            <option value={localGovernmane}>
+                                                {localGovernmane}
+                                            </option>
                                             {localGovernment
                                                 ? localGovernment?.map(
                                                       (item, index) => {
@@ -720,8 +743,24 @@ const AccountUpgrade = () => {
                     <div className={styles.meansIdentification}>
                         <div className={styles.identificationGroup}>
                             <label>Choose Means of Identification</label>
-                            <select name="" id="">
+                            <select
+                                name=""
+                                id=""
+                                onChange={(e) => {
+                                    setIDType(e.target.value);
+                                }}
+                            >
                                 <option value="">Select regulatory ID</option>
+                                <option value="Voters Card">Voters Card</option>
+                                <option value="National ID card">
+                                    National ID card
+                                </option>
+                                <option value="Drivers License">
+                                    Drivers License
+                                </option>
+                                <option value="International Passport">
+                                    International Passport
+                                </option>
                             </select>
                         </div>
                         <div className={styles.identificationGroup}>
@@ -1137,10 +1176,20 @@ const AccountUpgrade = () => {
                 >
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className={styles.documentBody}>
+                            {/* {message ? (
+                                message ===
+                                'Transaction Pin Set Successfully' ? (
+                                    <p className={styles.success}>
+                                        Transaction Pin Set Successfully
+                                    </p>
+                                ) : (
+                                    <p className={styles.errors}>{message}</p>
+                                )
+                            ) : null} */}
                             <div className={styles.directorsGroup}>
                                 <label>Transaction Pin</label>
                                 <input
-                                    type="text"
+                                    type="password"
                                     name="transactionPin"
                                     {...register('transactionPin', {
                                         required: 'Transaction Pin is required',
@@ -1164,10 +1213,49 @@ const AccountUpgrade = () => {
                                     {errors.transactionPin?.message}
                                 </p>
                             </div>
+                            <div className={styles.directorsGroup}>
+                                <label>Password</label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    {...register('password', {
+                                        required: 'Password is required'
+                                    })}
+                                    placeholder="Enter Password"
+                                />
+                                <p className={styles.error}>
+                                    {errors.password?.message}
+                                </p>
+                            </div>
                         </div>
-                        <button type="submit">Submit</button>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button type="submit">Submit</button>
+                        )}
                     </form>
                 </AccountUpgradeComponent>
+            );
+        case 'Success':
+            return (
+                <PaymentSuccess
+                    heading={message}
+                    error={message}
+                    statusbar={statusbar}
+                    overlay="true"
+                    action={
+                        statusbar === 'error'
+                            ? () => {
+                                  setTitle('Transaction Pin');
+                              }
+                            : statusbar === 'success'
+                            ? () => {
+                                  setTitle('First');
+                              }
+                            : null
+                    }
+                />
+                // <PaymentSuccess/>
             );
     }
 };

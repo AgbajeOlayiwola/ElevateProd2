@@ -59,6 +59,8 @@ const RegisteredForm = ({
             setPasswordMatch('Passwords do not match');
         }
     };
+    //how to write states in functional componenet in reactjs
+
     const handlePwd = (e) => {
         setCount(e.target.value.length);
         setFormData({
