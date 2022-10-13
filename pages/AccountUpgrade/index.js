@@ -26,6 +26,8 @@ import {
 } from '../../redux/actions/actions';
 
 import { useForm } from 'react-hook-form';
+import Loader from '../../components/ReusableComponents/Loader';
+import PaymentSuccess from '../../components/ReusableComponents/SuccessPage';
 
 const AccountUpgrade = () => {
     const router = useRouter();
@@ -43,15 +45,20 @@ const AccountUpgrade = () => {
 
     const onSubmit = (data) => {
         console.log(data);
+        setLoading(true);
         dispatch(loadsetTransactionPin(data));
     };
 
     const transactionPin = () => {
         if (setTransactionPin !== null) {
-            alert('Transaction Pin Set');
-            setTitle('First');
+            setMessage('Transaction Pin Set Successfully');
+            setStatusbar('success');
+            setTitle('Success');
+            // setTitle('First');
         } else if (setTransactionPinError !== null) {
-            console.log(setTransactionPinError);
+            setMessage(setTransactionPinError);
+            setStatusbar('error');
+            setTitle('Success');
         }
     };
 
@@ -68,11 +75,13 @@ const AccountUpgrade = () => {
         }
     }, [userProfile]);
     const [text, setText] = useState('');
+    const [message, setMessage] = useState('');
     const [localState, setLocalState] = useState('');
     const [location, setLocation] = useState([]);
     const [localGovernment, setLocalGovernment] = useState('');
     const [latitude, setLatitude] = useState('');
     const [longitude, setLongitude] = useState('');
+    const [loading, setLoading] = useState('');
     const [title, setTitle] = useState('First');
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
@@ -90,8 +99,10 @@ const AccountUpgrade = () => {
     const [city, setCity] = useState('');
     const [streetName, setStreetName] = useState('');
     const [localGovernmane, setLocalGovernmane] = useState('');
+    const [statusbar, setStatusbar] = useState('');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
+    const [IDType, setIDType] = useState('');
     const [identificationDocumentFile, setIdentificationDocument] =
         useState('');
     const [identificationDocumentFileName, setIdentificationDocumentName] =
@@ -213,7 +224,7 @@ const AccountUpgrade = () => {
     };
     const IdentificationyUpload = () => {
         const identificationThings = {
-            meansOfIdentification: 'Drivers Licence',
+            meansOfIdentification: IDType,
             idNumber: idNumber,
             identificationDocument: identificationDocumentFile
         };
@@ -238,9 +249,7 @@ const AccountUpgrade = () => {
     };
 
     //Refference
-    const test = () => {
-        console.log('test');
-    };
+
     const [document, setDocument] = useState(false);
     const AccountUpgradeData = {
         individual: [
@@ -329,7 +338,7 @@ const AccountUpgrade = () => {
                     title={
                         text === 'INDIVIDUAL'
                             ? 'Individual Account Upgrade'
-                            : text === 'Corporate'
+                            : text === 'CORPORATE'
                             ? 'Corporate Account Upgrade'
                             : null
                     }
@@ -470,7 +479,6 @@ const AccountUpgrade = () => {
                                         <select
                                             name=""
                                             id=""
-                                            value={selstate}
                                             onChange={(event) => {
                                                 setState(event.target.value);
                                                 // console.log(selstate);
@@ -630,11 +638,10 @@ const AccountUpgrade = () => {
                                         <select
                                             name=""
                                             id=""
-                                            onChange={(event) =>
-                                                setLocalState(
-                                                    event.target.value
-                                                )
-                                            }
+                                            onChange={(event) => {
+                                                setState(event.target.value);
+                                                // console.log(selstate);
+                                            }}
                                         >
                                             <option value="">
                                                 Select State
@@ -642,7 +649,7 @@ const AccountUpgrade = () => {
                                             {location?.map((state, index) => {
                                                 return (
                                                     <option
-                                                        value={state.state}
+                                                        value={state.code}
                                                         key={index}
                                                     >
                                                         {state.state}
@@ -674,7 +681,7 @@ const AccountUpgrade = () => {
                                             name=""
                                             id=""
                                             onChange={(event) => {
-                                                setLocalGovernmment(
+                                                setLocalGovernmane(
                                                     event.target.value
                                                 );
                                             }}
@@ -720,8 +727,24 @@ const AccountUpgrade = () => {
                     <div className={styles.meansIdentification}>
                         <div className={styles.identificationGroup}>
                             <label>Choose Means of Identification</label>
-                            <select name="" id="">
+                            <select
+                                name=""
+                                id=""
+                                onChange={(e) => {
+                                    setIDType(e.target.value);
+                                }}
+                            >
                                 <option value="">Select regulatory ID</option>
+                                <option value="Voters Card">Voters Card</option>
+                                <option value="National ID card">
+                                    National ID card
+                                </option>
+                                <option value="Drivers License">
+                                    Drivers License
+                                </option>
+                                <option value="International Passport">
+                                    International Passport
+                                </option>
                             </select>
                         </div>
                         <div className={styles.identificationGroup}>
@@ -1137,10 +1160,20 @@ const AccountUpgrade = () => {
                 >
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className={styles.documentBody}>
+                            {/* {message ? (
+                                message ===
+                                'Transaction Pin Set Successfully' ? (
+                                    <p className={styles.success}>
+                                        Transaction Pin Set Successfully
+                                    </p>
+                                ) : (
+                                    <p className={styles.errors}>{message}</p>
+                                )
+                            ) : null} */}
                             <div className={styles.directorsGroup}>
                                 <label>Transaction Pin</label>
                                 <input
-                                    type="text"
+                                    type="password"
                                     name="transactionPin"
                                     {...register('transactionPin', {
                                         required: 'Transaction Pin is required',
@@ -1164,10 +1197,38 @@ const AccountUpgrade = () => {
                                     {errors.transactionPin?.message}
                                 </p>
                             </div>
+                            <div className={styles.directorsGroup}>
+                                <label>Password</label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    {...register('password', {
+                                        required: 'Password is required'
+                                    })}
+                                    placeholder="Enter Password"
+                                />
+                                <p className={styles.error}>
+                                    {errors.password?.message}
+                                </p>
+                            </div>
                         </div>
-                        <button type="submit">Submit</button>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button type="submit">Submit</button>
+                        )}
                     </form>
                 </AccountUpgradeComponent>
+            );
+        case 'Success':
+            return (
+                <PaymentSuccess
+                    type="profile"
+                    heading={message}
+                    error={message}
+                    statusbar={statusbar}
+                />
+                // <PaymentSuccess/>
             );
     }
 };

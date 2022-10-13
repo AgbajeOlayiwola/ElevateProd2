@@ -560,7 +560,9 @@ export const loadsetTransactionPin = (code) => (dispatch) => {
         .then((response) =>
             dispatch(setTransactionPinLoadSuccess(response.data))
         )
-        .catch((error) => dispatch(setTransactionPinLoadError(error.message)));
+        .catch((error) =>
+            dispatch(setTransactionPinLoadError(error.response.data.message))
+        );
 };
 //setTransactionPin actions end
 
@@ -1315,9 +1317,8 @@ export const loginUserAction = (loginData) => {
 //end login user
 
 //profile setup action start
-export const setupProfileStart = (errorMessages) => ({
-    type: setupProfile.PROFILESETUP_LOAD_START,
-    payload: errorMessages
+export const setupProfileStart = () => ({
+    type: setupProfile.PROFILESETUP_LOAD_START
 });
 export const setupProfileSucces = (profileSetup) => ({
     type: setupProfile.PROFILESETUP_LOAD_SUCCESS,
