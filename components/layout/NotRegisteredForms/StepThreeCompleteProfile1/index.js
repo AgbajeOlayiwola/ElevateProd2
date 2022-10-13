@@ -221,11 +221,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                 comperrorMessage.message ===
                     'your have already setup your business'
             ) {
-                if (profile.data[1].documentData) {
-                    router.push('/Verify/Account/loading');
-                } else {
-                    router.push('/Verify/Account/loading');
-                }
+                profile.data?.map((item) => {
+                    if (type === 'true') {
+                        router.push('/Verify/CorportateAccount');
+                    } else if (type === 'false') {
+                        router.push('/Verify/Account/loading');
+                    }
+                });
             }
         }
     }, [newAccount, comperrorMessage]);
@@ -250,15 +252,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
-    useEffect(() => {
-        setLoading((prev) => !prev);
-        console.log(compBusprofile, comperrorMessage);
-        if (compBusprofile) {
-            if (compBusprofile.message === 'Successful') {
-                router.push('/Verify/CorportateAccount');
-            }
-        }
-    }, [newCorpAccount, comperrorMessage]);
     const [activeBtn, setActiveBtn] = useState(true);
     //console.log(test)
     // console.log(type);
@@ -363,22 +356,44 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <div className={styles.formGroup}>
                                         <div className={styles.singleFormGroup}>
                                             <label>Enter Business Name</label>
-                                            <input
-                                                type="text"
-                                                placeholder="Enter Business Full Name"
-                                                {...register('businessName', {
-                                                    required:
-                                                        'Business Name is required'
-                                                })}
-                                                value={formData.bussinessName}
-                                                onInput={(event) => {
-                                                    setFormData({
-                                                        ...formData,
-                                                        bussinessName:
-                                                            event.target.value
-                                                    });
-                                                }}
-                                            />
+                                            {type === 'true' ? (
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter Business Full Name"
+                                                    value={
+                                                        formData.bussinessName
+                                                    }
+                                                    onInput={(event) => {
+                                                        setFormData({
+                                                            ...formData,
+                                                            bussinessName:
+                                                                event.target
+                                                                    .value
+                                                        });
+                                                    }}
+                                                />
+                                            ) : (
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter Business Full Name"
+                                                    {...register(
+                                                        'businessName',
+                                                        {
+                                                            required:
+                                                                'Business Name is required'
+                                                        }
+                                                    )}
+                                                    onInput={(event) => {
+                                                        setFormData({
+                                                            ...formData,
+                                                            bussinessName:
+                                                                event.target
+                                                                    .value
+                                                        });
+                                                    }}
+                                                />
+                                            )}
+
                                             <p className={styles.error}>
                                                 {errors.businessName?.message}
                                             </p>
