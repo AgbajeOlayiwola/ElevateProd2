@@ -80,22 +80,22 @@ const RegisteredForm = ({
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
 
     // console.log('error essage', otpErrorMessage);
-    useEffect(() => {
-        setLoading((prev) => !prev);
-    }, [isLoading, profile, errorMessages]);
+    // useEffect(() => {
+    //     setLoading((prev) => !prev);
+    // }, [isLoading, profile, errorMessages]);
 
-    useEffect(() => {
-        // console.log('bvnError', bvnErrorI);
-        console.log(errorMessages);
-        setErrorM(errorMessages);
+    // useEffect(() => {
+    //     // console.log('bvnError', bvnErrorI);
+    //     console.log(errorMessages);
+    //     setErrorM(errorMessages);
 
-        //change to no error messages boss
-        if (!errorMessages) {
-            console.log(errorMessages);
-        } else {
-            console.log('moved');
-        }
-    }, [errorMessages]);
+    //     //change to no error messages boss
+    //     if (!errorMessages) {
+    //         console.log(errorMessages);
+    //     } else {
+    //         console.log('moved');
+    //     }
+    // }, [errorMessages]);
 
     return (
         <div className={styles.bodyWrapper}>
