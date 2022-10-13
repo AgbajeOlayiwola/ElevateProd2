@@ -120,17 +120,21 @@ const Liveness = ({ action, loading, setLoading }) => {
                     </div>
                 </div>
                 {/* {loading ? <Loader /> : null} */}
-                <ButtonComp
-                    onClick={succes === 'success' ? action : capture}
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    type="submit"
-                    text={
-                        // succes === 'facial verification successful'
-                        succes === 'success' ? 'Continue' : 'Snap'
-                    }
-                    // action={action}
-                />
+                {imageSrcI ? (
+                    <img src={imageSrcI} />
+                ) : (
+                    <ButtonComp
+                        onClick={succes === 'success' ? action : capture}
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        type="submit"
+                        text={
+                            // succes === 'facial verification successful'
+                            succes === 'success' ? 'Continue' : 'Snap'
+                        }
+                        // action={action}
+                    />
+                )}
                 {/* {imageSrcI && <img src={imageSrcI} />} */}
                 {/* <div className={styles.matiButtonSetup}>
                     <mati-button
