@@ -62,6 +62,11 @@ const ForgotPassword = () => {
                 <p>Reset Password</p>
             </div>
             <div className={styles.emailP}>
+                {forgotPasswordErrorMessages ? (
+                    <p className={styles.errors}>
+                        {forgotPasswordErrorMessages.response.data.message}
+                    </p>
+                ) : null}
                 <p>
                     Enter the email registered with your account and
                     instructions to reset your password will be sent to your
