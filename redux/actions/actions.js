@@ -318,9 +318,23 @@ export const accountPrimaryLoadError = (errorMessage) => ({
 
 export const loadAccountPrimary = () => (dispatch) => {
     dispatch(accountPrimaryLoadStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     axiosInstance
         .get(`${apiRoutes.accountPrimary}`)
-        .then((response) => dispatch(accountPrimaryLoadSuccess(response.data)))
+        .then((response) =>
+            dispatch(accountPrimaryLoadSuccess(response.data), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
+                }
+            })
+        )
         .catch((error) =>
             dispatch(accountPrimaryLoadError(error.response.message))
         );
@@ -764,9 +778,21 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
     payload: balanceEnquiryerror
 });
 export const getBalanceEnquiry = (data) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     dispatch(balanceEnquiryLoadStart());
     axiosInstance
-        .post(`${apiRoutes.balanceEnquiry}`, data)
+        .post(`${apiRoutes.balanceEnquiry}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(balanceEnquiryLoadSuccess(response.data.data))
         )
