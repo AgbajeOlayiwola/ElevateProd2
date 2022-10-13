@@ -35,9 +35,11 @@ const ExistingMultiStep = () => {
     //         setPage(page + 1);
     //     }
     // }, [errorMessage]);
-    let accounts = window.localStorage.getItem('account');
-    var newAccounts = JSON.parse(accounts);
-    console.log(newAccounts.user.email);
+    if (window !== undefined) {
+        let accounts = window.localStorage.getItem('account');
+        var newAccounts = JSON.parse(accounts);
+        console.log(newAccounts.user.email);
+    }
 
     const conditionalComponent = () => {
         switch (page) {
