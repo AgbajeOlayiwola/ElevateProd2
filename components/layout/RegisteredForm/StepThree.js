@@ -50,8 +50,8 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     );
     useEffect(() => {
         dispatch(bankAccountsData());
-        console.log(bankAccounts);
-    }, [bankAccounts]);
+        console.log(bankAccounts[0]?.accountNumber);
+    }, []);
 
     const [activeBtn, setActiveBtn] = useState(true);
     return (
@@ -89,11 +89,11 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                 <label>Account Number </label>
 
                                 <input
-                                    placeholder="Account Numberl"
+                                    placeholder="Account Number "
                                     className={styles.textInput}
                                     required
                                     readOnly
-                                    value={bankAccounts[0].accountNumber}
+                                    value={bankAccounts[0]?.accountNumber}
                                 />
                             </div>
                             <div>

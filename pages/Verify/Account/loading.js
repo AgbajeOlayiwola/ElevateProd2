@@ -57,7 +57,7 @@ const AccountLoading = () => {
         ) {
             setError(newAccountErrorMessage);
         }
-    }, []);
+    }, [accountStatus.messages]);
 
     // console.log(errorMessages);
 
