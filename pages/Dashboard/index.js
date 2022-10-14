@@ -63,9 +63,6 @@ const Dashboard = () => {
     const [items, setItems] = useState([]);
 
     const [acctNumber, setAcctNumber] = useState('');
-    useEffect(() => {
-        dispatch(getBalanceEnquiry());
-    }, []);
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );

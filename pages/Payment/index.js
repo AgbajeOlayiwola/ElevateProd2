@@ -118,11 +118,29 @@ const Payment = () => {
     useEffect(() => {
         dispatch(loadAccountPrimary());
     }, []);
+    useEffect(() => {
+        if (balanceEnquiry !== null) {
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'NGN',
+                currencyDisplay: 'narrowSymbol'
+            });
+            const formattedAmount = formatter.format(
+                balanceEnquiry.availableBalance
+            );
+            setBalance(formattedAmount);
+        }
+    }, [balanceEnquiry]);
 
     useEffect(() => {
         if (accountPrimary !== null) {
             setSenderDetails(accountPrimary);
-            setBalance(accountPrimary.accountBalance);
+            let balanceData;
+            balanceData = {
+                accountId: accountPrimary.accountId
+            };
+
+            dispatch(getBalanceEnquiry(balanceData));
         }
     }, [accountPrimary]);
     const interBankCheck = () => {

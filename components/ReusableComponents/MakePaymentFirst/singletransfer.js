@@ -26,6 +26,7 @@ const SingleTransfer = ({
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
+
     const interBankEnquiryCheck = () => {
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
@@ -48,6 +49,9 @@ const SingleTransfer = ({
         formState: { errors }
     } = useForm();
     console.log(bankAccounts);
+    useEffect(() => {
+        setInterEnquiry('');
+    }, []);
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
