@@ -1854,12 +1854,12 @@ export const identificationDocStart = () => ({
 });
 
 export const identificationDocSuccess = (identification) => ({
-    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_SUCCESS,
+    type: uploadIdDocType.GET_ID_DOCUMENTATION_SUCCESS,
     payload: identification
 });
 
 export const identificationDocError = (identificationErrorMessages) => ({
-    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_ERROR,
+    type: uploadIdDocType.GET_ID_DOCUMENTATION_ERROR,
     payload: identificationErrorMessages
 });
 export const identificationDocData = (identificationdata) => (dispatch) => {
@@ -1882,7 +1882,7 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
             }
         )
         .then((response) => {
-            dispatch(identificationDocSuccess(response));
+            dispatch(identificationDocSuccess(response.data.message));
             console.log(response);
         })
         .catch((error) => dispatch(identificationDocError(error.response)));

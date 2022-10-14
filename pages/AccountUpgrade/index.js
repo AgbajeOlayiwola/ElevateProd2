@@ -28,6 +28,7 @@ import {
 import { useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
 import PaymentSuccess from '../../components/ReusableComponents/SuccessPage';
+import Visbility from '../../components/ReusableComponents/Eyeysvg';
 
 const AccountUpgrade = () => {
     const router = useRouter();
@@ -69,6 +70,8 @@ const AccountUpgrade = () => {
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
     const [reftwoemail, setRefTwoEmail] = useState('');
+    const [outType, setOutType] = useState();
+    const [outTyped, setOutTyped] = useState();
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
     );
@@ -87,6 +90,9 @@ const AccountUpgrade = () => {
     const { setTransactionPin, setTransactionPinError } = useSelector(
         (state) => state.setTransactionPinReducer
     );
+    const { identification, identificationErrorMessages } = useSelector(
+        (state) => state.documentIdentificationReducer
+    );
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     const dispatch = useDispatch();
@@ -101,6 +107,10 @@ const AccountUpgrade = () => {
         setLoading(true);
         dispatch(loadsetTransactionPin(data));
     };
+
+    useEffect(() => {
+        setMessage('');
+    }, []);
 
     const transactionPin = () => {
         if (setTransactionPin !== null) {
@@ -225,7 +235,7 @@ const AccountUpgrade = () => {
             setMessage(utilityUpload.data.message);
             setStatusbar('success');
             setTitle('Success');
-        } else {
+        } else if (utilityUplodaErrorMessages !== null) {
             setMessage(utilityUplodaErrorMessages);
             setStatusbar('error');
             setTitle('Success');
@@ -250,6 +260,21 @@ const AccountUpgrade = () => {
         };
         dispatch(identificationDocData(identificationThings));
     };
+
+    useEffect(() => {
+        if (identification !== null) {
+            setMessage(identification);
+            setStatusbar('success');
+            setTitle('Success');
+            setLoading(false);
+        } else if (identificationErrorMessages !== null) {
+            setMessage(identificationErrorMessages.data.message);
+            setStatusbar('error');
+            setTitle('Success');
+            setLoading(false);
+        }
+    }, [identification, identificationErrorMessages]);
+    console.log(identificationErrorMessages);
 
     //Identification Upload End
 
@@ -278,7 +303,7 @@ const AccountUpgrade = () => {
                 icon: <AddressSvg />
             },
             {
-                title: 'Transaction Pin',
+                title: 'Set Transaction Pin',
                 icon: <SignatureRuleSvg />
             },
             {
@@ -296,7 +321,7 @@ const AccountUpgrade = () => {
                 icon: <AddressSvg />
             },
             {
-                title: 'Transaction Pin',
+                title: 'Set Transaction Pin',
                 icon: <SignatureRuleSvg />
             },
             {
@@ -331,6 +356,12 @@ const AccountUpgrade = () => {
                 title: 'MEMAT'
             }
         ]
+    };
+    const types = (type) => {
+        setOutType(type);
+    };
+    const typed = (type) => {
+        setOutTyped(type);
     };
     const { states } = useSelector((state) => state.statesReducer);
     const newStates = () => {
@@ -1178,13 +1209,13 @@ const AccountUpgrade = () => {
                     <button onClick={reffernceUpload}>Send Invite</button>
                 </AccountUpgradeComponent>
             );
-        case 'Transaction Pin':
+        case 'Set Transaction Pin':
             return (
                 <AccountUpgradeComponent
                     action={() => {
                         setTitle('First');
                     }}
-                    title="Transaction Pin"
+                    title="Set Transaction Pin"
                 >
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className={styles.documentBody}>
@@ -1200,41 +1231,48 @@ const AccountUpgrade = () => {
                             ) : null} */}
                             <div className={styles.directorsGroup}>
                                 <label>Transaction Pin</label>
-                                <input
-                                    type="password"
-                                    name="transactionPin"
-                                    {...register('transactionPin', {
-                                        required: 'Transaction Pin is required',
-                                        minLength: {
-                                            value: 6,
-                                            message: 'Min length is 6'
-                                        },
-                                        maxLength: {
-                                            value: 6,
-                                            message: 'Max length is 6'
-                                        },
-                                        pattern: {
-                                            value: /^[0-9]/i,
-                                            message:
-                                                'Transaction Pin can only be number '
-                                        }
-                                    })}
-                                    placeholder="Enter Transaction Pin"
-                                />
+                                <div className={styles.divs}>
+                                    <input
+                                        type={outType ? 'text' : 'password'}
+                                        name="transactionPin"
+                                        {...register('transactionPin', {
+                                            required:
+                                                'Transaction Pin is required',
+                                            minLength: {
+                                                value: 6,
+                                                message: 'Min length is 6'
+                                            },
+                                            maxLength: {
+                                                value: 6,
+                                                message: 'Max length is 6'
+                                            },
+                                            pattern: {
+                                                value: /^[0-9]/i,
+                                                message:
+                                                    'Transaction Pin can only be number '
+                                            }
+                                        })}
+                                        placeholder="Enter Transaction Pin"
+                                    />
+                                    <Visbility typeSet={types} />
+                                </div>
                                 <p className={styles.error}>
                                     {errors.transactionPin?.message}
                                 </p>
                             </div>
                             <div className={styles.directorsGroup}>
                                 <label>Password</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    {...register('password', {
-                                        required: 'Password is required'
-                                    })}
-                                    placeholder="Enter Password"
-                                />
+                                <div className={styles.divs}>
+                                    <input
+                                        type={outTyped ? 'text' : 'password'}
+                                        name="password"
+                                        {...register('password', {
+                                            required: 'Password is required'
+                                        })}
+                                        placeholder="Enter Password"
+                                    />
+                                    <Visbility typeSet={typed} />
+                                </div>
                                 <p className={styles.error}>
                                     {errors.password?.message}
                                 </p>
@@ -1258,7 +1296,7 @@ const AccountUpgrade = () => {
                     action={
                         statusbar === 'error'
                             ? () => {
-                                  setTitle('Transaction Pin');
+                                  setTitle('First');
                               }
                             : statusbar === 'success'
                             ? () => {
@@ -1270,6 +1308,7 @@ const AccountUpgrade = () => {
                 // <PaymentSuccess/>
             );
     }
+    return <h2>Hello</h2>;
 };
 
 export default AccountUpgrade;
