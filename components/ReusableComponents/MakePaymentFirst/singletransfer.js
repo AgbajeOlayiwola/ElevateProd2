@@ -132,7 +132,7 @@ const SingleTransfer = ({
                         name="bankName"
                     >
                         <option value="">Select Bank</option>
-                        <option value="Ecobank">Ecobank</option>
+                        <option value="Ecobank">ECOBANK</option>
                         {bank?.map((bank, index) => {
                             return (
                                 <option value={bank.institutionId} key={index}>

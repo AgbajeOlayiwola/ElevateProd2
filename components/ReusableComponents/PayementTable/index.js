@@ -73,7 +73,7 @@ const PaymentTable = ({ title }) => {
                           if (searchValue === '') {
                               return item;
                           } else if (
-                              item.type
+                              item.transactionType
                                   .toLowerCase()
                                   .includes(searchValue.toLowerCase())
                           ) {

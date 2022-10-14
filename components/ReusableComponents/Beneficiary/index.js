@@ -9,6 +9,7 @@ const Beneficiary = () => {
         (state) => state.getBeneficiariesReducer
     );
     const [beneficiaries, setBeneficiaries] = useState([]);
+    const [search, setSearch] = useState('');
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getBeneficiariesData());
@@ -18,32 +19,67 @@ const Beneficiary = () => {
             setBeneficiaries(getBeneficiaries);
         }
     }, [getBeneficiaries]);
+    let beneficiaryName;
     return (
         <div className={styles.beneficiary}>
             <div className={styles.beneficiaryHeader}>
                 <h2>Beneficiaries</h2>
-                <p>View all</p>
+
+                <div className={styles.beneficiarySearch}>
+                    <img src="../Assets/Svgs/search.svg" alt="" />
+                    <input
+                        type="text"
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                        }}
+                        placeholder="Search Beneficiary"
+                    />
+                </div>
             </div>
             <div className={styles.beneficiaryBody}>
                 {!beneficiaries.beneficiaries?.length ? (
                     <h2>You do not have any Beneficiaries at the Moment</h2>
                 ) : (
-                    beneficiaries.beneficiaries?.map((beneficiaries, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className={styles.beneficiarySingle}
-                            >
-                                <BeneficiaryAvatarSvg />
-                                <p className={styles.name}>
-                                    {beneficiaries.beneficiaryName}
-                                </p>
-                                <p className={styles.benebank}>
-                                    {beneficiaries.bankName}
-                                </p>
-                            </div>
-                        );
-                    })
+                    beneficiaries.beneficiaries
+                        ?.filter((item) => {
+                            if (search === '') {
+                                return item;
+                            } else if (
+                                item.beneficiaryName
+                                    .toLowerCase()
+                                    .includes(search.toLowerCase())
+                            ) {
+                                return item;
+                            }
+                        })
+                        .map((beneficiaries, index) => {
+                            {
+                                beneficiaries
+                                    ? (beneficiaryName =
+                                          beneficiaries.beneficiaryName.split(
+                                              ' '
+                                          ))
+                                    : null;
+                            }
+                            return (
+                                <div
+                                    key={index}
+                                    className={styles.beneficiarySingle}
+                                >
+                                    <div className={styles.beneficiaryIcon}>
+                                        <BeneficiaryAvatarSvg />
+                                    </div>
+                                    <div>
+                                        <p className={styles.name}>
+                                            {`${beneficiaryName[0]} ${beneficiaryName[1]}`}
+                                        </p>
+                                        <p className={styles.benebank}>
+                                            {beneficiaries.bankName}
+                                        </p>
+                                    </div>
+                                </div>
+                            );
+                        })
                 )}
             </div>
         </div>

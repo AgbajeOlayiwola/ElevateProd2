@@ -112,7 +112,8 @@ const BillPayment = ({
                             <p>View all</p>
                         </div>
                         <div className={styles.beneficiaryBody}>
-                            <div className={styles.beneficiarySingle}>
+                            <h2>No Recent Transactions</h2>
+                            {/* <div className={styles.beneficiarySingle}>
                                 <div>
                                     <img
                                         src="../../Assets/Svgs/IkejaLogo.svg"
@@ -129,7 +130,7 @@ const BillPayment = ({
                                     />
                                 </div>
                                 <p className={styles.name}>GOtv Subscriti...</p>
-                            </div>
+                            </div> */}
                             {/* <div className={styles.beneficiarySingle}>
                                 <BeneficiaryAvatarSvg />
                                 <p className={styles.name}>Ikeja Electric</p>
