@@ -309,7 +309,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                     {title === 'Basic' ? (
                         <form
                             onSubmit={handleSubmit(() => {
-                                if (!business) {
+                                if (business === '') {
                                     setBusinessError(true);
                                 }
                                 setTitle('Other');
@@ -768,7 +768,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                 <div className={styles.formGroup}>
                                     <div className={styles.singleFormGroup}>
                                         <label>
-                                            Enter Referral Code{' '}
+                                            Enter Referral Code
                                             <span>(Optional)</span>
                                         </label>
                                         <input
@@ -832,7 +832,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     : 'No file chosen...'}
                                             </p>
                                             <label>
-                                                Upload{' '}
+                                                Upload
                                                 <input
                                                     type="file"
                                                     placeholder="Enter Code"
