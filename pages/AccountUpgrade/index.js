@@ -61,13 +61,10 @@ const AccountUpgrade = () => {
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState('');
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -213,17 +210,27 @@ const AccountUpgrade = () => {
         setUtilityFileName(e.target.files[0].name);
     };
     const utilityUploads = () => {
-        // console.log(utilityFile);
+        setLoading(true);
         const utilityThingd = {
             streetName: streetName,
             lga: localGovernmane,
-            state: localState,
+            state: selstate,
             utilityDocument: utilityFile
         };
         dispatch(uploadUtilityData(utilityThingd));
         // console.log('state', localState, localGovernment, utilityFile);
     };
     useEffect(() => {
+        if (utilityUpload !== null) {
+            setMessage(utilityUpload.data.message);
+            setStatusbar('success');
+            setTitle('Success');
+        } else {
+            setMessage(utilityUplodaErrorMessages);
+            setStatusbar('error');
+            setTitle('Success');
+            setLoading(false);
+        }
         console.log(utilityUpload);
         console.log(utilityUplodaErrorMessages);
     }, [utilityUpload, utilityUplodaErrorMessages]);
@@ -235,6 +242,7 @@ const AccountUpgrade = () => {
         setIdentificationDocumentName(e.target.files[0].name);
     };
     const IdentificationyUpload = () => {
+        setLoading(true);
         const identificationThings = {
             meansOfIdentification: IDType,
             idNumber: idNumber,
@@ -725,8 +733,8 @@ const AccountUpgrade = () => {
                             </div>
                         </div>
                     </div>
-                    {utilityUpload ? (
-                        utilityUpload.data.message
+                    {loading ? (
+                        <Loader />
                     ) : (
                         <button onClick={utilityUploads}>Update Profile</button>
                     )}
@@ -792,12 +800,16 @@ const AccountUpgrade = () => {
                             </div>
                         </div>
                     </div>
-                    <button
-                        onClick={IdentificationyUpload}
-                        className={styles.updateBtn}
-                    >
-                        Update Profiles
-                    </button>
+                    {loading ? (
+                        <Loader />
+                    ) : (
+                        <button
+                            onClick={IdentificationyUpload}
+                            className={styles.updateBtn}
+                        >
+                            Update Profiles
+                        </button>
+                    )}
                 </AccountUpgradeComponent>
             );
         case 'Document':
