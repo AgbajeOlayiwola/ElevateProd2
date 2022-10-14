@@ -10,13 +10,21 @@ const TableDetail = ({
     Status,
     keys
 }) => {
-    const newBeneficiary = Beneficiary.split(' ', 2);
+    let newBeneficiary;
+    if (Beneficiary === null) {
+        newBeneficiary = '';
+    } else {
+        newBeneficiary = Beneficiary.split(' ');
+    }
     const newDate = Dates.split('T');
+    console.log(newBeneficiary);
     return (
         <>
             <div className={styles.TableDetailBody} key={keys}>
                 <p className={styles.bene}>
-                    {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                    {newBeneficiary === ''
+                        ? ''
+                        : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
                 </p>
                 <p className={styles.transfer}>{Type}</p>
                 <p className={styles.amount}>{Amount}</p>
