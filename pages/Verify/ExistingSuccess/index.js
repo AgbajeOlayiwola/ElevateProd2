@@ -39,7 +39,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                     </h2>
                     <h3>
                         Your Account Number is{' '}
-                        <span>{bankAccounts[0].accountNumber}</span>
+                        {/* <span>{bankAccounts[0].accountNumber}</span> */}
                     </h3>
                     <Link href="/Dashboard">
                         <ButtonComp
