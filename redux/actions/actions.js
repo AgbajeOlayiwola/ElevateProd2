@@ -1792,10 +1792,20 @@ export const bankAccountsLoadError = (bankAccountErrorMessages) => ({
     payload: bankAccountErrorMessages
 });
 export const bankAccountsData = () => (dispatch) => {
-    const exToken = getCookie('existingToken');
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     dispatch(accountNumberLoadStart());
     axiosInstance
-        .get(`https://ellevate-test.herokuapp.com${apiRoutes.banksAccounts}`)
+        .get(`https://ellevate-test.herokuapp.com${apiRoutes.banksAccounts}`, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) => {
             dispatch(bankAccountsSuccess(response.data));
         })

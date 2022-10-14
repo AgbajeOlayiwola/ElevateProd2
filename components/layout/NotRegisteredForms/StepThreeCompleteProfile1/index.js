@@ -107,7 +107,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     useEffect(() => {
         dispatch(CompProfile());
         dispatch(loadUserProfile());
-        console.log(profile.data);
+        // console.log(profile.data);
         {
             profile.data?.map((item) => {
                 if (item.documentType === 'CAC') {
@@ -143,21 +143,21 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         newAccount,
         newAccountErrorMessage
     );
-    useEffect(() => {
-        if (newAccount.message === 'success') {
-            console.log(errorMessages);
-            router.push('/Verify/Account/loading');
-        } else if (
-            newAccountErrorMessage ===
-            'You already have an account with us. Please contact us for more information'
-        ) {
-            router.push('/Succes');
-        }
+    // useEffect(() => {
+    //     if (newAccount.message === 'success') {
+    //         console.log(errorMessages);
+    //         router.push('/Verify/Account/loading');
+    //     } else if (
+    //         newAccountErrorMessage ===
+    //         'You already have an account with us. Please contact us for more information'
+    //     ) {
+    //         router.push('/Succes');
+    //     }
 
-        if (businessCategories !== null) {
-            setBusinessCategory(businessCategories);
-        }
-    }, [businessCategories, newAccountErrorMessage, newAccount]);
+    //     if (businessCategories !== null) {
+    //         setBusinessCategory(businessCategories);
+    //     }
+    // }, [businessCategories, newAccountErrorMessage, newAccount]);
     useEffect(() => {
         Object.keys(businessCategory)?.filter((item) => {
             if (item === business) {
@@ -212,25 +212,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         // console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
-    useEffect(() => {
-        setLoading((prev) => !prev);
-        console.log(compBusprofile);
-        if (compBusprofile) {
-            if (
-                compBusprofile.message === 'Successful' ||
-                comperrorMessage.message ===
-                    'your have already setup your business'
-            ) {
-                profile.data?.map((item) => {
-                    if (type === 'true') {
-                        router.push('/Verify/CorportateAccount');
-                    } else if (type === 'false') {
-                        router.push('/Verify/Account/loading');
-                    }
-                });
-            }
-        }
-    }, [newAccount, comperrorMessage]);
 
     const handleSubmitReg = () => {
         setLoading((prev) => !prev);
@@ -252,6 +233,27 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
+
+    useEffect(() => {
+        setLoading((prev) => !prev);
+        console.log(compBusprofile);
+        if (compBusprofile) {
+            if (
+                compBusprofile.message === 'Successful' ||
+                comperrorMessage.message ===
+                    'your have already setup your business'
+            ) {
+                profile.data?.map((item) => {
+                    if (type === 'true') {
+                        router.push('/Verify/CorportateAccount');
+                    } else if (type === 'false') {
+                        router.push('/Verify/Account/loading');
+                    }
+                });
+            }
+        }
+    }, [newAccount, comperrorMessage]);
+
     const [activeBtn, setActiveBtn] = useState(true);
     //console.log(test)
     // console.log(type);

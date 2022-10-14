@@ -31,9 +31,9 @@ const RegisteredForm = ({
         formState: { errors }
     } = useForm();
 
-    const account = localStorage.getItem('displayAccount');
+    const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
-
+    console.log(accountDetails);
     const sendAccount = localStorage.getItem('account');
     const sendAccounts = JSON.parse(sendAccount);
     const [activeBtn, setActiveBtn] = useState(true);
@@ -98,7 +98,7 @@ const RegisteredForm = ({
         // meta = { ...meta, password: e.target.value };
         // window.localStorage.setItem('meta', JSON.stringify(meta));
     };
-
+    // console.log(profileInfo);
     let accounts = window.localStorage.getItem('account');
     var newAccounts = JSON.parse(accounts);
     console.log(newAccounts);
@@ -161,7 +161,7 @@ const RegisteredForm = ({
                                 value={
                                     newAccounts.email === null
                                         ? formData.emailData
-                                        : newAccounts.user.email
+                                        : newAccounts.user?.email
                                 }
                                 onChange={(event) =>
                                     setFormData({
