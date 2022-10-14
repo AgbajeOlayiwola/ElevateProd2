@@ -85,6 +85,9 @@ const StepFour = ({ title, action }) => {
             console.log(phones);
         }
     }, []);
+    const [profileInfo, setProfileInfo] = useState([]);
+    const account = localStorage.getItem('account');
+    const accountDetails = JSON.parse(account);
 
     const onSubmitNew = (data) => {
         setLoading((prev) => !prev);
@@ -96,7 +99,7 @@ const StepFour = ({ title, action }) => {
             businessType: businesses,
             referralCode: refferalCode,
             countryCode: '+234',
-            businessPhoneNumber: phones.phoneNumber,
+            businessPhoneNumber: profileInfo.phoneNumber,
             street: streetName,
             state: localState,
             city: city,
@@ -123,74 +126,43 @@ const StepFour = ({ title, action }) => {
             setBusinessCategory(businessCategories);
         }
     };
-    // useEffect(() => {
-    //     profileTest();
-    // }, [compBusprofile, comperrorMessage]);
+    useEffect(() => {
+        profileTest();
+    }, [compBusprofile, comperrorMessage]);
 
-    // const onSubmit = (data) => {
-    //     console.log('old');
-    // console.log('old');
-    // const userData = {
-    //     isRegistered: 'true',
-    //     businessName: formData.bussinessName,
-    //     businessCategory: business,
-    //     businessType: businesses,
-    //     referralCode: formData.refferalCode,
-    //     countryCode: '+234',
-    //     businessPhoneNumber: formData.phoneNumber,
-    //     street: formData.streetName,
-    //     state: formData.state,
-    //     city: formData.city,
-    //     lga: formData.localGoverment,
-    //     refereeCode: 'END'
-    // };
-    // dispatch(ompleteBusinessProfile(userData));
-    // };
-    // console.log(businessName);
-    // const newAccountTest = () => {
-    //     console.log(createAccount);
-    //     if (errorData === 'User already Exists') {
-    //         router.push('/Succes/AccountSuccess');
-    //     } else if (errorData) {
-    //         setError(errorData);
-    //         console.log(errorData);
-    //         setLoading(false);
-    //     } else if (createAccount.statusCode === 200) {
-    //         console.log(createAccount);
-    //         dispatch(accountStatusData(createAccount.data.userId));
-    //         localStorage.setItem(
-    //             'userId',
-    //             JSON.stringify(createAccount.data.userId)
-    //         );
-    //         localStorage.setItem(
-    //             'token',
-    //             JSON.stringify(createAccount.data.token)
-    //         );
-    //     }
-    // };
-    // useEffect(() => {
-    //     newAccountTest();
-    // }, [errorData, createAccount]);
+    const onSubmit = (data) => {
+        console.log('old');
+        console.log('old');
+        const userData = {
+            isRegistered: 'true',
+            businessName: formData.bussinessName,
+            businessCategory: business,
+            businessType: businesses,
+            referralCode: formData.refferalCode,
+            countryCode: '+234',
+            businessPhoneNumber: formData.phoneNumber,
+            street: formData.streetName,
+            state: formData.state,
+            city: formData.city,
+            lga: formData.localGoverment,
+            refereeCode: 'END'
+        };
+        dispatch(CompleteBusinessProfile(userData));
+    };
 
-    // const newAccountTest1 = () => {
-    //     console.log(accountStatus);
-    //     if (errorMessages) {
-    //         setError(errorMessages);
-    //         console.log(errorMessages);
-    //         setLoading(false);
-    //     } else if (accountStatus.message === 'Try Again') {
-    //         router.push('/Verify/ExistingAccount');
-    //     } else if (accountStatus.message === 'SUCCESS') {
-    //         window.localStorage.setItem(
-    //             'accountNumber',
-    //             JSON.stringify(accountStatus.data)
-    //         );
-    //         router.push('/Verify/ExistingSuccess');
-    //     }
-    // };
-    // useEffect(() => {
-    //     newAccountTest1();
-    // }, [errorMessages, accountStatus]);
+    useEffect(() => {
+        setLoading((prev) => !prev);
+        console.log(compBusprofile);
+        if (compBusprofile) {
+            if (
+                compBusprofile.message === 'Successful' ||
+                comperrorMessage.message ===
+                    'your have already setup your business'
+            ) {
+                router.push('/Verify/CorportateAccount');
+            }
+        }
+    }, [compBusprofile, comperrorMessage]);
 
     const types = (type) => {
         setOutType(type);
@@ -220,6 +192,12 @@ const StepFour = ({ title, action }) => {
         dispatch(businessCategoriesData());
     }, []);
     useEffect(() => {
+        if (accountDetails.profile !== undefined) {
+            setProfileInfo(accountDetails.profile);
+        } else if (accountDetails.user !== undefined) {
+            setProfileInfo(accountDetails.user.profile);
+        }
+        console.log(profileInfo);
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
         }
@@ -475,9 +453,9 @@ const StepFour = ({ title, action }) => {
                                                                 e.target.value
                                                             )
                                                         }
-                                                        // value={
-                                                        //     accountDetails.phoneNumber
-                                                        // }
+                                                        value={
+                                                            profileInfo.phoneNumber
+                                                        }
                                                     />
                                                 </div>
                                             </div>

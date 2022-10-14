@@ -10,9 +10,12 @@ import { bankAccountsData } from '../../../redux/actions/actions';
 
 const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     const dispatch = useDispatch();
-    const account = localStorage.getItem('displayAccount');
+    const [profileInfo, setProfileInfo] = useState([]);
+    const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
+
     const [isRegistered, setIsRegistered] = useState(false);
+
     const [progress, setProgress] = useState('50%');
     const [bgcolor, setBgcolor] = useState(false);
 
@@ -50,6 +53,12 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     );
     useEffect(() => {
         dispatch(bankAccountsData());
+        if (accountDetails.profile !== undefined) {
+            setProfileInfo(accountDetails.profile);
+        } else if (accountDetails.user !== undefined) {
+            setProfileInfo(accountDetails.user.profile);
+        }
+        console.log(profileInfo);
         console.log(bankAccounts[0]?.accountNumber);
     }, []);
 
@@ -100,11 +109,11 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                 <label>Full Name </label>
 
                                 <input
-                                    placeholder="Enter Your Email"
+                                    placeholder="Full Name"
                                     className={styles.textInput}
                                     required
                                     readOnly
-                                    value={`${accountDetails.lastname}  ${accountDetails.lastname}`}
+                                    value={`${profileInfo.lastName}  ${profileInfo.firstName}`}
                                 />
                             </div>
                             <div>
@@ -124,7 +133,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                         <input
                                             type="number"
                                             placeholder="812 345 6789"
-                                            value={accountDetails.phoneNumber}
+                                            value={profileInfo.phoneNumber}
                                         />
                                     </div>
                                 </div>

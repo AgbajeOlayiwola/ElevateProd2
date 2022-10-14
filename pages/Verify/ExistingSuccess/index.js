@@ -5,8 +5,10 @@ import Link from 'next/link';
 import Success from '../../../components/ReusableComponents/Success';
 import { ButtonComp } from '../../../components';
 import { useDispatch, useSelector } from 'react-redux';
+import { bankAccountsData } from '../../../redux/actions/actions';
 
 const ExistingSuccess = ({ handleShowSuccessStep }) => {
+    const dispatch = useDispatch();
     const [activeBtn, setActiveBtn] = useState(true);
     // let accountDetails;
     // let accountNumber;
@@ -24,7 +26,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
     useEffect(() => {
         dispatch(bankAccountsData());
         console.log(bankAccounts);
-    }, [bankAccounts]);
+    }, []);
     return (
         <div className={styles.cover}>
             <>
@@ -37,7 +39,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                     </h2>
                     <h3>
                         Your Account Number is{' '}
-                        {/* <span>{bankAccounts[0].accountNumber}</span> */}
+                        <span>{bankAccounts[0].accountNumber}</span>
                     </h3>
                     <Link href="/Dashboard">
                         <ButtonComp

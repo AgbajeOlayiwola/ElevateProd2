@@ -331,25 +331,8 @@ const HomeMain = () => {
             // console.log('ecoOnlineData', ecoonlinePassword, ecoonlineUserName);
             // console.log(ecobankOnline);
             dispatch(ecobankOnlineData(postData));
-            console.log(ecobankOnline.message);
+            console.log(ecobankOnline);
 
-            if (ecobankOnline.message === 'success') {
-                const data = {
-                    email: ecobankOnline.data.user.email,
-                    firstName: omniliteData.data.user.profile.firstName,
-                    lastName: ecobankOnline.data.user.profile.lastName,
-                    phoneNumber: ecobankOnline.data.user.phoneNumber
-                };
-                window.localStorage.setItem(
-                    'displayAccount',
-                    JSON.stringify(data)
-                );
-                window.localStorage.setItem(
-                    'account',
-                    JSON.stringify(ecobankOnline.data.user)
-                );
-                router.push('/Onboarding/ExistingProfileSetup');
-            }
             //ecoBank Online Login End
 
             if (omniliteData.message === 'success') {
@@ -469,6 +452,26 @@ const HomeMain = () => {
     useEffect(() => {
         acctTest();
     }, [accountNumbers, errorMessages]);
+    const ecoOnlineTest = () => {
+        if (ecobankOnline.message === 'success') {
+            const data = {
+                email: ecobankOnline.data.user.email,
+                firstName: ecobankOnline.data.user.profile.firstName,
+                lastName: ecobankOnline.data.user.profile.lastName,
+                phoneNumber: ecobankOnline.data.user.phoneNumber
+            };
+            window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            window.localStorage.setItem(
+                'account',
+                JSON.stringify(ecobankOnline.data.user)
+            );
+            router.push('/Onboarding/ExistingProfileSetup');
+        }
+    };
+    useEffect(() => {
+        // console.log(ecobankOnline, ecoOnlineErrorMessage);
+        ecoOnlineTest();
+    }, [ecobankOnline, ecoOnlineErrorMessage]);
     const types = (type) => {
         setOutType(type);
     };

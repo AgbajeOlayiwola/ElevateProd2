@@ -40,9 +40,9 @@ const Liveness = ({ action, loading, setLoading }) => {
     // const [loading, setLoading] = useState(false);
     const [verifying, setVerifying] = useState(false);
 
-    useEffect(() => {
-        setLoading(false);
-    }, []);
+    // useEffect(() => {
+    //     setLoading(false);
+    // }, []);
     const capture = React.useCallback(() => {
         // dispatch(loadUserProfile());
 
@@ -85,9 +85,9 @@ const Liveness = ({ action, loading, setLoading }) => {
                 setError(error.response.data.message);
             });
     }, [webcamRef, setImgSrc, setImageSrcI]);
-    useEffect(() => {
-        setLoading((prev) => !prev);
-    }, [succes, error]);
+    // useEffect(() => {
+    //     setLoading((prev) => !prev);
+    // }, [succes, error]);
 
     return (
         <div className={styles.body}>

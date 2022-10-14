@@ -71,7 +71,7 @@ const PaymentSuccess = ({
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            text="Try again"
+                            text="Continue"
                             type="button"
                             onClick={action}
                         />
