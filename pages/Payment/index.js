@@ -632,7 +632,7 @@ const Payment = () => {
                                 amount={paymentDetails.amount}
                                 title="Bulk Payments"
                                 // recieverName={paymentDetails.accountNumber}
-                                sender={paymentDetails.sourceAccount}
+                                sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
                                 // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
                                 number={
@@ -643,7 +643,7 @@ const Payment = () => {
                                 transferAction={(data) => {
                                     setIsLoading(true);
                                     const paymentData = {
-                                        accountId: paymentDetails.sourceAccount,
+                                        accountId: senderDetails.accountId,
                                         transactionPin: Object.values(data)
                                             .toString()
                                             .replaceAll(',', ''),
@@ -764,7 +764,7 @@ const Payment = () => {
                                 amount={paymentDetails.amount}
                                 title="Bills Payment"
                                 recieverBank={airtimeNetData.name}
-                                sender={userProfileData.profile.preferredName}
+                                sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
                                 overlay={overlay}
                                 transferAction={(data) => {
                                     setIsLoading(true);
