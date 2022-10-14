@@ -10,14 +10,18 @@ const TableDetail = ({
     Status,
     keys
 }) => {
+    const newBeneficiary = Beneficiary.split(' ', 2);
+    const newDate = Dates.split('T');
     return (
         <>
             <div className={styles.TableDetailBody} key={keys}>
-                <p className={styles.bene}>{Beneficiary} </p>
+                <p className={styles.bene}>
+                    {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                </p>
                 <p className={styles.transfer}>{Type}</p>
                 <p className={styles.amount}>{Amount}</p>
                 <p className={styles.bank}>{Bank === null ? 'Null' : Bank}</p>
-                <p className={styles.date}>{Dates}</p>
+                <p className={styles.date}>{newDate[0]}</p>
                 <p className={styles.status}>{Status}</p>
             </div>
         </>
