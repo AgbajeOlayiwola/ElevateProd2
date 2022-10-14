@@ -783,7 +783,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             }}
                                         />
                                     </div>
-                                    {loading ? <Loader /> : null}
+                                    {/* {loading ? <Loader /> : null} */}
                                     {/* {profileCont.isBusinessRegistered ===
                                     true ? (
                                         <ButtonComp
