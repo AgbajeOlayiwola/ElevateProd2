@@ -220,7 +220,7 @@ const RegisteredForm = ({
                                 <p className={styles.error}>{passwordMatch}</p>
                             )}
                         </div>
-                        {loading ? <Loader /> : null}
+                        {/* {loading ? <Loader /> : null} */}
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}

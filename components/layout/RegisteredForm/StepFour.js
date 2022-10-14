@@ -606,7 +606,7 @@ const StepFour = ({ title, action }) => {
                                             setRefferalCode(e.target.value)
                                         }
                                     />{' '}
-                                    {loading ? <Loader /> : null}
+                                    {/* {loading ? <Loader /> : null} */}
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={
@@ -975,7 +975,7 @@ const StepFour = ({ title, action }) => {
                                         placeholder="Enter  Code"
                                         className={styles.textInput}
                                     />{' '}
-                                    {loading ? <Loader /> : null}
+                                    {/* {loading ? <Loader /> : null} */}
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={
