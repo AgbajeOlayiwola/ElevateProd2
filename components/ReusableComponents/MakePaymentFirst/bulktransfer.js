@@ -14,7 +14,7 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
     const count = 0;
-    const [number, setNumber] = useState([]);
+    const [number, setNumber] = useState([1]);
     useEffect(() => {}, [number]);
 
     useEffect(() => {
@@ -32,88 +32,74 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
     } = useForm();
     return (
         <div>
+            <h2 className={styles.firstTitle}>{firstTitle}</h2>
+            <Beneficiary />
             <form onSubmit={handleSubmit(action)}>
-                <div className={styles.bulkHeader}>
-                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
-                    <Beneficiary />
-                    <div className={styles.narration}>
-                        <label className={styles.bulkLabel}>
-                            Source Account
-                        </label>
-                        <select
-                            name="sourceAccount"
-                            {...register('sourceAccount')}
-                        >
-                            {/* <option defaultValue={bankAccounts[0]?.accountId}>
+                <div className={styles.narration}>
+                    <label className={styles.bulkLabel}>Source Account</label>
+                    <select name="sourceAccount" {...register('sourceAccount')}>
+                        {/* <option defaultValue={bankAccounts[0]?.accountId}>
                                 {bankAccounts[0]?.accountNumber}
                             </option> */}
-                            {bankAccounts?.map((accounts, index) => {
-                                return (
-                                    <option
-                                        value={accounts.accountId}
-                                        key={index}
-                                    >
-                                        {accounts.accountNumber}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                    </div>
-                    {number?.map((e, index) => {
-                        const fieldName = `details[${index}]`;
-                        return (
-                            <div className={styles.addedFormCont} key={index}>
-                                <div className={styles.formNumber}>
-                                    <label className={styles.bulkLabel}>
-                                        Account Number
-                                    </label>
-                                    <input
-                                        type="number"
-                                        placeholder="Enter Account Number"
-                                        {...register(
-                                            `${fieldName}.accountNumber`,
-                                            {
-                                                required:
-                                                    'Account Number  is required',
-                                                pattern: {
-                                                    value: /^[0-9]/i,
-                                                    message:
-                                                        'Account Number can only be number '
-                                                }
-                                            }
-                                        )}
-                                        name={`${fieldName}.accountNumber`}
-                                    />
-                                </div>
-                                <div className={styles.formBank}>
-                                    <label className={styles.bulkLabel}>
-                                        Choose Bank
-                                    </label>
-                                    <select
-                                        {...register(`${fieldName}.bankName`, {
-                                            required: 'Bank name is required'
-                                        })}
-                                        name={`${fieldName}.bankName`}
-                                    >
-                                        <option value="">Select Bank</option>
-                                        <option value="Ecobank">ECOBANK</option>
-                                        {banks?.map((item, index) => {
-                                            return (
-                                                <option
-                                                    value={item.institutionId}
-                                                    key={index}
-                                                >
-                                                    {item.institutionName}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </div>
-                            </div>
-                        );
-                    })}
+                        {bankAccounts?.map((accounts, index) => {
+                            return (
+                                <option value={accounts.accountId} key={index}>
+                                    {accounts.accountNumber}
+                                </option>
+                            );
+                        })}
+                    </select>
                 </div>
-                <div className={styles.oldForm}>
+                {number?.map((e, index) => {
+                    const fieldName = `details[${index}]`;
+                    return (
+                        <div className={styles.addedFormCont} key={index}>
+                            <div className={styles.formNumber}>
+                                <label className={styles.bulkLabel}>
+                                    Account Number
+                                </label>
+                                <input
+                                    type="number"
+                                    placeholder="Enter Account Number"
+                                    {...register(`${fieldName}.accountNumber`, {
+                                        required: 'Account Number  is required',
+                                        pattern: {
+                                            value: /^[0-9]/i,
+                                            message:
+                                                'Account Number can only be number '
+                                        }
+                                    })}
+                                    name={`${fieldName}.accountNumber`}
+                                />
+                            </div>
+                            <div className={styles.formBank}>
+                                <label className={styles.bulkLabel}>
+                                    Choose Bank
+                                </label>
+                                <select
+                                    {...register(`${fieldName}.bankName`, {
+                                        required: 'Bank name is required'
+                                    })}
+                                    name={`${fieldName}.bankName`}
+                                >
+                                    <option value="">Select Bank</option>
+                                    <option value="Ecobank">ECOBANK</option>
+                                    {banks?.map((item, index) => {
+                                        return (
+                                            <option
+                                                value={item.institutionId}
+                                                key={index}
+                                            >
+                                                {item.institutionName}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                    );
+                })}
+                {/* <div className={styles.oldForm}>
                     <div className={styles.formCont}>
                         <div className={styles.oldFormBody}>
                             <div className={styles.formGroup}>
@@ -179,12 +165,53 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
                             <PlusSvg />
                         </div>
                     </div>
-                </div>
-                <div className={styles.bulkWrapper}>
+                </div> */}
+                <div className={styles.narration}>
                     <div className={styles.uploadCsv}>
                         <p>
                             Tap to <span>Upload CSV File</span>
                         </p>
+                        <div className={styles.actionButtons}>
+                            <div
+                                className={styles.plus}
+                                onClick={() => {
+                                    console.log(number.length);
+                                    if (
+                                        number.length === 8 ||
+                                        number.length > 8
+                                    ) {
+                                        alert(
+                                            'You can only carry out 10 transactions at the same time. Use CSV file instead'
+                                        );
+                                    } else {
+                                        setNumber((arr) => [
+                                            ...arr,
+                                            `${arr.length}`
+                                        ]);
+                                    }
+                                }}
+                            >
+                                <PlusSvg />
+                            </div>
+                            <div
+                                className={styles.minus}
+                                onClick={() => {
+                                    console.log(number.length);
+                                    if (
+                                        number.length === 9 ||
+                                        number.length > 9
+                                    ) {
+                                        alert(
+                                            'You can only carry out 10 transactions at the same time. Use CSV file instead'
+                                        );
+                                    } else {
+                                        // number.pop();
+                                    }
+                                }}
+                            >
+                                -
+                            </div>
+                        </div>
                     </div>
                     <div className={styles.amountDiv}>
                         <label className={styles.bulkLabel}>Amount</label>

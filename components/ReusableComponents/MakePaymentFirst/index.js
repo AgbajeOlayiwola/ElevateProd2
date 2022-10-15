@@ -46,13 +46,7 @@ const MakePaymentFirst = ({
     return (
         <Overlay overlay={overlay}>
             <div className={styles.firstDiv} ref={myref}>
-                <div
-                    className={
-                        firstTitle === 'Bulk Payments'
-                            ? styles.bulkBody
-                            : styles.firstBody
-                    }
-                >
+                <div className={styles.firstBody}>
                     {firstTitle === 'Single Transfer Payment' ? (
                         <SingleTransfer
                             selfaction={selfaction}
