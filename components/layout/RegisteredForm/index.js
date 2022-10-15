@@ -54,9 +54,9 @@ const ExistingMultiStep = () => {
                             const userData = {
                                 userId: formData.userId,
                                 email:
-                                    newAccounts.user?.email === null
-                                        ? newAccounts.user?.email
-                                        : formData.emailData,
+                                    newAccounts.email === null
+                                        ? formData.emailData
+                                        : newAccounts.user?.email,
                                 password: formData.password,
                                 confirmPassword: formData.confPassword
                             };
