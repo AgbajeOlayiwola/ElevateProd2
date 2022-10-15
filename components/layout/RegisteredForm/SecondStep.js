@@ -126,7 +126,7 @@ const RegisteredForm = ({
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     const [outTypes, setOutTypes] = useState();
-    console.log(errorMessage);
+
     console.log(existingUserProfilee);
     return (
         <div className={styles.body}>
