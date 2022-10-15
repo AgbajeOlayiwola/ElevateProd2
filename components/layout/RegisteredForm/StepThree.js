@@ -98,7 +98,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                 <label>Account Number </label>
 
                                 <input
-                                    placeholder="Account Number "
+                                    placeholder="Fetching Account Number ...."
                                     className={styles.textInput}
                                     required
                                     readOnly

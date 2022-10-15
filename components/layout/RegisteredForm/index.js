@@ -41,7 +41,7 @@ const ExistingMultiStep = () => {
         // console.log(newAccounts.user.email);
     }
     // console.log(formData.emailData, newAccounts.user?.email);
-    console.log(formData.emailData, newAccounts.email);
+    // console.log(formData.emailData, newAccounts.email);
 
     const conditionalComponent = () => {
         switch (page) {
