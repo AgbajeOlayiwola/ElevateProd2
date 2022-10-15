@@ -223,6 +223,10 @@
 .updateBtn {
     margin-top: 64px;
 }
+
+.updateBtn:hover {
+    margin-top: 60px;
+}
 /* ID Card end*/
 
 /*Documents*/

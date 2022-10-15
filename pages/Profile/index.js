@@ -29,7 +29,8 @@ import {
     loadViewBvn,
     loadfreezeTransactions,
     loadunfreezeTransactions,
-    loadUserProfile
+    loadUserProfile,
+    loadAccountPrimary
 } from '../../redux/actions/actions';
 import { set, useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
@@ -42,10 +43,12 @@ const Profile = () => {
     const [text, setText] = useState('View Profile');
     const [error, setError] = useState('');
     const [bvn, setBvn] = useState('');
+    const [acctNumber, setAcctNumber] = useState('');
     const [count, setCount] = useState(0);
     const [outType, setOutType] = useState();
     const [beneficiaries, setBeneficiaries] = useState([]);
     const [userProfileData, setUserProfileData] = useState([]);
+    const [outTyped, setOutTyped] = useState();
     const dispatch = useDispatch();
     const { getBeneficiaries } = useSelector(
         (state) => state.getBeneficiariesReducer
@@ -63,10 +66,22 @@ const Profile = () => {
         (state) => state.unfreezeTransactionsReducer
     );
     const { userProfile } = useSelector((state) => state.userProfileReducer);
+    const { accountPrimary, accountPrimaryError } = useSelector(
+        (state) => state.accountPrimaryReducer
+    );
     useEffect(() => {
         dispatch(getBeneficiariesData());
         dispatch(loadUserProfile());
+        dispatch(loadAccountPrimary());
     }, []);
+
+    useEffect(() => {
+        if (accountPrimary !== null) {
+            setAcctNumber(accountPrimary);
+        } else {
+            setAcctNumber('Pending');
+        }
+    }, [accountPrimary]);
     useEffect(() => {
         if (getBeneficiaries !== null) {
             setBeneficiaries(getBeneficiaries);
@@ -192,6 +207,9 @@ const Profile = () => {
     // console.log(countryNames.flags.svg);
     const types = (type) => {
         setOutType(type);
+    };
+    const typed = (type) => {
+        setOutTyped(type);
     };
     const {
         register,
@@ -337,7 +355,7 @@ const Profile = () => {
                                     <label>Enter your Password</label>
                                     <div className={styles.divs}>
                                         <input
-                                            placeholder="**********"
+                                            placeholder="Enter your Password"
                                             {...register('bvnPassword', {
                                                 required: 'Password is Required'
                                             })}
@@ -351,9 +369,20 @@ const Profile = () => {
                                     </p>
                                 </div>
                                 {bvn ? (
-                                    <p className={styles.bvns}>
-                                        Your bvn is {bvn}
-                                    </p>
+                                    <div className={styles.formGroup}>
+                                        <label>Your BVN</label>
+                                        <div className={styles.divs}>
+                                            <input
+                                                value={bvn}
+                                                type={
+                                                    outTyped
+                                                        ? 'password'
+                                                        : 'text'
+                                                }
+                                            />
+                                            <Visbility typeSet={typed} />
+                                        </div>
+                                    </div>
                                 ) : null}
                                 <div className={styles.bvnButton}>
                                     {loading ? (
@@ -365,36 +394,6 @@ const Profile = () => {
                                     )}
                                 </div>
                             </form>
-                        );
-                    case 1:
-                        return (
-                            <ManageLimit2
-                                title="Update Signatories"
-                                overlay={overlay}
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                btnAction={(data) => {
-                                    setCount(count + 1);
-                                    console.log(data);
-                                }}
-                            />
-                        );
-                    case 2:
-                        return (
-                            <PaymentSuccess
-                                overlay={overlay}
-                                type="profile"
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                heading="New Signatory Successful"
-                                body="Ayomide James has been added to your Signatory"
-                            />
                         );
                 }
 
@@ -868,7 +867,7 @@ const Profile = () => {
                             <div className={styles.accountNumber}>
                                 <h4>Account Number</h4>
                                 <div className={styles.accountNumberCopy}>
-                                    <p>2345678910 (Ecobank)</p>
+                                    <p>{acctNumber.accountNumber}</p>
                                     <h5>copy</h5>
                                 </div>
                             </div>
@@ -885,6 +884,7 @@ const Profile = () => {
                                             setText(item.text);
                                             setOverlay(true);
                                             setCount(0);
+                                            setBvn('');
                                         }}
                                         color={item.color}
                                     />
