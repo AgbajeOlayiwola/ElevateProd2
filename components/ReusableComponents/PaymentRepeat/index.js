@@ -4,7 +4,7 @@ import CloseButton from '../CloseButtonSvg';
 import Overlay from '../Overlay';
 import styles from './styles.module.css';
 
-const PaymentRepeat = ({ overlay, closeAction }) => {
+const PaymentRepeat = ({ overlay, closeAction, type }) => {
     return (
         <Overlay overlay={overlay}>
             <div className={styles.repeatCont}>
@@ -31,10 +31,8 @@ const PaymentRepeat = ({ overlay, closeAction }) => {
                 </div>
                 <div className={styles.repeatBody}>
                     <div className={styles.formGroup}>
-                        <label>Choose Transfer Type</label>
-                        <select name="" id="">
-                            <option value="">Single Transfer</option>
-                        </select>
+                        <label> Transfer Type</label>
+                        <input type="text" value={type} />
                     </div>
                     <div className={styles.formGroup}>
                         <label>Set Time</label>

@@ -45,6 +45,7 @@ const AccountUpgrade = () => {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
     const [director, setDirector] = useState(false);
+    const [outcome, setOutcome] = useState(false);
     const [scmulfile, setScmulFile] = useState('');
     const [scmulfileName, setScmulFileName] = useState('');
     const [co2file, setCo2File] = useState('');
@@ -59,6 +60,7 @@ const AccountUpgrade = () => {
     const [streetName, setStreetName] = useState('');
     const [localGovernmane, setLocalGovernmane] = useState('');
     const [statusbar, setStatusbar] = useState('');
+    const [verifyStatus, setVerifyStatus] = useState('pending');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
@@ -116,13 +118,13 @@ const AccountUpgrade = () => {
         if (setTransactionPin !== null) {
             setMessage('Transaction Pin Set Successfully');
             setStatusbar('success');
-            setTitle('Success');
+            setOutcome(true);
             setLoading(false);
-            // setTitle('First');
+            // setOutcome('First');
         } else if (setTransactionPinError !== null) {
             setMessage(setTransactionPinError);
             setStatusbar('error');
-            setTitle('Success');
+            setOutcome(true);
             setLoading(false);
         }
     };
@@ -234,11 +236,13 @@ const AccountUpgrade = () => {
         if (utilityUpload !== null) {
             setMessage(utilityUpload.data.message);
             setStatusbar('success');
-            setTitle('Success');
+            setOutcome(true);
+            setLoading(false);
+            setVerifyStatus('completed');
         } else if (utilityUplodaErrorMessages !== null) {
             setMessage(utilityUplodaErrorMessages);
             setStatusbar('error');
-            setTitle('Success');
+            setOutcome(true);
             setLoading(false);
         }
         console.log(utilityUpload);
@@ -265,12 +269,12 @@ const AccountUpgrade = () => {
         if (identification !== null) {
             setMessage(identification);
             setStatusbar('success');
-            setTitle('Success');
+            setOutcome(true);
             setLoading(false);
         } else if (identificationErrorMessages !== null) {
             setMessage(identificationErrorMessages.data.message);
             setStatusbar('error');
-            setTitle('Success');
+            setOutcome(true);
             setLoading(false);
         }
     }, [identification, identificationErrorMessages]);
@@ -300,19 +304,23 @@ const AccountUpgrade = () => {
         individual: [
             {
                 title: 'Verify your Address',
-                icon: <AddressSvg />
+                icon: <AddressSvg />,
+                statusReport: verifyStatus
             },
             {
                 title: 'Set Transaction Pin',
-                icon: <SignatureRuleSvg />
+                icon: <SignatureRuleSvg />,
+                statusReport: 'pending'
             },
             {
                 title: 'Upload Utility BIll',
-                icon: <BillSvg />
+                icon: <BillSvg />,
+                statusReport: 'pending'
             },
             {
                 title: 'Upload ID Card',
-                icon: <IdCard />
+                icon: <IdCard />,
+                statusReport: 'pending'
             }
         ],
         corporate: [
@@ -382,586 +390,595 @@ const AccountUpgrade = () => {
             }
         });
     }, [selstate]);
-    switch (title) {
-        case 'First':
-            return (
-                <AccountUpgradeComponent
-                    title={
-                        text === 'INDIVIDUAL'
-                            ? 'Individual Account Upgrade'
-                            : text === 'CORPORATE'
-                            ? 'Corporate Account Upgrade'
-                            : null
-                    }
-                    action={() => {
-                        router.push('./Dashboard');
-                    }}
-                >
-                    <div className={styles.currentLevel}>
-                        <div className={styles.currentLevelDonut}>
-                            <DounutComp />
-                            <p className={styles.perc}>70%</p>
-                        </div>
-                        <div className={styles.currentLeveltext}>
-                            <h2>You’re currently at Level xxx</h2>
-                            <div>
-                                <p>Account Limit: N1,000,000 </p>
-                                <p>Loan Limit: xxxxxx</p>
+    const multiStep = () => {
+        switch (title) {
+            case 'First':
+                return (
+                    <AccountUpgradeComponent
+                        title={
+                            text === 'INDIVIDUAL'
+                                ? 'Individual Account Upgrade'
+                                : text === 'CORPORATE'
+                                ? 'Corporate Account Upgrade'
+                                : null
+                        }
+                        action={() => {
+                            router.push('./Dashboard');
+                        }}
+                    >
+                        <div className={styles.currentLevel}>
+                            <div className={styles.currentLevelDonut}>
+                                <DounutComp />
+                                <p className={styles.perc}>70%</p>
+                            </div>
+                            <div className={styles.currentLeveltext}>
+                                <h2>You’re currently at Level xxx</h2>
+                                <div>
+                                    <p>Account Limit: N1,000,000 </p>
+                                    <p>Loan Limit: xxxxxx</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={styles.verifyText}>
-                        <p>
-                            We need to verity your information, please submit
-                            the documents below to process your account upgrade.
-                        </p>
-                    </div>
-                    {text === 'INDIVIDUAL'
-                        ? AccountUpgradeData.individual.map((item, index) => {
-                              return (
-                                  <AccountUpgradeSingle
-                                      statusInfo="Pending"
-                                      icon={item.icon}
-                                      text={item.title}
-                                      key={index}
-                                      action={() => {
-                                          setTitle(item.title);
-                                      }}
-                                  />
-                              );
-                          })
-                        : text === 'Corporate'
-                        ? AccountUpgradeData.corporate.map((item, index) => {
-                              if (item.title === 'Documents') {
-                                  return (
-                                      <>
+                        <div className={styles.verifyText}>
+                            <p>
+                                We need to verity your information, please
+                                submit the documents below to process your
+                                account upgrade.
+                            </p>
+                        </div>
+                        {text === 'INDIVIDUAL'
+                            ? AccountUpgradeData.individual.map(
+                                  (item, index) => {
+                                      return (
                                           <AccountUpgradeSingle
-                                              statusInfo="Pending"
+                                              statusInfo={item.statusReport}
                                               icon={item.icon}
                                               text={item.title}
                                               key={index}
                                               action={() => {
-                                                  setDocument(!document);
+                                                  setTitle(item.title);
                                               }}
                                           />
-                                          {document
-                                              ? AccountUpgradeData.document.map(
-                                                    (item, index) => {
+                                      );
+                                  }
+                              )
+                            : text === 'Corporate'
+                            ? AccountUpgradeData.corporate.map(
+                                  (item, index) => {
+                                      if (item.title === 'Documents') {
+                                          return (
+                                              <>
+                                                  <AccountUpgradeSingle
+                                                      statusInfo="Pending"
+                                                      icon={item.icon}
+                                                      text={item.title}
+                                                      key={index}
+                                                      action={() => {
+                                                          setDocument(
+                                                              !document
+                                                          );
+                                                      }}
+                                                  />
+                                                  {document
+                                                      ? AccountUpgradeData.document.map(
+                                                            (item, index) => {
+                                                                return (
+                                                                    <AccountUpgradeSingle
+                                                                        text={
+                                                                            item.title
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        statusInfo="Pending"
+                                                                        action={() => {
+                                                                            setTitle(
+                                                                                item.title
+                                                                            );
+                                                                        }}
+                                                                    />
+                                                                );
+                                                            }
+                                                        )
+                                                      : null}
+                                              </>
+                                          );
+                                      } else {
+                                          return (
+                                              <AccountUpgradeSingle
+                                                  statusInfo="Pending"
+                                                  icon={item.icon}
+                                                  text={item.title}
+                                                  key={index}
+                                                  action={() => {
+                                                      setTitle(item.title);
+                                                  }}
+                                              />
+                                          );
+                                      }
+                                  }
+                              )
+                            : null}
+                        <button className={styles.buttonDone}>Done</button>
+                    </AccountUpgradeComponent>
+                );
+            case 'Verify your Address':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Verify your Address"
+                    >
+                        <div className={styles.verifyBody}>
+                            <p>
+                                Provide the address you previously entered while
+                                registering for verification.
+                            </p>
+                            <div className={styles.addressBody}>
+                                <div className={styles.addressGroup}>
+                                    <label>Address </label>
+                                    <input
+                                        value={streetName}
+                                        onChange={(e) =>
+                                            setStreetName(e.target.value)
+                                        }
+                                        type="text"
+                                        placeholder="Enter Address "
+                                    />
+                                </div>
+                                <div className={styles.addressCont}>
+                                    <div className={styles.midCont}>
+                                        <div className={styles.addressGroup}>
+                                            <label>Landmark</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Enter Landmark"
+                                                value={landMark}
+                                                onInput={(e) => {
+                                                    setLandMark(e.target.value);
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.midCont}>
+                                        <div className={styles.addressGroup}>
+                                            <label>State</label>
+                                            <select
+                                                name=""
+                                                id=""
+                                                onChange={(event) => {
+                                                    setState(
+                                                        event.target.value
+                                                    );
+                                                    // console.log(selstate);
+                                                }}
+                                            >
+                                                <option value={selstate}>
+                                                    {selstate}
+                                                </option>
+                                                {location?.map(
+                                                    (state, index) => {
                                                         return (
-                                                            <AccountUpgradeSingle
-                                                                text={
-                                                                    item.title
+                                                            <option
+                                                                value={
+                                                                    state.code
                                                                 }
                                                                 key={index}
-                                                                statusInfo="Pending"
-                                                                action={() => {
-                                                                    setTitle(
-                                                                        item.title
-                                                                    );
-                                                                }}
-                                                            />
+                                                            >
+                                                                {state.state}
+                                                            </option>
                                                         );
                                                     }
-                                                )
-                                              : null}
-                                      </>
-                                  );
-                              } else {
-                                  return (
-                                      <AccountUpgradeSingle
-                                          statusInfo="Pending"
-                                          icon={item.icon}
-                                          text={item.title}
-                                          key={index}
-                                          action={() => {
-                                              setTitle(item.title);
-                                          }}
-                                      />
-                                  );
-                              }
-                          })
-                        : null}
-                    <button className={styles.buttonDone}>Done</button>
-                </AccountUpgradeComponent>
-            );
-        case 'Verify your Address':
-            return (
-                <AccountUpgradeComponent
-                    action={() => {
-                        setTitle('First');
-                    }}
-                    title="Verify your Address"
-                >
-                    <div className={styles.verifyBody}>
-                        <p>
-                            Provide the address you previously entered while
-                            registering for verification.
-                        </p>
-                        <div className={styles.addressBody}>
-                            <div className={styles.addressGroup}>
-                                <label>Address </label>
-                                <input
-                                    value={streetName}
-                                    onChange={(e) =>
-                                        setStreetName(e.target.value)
+                                                )}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.addressCont}>
+                                    <div className={styles.midCont}>
+                                        <div className={styles.addressGroup}>
+                                            <label>City</label>
+                                            <input
+                                                value={
+                                                    city === null ? '' : city
+                                                }
+                                                onChange={(e) =>
+                                                    setCity(e.target.value)
+                                                }
+                                                type="text"
+                                                placeholder="Enter City"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className={styles.midCont}>
+                                        <div className={styles.addressGroup}>
+                                            <label>Local Government Area</label>
+                                            <select
+                                                name=""
+                                                id=""
+                                                onChange={(event) => {
+                                                    setLocalGovernmane(
+                                                        event.target.value
+                                                    );
+                                                }}
+                                            >
+                                                <option value={localGovernmane}>
+                                                    {localGovernmane}
+                                                </option>
+                                                {localGovernment
+                                                    ? localGovernment?.map(
+                                                          (item, index) => {
+                                                              return (
+                                                                  <option
+                                                                      value={
+                                                                          item.lgaCode
+                                                                      }
+                                                                      key={
+                                                                          index
+                                                                      }
+                                                                  >
+                                                                      {
+                                                                          item.lgaName
+                                                                      }
+                                                                  </option>
+                                                              );
+                                                          }
+                                                      )
+                                                    : null}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <Link
+                                href={{
+                                    pathname:
+                                        'https://ecocomonoreact.azurewebsites.net/customer-details/',
+                                    query: {
+                                        workitemId: 'AO-095734358976187628-CO',
+                                        customerName:
+                                            userProfile?.preferredName,
+                                        customerEmail: userProfile?.email,
+                                        branchCode: 'A02',
+                                        segmentId: 'ADB',
+                                        // houseNumber: '25',
+                                        address: streetName,
+                                        // streetName: 'Igbobi College Road',
+                                        // areaName: 'Yaba',
+                                        landmark: landMark,
+                                        state: selstate,
+                                        lga: localGovernmane,
+                                        createdBy: 'RealMg',
+                                        customerImage: '',
+                                        Latitude: latitude,
+                                        Longitude: longitude
                                     }
-                                    type="text"
-                                    placeholder="Enter Address "
-                                />
-                            </div>
-                            <div className={styles.addressCont}>
-                                <div className={styles.midCont}>
-                                    <div className={styles.addressGroup}>
-                                        <label>Landmark</label>
-                                        <input
-                                            type="text"
-                                            placeholder="Enter Landmark"
-                                            value={landMark}
-                                            onInput={(e) => {
-                                                setLandMark(e.target.value);
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className={styles.midCont}>
-                                    <div className={styles.addressGroup}>
-                                        <label>State</label>
-                                        <select
-                                            name=""
-                                            id=""
-                                            onChange={(event) => {
-                                                setState(event.target.value);
-                                                // console.log(selstate);
-                                            }}
-                                        >
-                                            <option value={selstate}>
-                                                {selstate}
-                                            </option>
-                                            {location?.map((state, index) => {
-                                                return (
-                                                    <option
-                                                        value={state.code}
-                                                        key={index}
-                                                    >
-                                                        {state.state}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.addressCont}>
-                                <div className={styles.midCont}>
-                                    <div className={styles.addressGroup}>
-                                        <label>City</label>
-                                        <input
-                                            value={city === null ? '' : city}
-                                            onChange={(e) =>
-                                                setCity(e.target.value)
-                                            }
-                                            type="text"
-                                            placeholder="Enter City"
-                                        />
-                                    </div>
-                                </div>
-                                <div className={styles.midCont}>
-                                    <div className={styles.addressGroup}>
-                                        <label>Local Government Area</label>
-                                        <select
-                                            name=""
-                                            id=""
-                                            onChange={(event) => {
-                                                setLocalGovernmane(
-                                                    event.target.value
-                                                );
-                                            }}
-                                        >
-                                            <option value={localGovernmane}>
-                                                {localGovernmane}
-                                            </option>
-                                            {localGovernment
-                                                ? localGovernment?.map(
-                                                      (item, index) => {
-                                                          return (
-                                                              <option
-                                                                  value={
-                                                                      item.lgaCode
-                                                                  }
-                                                                  key={index}
-                                                              >
-                                                                  {item.lgaName}
-                                                              </option>
-                                                          );
-                                                      }
-                                                  )
-                                                : null}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <Link
-                            href={{
-                                pathname:
-                                    'https://ecocomonoreact.azurewebsites.net/customer-details/',
-                                query: {
-                                    workitemId: 'AO-095734358976187628-CO',
-                                    customerName: userProfile?.preferredName,
-                                    customerEmail: userProfile?.email,
-                                    branchCode: 'A02',
-                                    segmentId: 'ADB',
-                                    // houseNumber: '25',
-                                    address: streetName,
-                                    // streetName: 'Igbobi College Road',
-                                    // areaName: 'Yaba',
-                                    landmark: landMark,
-                                    state: selstate,
-                                    lga: localGovernmane,
-                                    createdBy: 'RealMg',
-                                    customerImage: '',
-                                    Latitude: latitude,
-                                    Longitude: longitude
-                                }
-                            }}
-                        >
-                            <button>Confirm Address</button>
-                        </Link>
-                    </div>
-                </AccountUpgradeComponent>
-            );
-        case 'Upload Utility BIll':
-            return (
-                <AccountUpgradeComponent
-                    action={() => {
-                        setTitle('First');
-                    }}
-                    title="Utility"
-                >
-                    <div className={styles.utilityBody}>
-                        <div className={styles.signatureGroup}>
-                            <p>Upload Photo</p>
-                            <div className={styles.signatureFormGroup}>
-                                <p>
-                                    {' '}
-                                    {utilityFileName
-                                        ? utilityFileName
-                                        : 'No file chosen...'}
-                                </p>
-                                <label>
-                                    <input
-                                        type="file"
-                                        onChange={saveUtilityFile}
-                                    />{' '}
-                                    Upload
-                                </label>
-                            </div>
-                        </div>
-                        <div className={styles.addressBody}>
-                            <div className={styles.addressGroup}>
-                                <label>Street </label>
-                                <input
-                                    value={streetName}
-                                    onChange={(e) =>
-                                        setStreetName(e.target.value)
-                                    }
-                                    type="text"
-                                    placeholder="Enter Street "
-                                />
-                            </div>
-                            <div className={styles.addressCont}>
-                                <div className={styles.midCont}>
-                                    <div className={styles.addressGroup}>
-                                        <label>Landmark</label>
-                                        <input
-                                            value={landMark}
-                                            onChange={(e) =>
-                                                setLandMark(e.target.value)
-                                            }
-                                            type="text"
-                                            placeholder="Enter Landmark"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className={styles.midCont}>
-                                    <div className={styles.addressGroup}>
-                                        <label>State</label>
-                                        <select
-                                            name=""
-                                            id=""
-                                            onChange={(event) => {
-                                                setState(event.target.value);
-                                                // console.log(selstate);
-                                            }}
-                                        >
-                                            <option value={selstate}>
-                                                {selstate}
-                                            </option>
-                                            {location?.map((state, index) => {
-                                                return (
-                                                    <option
-                                                        value={state.code}
-                                                        key={index}
-                                                    >
-                                                        {state.state}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.addressCont}>
-                                <div className={styles.midCont}>
-                                    <div className={styles.addressGroup}>
-                                        <label>City</label>
-                                        <input
-                                            value={city}
-                                            onChange={(e) =>
-                                                setCity(e.target.value)
-                                            }
-                                            type="text"
-                                            placeholder="Enter City"
-                                        />
-                                    </div>
-                                </div>
-                                <div className={styles.midCont}>
-                                    <div className={styles.addressGroup}>
-                                        <label>Local Government Area</label>
-                                        <select
-                                            name=""
-                                            id=""
-                                            onChange={(event) => {
-                                                setLocalGovernmane(
-                                                    event.target.value
-                                                );
-                                            }}
-                                        >
-                                            <option value={localGovernmane}>
-                                                {localGovernmane}
-                                            </option>
-                                            {localGovernment
-                                                ? localGovernment?.map(
-                                                      (item, index) => {
-                                                          return (
-                                                              <option
-                                                                  value={
-                                                                      item.lgaName
-                                                                  }
-                                                                  key={index}
-                                                              >
-                                                                  {item.lgaName}
-                                                              </option>
-                                                          );
-                                                      }
-                                                  )
-                                                : null}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {loading ? (
-                        <Loader />
-                    ) : (
-                        <button onClick={utilityUploads}>Update Profile</button>
-                    )}
-                </AccountUpgradeComponent>
-            );
-        case 'Upload ID Card':
-            return (
-                <AccountUpgradeComponent
-                    action={() => {
-                        setTitle('First');
-                    }}
-                    title="Means of Identification"
-                >
-                    <div className={styles.meansIdentification}>
-                        <div className={styles.identificationGroup}>
-                            <label>Choose Means of Identification</label>
-                            <select
-                                name=""
-                                id=""
-                                onChange={(e) => {
-                                    setIDType(e.target.value);
                                 }}
                             >
-                                <option value="">Select regulatory ID</option>
-                                <option value="Voters Card">Voters Card</option>
-                                <option value="National ID card">
-                                    National ID card
-                                </option>
-                                <option value="Drivers License">
-                                    Drivers License
-                                </option>
-                                <option value="International Passport">
-                                    International Passport
-                                </option>
-                            </select>
+                                <button>Confirm Address</button>
+                            </Link>
                         </div>
-                        <div className={styles.identificationGroup}>
-                            <label>ID Number</label>
-                            <input
-                                type="text"
-                                onChange={(e) => setIdNumber(e.target.value)}
-                                placeholder="Enter ID  Number"
-                            />
-                        </div>
-                    </div>
-                    <div className={styles.signature}>
-                        <div className={styles.signatureGroup}>
-                            <p>Upload ID</p>
-                            <div className={styles.signatureFormGroup}>
-                                <p>
-                                    {' '}
-                                    {identificationDocumentFileName
-                                        ? identificationDocumentFileName
-                                        : 'No file chosen...'}
-                                </p>
-                                <label>
-                                    <input
-                                        onChange={saveIdentificationFile}
-                                        type="file"
-                                    />{' '}
-                                    Upload
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    {loading ? (
-                        <Loader />
-                    ) : (
-                        <button
-                            onClick={IdentificationyUpload}
-                            className={styles.updateBtn}
-                        >
-                            Update Profiles
-                        </button>
-                    )}
-                </AccountUpgradeComponent>
-            );
-        case 'Document':
-            return (
-                <AccountUpgradeComponent
-                    action={() => {
-                        setTitle('First');
-                    }}
-                    title="Documents"
-                >
-                    <div className={styles.rcNumber}>
-                        <label>RC Number/Business Registration Number</label>
-                        <input
-                            type="text"
-                            name=""
-                            id=""
-                            placeholder="rc123456789"
-                        />
-                    </div>
-                    <div className={styles.documentSingle}>
-                        <div className={styles.signatureGroup}>
-                            <p>
-                                Upload SCUML Certificate <span>(optional)</span>{' '}
-                            </p>
-                            <div className={styles.signatureFormGroup}>
-                                <p>No file chosen...</p>
-                                <label>
-                                    <input type="file" /> Upload
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.documentSingle}>
-                        <div className={styles.signatureGroup}>
-                            <p>Upload MEMAT</p>
-                            <div className={styles.signatureFormGroup}>
-                                <p>No file chosen...</p>
-                                <div>
-                                    <label>
-                                        <input type="file" /> Share
-                                    </label>
-                                    <label>
-                                        <input type="file" /> Upload
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.documentSingle}>
-                        <div className={styles.signatureGroup}>
-                            <p>Share Reference Form</p>
-                            <div className={styles.signatureFormGroup}>
-                                <p>No file chosen...</p>
-                                <div>
-                                    <label>
-                                        <input type="file" /> Share
-                                    </label>
-                                    <label>
-                                        <input type="file" /> Upload
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.documentSingle}>
-                        <div className={styles.signatureGroup}>
-                            <p>Upload Board Resolution</p>
-                            <div className={styles.signatureFormGroup}>
-                                <p>No file chosen...</p>
-                                <label>
-                                    <input type="file" /> Upload
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <button>Submit</button>
-                </AccountUpgradeComponent>
-            );
-        case 'Directors':
-            return (
-                <AccountUpgradeComponent
-                    action={() => {
-                        setTitle('First');
-                    }}
-                    title="Directors"
-                >
-                    <div className={styles.directorsBody}>
-                        <div className={styles.directorsGroup}>
-                            <label>Full Name</label>
-                            <input
-                                type="text"
-                                name=""
-                                placeholder="Enter Full name"
-                            />
-                        </div>
-                        <div className={styles.directorsGroup}>
-                            <label>Email</label>
-                            <input
-                                type="text"
-                                name=""
-                                placeholder="Enter Email"
-                            />
-                        </div>
-                        <div className={styles.directorsGroup}>
-                            <label>Phone Number</label>
-                            <input
-                                type="text"
-                                name=""
-                                placeholder="Enter Phone Number"
-                            />
-                        </div>
-                    </div>
-                    <p
-                        className={styles.addNew}
-                        onClick={() => {
-                            setDirector(!director);
+                    </AccountUpgradeComponent>
+                );
+            case 'Upload Utility BIll':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
                         }}
+                        title="Utility"
                     >
-                        + Add New
-                    </p>
-                    {director ? (
+                        <div className={styles.utilityBody}>
+                            <div className={styles.signatureGroup}>
+                                <p>Upload Photo</p>
+                                <div className={styles.signatureFormGroup}>
+                                    <p>
+                                        {' '}
+                                        {utilityFileName
+                                            ? utilityFileName
+                                            : 'No file chosen...'}
+                                    </p>
+                                    <label>
+                                        <input
+                                            type="file"
+                                            onChange={saveUtilityFile}
+                                        />{' '}
+                                        Upload
+                                    </label>
+                                </div>
+                            </div>
+                            <div className={styles.addressBody}>
+                                <div className={styles.addressGroup}>
+                                    <label>Street </label>
+                                    <input
+                                        value={streetName}
+                                        onChange={(e) =>
+                                            setStreetName(e.target.value)
+                                        }
+                                        type="text"
+                                        placeholder="Enter Street "
+                                    />
+                                </div>
+                                <div className={styles.addressCont}>
+                                    <div className={styles.midCont}>
+                                        <div className={styles.addressGroup}>
+                                            <label>Landmark</label>
+                                            <input
+                                                value={landMark}
+                                                onChange={(e) =>
+                                                    setLandMark(e.target.value)
+                                                }
+                                                type="text"
+                                                placeholder="Enter Landmark"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.midCont}>
+                                        <div className={styles.addressGroup}>
+                                            <label>State</label>
+                                            <select
+                                                name=""
+                                                id=""
+                                                onChange={(event) => {
+                                                    setState(
+                                                        event.target.value
+                                                    );
+                                                    // console.log(selstate);
+                                                }}
+                                            >
+                                                <option value={selstate}>
+                                                    {selstate}
+                                                </option>
+                                                {location?.map(
+                                                    (state, index) => {
+                                                        return (
+                                                            <option
+                                                                value={
+                                                                    state.code
+                                                                }
+                                                                key={index}
+                                                            >
+                                                                {state.state}
+                                                            </option>
+                                                        );
+                                                    }
+                                                )}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.addressCont}>
+                                    <div className={styles.midCont}>
+                                        <div className={styles.addressGroup}>
+                                            <label>City</label>
+                                            <input
+                                                value={city}
+                                                onChange={(e) =>
+                                                    setCity(e.target.value)
+                                                }
+                                                type="text"
+                                                placeholder="Enter City"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className={styles.midCont}>
+                                        <div className={styles.addressGroup}>
+                                            <label>Local Government Area</label>
+                                            <select
+                                                name=""
+                                                id=""
+                                                onChange={(event) => {
+                                                    setLocalGovernmane(
+                                                        event.target.value
+                                                    );
+                                                }}
+                                            >
+                                                <option value={localGovernmane}>
+                                                    {localGovernmane}
+                                                </option>
+                                                {localGovernment
+                                                    ? localGovernment?.map(
+                                                          (item, index) => {
+                                                              return (
+                                                                  <option
+                                                                      value={
+                                                                          item.lgaName
+                                                                      }
+                                                                      key={
+                                                                          index
+                                                                      }
+                                                                  >
+                                                                      {
+                                                                          item.lgaName
+                                                                      }
+                                                                  </option>
+                                                              );
+                                                          }
+                                                      )
+                                                    : null}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button onClick={utilityUploads}>
+                                Update Profile
+                            </button>
+                        )}
+                    </AccountUpgradeComponent>
+                );
+            case 'Upload ID Card':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Means of Identification"
+                    >
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Choose Means of Identification</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    onChange={(e) => {
+                                        setIDType(e.target.value);
+                                    }}
+                                >
+                                    <option value="">
+                                        Select regulatory ID
+                                    </option>
+                                    <option value="Voters Card">
+                                        Voters Card
+                                    </option>
+                                    <option value="National ID card">
+                                        National ID card
+                                    </option>
+                                    <option value="Drivers License">
+                                        Drivers License
+                                    </option>
+                                    <option value="International Passport">
+                                        International Passport
+                                    </option>
+                                </select>
+                            </div>
+                            <div className={styles.identificationGroup}>
+                                <label>ID Number</label>
+                                <input
+                                    type="text"
+                                    onChange={(e) =>
+                                        setIdNumber(e.target.value)
+                                    }
+                                    placeholder="Enter ID  Number"
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.signature}>
+                            <div className={styles.signatureGroup}>
+                                <p>Upload ID</p>
+                                <div className={styles.signatureFormGroup}>
+                                    <p>
+                                        {' '}
+                                        {identificationDocumentFileName
+                                            ? identificationDocumentFileName
+                                            : 'No file chosen...'}
+                                    </p>
+                                    <label>
+                                        <input
+                                            onChange={saveIdentificationFile}
+                                            type="file"
+                                        />{' '}
+                                        Upload
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                onClick={IdentificationyUpload}
+                                className={styles.updateBtn}
+                            >
+                                Update Profiles
+                            </button>
+                        )}
+                    </AccountUpgradeComponent>
+                );
+            case 'Document':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Documents"
+                    >
+                        <div className={styles.rcNumber}>
+                            <label>
+                                RC Number/Business Registration Number
+                            </label>
+                            <input
+                                type="text"
+                                name=""
+                                id=""
+                                placeholder="rc123456789"
+                            />
+                        </div>
+                        <div className={styles.documentSingle}>
+                            <div className={styles.signatureGroup}>
+                                <p>
+                                    Upload SCUML Certificate{' '}
+                                    <span>(optional)</span>{' '}
+                                </p>
+                                <div className={styles.signatureFormGroup}>
+                                    <p>No file chosen...</p>
+                                    <label>
+                                        <input type="file" /> Upload
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.documentSingle}>
+                            <div className={styles.signatureGroup}>
+                                <p>Upload MEMAT</p>
+                                <div className={styles.signatureFormGroup}>
+                                    <p>No file chosen...</p>
+                                    <div>
+                                        <label>
+                                            <input type="file" /> Share
+                                        </label>
+                                        <label>
+                                            <input type="file" /> Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.documentSingle}>
+                            <div className={styles.signatureGroup}>
+                                <p>Share Reference Form</p>
+                                <div className={styles.signatureFormGroup}>
+                                    <p>No file chosen...</p>
+                                    <div>
+                                        <label>
+                                            <input type="file" /> Share
+                                        </label>
+                                        <label>
+                                            <input type="file" /> Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.documentSingle}>
+                            <div className={styles.signatureGroup}>
+                                <p>Upload Board Resolution</p>
+                                <div className={styles.signatureFormGroup}>
+                                    <p>No file chosen...</p>
+                                    <label>
+                                        <input type="file" /> Upload
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button>Submit</button>
+                    </AccountUpgradeComponent>
+                );
+            case 'Directors':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Directors"
+                    >
                         <div className={styles.directorsBody}>
                             <div className={styles.directorsGroup}>
                                 <label>Full Name</label>
@@ -988,238 +1005,277 @@ const AccountUpgrade = () => {
                                 />
                             </div>
                         </div>
-                    ) : null}
-                    <button>Send Invite</button>
-                </AccountUpgradeComponent>
-            );
-        case 'CAC Registration':
-            return (
-                <AccountUpgradeComponent
-                    action={() => {
-                        setTitle('First');
-                        setDocument(false);
-                    }}
-                    title="CAC Registration"
-                >
-                    <div className={styles.documentBody}>
-                        <div className={styles.identificationGroup}>
-                            <label>CAC Registration Number</label>
-                            <input
-                                type="text"
-                                placeholder="Enter CAC Registration Number"
-                            />
-                        </div>
-                        <div className={styles.signature}>
-                            <div className={styles.signatureGroup}>
-                                <p>Upload CAC Certificate</p>
-                                <div className={styles.signatureFormGroup}>
-                                    <p>
-                                        {' '}
-                                        {fileName
-                                            ? fileName
-                                            : 'No file chosen...'}
-                                    </p>
-                                    <label>
-                                        <input
-                                            type="file"
-                                            onChange={saveFile}
-                                        />{' '}
-                                        Upload
-                                    </label>
+                        <p
+                            className={styles.addNew}
+                            onClick={() => {
+                                setDirector(!director);
+                            }}
+                        >
+                            + Add New
+                        </p>
+                        {director ? (
+                            <div className={styles.directorsBody}>
+                                <div className={styles.directorsGroup}>
+                                    <label>Full Name</label>
+                                    <input
+                                        type="text"
+                                        name=""
+                                        placeholder="Enter Full name"
+                                    />
+                                </div>
+                                <div className={styles.directorsGroup}>
+                                    <label>Email</label>
+                                    <input
+                                        type="text"
+                                        name=""
+                                        placeholder="Enter Email"
+                                    />
+                                </div>
+                                <div className={styles.directorsGroup}>
+                                    <label>Phone Number</label>
+                                    <input
+                                        type="text"
+                                        name=""
+                                        placeholder="Enter Phone Number"
+                                    />
                                 </div>
                             </div>
-                        </div>
-                        {cac === 'success' ? (
-                            <>
-                                <p>Document Upload SUccessful</p>
-                            </>
-                        ) : (
-                            <button
-                                className={styles.updateBtn}
-                                onClick={cacRegistration}
-                            >
-                                Update Profile
-                            </button>
-                        )}
-                    </div>
-                </AccountUpgradeComponent>
-            );
-        case 'SCUML Certificate':
-            return (
-                <AccountUpgradeComponent
-                    action={() => {
-                        setTitle('First');
-                        setDocument(false);
-                    }}
-                    title="SCUML Certificate"
-                >
-                    <div className={styles.documentBody}>
-                        <div className={styles.identificationGroup}>
-                            <label>SCUML Certificate Number</label>
-                            <input
-                                type="text"
-                                placeholder="Enter SCUML Certificate Number"
-                            />
-                        </div>
-                        <div className={styles.signature}>
-                            <div className={styles.signatureGroup}>
-                                <p>Upload SCUML Certificate</p>
-                                <div className={styles.signatureFormGroup}>
-                                    <p>
-                                        {' '}
-                                        {scmulfileName
-                                            ? scmulfileName
-                                            : 'No file chosen...'}
-                                    </p>
-                                    <label>
-                                        <input
-                                            onChange={saveScmulFile}
-                                            type="file"
-                                        />{' '}
-                                        Upload
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        {scmul ? (
-                            scmul.data.message
-                        ) : (
-                            <button
-                                className={styles.updateBtn}
-                                onClick={uploadScmul}
-                            >
-                                Update Profile
-                            </button>
-                        )}
-                    </div>
-                </AccountUpgradeComponent>
-            );
-        case 'MEMAT':
-            return (
-                <AccountUpgradeComponent
-                    action={() => {
-                        setTitle('First');
-                        setDocument(false);
-                    }}
-                    title="MEMAT"
-                >
-                    <div className={styles.documentBody}>
-                        <div className={styles.signature}>
-                            <div className={styles.signatureGroup}>
-                                <p>Upload CO2</p>
-                                <div className={styles.signatureFormGroup}>
-                                    <p>
-                                        {' '}
-                                        {co2FileName
-                                            ? co2FileName
-                                            : 'No file chosen...'}
-                                    </p>
-                                    <label>
-                                        <input
-                                            onChange={saveMemart2lFile}
-                                            type="file"
-                                        />{' '}
-                                        Upload
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.signature}>
-                            <div className={styles.signatureGroup}>
-                                <p>Upload CO7</p>
-                                <div className={styles.signatureFormGroup}>
-                                    <p>
-                                        {co7FileName
-                                            ? co7FileName
-                                            : 'No file chosen...'}
-                                    </p>
-                                    <label>
-                                        <input
-                                            onChange={saveMemart7lFile}
-                                            type="file"
-                                        />{' '}
-                                        Upload
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        {memart ? (
-                            memart.data.message
-                        ) : (
-                            <button
-                                onClick={memartUpload}
-                                className={styles.updateBtn}
-                            >
-                                Update Profile
-                            </button>
-                        )}
-                    </div>
-                </AccountUpgradeComponent>
-            );
-        case 'Referee':
-            return (
-                <AccountUpgradeComponent
-                    action={() => {
-                        setTitle('First');
-                    }}
-                    title="Referee"
-                >
-                    <div className={styles.directorsBody}>
-                        <h2>Reference 1</h2>
-                        <div className={styles.directorsGroup}>
-                            <label>Email</label>
-                            <input
-                                type="text"
-                                name=""
-                                placeholder="Enter Email"
-                                value={refoneemail}
-                                onChange={(e) => setRefoneEmail(e.target.value)}
-                            />
-                        </div>
-                        <div className={styles.directorsGroup}>
-                            <label>Phone Number</label>
-                            <input
-                                type="text"
-                                name=""
-                                placeholder="Enter Phone Number"
-                            />
-                        </div>
-                    </div>
-                    <div className={styles.directorsBody}>
-                        <h2>Reference 2</h2>
-                        <div className={styles.directorsGroup}>
-                            <label>Email</label>
-                            <input
-                                type="text"
-                                name=""
-                                placeholder="Enter Email"
-                                value={refoneno}
-                                onChange={(e) => setRefoneNo(e.target.value)}
-                            />
-                        </div>
-                        <div className={styles.directorsGroup}>
-                            <label>Phone Number</label>
-                            <input
-                                type="text"
-                                name=""
-                                placeholder="Enter Phone Number"
-                            />
-                        </div>
-                    </div>
-                    <button onClick={reffernceUpload}>Send Invite</button>
-                </AccountUpgradeComponent>
-            );
-        case 'Set Transaction Pin':
-            return (
-                <AccountUpgradeComponent
-                    action={() => {
-                        setTitle('First');
-                    }}
-                    title="Set Transaction Pin"
-                >
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                        ) : null}
+                        <button>Send Invite</button>
+                    </AccountUpgradeComponent>
+                );
+            case 'CAC Registration':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                            setDocument(false);
+                        }}
+                        title="CAC Registration"
+                    >
                         <div className={styles.documentBody}>
-                            {/* {message ? (
+                            <div className={styles.identificationGroup}>
+                                <label>CAC Registration Number</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter CAC Registration Number"
+                                />
+                            </div>
+                            <div className={styles.signature}>
+                                <div className={styles.signatureGroup}>
+                                    <p>Upload CAC Certificate</p>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {' '}
+                                            {fileName
+                                                ? fileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                type="file"
+                                                onChange={saveFile}
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            {cac === 'success' ? (
+                                <>
+                                    <p>Document Upload SUccessful</p>
+                                </>
+                            ) : (
+                                <button
+                                    className={styles.updateBtn}
+                                    onClick={cacRegistration}
+                                >
+                                    Update Profile
+                                </button>
+                            )}
+                        </div>
+                    </AccountUpgradeComponent>
+                );
+            case 'SCUML Certificate':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                            setDocument(false);
+                        }}
+                        title="SCUML Certificate"
+                    >
+                        <div className={styles.documentBody}>
+                            <div className={styles.identificationGroup}>
+                                <label>SCUML Certificate Number</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter SCUML Certificate Number"
+                                />
+                            </div>
+                            <div className={styles.signature}>
+                                <div className={styles.signatureGroup}>
+                                    <p>Upload SCUML Certificate</p>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {' '}
+                                            {scmulfileName
+                                                ? scmulfileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={saveScmulFile}
+                                                type="file"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            {scmul ? (
+                                scmul.data.message
+                            ) : (
+                                <button
+                                    className={styles.updateBtn}
+                                    onClick={uploadScmul}
+                                >
+                                    Update Profile
+                                </button>
+                            )}
+                        </div>
+                    </AccountUpgradeComponent>
+                );
+            case 'MEMAT':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                            setDocument(false);
+                        }}
+                        title="MEMAT"
+                    >
+                        <div className={styles.documentBody}>
+                            <div className={styles.signature}>
+                                <div className={styles.signatureGroup}>
+                                    <p>Upload CO2</p>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {' '}
+                                            {co2FileName
+                                                ? co2FileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={saveMemart2lFile}
+                                                type="file"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.signature}>
+                                <div className={styles.signatureGroup}>
+                                    <p>Upload CO7</p>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {co7FileName
+                                                ? co7FileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={saveMemart7lFile}
+                                                type="file"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            {memart ? (
+                                memart.data.message
+                            ) : (
+                                <button
+                                    onClick={memartUpload}
+                                    className={styles.updateBtn}
+                                >
+                                    Update Profile
+                                </button>
+                            )}
+                        </div>
+                    </AccountUpgradeComponent>
+                );
+            case 'Referee':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Referee"
+                    >
+                        <div className={styles.directorsBody}>
+                            <h2>Reference 1</h2>
+                            <div className={styles.directorsGroup}>
+                                <label>Email</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Email"
+                                    value={refoneemail}
+                                    onChange={(e) =>
+                                        setRefoneEmail(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div className={styles.directorsGroup}>
+                                <label>Phone Number</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Phone Number"
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.directorsBody}>
+                            <h2>Reference 2</h2>
+                            <div className={styles.directorsGroup}>
+                                <label>Email</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Email"
+                                    value={refoneno}
+                                    onChange={(e) =>
+                                        setRefoneNo(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div className={styles.directorsGroup}>
+                                <label>Phone Number</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Phone Number"
+                                />
+                            </div>
+                        </div>
+                        <button onClick={reffernceUpload}>Send Invite</button>
+                    </AccountUpgradeComponent>
+                );
+            case 'Set Transaction Pin':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Set Transaction Pin"
+                    >
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <div className={styles.documentBody}>
+                                {/* {message ? (
                                 message ===
                                 'Transaction Pin Set Successfully' ? (
                                     <p className={styles.success}>
@@ -1229,67 +1285,93 @@ const AccountUpgrade = () => {
                                     <p className={styles.errors}>{message}</p>
                                 )
                             ) : null} */}
-                            <div className={styles.directorsGroup}>
-                                <label>Transaction Pin</label>
-                                <div className={styles.divs}>
-                                    <input
-                                        type={outType ? 'text' : 'password'}
-                                        name="transactionPin"
-                                        {...register('transactionPin', {
-                                            required:
-                                                'Transaction Pin is required',
-                                            minLength: {
-                                                value: 6,
-                                                message: 'Min length is 6'
-                                            },
-                                            maxLength: {
-                                                value: 6,
-                                                message: 'Max length is 6'
-                                            },
-                                            pattern: {
-                                                value: /^[0-9]/i,
-                                                message:
-                                                    'Transaction Pin can only be number '
+                                <div className={styles.directorsGroup}>
+                                    <label>Transaction Pin</label>
+                                    <div className={styles.divs}>
+                                        <input
+                                            type={outType ? 'text' : 'password'}
+                                            name="transactionPin"
+                                            {...register('transactionPin', {
+                                                required:
+                                                    'Transaction Pin is required',
+                                                minLength: {
+                                                    value: 6,
+                                                    message: 'Min length is 6'
+                                                },
+                                                maxLength: {
+                                                    value: 6,
+                                                    message: 'Max length is 6'
+                                                },
+                                                pattern: {
+                                                    value: /^[0-9]/i,
+                                                    message:
+                                                        'Transaction Pin can only be number '
+                                                }
+                                            })}
+                                            placeholder="Enter Transaction Pin"
+                                        />
+                                        <Visbility typeSet={types} />
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors.transactionPin?.message}
+                                    </p>
+                                </div>
+                                <div className={styles.directorsGroup}>
+                                    <label>Password</label>
+                                    <div className={styles.divs}>
+                                        <input
+                                            type={
+                                                outTyped ? 'text' : 'password'
                                             }
-                                        })}
-                                        placeholder="Enter Transaction Pin"
-                                    />
-                                    <Visbility typeSet={types} />
+                                            name="password"
+                                            {...register('password', {
+                                                required: 'Password is required'
+                                            })}
+                                            placeholder="Enter Password"
+                                        />
+                                        <Visbility typeSet={typed} />
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors.password?.message}
+                                    </p>
                                 </div>
-                                <p className={styles.error}>
-                                    {errors.transactionPin?.message}
-                                </p>
                             </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Password</label>
-                                <div className={styles.divs}>
-                                    <input
-                                        type={outTyped ? 'text' : 'password'}
-                                        name="password"
-                                        {...register('password', {
-                                            required: 'Password is required'
-                                        })}
-                                        placeholder="Enter Password"
-                                    />
-                                    <Visbility typeSet={typed} />
-                                </div>
-                                <p className={styles.error}>
-                                    {errors.password?.message}
-                                </p>
-                            </div>
-                        </div>
-                        {loading ? (
-                            <Loader />
-                        ) : (
-                            <button type="submit">Submit</button>
-                        )}
-                    </form>
-                </AccountUpgradeComponent>
-            );
-        case 'Success':
-            return (
+                            {loading ? (
+                                <Loader />
+                            ) : (
+                                <button type="submit">Submit</button>
+                            )}
+                        </form>
+                    </AccountUpgradeComponent>
+                );
+            case 'Success':
+                return (
+                    <PaymentSuccess
+                        heading={message}
+                        error={message}
+                        statusbar={statusbar}
+                        overlay="true"
+                        action={
+                            statusbar === 'error'
+                                ? () => {
+                                      setTitle('First');
+                                  }
+                                : statusbar === 'success'
+                                ? () => {
+                                      setTitle('First');
+                                  }
+                                : null
+                        }
+                    />
+                );
+        }
+    };
+
+    return (
+        <>
+            {outcome ? (
                 <PaymentSuccess
-                    heading={message}
+                    body={message}
                     error={message}
                     statusbar={statusbar}
                     overlay="true"
@@ -1297,18 +1379,20 @@ const AccountUpgrade = () => {
                         statusbar === 'error'
                             ? () => {
                                   setTitle('First');
+                                  setOutcome(false);
                               }
                             : statusbar === 'success'
                             ? () => {
                                   setTitle('First');
+                                  setOutcome(false);
                               }
                             : null
                     }
                 />
-                // <PaymentSuccess/>
-            );
-    }
-    return <h2>Hello</h2>;
+            ) : null}
+            {multiStep()}
+        </>
+    );
 };
 
 export default AccountUpgrade;

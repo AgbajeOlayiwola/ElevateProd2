@@ -552,7 +552,7 @@ const Payment = () => {
                                 }}
                                 title="Single Transfer Payment"
                                 amount={paymentDetails.amount}
-                                beneName={interEnquiry.accountName}
+                                beneName={paymentDetails.accountName}
                                 repeatAction={() => {
                                     setCount(count + 1);
                                 }}
@@ -563,6 +563,7 @@ const Payment = () => {
                             <PaymentRepeat
                                 overlay={overlay}
                                 closeAction={handleClose}
+                                type="Single Transfer"
                             />
                         );
                     case 4:
