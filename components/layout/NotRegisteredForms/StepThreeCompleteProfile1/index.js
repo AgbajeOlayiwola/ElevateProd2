@@ -109,14 +109,16 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         dispatch(loadUserProfile());
         // console.log(profile.data);
         {
-            profile.data?.map((item) => {
-                if (item.documentType === 'CAC') {
-                    setFormData({
-                        ...formData,
-                        bussinessName: item.documentData.companyName
-                    });
-                }
-            });
+            if (profile) {
+                profile.data?.map((item) => {
+                    if (item.documentType === 'CAC') {
+                        setFormData({
+                            ...formData,
+                            bussinessName: item.documentData.companyName
+                        });
+                    }
+                });
+            }
         }
         setProfileCont(userProfiles);
     }, []);
@@ -839,6 +841,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     type="file"
                                                     placeholder="Enter Code"
                                                     onChange={saveFile}
+                                                    accept="image/png, image/jpeg, application/pdf"
                                                 />
                                             </label>
                                         </div>
