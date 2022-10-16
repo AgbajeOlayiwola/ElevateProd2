@@ -286,7 +286,7 @@ const Payment = () => {
             setCount(0);
         }
     };
-
+    let sum;
     const renderForm = () => {
         switch (formType) {
             case 'paylink':
@@ -621,7 +621,6 @@ const Payment = () => {
 
                                     console.log(data);
                                     setCount(count + 1);
-                                    console.log(paymentDetails.details);
                                 }}
                             />
                         );
@@ -630,17 +629,24 @@ const Payment = () => {
                             <MakePaymentSecond
                                 isLoading={isLoading}
                                 closeAction={handleClose}
-                                amount={paymentDetails.amount}
+                                amount={
+                                    paymentDetails.amount === ''
+                                        ? paymentDetails.details.reduce(
+                                              (a, b) => {
+                                                  return +a.amount + +b.amount;
+                                              }
+                                          )
+                                        : paymentDetails.amount
+                                }
                                 title="Bulk Payments"
                                 // recieverName={paymentDetails.accountNumber}
                                 sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
                                 // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
-                                number={
-                                    paymentDetails.details === undefined
-                                        ? 1
-                                        : paymentDetails.details.length + 1
-                                }
+                                number={paymentDetails.details.length}
+                                backAction={() => {
+                                    setCount(count - 1);
+                                }}
                                 transferAction={(data) => {
                                     setIsLoading(true);
                                     const paymentData = {
@@ -649,52 +655,34 @@ const Payment = () => {
                                             .toString()
                                             .replaceAll(',', ''),
                                         transactions: [
-                                            {
-                                                isEcobankToEcobankTransaction:
-                                                    paymentDetails.firstBank ===
-                                                    'Ecobank'
-                                                        ? true
-                                                        : false,
-                                                destinationBank:
-                                                    paymentDetails.firstBank,
-                                                destinationBankCode:
-                                                    paymentDetails.firstBank,
-                                                beneficiaryName:
-                                                    'HIJIOKE   NWANKWO',
-                                                destinationAccountNo:
-                                                    paymentDetails.firstAccountNumber,
-                                                transactionAmount:
-                                                    paymentDetails.amount,
-                                                narration: ''
-                                            }
+                                            paymentDetails.details?.map(
+                                                (details, index) => {
+                                                    return {
+                                                        isEcobankToEcobankTransaction:
+                                                            details.bankName ===
+                                                            'Ecobank'
+                                                                ? true
+                                                                : false,
+                                                        destinationBank:
+                                                            details.bankName,
+                                                        destinationBankCode:
+                                                            details.bankName,
+                                                        beneficiaryName:
+                                                            'HIJIOKE   NWANKWO',
+                                                        destinationAccountNo:
+                                                            details.accountNumber,
+                                                        transactionAmount:
+                                                            paymentDetails.amount ===
+                                                            ''
+                                                                ? details.amount
+                                                                : paymentDetails.amount,
+                                                        narration: ''
+                                                    };
+                                                }
+                                            )
                                         ]
                                     };
-                                    paymentDetails.details === undefined
-                                        ? null
-                                        : paymentDetails.details?.map(
-                                              (details, index) => {
-                                                  paymentData.transactions.push(
-                                                      {
-                                                          isEcobankToEcobankTransaction:
-                                                              details.bankName ===
-                                                              'Ecobank'
-                                                                  ? true
-                                                                  : false,
-                                                          destinationBank:
-                                                              details.bankName,
-                                                          destinationBankCode:
-                                                              details.bankName,
-                                                          beneficiaryName:
-                                                              'HIJIOKE   NWANKWO',
-                                                          destinationAccountNo:
-                                                              details.accountNumber,
-                                                          transactionAmount:
-                                                              paymentDetails.amount,
-                                                          narration: ''
-                                                      }
-                                                  );
-                                              }
-                                          );
+
                                     dispatch(getBulkTransfer(paymentData));
                                 }}
                             />
