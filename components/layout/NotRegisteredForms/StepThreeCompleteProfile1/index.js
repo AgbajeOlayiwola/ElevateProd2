@@ -145,21 +145,21 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         newAccount,
         newAccountErrorMessage
     );
-    // useEffect(() => {
-    //     if (newAccount.message === 'success') {
-    //         console.log(errorMessages);
-    //         router.push('/Verify/Account/loading');
-    //     } else if (
-    //         newAccountErrorMessage ===
-    //         'You already have an account with us. Please contact us for more information'
-    //     ) {
-    //         router.push('/Succes');
-    //     }
+    useEffect(() => {
+        if (newAccount.message === 'success') {
+            console.log(errorMessages);
+            router.push('/Verify/Account/loading');
+        } else if (
+            newAccountErrorMessage ===
+            'You already have an account with us. Please contact us for more information'
+        ) {
+            router.push('/Succes');
+        }
 
-    //     if (businessCategories !== null) {
-    //         setBusinessCategory(businessCategories);
-    //     }
-    // }, [businessCategories, newAccountErrorMessage, newAccount]);
+        if (businessCategories !== null) {
+            setBusinessCategory(businessCategories);
+        }
+    }, [businessCategories, newAccountErrorMessage, newAccount]);
     useEffect(() => {
         Object.keys(businessCategory)?.filter((item) => {
             if (item === business) {

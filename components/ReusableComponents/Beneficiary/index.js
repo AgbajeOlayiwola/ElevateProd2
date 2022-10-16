@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBeneficiariesData } from '../../../redux/actions/actions';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 
-const Beneficiary = () => {
+const Beneficiary = ({ action }) => {
     const { getBeneficiaries } = useSelector(
         (state) => state.getBeneficiariesReducer
     );
@@ -65,6 +65,7 @@ const Beneficiary = () => {
                                 <div
                                     key={index}
                                     className={styles.beneficiarySingle}
+                                    onClick={action}
                                 >
                                     <div className={styles.beneficiaryIcon}>
                                         <BeneficiaryAvatarSvg />

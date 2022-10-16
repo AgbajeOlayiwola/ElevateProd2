@@ -17,7 +17,6 @@ const TableDetail = ({
         newBeneficiary = Beneficiary.split(' ');
     }
     const newDate = Dates.split('T');
-    console.log(newBeneficiary);
     return (
         <>
             <div className={styles.TableDetailBody} key={keys}>

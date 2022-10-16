@@ -16,6 +16,10 @@
     max-width: 400px;
 }
 
+.backIcon {
+    cursor: pointer;
+}
+
 .icons {
     display: flex;
     justify-content: space-between;

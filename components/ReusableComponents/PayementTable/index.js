@@ -10,6 +10,7 @@ const PaymentTable = ({ title }) => {
     );
     const [tableDetails, setTableDetails] = useState([]);
     const [searchValue, setSearchValue] = useState('');
+    const [searchType, setSearchType] = useState('transactionType');
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -22,6 +23,18 @@ const PaymentTable = ({ title }) => {
             console.log(transactionElevate.transactions);
         }
     }, [transactionElevate]);
+    const changeTransaction = () => {
+        switch (searchType) {
+            case 'transactionType':
+                return 'transactionType';
+            case 'transactionStatus':
+                return 'transactionStatus';
+            case 'transactionAmount':
+                return 'transactionAmount';
+            case 'transactionDate':
+                return 'transactionDate';
+        }
+    };
     return (
         <div className={styles.table}>
             <div className={styles.tableHeader}>
@@ -31,24 +44,23 @@ const PaymentTable = ({ title }) => {
                         <img src="../Assets/Svgs/search.svg" alt="" />
                         <input
                             type="text"
-                            placeholder="Search by Type"
+                            placeholder="Search"
                             onChange={(e) => {
                                 setSearchValue(e.target.value);
                             }}
                         />
                     </div>
-                    <select name="" id="">
-                        <option value="" defaultValue="Filter">
-                            Filter
-                        </option>
-                        <option
-                            value="Bvn"
-                            onClick={(e) => {
-                                alert(e.target.value);
-                            }}
-                        >
-                            Bvn
-                        </option>
+                    <select
+                        name=""
+                        id=""
+                        onChange={(e) => {
+                            setSearchType(e.target.value);
+                        }}
+                    >
+                        <option value="transactionType">Type</option>
+                        <option value="transactionStatus">Status</option>
+                        <option value="transactionAmount">Amount</option>
+                        <option value="transactionDate">Date</option>
                     </select>
                     {/* <button>
                         Filter
@@ -73,6 +85,11 @@ const PaymentTable = ({ title }) => {
                           if (searchValue === '') {
                               return item;
                           } else if (
+                              //   searchType === 'transactionType'
+                              //       ? item.transactionType
+                              //       : searchType === 'transactionStatus'
+                              //       ? item.transactionStatus
+                              //       : null
                               item.transactionType
                                   .toLowerCase()
                                   .includes(searchValue.toLowerCase())
