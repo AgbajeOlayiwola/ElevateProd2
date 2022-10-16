@@ -111,7 +111,7 @@ const StepTwoBVNAuthenticator = ({
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
                         onClick={action}
-                        type="submit"
+                        type="button"
                         margin="80px 0px 0px 0px"
                         text="Proceed"
                     />

@@ -37,15 +37,8 @@ const Liveness = ({ action, loading, setLoading }) => {
     const [succes, setSuccess] = useState('');
     const [imageSrcI, setImageSrcI] = React.useState(null);
     const [error, setError] = React.useState('');
-    // const [loading, setLoading] = useState(false);
-    const [verifying, setVerifying] = useState(false);
 
-    // useEffect(() => {
-    //     setLoading(false);
-    // }, []);
     const capture = React.useCallback(() => {
-        // dispatch(loadUserProfile());
-
         setLoading((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
@@ -72,7 +65,7 @@ const Liveness = ({ action, loading, setLoading }) => {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         Authorization: `Bearer ${cookie}`
-                    }
+                    // }
                 }
             )
             .then((response) => {
@@ -85,9 +78,6 @@ const Liveness = ({ action, loading, setLoading }) => {
                 setError(error.response.data.message);
             });
     }, [webcamRef, setImgSrc, setImageSrcI]);
-    // useEffect(() => {
-    //     setLoading((prev) => !prev);
-    // }, [succes, error]);
 
     return (
         <div className={styles.body}>
@@ -110,16 +100,16 @@ const Liveness = ({ action, loading, setLoading }) => {
                                     : styles.imageInner
                             }
                         >
-                            {imageSrcI ? (
+                            {/* {imageSrcI ? (
                                 <img src={imageSrcI} />
-                            ) : (
-                                <Webcam
-                                    audio={false}
-                                    screenshotFormat="image/jpeg"
-                                    videoConstraints={videoConstraints}
-                                    ref={webcamRef}
-                                />
-                            )}
+                            ) : ( */}
+                            <Webcam
+                                audio={false}
+                                screenshotFormat="image/jpeg"
+                                videoConstraints={videoConstraints}
+                                ref={webcamRef}
+                            />
+                            {/* )} */}
                         </div>
                     </div>
                 </div>
@@ -129,7 +119,7 @@ const Liveness = ({ action, loading, setLoading }) => {
                     onClick={succes === 'success' ? action : capture}
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
-                    type="submit"
+                    type="button"
                     text={
                         // succes === 'facial verification successful'
                         succes === 'success' ? 'Continue' : 'Snap'
