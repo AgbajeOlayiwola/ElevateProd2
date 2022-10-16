@@ -107,6 +107,7 @@ const ProfileSetups = () => {
     const [loading, setLoading] = useState(false);
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
+
     const conditionalComponent = () => {
         switch (page) {
             case 0:
@@ -137,7 +138,7 @@ const ProfileSetups = () => {
                                 otp: '123456'
                             };
                             dispatch(verifyOtp(otpData));
-                            dispatch(CompProfile());
+                            // dispatch(CompProfile());
                             if (otpErrorMessage) {
                                 console.log('otpError');
                             } else if (!otpErrorMessage) {
@@ -149,12 +150,11 @@ const ProfileSetups = () => {
             case 2:
                 return (
                     <Liveness
-                        action={() => {
-                            setPage(page + 1);
-                        }}
+                        // action={() => {
+                        //     setPage(page + 1);
+                        // }}
                         loading={loading}
                         setLoading={setLoading}
-                        // action={handleSubmitt}
                     />
                 );
             case 3:
@@ -230,9 +230,9 @@ const ProfileSetups = () => {
         }
     }, [bvnNin, errorMessages, bvnError]);
 
-    const handleSubmitt = () => {
-        setPage(page + 1);
-    };
+    // const handleSubmitt = () => {
+    //     setPage(page + 1);
+    // };
     // console.log(errorM, errorI);
 
     // useEffect(() => {
