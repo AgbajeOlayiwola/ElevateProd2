@@ -6,7 +6,10 @@ import BillPayment from './billpayment';
 import SingleTransfer from './singletransfer';
 import Overlay from '../Overlay';
 import CloseButton from '../CloseButtonSvg';
-import { bankAccountsData } from '../../../redux/actions/actions';
+import {
+    bankAccountsData,
+    getBeneficiariesData
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const MakePaymentFirst = ({
@@ -33,16 +36,26 @@ const MakePaymentFirst = ({
 
     const dispatch = useDispatch();
     const [bankAccount, setBankAccount] = useState([]);
+    const [beneficiaries, setBeneficiaries] = useState([]);
+    const [search, setSearch] = useState('');
+    const { getBeneficiaries } = useSelector(
+        (state) => state.getBeneficiariesReducer
+    );
     const { bankAccounts } = useSelector((state) => state.bankAccountsReducer);
-    console.log(bankAccount);
     useEffect(() => {
         dispatch(bankAccountsData());
+        dispatch(getBeneficiariesData());
     }, []);
     useEffect(() => {
         if (bankAccounts !== null) {
             setBankAccount(bankAccounts);
         }
     }, [bankAccounts]);
+    useEffect(() => {
+        if (getBeneficiaries !== null) {
+            setBeneficiaries(getBeneficiaries);
+        }
+    }, [getBeneficiaries]);
     return (
         <Overlay overlay={overlay}>
             <div className={styles.firstDiv} ref={myref}>
@@ -56,6 +69,7 @@ const MakePaymentFirst = ({
                             scheduleLater={scheduleLater}
                             isLoading={isLoading}
                             bankAccounts={bankAccount}
+                            beneficiaries={beneficiaries}
                         />
                     ) : firstTitle === 'Foreign Transfer' ? (
                         <ForeignTransfer

@@ -78,6 +78,7 @@
     max-width: 100px;
     margin-left: 40px;
     display: inline-block;
+    cursor: pointer;
 }
 
 .beneficiarySingle svg {

@@ -48,6 +48,8 @@ const PaymentRepeat = ({ overlay, closeAction, type }) => {
                         <label>Set Frequency</label>
                         <select>
                             <option value="">Select Frequency</option>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Monthly">Monthly</option>
                         </select>
                     </div>
                     <button>Save</button>
