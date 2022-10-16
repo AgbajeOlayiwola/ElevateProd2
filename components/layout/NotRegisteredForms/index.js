@@ -150,9 +150,9 @@ const ProfileSetups = () => {
             case 2:
                 return (
                     <Liveness
-                        // action={() => {
-                        //     setPage(page + 1);
-                        // }}
+                        action={() => {
+                            setPage(page + 1);
+                        }}
                         loading={loading}
                         setLoading={setLoading}
                     />
@@ -228,7 +228,7 @@ const ProfileSetups = () => {
             setErrorI(bvnError);
             setLoading(false);
         }
-    }, [bvnNin, errorMessages, bvnError]);
+    }, [bvnNin, errorMessages]);
 
     // const handleSubmitt = () => {
     //     setPage(page + 1);
@@ -239,7 +239,7 @@ const ProfileSetups = () => {
     //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
     //         setErrorM(bvnError);
-    //         setErrorI(bvnErrorI);`   1qa¸asw2a   q1`
+    //         setErrorI(bvnErrorI);
     //     } else if (!otpErrorMessage && !bvnError && !bvnErrorI) {
     //         setPage(page + 1);
     //     }
