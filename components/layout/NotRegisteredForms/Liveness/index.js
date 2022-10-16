@@ -65,7 +65,7 @@ const Liveness = ({ action, loading, setLoading }) => {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         Authorization: `Bearer ${cookie}`
-                    // }
+                    }
                 }
             )
             .then((response) => {
