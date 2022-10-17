@@ -19,14 +19,16 @@ import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymne
 // import withAuth from '../../components/HOC/withAuth.js';
 import {
     getBalanceEnquiry,
-    getTransactionElevate,
-    loadAccountPrimary
+    loadUserProfile,
+    loadAccountPrimary,
+    getTransactionElevate
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
 import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
 import Ussd from '../../components/ReusableComponents/UssdSvg';
 import SingleTrans from '../../components/ReusableComponents/SingleTransSvg';
+import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess copy';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -58,43 +60,22 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     const [outType, setOutType] = useState();
     const [balance, setBalance] = useState('₦0.00');
-    const router = useRouter();
-    const [loaded, setLoaded] = useState(false);
-    const [items, setItems] = useState([]);
+    const [tableDetails, setTableDetails] = useState([]);
+    const [userProfileData, setUserProfileData] = useState([]);
 
     const [acctNumber, setAcctNumber] = useState('');
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
 
-    const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
-        (state) => state.balanceEnquiryReducer
-    );
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
-    const [transactionData, setTransactionData] = useState([]);
-    let userProfile;
-    let userProfileData = {};
-    if (typeof window !== 'undefined') {
-        userProfile = window.localStorage.getItem('user');
-        userProfileData = JSON.parse(userProfile);
-    }
+    const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
+        (state) => state.balanceEnquiryReducer
+    );
+    const { accountPrimary, accountPrimaryError } = useSelector(
+        (state) => state.accountPrimaryReducer
+    );
 
-    // useEffect(() => {
-    //     if (transactionElevate !== null) {
-    //         setTransactionData(transactionElevate);
-    //     }
-    // }, [transactionElevate]);
-
-    // useEffect(() => {
-    //     if (userProfile !== null) {
-    //         setUserProfileData(userProfile);
-    //
-    //         console.log(balanceData);
-    //     }
-    // }, []);
-    console.log(transactionData);
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     const types = (type) => {
         setOutType(type);
@@ -114,15 +95,6 @@ const Dashboard = () => {
         }
     }, [balanceEnquiry]);
 
-    // useEffect(() => {
-    //     const items = JSON.parse(localStorage.getItem('user'));
-
-    //     if (!items) {
-    //         router.push('../Auth/Login');
-    //     } else {
-    //         setLoaded(true);
-    //     }
-    // });
     const settings = {
         className: 'center',
         centerMode: true,
@@ -138,12 +110,10 @@ const Dashboard = () => {
         autoplaySpeed: 2000,
         cssEase: 'linear'
     };
-    const { accountPrimary, accountPrimaryError } = useSelector(
-        (state) => state.accountPrimaryReducer
-    );
-
     useEffect(() => {
         dispatch(loadAccountPrimary());
+        dispatch(loadUserProfile());
+        dispatch(getTransactionElevate());
     }, []);
 
     useEffect(() => {
@@ -159,8 +129,17 @@ const Dashboard = () => {
             setAcctNumber('Pending');
         }
     }, [accountPrimary]);
-
-    console.log(accountPrimary);
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
+    }, [userProfile]);
+    useEffect(() => {
+        if (transactionElevate !== null) {
+            setTableDetails(transactionElevate.transactions);
+            console.log(transactionElevate.transactions);
+        }
+    }, [transactionElevate]);
     return (
         <DashLayout page="Dashboard">
             <Levelup />
@@ -288,7 +267,7 @@ const Dashboard = () => {
                                 <p>Recent Transactions</p>
                                 <p>View All</p>
                             </div>
-                            {transactionData.length === 0 ? (
+                            {tableDetails.length === 0 ? (
                                 <div className={styles.transactionBody}>
                                     <div>
                                         <div className={styles.transactionSvg}>
@@ -301,7 +280,7 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             ) : (
-                                transactionData.map((item, index) => {
+                                tableDetails.map((item, index) => {
                                     return (
                                         <div key={index}>
                                             <div className={styles.transaction}>
@@ -380,6 +359,11 @@ const Dashboard = () => {
                     </div> */}
                 </section>
             </div>
+            <PaymentSuccess
+                overlay="true"
+                error="Account Upgrade is important"
+                statusbar="error"
+            />
         </DashLayout>
     );
 };
