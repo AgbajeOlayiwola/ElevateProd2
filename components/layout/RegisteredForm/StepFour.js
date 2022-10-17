@@ -23,7 +23,7 @@ import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg'
 import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 
-const StepFour = ({ title, action }) => {
+const StepFour = ({ title, action, setFormData, formData }) => {
     const dispatch = useDispatch();
     const router = useRouter();
     // const account = localStorage.getItem('meta');
@@ -73,11 +73,13 @@ const StepFour = ({ title, action }) => {
     console.log(localGoverment);
     const [phones, setPhones] = useState();
 
+    console.log(formData.type);
+
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        console.log(file);
+        console.log(formData.type);
     };
     useEffect(() => {
         if (window.typeof !== 'undefined') {
@@ -108,46 +110,47 @@ const StepFour = ({ title, action }) => {
             signature: file
         };
         dispatch(CompleteBusinessProfile(userData));
+        console.log(userData);
     };
 
-    const profileTest = () => {
-        setLoading((prev) => !prev);
-        if (compBusprofile) {
-            console.log(errorMessages);
-            router.push('/Verify/ExistingSuccess');
-        } else if (
-            comperrorMessage.message ===
-            'You already have an account with us. Please contact us for more information'
-        ) {
-            router.push('/Verify/ExistingSuccess');
-        }
+    // const profileTest = () => {
+    //     setLoading((prev) => !prev);
+    //     if (compBusprofile) {
+    //         console.log(errorMessages);
+    //         router.push('/Verify/ExistingSuccess');
+    //     } else if (
+    //         comperrorMessage.message ===
+    //         'You already have an account with us. Please contact us for more information'
+    //     ) {
+    //         router.push('/Verify/ExistingSuccess');
+    //     }
 
-        if (businessCategories !== null) {
-            setBusinessCategory(businessCategories);
-        }
-    };
-    useEffect(() => {
-        profileTest();
-    }, [compBusprofile, comperrorMessage]);
+    //     if (businessCategories !== null) {
+    //         setBusinessCategory(businessCategories);
+    //     }
+    // };
+    // useEffect(() => {
+    //     profileTest();
+    // }, [compBusprofile, comperrorMessage]);
 
     const onSubmit = (data) => {
-        console.log('old');
-        console.log('old');
         const userData = {
             isRegistered: 'true',
-            businessName: formData.bussinessName,
+            businessName: businessName,
             businessCategory: business,
             businessType: businesses,
-            referralCode: formData.refferalCode,
+            referralCode: refferalCode,
             countryCode: '+234',
-            businessPhoneNumber: formData.phoneNumber,
-            street: formData.streetName,
-            state: formData.state,
-            city: formData.city,
-            lga: formData.localGoverment,
-            refereeCode: 'END'
+            businessPhoneNumber: profileInfo.phoneNumber,
+            street: streetName,
+            state: localState,
+            city: city,
+            lga: localGoverment,
+            refereeCode: '',
+            signature: file
         };
         dispatch(CompleteBusinessProfile(userData));
+        console.log(userData);
     };
 
     useEffect(() => {
@@ -159,7 +162,11 @@ const StepFour = ({ title, action }) => {
                 comperrorMessage.message ===
                     'your have already setup your business'
             ) {
-                router.push('/Verify/CorportateAccount');
+                if (formData.type !== 'true') {
+                    router.push('/Verify/ExistingSuccess');
+                } else {
+                    router.push('/Verify/CorportateAccount');
+                }
             }
         }
     }, [compBusprofile, comperrorMessage]);
@@ -691,9 +698,14 @@ const StepFour = ({ title, action }) => {
                                                                 }
                                                             }
                                                         )}
-                                                        // value={
-                                                        //     accountDetails.phoneNumber
-                                                        // }
+                                                        onChange={(e) =>
+                                                            setPhoneNumber(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        value={
+                                                            profileInfo.phoneNumber
+                                                        }
                                                     />
                                                 </div>
                                             </div>
@@ -776,6 +788,12 @@ const StepFour = ({ title, action }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter Your Business Name"
+                                                value={businessName}
+                                                onChange={(e) =>
+                                                    setBusinessName(
+                                                        e.target.value
+                                                    )
+                                                }
                                             />
                                         </div>
                                         <div
@@ -867,6 +885,12 @@ const StepFour = ({ title, action }) => {
                                                 <input
                                                     type="text"
                                                     placeholder="Enter Street Name"
+                                                    value={streetName}
+                                                    onChange={(e) =>
+                                                        setStreetName(
+                                                            e.target.value
+                                                        )
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -876,7 +900,13 @@ const StepFour = ({ title, action }) => {
                                             <label>
                                                 Local Government Area (LGA)
                                             </label>
-                                            <select>
+                                            <select
+                                                onChange={(e) => {
+                                                    setLocalGoverment(
+                                                        e.target.value
+                                                    );
+                                                }}
+                                            >
                                                 <option value="">
                                                     Select Local Government
                                                 </option>
@@ -939,6 +969,10 @@ const StepFour = ({ title, action }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter City"
+                                                value={city}
+                                                onChange={(e) =>
+                                                    setCity(e.target.value)
+                                                }
                                             />
                                         </div>
                                     </div>

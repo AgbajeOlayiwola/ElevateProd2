@@ -18,7 +18,12 @@ const CorporateAccount = () => {
     const router = useRouter();
 
     const newUserAccountt = () => {
-        const cookie = getCookie('cookieToken');
+        let cookie;
+        if (getCookie('cookieToken') == undefined) {
+            cookie = getCookie('existingToken');
+        } else {
+            cookie = getCookie('cookieToken');
+        }
 
         const accountData = {
             affiliateCode: 'ENG',
