@@ -10,9 +10,12 @@ import { bankAccountsData } from '../../../redux/actions/actions';
 
 const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     const dispatch = useDispatch();
-    const account = localStorage.getItem('displayAccount');
+    const [profileInfo, setProfileInfo] = useState([]);
+    const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
+
     const [isRegistered, setIsRegistered] = useState(false);
+
     const [progress, setProgress] = useState('50%');
     const [bgcolor, setBgcolor] = useState(false);
 
@@ -50,8 +53,14 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     );
     useEffect(() => {
         dispatch(bankAccountsData());
-        console.log(bankAccounts);
-    }, [bankAccounts]);
+        if (accountDetails.profile !== undefined) {
+            setProfileInfo(accountDetails.profile);
+        } else if (accountDetails.user !== undefined) {
+            setProfileInfo(accountDetails.user.profile);
+        }
+        console.log(profileInfo);
+        console.log(bankAccounts[0]?.accountNumber);
+    }, []);
 
     const [activeBtn, setActiveBtn] = useState(true);
     return (
@@ -89,22 +98,22 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                 <label>Account Number </label>
 
                                 <input
-                                    placeholder="Account Numberl"
+                                    placeholder="Fetching Account Number ...."
                                     className={styles.textInput}
                                     required
                                     readOnly
-                                    value={bankAccounts}
+                                    value={bankAccounts[0]?.accountNumber}
                                 />
                             </div>
                             <div>
                                 <label>Full Name </label>
 
                                 <input
-                                    placeholder="Enter Your Email"
+                                    placeholder="Full Name"
                                     className={styles.textInput}
                                     required
                                     readOnly
-                                    value={accountDetails.fullName}
+                                    value={`${profileInfo.lastName}  ${profileInfo.firstName}`}
                                 />
                             </div>
                             <div>
@@ -124,7 +133,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                         <input
                                             type="number"
                                             placeholder="812 345 6789"
-                                            value={accountDetails.phoneNumber}
+                                            value={profileInfo.phoneNumber}
                                         />
                                     </div>
                                 </div>

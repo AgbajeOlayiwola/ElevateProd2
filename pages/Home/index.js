@@ -58,6 +58,7 @@ const HomeMain = () => {
     const dispatch = useDispatch();
     const [ecoonlineUserName, setEconlineUsername] = useState();
     const [ecoonlinePassword, setEcoonlinePassword] = useState();
+    const [accountNo, setAccountNo] = useState();
     const [languages, setLanguages] = useState([]);
     const [languageState, setLanguageState] = useState(false);
 
@@ -169,9 +170,9 @@ const HomeMain = () => {
                                     required:
                                         'Ecobank Online Username is Required'
                                 })}
-                                name="username"
+                                name="onlineUsername"
                                 value={ecoonlineUserName}
-                                onChange={(e) =>
+                                onInput={(e) =>
                                     setEconlineUsername(e.target.value)
                                 }
                             />
@@ -192,7 +193,7 @@ const HomeMain = () => {
                                     name="onlinePassword"
                                     type={outType ? 'text' : 'password'}
                                     value={ecoonlinePassword}
-                                    onChange={(e) =>
+                                    onInput={(e) =>
                                         setEcoonlinePassword(e.target.value)
                                     }
                                 />
@@ -216,6 +217,10 @@ const HomeMain = () => {
                                 {...register('accountNumber', {
                                     required: 'Account Number is Required'
                                 })}
+                                value={accountNo}
+                                onInput={(e) => {
+                                    setAccountNo(e.target.value);
+                                }}
                                 name="accountNumber"
                             />
                             <p className={styles.error}>
@@ -237,9 +242,7 @@ const HomeMain = () => {
                                     required: 'Card Number is Required'
                                 })}
                                 value={cardPan}
-                                onChange={(e) =>
-                                    setCardPanMatch(e.target.value)
-                                }
+                                onInput={(e) => setCardPanMatch(e.target.value)}
                                 name="cardNumber"
                             />
                             <p className={styles.error}>
@@ -258,7 +261,7 @@ const HomeMain = () => {
                                             required: 'Expiry Date is Required'
                                         })}
                                         name="expiryDate"
-                                        onChange={(e) => {
+                                        onInput={(e) => {
                                             if (e.target.value.length === 2) {
                                                 e.target.value += '/';
                                             }
@@ -283,7 +286,7 @@ const HomeMain = () => {
                                         // {...register('cvv', {
                                         //     required: 'CVV is Required'
                                         // })}
-                                        onChange={(e) => setCVV(e.target.value)}
+                                        onInput={(e) => setCVV(e.target.value)}
                                         value={cvv}
                                         name="cvv"
                                     />
@@ -328,25 +331,8 @@ const HomeMain = () => {
             // console.log('ecoOnlineData', ecoonlinePassword, ecoonlineUserName);
             // console.log(ecobankOnline);
             dispatch(ecobankOnlineData(postData));
-            console.log(ecobankOnline.message);
+            console.log(ecobankOnline);
 
-            if (ecobankOnline.message === 'success') {
-                const data = {
-                    email: ecobankOnline.data.user.email,
-                    // accountNumber: omniliteData.data.user.profile.firstName,
-                    fullName: ecobankOnline.data.user.profile.lastName,
-                    phoneNumber: ecobankOnline.data.user.phoneNumber
-                };
-                window.localStorage.setItem(
-                    'displayAccount',
-                    JSON.stringify(data)
-                );
-                window.localStorage.setItem(
-                    'account',
-                    JSON.stringify(ecobankOnline.data.user)
-                );
-                router.push('/Onboarding/ExistingProfileSetup');
-            }
             //ecoBank Online Login End
 
             if (omniliteData.message === 'success') {
@@ -417,8 +403,8 @@ const HomeMain = () => {
         } else if (omniliteData.message === 'success') {
             const data = {
                 email: omniliteData.data.user.email,
-                // accountNumber: omniliteData.data.user.profile.firstName,
-                fullName: omniliteData.data.user.profile.lastName,
+                firstName: omniliteData.data.user.profile.firstName,
+                lastName: omniliteData.data.user.profile.lastName,
                 phoneNumber: omniliteData.data.user.phoneNumber
             };
             window.localStorage.setItem('displayAccount', JSON.stringify(data));
@@ -466,6 +452,26 @@ const HomeMain = () => {
     useEffect(() => {
         acctTest();
     }, [accountNumbers, errorMessages]);
+    const ecoOnlineTest = () => {
+        if (ecobankOnline.message === 'success') {
+            const data = {
+                email: ecobankOnline.data.user.email,
+                firstName: ecobankOnline.data.user.profile.firstName,
+                lastName: ecobankOnline.data.user.profile.lastName,
+                phoneNumber: ecobankOnline.data.user.phoneNumber
+            };
+            window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            window.localStorage.setItem(
+                'account',
+                JSON.stringify(ecobankOnline.data.user)
+            );
+            router.push('/Onboarding/ExistingProfileSetup');
+        }
+    };
+    useEffect(() => {
+        // console.log(ecobankOnline, ecoOnlineErrorMessage);
+        ecoOnlineTest();
+    }, [ecobankOnline, ecoOnlineErrorMessage]);
     const types = (type) => {
         setOutType(type);
     };
@@ -629,7 +635,7 @@ const HomeMain = () => {
                             Do you have an Ecobank Account?
                         </label>
                         <select
-                            onChange={(e) => {
+                            onInput={(e) => {
                                 if (e.target.value === 'No') {
                                     setEcobankAccount('No');
                                 } else if (e.target.value === 'Yes') {
@@ -664,6 +670,7 @@ const HomeMain = () => {
                                             }
                                             onClick={() => {
                                                 setPage(0);
+                                                setError('');
                                                 setOmnilite(true);
                                                 setEcobank(false);
                                                 setCard(false);
@@ -692,10 +699,13 @@ const HomeMain = () => {
                                             }
                                             onClick={() => {
                                                 setPage(1);
+                                                setError('');
                                                 setOmnilite(false);
                                                 setEcobank(true);
                                                 setCard(false);
                                                 setAcct(false);
+                                                setEconlineUsername('');
+                                                setEcoonlinePassword('');
                                             }}
                                         >
                                             <Image
@@ -726,10 +736,12 @@ const HomeMain = () => {
                                             }
                                             onClick={() => {
                                                 setPage(2);
+                                                setError('');
                                                 setOmnilite(false);
                                                 setEcobank(false);
                                                 setCard(false);
                                                 setAcct(true);
+                                                setAccountNo('');
                                             }}
                                         >
                                             <AccountNumberSvg />
@@ -753,10 +765,12 @@ const HomeMain = () => {
                                             }
                                             onClick={() => {
                                                 setPage(3);
+                                                setError('');
                                                 setOmnilite(false);
                                                 setEcobank(false);
                                                 setCard(true);
                                                 setAcct(false);
+                                                setCVV('');
                                             }}
                                         >
                                             <CardSvg />

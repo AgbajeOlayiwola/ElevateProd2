@@ -9,6 +9,8 @@ import Script from 'next/script';
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
+import { loadUserProfile } from '../../../../redux/actions/actions';
+// import { useDispatch, useSelector } from 'react-redux';
 
 const videoConstraints = {
     width: 390,
@@ -26,7 +28,8 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ action }) => {
+const Liveness = ({ action, loading, setLoading }) => {
+    // const dispatch = useDispatch();
     const [activeBtn, setActiveBtn] = useState(true);
     // const [loading, setLoading] = useState(false);
     const webcamRef = React.useRef(null);
@@ -34,12 +37,9 @@ const Liveness = ({ action }) => {
     const [succes, setSuccess] = useState('');
     const [imageSrcI, setImageSrcI] = React.useState(null);
     const [error, setError] = React.useState('');
-    const [loading, setLoading] = useState(false);
-    const [verifying, setVerifying] = useState('');
 
     const capture = React.useCallback(() => {
         setLoading((prev) => !prev);
-        setVerifying('Verifying...');
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
@@ -54,12 +54,12 @@ const Liveness = ({ action }) => {
 
         var formData = new FormData();
 
-        formData.append('userFace', file);
+        formData.append('photo', file);
 
         const cookie = getCookie('cookieToken');
         axios
             .post(
-                `https://ellevate-test.herokuapp.com/authentication/facematch`,
+                `https://ellevate-test.herokuapp.com/users/profile/image`,
                 formData,
                 {
                     headers: {
@@ -78,9 +78,6 @@ const Liveness = ({ action }) => {
                 setError(error.response.data.message);
             });
     }, [webcamRef, setImgSrc, setImageSrcI]);
-    // useEffect(() => {
-    // setLoading((prev) => !prev);
-    // }, [webcamRef, setImgSrc, setImageSrcI]);
 
     return (
         <div className={styles.body}>
@@ -95,39 +92,41 @@ const Liveness = ({ action }) => {
                         {error ? <p>{error}</p> : null}
                         <div
                             className={
-                                succes === 'facial verification successful'
+                                // succes === 'facial verification successful'
+                                succes === 'success'
                                     ? styles.imageOuter
                                     : error
                                     ? styles.errorInner
                                     : styles.imageInner
                             }
                         >
+                            {/* {imageSrcI ? (
+                                <img src={imageSrcI} />
+                            ) : ( */}
                             <Webcam
                                 audio={false}
                                 screenshotFormat="image/jpeg"
                                 videoConstraints={videoConstraints}
                                 ref={webcamRef}
                             />
+                            {/* )} */}
                         </div>
                     </div>
                 </div>
-                {verifying ? verifying : null}
+                {/* {loading ? <Loader /> : null} */}
+
                 <ButtonComp
-                    onClick={
-                        succes === 'facial verification successful'
-                            ? action
-                            : capture
-                    }
+                    onClick={succes === 'success' ? action : capture}
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
-                    type="submit"
+                    type="button"
                     text={
-                        succes === 'facial verification successful'
-                            ? 'Success'
-                            : 'Snap'
+                        // succes === 'facial verification successful'
+                        succes === 'success' ? 'Continue' : 'Snap'
                     }
                     // action={action}
                 />
+
                 {/* {imageSrcI && <img src={imageSrcI} />} */}
                 {/* <div className={styles.matiButtonSetup}>
                     <mati-button

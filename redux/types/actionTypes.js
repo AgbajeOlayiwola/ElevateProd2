@@ -76,6 +76,36 @@ export const setTransactionPin = {
 
 //setTransactionPin action type ends
 
+//changeTransactionPin action types
+
+export const changeTransactionPin = {
+    CHANGETRANSACTIONPIN_LOAD_START: 'CHANGETRANSACTIONPIN_LOAD_START',
+    CHANGETRANSACTIONPIN_LOAD_SUCCESS: 'CHANGETRANSACTIONPIN_LOAD_SUCCESS',
+    CHANGETRANSACTIONPIN_LOAD_ERROR: 'CHANGETRANSACTIONPIN_LOAD_ERROR'
+};
+
+//changeTransactionPin action type ends
+
+//freezeTransactions action types
+
+export const freezeTransactions = {
+    FREEZETRANSACTIONS_LOAD_START: 'FREEZETRANSACTIONS_LOAD_START',
+    FREEZETRANSACTIONS_LOAD_SUCCESS: 'FREEZETRANSACTIONS_LOAD_SUCCESS',
+    FREEZETRANSACTIONS_LOAD_ERROR: 'FREEZETRANSACTIONS_LOAD_ERROR'
+};
+
+//freezeTransactions action type ends
+
+//unfreezeTransactions action types
+
+export const unfreezeTransactions = {
+    UNFREEZETRANSACTIONS_LOAD_START: 'UNFREEZETRANSACTIONS_LOAD_START',
+    UNFREEZETRANSACTIONS_LOAD_SUCCESS: 'UNFREEZETRANSACTIONS_LOAD_SUCCESS',
+    UNFREEZETRANSACTIONS_LOAD_ERROR: 'UNFREEZETRANSACTIONS_LOAD_ERROR'
+};
+
+//unfreezeTransactions action type ends
+
 //Bills action types
 
 export const bills = {

@@ -18,13 +18,15 @@ const ExistingMultiStep = () => {
     const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
-
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
+        type: 'false',
         userId: '',
         emailData: '',
         password: '',
         confPassword: ''
     });
+    const [setType, typeset] = useState('false');
     // useEffect(() => {
     //     if (!errorMessage) {
     //         setPage(page + 1);
@@ -35,6 +37,13 @@ const ExistingMultiStep = () => {
     //         setPage(page + 1);
     //     }
     // }, [errorMessage]);
+    if (typeof window !== 'undefined') {
+        let accounts = window.localStorage.getItem('account');
+        var newAccounts = JSON.parse(accounts);
+        // console.log(newAccounts.user.email);
+    }
+    // console.log(formData.emailData, newAccounts.user?.email);
+    // console.log(formData.emailData, newAccounts.email);
 
     const conditionalComponent = () => {
         switch (page) {
@@ -43,32 +52,30 @@ const ExistingMultiStep = () => {
             case 1:
                 return (
                     <SecondStep
+                        errorMessage={errorMessage}
                         move={() => {
                             const userData = {
                                 userId: formData.userId,
-                                email: formData.emailData,
+                                email: newAccounts.email
+                                    ? newAccounts.email
+                                    : newAccounts.user.email
+                                    ? newAccounts.user.email
+                                    : formData.emailData,
                                 password: formData.password,
                                 confirmPassword: formData.confPassword
                             };
                             console.log(formData.userId);
                             dispatch(existingUserProfileData(userData));
+                            setLoading((prev) => !prev);
                             // console.log(existingUserProfilee.data.message);
-                            if (!errorMessage) {
-                                setPage(page + 1);
-                            } else if (
-                                existingUserProfilee.message ==
-                                'Profile setup Intialization completed'
-                            ) {
-                                setPage(page + 1);
-                            }
                         }}
                         formData={formData}
                         setFormData={setFormData}
                         action={() => {
                             setPage(page - 1);
                         }}
-
-                        //
+                        loading={loading}
+                        setLoading={setLoading}
                     />
                 );
             // case 2:
@@ -98,6 +105,8 @@ const ExistingMultiStep = () => {
                             setPage(page - 1);
                             setPageType('');
                         }}
+                        formData={formData}
+                        setFormData={setFormData}
                     />
                 );
             default:
@@ -106,11 +115,23 @@ const ExistingMultiStep = () => {
     };
     function handleSubmit() {
         setPage(page + 1);
+        setFormData({ ...formData, type: 'true' });
     }
     function handleSubmitNew() {
         setPage(page + 1);
         setPageType('New');
     }
+    useEffect(() => {
+        // console.log('new bvn:', bvnNin.message);
+        if (existingUserProfilee.data) {
+            if (
+                existingUserProfilee.data.message ==
+                'Profile setup Intialization completed'
+            ) {
+                setPage(page + 1);
+            }
+        }
+    }, [existingUserProfilee]);
     return (
         <>
             <>{conditionalComponent()}</>

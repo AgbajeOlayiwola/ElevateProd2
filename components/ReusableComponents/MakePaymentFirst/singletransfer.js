@@ -2,35 +2,34 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import {
-    loadbank,
-    getBeneficiariesData,
-    postInterBankEnquiry
-} from '../../../redux/actions/actions';
+import { loadbank, postInterBankEnquiry } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import Loader from '../Loader';
+import Beneficiary from '../Beneficiary';
 
 const SingleTransfer = ({
     othersaction,
     firstTitle,
     buttonText,
     scheduleLater,
-    isLoading
+    isLoading,
+    bankAccounts,
+    beneficiaries
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);
+    const [beneActive, setBeneActive] = useState();
     const [interEnquiry, setInterEnquiry] = useState('');
-    const [beneficiaries, setBeneficiaries] = useState([]);
+    const [search, setSearch] = useState('');
+    // const [beneficiaries, setBeneficiaries] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
-    const { getBeneficiaries } = useSelector(
-        (state) => state.getBeneficiariesReducer
-    );
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
+
     const interBankEnquiryCheck = () => {
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
@@ -41,129 +40,204 @@ const SingleTransfer = ({
     }, [interBankEnquiry]);
     useEffect(() => {
         dispatch(loadbank('ENG'));
-        dispatch(getBeneficiariesData());
     }, []);
     useEffect(() => {
         if (banks !== null) {
             setBank(banks);
         }
     }, [banks]);
-    useEffect(() => {
-        if (getBeneficiaries !== null) {
-            setBeneficiaries(getBeneficiaries);
-        }
-    }, [getBeneficiaries]);
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
+    useEffect(() => {
+        setInterEnquiry('');
+    }, []);
+    let beneficiaryName;
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
             <div className={styles.beneficiary}>
                 <div className={styles.beneficiaryHeader}>
                     <h2>Beneficiaries</h2>
-                    <p>View all</p>
+
+                    <div className={styles.beneficiarySearch}>
+                        <img src="../Assets/Svgs/search.svg" alt="" />
+                        <input
+                            type="text"
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                            }}
+                            placeholder="Search Beneficiary"
+                        />
+                    </div>
                 </div>
                 <div className={styles.beneficiaryBody}>
                     {!beneficiaries.beneficiaries?.length ? (
                         <h2>You do not have any Beneficiaries at the Moment</h2>
                     ) : (
-                        beneficiaries.beneficiaries?.map(
-                            (beneficiaries, index) => {
+                        beneficiaries.beneficiaries
+                            ?.filter((item) => {
+                                if (search === '') {
+                                    return item;
+                                } else if (
+                                    item.beneficiaryName
+                                        .toLowerCase()
+                                        .includes(search.toLowerCase())
+                                ) {
+                                    return item;
+                                }
+                            })
+                            .map((beneficiaries, index) => {
+                                {
+                                    beneficiaries
+                                        ? (beneficiaryName =
+                                              beneficiaries.beneficiaryName.split(
+                                                  ' '
+                                              ))
+                                        : null;
+                                }
                                 return (
                                     <div
                                         key={index}
                                         className={styles.beneficiarySingle}
+                                        onClick={() => {
+                                            setBeneActive(beneficiaries);
+                                        }}
                                     >
-                                        <BeneficiaryAvatarSvg />
-                                        <p className={styles.name}>
-                                            {beneficiaries.beneficiaryName}
-                                        </p>
-                                        <p className={styles.benebank}>
-                                            {beneficiaries.bankName}
-                                        </p>
+                                        <div className={styles.beneficiaryIcon}>
+                                            <BeneficiaryAvatarSvg />
+                                        </div>
+                                        <div>
+                                            <p className={styles.name}>
+                                                {`${beneficiaryName[0]} ${beneficiaryName[1]}`}
+                                            </p>
+                                            <p className={styles.benebank}>
+                                                {beneficiaries.bankName}
+                                            </p>
+                                        </div>
                                     </div>
                                 );
-                            }
-                        )
+                            })
                     )}
                 </div>
             </div>
             <form onSubmit={handleSubmit(othersaction)}>
-                <div className={styles.source}>
-                    <h2>
-                        Source <span>- Marvelous N******</span>
-                    </h2>
-                    <SourceSvg />
+                <div className={styles.narration}>
+                    <label>Source Account</label>
+                    <select name="" id="" {...register('sourceAccount')}>
+                        {bankAccounts?.map((accounts, index) => {
+                            return (
+                                <option value={accounts.accountId} key={index}>
+                                    {accounts.accountNumber}
+                                </option>
+                            );
+                        })}
+                    </select>
                 </div>
                 <div className={styles.narration}>
                     <label> Account Number</label>
-                    <input
-                        {...register('accountNumber', {
-                            required: 'Please enter  Acount Number',
-                            pattern: {
-                                value: /^[0-9 ]/i,
-                                message: 'Account Number must be a number'
-                            },
-                            minLength: {
-                                value: 10,
-                                message: 'Min length is 10'
-                            },
-                            maxLength: {
-                                value: 10,
-                                message: 'Max length is 10'
-                            }
-                        })}
-                        onInput={(e) => {
-                            if (e.target.value.length === 10) {
-                                const details = {
-                                    accountNumber: e.target.value
-                                };
-                                dispatch(postInterBankEnquiry(details));
-                                console.log();
-                            }
-                        }}
-                        type="number"
-                        placeholder="Enter account number here"
-                    />
+                    {beneActive ? (
+                        <input
+                            {...register('accountNumber')}
+                            defaultValue={beneActive.accountNumber}
+                            type="number"
+                        />
+                    ) : (
+                        <input
+                            {...register('accountNumber', {
+                                required: 'Please enter  Acount Number',
+                                pattern: {
+                                    value: /^[0-9 ]/i,
+                                    message: 'Account Number must be a number'
+                                },
+                                minLength: {
+                                    value: 10,
+                                    message: 'Min length is 10'
+                                },
+                                maxLength: {
+                                    value: 10,
+                                    message: 'Max length is 10'
+                                }
+                            })}
+                            onInput={(e) => {
+                                if (e.target.value.length === 10) {
+                                    const details = {
+                                        accountNumber: e.target.value
+                                    };
+                                    dispatch(postInterBankEnquiry(details));
+                                    console.log();
+                                }
+                            }}
+                            type="number"
+                            placeholder="Enter account number here"
+                        />
+                    )}
                     <p className={styles.error}>
                         {errors?.accountNumber?.message}
                     </p>
                 </div>
-                {interEnquiry ? (
+                {beneActive ? (
                     <div className={styles.narration}>
                         <label> Account Name</label>
                         <input
                             {...register('accountName')}
                             type="text"
-                            value={interEnquiry.accountName}
+                            value={beneActive.beneficiaryName}
                         />
                         <p className={styles.error}>
-                            {errors?.accountNumber?.message}
+                            {errors?.accountName?.message}
                         </p>
                     </div>
-                ) : null}
+                ) : (
+                    <>
+                        {interEnquiry ? (
+                            <div className={styles.narration}>
+                                <label> Account Name</label>
+                                <input
+                                    {...register('accountName')}
+                                    type="text"
+                                    value={interEnquiry.accountName}
+                                />
+                                <p className={styles.error}>
+                                    {errors?.accountNumber?.message}
+                                </p>
+                            </div>
+                        ) : null}
+                    </>
+                )}
 
                 <div className={styles.narration}>
                     <label>Choose Bank</label>
-                    <select
-                        {...register('bankName', {
-                            required: 'Choose a bank'
-                        })}
-                        name="bankName"
-                    >
-                        <option value="">Select Bank</option>
-                        <option value="Ecobank">Ecobank</option>
-                        {bank?.map((bank, index) => {
-                            return (
-                                <option value={bank.institutionId} key={index}>
-                                    {bank.institutionName}
-                                </option>
-                            );
-                        })}
-                    </select>
+                    {beneActive ? (
+                        <select {...register('bankName')} name="bankName">
+                            <option value={beneActive.bankName}>
+                                {beneActive.bankName}
+                            </option>
+                        </select>
+                    ) : (
+                        <select
+                            {...register('bankName', {
+                                required: 'Choose a bank'
+                            })}
+                            name="bankName"
+                        >
+                            <option value="">Select Bank</option>
+                            <option value="Ecobank">ECOBANK</option>
+                            {bank?.map((bank, index) => {
+                                return (
+                                    <option
+                                        value={bank.institutionId}
+                                        key={index}
+                                    >
+                                        {bank.institutionName}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                    )}
+
                     {errors.bankName && (
                         <p className={styles.error}>
                             {errors?.bankName?.message}
@@ -209,23 +283,22 @@ const SingleTransfer = ({
                     />
                     <p className={styles.error}>{errors?.narration?.message}</p>
                 </div>
-                {/* <div className={styles.repeat}>
-                    <input type="checkbox" />
-                    <p>Do you want to set this as a repeat transaction?</p>
-                </div> */}
-                <div className={styles.saveBene}>
-                    <label className={styles.beneCheck}>
-                        <input
-                            type="checkbox"
-                            name="beneficiary"
-                            {...register('beneficiary')}
-                        />
-                        <span>
-                            <i></i>
-                        </span>
-                    </label>
-                    <p>Save Beneficiary</p>
-                </div>
+                {beneActive ? null : (
+                    <div className={styles.saveBene}>
+                        <label className={styles.beneCheck}>
+                            <input
+                                type="checkbox"
+                                name="beneficiary"
+                                {...register('beneficiary')}
+                            />
+                            <span>
+                                <i></i>
+                            </span>
+                        </label>
+                        <p>Save Beneficiary</p>
+                    </div>
+                )}
+
                 {isLoading ? (
                     <Loader />
                 ) : (

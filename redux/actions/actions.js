@@ -34,6 +34,9 @@ import {
     completeProfile,
     newUserCreateAccount,
     setTransactionPin,
+    changeTransactionPin,
+    freezeTransactions,
+    unfreezeTransactions,
     getNewUserAccount,
     states,
     cardLogin,
@@ -135,7 +138,7 @@ export const resetPasswordLoadError = (errorMessage) => ({
 export const loadresetPassword = (code) => (dispatch) => {
     dispatch(resetPasswordLoadStart());
     axiosInstance
-        .post(`${apiRoutes.resetPassword}`, code)
+        .patch(`${apiRoutes.resetPassword}`, code)
         .then((response) =>
             dispatch(resetPasswordLoadSuccess(response.data.data))
         )
@@ -242,6 +245,62 @@ export const loadCountry = () => (dispatch) => {
 };
 //country actions end
 
+//freezeTransactions actions
+export const freezeTransactionsLoadStart = () => ({
+    type: freezeTransactions.FREEZETRANSACTIONS_LOAD_START
+});
+
+export const freezeTransactionsLoadSuccess = (countries) => ({
+    type: freezeTransactions.FREEZETRANSACTIONS_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const freezeTransactionsLoadError = (errorMessage) => ({
+    type: freezeTransactions.FREEZETRANSACTIONS_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const loadfreezeTransactions = () => (dispatch) => {
+    dispatch(freezeTransactionsLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.freezeTransactions}`)
+        .then((response) =>
+            dispatch(freezeTransactionsLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(freezeTransactionsLoadError(error.response.message))
+        );
+};
+//freezeTransactions actions end
+
+//unfreezeTransactions actions
+export const unfreezeTransactionsLoadStart = () => ({
+    type: unfreezeTransactions.UNFREEZETRANSACTIONS_LOAD_START
+});
+
+export const unfreezeTransactionsLoadSuccess = (countries) => ({
+    type: unfreezeTransactions.UNFREEZETRANSACTIONS_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const unfreezeTransactionsLoadError = (errorMessage) => ({
+    type: unfreezeTransactions.UNFREEZETRANSACTIONS_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const loadunfreezeTransactions = () => (dispatch) => {
+    dispatch(unfreezeTransactionsLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.unfreezeTransactions}`)
+        .then((response) =>
+            dispatch(unfreezeTransactionsLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(unfreezeTransactionsLoadError(error.response.message))
+        );
+};
+//unfreezeTransactions actions end
+
 //accountPrimary actions
 export const accountPrimaryLoadStart = () => ({
     type: accountPrimary.ACCOUNTPRIMARY_LOAD_START
@@ -259,9 +318,23 @@ export const accountPrimaryLoadError = (errorMessage) => ({
 
 export const loadAccountPrimary = () => (dispatch) => {
     dispatch(accountPrimaryLoadStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     axiosInstance
         .get(`${apiRoutes.accountPrimary}`)
-        .then((response) => dispatch(accountPrimaryLoadSuccess(response.data)))
+        .then((response) =>
+            dispatch(accountPrimaryLoadSuccess(response.data), {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
+                }
+            })
+        )
         .catch((error) =>
             dispatch(accountPrimaryLoadError(error.response.message))
         );
@@ -293,7 +366,10 @@ export const loadUserProfile = () => (dispatch) => {
                 Authorization: `Bearer ${cookie}`
             }
         })
-        .then((response) => dispatch(userProfileLoadSuccess(response.data)))
+        .then((response) => {
+            dispatch(userProfileLoadSuccess(response.data)),
+                console.log(response.data);
+        })
         .catch((error) =>
             dispatch(userProfileLoadError(error.response.message))
         );
@@ -450,6 +526,33 @@ export const loadbillerPlan = (code) => (dispatch) => {
 };
 //country actions end
 
+//changeTransactionPin actions
+export const changeTransactionPinLoadStart = () => ({
+    type: changeTransactionPin.CHANGETRANSACTIONPIN_LOAD_START
+});
+
+export const changeTransactionPinLoadSuccess = (billers) => ({
+    type: changeTransactionPin.CHANGETRANSACTIONPIN_LOAD_SUCCESS,
+    payload: billers
+});
+
+export const changeTransactionPinLoadError = (errorMessage) => ({
+    type: changeTransactionPin.CHANGETRANSACTIONPIN_LOAD_ERROR,
+    payload: errorMessage
+});
+export const loadchangeTransactionPin = (code) => (dispatch) => {
+    dispatch(changeTransactionPinLoadStart());
+    axiosInstance
+        .patch(`${apiRoutes.changeTransactionPin}`, code)
+        .then((response) =>
+            dispatch(changeTransactionPinLoadSuccess(response.data))
+        )
+        .catch((error) =>
+            dispatch(changeTransactionPinLoadError(error.response.data.message))
+        );
+};
+//changeTransactionPin actions end
+
 //setTransactionPin actions
 export const setTransactionPinLoadStart = () => ({
     type: setTransactionPin.SETTRANSACTIONPIN_LOAD_START
@@ -471,7 +574,9 @@ export const loadsetTransactionPin = (code) => (dispatch) => {
         .then((response) =>
             dispatch(setTransactionPinLoadSuccess(response.data))
         )
-        .catch((error) => dispatch(setTransactionPinLoadError(error.message)));
+        .catch((error) =>
+            dispatch(setTransactionPinLoadError(error.response.data.message))
+        );
 };
 //setTransactionPin actions end
 
@@ -673,9 +778,21 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
     payload: balanceEnquiryerror
 });
 export const getBalanceEnquiry = (data) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     dispatch(balanceEnquiryLoadStart());
     axiosInstance
-        .post(`${apiRoutes.balanceEnquiry}`, data)
+        .post(`${apiRoutes.balanceEnquiry}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(balanceEnquiryLoadSuccess(response.data.data))
         )
@@ -1226,9 +1343,8 @@ export const loginUserAction = (loginData) => {
 //end login user
 
 //profile setup action start
-export const setupProfileStart = (errorMessages) => ({
-    type: setupProfile.PROFILESETUP_LOAD_START,
-    payload: errorMessages
+export const setupProfileStart = () => ({
+    type: setupProfile.PROFILESETUP_LOAD_START
 });
 export const setupProfileSucces = (profileSetup) => ({
     type: setupProfile.PROFILESETUP_LOAD_SUCCESS,
@@ -1535,7 +1651,7 @@ export const CompleteBusinessProfile = (completeProfileData) => {
             })
             .catch((error) => {
                 console.log(error);
-                dispatch(completeProfileLoadError(error));
+                dispatch(completeProfileLoadError(error.response.data));
             });
     };
 };
@@ -1661,7 +1777,7 @@ export const getNewUserAccountDetails = (accountData) => {
 //end corp account status
 
 //bank accounts start
-
+// I change what was been dispatched for existing user and also changed the axios to axios instance
 export const bankAccountsStart = () => ({
     type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_START
 });
@@ -1676,18 +1792,22 @@ export const bankAccountsLoadError = (bankAccountErrorMessages) => ({
     payload: bankAccountErrorMessages
 });
 export const bankAccountsData = () => (dispatch) => {
-    const exToken = getCookie('existingToken');
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     dispatch(accountNumberLoadStart());
-    axios
+    axiosInstance
         .get(`https://ellevate-test.herokuapp.com${apiRoutes.banksAccounts}`, {
             headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${exToken}`
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${cookie}`
             }
         })
         .then((response) => {
-            dispatch(bankAccountsSuccess(response.data[0].accountNumber));
-            console.log(response.data.accountNumber);
+            dispatch(bankAccountsSuccess(response.data));
         })
         .catch((error) =>
             dispatch(bankAccountsLoadError(error.response.data.message))
@@ -1744,12 +1864,12 @@ export const identificationDocStart = () => ({
 });
 
 export const identificationDocSuccess = (identification) => ({
-    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_SUCCESS,
+    type: uploadIdDocType.GET_ID_DOCUMENTATION_SUCCESS,
     payload: identification
 });
 
 export const identificationDocError = (identificationErrorMessages) => ({
-    type: getUserBankAccounts.GET_USER_Bank_ACCOUNTS_ACCOUNT_LOAD_ERROR,
+    type: uploadIdDocType.GET_ID_DOCUMENTATION_ERROR,
     payload: identificationErrorMessages
 });
 export const identificationDocData = (identificationdata) => (dispatch) => {
@@ -1772,7 +1892,7 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
             }
         )
         .then((response) => {
-            dispatch(identificationDocSuccess(response));
+            dispatch(identificationDocSuccess(response.data.message));
             console.log(response);
         })
         .catch((error) => dispatch(identificationDocError(error.response)));

@@ -108,7 +108,29 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    color: #bdbdbd;
+    color: #3e3e3e;
+}
+
+.addressGroup input::placeholder {
+    color: #3e3e3e;
+}
+
+.divs {
+    display: flex;
+    align-items: center;
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding-right: 16px;
+    margin-bottom: 32px;
+}
+
+.divs input {
+    height: 100%;
+    padding: 0px;
+    border: 0px;
+    padding: 16px 16px 16px 24px;
+    margin-bottom: 0px !important;
+    background-color: transparent;
 }
 
 /*Utility End*/
@@ -200,6 +222,10 @@
 
 .updateBtn {
     margin-top: 64px;
+}
+
+.updateBtn:hover {
+    margin-top: 60px;
 }
 /* ID Card end*/
 
@@ -304,6 +330,26 @@
     font-weight: 400;
     line-height: 24px;
     margin-top: -20px;
+}
+
+.errors {
+    color: red;
+    font-size: 12px;
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.success {
+    color: green;
+    font-size: 20px;
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
 }
 
 /*Directors*/

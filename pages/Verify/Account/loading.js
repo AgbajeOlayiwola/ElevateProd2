@@ -33,7 +33,7 @@ const AccountLoading = () => {
 
     // console.log(profile);
 
-    console.log(accountStatus, errorMessages);
+    // console.log(accountStatus, errorMessages);
     //error message
     //Bank Account has not been created for this user
     const { newAccount, newAccountErrorMessage } = useSelector(
@@ -47,23 +47,17 @@ const AccountLoading = () => {
         };
         dispatch(createNewUserAccount(accountData));
         dispatch(newAccountStatusData());
-        const newUserAccountt = () => {
-            // console.log(accountStatus);
-        };
 
-        if (newAccount.message === 'success') {
-            if (errorMessages) {
-                if (accountStatus.message === 'success') {
-                    router.push('/Succes');
-                }
-            }
+        if (accountStatus.message === 'success') {
+            console.log(accountStatus.messages, errorMessages);
+            router.push('/Succes');
         } else if (
             newAccountErrorMessage ===
             'Sorry, we could not process your request. Please chat with us to get this sorted.'
         ) {
             setError(newAccountErrorMessage);
         }
-    }, [errorMessages, accountStatus, newAccountErrorMessage]);
+    }, [accountStatus.messages]);
 
     // console.log(errorMessages);
 

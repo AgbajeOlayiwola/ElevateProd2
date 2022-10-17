@@ -58,6 +58,9 @@ import ussdStatusReducer from './ussdStatus.reducer';
 import viewBvnReducer from './viewBvn.reducer';
 import resetPasswordReducer from './resetPassword.reducer';
 import bankStatementReducer from './bankStatement.reducer';
+import freezeTransactionsReducer from './freezeTransactions.reducer';
+import changeTransactionPinReducer from './changeTransactionPin.reducer';
+import unfreezeTransactionsReducer from './unfreezeTransactions.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -120,7 +123,12 @@ const rootReducer = combineReducers({
     viewBvnReducer: viewBvnReducer,
     resetPasswordReducer: resetPasswordReducer,
     bankStatementReducer: bankStatementReducer,
-    resetOtpReducer: resetOtpReducer
+    resetOtpReducer: resetOtpReducer,
+    completeBusinessprofileReducer,
+    unfreezeTransactionsReducer,
+    freezeTransactionsReducer,
+    changeTransactionPinReducer,
+    completeBusinessprofileReducer
 });
 
 export default rootReducer;

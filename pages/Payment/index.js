@@ -118,11 +118,29 @@ const Payment = () => {
     useEffect(() => {
         dispatch(loadAccountPrimary());
     }, []);
+    useEffect(() => {
+        if (balanceEnquiry !== null) {
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'NGN',
+                currencyDisplay: 'narrowSymbol'
+            });
+            const formattedAmount = formatter.format(
+                balanceEnquiry.availableBalance
+            );
+            setBalance(formattedAmount);
+        }
+    }, [balanceEnquiry]);
 
     useEffect(() => {
         if (accountPrimary !== null) {
             setSenderDetails(accountPrimary);
-            setBalance(accountPrimary.accountBalance);
+            let balanceData;
+            balanceData = {
+                accountId: accountPrimary.accountId
+            };
+
+            dispatch(getBalanceEnquiry(balanceData));
         }
     }, [accountPrimary]);
     const interBankCheck = () => {
@@ -268,7 +286,7 @@ const Payment = () => {
             setCount(0);
         }
     };
-
+    let sum;
     const renderForm = () => {
         switch (formType) {
             case 'paylink':
@@ -424,12 +442,9 @@ const Payment = () => {
                                 othersaction={(data) => {
                                     if (data.bankName === 'Ecobank') {
                                         setEcobank(true);
+                                        setCount(count + 1);
                                     } else {
                                         setEcobank(false);
-                                        setInterEnquiry({
-                                            accountName: 'Aderohunmu Matthew'
-                                        });
-                                        setIsLoading(false);
                                         setCount(count + 1);
                                     }
                                     if (data.beneficiary === true) {
@@ -460,7 +475,7 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 isLoading={isLoading}
                                 amount={paymentDetails.amount}
-                                recieverName={interEnquiry.accountName}
+                                recieverName={paymentDetails.accountName}
                                 sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
                                 recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
@@ -537,7 +552,7 @@ const Payment = () => {
                                 }}
                                 title="Single Transfer Payment"
                                 amount={paymentDetails.amount}
-                                beneName={interEnquiry.accountName}
+                                beneName={paymentDetails.accountName}
                                 repeatAction={() => {
                                     setCount(count + 1);
                                 }}
@@ -548,6 +563,7 @@ const Payment = () => {
                             <PaymentRepeat
                                 overlay={overlay}
                                 closeAction={handleClose}
+                                type="Single Transfer"
                             />
                         );
                     case 4:
@@ -613,57 +629,60 @@ const Payment = () => {
                             <MakePaymentSecond
                                 isLoading={isLoading}
                                 closeAction={handleClose}
-                                amount={paymentDetails.amount}
-                                recieverName={paymentDetails.accountNumber}
-                                sender={paymentDetails.accountName}
-                                recieverBank={paymentDetails.bankName}
+                                amount={
+                                    paymentDetails.amount === ''
+                                        ? paymentDetails.details.reduce(
+                                              (a, b) => {
+                                                  return +a.amount + +b.amount;
+                                              }
+                                          )
+                                        : paymentDetails.amount
+                                }
+                                title="Bulk Payments"
+                                // recieverName={paymentDetails.accountNumber}
+                                sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
+                                // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
-                                transferAction={() => {
+                                number={paymentDetails.details.length}
+                                backAction={() => {
+                                    setCount(count - 1);
+                                }}
+                                transferAction={(data) => {
                                     setIsLoading(true);
                                     const paymentData = {
-                                        senderAccountNo: '1823020500',
-                                        senderAccountType: 'A',
-                                        senderName: 'Aderohunmu Matthew',
-                                        senderPhone: '2348039219191',
-                                        destinations: [
-                                            {
-                                                destinationBankCode:
-                                                    'ZENITH-ACC',
-                                                beneficiaryAccountNo:
-                                                    '2252999745',
-                                                beneficiaryName:
-                                                    'CHIJIOKE NWANKWO',
-                                                narration: 'salary',
-                                                // amount: paymentDetails.amount,
-                                                amount: '1.00',
-                                                ccy: 'NGN'
-                                            },
-                                            {
-                                                destinationBankCode:
-                                                    'ZENITH-ACC',
-                                                beneficiaryAccountNo:
-                                                    '2252999740',
-                                                beneficiaryName:
-                                                    'CHIJIOKE NWANKWO',
-                                                narration: 'salary',
-                                                amount: '2.00',
-                                                ccy: 'NGN'
-                                            }
+                                        accountId: senderDetails.accountId,
+                                        transactionPin: Object.values(data)
+                                            .toString()
+                                            .replaceAll(',', ''),
+                                        transactions: [
+                                            paymentDetails.details?.map(
+                                                (details, index) => {
+                                                    return {
+                                                        isEcobankToEcobankTransaction:
+                                                            details.bankName ===
+                                                            'Ecobank'
+                                                                ? true
+                                                                : false,
+                                                        destinationBank:
+                                                            details.bankName,
+                                                        destinationBankCode:
+                                                            details.bankName,
+                                                        beneficiaryName:
+                                                            'HIJIOKE   NWANKWO',
+                                                        destinationAccountNo:
+                                                            details.accountNumber,
+                                                        transactionAmount:
+                                                            paymentDetails.amount ===
+                                                            ''
+                                                                ? details.amount
+                                                                : paymentDetails.amount,
+                                                        narration: ''
+                                                    };
+                                                }
+                                            )
                                         ]
                                     };
-                                    if (
-                                        paymentDetails.accountNumber3 !== '' &&
-                                        paymentDetails.bankName3 !== ''
-                                    ) {
-                                        paymentData.destinations.push({
-                                            destinationBankCode: 'ZENITH-ACC',
-                                            beneficiaryAccountNo: '2252999740',
-                                            beneficiaryName: 'CHIJIOKE NWANKWO',
-                                            narration: 'salary',
-                                            amount: '3.00',
-                                            ccy: 'NGN'
-                                        });
-                                    }
+
                                     dispatch(getBulkTransfer(paymentData));
                                 }}
                             />
@@ -734,7 +753,7 @@ const Payment = () => {
                                 amount={paymentDetails.amount}
                                 title="Bills Payment"
                                 recieverBank={airtimeNetData.name}
-                                sender={userProfileData.profile.preferredName}
+                                sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
                                 overlay={overlay}
                                 transferAction={(data) => {
                                     setIsLoading(true);

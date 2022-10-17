@@ -6,10 +6,7 @@ import Card from '../NotRegisteredForms/Card';
 import Visbility from '../../ReusableComponents/Eyeysvg';
 import styles from './styles.module.css';
 import validator from 'validator';
-import {
-    bankAccountsData,
-    existingUserProfileData
-} from '../../../redux/actions/actions';
+import { existingUserProfileData } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
 import Progressbar from '../../ReusableComponents/Progressbar';
@@ -22,7 +19,10 @@ const RegisteredForm = ({
     action,
     move,
     formData,
-    setFormData
+    setFormData,
+    loading,
+    setLoading
+    // errorMessage
 }) => {
     const dispatch = useDispatch();
     const {
@@ -31,9 +31,9 @@ const RegisteredForm = ({
         formState: { errors }
     } = useForm();
 
-    const account = localStorage.getItem('displayAccount');
+    const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
-
+    console.log(accountDetails);
     const sendAccount = localStorage.getItem('account');
     const sendAccounts = JSON.parse(sendAccount);
     const [activeBtn, setActiveBtn] = useState(true);
@@ -42,7 +42,7 @@ const RegisteredForm = ({
     const [passwordMatch, setPasswordMatch] = useState('');
     // const [userId, setUserId] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [emailData, setEmailData] = useState('');
     const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
@@ -50,6 +50,7 @@ const RegisteredForm = ({
     // console.log(existingUserProfilee);
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
+        setConfPassword(e.target.value);
         setFormData({
             ...formData,
             confPassword: e.target.value
@@ -58,6 +59,8 @@ const RegisteredForm = ({
             setPasswordMatch('Passwords do not match');
         }
     };
+    //how to write states in functional componenet in reactjs
+
     const handlePwd = (e) => {
         setCount(e.target.value.length);
         setFormData({
@@ -95,14 +98,19 @@ const RegisteredForm = ({
         // meta = { ...meta, password: e.target.value };
         // window.localStorage.setItem('meta', JSON.stringify(meta));
     };
-
+    // console.log(profileInfo);
     let accounts = window.localStorage.getItem('account');
     var newAccounts = JSON.parse(accounts);
     console.log(newAccounts);
     // console.log('payload',emailData, password, confPassword);
 
     useEffect(() => {
-        setFormData({ ...formData, userId: newAccounts.user.userId });
+        if (newAccounts.userId) {
+            setFormData({ ...formData, userId: newAccounts.userId });
+        } else if (newAccounts.user.userId) {
+            setFormData({ ...formData, userId: newAccounts.user.userId });
+        }
+
         console.log(formData.userId);
     }, []);
     const types = (types) => {
@@ -111,10 +119,15 @@ const RegisteredForm = ({
     const type = (type) => {
         setOutType(type);
     };
+    useEffect(() => {
+        setLoading((prev) => !prev);
+    }, [errorMessage]);
+
     const [count, setCount] = useState([]);
     const [outType, setOutType] = useState();
     const [outTypes, setOutTypes] = useState();
-    // console.log(existingUserProfilee);
+
+    console.log(existingUserProfilee);
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
@@ -125,6 +138,11 @@ const RegisteredForm = ({
                     <div className={styles.cardHeading}>
                         <ArrowBackSvg action={action} color="#102572" />
                         <div>
+                            {errorMessage ? (
+                                <p className={styles.error}>
+                                    {errorMessage.response.data.message}
+                                </p>
+                            ) : null}
                             <h3 className={styles.LeftHeading}>
                                 Profile Setup
                             </h3>
@@ -133,7 +151,7 @@ const RegisteredForm = ({
                     <form onSubmit={handleSubmit(move)}>
                         {/* include validation with required or other standard HTML validation rules */}
                         <div className={styles.textInput}>
-                            <label>Email Address/ Phone Number </label>
+                            <label>Email Address </label>
                             {errors.email?.message}
                             <input
                                 placeholder="Enter Your Email"
@@ -141,9 +159,11 @@ const RegisteredForm = ({
                                 required
                                 // readOnly
                                 value={
-                                    newAccounts.email === null
-                                        ? formData.emailData
+                                    newAccounts.email
+                                        ? newAccounts.email
                                         : newAccounts.user.email
+                                        ? newAccounts.user.email
+                                        : formData.emailData
                                 }
                                 onChange={(event) =>
                                     setFormData({
@@ -202,9 +222,7 @@ const RegisteredForm = ({
                                 <p className={styles.error}>{passwordMatch}</p>
                             )}
                         </div>
-                        {/* {loading ? (
-                            <Loader />
-                        ) : ( */}
+                        {/* {loading ? <Loader /> : null} */}
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}

@@ -13,7 +13,9 @@ import {
     CompProfile,
     createNewCorpUserAccount,
     createNewUserAccount,
-    statesData
+    loadUserProfile,
+    statesData,
+    type
 } from '../../../../redux/actions/actions';
 import { useRouter } from 'next/router';
 import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
@@ -21,6 +23,7 @@ import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchS
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import { getCookie } from 'cookies-next';
+import Loader from '../../../ReusableComponents/Loader';
 const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // const [progress, setProgress] = useState('75%');
     const [title, setTitle] = useState('Basic');
@@ -50,6 +53,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [errorMes, setErrorMes] = useState();
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
+    const [userProfiles, setUserProfiles] = useState('');
+    const [alluserData, setAllUserData] = useState('');
     const { compBusprofile, comperrorMessage } = useSelector(
         (state) => state.completeBusProfileReducer
     );
@@ -70,6 +75,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
+
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     const router = useRouter();
     const saveFile = (e) => {
@@ -99,11 +106,28 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     useEffect(() => {
         dispatch(CompProfile());
+        dispatch(loadUserProfile());
+        // console.log(profile.data);
+        {
+            if (profile) {
+                profile.data?.map((item) => {
+                    if (item.documentType === 'CAC') {
+                        setFormData({
+                            ...formData,
+                            bussinessName: item.documentData.companyName
+                        });
+                    }
+                });
+            }
+        }
+        setProfileCont(userProfiles);
     }, []);
     useEffect(() => {
         if (profile !== null) {
-            console.log(profileCont.companyName);
-            setProfileCont(profile);
+            if (userProfile !== null) {
+                console.log(userProfile);
+                setProfileCont(userProfile);
+            }
             if (profile.data[2]) {
                 setBusinessProfile(profile.data[2].documentData);
             } else {
@@ -111,7 +135,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             }
         }
         // setGender(profileCont.gender);
-    }, [profile]);
+    }, [profile, userProfile]);
+
     useEffect(() => {
         dispatch(businessCategoriesData());
     }, []);
@@ -152,7 +177,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         formState: { errors }
     } = useForm();
 
-    // console.log(type);
+    console.log(type);
 
     // const uploadFile = async (e) => {
     //   const formData = new FormData();
@@ -186,18 +211,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             refereeCode: '',
             signature: file
         };
-        console.log(commpleteProfileData);
+        // console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
-    useEffect(() => {
-        setLoading((prev) => !prev);
-        console.log(compBusprofile);
-        if (compBusprofile) {
-            if (compBusprofile.message === 'Successful') {
-                router.push('/Verify/Account/loading');
-            }
-        }
-    }, [newAccount, comperrorMessage]);
 
     const handleSubmitReg = () => {
         setLoading((prev) => !prev);
@@ -213,23 +229,35 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             state: formData.state,
             city: formData.city,
             lga: formData.localGoverment,
-            refereeCode: 'WO69LA',
+            refereeCode: '',
             signature: file
         };
         console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
+
     useEffect(() => {
         setLoading((prev) => !prev);
         console.log(compBusprofile);
         if (compBusprofile) {
-            if (compBusprofile.message === 'Successful') {
-                router.push('/Verify/CorportateAccount');
+            if (
+                compBusprofile.message === 'Successful' ||
+                comperrorMessage.message ===
+                    'your have already setup your business'
+            ) {
+                profile.data?.map((item) => {
+                    if (type === 'true') {
+                        router.push('/Verify/CorportateAccount');
+                    } else if (type === 'false') {
+                        router.push('/Verify/Account/loading');
+                    }
+                });
             }
         }
-    }, [newCorpAccount, newCorpAccountErrorMMessage]);
-    const [activeBtn, setActiveBtn] = useState(true);
+    }, [newAccount, comperrorMessage]);
 
+    const [activeBtn, setActiveBtn] = useState(true);
+    //console.log(test)
     // console.log(type);
     return (
         <div className={styles.bodyWrapper}>
@@ -285,7 +313,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                     {title === 'Basic' ? (
                         <form
                             onSubmit={handleSubmit(() => {
-                                if (!business) {
+                                if (business === '') {
                                     setBusinessError(true);
                                 }
                                 setTitle('Other');
@@ -296,10 +324,20 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <label>Enter Full Name</label>
                                     <input
                                         type="text"
-                                        value={`${profileCont.lastName} ${profileCont.firstName}`}
+                                        value={
+                                            profileCont
+                                                ? `${profileCont.lastName} ${profileCont.firstName}`
+                                                : null
+                                        }
                                         disabled
                                     />
                                 </div>
+                                {/* {alluserData[1].documentData.map(
+                                    (usersData, index) => {
+                                        console.log(alluserData);
+                                        return <></>;
+                                    }
+                                )} */}
                                 <div className={styles.formGroup}>
                                     <label>Select your Gender</label>
                                     <select
@@ -322,22 +360,44 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <div className={styles.formGroup}>
                                         <div className={styles.singleFormGroup}>
                                             <label>Enter Business Name</label>
-                                            <input
-                                                type="text"
-                                                placeholder="Enter Business Full Name"
-                                                {...register('businessName', {
-                                                    required:
-                                                        'Business Name is required'
-                                                })}
-                                                value={formData.bussinessName}
-                                                onInput={(event) => {
-                                                    setFormData({
-                                                        ...formData,
-                                                        bussinessName:
-                                                            event.target.value
-                                                    });
-                                                }}
-                                            />
+                                            {type === 'true' ? (
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter Business Full Name"
+                                                    value={
+                                                        formData.bussinessName
+                                                    }
+                                                    onInput={(event) => {
+                                                        setFormData({
+                                                            ...formData,
+                                                            bussinessName:
+                                                                event.target
+                                                                    .value
+                                                        });
+                                                    }}
+                                                />
+                                            ) : (
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter Business Full Name"
+                                                    {...register(
+                                                        'businessName',
+                                                        {
+                                                            required:
+                                                                'Business Name is required'
+                                                        }
+                                                    )}
+                                                    onInput={(event) => {
+                                                        setFormData({
+                                                            ...formData,
+                                                            bussinessName:
+                                                                event.target
+                                                                    .value
+                                                        });
+                                                    }}
+                                                />
+                                            )}
+
                                             <p className={styles.error}>
                                                 {errors.businessName?.message}
                                             </p>
@@ -565,11 +625,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                     ) : (
                         <form
                             onSubmit={handleSubmit(
-                                profileCont.isBusinessRegistered === true
+                                type === 'true'
                                     ? handleSubmitReg
                                     : handleSubmitIII
                             )}
                         >
+                            {comperrorMessage ? comperrorMessage.message : null}
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroup}>
                                     <div>
@@ -711,7 +772,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                 <div className={styles.formGroup}>
                                     <div className={styles.singleFormGroup}>
                                         <label>
-                                            Enter Referral Code{' '}
+                                            Enter Referral Code
                                             <span>(Optional)</span>
                                         </label>
                                         <input
@@ -726,6 +787,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             }}
                                         />
                                     </div>
+                                    {/* {loading ? <Loader /> : null} */}
                                     {/* {profileCont.isBusinessRegistered ===
                                     true ? (
                                         <ButtonComp
@@ -754,6 +816,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             // onClick={handleShowFourthStep}
                                         />
                                     )} */}
+
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={
@@ -773,12 +836,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     : 'No file chosen...'}
                                             </p>
                                             <label>
+                                                Upload
                                                 <input
                                                     type="file"
                                                     placeholder="Enter Code"
                                                     onChange={saveFile}
+                                                    accept="image/png, image/jpeg, application/pdf"
                                                 />
-                                                Upload
                                             </label>
                                         </div>
                                     </div>

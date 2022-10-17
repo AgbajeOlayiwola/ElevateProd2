@@ -18,10 +18,12 @@ const RegisteredForm = ({
     // errorM,
     errorI,
     bvnError,
-    actionI
+    actionI,
+    loading,
+    setLoading
 }) => {
     // const [progress, setProgress] = useState('25%');
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [switchs, setSwitch] = useState(true);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
@@ -78,30 +80,28 @@ const RegisteredForm = ({
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
 
     // console.log('error essage', otpErrorMessage);
-    useEffect(() => {
-        setLoading((prev) => !prev);
-    }, [isLoading, profile, errorMessages]);
+    // useEffect(() => {
+    //     setLoading((prev) => !prev);
+    // }, [isLoading, profile, errorMessages]);
 
-    useEffect(() => {
-        // console.log('bvnError', bvnErrorI);
-        console.log(errorMessages);
-        setErrorM(errorMessages);
+    // useEffect(() => {
+    //     // console.log('bvnError', bvnErrorI);
+    //     console.log(errorMessages);
+    //     setErrorM(errorMessages);
 
-        //change to no error messages boss
-        if (!errorMessages) {
-            console.log(errorMessages);
-        } else {
-            console.log('moved');
-        }
-    }, [errorMessages]);
+    //     //change to no error messages boss
+    //     if (!errorMessages) {
+    //         console.log(errorMessages);
+    //     } else {
+    //         console.log('moved');
+    //     }
+    // }, [errorMessages]);
 
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.cardHeading}>
                 <h3 className={styles.LeftHeading}>Profile Setup</h3>
-                <p>
-                    We recommend you enter the phone number linked to your BVN
-                </p>
+                <p>We recommend you use a phone number linked to NIN</p>
             </div>
             <div className={styles.formWrapper}>
                 <InputWrapper>
@@ -155,7 +155,7 @@ const RegisteredForm = ({
                                 //setRcnumber(event?.target.value); //saving input to state
                             }}
                         />
-                        <div className="errors">
+                        <div className={styles.errors}>
                             {errors.rc_number?.message}
                         </div>
                         <InputWrapper>
@@ -178,7 +178,9 @@ const RegisteredForm = ({
                                     //setTinumber(event?.target.value); //saving input to state
                                 }}
                             />
-                            <div className="errors">{errors.tin?.message}</div>
+                            <div className={styles.errors}>
+                                {errors.tin?.message}
+                            </div>
                         </InputWrapper>
 
                         <InputWrapper>
@@ -210,7 +212,9 @@ const RegisteredForm = ({
                                 }}
                             />
                             <p className={styles.error}>{errorM}</p>
-                            <div className="errors">{errors.bvn?.message}</div>
+                            <div className={styles.errors}>
+                                {errors.bvn?.message}
+                            </div>
                         </InputWrapper>
 
                         <InputWrapper>
@@ -269,7 +273,7 @@ const RegisteredForm = ({
                                     />
                                 </div>
                             </div>
-                            <div className="errors">
+                            <div className={styles.errors}>
                                 {errors.phone_number?.message}
                             </div>
                         </InputWrapper>
@@ -294,7 +298,7 @@ const RegisteredForm = ({
                                     });
                                 }}
                             />
-                            <div className="errors">
+                            <div className={styles.errors}>
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
@@ -303,7 +307,7 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text={'Next'}
-                            onClick={actionI}
+                            // onClick={actionI}
                         />
                     </form>
                 ) : (
@@ -337,7 +341,7 @@ const RegisteredForm = ({
                             />
                             <p className={styles.error}>{errorM}</p>
                             <p className={styles.error}> {bvnError}</p>
-                            <div className="errors">
+                            <div className={styles.errors}>
                                 {errors.bvnFalse?.message}
                             </div>
                         </InputWrapper>
@@ -397,7 +401,7 @@ const RegisteredForm = ({
                                     />
                                 </div>
                             </div>
-                            <div className="errors">
+                            <div className={styles.errors}>
                                 {errors.countryCode_number?.message}
                             </div>
                         </InputWrapper>
@@ -406,7 +410,7 @@ const RegisteredForm = ({
                             <FormInput
                                 type="date"
                                 placeholder="DD  |  MM  |  YYYY"
-                                max="2002-12-31"
+                                max="2004-12-31"
                                 {...register('date_of_birth', {
                                     required: 'Date of birth is required',
                                     minLength: {
@@ -422,17 +426,17 @@ const RegisteredForm = ({
                                     });
                                 }}
                             />
-                            <div className="errors">
+                            <div className={styles.errors}>
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
-
+                        {/* {loading ? <Loader /> : null} */}
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text={'Next'}
-                            onClick={action}
+                            // onClick={action}
                         />
                     </form>
                 ) : null}

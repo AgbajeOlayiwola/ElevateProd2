@@ -107,6 +107,7 @@ const ProfileSetups = () => {
     const [loading, setLoading] = useState(false);
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
+
     const conditionalComponent = () => {
         switch (page) {
             case 0:
@@ -119,9 +120,9 @@ const ProfileSetups = () => {
                         setFormData={setFormData}
                         action={handleSubmit}
                         actionI={regsiteredBus}
-                        // action is supposed to be handleSubmit
+                        loading={loading}
+                        setLoading={setLoading}
                     />
-                    // <StepTwoBVNAuthenticator />
                 );
             case 1:
                 return (
@@ -137,7 +138,7 @@ const ProfileSetups = () => {
                                 otp: '123456'
                             };
                             dispatch(verifyOtp(otpData));
-                            dispatch(CompProfile());
+                            // dispatch(CompProfile());
                             if (otpErrorMessage) {
                                 console.log('otpError');
                             } else if (!otpErrorMessage) {
@@ -152,7 +153,8 @@ const ProfileSetups = () => {
                         action={() => {
                             setPage(page + 1);
                         }}
-                        // action={handleSubmitt}
+                        loading={loading}
+                        setLoading={setLoading}
                     />
                 );
             case 3:
@@ -164,6 +166,8 @@ const ProfileSetups = () => {
                         action={() => {
                             alert('Hello');
                         }}
+                        loading={loading}
+                        setLoading={setLoading}
                     />
                 );
             default:
@@ -204,8 +208,9 @@ const ProfileSetups = () => {
             countryCode: formData.countryCode,
             dateOfBirth: formData.dateOfBirth
         };
-        setLoading((prev) => !prev);
-
+        setLoading(true);
+        setErrorM('');
+        setErrorI('');
         dispatch(createProfileSetup(profileData));
         // console.log('lol');
     }
@@ -221,19 +226,20 @@ const ProfileSetups = () => {
             console.log('move');
             setErrorM(errorMessages);
             setErrorI(bvnError);
+            setLoading(false);
         }
     }, [bvnNin, errorMessages]);
 
-    const handleSubmitt = () => {
-        setPage(page + 1);
-    };
+    // const handleSubmitt = () => {
+    //     setPage(page + 1);
+    // };
     // console.log(errorM, errorI);
 
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
     //         setPage(page - 1);
     //         setErrorM(bvnError);
-    //         setErrorI(bvnErrorI);`   1qa¸asw2a   q1`
+    //         setErrorI(bvnErrorI);
     //     } else if (!otpErrorMessage && !bvnError && !bvnErrorI) {
     //         setPage(page + 1);
     //     }

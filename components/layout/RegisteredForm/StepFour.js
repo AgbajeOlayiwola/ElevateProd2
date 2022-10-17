@@ -9,7 +9,6 @@ import {
     accountStatusData,
     statesData,
     businessCategoriesData,
-    bankAccountsData,
     CompleteBusinessProfile
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +23,7 @@ import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg'
 import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 
-const StepFour = ({ title, action }) => {
+const StepFour = ({ title, action, setFormData, formData }) => {
     const dispatch = useDispatch();
     const router = useRouter();
     // const account = localStorage.getItem('meta');
@@ -44,12 +43,23 @@ const StepFour = ({ title, action }) => {
     const { businessCategories, errorDatas } = useSelector(
         (state) => state.businessCategoriesReducer
     );
+    const { compBusprofile, comperrorMessage } = useSelector(
+        (state) => state.completeBusinessprofileReducer
+    );
 
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
+    const [businessCategory, setBusinessCategory] = useState([]);
+    const [businessType, setBusinessType] = useState([]);
+    const [business, setBusiness] = useState('');
+    const [businesses, setBusinesses] = useState('');
+    const [localGovernment, setLocalGovernment] = useState('');
+    const [businessTest, setBusinessTest] = useState(false);
+    const [businessText, setBusinessText] = useState(false);
+    const { states } = useSelector((state) => state.statesReducer);
     const [businessName, setBusinessName] = useState('');
     const [refferalCode, setRefferalCode] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
@@ -61,16 +71,29 @@ const StepFour = ({ title, action }) => {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
     console.log(localGoverment);
+    const [phones, setPhones] = useState();
+
+    console.log(formData.type);
 
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        console.log(file);
+        console.log(formData.type);
     };
+    useEffect(() => {
+        if (window.typeof !== 'undefined') {
+            setPhones(JSON.parse(window.localStorage.getItem('account')));
+            console.log(phones);
+        }
+    }, []);
+    const [profileInfo, setProfileInfo] = useState([]);
+    const account = localStorage.getItem('account');
+    const accountDetails = JSON.parse(account);
+
     const onSubmitNew = (data) => {
-        setLoading(true);
-        console.log('New');
+        setLoading((prev) => !prev);
+        // console.log(data);
         const userData = {
             isRegistered: 'true',
             businessName: businessName,
@@ -78,98 +101,75 @@ const StepFour = ({ title, action }) => {
             businessType: businesses,
             referralCode: refferalCode,
             countryCode: '+234',
-            businessPhoneNumber: phoneNumber,
+            businessPhoneNumber: profileInfo.phoneNumber,
             street: streetName,
             state: localState,
             city: city,
             lga: localGoverment,
-            refereeCode: 'END',
+            refereeCode: '',
             signature: file
         };
         dispatch(CompleteBusinessProfile(userData));
+        console.log(userData);
     };
-    const profileTest = () => {
-        if (errorMessage === 'Account already exists') {
-            router.push('/Succes/AccountSuccess');
-        }
-        //  else if (errorMessage) {
-        //     setError(errorMessage);
-        //     console.log(errorMessage);
-        //     setLoading(false);
-        // } else if (
-        //     existingUserProfile.message === 'User account created succesfully'
-        // ) {
-        //     setLoading(false);
-        //     router.push('/Succes/Success');
-        // }
-    };
-    useEffect(() => {
-        profileTest();
-    }, [errorMessage, existingUserProfile]);
-    const onSubmit = (data) => {
-        console.log('old');
-        // console.log('old');
-        // const userData = {
-        //     isRegistered: 'true',
-        //     businessName: formData.bussinessName,
-        //     businessCategory: business,
-        //     businessType: businesses,
-        //     referralCode: formData.refferalCode,
-        //     countryCode: '+234',
-        //     businessPhoneNumber: formData.phoneNumber,
-        //     street: formData.streetName,
-        //     state: formData.state,
-        //     city: formData.city,
-        //     lga: formData.localGoverment,
-        //     refereeCode: 'END'
-        // };
-        // dispatch(ompleteBusinessProfile(userData));
-    };
-    console.log(businessName);
-    const newAccountTest = () => {
-        console.log(createAccount);
-        if (errorData === 'User already Exists') {
-            router.push('/Succes/AccountSuccess');
-        } else if (errorData) {
-            setError(errorData);
-            console.log(errorData);
-            setLoading(false);
-        } else if (createAccount.statusCode === 200) {
-            console.log(createAccount);
-            dispatch(accountStatusData(createAccount.data.userId));
-            localStorage.setItem(
-                'userId',
-                JSON.stringify(createAccount.data.userId)
-            );
-            localStorage.setItem(
-                'token',
-                JSON.stringify(createAccount.data.token)
-            );
-        }
-    };
-    useEffect(() => {
-        newAccountTest();
-    }, [errorData, createAccount]);
 
-    const newAccountTest1 = () => {
-        console.log(accountStatus);
-        if (errorMessages) {
-            setError(errorMessages);
-            console.log(errorMessages);
-            setLoading(false);
-        } else if (accountStatus.message === 'Try Again') {
-            router.push('/Verify/ExistingAccount');
-        } else if (accountStatus.message === 'SUCCESS') {
-            window.localStorage.setItem(
-                'accountNumber',
-                JSON.stringify(accountStatus.data)
-            );
-            router.push('/Verify/ExistingSuccess');
-        }
+    // const profileTest = () => {
+    //     setLoading((prev) => !prev);
+    //     if (compBusprofile) {
+    //         console.log(errorMessages);
+    //         router.push('/Verify/ExistingSuccess');
+    //     } else if (
+    //         comperrorMessage.message ===
+    //         'You already have an account with us. Please contact us for more information'
+    //     ) {
+    //         router.push('/Verify/ExistingSuccess');
+    //     }
+
+    //     if (businessCategories !== null) {
+    //         setBusinessCategory(businessCategories);
+    //     }
+    // };
+    // useEffect(() => {
+    //     profileTest();
+    // }, [compBusprofile, comperrorMessage]);
+
+    const onSubmit = (data) => {
+        const userData = {
+            isRegistered: 'true',
+            businessName: businessName,
+            businessCategory: business,
+            businessType: businesses,
+            referralCode: refferalCode,
+            countryCode: '+234',
+            businessPhoneNumber: profileInfo.phoneNumber,
+            street: streetName,
+            state: localState,
+            city: city,
+            lga: localGoverment,
+            refereeCode: '',
+            signature: file
+        };
+        dispatch(CompleteBusinessProfile(userData));
+        console.log(userData);
     };
+
     useEffect(() => {
-        newAccountTest1();
-    }, [errorMessages, accountStatus]);
+        setLoading((prev) => !prev);
+        console.log(compBusprofile);
+        if (compBusprofile) {
+            if (
+                compBusprofile.message === 'Successful' ||
+                comperrorMessage.message ===
+                    'your have already setup your business'
+            ) {
+                if (formData.type !== 'true') {
+                    router.push('/Verify/ExistingSuccess');
+                } else {
+                    router.push('/Verify/CorportateAccount');
+                }
+            }
+        }
+    }, [compBusprofile, comperrorMessage]);
 
     const types = (type) => {
         setOutType(type);
@@ -177,14 +177,6 @@ const StepFour = ({ title, action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [location, setLocation] = useState([]);
 
-    const [businessCategory, setBusinessCategory] = useState([]);
-    const [businessType, setBusinessType] = useState([]);
-    const [business, setBusiness] = useState('');
-    const [businesses, setBusinesses] = useState('');
-    const [localGovernment, setLocalGovernment] = useState('');
-    const [businessTest, setBusinessTest] = useState(false);
-    const [businessText, setBusinessText] = useState(false);
-    const { states } = useSelector((state) => state.statesReducer);
     useEffect(() => {
         dispatch(statesData());
     }, []);
@@ -207,6 +199,12 @@ const StepFour = ({ title, action }) => {
         dispatch(businessCategoriesData());
     }, []);
     useEffect(() => {
+        if (accountDetails.profile !== undefined) {
+            setProfileInfo(accountDetails.profile);
+        } else if (accountDetails.user !== undefined) {
+            setProfileInfo(accountDetails.user.profile);
+        }
+        console.log(profileInfo);
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
         }
@@ -223,7 +221,7 @@ const StepFour = ({ title, action }) => {
 
     if (typeof window !== 'undefined') {
         countryName = window.localStorage.getItem('country');
-        console.log(window.localStorage.getItem('country'));
+
         if (countryName === null) {
             countryNames = window.localStorage.getItem('country');
         } else {
@@ -239,6 +237,9 @@ const StepFour = ({ title, action }) => {
                 <div className={styles.lastStep}>
                     <div className={styles.cardHeading}>
                         <ArrowBackSvg action={action} color="#102572" />
+                        <p>
+                            {comperrorMessage ? comperrorMessage.message : null}
+                        </p>
                         <div>
                             <h3 className={styles.LeftHeading}>
                                 Complete your Profile
@@ -438,6 +439,9 @@ const StepFour = ({ title, action }) => {
                                                     <input
                                                         type="number"
                                                         placeholder="812 345 6789"
+                                                        // value={
+                                                        //     phones.phoneNumber
+                                                        // }
                                                         {...register(
                                                             'countryCode_number',
                                                             {
@@ -450,15 +454,15 @@ const StepFour = ({ title, action }) => {
                                                                 }
                                                             }
                                                         )}
-                                                        value={phoneNumber}
+                                                        // value={phoneNumber}
                                                         onChange={(e) =>
                                                             setPhoneNumber(
                                                                 e.target.value
                                                             )
                                                         }
-                                                        // value={
-                                                        //     accountDetails.phoneNumber
-                                                        // }
+                                                        value={
+                                                            profileInfo.phoneNumber
+                                                        }
                                                     />
                                                 </div>
                                             </div>
@@ -587,22 +591,16 @@ const StepFour = ({ title, action }) => {
                                             setRefferalCode(e.target.value)
                                         }
                                     />{' '}
-                                    {loading ? (
-                                        <Loader />
-                                    ) : (
-                                        <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            text="Save and Continue"
-                                            type="submit"
-                                            // onClick={handleShowSuccessStep}
-                                            // onClick={handleShowFourthStep}
-                                        />
-                                    )}
+                                    {/* {loading ? <Loader /> : null} */}
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Save and Continue"
+                                        type="submit"
+                                        // onClick={handleShowFourthStep}
+                                    />
                                 </div>
                                 {/* <div>
                                     <div className={styles.terms}>
@@ -700,9 +698,14 @@ const StepFour = ({ title, action }) => {
                                                                 }
                                                             }
                                                         )}
-                                                        // value={
-                                                        //     accountDetails.phoneNumber
-                                                        // }
+                                                        onChange={(e) =>
+                                                            setPhoneNumber(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        value={
+                                                            profileInfo.phoneNumber
+                                                        }
                                                     />
                                                 </div>
                                             </div>
@@ -785,6 +788,12 @@ const StepFour = ({ title, action }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter Your Business Name"
+                                                value={businessName}
+                                                onChange={(e) =>
+                                                    setBusinessName(
+                                                        e.target.value
+                                                    )
+                                                }
                                             />
                                         </div>
                                         <div
@@ -876,6 +885,12 @@ const StepFour = ({ title, action }) => {
                                                 <input
                                                     type="text"
                                                     placeholder="Enter Street Name"
+                                                    value={streetName}
+                                                    onChange={(e) =>
+                                                        setStreetName(
+                                                            e.target.value
+                                                        )
+                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -885,7 +900,13 @@ const StepFour = ({ title, action }) => {
                                             <label>
                                                 Local Government Area (LGA)
                                             </label>
-                                            <select>
+                                            <select
+                                                onChange={(e) => {
+                                                    setLocalGoverment(
+                                                        e.target.value
+                                                    );
+                                                }}
+                                            >
                                                 <option value="">
                                                     Select Local Government
                                                 </option>
@@ -948,6 +969,10 @@ const StepFour = ({ title, action }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter City"
+                                                value={city}
+                                                onChange={(e) =>
+                                                    setCity(e.target.value)
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -962,22 +987,17 @@ const StepFour = ({ title, action }) => {
                                         placeholder="Enter  Code"
                                         className={styles.textInput}
                                     />{' '}
-                                    {loading ? (
-                                        <Loader />
-                                    ) : (
-                                        <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            text="Save and Continue"
-                                            type="submit"
-                                            // onClick={handleShowSuccessStep}
-                                            // onClick={handleShowFourthStep}
-                                        />
-                                    )}
+                                    {/* {loading ? <Loader /> : null} */}
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Save and Continue"
+                                        type="submit"
+                                        // onClick={handleShowSuccessStep}
+                                        // onClick={handleShowFourthStep}
+                                    />
                                 </div>
                             </form>
                         </div>

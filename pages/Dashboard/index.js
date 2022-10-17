@@ -63,9 +63,6 @@ const Dashboard = () => {
     const [items, setItems] = useState([]);
 
     const [acctNumber, setAcctNumber] = useState('');
-    useEffect(() => {
-        dispatch(getBalanceEnquiry());
-    }, []);
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
@@ -111,7 +108,7 @@ const Dashboard = () => {
                 currencyDisplay: 'narrowSymbol'
             });
             const formattedAmount = formatter.format(
-                balanceEnquiry[0].availableBalance
+                balanceEnquiry.availableBalance
             );
             setBalance(formattedAmount);
         }
