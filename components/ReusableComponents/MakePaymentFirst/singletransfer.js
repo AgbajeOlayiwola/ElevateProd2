@@ -140,11 +140,11 @@ const SingleTransfer = ({
                     <label> Account Number</label>
                     {beneActive ? (
                         <input
-                            {...register('accountNumber')}
-                            defaultValue={beneActive.accountNumber}
+                            {...register('accountNumberBene')}
                             type="number"
+                            value={beneActive.accountNumber}
                         />
-                    ) : (
+                    ) : !beneActive ? (
                         <input
                             {...register('accountNumber', {
                                 required: 'Please enter  Acount Number',
@@ -173,7 +173,7 @@ const SingleTransfer = ({
                             type="number"
                             placeholder="Enter account number here"
                         />
-                    )}
+                    ) : null}
                     <p className={styles.error}>
                         {errors?.accountNumber?.message}
                     </p>
@@ -211,7 +211,7 @@ const SingleTransfer = ({
                 <div className={styles.narration}>
                     <label>Choose Bank</label>
                     {beneActive ? (
-                        <select {...register('bankName')} name="bankName">
+                        <select {...register('bankNameBene')} name="bankName">
                             <option value={beneActive.bankName}>
                                 {beneActive.bankName}
                             </option>
