@@ -9,7 +9,8 @@ import {
     accountStatusData,
     statesData,
     businessCategoriesData,
-    CompleteBusinessProfile
+    CompleteBusinessProfile,
+    ExCreateBusProfileSetup
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -70,6 +71,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
     const [localState, setLocalState] = useState('');
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
+    const [regNo, setRegNo] = useState('');
     console.log(localGoverment);
     const [phones, setPhones] = useState();
 
@@ -135,6 +137,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
 
     const onSubmit = (data) => {
         const userData = {
+            registerationNumber: regNo,
             isRegistered: 'true',
             businessName: businessName,
             businessCategory: business,
@@ -149,27 +152,27 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             refereeCode: '',
             signature: file
         };
-        dispatch(CompleteBusinessProfile(userData));
+        dispatch(ExCreateBusProfileSetup(userData));
         console.log(userData);
     };
 
-    useEffect(() => {
-        setLoading((prev) => !prev);
-        console.log(compBusprofile);
-        if (compBusprofile) {
-            if (
-                compBusprofile.message === 'Successful' ||
-                comperrorMessage.message ===
-                    'your have already setup your business'
-            ) {
-                if (formData.type !== 'true') {
-                    router.push('/Verify/ExistingSuccess');
-                } else {
-                    router.push('/Verify/CorportateAccount');
-                }
-            }
-        }
-    }, [compBusprofile, comperrorMessage]);
+    // useEffect(() => {
+    //     setLoading((prev) => !prev);
+    //     console.log(compBusprofile);
+    //     if (compBusprofile) {
+    //         if (
+    //             compBusprofile.message === 'Successful' ||
+    //             comperrorMessage.message ===
+    //                 'your have already setup your business'
+    //         ) {
+    //             if (formData.type !== 'true') {
+    //                 router.push('/Verify/ExistingSuccess');
+    //             } else {
+    //                 router.push('/Verify/CorportateAccount');
+    //             }
+    //         }
+    //     }
+    // }, [compBusprofile, comperrorMessage]);
 
     const types = (type) => {
         setOutType(type);
@@ -648,6 +651,10 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                             'Only Alphabelts/Number allowed'
                                                     }
                                                 })}
+                                                onChange={(e) =>
+                                                    setRegNo(e.target.value)
+                                                }
+                                                value={regNo}
                                             />
                                         </div>
                                         <div
@@ -704,7 +711,8 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                             )
                                                         }
                                                         value={
-                                                            profileInfo.phoneNumber
+                                                            phoneNumber
+                                                            // profileInfo.phoneNumber
                                                         }
                                                     />
                                                 </div>

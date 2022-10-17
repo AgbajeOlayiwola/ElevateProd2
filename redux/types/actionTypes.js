@@ -593,3 +593,26 @@ export const resetOtpType = {
     RESET_OTP_PASSWORD_ERROR: 'RESET_OTP_ERROR'
 };
 // FReset otp End
+
+//SEND CAC START
+export const sendCac = {
+    SEND_CAC_START: 'SEND_CAC_START',
+    SEND_CAC_SUCCESS: 'SEND_CAC_SUCCESS',
+    SEND_CAC_ERROR: 'SEND_CAC_ERROR'
+};
+//SEND CAC EEND
+
+//GET CAC START
+export const getCAC = {
+    GET_CAC_START: 'GET_CAC_START',
+    GET_CAC_SUCCESS: 'GET_CAC_SUCCESS',
+    GET_CAC_ERROR: 'GET_CAC_ERROR'
+};
+//GET CAC END
+//existing business setup TYPE STARTE
+export const existingBusnessSetup = {
+    EXISTING_BUSINESS_START: 'EXISTING_BUSINESS_START',
+    EXISTING_BUSINESS_SUCCESS: 'EXISTING_BUSINESS_SUCCESS',
+    EXISTING_BUSINESS_ERROR: 'EXISTING_BUSINESS_ERROR'
+};
+// existing business setup End
