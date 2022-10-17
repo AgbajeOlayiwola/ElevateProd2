@@ -4,7 +4,7 @@ import { getTransactionElevate } from '../../../redux/actions/actions';
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
 
-const PaymentTable = ({ title }) => {
+const PaymentTable = ({ title, test }) => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
@@ -15,7 +15,7 @@ const PaymentTable = ({ title }) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getTransactionElevate());
-    }, []);
+    }, [test === 0]);
 
     useEffect(() => {
         if (transactionElevate !== null) {
@@ -23,18 +23,6 @@ const PaymentTable = ({ title }) => {
             console.log(transactionElevate.transactions);
         }
     }, [transactionElevate]);
-    const changeTransaction = () => {
-        switch (searchType) {
-            case 'transactionType':
-                return 'transactionType';
-            case 'transactionStatus':
-                return 'transactionStatus';
-            case 'transactionAmount':
-                return 'transactionAmount';
-            case 'transactionDate':
-                return 'transactionDate';
-        }
-    };
     return (
         <div className={styles.table}>
             <div className={styles.tableHeader}>

@@ -165,11 +165,11 @@ const Profile = () => {
             icon: <RmSvg />,
             color: '#7A7978'
         },
-        {
-            text: 'Manage Signatories',
-            icon: <ManageSignSvg />,
-            color: '#7A7978'
-        },
+        // {
+        //     text: 'Manage Signatories',
+        //     icon: <ManageSignSvg />,
+        //     color: '#7A7978'
+        // },
 
         {
             text: 'Contact us',
@@ -397,224 +397,224 @@ const Profile = () => {
                         );
                 }
 
-            case 'Manage Signatories':
-                switch (count) {
-                    case 0:
-                        return (
-                            <>
-                                <h2 className={styles.title}>
-                                    Manage Signatories
-                                </h2>
-                                <div className={styles.sign}>
-                                    <p>
-                                        Please see below signatories to your
-                                        Ellevate account.
-                                    </p>
-                                </div>
-                                <div className={styles.signBody}>
-                                    {!bene.signatories.length ? (
-                                        <h2 className={styles.dontHave}>
-                                            You do not have signatories yet
-                                        </h2>
-                                    ) : (
-                                        <>
-                                            {bene.signatories?.map(
-                                                (sign, index) => {
-                                                    return (
-                                                        <ManageLimit
-                                                            fname={sign.name}
-                                                            mail={sign.mail}
-                                                            key={index}
-                                                        />
-                                                    );
-                                                }
-                                            )}
-                                        </>
-                                    )}
+            // case 'Manage Signatories':
+            //     switch (count) {
+            //         case 0:
+            //             return (
+            //                 <>
+            //                     <h2 className={styles.title}>
+            //                         Manage Signatories
+            //                     </h2>
+            //                     <div className={styles.sign}>
+            //                         <p>
+            //                             Please see below signatories to your
+            //                             Ellevate account.
+            //                         </p>
+            //                     </div>
+            //                     <div className={styles.signBody}>
+            //                         {!bene.signatories.length ? (
+            //                             <h2 className={styles.dontHave}>
+            //                                 You do not have signatories yet
+            //                             </h2>
+            //                         ) : (
+            //                             <>
+            //                                 {bene.signatories?.map(
+            //                                     (sign, index) => {
+            //                                         return (
+            //                                             <ManageLimit
+            //                                                 fname={sign.name}
+            //                                                 mail={sign.mail}
+            //                                                 key={index}
+            //                                             />
+            //                                         );
+            //                                     }
+            //                                 )}
+            //                             </>
+            //                         )}
 
-                                    <div className={styles.signButton}>
-                                        <button
-                                            onClick={() => {
-                                                setCount(count + 1);
-                                            }}
-                                        >
-                                            Add New
-                                        </button>
-                                    </div>
-                                </div>
-                            </>
-                        );
-                    case 1:
-                        return (
-                            <>
-                                <h2 className={styles.title}>
-                                    <span>
-                                        <ArrowBackSvg
-                                            action={() => {
-                                                setCount(count - 1);
-                                            }}
-                                            color="#102572"
-                                        />
-                                    </span>
-                                    Manage Signatory
-                                </h2>
-                                <div className={styles.beneForm}>
-                                    <div className={styles.signForm}>
-                                        <div className={styles.midBeneForm}>
-                                            <div className={styles.formGroup}>
-                                                <label>Enter Email</label>
-                                                <InputTag
-                                                    type="email"
-                                                    placeholder="Enter email here"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className={styles.midBeneForm}>
-                                            <div className={styles.formGroup}>
-                                                <label>
-                                                    Enter your Business Phone
-                                                    Number
-                                                </label>
-                                                <div className={styles.phone}>
-                                                    <div
-                                                        className={
-                                                            styles.phoneHeader
-                                                        }
-                                                    >
-                                                        <span>
-                                                            {/* <img
-                                                            src={
-                                                                countryNames
-                                                                    .flags.svg
-                                                            }
-                                                            alt=""
-                                                        /> */}
-                                                        </span>
-                                                        <p>
-                                                            {/* {
-                                                            countryNames.baseCurrency
-                                                        } */}
-                                                        </p>
-                                                    </div>
-                                                    <div
-                                                        className={
-                                                            styles.phoneDetails
-                                                        }
-                                                    >
-                                                        {/* <p>{countryNames.countryCode}</p> */}
-                                                        <input
-                                                            type="number"
-                                                            placeholder="812 345 6789"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.signForm}>
-                                        <div className={styles.midBeneForm}>
-                                            <div className={styles.formGroup}>
-                                                <label>Enter BVN</label>
-                                                <input
-                                                    type="email"
-                                                    placeholder="Enter your BVN"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={styles.signRights}>
-                                    <p>
-                                        Select sigining rights to be assigned to
-                                        this user
-                                    </p>
-                                    <div className={styles.signRightSingle}>
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="toSign"
-                                                    value="To Sign"
-                                                />
-                                                <span>
-                                                    <CheckedSvg />
-                                                </span>
-                                            </label>
+            //                         <div className={styles.signButton}>
+            //                             <button
+            //                                 onClick={() => {
+            //                                     setCount(count + 1);
+            //                                 }}
+            //                             >
+            //                                 Add New
+            //                             </button>
+            //                         </div>
+            //                     </div>
+            //                 </>
+            //             );
+            //         case 1:
+            //             return (
+            //                 <>
+            //                     <h2 className={styles.title}>
+            //                         <span>
+            //                             <ArrowBackSvg
+            //                                 action={() => {
+            //                                     setCount(count - 1);
+            //                                 }}
+            //                                 color="#102572"
+            //                             />
+            //                         </span>
+            //                         Manage Signatory
+            //                     </h2>
+            //                     <div className={styles.beneForm}>
+            //                         <div className={styles.signForm}>
+            //                             <div className={styles.midBeneForm}>
+            //                                 <div className={styles.formGroup}>
+            //                                     <label>Enter Email</label>
+            //                                     <InputTag
+            //                                         type="email"
+            //                                         placeholder="Enter email here"
+            //                                     />
+            //                                 </div>
+            //                             </div>
+            //                             <div className={styles.midBeneForm}>
+            //                                 <div className={styles.formGroup}>
+            //                                     <label>
+            //                                         Enter your Business Phone
+            //                                         Number
+            //                                     </label>
+            //                                     <div className={styles.phone}>
+            //                                         <div
+            //                                             className={
+            //                                                 styles.phoneHeader
+            //                                             }
+            //                                         >
+            //                                             <span>
+            //                                                 {/* <img
+            //                                                 src={
+            //                                                     countryNames
+            //                                                         .flags.svg
+            //                                                 }
+            //                                                 alt=""
+            //                                             /> */}
+            //                                             </span>
+            //                                             <p>
+            //                                                 {/* {
+            //                                                 countryNames.baseCurrency
+            //                                             } */}
+            //                                             </p>
+            //                                         </div>
+            //                                         <div
+            //                                             className={
+            //                                                 styles.phoneDetails
+            //                                             }
+            //                                         >
+            //                                             {/* <p>{countryNames.countryCode}</p> */}
+            //                                             <input
+            //                                                 type="number"
+            //                                                 placeholder="812 345 6789"
+            //                                             />
+            //                                         </div>
+            //                                     </div>
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                         <div className={styles.signForm}>
+            //                             <div className={styles.midBeneForm}>
+            //                                 <div className={styles.formGroup}>
+            //                                     <label>Enter BVN</label>
+            //                                     <input
+            //                                         type="email"
+            //                                         placeholder="Enter your BVN"
+            //                                     />
+            //                                 </div>
+            //                             </div>
+            //                         </div>
+            //                     </div>
+            //                     <div className={styles.signRights}>
+            //                         <p>
+            //                             Select sigining rights to be assigned to
+            //                             this user
+            //                         </p>
+            //                         <div className={styles.signRightSingle}>
+            //                             <div>
+            //                                 <label>
+            //                                     <input
+            //                                         type="checkbox"
+            //                                         name="toSign"
+            //                                         value="To Sign"
+            //                                     />
+            //                                     <span>
+            //                                         <CheckedSvg />
+            //                                     </span>
+            //                                 </label>
 
-                                            <p>To Sign</p>
-                                        </div>
-                                    </div>
-                                    <div className={styles.signRightSingle}>
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="viewBalances"
-                                                    value="View Balances"
-                                                />
-                                                <span>
-                                                    <CheckedSvg />
-                                                </span>
-                                            </label>
+            //                                 <p>To Sign</p>
+            //                             </div>
+            //                         </div>
+            //                         <div className={styles.signRightSingle}>
+            //                             <div>
+            //                                 <label>
+            //                                     <input
+            //                                         type="checkbox"
+            //                                         name="viewBalances"
+            //                                         value="View Balances"
+            //                                     />
+            //                                     <span>
+            //                                         <CheckedSvg />
+            //                                     </span>
+            //                                 </label>
 
-                                            <p>View Balances</p>
-                                        </div>
-                                    </div>
-                                    <div className={styles.signRightSingle}>
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="viewBalances"
-                                                    value="Transacting (able to move money)"
-                                                />
-                                                <span>
-                                                    <CheckedSvg />
-                                                </span>
-                                            </label>
+            //                                 <p>View Balances</p>
+            //                             </div>
+            //                         </div>
+            //                         <div className={styles.signRightSingle}>
+            //                             <div>
+            //                                 <label>
+            //                                     <input
+            //                                         type="checkbox"
+            //                                         name="viewBalances"
+            //                                         value="Transacting (able to move money)"
+            //                                     />
+            //                                     <span>
+            //                                         <CheckedSvg />
+            //                                     </span>
+            //                                 </label>
 
-                                            <p>
-                                                Transacting (able to move money)
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className={styles.signRightSingle}>
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="viewBalances"
-                                                    value="Manage Account"
-                                                />
-                                                <span>
-                                                    <CheckedSvg />
-                                                </span>
-                                            </label>
+            //                                 <p>
+            //                                     Transacting (able to move money)
+            //                                 </p>
+            //                             </div>
+            //                         </div>
+            //                         <div className={styles.signRightSingle}>
+            //                             <div>
+            //                                 <label>
+            //                                     <input
+            //                                         type="checkbox"
+            //                                         name="viewBalances"
+            //                                         value="Manage Account"
+            //                                     />
+            //                                     <span>
+            //                                         <CheckedSvg />
+            //                                     </span>
+            //                                 </label>
 
-                                            <p>Manage Account</p>
-                                        </div>
-                                    </div>
-                                    <div className={styles.profileBodyButton}>
-                                        <button>Create Signatory</button>
-                                    </div>
-                                </div>
-                            </>
-                        );
-                    case 2:
-                        return (
-                            <PaymentSuccess
-                                overlay={overlay}
-                                type="profile"
-                                action={() => {
-                                    setOverlay(false);
-                                    setCount(0);
-                                    setText('');
-                                }}
-                                heading="New Signatory Successful"
-                                body="Ayomide James has been added to your Signatory"
-                            />
-                        );
-                }
+            //                                 <p>Manage Account</p>
+            //                             </div>
+            //                         </div>
+            //                         <div className={styles.profileBodyButton}>
+            //                             <button>Create Signatory</button>
+            //                         </div>
+            //                     </div>
+            //                 </>
+            //             );
+            //         case 2:
+            //             return (
+            //                 <PaymentSuccess
+            //                     overlay={overlay}
+            //                     type="profile"
+            //                     action={() => {
+            //                         setOverlay(false);
+            //                         setCount(0);
+            //                         setText('');
+            //                     }}
+            //                     heading="New Signatory Successful"
+            //                     body="Ayomide James has been added to your Signatory"
+            //                 />
+            //             );
+            //     }
             case 'Manage Beneficiaries':
                 switch (count) {
                     case 0:
