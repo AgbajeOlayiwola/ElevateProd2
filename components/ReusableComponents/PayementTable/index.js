@@ -23,6 +23,22 @@ const PaymentTable = ({ title, test }) => {
             console.log(transactionElevate.transactions);
         }
     }, [transactionElevate]);
+    const filterCondition = (item, searchType) => {
+        switch (searchType) {
+            case 'transactionType':
+                return item.transactionType
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase())
+            case 'transactionStatus':
+                return item.transactionStatus
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase())
+            default:
+                item.transactionType
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase())
+        }
+    }
     return (
         <div className={styles.table}>
             <div className={styles.tableHeader}>
@@ -69,35 +85,26 @@ const PaymentTable = ({ title, test }) => {
             {!tableDetails.length
                 ? 'No Recent transaction'
                 : tableDetails
-                      ?.filter((item) => {
-                          if (searchValue === '') {
-                              return item;
-                          } else if (
-                              //   searchType === 'transactionType'
-                              //       ? item.transactionType
-                              //       : searchType === 'transactionStatus'
-                              //       ? item.transactionStatus
-                              //       : null
-                              item.transactionType
-                                  .toLowerCase()
-                                  .includes(searchValue.toLowerCase())
-                          ) {
-                              return item;
-                          }
-                      })
-                      ?.map((items, index) => {
-                          return (
-                              <TableDetail
-                                  key={index}
-                                  Beneficiary={items.receiversName}
-                                  Type={items.transactionType}
-                                  Amount={items.transactionAmount}
-                                  Bank={items.destinationBank}
-                                  Dates={items.transactionDate}
-                                  Status={items.transactionStatus}
-                              />
-                          );
-                      })}
+                    ?.filter((item) => {
+                        if (searchValue === '') {
+                            return item;
+                        } else if (filterCondition(item, searchType)) {
+                            return item;
+                        }
+                    })
+                    ?.map((items, index) => {
+                        return (
+                            <TableDetail
+                                key={index}
+                                Beneficiary={items.receiversName}
+                                Type={items.transactionType}
+                                Amount={items.transactionAmount}
+                                Bank={items.destinationBank}
+                                Dates={items.transactionDate}
+                                Status={items.transactionStatus}
+                            />
+                        );
+                    })}
         </div>
     );
 };
