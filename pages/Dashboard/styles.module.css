@@ -382,27 +382,26 @@
     justify-content: space-between;
     align-items: center;
 }
-.names {
+/* .names {
     width: 50%;
-}
-.names p:nth-child(1) {
+} */
+.names p {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
-    margin-bottom: 0px;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0px;
     color: #102572;
 }
-.names p:nth-child(2) {
+.type p {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
-    margin-top: 0px;
-    font-size: 12px;
-    line-height: 15px;
-    /* identical to box height */
-
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0px;
+    text-transform: capitalize;
     color: #2f2f2f;
 }
 .hr {

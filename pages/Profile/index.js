@@ -94,7 +94,6 @@ const Profile = () => {
             console.log(freeze);
         }
     }, [userProfile]);
-    console.log(userProfileData);
     useEffect(() => {
         if (deleteBeneficiaries !== null) {
             dispatch(getBeneficiariesData());

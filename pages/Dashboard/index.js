@@ -28,7 +28,7 @@ import TransactionSvg from '../../components/ReusableComponents/ReusableSvgCompo
 import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
 import Ussd from '../../components/ReusableComponents/UssdSvg';
 import SingleTrans from '../../components/ReusableComponents/SingleTransSvg';
-import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess copy';
+import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -59,6 +59,8 @@ function SamplePrevArrow(props) {
 const Dashboard = () => {
     const dispatch = useDispatch();
     const [outType, setOutType] = useState();
+    const [time, setTime] = useState();
+    const [accountUpgrade, setAccountUpgrade] = useState(false);
     const [balance, setBalance] = useState('₦0.00');
     const [tableDetails, setTableDetails] = useState([]);
     const [userProfileData, setUserProfileData] = useState([]);
@@ -95,25 +97,35 @@ const Dashboard = () => {
         }
     }, [balanceEnquiry]);
 
-    const settings = {
-        className: 'center',
-        centerMode: true,
-        infinite: true,
-        centerPadding: '40px 0px 0px 0px',
-        slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        speed: 500,
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        cssEase: 'linear'
+    const getCurrentDate = () => {
+        let newDate = new Date();
+        let date = newDate.getDate();
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+        setTime(`${year}-${month < 10 ? `0${month}` : `${month}`}-${date}`);
     };
+    console.log(time);
+
+    // const settings = {
+    //     className: 'center',
+    //     centerMode: true,
+    //     infinite: true,
+    //     centerPadding: '40px 0px 0px 0px',
+    //     slidesToShow: 1,
+    //     autoplay: true,
+    //     autoplaySpeed: 2000,
+    //     speed: 500,
+    //     nextArrow: <SampleNextArrow />,
+    //     prevArrow: <SamplePrevArrow />,
+    //     autoplay: true,
+    //     autoplaySpeed: 2000,
+    //     cssEase: 'linear'
+    // };
     useEffect(() => {
         dispatch(loadAccountPrimary());
         dispatch(loadUserProfile());
         dispatch(getTransactionElevate());
+        getCurrentDate();
     }, []);
 
     useEffect(() => {
@@ -132,6 +144,11 @@ const Dashboard = () => {
     useEffect(() => {
         if (userProfile !== null) {
             setUserProfileData(userProfile);
+            if (userProfileData.isUpgradedAccount === false) {
+                setAccountUpgrade(true);
+            } else if (userProfileData.isUpgradedAccount === true) {
+                setAccountUpgrade(false);
+            }
         }
     }, [userProfile]);
     useEffect(() => {
@@ -280,27 +297,77 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             ) : (
-                                tableDetails.map((item, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <div className={styles.transaction}>
-                                                <div className={styles.names}>
-                                                    <p>
-                                                        {item.beneficiaryName}
-                                                    </p>
-                                                    <p>{item.type}</p>
-                                                </div>
-                                                <div className={styles.money}>
-                                                    <p>{item.amount}</p>
+                                tableDetails
+                                    ?.filter((item) => {
+                                        const newDate =
+                                            item.transactionDate.split('T');
+                                        if (newDate[0].includes(time)) {
+                                            return item;
+                                        }
+                                    })
+                                    ?.map((item, index) => {
+                                        const formatter = new Intl.NumberFormat(
+                                            'en-US',
+                                            {
+                                                style: 'currency',
+                                                currency: 'NGN',
+                                                currencyDisplay: 'narrowSymbol'
+                                            }
+                                        );
+                                        const formattedAmount =
+                                            formatter.format(
+                                                item.transactionAmount
+                                            );
+                                        const newBeneficiary =
+                                            item.receiversName.split(' ');
+                                        return (
+                                            <div key={index}>
+                                                <div
+                                                    className={
+                                                        styles.transaction
+                                                    }
+                                                >
                                                     <div
-                                                        className={item.color}
-                                                    ></div>
+                                                        className={styles.names}
+                                                    >
+                                                        <p>
+                                                            {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className={styles.type}
+                                                    >
+                                                        <p>
+                                                            {
+                                                                item.transactionType
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className={styles.money}
+                                                    >
+                                                        <p>{formattedAmount}</p>
+                                                    </div>
+                                                    <div
+                                                        className={item.status}
+                                                    >
+                                                        <div
+                                                            className={
+                                                                styles.statusColor
+                                                            }
+                                                        >
+                                                            <p>
+                                                                {
+                                                                    item.transactionStatus
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <hr className={styles.hr} />
                                             </div>
-                                            <hr className={styles.hr} />
-                                        </div>
-                                    );
-                                })
+                                        );
+                                    })
                             )}
                         </div>
                         {/* <div className={styles.btmIII}>
@@ -359,11 +426,17 @@ const Dashboard = () => {
                     </div> */}
                 </section>
             </div>
-            <PaymentSuccess
-                overlay="true"
-                error="Account Upgrade is important"
-                statusbar="error"
-            />
+            {accountUpgrade ? (
+                <PaymentSuccess
+                    overlay="true"
+                    error="Account Upgrade is important"
+                    statusbar="error"
+                    action={() => {
+                        setAccountUpgrade(false);
+                    }}
+                    text="Close"
+                />
+            ) : null}
         </DashLayout>
     );
 };
