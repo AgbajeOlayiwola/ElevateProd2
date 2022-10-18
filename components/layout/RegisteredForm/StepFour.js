@@ -645,6 +645,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                         <div
                                             className={styles.existingUserCont}
                                         >
+                                            {}
                                             <label>
                                                 Enter your RC /Business
                                                 Registration Number
