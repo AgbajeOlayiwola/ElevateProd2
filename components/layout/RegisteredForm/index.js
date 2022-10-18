@@ -56,9 +56,15 @@ const ExistingMultiStep = () => {
                         move={() => {
                             console.log(formData.emailData);
                             let userEmail;
-                            if (newAccounts.email !== undefined) {
+                            if (
+                                newAccounts?.email !== null &&
+                                newAccounts?.email !== undefined
+                            ) {
                                 userEmail = newAccounts.email;
-                            } else if (newAccounts.user !== undefined) {
+                            } else if (
+                                newAccounts?.user?.email !== undefined &&
+                                newAccounts?.user?.email !== null
+                            ) {
                                 userEmail = newAccounts.user.email;
                             } else {
                                 userEmail = formData.emailData;
