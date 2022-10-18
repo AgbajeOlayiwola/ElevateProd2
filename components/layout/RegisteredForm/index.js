@@ -20,11 +20,13 @@ const ExistingMultiStep = () => {
     );
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
+        type: 'false',
         userId: '',
         emailData: '',
         password: '',
         confPassword: ''
     });
+    const [setType, typeset] = useState('false');
     // useEffect(() => {
     //     if (!errorMessage) {
     //         setPage(page + 1);
@@ -54,11 +56,11 @@ const ExistingMultiStep = () => {
                         move={() => {
                             const userData = {
                                 userId: formData.userId,
-                                email:
-                                    newAccounts.email === null ||
-                                    newAccounts.email === undefined
-                                        ? formData.emailData
-                                        : newAccounts.user?.email,
+                                email: newAccounts.email
+                                    ? newAccounts.email
+                                    : newAccounts.user.email
+                                    ? newAccounts.user.email
+                                    : formData.emailData,
                                 password: formData.password,
                                 confirmPassword: formData.confPassword
                             };
@@ -103,6 +105,8 @@ const ExistingMultiStep = () => {
                             setPage(page - 1);
                             setPageType('');
                         }}
+                        formData={formData}
+                        setFormData={setFormData}
                     />
                 );
             default:
@@ -111,6 +115,7 @@ const ExistingMultiStep = () => {
     };
     function handleSubmit() {
         setPage(page + 1);
+        setFormData({ ...formData, type: 'true' });
     }
     function handleSubmitNew() {
         setPage(page + 1);
