@@ -37,11 +37,13 @@ import Loader from '../../components/ReusableComponents/Loader';
 
 const Profile = () => {
     const [type, setType] = useState('Account');
-    const [overlay, setOverlay] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [outcome, setOutcome] = useState(false);
     const [freeze, setFreeze] = useState();
     const [text, setText] = useState('View Profile');
     const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
+    const [statusBar, setStatusBar] = useState('');
     const [bvn, setBvn] = useState('');
     const [acctNumber, setAcctNumber] = useState('');
     const [count, setCount] = useState(0);
@@ -301,7 +303,13 @@ const Profile = () => {
                 );
             case 'Manage Limit':
                 return (
-                    <>
+                    <form
+                        onSubmit={handleSubmit(() => {
+                            setOutcome(true);
+                            setMessage('Limit saved Successfully');
+                            setStatusBar('success');
+                        })}
+                    >
                         <h2 className={styles.title}>Manage Limit</h2>
                         <div className={styles.formGroup}>
                             <label>Limit Type </label>
@@ -317,9 +325,9 @@ const Profile = () => {
                             <InputTag type="text" placeholder="Add Limit" />
                         </div>
                         <div className={styles.profileBody}>
-                            <button>Add Limit</button>
+                            <button type="submit">Add Limit</button>
                         </div>
-                    </>
+                    </form>
                 );
 
             case 'Bank Verification Number (BVN)':
@@ -884,7 +892,7 @@ const Profile = () => {
                                         index={index}
                                         action={() => {
                                             setText(item.text);
-                                            setOverlay(true);
+                                            // setOverlay(true);
                                             setCount(0);
                                             setBvn('');
                                         }}
@@ -898,17 +906,25 @@ const Profile = () => {
             >
                 {renderForm()}
             </ProfileLayout>
-            {/* {accountUpgrade ? (
+            {outcome ? (
                 <PaymentSuccess
+                    body={message}
+                    error={message}
+                    statusbar={statusbar}
                     overlay="true"
-                    error="Account Upgrade is important"
-                    statusbar="error"
-                    action={() => {
-                        setAccountUpgrade(false);
-                    }}
-                    text="Close"
+                    action={
+                        statusbar === 'error'
+                            ? () => {
+                                  setOutcome(false);
+                              }
+                            : statusbar === 'success'
+                            ? () => {
+                                  setOutcome(false);
+                              }
+                            : null
+                    }
                 />
-            ) : null} */}
+            ) : null}
         </DashLayout>
     );
 };
