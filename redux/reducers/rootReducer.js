@@ -61,6 +61,7 @@ import bankStatementReducer from './bankStatement.reducer';
 import freezeTransactionsReducer from './freezeTransactions.reducer';
 import changeTransactionPinReducer from './changeTransactionPin.reducer';
 import unfreezeTransactionsReducer from './unfreezeTransactions.reducer';
+import ExistingProfileSetupReducer from './existingProfileSetup';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
@@ -124,11 +125,14 @@ const rootReducer = combineReducers({
     resetPasswordReducer: resetPasswordReducer,
     bankStatementReducer: bankStatementReducer,
     resetOtpReducer: resetOtpReducer,
+    ExistingProfileSetupReducer:ExistingProfileSetupReducer,
     completeBusinessprofileReducer,
     unfreezeTransactionsReducer,
     freezeTransactionsReducer,
     changeTransactionPinReducer,
-    completeBusinessprofileReducer
+    completeBusinessprofileReducer,
+  
+
 });
 
 export default rootReducer;

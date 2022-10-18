@@ -2354,9 +2354,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                                     )
                                     .then((response) => {
                                         dispatch(
-                                            exBusinessProfileSuccess(
-                                                response.data
-                                            )
+                                            exBusinessProfileSuccess(response)
                                         );
                                     })
                                     .catch((error) => {
