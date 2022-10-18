@@ -226,7 +226,7 @@ const RegisteredForm = ({
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            // type="submit"
+                            type="submit"
                             text="Next"
                         />
                         {/* )} */}

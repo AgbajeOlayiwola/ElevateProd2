@@ -54,17 +54,25 @@ const ExistingMultiStep = () => {
                     <SecondStep
                         errorMessage={errorMessage}
                         move={() => {
+                            console.log(formData.emailData);
+                            let userEmail;
+                            if (newAccounts.email !== undefined) {
+                                userEmail = newAccounts.email;
+                            } else if (newAccounts.user !== undefined) {
+                                userEmail = newAccounts.user.email;
+                            } else {
+                                userEmail = formData.emailData;
+                            }
+                            console.log(newAccounts.email);
+                            console.log(newAccounts.user);
+                            console.log(formData.emailData);
                             const userData = {
                                 userId: formData.userId,
-                                email: newAccounts.email
-                                    ? newAccounts.email
-                                    : newAccounts.user
-                                    ? newAccounts.user.email
-                                    : formData.emailData,
+                                email: userEmail,
                                 password: formData.password,
                                 confirmPassword: formData.confPassword
                             };
-                            console.log(formData.userId);
+                            console.log(userData);
                             dispatch(existingUserProfileData(userData));
                             setLoading((prev) => !prev);
                             // console.log(existingUserProfilee.data.message);
