@@ -315,8 +315,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                             onSubmit={handleSubmit(() => {
                                 if (business === '') {
                                     setBusinessError(true);
+                                } else {
+                                    setTitle('Other');
                                 }
-                                setTitle('Other');
                             })}
                         >
                             <div className={styles.nameDiv}>

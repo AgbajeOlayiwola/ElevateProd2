@@ -659,6 +659,7 @@ const Payment = () => {
                                 }}
                                 transferAction={(data) => {
                                     setIsLoading(true);
+                                    console;
                                     const paymentData = {
                                         accountId: senderDetails.accountId,
                                         transactionPin: Object.values(data)
@@ -684,8 +685,14 @@ const Payment = () => {
                                                         transactionAmount:
                                                             paymentDetails.amount ===
                                                             ''
-                                                                ? details.amount
-                                                                : paymentDetails.amount,
+                                                                ? parseInt(
+                                                                      details.amount,
+                                                                      10
+                                                                  )
+                                                                : parseInt(
+                                                                      paymentDetails.amount,
+                                                                      10
+                                                                  ),
                                                         narration: ''
                                                     };
                                                 }

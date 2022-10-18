@@ -691,6 +691,9 @@ const Profile = () => {
                                                                     }
                                                                     key={index}
                                                                     deleteAction={() => {
+                                                                        // alert(`Are you sure you want to delete Beneficiary
+                                                                        // <button>Yes</button>
+                                                                        // `);
                                                                         dispatch(
                                                                             deleteBeneficiariesData(
                                                                                 account.beneficiaryId
@@ -895,6 +898,17 @@ const Profile = () => {
             >
                 {renderForm()}
             </ProfileLayout>
+            {/* {accountUpgrade ? (
+                <PaymentSuccess
+                    overlay="true"
+                    error="Account Upgrade is important"
+                    statusbar="error"
+                    action={() => {
+                        setAccountUpgrade(false);
+                    }}
+                    text="Close"
+                />
+            ) : null} */}
         </DashLayout>
     );
 };

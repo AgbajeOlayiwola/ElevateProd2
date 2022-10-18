@@ -144,7 +144,13 @@ const Security = () => {
             newPassword: data.newPassword,
             confirmPassword: data.confirmPassword
         };
-        dispatch(loadresetPassword(changePasswordData));
+        if (data.oldPassword === data.newPassword) {
+            setStatusMessage('New password cannot be the same as Old password');
+            setStatusState('Error');
+            setLoading(false);
+        } else {
+            dispatch(loadresetPassword(changePasswordData));
+        }
     };
 
     const resetPasswordCheck = () => {
