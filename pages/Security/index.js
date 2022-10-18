@@ -84,12 +84,12 @@ const Security = () => {
     const handleNewPin = (e) => {
         setCount(e.target.value.length);
         setConfPin(e.target.value);
-        if (pin != confirmPin) {
-            setPasswordMatch('Passwords do not match');
+        if (pin !== confirmPin) {
+            setPasswordMatch('Pin do not match');
         }
     };
     const handlePin = (e) => {
-        setPassword(e.target.value);
+        setPin(e.target.value);
     };
     const profileData = [
         {

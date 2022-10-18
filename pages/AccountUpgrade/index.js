@@ -27,8 +27,8 @@ import {
 
 import { useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
-import PaymentSuccess from '../../components/ReusableComponents/SuccessPage';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
+import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 
 const AccountUpgrade = () => {
     const router = useRouter();
@@ -1349,6 +1349,7 @@ const AccountUpgrade = () => {
                     <PaymentSuccess
                         heading={message}
                         error={message}
+                        text="Continue"
                         statusbar={statusbar}
                         overlay="true"
                         action={

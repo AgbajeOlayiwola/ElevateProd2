@@ -4,7 +4,7 @@ import { getTransactionElevate } from '../../../redux/actions/actions';
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
 
-const PaymentTable = ({ title }) => {
+const PaymentTable = ({ title, test }) => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
@@ -15,7 +15,7 @@ const PaymentTable = ({ title }) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getTransactionElevate());
-    }, []);
+    }, [test === 0]);
 
     useEffect(() => {
         if (transactionElevate !== null) {
@@ -23,16 +23,28 @@ const PaymentTable = ({ title }) => {
             console.log(transactionElevate.transactions);
         }
     }, [transactionElevate]);
-    const changeTransaction = () => {
+    const filterCondition = (item, searchType) => {
         switch (searchType) {
             case 'transactionType':
-                return 'transactionType';
+                return item.transactionType
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
             case 'transactionStatus':
-                return 'transactionStatus';
+                return item.transactionStatus
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
             case 'transactionAmount':
-                return 'transactionAmount';
+                return item.transactionAmount
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
             case 'transactionDate':
-                return 'transactionDate';
+                return item.transactionDate
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
+            default:
+                item.transactionType
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
         }
     };
     return (
@@ -84,16 +96,7 @@ const PaymentTable = ({ title }) => {
                       ?.filter((item) => {
                           if (searchValue === '') {
                               return item;
-                          } else if (
-                              //   searchType === 'transactionType'
-                              //       ? item.transactionType
-                              //       : searchType === 'transactionStatus'
-                              //       ? item.transactionStatus
-                              //       : null
-                              item.transactionType
-                                  .toLowerCase()
-                                  .includes(searchValue.toLowerCase())
-                          ) {
+                          } else if (filterCondition(item, searchType)) {
                               return item;
                           }
                       })

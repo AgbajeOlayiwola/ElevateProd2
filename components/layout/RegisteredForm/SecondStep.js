@@ -159,9 +159,11 @@ const RegisteredForm = ({
                                 required
                                 // readOnly
                                 value={
-                                    newAccounts.email === null
-                                        ? formData.emailData
-                                        : newAccounts.user?.email
+                                    newAccounts.email
+                                        ? newAccounts.email
+                                        : newAccounts.user.email
+                                        ? newAccounts.user.email
+                                        : formData.emailData
                                 }
                                 onChange={(event) =>
                                     setFormData({

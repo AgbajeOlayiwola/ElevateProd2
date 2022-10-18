@@ -477,7 +477,11 @@ const Payment = () => {
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountName}
                                 sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
-                                recieverBank={paymentDetails.bankName}
+                                recieverBank={
+                                    paymentDetails.bankName === ''
+                                        ? paymentDetails.bankNameBene
+                                        : paymentDetails.bankName
+                                }
                                 overlay={overlay}
                                 backAction={() => {
                                     setCount(count - 1);
@@ -512,13 +516,19 @@ const Payment = () => {
                                     const paymentData = {
                                         isEcobankToEcobankTransaction: ecobank,
                                         destinationBank:
-                                            paymentDetails.bankName,
+                                            paymentDetails.bankName === ''
+                                                ? paymentDetails.bankNameBene
+                                                : paymentDetails.bankName,
                                         destinationBankCode:
-                                            paymentDetails.bankName,
+                                            paymentDetails.bankName === ''
+                                                ? paymentDetails.bankNameBene
+                                                : paymentDetails.bankName,
                                         beneficiaryName:
                                             paymentDetails.accountName,
                                         destinationAccountNo:
-                                            paymentDetails.accountNumber,
+                                            paymentDetails.accountNumber === ''
+                                                ? paymentDetails.accountNumberBene
+                                                : paymentDetails.accountNumber,
                                         transactionAmount: parseInt(
                                             paymentDetails.amount,
                                             10
@@ -1019,7 +1029,7 @@ const Payment = () => {
                 </PaymentCard>
             </div>
 
-            <PaymentTable title="Payment History" />
+            <PaymentTable title="Payment History" test={count} />
 
             {renderForm()}
         </DashLayout>

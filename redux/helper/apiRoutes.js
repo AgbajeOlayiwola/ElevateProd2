@@ -46,8 +46,7 @@ const verifyStatus = '/document-verification/unregistered-business';
 const omnilite = '/authentication/register/omnilite';
 const ecobankOnline = '/authentication/register/ecobank-online';
 const accountNumber = '/authentication/register/account-number';
-const existingUserProfile =
-    '/authentication/profile-setup/unregistered-business/eco-auth';
+const existingUserProfile = '/authentication/profile-setup/eco-auth';
 const businessCategories = '/business-categories';
 const states = '/lga';
 const cardLogin = '/authentication/register/card';
@@ -68,6 +67,8 @@ const resetPassword = '/users/password';
 const bankStatement = '/bank-account/statement';
 const freezeTransactions = '/users/freeze-transactions';
 const unfreezeTransactions = '/users/unfreeze-transactions';
+const businessNameCac = '/business/name';
+const verifyCac = '/document-verification/cac';
 export default {
     getBanks,
     getCountries,
@@ -136,5 +137,7 @@ export default {
     bankStatement,
     freezeTransactions,
     unfreezeTransactions,
-    resetOtp
+    resetOtp,
+    businessNameCac,
+    verifyCac
 };

@@ -13,17 +13,10 @@ import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 
 const PaymentSuccess = ({
     action,
-    country,
-    title,
+    text,
     overlay,
-    type,
     heading,
     body,
-    paymentType,
-    amount,
-    number,
-    beneName,
-    isLoading,
     statusbar,
     error,
     repeatAction
@@ -71,7 +64,7 @@ const PaymentSuccess = ({
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            text="Continue"
+                            text={text}
                             type="button"
                             onClick={action}
                         />
