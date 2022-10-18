@@ -161,7 +161,7 @@ const RegisteredForm = ({
                                 value={
                                     newAccounts.email
                                         ? newAccounts.email
-                                        : newAccounts.user.email
+                                        : newAccounts.user
                                         ? newAccounts.user.email
                                         : formData.emailData
                                 }
