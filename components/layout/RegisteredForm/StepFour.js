@@ -35,6 +35,15 @@ const StepFour = ({ title, action, setFormData, formData }) => {
     const { existingUserProfile, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
+
+    const {
+        cacName,
+        cacNameError,
+        getCacName,
+        getCacNameError,
+        existingProfileSetupPay,
+        existingProfileSetupError
+    } = useSelector((state) => state.ExistingProfileSetupReducer);
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
@@ -112,7 +121,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             signature: file
         };
         dispatch(CompleteBusinessProfile(userData));
-        console.log(userData);
+        // console.log(existingProfileSetupPay, existingProfileSetupError);
     };
 
     // const profileTest = () => {
@@ -153,26 +162,33 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             signature: file
         };
         dispatch(ExCreateBusProfileSetup(userData));
-        console.log(userData);
+        console.log(existingProfileSetupPay, existingProfileSetupError);
     };
 
-    // useEffect(() => {
-    //     setLoading((prev) => !prev);
-    //     console.log(compBusprofile);
-    //     if (compBusprofile) {
-    //         if (
-    //             compBusprofile.message === 'Successful' ||
-    //             comperrorMessage.message ===
-    //                 'your have already setup your business'
-    //         ) {
-    //             if (formData.type !== 'true') {
-    //                 router.push('/Verify/ExistingSuccess');
-    //             } else {
-    //                 router.push('/Verify/CorportateAccount');
-    //             }
-    //         }
-    //     }
-    // }, [compBusprofile, comperrorMessage]);
+    useEffect(() => {
+        setLoading((prev) => !prev);
+        console.log(compBusprofile);
+        if (existingProfileSetupPay) {
+            if (existingProfileSetupPay.data.message === 'Successful') {
+                if (formData.type !== 'true') {
+                    router.push('/Verify/ExistingSuccess');
+                } else {
+                    router.push('/Verify/CorportateAccount');
+                }
+            }
+        } else if (existingProfileSetupError) {
+            if (
+                existingProfileSetupError.response.data.message ===
+                'your have already setup your business'
+            ) {
+                if (formData.type !== 'true') {
+                    router.push('/Verify/ExistingSuccess');
+                } else {
+                    router.push('/Verify/CorportateAccount');
+                }
+            }
+        }
+    }, [existingProfileSetupPay, existingProfileSetupError]);
 
     const types = (type) => {
         setOutType(type);
@@ -629,6 +645,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                         <div
                                             className={styles.existingUserCont}
                                         >
+                                            {}
                                             <label>
                                                 Enter your RC /Business
                                                 Registration Number
@@ -641,7 +658,6 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                     required:
                                                         'RC Number is required',
                                                     minLength: {
-                                                        value: 10,
                                                         message:
                                                             'Min length is 10'
                                                     },
