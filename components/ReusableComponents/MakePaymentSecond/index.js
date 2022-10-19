@@ -237,14 +237,14 @@ const MakePaymentSecond = ({
                                             : recieverBank}
                                     </h3>
                                 </div>
-                                {recieverBank === 'Ecobank' ? null : (
+                                {/* {recieverBank === 'Ecobank' ? null : (
                                     <div className={styles.transactionsingle}>
                                         <p className={styles.transactionTitle}>
                                             Charges
                                         </p>
                                         <h3>N50.50</h3>
                                     </div>
-                                )}
+                                )} */}
 
                                 <div className={styles.transactionsingle}>
                                     <p className={styles.transactionTitle}>

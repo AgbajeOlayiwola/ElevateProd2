@@ -13,7 +13,6 @@ import ManageLimit from '../../components/ReusableComponents/ManageLimit1';
 import ManageLimit2 from '../../components/ReusableComponents/ManageLimit2';
 import ManageLimitSvg from '../../components/ReusableComponents/ManageLimitSvg';
 import ManageSignSvg from '../../components/ReusableComponents/ManageSignSvg';
-import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess';
 import ProfileSingle from '../../components/ReusableComponents/ProfileSingle';
 import AddSvg from '../../components/ReusableComponents/ReusableSvgComponents/AddSvg';
 import ContactSvg from '../../components/ReusableComponents/ReusableSvgComponents/ContactSvg';
@@ -34,6 +33,7 @@ import {
 } from '../../redux/actions/actions';
 import { set, useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
+import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 
 const Profile = () => {
     const [type, setType] = useState('Account');
@@ -43,12 +43,14 @@ const Profile = () => {
     const [text, setText] = useState('View Profile');
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
-    const [statusBar, setStatusBar] = useState('');
+    const [statusbar, setStatusbar] = useState('');
+    const [alertType, setAlertType] = useState('');
     const [bvn, setBvn] = useState('');
     const [acctNumber, setAcctNumber] = useState('');
     const [count, setCount] = useState(0);
     const [outType, setOutType] = useState();
     const [beneficiaries, setBeneficiaries] = useState([]);
+    const [bene, setBene] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const [outTyped, setOutTyped] = useState();
     const dispatch = useDispatch();
@@ -93,7 +95,6 @@ const Profile = () => {
         if (userProfile !== null) {
             setUserProfileData(userProfile);
             setFreeze(userProfile.freezeTransactions);
-            console.log(freeze);
         }
     }, [userProfile]);
     useEffect(() => {
@@ -188,7 +189,7 @@ const Profile = () => {
             color: '#FF0000'
         }
     ];
-    const bene = {
+    const benes = {
         account: [],
         airtime: [],
         signatories: []
@@ -307,13 +308,17 @@ const Profile = () => {
                         onSubmit={handleSubmit(() => {
                             setOutcome(true);
                             setMessage('Limit saved Successfully');
-                            setStatusBar('success');
+                            setStatusbar('success');
                         })}
                     >
                         <h2 className={styles.title}>Manage Limit</h2>
                         <div className={styles.formGroup}>
                             <label>Limit Type </label>
-                            <select>
+                            <select
+                                {...register('limitType', {
+                                    required: 'Limit Type is Required'
+                                })}
+                            >
                                 <option value="Mpos Limit">Mpos Limit</option>
                                 <option value="Transaction Limit">
                                     Transaction Limit
@@ -322,8 +327,15 @@ const Profile = () => {
                         </div>
                         <div className={styles.formGroup}>
                             <label>Add Limit </label>
-                            <InputTag type="text" placeholder="Add Limit" />
+                            <input
+                                type="text"
+                                placeholder="Add Limit"
+                                {...register('limit', {
+                                    required: 'Limit is Required'
+                                })}
+                            />
                         </div>
+                        <p className={styles.error}>{errors?.limit?.message}</p>
                         <div className={styles.profileBody}>
                             <button type="submit">Add Limit</button>
                         </div>
@@ -699,13 +711,20 @@ const Profile = () => {
                                                                     }
                                                                     key={index}
                                                                     deleteAction={() => {
-                                                                        // alert(`Are you sure you want to delete Beneficiary
-                                                                        // <button>Yes</button>
-                                                                        // `);
-                                                                        dispatch(
-                                                                            deleteBeneficiariesData(
-                                                                                account.beneficiaryId
-                                                                            )
+                                                                        setOutcome(
+                                                                            true
+                                                                        );
+                                                                        setMessage(
+                                                                            'Are you sure you want to Delete'
+                                                                        );
+                                                                        setStatusbar(
+                                                                            'error'
+                                                                        );
+                                                                        setAlertType(
+                                                                            'bene'
+                                                                        );
+                                                                        setBene(
+                                                                            account.beneficiaryId
                                                                         );
                                                                     }}
                                                                 />
@@ -718,7 +737,7 @@ const Profile = () => {
                                     ) : type === 'Airtime' ? (
                                         <>
                                             {/* <p className={styles.text}>A</p> */}
-                                            {!bene.airtime.length ? (
+                                            {!benes.airtime.length ? (
                                                 <h2 className={styles.dontHave}>
                                                     You do not have any
                                                     Beneficiary at the moment
@@ -911,7 +930,16 @@ const Profile = () => {
                     body={message}
                     error={message}
                     statusbar={statusbar}
+                    type={alertType}
                     overlay="true"
+                    text="Continue"
+                    actionNo={() => {
+                        setOutcome(false);
+                    }}
+                    actionYes={() => {
+                        dispatch(deleteBeneficiariesData(bene));
+                        setOutcome(false);
+                    }}
                     action={
                         statusbar === 'error'
                             ? () => {
@@ -920,6 +948,7 @@ const Profile = () => {
                             : statusbar === 'success'
                             ? () => {
                                   setOutcome(false);
+                                  setText('View Profile');
                               }
                             : null
                     }
