@@ -466,6 +466,9 @@ const HomeMain = () => {
                 JSON.stringify(ecobankOnline.data.user)
             );
             router.push('/Onboarding/ExistingProfileSetup');
+        } else if (ecoOnlineErrorMessage) {
+            setError(ecoOnlineErrorMessage);
+            setLoading(false);
         }
     };
     useEffect(() => {
