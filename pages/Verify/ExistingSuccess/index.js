@@ -10,6 +10,7 @@ import { bankAccountsData } from '../../../redux/actions/actions';
 const ExistingSuccess = ({ handleShowSuccessStep }) => {
     const dispatch = useDispatch();
     const [activeBtn, setActiveBtn] = useState(true);
+    const [acctNo, setActNo] = useState();
     // let accountDetails;
     // let accountNumber;
     // if (typeof window !== 'undefined') {
@@ -25,8 +26,10 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
     );
     useEffect(() => {
         dispatch(bankAccountsData());
-        console.log(bankAccounts);
-    }, []);
+        // console.log(bankAccounts[0].accountNumber);
+
+        setActNo(bankAccounts[0]?.accountNumber);
+    }, [bankAccounts[0]?.accountNumber]);
     return (
         <div className={styles.cover}>
             <>
@@ -38,8 +41,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                         Your Business account is ready!
                     </h2>
                     <h3>
-                        Your Account Number is{' '}
-                        {/* <span>{bankAccounts[0].accountNumber}</span> */}
+                        Your Account Number is <span>{acctNo}</span>
                     </h3>
                     <Link href="/Dashboard">
                         <ButtonComp

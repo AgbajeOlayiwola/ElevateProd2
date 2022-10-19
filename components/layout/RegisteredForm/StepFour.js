@@ -124,25 +124,25 @@ const StepFour = ({ title, action, setFormData, formData }) => {
         // console.log(existingProfileSetupPay, existingProfileSetupError);
     };
 
-    // const profileTest = () => {
-    //     setLoading((prev) => !prev);
-    //     if (compBusprofile) {
-    //         console.log(errorMessages);
-    //         router.push('/Verify/ExistingSuccess');
-    //     } else if (
-    //         comperrorMessage.message ===
-    //         'You already have an account with us. Please contact us for more information'
-    //     ) {
-    //         router.push('/Verify/ExistingSuccess');
-    //     }
+    const profileTest = () => {
+        console.log(compBusprofile, comperrorMessage);
+        setLoading((prev) => !prev);
+        if (compBusprofile) {
+            console.log(errorMessages);
+            router.push('/Verify/ExistingSuccess');
+        } else if (
+            comperrorMessage.message === 'your have already setup your business'
+        ) {
+            router.push('/Verify/ExistingSuccess');
+        }
 
-    //     if (businessCategories !== null) {
-    //         setBusinessCategory(businessCategories);
-    //     }
-    // };
-    // useEffect(() => {
-    //     profileTest();
-    // }, [compBusprofile, comperrorMessage]);
+        if (businessCategories !== null) {
+            setBusinessCategory(businessCategories);
+        }
+    };
+    useEffect(() => {
+        profileTest();
+    }, [compBusprofile, comperrorMessage]);
 
     const onSubmit = (data) => {
         const userData = {
@@ -162,13 +162,14 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             signature: file
         };
         dispatch(ExCreateBusProfileSetup(userData));
-        console.log(existingProfileSetupPay, existingProfileSetupError);
+        // console.log(existingProfileSetupPay, existingProfileSetupError);
     };
 
     useEffect(() => {
         setLoading((prev) => !prev);
-        console.log(compBusprofile);
+
         if (existingProfileSetupPay) {
+            console.log(existingProfileSetupPay, existingProfileSetupError);
             if (existingProfileSetupPay.data.message === 'Successful') {
                 if (formData.type !== 'true') {
                     router.push('/Verify/ExistingSuccess');
@@ -188,7 +189,12 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                 }
             }
         }
-    }, [existingProfileSetupPay, existingProfileSetupError]);
+    }, [
+        existingProfileSetupPay,
+        existingProfileSetupError,
+        compBusprofile,
+        comperrorMessage
+    ]);
 
     const types = (type) => {
         setOutType(type);
@@ -645,7 +651,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                         <div
                                             className={styles.existingUserCont}
                                         >
-                                            {}
+                                            {/* {getCacNameError?getCacNameError.response.data.message:null} */}
                                             <label>
                                                 Enter your RC /Business
                                                 Registration Number
