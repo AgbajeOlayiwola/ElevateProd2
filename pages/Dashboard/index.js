@@ -104,7 +104,6 @@ const Dashboard = () => {
         let year = newDate.getFullYear();
         setTime(`${year}-${month < 10 ? `0${month}` : `${month}`}-${date}`);
     };
-    console.log(time);
 
     // const settings = {
     //     className: 'center',
