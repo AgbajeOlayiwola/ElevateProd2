@@ -89,7 +89,7 @@
     padding: 100px 0px;
 }
 
-.errorCont div {
+.errorCont .icons {
     width: 100%;
     display: flex;
     align-items: center;
@@ -121,6 +121,26 @@
 .errorCont button {
     background-color: #ff0000;
     width: 100%;
+}
+
+.beneButton {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.beneButton .beneButtonSingle {
+    width: 47%;
+}
+
+.beneButtonSingle button {
+    background: #6ccf00;
+}
+
+.beneButton .beneButtonSinglse {
+    width: 47%;
 }
 
 .successCheck {

@@ -49,6 +49,10 @@
     margin: 0px !important;
 }
 
+.trash {
+    color: red;
+}
+
 .manageBeneBody div {
     width: 100%;
 }
