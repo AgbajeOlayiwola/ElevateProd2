@@ -651,7 +651,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                         <div
                                             className={styles.existingUserCont}
                                         >
-                                            {}
+                                            {/* {getCacNameError?getCacNameError.response.data.message:null} */}
                                             <label>
                                                 Enter your RC /Business
                                                 Registration Number

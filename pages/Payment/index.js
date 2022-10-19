@@ -443,6 +443,11 @@ const Payment = () => {
                                     if (data.bankName === 'Ecobank') {
                                         setEcobank(true);
                                         setCount(count + 1);
+                                    } else if (
+                                        data.bankNameBene === 'Ecobank'
+                                    ) {
+                                        setEcobank(true);
+                                        setCount(count + 1);
                                     } else {
                                         setEcobank(false);
                                         setCount(count + 1);

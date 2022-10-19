@@ -3,6 +3,7 @@ import Popup from '../../layout/Popup';
 import BeneUserSvg from '../ReusableSvgComponents/BeneUserSvg';
 import ThreeDotsSvg from '../ThreeDotSvg';
 import styles from './styles.module.css';
+import { FaTrash } from 'react-icons/fa';
 
 const ManageBene = ({ overlay, title, action, btnAction }) => {
     const [transfer, setTransfer] = useState(true);
@@ -193,7 +194,7 @@ const ManageBeneSingle = ({ beneAccount, beneName, index, deleteAction }) => {
                     <p>{beneAccount}</p>
                 </div>
             </div>
-            <ThreeDotsSvg action={deleteAction} />
+            <FaTrash onClick={deleteAction} className={styles.trash} />
         </div>
     );
 };
