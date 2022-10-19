@@ -26,8 +26,10 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
     );
     useEffect(() => {
         dispatch(bankAccountsData());
-        console.log(bankAccounts[0].accountNumber);
-        setActNo(bankAccounts[0].accountNumber);
+        // console.log(bankAccounts[0].accountNumber);
+        if (bankAccounts) {
+            setActNo(bankAccounts[0].accountNumber);
+        }
     }, [bankAccounts[0].accountNumber]);
     return (
         <div className={styles.cover}>
