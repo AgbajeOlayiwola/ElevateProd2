@@ -1035,9 +1035,7 @@ export const postBeneficiariesData = (data) => (dispatch) => {
     axiosInstance
         .post(`${apiRoutes.beneficiaries}`, data)
         .then((response) =>
-            dispatch(
-                postBeneficiariesLoadSuccess(response.data.data.beneficiaries)
-            )
+            dispatch(postBeneficiariesLoadSuccess(response.data.data))
         )
         .catch((error) => dispatch(postBeneficiariesLoadError(error.message)));
 };

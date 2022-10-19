@@ -95,7 +95,7 @@ const PaymentSuccess = ({
                                         </h6>
                                     ) : title === 'Bulk Payment' ? (
                                         <h6 className={styles.elevateSuccess}>
-                                            {amount} was transferred to 3
+                                            {amount} was transferred to {number}
                                             Accounts on {current}
                                         </h6>
                                     ) : title === 'Single Transfer Payment' ? (

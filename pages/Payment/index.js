@@ -720,6 +720,7 @@ const Payment = () => {
                                     setOverlay(false);
                                     setFormType('');
                                 }}
+                                number={paymentDetails.details.length}
                                 title="Bulk Payment"
                                 amount={paymentDetails.amount}
                             />
