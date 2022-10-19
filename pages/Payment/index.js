@@ -670,7 +670,7 @@ const Payment = () => {
                                         transactionPin: Object.values(data)
                                             .toString()
                                             .replaceAll(',', ''),
-                                        transactions: [
+                                        transactions:
                                             paymentDetails.details?.map(
                                                 (details, index) => {
                                                     return {
@@ -702,7 +702,6 @@ const Payment = () => {
                                                     };
                                                 }
                                             )
-                                        ]
                                     };
 
                                     dispatch(getBulkTransfer(paymentData));
