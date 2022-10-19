@@ -29,6 +29,7 @@ import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
 import Ussd from '../../components/ReusableComponents/UssdSvg';
 import SingleTrans from '../../components/ReusableComponents/SingleTransSvg';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
+import Link from 'next/link';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -190,30 +191,58 @@ const Dashboard = () => {
                         <p>Other Transaction</p>
                     </div>
                     <div className={styles.divCover}>
-                        <div className={styles.dinCLass}>
-                            <div className={styles.svg}>
-                                <PhoneSvg />
+                        <Link
+                            href={{
+                                pathname: './Payment',
+                                query: { id: 'Bills Payment' }
+                            }}
+                        >
+                            <div className={styles.dinCLass}>
+                                <div className={styles.svg}>
+                                    <PhoneSvg />
+                                </div>
+                                <p className={styles.name}> Airtime & Data</p>
                             </div>
-                            <p className={styles.name}> Airtime & Data</p>
-                        </div>
-                        <div className={styles.dinCLass}>
-                            <div className={styles.svg}>
-                                <EcobankQRSvg />
+                        </Link>
+                        <Link
+                            href={{
+                                pathname: './Payment',
+                                query: { id: 'Ecobank QR Only' }
+                            }}
+                        >
+                            <div className={styles.dinCLass}>
+                                <div className={styles.svg}>
+                                    <EcobankQRSvg />
+                                </div>
+                                <p className={styles.name}>Ecobank QR Code</p>
                             </div>
-                            <p className={styles.name}>Ecobank QR Code</p>
-                        </div>
-                        <div className={styles.dinCLass}>
-                            <div className={styles.svg}>
-                                <Ussd />
+                        </Link>
+                        <Link
+                            href={{
+                                pathname: './Payment',
+                                query: { id: 'USSD only' }
+                            }}
+                        >
+                            <div className={styles.dinCLass}>
+                                <div className={styles.svg}>
+                                    <Ussd />
+                                </div>
+                                <p className={styles.name}>USSD</p>
                             </div>
-                            <p className={styles.name}>USSD</p>
-                        </div>
-                        <div className={styles.dinCLass}>
-                            <div className={styles.svg}>
-                                <SingleTrans />
+                        </Link>
+                        <Link
+                            href={{
+                                pathname: './Payment',
+                                query: { id: 'Single Transfer' }
+                            }}
+                        >
+                            <div className={styles.dinCLass}>
+                                <div className={styles.svg}>
+                                    <SingleTrans />
+                                </div>
+                                <p className={styles.name}>Single Transfer</p>
                             </div>
-                            <p className={styles.name}>Single Transfer</p>
-                        </div>
+                        </Link>
                     </div>
                     <div className={styles.btmI}>
                         <div className={styles.btmItop}>

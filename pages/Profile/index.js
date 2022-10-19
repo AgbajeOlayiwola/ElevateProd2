@@ -383,6 +383,23 @@ const Profile = () => {
                             />
                         </div>
                         <p className={styles.error}>{errors?.limit?.message}</p>
+                        <div className={styles.formGroup}>
+                            <label>Enter your Password</label>
+                            <div className={styles.divs}>
+                                <input
+                                    placeholder="Enter your Password"
+                                    {...register('limitpassword', {
+                                        required: 'Password is Required'
+                                    })}
+                                    name="limitpassword"
+                                    type={outType ? 'text' : 'password'}
+                                />
+                                <Visbility typeSet={types} />
+                            </div>
+                            <p className={styles.error}>
+                                {errors?.limitpassword?.message}
+                            </p>
+                        </div>
                         <div className={styles.profileBody}>
                             <button type="submit">Add Limit</button>
                         </div>

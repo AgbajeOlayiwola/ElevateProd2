@@ -54,12 +54,12 @@ const SchedulePayment = ({ overlay, closeAction, action }) => {
                                     <span></span> Ecobank Plc
                                 </h3>
                             </div>
-                            <div className={styles.transactionsingle}>
+                            {/* <div className={styles.transactionsingle}>
                                 <p className={styles.transactionTitle}>
                                     Charges
                                 </p>
                                 <h3>N50.50</h3>
-                            </div>
+                            </div> */}
                             <div className={styles.transactionsingle}>
                                 <p className={styles.transactionTitle}>From</p>
                                 <h3>Marvelous Limited</h3>

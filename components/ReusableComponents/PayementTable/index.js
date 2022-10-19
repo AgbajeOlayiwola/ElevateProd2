@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTransactionElevate } from '../../../redux/actions/actions';
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
+import ReactPaginate from 'react-paginate';
 
 const PaymentTable = ({ title, test }) => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
@@ -10,8 +11,12 @@ const PaymentTable = ({ title, test }) => {
     );
     const [tableDetails, setTableDetails] = useState([]);
     const [searchValue, setSearchValue] = useState('');
+    const [pageNumber, setPageNumber] = useState(0);
     const [searchType, setSearchType] = useState('transactionType');
 
+    const usersPerPage = 10;
+    const pagesVisited = pageNumber * usersPerPage;
+    const pageCount = Math.ceil(tableDetails.length / usersPerPage);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getTransactionElevate());
@@ -100,6 +105,7 @@ const PaymentTable = ({ title, test }) => {
                               return item;
                           }
                       })
+                      ?.slice(pagesVisited, pagesVisited + usersPerPage)
                       ?.map((items, index) => {
                           return (
                               <TableDetail
@@ -113,6 +119,18 @@ const PaymentTable = ({ title, test }) => {
                               />
                           );
                       })}
+            <ReactPaginate
+                previousLabel="Previous"
+                nextLabel="Next"
+                pageCount={pageCount}
+                onPageChange={({ selected }) => {
+                    setPageNumber(selected);
+                }}
+                containerClassName={styles.paginationBtns}
+                previousClassName={styles.previousBtns}
+                nextLinkClassName={styles.nextBtns}
+                activeClassName={styles.paginationActive}
+            />
         </div>
     );
 };
