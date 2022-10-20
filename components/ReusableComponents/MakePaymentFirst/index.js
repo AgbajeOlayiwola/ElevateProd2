@@ -26,7 +26,8 @@ const MakePaymentFirst = ({
     airtimeAction,
     type,
     secondAction,
-    isLoading
+    isLoading,
+    payload
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -69,6 +70,7 @@ const MakePaymentFirst = ({
                             isLoading={isLoading}
                             bankAccounts={bankAccount}
                             beneficiaries={beneficiaries}
+                            payload={payload}
                         />
                     ) : firstTitle === 'Foreign Transfer' ? (
                         <ForeignTransfer

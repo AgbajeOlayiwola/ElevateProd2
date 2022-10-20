@@ -11,6 +11,7 @@ const PaymentTable = ({ title, test }) => {
     );
     const [tableDetails, setTableDetails] = useState([]);
     const [searchValue, setSearchValue] = useState('');
+    const [displayType, setDisplayType] = useState('');
     const [pageNumber, setPageNumber] = useState(0);
     const [searchType, setSearchType] = useState('transactionType');
 
@@ -28,6 +29,17 @@ const PaymentTable = ({ title, test }) => {
             console.log(transactionElevate.transactions);
         }
     }, [transactionElevate]);
+    useEffect(() => {
+        if (searchType === 'transactionType') {
+            setDisplayType('Type');
+        } else if (searchType === 'transactionStatus') {
+            setDisplayType('Status');
+        } else if (searchType === 'transactionAmount') {
+            setDisplayType('Amount');
+        } else if (searchType === 'transactionDate') {
+            setDisplayType('Date');
+        }
+    }, [searchType]);
     const filterCondition = (item, searchType) => {
         switch (searchType) {
             case 'transactionType':
@@ -58,10 +70,10 @@ const PaymentTable = ({ title, test }) => {
                 <h2>{title}</h2>
                 <div className={styles.tableFilter}>
                     <div>
-                        <img src="../Assets/Svgs/search.svg" alt="" />
+                        {/* <img src="../Assets/Svgs/search.svg" alt="" /> */}
                         <input
                             type="text"
-                            placeholder="Search"
+                            placeholder={`Filter by ${displayType}`}
                             onChange={(e) => {
                                 setSearchValue(e.target.value);
                             }}

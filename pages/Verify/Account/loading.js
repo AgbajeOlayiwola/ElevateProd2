@@ -48,7 +48,7 @@ const AccountLoading = () => {
         dispatch(createNewUserAccount(accountData));
         dispatch(newAccountStatusData());
 
-        if (accountStatus.message === 'success') {
+        if (accountStatus.data.message === 'success') {
             // console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         } else if (
@@ -61,9 +61,7 @@ const AccountLoading = () => {
 
     // console.log(errorMessages);
     const newUserAccountt = () => {
-        if (
-            errorMessages === 'Bank Account has not been created for this user'
-        ) {
+        if (errorMessages === 'Pending Creation, Try Again') {
             console.log(errorMessages);
             dispatch(newAccountStatusData());
             setInterval(() => {

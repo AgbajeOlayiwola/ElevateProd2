@@ -243,6 +243,8 @@ const Profile = () => {
     };
     const [countryName, setCountryName] = useState();
     const [countryNames, setCountryNames] = useState();
+    const [searchItem, setSearchItem] = useState('');
+    const [beneType, setBeneType] = useState('');
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setCountryName(window.localStorage.getItem('country'));
@@ -749,6 +751,9 @@ const Profile = () => {
                                     <input
                                         type="text"
                                         placeholder="Search Beneficiaries"
+                                        onChange={(e) => {
+                                            setSearchItem(e.target.value);
+                                        }}
                                     />
                                 </div>
                                 <div className={styles.beneficiaryBody}>
@@ -763,38 +768,60 @@ const Profile = () => {
                                                 </h2>
                                             ) : (
                                                 <>
-                                                    {beneficiaries.beneficiaries?.map(
-                                                        (account, index) => {
-                                                            return (
-                                                                <ManageBeneSingle
-                                                                    beneAccount={
-                                                                        account.bankName
-                                                                    }
-                                                                    beneName={
-                                                                        account.beneficiaryName
-                                                                    }
-                                                                    key={index}
-                                                                    deleteAction={() => {
-                                                                        setOutcome(
-                                                                            true
-                                                                        );
-                                                                        setMessage(
-                                                                            'Are you sure you want to Delete'
-                                                                        );
-                                                                        setStatusbar(
-                                                                            'error'
-                                                                        );
-                                                                        setAlertType(
-                                                                            'bene'
-                                                                        );
-                                                                        setBene(
-                                                                            account.beneficiaryId
-                                                                        );
-                                                                    }}
-                                                                />
-                                                            );
-                                                        }
-                                                    )}
+                                                    {beneficiaries.beneficiaries
+                                                        ?.filter((item) => {
+                                                            if (
+                                                                searchItem ===
+                                                                ''
+                                                            ) {
+                                                                return item;
+                                                            } else if (
+                                                                item.beneficiaryName
+                                                                    .toLowerCase()
+                                                                    .includes(
+                                                                        searchItem.toLowerCase()
+                                                                    )
+                                                            ) {
+                                                                return item;
+                                                            }
+                                                        })
+                                                        ?.map(
+                                                            (
+                                                                account,
+                                                                index
+                                                            ) => {
+                                                                return (
+                                                                    <ManageBeneSingle
+                                                                        beneAccount={
+                                                                            account.bankName
+                                                                        }
+                                                                        beneName={
+                                                                            account.beneficiaryName
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        deleteAction={() => {
+                                                                            setOutcome(
+                                                                                true
+                                                                            );
+                                                                            setMessage(
+                                                                                'Are you sure you want to Delete'
+                                                                            );
+                                                                            setStatusbar(
+                                                                                'error'
+                                                                            );
+                                                                            setAlertType(
+                                                                                'bene'
+                                                                            );
+                                                                            setBene(
+                                                                                account.beneficiaryId
+                                                                            );
+                                                                        }}
+                                                                    />
+                                                                );
+                                                            }
+                                                        )}
                                                 </>
                                             )}
                                         </>
@@ -874,7 +901,13 @@ const Profile = () => {
                                             <label>
                                                 Choose Beneficiary Type
                                             </label>
-                                            <select name="" id="">
+                                            <select
+                                                name=""
+                                                id=""
+                                                onChange={(e) => {
+                                                    setBeneType(e.target.value);
+                                                }}
+                                            >
                                                 <option value="">
                                                     Select Type
                                                 </option>
@@ -886,100 +919,184 @@ const Profile = () => {
                                                 </option>
                                             </select>
                                         </div>
-                                        <div className={styles.formGroup}>
-                                            <label>Account Number</label>
-                                            <input
-                                                {...register('accountNumber', {
-                                                    required:
-                                                        'Please enter  Acount Number',
-                                                    pattern: {
-                                                        value: /^[0-9 ]/i,
-                                                        message:
-                                                            'Account Number must be a number'
-                                                    },
-                                                    minLength: {
-                                                        value: 10,
-                                                        message:
-                                                            'Min length is 10'
-                                                    },
-                                                    maxLength: {
-                                                        value: 10,
-                                                        message:
-                                                            'Max length is 10'
-                                                    }
-                                                })}
-                                                onInput={(e) => {
-                                                    if (
-                                                        e.target.value
-                                                            .length === 10
-                                                    ) {
-                                                        const details = {
-                                                            accountNumber:
+                                        {beneType === 'Account' ? (
+                                            <>
+                                                <div
+                                                    className={styles.formGroup}
+                                                >
+                                                    <label>
+                                                        Account Number
+                                                    </label>
+                                                    <input
+                                                        {...register(
+                                                            'accountNumber',
+                                                            {
+                                                                required:
+                                                                    'Please enter  Acount Number',
+                                                                pattern: {
+                                                                    value: /^[0-9 ]/i,
+                                                                    message:
+                                                                        'Account Number must be a number'
+                                                                },
+                                                                minLength: {
+                                                                    value: 10,
+                                                                    message:
+                                                                        'Min length is 10'
+                                                                },
+                                                                maxLength: {
+                                                                    value: 10,
+                                                                    message:
+                                                                        'Max length is 10'
+                                                                }
+                                                            }
+                                                        )}
+                                                        onInput={(e) => {
+                                                            if (
                                                                 e.target.value
-                                                        };
-                                                        dispatch(
-                                                            postInterBankEnquiry(
-                                                                details
-                                                            )
-                                                        );
-                                                        console.log();
-                                                    }
-                                                }}
-                                                type="number"
-                                                placeholder="Enter account number here"
-                                            />
-                                        </div>
-                                        <p className={styles.error}>
-                                            {errors?.accountNumber?.message}
-                                        </p>
-                                        {interEnquiry ? (
-                                            <div className={styles.formGroup}>
-                                                <label> Account Name</label>
-                                                <input
-                                                    {...register('accountName')}
-                                                    type="text"
-                                                    value={
-                                                        interEnquiry.accountName
-                                                    }
-                                                />
+                                                                    .length ===
+                                                                10
+                                                            ) {
+                                                                const details =
+                                                                    {
+                                                                        accountNumber:
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                    };
+                                                                dispatch(
+                                                                    postInterBankEnquiry(
+                                                                        details
+                                                                    )
+                                                                );
+                                                                console.log();
+                                                            }
+                                                        }}
+                                                        type="number"
+                                                        placeholder="Enter account number here"
+                                                    />
+                                                </div>
                                                 <p className={styles.error}>
                                                     {
                                                         errors?.accountNumber
                                                             ?.message
                                                     }
                                                 </p>
-                                            </div>
-                                        ) : null}
-                                        <div className={styles.formGroup}>
-                                            <label>Choose Bank</label>
-                                            <select
-                                                {...register('bankName', {
-                                                    required: 'Choose a bank'
-                                                })}
-                                                name="bankName"
-                                            >
-                                                <option value="">
-                                                    Select Bank
-                                                </option>
-                                                <option value="Ecobank">
-                                                    ECOBANK
-                                                </option>
-                                                {bank?.map((bank, index) => {
-                                                    return (
-                                                        <option
+                                                {interEnquiry ? (
+                                                    <div
+                                                        className={
+                                                            styles.formGroup
+                                                        }
+                                                    >
+                                                        <label>
+                                                            {' '}
+                                                            Account Name
+                                                        </label>
+                                                        <input
+                                                            {...register(
+                                                                'accountName'
+                                                            )}
+                                                            type="text"
                                                             value={
-                                                                bank.institutionId
+                                                                interEnquiry.accountName
                                                             }
-                                                            key={index}
+                                                        />
+                                                        <p
+                                                            className={
+                                                                styles.error
+                                                            }
                                                         >
                                                             {
-                                                                bank.institutionName
+                                                                errors
+                                                                    ?.accountNumber
+                                                                    ?.message
                                                             }
+                                                        </p>
+                                                    </div>
+                                                ) : null}
+                                                <div
+                                                    className={styles.formGroup}
+                                                >
+                                                    <label>Choose Bank</label>
+                                                    <select
+                                                        {...register(
+                                                            'bankName',
+                                                            {
+                                                                required:
+                                                                    'Choose a bank'
+                                                            }
+                                                        )}
+                                                        name="bankName"
+                                                    >
+                                                        <option value="">
+                                                            Select Bank
                                                         </option>
-                                                    );
-                                                })}
-                                            </select>
-                                        </div>
+                                                        <option value="Ecobank">
+                                                            ECOBANK
+                                                        </option>
+                                                        {bank?.map(
+                                                            (bank, index) => {
+                                                                return (
+                                                                    <option
+                                                                        value={
+                                                                            bank.institutionId
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            bank.institutionName
+                                                                        }
+                                                                    </option>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </select>
+                                                </div>
+                                            </>
+                                        ) : beneType === 'Airtime and Data' ? (
+                                            <>
+                                                <div
+                                                    className={styles.formGroup}
+                                                >
+                                                    <label> Phone Number</label>
+                                                    <input
+                                                        // {...register('accountName')}
+                                                        type="text"
+                                                        placeholder="Enter Phone Number"
+                                                        // value={
+                                                        //     interEnquiry.accountName
+                                                        // }
+                                                    />
+                                                    {/* <p className={styles.error}>
+                                                    {
+                                                        errors?.accountNumber
+                                                            ?.message
+                                                    }
+                                                </p> */}
+                                                </div>
+                                                <div
+                                                    className={styles.formGroup}
+                                                >
+                                                    <label> Network</label>
+                                                    <input
+                                                        // {...register('accountName')}
+                                                        type="text"
+                                                        placeholder="Enter Network"
+                                                        // value={
+                                                        //     interEnquiry.accountName
+                                                        // }
+                                                    />
+                                                    {/* <p className={styles.error}>
+                                                    {
+                                                        errors?.accountNumber
+                                                            ?.message
+                                                    }
+                                                </p> */}
+                                                </div>
+                                            </>
+                                        ) : null}
+
                                         <div
                                             className={styles.profileBodyButton}
                                         >
@@ -1057,7 +1174,17 @@ const Profile = () => {
                                 <h4>Account Number</h4>
                                 <div className={styles.accountNumberCopy}>
                                     <p>{acctNumber.accountNumber}</p>
-                                    <h5>copy</h5>
+                                    <h5
+                                        onClick={() => {
+                                            {
+                                                navigator.clipboard.writeText(
+                                                    acctNumber.accountNumber
+                                                );
+                                            }
+                                        }}
+                                    >
+                                        copy
+                                    </h5>
                                 </div>
                             </div>
                         </div>

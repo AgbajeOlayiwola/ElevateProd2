@@ -5,11 +5,12 @@ import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 import Dropdownicon from './dropdownicon';
 import Innersubnav from './innersubnav.js';
+import OutsideClick from '../OutsideClick';
 
 const SideBarDrop = ({ item }) => {
     const [subNav, setSubNav] = useState(false);
     const [innersubNav, setInnerSubNav] = useState(false);
-    const showSubnav = ({ item }) => {
+    const showSubnav = () => {
         setSubNav((prev) => !prev);
         // console.log('clicked');
     };
@@ -31,11 +32,13 @@ const SideBarDrop = ({ item }) => {
                         : null}
                 </span>
             </div>
-            {!subNav ? null : (
-                <div className={styles.drops}>
-                    <Innersubnav item={item} subNav={subNav} />
-                </div>
-            )}
+            <OutsideClick onClickOutside={item.subNav && showSubnav}>
+                {!subNav ? null : (
+                    <div className={styles.drops}>
+                        <Innersubnav item={item} subNav={subNav} />
+                    </div>
+                )}
+            </OutsideClick>
         </>
     );
 };

@@ -80,7 +80,7 @@ const DashLayout = ({
                 />
             </div>
             <Idle
-                timeout={300000}
+                timeout={2300000}
                 onChange={({ idle }) => {
                     if (idle) {
                         preloadCornify();

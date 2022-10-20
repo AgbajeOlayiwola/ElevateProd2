@@ -574,8 +574,7 @@
     margin-left: 12px;
 }
 
-.phoneDetails input,
-.phoneDetails input::placeholder {
+.phoneDetails input {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 600;
