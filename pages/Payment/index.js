@@ -17,6 +17,7 @@ import {
     postAirtime,
     postInterBank,
     loadussdGen,
+    getTransactionFees,
     loadussdStatus,
     postBills,
     loadbillerPlan,
@@ -69,6 +70,9 @@ const Payment = () => {
     const { bulkTransfer, errorMessagebulkTransfer } = useSelector(
         (state) => state.bulkTransferReducer
     );
+    const { transactionFees, errorMessageTransactionFees } = useSelector(
+        (state) => state.transactionFeesReducer
+    );
     const { internationalTransfer, errorMessageinternationalTransfer } =
         useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
@@ -92,6 +96,7 @@ const Payment = () => {
     const [count, setCount] = useState(0);
     const [active, setActive] = useState(true);
     const [outType, setOutType] = useState();
+    const [transactionFee, setTransactionFee] = useState(0);
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
     const [balance, setBalance] = useState('₦ 0.00');
@@ -213,6 +218,23 @@ const Payment = () => {
     useEffect(() => {
         billsCheck();
     }, [bills, errorMessageBills]);
+    const transactionFeesCheck = () => {
+        if (transactionFees !== null) {
+            console.log(bills);
+            setTransactionFee(transactionFees.data.transactionFee);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setEcobank(false);
+        } else if (errorMessageTransactionFees !== null) {
+            setCount((count) => count + 2);
+            setIsLoading(false);
+            setError(errorMessageTransactionFees);
+            setStatus('error');
+        }
+    };
+    useEffect(() => {
+        transactionFeesCheck();
+    }, [transactionFees, errorMessageTransactionFees]);
     const bulkcheck = () => {
         if (bulkTransfer !== null) {
             console.log(bulkTransfer);
@@ -450,8 +472,16 @@ const Payment = () => {
                                         setEcobank(true);
                                         setCount(count + 1);
                                     } else {
-                                        setEcobank(false);
-                                        setCount(count + 1);
+                                        const payload = {
+                                            accountId: senderDetails.accountId,
+                                            destinationBankCode: data.bankName,
+                                            transactionAmount: parseInt(
+                                                data.amount,
+                                                10
+                                            )
+                                        };
+                                        dispatch(getTransactionFees(payload));
+                                        setIsLoading(true);
                                     }
                                     if (data.beneficiary === true) {
                                         const beneficiaryData = {
@@ -480,7 +510,10 @@ const Payment = () => {
                             <MakePaymentSecond
                                 closeAction={handleClose}
                                 isLoading={isLoading}
-                                amount={paymentDetails.amount}
+                                amount={
+                                    parseInt(paymentDetails.amount, 10) +
+                                    parseInt(transactionFee, 10)
+                                }
                                 recieverName={paymentDetails.accountName}
                                 sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
                                 recieverBank={
@@ -535,10 +568,11 @@ const Payment = () => {
                                             paymentDetails.accountNumber === ''
                                                 ? paymentDetails.accountNumberBene
                                                 : paymentDetails.accountNumber,
-                                        transactionAmount: parseInt(
-                                            paymentDetails.amount,
-                                            10
-                                        ),
+                                        transactionAmount:
+                                            parseInt(
+                                                paymentDetails.amount,
+                                                10
+                                            ) + parseInt(transactionFee, 10),
                                         narration: paymentDetails.narration,
                                         transactionPin: Object.values(data)
                                             .toString()
@@ -558,7 +592,7 @@ const Payment = () => {
                                 overlay={overlay}
                                 action={() => {
                                     if (status === 'error') {
-                                        setCount(count - 1);
+                                        setCount(count - 2);
                                         setIsLoading(false);
                                     } else {
                                         setCount(0);

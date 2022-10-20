@@ -48,7 +48,7 @@ const AccountLoading = () => {
         dispatch(createNewUserAccount(accountData));
         dispatch(newAccountStatusData());
 
-        if (accountStatus.message === 'success') {
+        if (accountStatus.data.message === 'success') {
             // console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         } else if (
