@@ -110,5 +110,22 @@
     width: 15%;
 }
 
-@media screen {
+.paginationBtns {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    list-style-type: none;
+}
+
+.paginationBtns a {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #102572;
+    color: #102572;
+    cursor: pointer;
+}
+
+.paginationActive {
+    background-color: #102572;
+    color: white;
 }

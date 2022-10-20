@@ -46,7 +46,7 @@ const CorporateAccount = () => {
                 if (response.data.message === 'success') {
                     axiosInstance
                         .get(
-                            `https://ellevate-app.herokuapp.com${apiRoutes.corpAccountStatus}`,
+                            `https://ellevate-test.herokuapp.com/bank-account/status`,
                             {
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -81,6 +81,19 @@ const CorporateAccount = () => {
 
     useEffect(() => {
         newUserAccountt();
+    }, [errorMes, accountDone]);
+
+    const newUserCorpAccountt = () => {
+        if (errorMes === 'Bank Account has not been created for this user') {
+            console.log(errorMes);
+            dispatch(newAccountStatusData());
+            setInterval(() => {
+                dispatch(newAccountStatusData());
+            }, 10000);
+        }
+    };
+    useEffect(() => {
+        newUserCorpAccountt();
     }, [errorMes, accountDone]);
 
     return (

@@ -19,14 +19,17 @@ import RecievePaymentBtn from '../../components/ReusableComponents/RecievePaymne
 // import withAuth from '../../components/HOC/withAuth.js';
 import {
     getBalanceEnquiry,
-    getTransactionElevate,
-    loadAccountPrimary
+    loadUserProfile,
+    loadAccountPrimary,
+    getTransactionElevate
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
 import EcobankQRSvg from '../../components/ReusableComponents/EcobankQRSvg';
 import Ussd from '../../components/ReusableComponents/UssdSvg';
 import SingleTrans from '../../components/ReusableComponents/SingleTransSvg';
+import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
+import Link from 'next/link';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -57,44 +60,25 @@ function SamplePrevArrow(props) {
 const Dashboard = () => {
     const dispatch = useDispatch();
     const [outType, setOutType] = useState();
+    const [time, setTime] = useState();
+    const [accountUpgrade, setAccountUpgrade] = useState(false);
     const [balance, setBalance] = useState('₦0.00');
-    const router = useRouter();
-    const [loaded, setLoaded] = useState(false);
-    const [items, setItems] = useState([]);
+    const [tableDetails, setTableDetails] = useState([]);
+    const [userProfileData, setUserProfileData] = useState([]);
 
     const [acctNumber, setAcctNumber] = useState('');
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
 
-    const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
-        (state) => state.balanceEnquiryReducer
-    );
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
-    const [transactionData, setTransactionData] = useState([]);
-    let userProfile;
-    let userProfileData = {};
-    if (typeof window !== 'undefined') {
-        userProfile = window.localStorage.getItem('user');
-        userProfileData = JSON.parse(userProfile);
-    }
+    const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
+        (state) => state.balanceEnquiryReducer
+    );
+    const { accountPrimary, accountPrimaryError } = useSelector(
+        (state) => state.accountPrimaryReducer
+    );
 
-    // useEffect(() => {
-    //     if (transactionElevate !== null) {
-    //         setTransactionData(transactionElevate);
-    //     }
-    // }, [transactionElevate]);
-
-    // useEffect(() => {
-    //     if (userProfile !== null) {
-    //         setUserProfileData(userProfile);
-    //
-    //         console.log(balanceData);
-    //     }
-    // }, []);
-    console.log(transactionData);
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     const types = (type) => {
         setOutType(type);
@@ -114,36 +98,34 @@ const Dashboard = () => {
         }
     }, [balanceEnquiry]);
 
-    // useEffect(() => {
-    //     const items = JSON.parse(localStorage.getItem('user'));
-
-    //     if (!items) {
-    //         router.push('../Auth/Login');
-    //     } else {
-    //         setLoaded(true);
-    //     }
-    // });
-    const settings = {
-        className: 'center',
-        centerMode: true,
-        infinite: true,
-        centerPadding: '40px 0px 0px 0px',
-        slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        speed: 500,
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        cssEase: 'linear'
+    const getCurrentDate = () => {
+        let newDate = new Date();
+        let date = newDate.getDate();
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+        setTime(`${year}-${month < 10 ? `0${month}` : `${month}`}-${date}`);
     };
-    const { accountPrimary, accountPrimaryError } = useSelector(
-        (state) => state.accountPrimaryReducer
-    );
 
+    // const settings = {
+    //     className: 'center',
+    //     centerMode: true,
+    //     infinite: true,
+    //     centerPadding: '40px 0px 0px 0px',
+    //     slidesToShow: 1,
+    //     autoplay: true,
+    //     autoplaySpeed: 2000,
+    //     speed: 500,
+    //     nextArrow: <SampleNextArrow />,
+    //     prevArrow: <SamplePrevArrow />,
+    //     autoplay: true,
+    //     autoplaySpeed: 2000,
+    //     cssEase: 'linear'
+    // };
     useEffect(() => {
         dispatch(loadAccountPrimary());
+        dispatch(loadUserProfile());
+        dispatch(getTransactionElevate());
+        getCurrentDate();
     }, []);
 
     useEffect(() => {
@@ -159,8 +141,22 @@ const Dashboard = () => {
             setAcctNumber('Pending');
         }
     }, [accountPrimary]);
-
-    console.log(accountPrimary);
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+            if (userProfileData.isUpgradedAccount === false) {
+                setAccountUpgrade(true);
+            } else if (userProfileData.isUpgradedAccount === true) {
+                setAccountUpgrade(false);
+            }
+        }
+    }, [userProfile]);
+    useEffect(() => {
+        if (transactionElevate !== null) {
+            setTableDetails(transactionElevate.transactions);
+            console.log(transactionElevate.transactions);
+        }
+    }, [transactionElevate]);
     return (
         <DashLayout page="Dashboard">
             <Levelup />
@@ -195,30 +191,58 @@ const Dashboard = () => {
                         <p>Other Transaction</p>
                     </div>
                     <div className={styles.divCover}>
-                        <div className={styles.dinCLass}>
-                            <div className={styles.svg}>
-                                <PhoneSvg />
+                        <Link
+                            href={{
+                                pathname: './Payment',
+                                query: { id: 'Bills Payment' }
+                            }}
+                        >
+                            <div className={styles.dinCLass}>
+                                <div className={styles.svg}>
+                                    <PhoneSvg />
+                                </div>
+                                <p className={styles.name}> Airtime & Data</p>
                             </div>
-                            <p className={styles.name}> Airtime & Data</p>
-                        </div>
-                        <div className={styles.dinCLass}>
-                            <div className={styles.svg}>
-                                <EcobankQRSvg />
+                        </Link>
+                        <Link
+                            href={{
+                                pathname: './Payment',
+                                query: { id: 'Ecobank QR Only' }
+                            }}
+                        >
+                            <div className={styles.dinCLass}>
+                                <div className={styles.svg}>
+                                    <EcobankQRSvg />
+                                </div>
+                                <p className={styles.name}>Ecobank QR Code</p>
                             </div>
-                            <p className={styles.name}>Ecobank QR Code</p>
-                        </div>
-                        <div className={styles.dinCLass}>
-                            <div className={styles.svg}>
-                                <Ussd />
+                        </Link>
+                        <Link
+                            href={{
+                                pathname: './Payment',
+                                query: { id: 'USSD only' }
+                            }}
+                        >
+                            <div className={styles.dinCLass}>
+                                <div className={styles.svg}>
+                                    <Ussd />
+                                </div>
+                                <p className={styles.name}>USSD</p>
                             </div>
-                            <p className={styles.name}>USSD</p>
-                        </div>
-                        <div className={styles.dinCLass}>
-                            <div className={styles.svg}>
-                                <SingleTrans />
+                        </Link>
+                        <Link
+                            href={{
+                                pathname: './Payment',
+                                query: { id: 'Single Transfer' }
+                            }}
+                        >
+                            <div className={styles.dinCLass}>
+                                <div className={styles.svg}>
+                                    <SingleTrans />
+                                </div>
+                                <p className={styles.name}>Single Transfer</p>
                             </div>
-                            <p className={styles.name}>Single Transfer</p>
-                        </div>
+                        </Link>
                     </div>
                     <div className={styles.btmI}>
                         <div className={styles.btmItop}>
@@ -288,7 +312,7 @@ const Dashboard = () => {
                                 <p>Recent Transactions</p>
                                 <p>View All</p>
                             </div>
-                            {transactionData.length === 0 ? (
+                            {tableDetails.length === 0 ? (
                                 <div className={styles.transactionBody}>
                                     <div>
                                         <div className={styles.transactionSvg}>
@@ -301,27 +325,77 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                             ) : (
-                                transactionData.map((item, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <div className={styles.transaction}>
-                                                <div className={styles.names}>
-                                                    <p>
-                                                        {item.beneficiaryName}
-                                                    </p>
-                                                    <p>{item.type}</p>
-                                                </div>
-                                                <div className={styles.money}>
-                                                    <p>{item.amount}</p>
+                                tableDetails
+                                    ?.filter((item) => {
+                                        const newDate =
+                                            item.transactionDate.split('T');
+                                        if (newDate[0].includes(time)) {
+                                            return item;
+                                        }
+                                    })
+                                    ?.map((item, index) => {
+                                        const formatter = new Intl.NumberFormat(
+                                            'en-US',
+                                            {
+                                                style: 'currency',
+                                                currency: 'NGN',
+                                                currencyDisplay: 'narrowSymbol'
+                                            }
+                                        );
+                                        const formattedAmount =
+                                            formatter.format(
+                                                item.transactionAmount
+                                            );
+                                        const newBeneficiary =
+                                            item.receiversName.split(' ');
+                                        return (
+                                            <div key={index}>
+                                                <div
+                                                    className={
+                                                        styles.transaction
+                                                    }
+                                                >
                                                     <div
-                                                        className={item.color}
-                                                    ></div>
+                                                        className={styles.names}
+                                                    >
+                                                        <p>
+                                                            {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className={styles.type}
+                                                    >
+                                                        <p>
+                                                            {
+                                                                item.transactionType
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className={styles.money}
+                                                    >
+                                                        <p>{formattedAmount}</p>
+                                                    </div>
+                                                    <div
+                                                        className={item.status}
+                                                    >
+                                                        <div
+                                                            className={
+                                                                styles.statusColor
+                                                            }
+                                                        >
+                                                            <p>
+                                                                {
+                                                                    item.transactionStatus
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <hr className={styles.hr} />
                                             </div>
-                                            <hr className={styles.hr} />
-                                        </div>
-                                    );
-                                })
+                                        );
+                                    })
                             )}
                         </div>
                         {/* <div className={styles.btmIII}>
@@ -380,6 +454,17 @@ const Dashboard = () => {
                     </div> */}
                 </section>
             </div>
+            {accountUpgrade ? (
+                <PaymentSuccess
+                    overlay="true"
+                    error="Account Upgrade is important"
+                    statusbar="error"
+                    action={() => {
+                        setAccountUpgrade(false);
+                    }}
+                    text="Close"
+                />
+            ) : null}
         </DashLayout>
     );
 };

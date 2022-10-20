@@ -50,6 +50,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
     const [businessError, setBusinessError] = useState(false);
+    const [businessTypeError, setBusinessTypeError] = useState(false);
     const [errorMes, setErrorMes] = useState();
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
@@ -255,6 +256,17 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             }
         }
     }, [newAccount, comperrorMessage]);
+    const basicAction = () => {
+        console.log(business);
+        if (business === '' && businesses === '') {
+            setBusinessError(true);
+            setBusinessTypeError(true);
+        } else if (businesses === '') {
+            setBusinessTypeError(true);
+        } else {
+            setTitle('Other');
+        }
+    };
 
     const [activeBtn, setActiveBtn] = useState(true);
     //console.log(test)
@@ -311,14 +323,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                 </ButtonWrapper>
                 <>
                     {title === 'Basic' ? (
-                        <form
-                            onSubmit={handleSubmit(() => {
-                                if (business === '') {
-                                    setBusinessError(true);
-                                }
-                                setTitle('Other');
-                            })}
-                        >
+                        <form onSubmit={handleSubmit(basicAction)}>
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroups}>
                                     <label>Enter Full Name</label>
@@ -517,7 +522,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                             'countryCode_number',
                                                             {
                                                                 required:
-                                                                    'Country Code is required',
+                                                                    'Phone number is required',
                                                                 minLength: {
                                                                     value: 9,
                                                                     message:
@@ -598,6 +603,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                                             setBusinessText(
                                                                                 false
                                                                             );
+                                                                            setBusinessTypeError(
+                                                                                false
+                                                                            );
                                                                         }}
                                                                     >
                                                                         {
@@ -609,7 +617,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                         )}
                                                     </ul>
                                                 )}
-                                                {businessError ? (
+                                                {businessTypeError ? (
                                                     <p className={styles.error}>
                                                         Busuness Type is
                                                         Required
@@ -630,7 +638,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     : handleSubmitIII
                             )}
                         >
-                            {comperrorMessage ? comperrorMessage.message : null}
+                            <p className={styles.error}>
+                                {comperrorMessage
+                                    ? comperrorMessage.message
+                                    : null}
+                            </p>
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroup}>
                                     <div>

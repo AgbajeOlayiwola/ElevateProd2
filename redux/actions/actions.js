@@ -59,7 +59,10 @@ import {
     resetPassword,
     bankStatement,
     viewBvn,
-    resetOtpType
+    resetOtpType,
+    existingBusnessSetup,
+    sendCac,
+    getCAC
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -1032,9 +1035,7 @@ export const postBeneficiariesData = (data) => (dispatch) => {
     axiosInstance
         .post(`${apiRoutes.beneficiaries}`, data)
         .then((response) =>
-            dispatch(
-                postBeneficiariesLoadSuccess(response.data.data.beneficiaries)
-            )
+            dispatch(postBeneficiariesLoadSuccess(response.data.data))
         )
         .catch((error) => dispatch(postBeneficiariesLoadError(error.message)));
 };
@@ -2240,3 +2241,134 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
         .catch((error) => dispatch(resetOtpError(error)));
 };
 //RESET OTP resolution end
+
+//existingUser profile setup action start
+export const exSetupBusSendCac = () => ({
+    type: sendCac.SEND_CAC_START
+});
+export const exSetupBusSendCacSucces = (cacName) => ({
+    type: sendCac.SEND_CAC_SUCCESS,
+    payload: cacName
+});
+export const exSetupBusSendCacError = (cacNameError) => ({
+    type: sendCac.SEND_CAC_ERROR,
+    payload: cacNameError
+});
+//get business cac
+export const exGetBusCac = () => ({
+    type: getCAC.GET_CAC_START
+});
+export const exGetBusCacSuccess = (getCacName) => ({
+    type: getCAC.GET_CAC_SUCCESS,
+    payload: getCacName
+});
+export const exGetBusCacError = (getCacNameError) => ({
+    type: getCAC.GET_CAC_ERROR,
+    payload: getCacNameError
+});
+
+export const exBusinessProfile = () => ({
+    type: existingBusnessSetup.EXISTING_BUSINESS_START
+});
+export const exBusinessProfileSuccess = (existingProfileSetupPay) => ({
+    type: existingBusnessSetup.EXISTING_BUSINESS_SUCCESS,
+    payload: existingProfileSetupPay
+});
+export const exBusinessProfileError = (existingProfileSetupError) => ({
+    type: existingBusnessSetup.EXISTING_BUSINESS_ERROR,
+    payload: existingProfileSetupError
+});
+export const ExCreateBusProfileSetup = (businessProfileData) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    return async (dispatch) => {
+        await axios
+            .post(
+                `https://ellevate-test.herokuapp.com${apiRoutes.businessNameCac}`,
+                {
+                    registerationNumber: businessProfileData.registerationNumber
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
+                }
+            )
+            .then((response) => {
+                dispatch(exSetupBusSendCacSucces(response.data));
+
+                //verify response
+                if (response.data) {
+                    let cookie;
+
+                    if (getCookie('cookieToken') == undefined) {
+                        cookie = getCookie('existingToken');
+                    } else {
+                        cookie = getCookie('cookieToken');
+                    }
+                    // dispatch(accountNumberLoadStart());
+                    axios
+                        .get(
+                            `https://ellevate-test.herokuapp.com${apiRoutes.verifyCac}`,
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${cookie}`
+                                }
+                            }
+                        )
+                        .then((response) => {
+                            console.log(response.data.data);
+                            dispatch(exGetBusCacSuccess(response));
+
+                            //business profile setup
+                            if (
+                                response.data.data.isCredentialsValid === true
+                            ) {
+                                let cookie;
+
+                                if (getCookie('cookieToken') == undefined) {
+                                    cookie = getCookie('existingToken');
+                                } else {
+                                    cookie = getCookie('cookieToken');
+                                }
+                                axios
+                                    .post(
+                                        `https://ellevate-test.herokuapp.com${apiRoutes.completesBusinessProfile}`,
+                                        businessProfileData,
+                                        {
+                                            headers: {
+                                                'Content-Type':
+                                                    'application/json',
+                                                Authorization: `Bearer ${cookie}`
+                                            }
+                                        }
+                                    )
+                                    .then((response) => {
+                                        dispatch(
+                                            exBusinessProfileSuccess(response)
+                                        );
+                                    })
+                                    .catch((error) => {
+                                        dispatch(exBusinessProfileError(error));
+                                    });
+                            }
+                        })
+
+                        .catch((error) => dispatch(exGetBusCacError(error)));
+                }
+            })
+
+            .catch((error) => {
+                dispatch(exSetupBusSendCacError(error.response.data.message));
+            });
+    };
+};
+
+// business profile setuo action end

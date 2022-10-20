@@ -161,7 +161,7 @@ const RegisteredForm = ({
                                 value={
                                     newAccounts.email
                                         ? newAccounts.email
-                                        : newAccounts.user.email
+                                        : newAccounts.user
                                         ? newAccounts.user.email
                                         : formData.emailData
                                 }
@@ -226,7 +226,7 @@ const RegisteredForm = ({
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            // type="submit"
+                            type="submit"
                             text="Next"
                         />
                         {/* )} */}

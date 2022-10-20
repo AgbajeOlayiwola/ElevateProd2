@@ -15,6 +15,7 @@ import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import Loader from '../../components/ReusableComponents/Loader';
 import validator from 'validator';
 import { useEffect } from 'react';
+import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 
 const Security = () => {
     const dispatch = useDispatch();
@@ -26,11 +27,14 @@ const Security = () => {
     );
     const [error, setError] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
-    const [statusState, setStatusState] = useState('');
-    const [statusMessage, setStatusMessage] = useState('');
+    const [outcome, setOutcome] = useState(false);
+    const [message, setMessage] = useState('');
+    const [statusbar, setStatusbar] = useState('');
     const [text, setText] = useState('Change Transaction Pin');
     const [password, setPassword] = useState('');
     const [pin, setPin] = useState('');
+    const [oldPassword, setOldPassword] = useState('');
+    const [oldTransactionPin, setOldTransactionPin] = useState('');
     const [confirmPin, setConfPin] = useState('');
     const [confirmPassword, setConfPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -84,12 +88,12 @@ const Security = () => {
     const handleNewPin = (e) => {
         setCount(e.target.value.length);
         setConfPin(e.target.value);
-        if (pin != confirmPin) {
-            setPasswordMatch('Passwords do not match');
+        if (pin !== confirmPin) {
+            setPasswordMatch('Pin do not match');
         }
     };
     const handlePin = (e) => {
-        setPassword(e.target.value);
+        setPin(e.target.value);
     };
     const profileData = [
         {
@@ -109,7 +113,6 @@ const Security = () => {
         formState: { errors }
     } = useForm();
     const changePin = (data) => {
-        setStatusState('');
         setLoading(true);
         const changePinData = {
             oldPin: data.oldPin,
@@ -123,13 +126,15 @@ const Security = () => {
         if (changeTransactionPin !== null) {
             console.log(changeTransactionPin);
             setLoading(false);
-            setStatusMessage('Pin Changed Successfully');
-            setStatusState('Success');
+            setMessage('Pin Changed Successfully');
+            setStatusbar('success');
+            setOutcome(true);
         } else if (changeTransactionPinError !== null) {
             console.log(changeTransactionPinError);
             setLoading(false);
-            setStatusMessage(changeTransactionPinError);
-            setStatusState('Error');
+            setMessage(changeTransactionPinError);
+            setOutcome(true);
+            setStatusbar('error');
         }
     };
 
@@ -137,27 +142,35 @@ const Security = () => {
         resetPinCheck();
     }, [changeTransactionPinError, changeTransactionPin]);
     const changePassword = (data) => {
-        setStatusState('');
         setLoading(true);
         const changePasswordData = {
             oldPassword: data.oldPassword,
             newPassword: data.newPassword,
             confirmPassword: data.confirmPassword
         };
-        dispatch(loadresetPassword(changePasswordData));
+        if (data.oldPassword === data.newPassword) {
+            setMessage('New password cannot be the same as Old password');
+            setOutcome(true);
+            setStatusbar('error');
+            setLoading(false);
+        } else {
+            dispatch(loadresetPassword(changePasswordData));
+        }
     };
 
     const resetPasswordCheck = () => {
         if (resetPassword !== null) {
             console.log(resetPassword);
             setLoading(false);
-            setStatusMessage('Password Changed Successfully');
-            setStatusState('Success');
+            setMessage('Password Changed Successfully');
+            setStatusbar('success');
+            setOutcome(true);
         } else if (errorMessageresetPassword !== null) {
             console.log(errorMessageresetPassword);
             setLoading(false);
-            setStatusMessage(errorMessageresetPassword);
-            setStatusState('Error');
+            setMessage(errorMessageresetPassword);
+            setOutcome(true);
+            setStatusbar('error');
         }
     };
 
@@ -180,6 +193,10 @@ const Security = () => {
                                         required:
                                             'Old Transaction Pin is Required'
                                     })}
+                                    value={oldTransactionPin}
+                                    onInput={(e) => {
+                                        setOldTransactionPin(e.target.value);
+                                    }}
                                 />
                                 <p className={styles.error}>
                                     {errors?.oldPin?.message}
@@ -194,6 +211,7 @@ const Security = () => {
                                         {...register('newPin', {
                                             required: 'New Pin is Required'
                                         })}
+                                        value={pin}
                                         onInput={handlePin}
                                     />
                                     <Visbility typeSet={types} />
@@ -211,6 +229,7 @@ const Security = () => {
                                         {...register('confirmPin', {
                                             required: 'Confirm Pin is Required'
                                         })}
+                                        value={confirmPin}
                                         onChange={handleNewPin}
                                     />
                                     <Visbility typeSet={typed} />
@@ -247,6 +266,10 @@ const Security = () => {
                                     {...register('oldPassword', {
                                         required: 'Old Password is Required'
                                     })}
+                                    value={oldPassword}
+                                    onInput={(e) => {
+                                        setOldPassword(e.target.value);
+                                    }}
                                 />
                                 <p className={styles.error}>
                                     {errors?.oldPassword?.message}
@@ -261,6 +284,7 @@ const Security = () => {
                                         {...register('newPassword', {
                                             required: 'New Password is Required'
                                         })}
+                                        value={password}
                                         onInput={handlePwd}
                                     />
                                     <Visbility typeSet={types} />
@@ -296,6 +320,7 @@ const Security = () => {
                                             required:
                                                 'Confirm Password is Required'
                                         })}
+                                        value={confirmPassword}
                                         onChange={handlePaswword}
                                     />
                                     <Visbility typeSet={typed} />
@@ -334,24 +359,43 @@ const Security = () => {
                             action={() => {
                                 setText(profile.text);
                                 setCount(0);
-                                setStatusState('');
+                                setConfPassword('');
+                                setConfPin('');
+                                setOldPassword('');
+                                setOldTransactionPin('');
+                                setPin('');
+                                setPassword('');
+                                setPasswordMatch('');
                             }}
                         />
                     );
                 })}
             >
-                {statusState ? (
-                    <p
-                        className={
-                            statusState === 'Success'
-                                ? styles.statusTrue
-                                : statusState === 'Error'
-                                ? styles.error
+                {outcome ? (
+                    <PaymentSuccess
+                        body={message}
+                        error={message}
+                        statusbar={statusbar}
+                        overlay="true"
+                        action={
+                            statusbar === 'error'
+                                ? () => {
+                                      setOutcome(false);
+                                  }
+                                : statusbar === 'success'
+                                ? () => {
+                                      setOutcome(false);
+                                      setConfPassword('');
+                                      setConfPin('');
+                                      setOldPassword('');
+                                      setOldTransactionPin('');
+                                      setPin('');
+                                      setPassword('');
+                                  }
                                 : null
                         }
-                    >
-                        {statusMessage}
-                    </p>
+                        text="Retry"
+                    />
                 ) : null}
                 {renderForm()}
             </ProfileLayout>

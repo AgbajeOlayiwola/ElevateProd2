@@ -9,7 +9,8 @@ import {
     accountStatusData,
     statesData,
     businessCategoriesData,
-    CompleteBusinessProfile
+    CompleteBusinessProfile,
+    ExCreateBusProfileSetup
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -34,6 +35,15 @@ const StepFour = ({ title, action, setFormData, formData }) => {
     const { existingUserProfile, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
+
+    const {
+        cacName,
+        cacNameError,
+        getCacName,
+        getCacNameError,
+        existingProfileSetupPay,
+        existingProfileSetupError
+    } = useSelector((state) => state.ExistingProfileSetupReducer);
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
@@ -70,6 +80,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
     const [localState, setLocalState] = useState('');
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
+    const [regNo, setRegNo] = useState('');
     console.log(localGoverment);
     const [phones, setPhones] = useState();
 
@@ -110,31 +121,32 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             signature: file
         };
         dispatch(CompleteBusinessProfile(userData));
-        console.log(userData);
+        // console.log(existingProfileSetupPay, existingProfileSetupError);
     };
 
-    // const profileTest = () => {
-    //     setLoading((prev) => !prev);
-    //     if (compBusprofile) {
-    //         console.log(errorMessages);
-    //         router.push('/Verify/ExistingSuccess');
-    //     } else if (
-    //         comperrorMessage.message ===
-    //         'You already have an account with us. Please contact us for more information'
-    //     ) {
-    //         router.push('/Verify/ExistingSuccess');
-    //     }
+    const profileTest = () => {
+        console.log(compBusprofile, comperrorMessage);
+        setLoading((prev) => !prev);
+        if (compBusprofile) {
+            console.log(errorMessages);
+            router.push('/Verify/ExistingSuccess');
+        } else if (
+            comperrorMessage.message === 'your have already setup your business'
+        ) {
+            router.push('/Verify/ExistingSuccess');
+        }
 
-    //     if (businessCategories !== null) {
-    //         setBusinessCategory(businessCategories);
-    //     }
-    // };
-    // useEffect(() => {
-    //     profileTest();
-    // }, [compBusprofile, comperrorMessage]);
+        if (businessCategories !== null) {
+            setBusinessCategory(businessCategories);
+        }
+    };
+    useEffect(() => {
+        profileTest();
+    }, [compBusprofile, comperrorMessage]);
 
     const onSubmit = (data) => {
         const userData = {
+            registerationNumber: regNo,
             isRegistered: 'true',
             businessName: businessName,
             businessCategory: business,
@@ -149,18 +161,26 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             refereeCode: '',
             signature: file
         };
-        dispatch(CompleteBusinessProfile(userData));
-        console.log(userData);
+        dispatch(ExCreateBusProfileSetup(userData));
+        // console.log(existingProfileSetupPay, existingProfileSetupError);
     };
 
     useEffect(() => {
         setLoading((prev) => !prev);
-        console.log(compBusprofile);
-        if (compBusprofile) {
+
+        if (existingProfileSetupPay) {
+            console.log(existingProfileSetupPay, existingProfileSetupError);
+            if (existingProfileSetupPay.data.message === 'Successful') {
+                if (formData.type !== 'true') {
+                    router.push('/Verify/ExistingSuccess');
+                } else {
+                    router.push('/Verify/CorportateAccount');
+                }
+            }
+        } else if (existingProfileSetupError) {
             if (
-                compBusprofile.message === 'Successful' ||
-                comperrorMessage.message ===
-                    'your have already setup your business'
+                existingProfileSetupError.response.data.message ===
+                'your have already setup your business'
             ) {
                 if (formData.type !== 'true') {
                     router.push('/Verify/ExistingSuccess');
@@ -169,7 +189,12 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                 }
             }
         }
-    }, [compBusprofile, comperrorMessage]);
+    }, [
+        existingProfileSetupPay,
+        existingProfileSetupError,
+        compBusprofile,
+        comperrorMessage
+    ]);
 
     const types = (type) => {
         setOutType(type);
@@ -442,18 +467,18 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                         // value={
                                                         //     phones.phoneNumber
                                                         // }
-                                                        {...register(
-                                                            'countryCode_number',
-                                                            {
-                                                                required:
-                                                                    'Country Code is required',
-                                                                minLength: {
-                                                                    value: 9,
-                                                                    message:
-                                                                        'Min length is 9'
-                                                                }
-                                                            }
-                                                        )}
+                                                        // {...register(
+                                                        //     'countryCode_number',
+                                                        //     {
+                                                        //         required:
+                                                        //             'Phone Number is required',
+                                                        //         minLength: {
+                                                        //             value: 9,
+                                                        //             message:
+                                                        //                 'Min length is 9'
+                                                        //         }
+                                                        //     }
+                                                        // )}
                                                         // value={phoneNumber}
                                                         onChange={(e) =>
                                                             setPhoneNumber(
@@ -462,6 +487,8 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                         }
                                                         value={
                                                             profileInfo.phoneNumber
+                                                                ? profileInfo.phoneNumber
+                                                                : phoneNumber
                                                         }
                                                     />
                                                 </div>
@@ -626,6 +653,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                         <div
                                             className={styles.existingUserCont}
                                         >
+                                            {/* {getCacNameError?getCacNameError.response.data.message:null} */}
                                             <label>
                                                 Enter your RC /Business
                                                 Registration Number
@@ -638,7 +666,6 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                     required:
                                                         'RC Number is required',
                                                     minLength: {
-                                                        value: 10,
                                                         message:
                                                             'Min length is 10'
                                                     },
@@ -648,6 +675,10 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                             'Only Alphabelts/Number allowed'
                                                     }
                                                 })}
+                                                onChange={(e) =>
+                                                    setRegNo(e.target.value)
+                                                }
+                                                value={regNo}
                                             />
                                         </div>
                                         <div
@@ -704,7 +735,8 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                             )
                                                         }
                                                         value={
-                                                            profileInfo.phoneNumber
+                                                            phoneNumber
+                                                            // profileInfo.phoneNumber
                                                         }
                                                     />
                                                 </div>

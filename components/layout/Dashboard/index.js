@@ -42,7 +42,9 @@ import { useState } from 'react';
 // import withAuth from '../../HOC/withAuth';
 import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
-
+import Idle from 'react-idle';
+import { deleteCookie, getCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 const DashLayout = ({
     children,
     page,
@@ -53,6 +55,21 @@ const DashLayout = ({
     productAction
 }) => {
     const [sideActive, setSideActive] = useState(false);
+    const [cornifyLoaded, setCornifyLoaded] = useState('');
+    const router = useRouter();
+    const preloadCornify = () => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        if (!localStorage.getItem('user')) {
+            router.replace('../Auth/Login');
+        }
+
+        if (getCookie('cookieToken') == undefined) {
+            deleteCookie('existingToken');
+        } else {
+            deleteCookie('cookieToken');
+        }
+    };
     return (
         <div className={styles.dash}>
             <div className={sideActive ? styles.sidebar : styles.sidebarActive}>
@@ -62,6 +79,15 @@ const DashLayout = ({
                     }}
                 />
             </div>
+            <Idle
+                timeout={300000}
+                onChange={({ idle }) => {
+                    if (idle) {
+                        preloadCornify();
+                    }
+                }}
+            />
+
             {!sideActive ? (
                 <div className={styles.dashCont}>
                     <Navbar

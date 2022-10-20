@@ -37,7 +37,6 @@ const MakePaymentFirst = ({
     const dispatch = useDispatch();
     const [bankAccount, setBankAccount] = useState([]);
     const [beneficiaries, setBeneficiaries] = useState([]);
-    const [search, setSearch] = useState('');
     const { getBeneficiaries } = useSelector(
         (state) => state.getBeneficiariesReducer
     );

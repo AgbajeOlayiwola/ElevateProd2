@@ -3,19 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTransactionElevate } from '../../../redux/actions/actions';
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
+import ReactPaginate from 'react-paginate';
 
-const PaymentTable = ({ title }) => {
+const PaymentTable = ({ title, test }) => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
     const [tableDetails, setTableDetails] = useState([]);
     const [searchValue, setSearchValue] = useState('');
+    const [pageNumber, setPageNumber] = useState(0);
     const [searchType, setSearchType] = useState('transactionType');
 
+    const usersPerPage = 10;
+    const pagesVisited = pageNumber * usersPerPage;
+    const pageCount = Math.ceil(tableDetails.length / usersPerPage);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getTransactionElevate());
-    }, []);
+    }, [test === 0]);
 
     useEffect(() => {
         if (transactionElevate !== null) {
@@ -23,16 +28,28 @@ const PaymentTable = ({ title }) => {
             console.log(transactionElevate.transactions);
         }
     }, [transactionElevate]);
-    const changeTransaction = () => {
+    const filterCondition = (item, searchType) => {
         switch (searchType) {
             case 'transactionType':
-                return 'transactionType';
+                return item.transactionType
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
             case 'transactionStatus':
-                return 'transactionStatus';
+                return item.transactionStatus
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
             case 'transactionAmount':
-                return 'transactionAmount';
+                return item.transactionAmount
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
             case 'transactionDate':
-                return 'transactionDate';
+                return item.transactionDate
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
+            default:
+                item.transactionType
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
         }
     };
     return (
@@ -84,19 +101,11 @@ const PaymentTable = ({ title }) => {
                       ?.filter((item) => {
                           if (searchValue === '') {
                               return item;
-                          } else if (
-                              //   searchType === 'transactionType'
-                              //       ? item.transactionType
-                              //       : searchType === 'transactionStatus'
-                              //       ? item.transactionStatus
-                              //       : null
-                              item.transactionType
-                                  .toLowerCase()
-                                  .includes(searchValue.toLowerCase())
-                          ) {
+                          } else if (filterCondition(item, searchType)) {
                               return item;
                           }
                       })
+                      ?.slice(pagesVisited, pagesVisited + usersPerPage)
                       ?.map((items, index) => {
                           return (
                               <TableDetail
@@ -110,6 +119,18 @@ const PaymentTable = ({ title }) => {
                               />
                           );
                       })}
+            <ReactPaginate
+                previousLabel="Previous"
+                nextLabel="Next"
+                pageCount={pageCount}
+                onPageChange={({ selected }) => {
+                    setPageNumber(selected);
+                }}
+                containerClassName={styles.paginationBtns}
+                previousClassName={styles.previousBtns}
+                nextLinkClassName={styles.nextBtns}
+                activeClassName={styles.paginationActive}
+            />
         </div>
     );
 };

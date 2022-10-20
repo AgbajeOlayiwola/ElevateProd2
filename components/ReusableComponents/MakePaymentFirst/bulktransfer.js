@@ -34,7 +34,7 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
-            <Beneficiary />
+            {/* <Beneficiary /> */}
             <form onSubmit={handleSubmit(action)}>
                 <div className={styles.narration}>
                     <label className={styles.bulkLabel}>Source Account</label>

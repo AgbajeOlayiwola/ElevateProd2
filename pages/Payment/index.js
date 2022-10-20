@@ -443,6 +443,11 @@ const Payment = () => {
                                     if (data.bankName === 'Ecobank') {
                                         setEcobank(true);
                                         setCount(count + 1);
+                                    } else if (
+                                        data.bankNameBene === 'Ecobank'
+                                    ) {
+                                        setEcobank(true);
+                                        setCount(count + 1);
                                     } else {
                                         setEcobank(false);
                                         setCount(count + 1);
@@ -477,7 +482,11 @@ const Payment = () => {
                                 amount={paymentDetails.amount}
                                 recieverName={paymentDetails.accountName}
                                 sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
-                                recieverBank={paymentDetails.bankName}
+                                recieverBank={
+                                    paymentDetails.bankName === ''
+                                        ? paymentDetails.bankNameBene
+                                        : paymentDetails.bankName
+                                }
                                 overlay={overlay}
                                 backAction={() => {
                                     setCount(count - 1);
@@ -512,13 +521,19 @@ const Payment = () => {
                                     const paymentData = {
                                         isEcobankToEcobankTransaction: ecobank,
                                         destinationBank:
-                                            paymentDetails.bankName,
+                                            paymentDetails.bankName === ''
+                                                ? paymentDetails.bankNameBene
+                                                : paymentDetails.bankName,
                                         destinationBankCode:
-                                            paymentDetails.bankName,
+                                            paymentDetails.bankName === ''
+                                                ? paymentDetails.bankNameBene
+                                                : paymentDetails.bankName,
                                         beneficiaryName:
                                             paymentDetails.accountName,
                                         destinationAccountNo:
-                                            paymentDetails.accountNumber,
+                                            paymentDetails.accountNumber === ''
+                                                ? paymentDetails.accountNumberBene
+                                                : paymentDetails.accountNumber,
                                         transactionAmount: parseInt(
                                             paymentDetails.amount,
                                             10
@@ -649,12 +664,13 @@ const Payment = () => {
                                 }}
                                 transferAction={(data) => {
                                     setIsLoading(true);
+                                    console;
                                     const paymentData = {
                                         accountId: senderDetails.accountId,
                                         transactionPin: Object.values(data)
                                             .toString()
                                             .replaceAll(',', ''),
-                                        transactions: [
+                                        transactions:
                                             paymentDetails.details?.map(
                                                 (details, index) => {
                                                     return {
@@ -674,13 +690,18 @@ const Payment = () => {
                                                         transactionAmount:
                                                             paymentDetails.amount ===
                                                             ''
-                                                                ? details.amount
-                                                                : paymentDetails.amount,
+                                                                ? parseInt(
+                                                                      details.amount,
+                                                                      10
+                                                                  )
+                                                                : parseInt(
+                                                                      paymentDetails.amount,
+                                                                      10
+                                                                  ),
                                                         narration: ''
                                                     };
                                                 }
                                             )
-                                        ]
                                     };
 
                                     dispatch(getBulkTransfer(paymentData));
@@ -698,6 +719,7 @@ const Payment = () => {
                                     setOverlay(false);
                                     setFormType('');
                                 }}
+                                number={paymentDetails.details.length}
                                 title="Bulk Payment"
                                 amount={paymentDetails.amount}
                             />
@@ -1019,7 +1041,7 @@ const Payment = () => {
                 </PaymentCard>
             </div>
 
-            <PaymentTable title="Payment History" />
+            <PaymentTable title="Payment History" test={count} />
 
             {renderForm()}
         </DashLayout>
