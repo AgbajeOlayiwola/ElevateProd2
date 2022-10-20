@@ -487,6 +487,8 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                         }
                                                         value={
                                                             profileInfo.phoneNumber
+                                                                ? profileInfo.phoneNumber
+                                                                : phoneNumber
                                                         }
                                                     />
                                                 </div>
