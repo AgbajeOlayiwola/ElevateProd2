@@ -49,7 +49,7 @@ const AccountLoading = () => {
         dispatch(newAccountStatusData());
 
         if (accountStatus.message === 'success') {
-            console.log(accountStatus.messages, errorMessages);
+            // console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         } else if (
             newAccountErrorMessage ===
@@ -60,6 +60,20 @@ const AccountLoading = () => {
     }, [accountStatus.messages]);
 
     // console.log(errorMessages);
+    const newUserAccountt = () => {
+        if (
+            errorMessages === 'Bank Account has not been created for this user'
+        ) {
+            console.log(errorMessages);
+            dispatch(newAccountStatusData());
+            setInterval(() => {
+                dispatch(newAccountStatusData());
+            }, 10000);
+        }
+    };
+    useEffect(() => {
+        newUserAccountt();
+    }, [errorMessages]);
 
     return (
         <>

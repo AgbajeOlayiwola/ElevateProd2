@@ -83,6 +83,19 @@ const CorporateAccount = () => {
         newUserAccountt();
     }, [errorMes, accountDone]);
 
+    const newUserCorpAccountt = () => {
+        if (errorMes === 'Bank Account has not been created for this user') {
+            console.log(errorMes);
+            dispatch(newAccountStatusData());
+            setInterval(() => {
+                dispatch(newAccountStatusData());
+            }, 10000);
+        }
+    };
+    useEffect(() => {
+        newUserCorpAccountt();
+    }, [errorMes, accountDone]);
+
     return (
         <>
             <div className={styles.cover}>
