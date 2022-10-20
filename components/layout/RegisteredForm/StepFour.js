@@ -467,18 +467,18 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                         // value={
                                                         //     phones.phoneNumber
                                                         // }
-                                                        {...register(
-                                                            'countryCode_number',
-                                                            {
-                                                                required:
-                                                                    'Country Code is required',
-                                                                minLength: {
-                                                                    value: 9,
-                                                                    message:
-                                                                        'Min length is 9'
-                                                                }
-                                                            }
-                                                        )}
+                                                        // {...register(
+                                                        //     'countryCode_number',
+                                                        //     {
+                                                        //         required:
+                                                        //             'Phone Number is required',
+                                                        //         minLength: {
+                                                        //             value: 9,
+                                                        //             message:
+                                                        //                 'Min length is 9'
+                                                        //         }
+                                                        //     }
+                                                        // )}
                                                         // value={phoneNumber}
                                                         onChange={(e) =>
                                                             setPhoneNumber(
