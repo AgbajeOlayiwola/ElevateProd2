@@ -435,6 +435,7 @@ const Payment = () => {
                         return (
                             <MakePaymentFirst
                                 overlay={overlay}
+                                payload={paymentDetails}
                                 firstTitle="Single Transfer Payment"
                                 isLoading={isLoading}
                                 closeAction={handleClose}
