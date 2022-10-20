@@ -61,9 +61,7 @@ const AccountLoading = () => {
 
     // console.log(errorMessages);
     const newUserAccountt = () => {
-        if (
-            errorMessages === 'Bank Account has not been created for this user'
-        ) {
+        if (errorMessages === 'Pending Creation, Try Again') {
             console.log(errorMessages);
             dispatch(newAccountStatusData());
             setInterval(() => {

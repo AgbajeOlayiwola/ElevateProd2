@@ -46,7 +46,7 @@ const CorporateAccount = () => {
                 if (response.data.message === 'success') {
                     axiosInstance
                         .get(
-                            `https://ellevate-app.herokuapp.com${apiRoutes.corpAccountStatus}`,
+                            `https://ellevate-test.herokuapp.com/bank-account/status`,
                             {
                                 headers: {
                                     'Content-Type': 'application/json',
