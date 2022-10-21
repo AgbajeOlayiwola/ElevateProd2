@@ -123,7 +123,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             }
         }
         setProfileCont(userProfiles);
-    }, []);
+    }, [profile, userProfile]);
     // useEffect(() => {
     //     if (profile !== null) {
     //         if (userProfile !== null) {
@@ -271,7 +271,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     const [activeBtn, setActiveBtn] = useState(true);
     //console.log(test)
-    // console.log(type);
+    console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
