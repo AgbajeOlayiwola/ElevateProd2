@@ -20,7 +20,7 @@ const AccountLoading = () => {
     const [accountInfo, setAccountInfo] = useState('');
     const [profileCont, setProfileCont] = useState([]);
     const [errorT, setError] = useState();
-    const { accountStatus, errorMessages } = useSelector(
+    const { accountStatuss, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
 
@@ -40,38 +40,51 @@ const AccountLoading = () => {
         (state) => state.newUserAccountDets
     );
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     const accountData = {
+    //         affiliateCode: 'ENG',
+    //         currency: 'NGN'
+    //     };
+    //     dispatch(createNewUserAccount(accountData));
+    //     dispatch(newAccountStatusData());
+
+    //     if (accountStatus.message === 'success') {
+    //         // console.log(accountStatus.messages, errorMessages);
+    //         router.push('/Succes');
+    //     } else if (
+    //         newAccountErrorMessage ===
+    //         'Sorry, we could not process your request. Please chat with us to get this sorted.'
+    //     ) {
+    //         setError(newAccountErrorMessage);
+    //     }
+    // }, [accountStatus.messages]);
+
+    // console.log(errorMessages);
+    const newUserAccountt = () => {
         const accountData = {
             affiliateCode: 'ENG',
             currency: 'NGN'
         };
         dispatch(createNewUserAccount(accountData));
         dispatch(newAccountStatusData());
-
-        if (accountStatus.data.message === 'success') {
-            // console.log(accountStatus.messages, errorMessages);
-            router.push('/Succes');
-        } else if (
+        if (
+            errorMessages === 'Pending Creation, Try Again' ||
             newAccountErrorMessage ===
-            'Sorry, we could not process your request. Please chat with us to get this sorted.'
+                'Sorry, we could not process your request. Please chat with us to get this sorted.'
         ) {
-            setError(newAccountErrorMessage);
-        }
-    }, [accountStatus.messages]);
-
-    // console.log(errorMessages);
-    const newUserAccountt = () => {
-        if (errorMessages === 'Pending Creation, Try Again') {
             console.log(errorMessages);
             dispatch(newAccountStatusData());
             setInterval(() => {
                 dispatch(newAccountStatusData());
             }, 10000);
+        } else if (accountStatuss.message === 'success') {
+            // console.log(accountStatus.messages, errorMessages);
+            router.push('/Succes');
         }
     };
     useEffect(() => {
         newUserAccountt();
-    }, [errorMessages]);
+    }, [errorMessages, accountStatuss.message]);
 
     return (
         <>
