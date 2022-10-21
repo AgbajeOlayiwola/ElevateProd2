@@ -105,39 +105,41 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         });
     }, [localState]);
 
+    // useEffect(() => {
+
+    // }, [businessProfile]);
     useEffect(() => {
         dispatch(CompProfile());
         dispatch(loadUserProfile());
         // console.log(profile.data);
-        {
-            if (profile) {
-                profile.data?.map((item) => {
-                    if (item.documentType === 'CAC') {
-                        setFormData({
-                            ...formData,
-                            bussinessName: item.documentData.companyName
-                        });
-                        setBusinessProfile(item.documentData.companyName);
-                    }
-                });
+
+        if (profile) {
+            profile.data?.map((item) => {
+                if (item.documentType === 'CAC') {
+                    setFormData({
+                        ...formData,
+                        bussinessName: item.documentData.companyName
+                    });
+                    setBusinessProfile(item.documentData.companyName);
+                    console.log(businessProfile);
+                    // console.log(formData.businessName);
+                }
+            });
+        }
+
+        if (profile !== null) {
+            if (userProfile !== null) {
+                console.log(userProfile);
+                setProfileCont(userProfile);
+            }
+            if (profile.data[1]) {
+                setBusinessProfile(profile.data[1].documentData);
+            } else {
+                setBusinessProfile('');
             }
         }
-        setProfileCont(userProfiles);
-    }, []);
-    // useEffect(() => {
-    //     if (profile !== null) {
-    //         if (userProfile !== null) {
-    //             console.log(userProfile);
-    //             setProfileCont(userProfile);
-    //         }
-    //         if (profile.data[1]) {
-    //             setBusinessProfile(profile.data[1].documentData);
-    //         } else {
-    //             setBusinessProfile('');
-    //         }
-    //     }
-    //     // setGender(profileCont.gender);
-    // }, [profile, userProfile]);
+        // setGender(profileCont.gender);
+    }, [profile, userProfile]);
 
     useEffect(() => {
         dispatch(businessCategoriesData());
@@ -271,7 +273,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     const [activeBtn, setActiveBtn] = useState(true);
     //console.log(test)
-    // console.log(type);
+    console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
