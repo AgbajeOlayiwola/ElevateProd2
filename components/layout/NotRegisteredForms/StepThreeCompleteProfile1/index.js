@@ -117,26 +117,27 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                             ...formData,
                             bussinessName: item.documentData.companyName
                         });
+                        setBusinessProfile(item.documentData.companyName);
                     }
                 });
             }
         }
         setProfileCont(userProfiles);
     }, []);
-    useEffect(() => {
-        if (profile !== null) {
-            if (userProfile !== null) {
-                console.log(userProfile);
-                setProfileCont(userProfile);
-            }
-            if (profile.data[2]) {
-                setBusinessProfile(profile.data[2].documentData);
-            } else {
-                setBusinessProfile('');
-            }
-        }
-        // setGender(profileCont.gender);
-    }, [profile, userProfile]);
+    // useEffect(() => {
+    //     if (profile !== null) {
+    //         if (userProfile !== null) {
+    //             console.log(userProfile);
+    //             setProfileCont(userProfile);
+    //         }
+    //         if (profile.data[1]) {
+    //             setBusinessProfile(profile.data[1].documentData);
+    //         } else {
+    //             setBusinessProfile('');
+    //         }
+    //     }
+    //     // setGender(profileCont.gender);
+    // }, [profile, userProfile]);
 
     useEffect(() => {
         dispatch(businessCategoriesData());
