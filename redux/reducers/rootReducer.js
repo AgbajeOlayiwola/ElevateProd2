@@ -64,8 +64,9 @@ import changeTransactionPinReducer from './changeTransactionPin.reducer';
 import unfreezeTransactionsReducer from './unfreezeTransactions.reducer';
 import ExistingProfileSetupReducer from './exixtingUserProfile.reducer';
 import transactionFeesReducer from './transactionFees.reducer';
+import logoutReducer from './logout.reducer';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
     countryReducer: countryReducer,
     internationalCountryReducer: internationalCountryReducer,
     languages: languageReducer,
@@ -92,6 +93,7 @@ const rootReducer = combineReducers({
     deleteBeneficiariesReducer: deleteBeneficiariesReducer,
     postBeneficiariesReducer: postBeneficiariesReducer,
     auth: authReducer,
+    logoutReducer: logoutReducer,
     registered: registerReducer,
     profile: profileReducer,
     otp: otpReducer,
@@ -136,5 +138,10 @@ const rootReducer = combineReducers({
     changeTransactionPinReducer,
     completeBusinessprofileReducer
 });
-
+const rootReducer = (state, action) => {
+    if (action.type === 'LOGOUT_START') {
+        return appReducer(undefined, action);
+    }
+    return appReducer(state, action);
+};
 export default rootReducer;

@@ -3,6 +3,7 @@ import {
     internationalCountry,
     languages,
     banks,
+    logout,
     billerCategory,
     billerType,
     billerPlan,
@@ -68,7 +69,7 @@ import {
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import axios from 'axios';
 
 var loginToken = '';
@@ -125,6 +126,24 @@ export const loadussdGen = (code) => (dispatch) => {
         .catch((error) => dispatch(ussdGenLoadError(error.message)));
 };
 //uusdGen actions end
+
+//logout actions
+export const logoutLoadStart = () => ({
+    type: logout.LOGOUT_START
+});
+
+export const logoutAction = () => (dispatch) => {
+    dispatch(logoutLoadStart());
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+
+    if (getCookie('cookieToken') == undefined) {
+        deleteCookie('existingToken');
+    } else {
+        deleteCookie('cookieToken');
+    }
+};
+//logout actions end
 
 //resetPassword actions
 export const resetPasswordLoadStart = () => ({
@@ -787,7 +806,9 @@ export const postInterBankEnquiry = (data) => (dispatch) => {
         .then((response) =>
             dispatch(interBankEnquiryLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(interBankEnquiryLoadError(error.message)));
+        .catch((error) =>
+            dispatch(interBankEnquiryLoadError(error.response.data.message))
+        );
 };
 
 //interBankEnquiry action end
@@ -808,7 +829,7 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
 });
 export const getBalanceEnquiry = (data) => (dispatch) => {
     const cookie = getCookie('cookieToken');
-
+    console.log(cookie);
     dispatch(balanceEnquiryLoadStart());
     axiosInstance
         .post(`${apiRoutes.balanceEnquiry}`, data, {

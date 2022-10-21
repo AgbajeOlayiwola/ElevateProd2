@@ -163,7 +163,7 @@ const Dashboard = () => {
                 <section className={styles.sectionI}>
                     <div className={styles.Tpwh}>
                         <h2 className={styles.transP}>Transactions Today</h2>
-                        {/* <div className={styles.payEco}>
+                        <div className={styles.payEco}>
                             <div className={styles.svgTxt}>
                                 <div className={styles.svgCov}>
                                     <Paylink2 />
@@ -182,7 +182,7 @@ const Dashboard = () => {
                                     <h5 className={styles.h5}>₦24,000,000</h5>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
                         <p>No transactions has been made today.</p>
                     </div>
 

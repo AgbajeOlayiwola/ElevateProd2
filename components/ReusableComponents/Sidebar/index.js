@@ -13,26 +13,22 @@ import SideBarDrop from './sidebarcont';
 import Dropdownicon from './dropdownicon';
 import Innersubnav from './innersubnav';
 import { FaTimes } from 'react-icons/fa';
-import { deleteCookie, getCookie } from 'cookies-next';
+import { logoutAction } from '../../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Sidebar = ({ showSubnav }) => {
+    const dispatch = useDispatch();
+    // const { logout } = useSelector((state) => state.logoutReducer);
     const router = useRouter();
 
     const [Nav, setNav] = useState(false);
     const [subNavTitle, setSubNavTitle] = useState('');
 
     const handleLogOut = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
         if (!localStorage.getItem('user')) {
             router.replace('../Auth/Login');
         }
-
-        if (getCookie('cookieToken') == undefined) {
-            deleteCookie('existingToken');
-        } else {
-            deleteCookie('cookieToken');
-        }
+        dispatch(logoutAction());
     };
 
     // fillColor={router.pathname == '/Dashboard'}
