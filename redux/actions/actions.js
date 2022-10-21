@@ -1276,9 +1276,9 @@ export const newAccountStatusLoadStart = () => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_START
 });
 
-export const newAccountStatusLoadSuccess = (accountStatus) => ({
+export const newAccountStatusLoadSuccess = (accountStatuss) => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_SUCCESS,
-    payload: accountStatus
+    payload: accountStatuss
 });
 
 export const newAccountStatusLoadError = (errorMessages) => ({
