@@ -372,7 +372,7 @@ export const loadAccountPrimary = () => (dispatch) => {
     dispatch(accountPrimaryLoadStart());
 
     const cookie = getCookie('cookieToken');
-
+    console.log(cookie);
     axiosInstance
         .get(`${apiRoutes.accountPrimary}`)
         .then((response) =>
