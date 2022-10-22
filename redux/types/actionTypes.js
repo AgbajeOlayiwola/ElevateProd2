@@ -20,6 +20,12 @@ export const banks = {
     BANK_LOAD_ERROR: 'BANK_LOAD_ERROR'
 };
 //banks action types end
+
+//banks action types
+export const logout = {
+    LOGOUT_START: 'LOGOUT_START'
+};
+//banks action types end
 //biller category action types
 export const billerCategory = {
     BILLERCATEGORY_LOAD_START: 'BILLERCATEGORY_LOAD_START',

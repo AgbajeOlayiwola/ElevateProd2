@@ -71,14 +71,18 @@ const ForeignTransfer = ({
                         <label>Source Account</label>
                         <select name="" id="" {...register('sourceAccount')}>
                             {bankAccounts?.map((accounts, index) => {
-                                return (
-                                    <option
-                                        value={accounts.accountId}
-                                        key={index}
-                                    >
-                                        {accounts.accountNumber}
-                                    </option>
-                                );
+                                if (accounts.currency === 'NGN') {
+                                    return (
+                                        <option
+                                            value={accounts.accountId}
+                                            key={index}
+                                        >
+                                            {accounts.accountNumber}
+                                        </option>
+                                    );
+                                } else {
+                                    return null;
+                                }
                             })}
                         </select>
                     </div>

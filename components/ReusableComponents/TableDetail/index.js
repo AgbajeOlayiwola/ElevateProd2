@@ -8,7 +8,8 @@ const TableDetail = ({
     Bank,
     Dates,
     Status,
-    keys
+    keys,
+    accountNumber
 }) => {
     let newBeneficiary;
     if (Beneficiary === null) {
@@ -27,7 +28,9 @@ const TableDetail = ({
                 </p>
                 <p className={styles.transfer}>{Type}</p>
                 <p className={styles.amount}>{Amount}</p>
-                <p className={styles.bank}>{Bank === null ? 'Null' : Bank}</p>
+                <p className={styles.bank}>
+                    {Bank === null ? 'Null' : `${Bank} - ${accountNumber}`}
+                </p>
                 <p className={styles.date}>{newDate[0]}</p>
                 <p className={styles.status}>{Status}</p>
             </div>

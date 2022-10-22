@@ -5,9 +5,7 @@ import { useForm } from 'react-hook-form';
 import { loadbank, postInterBankEnquiry } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
-import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import Loader from '../Loader';
-import Beneficiary from '../Beneficiary';
 
 const SingleTransfer = ({
     othersaction,
@@ -19,10 +17,35 @@ const SingleTransfer = ({
     beneficiaries,
     payload
 }) => {
-    const [activeBtn, setActiveBtn] = useState(false);
+    const [activeBtn, setActiveBtn] = useState(
+        Object.keys(payload).length !== 0 ? true : false
+    );
     const [bank, setBank] = useState([]);
     const [beneActive, setBeneActive] = useState();
     const [interEnquiry, setInterEnquiry] = useState('');
+    const [accountName, setAccountName] = useState(
+        payload.accountName !== '' ? payload.accountName : ''
+    );
+    const [accountNumber, setAccountNumber] = useState(
+        payload.accountNumber !== ''
+            ? payload.accountNumber
+            : payload.accountNumberBene !== ''
+            ? payload.accountNumberBene
+            : ''
+    );
+    const [bankName, setBankName] = useState(
+        payload.bankName !== ''
+            ? payload.bankName
+            : payload.bankNameBene !== ''
+            ? payload.bankNameBene
+            : ''
+    );
+    const [narration, setNarration] = useState(
+        payload.narration !== '' ? payload.narration : ''
+    );
+    const [amount, setAmount] = useState(
+        payload.amount !== '' ? payload.amount : ''
+    );
     const [search, setSearch] = useState('');
     // const [beneficiaries, setBeneficiaries] = useState([]);
     const dispatch = useDispatch();
@@ -34,11 +57,13 @@ const SingleTransfer = ({
     const interBankEnquiryCheck = () => {
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
+        } else if (errorMessageInterBankEnquiry !== null) {
+            alert(errorMessageInterBankEnquiry);
         }
     };
     useEffect(() => {
         interBankEnquiryCheck();
-    }, [interBankEnquiry]);
+    }, [interBankEnquiry, errorMessageInterBankEnquiry]);
     useEffect(() => {
         dispatch(loadbank('ENG'));
     }, []);
@@ -162,13 +187,16 @@ const SingleTransfer = ({
                                     message: 'Max length is 10'
                                 }
                             })}
+                            value={accountNumber}
                             onInput={(e) => {
+                                setAccountNumber(e.target.value);
                                 if (e.target.value.length === 10) {
                                     const details = {
                                         accountNumber: e.target.value
                                     };
                                     dispatch(postInterBankEnquiry(details));
-                                    console.log();
+                                } else if (e.target.value.length === 0) {
+                                    setInterEnquiry('');
                                 }
                             }}
                             type="number"
@@ -186,6 +214,18 @@ const SingleTransfer = ({
                             {...register('accountName')}
                             type="text"
                             value={beneActive.beneficiaryName}
+                        />
+                        <p className={styles.error}>
+                            {errors?.accountName?.message}
+                        </p>
+                    </div>
+                ) : Object.keys(payload).length !== 0 ? (
+                    <div className={styles.narration}>
+                        <label> Account Name</label>
+                        <input
+                            {...register('accountName')}
+                            type="text"
+                            value={accountName}
                         />
                         <p className={styles.error}>
                             {errors?.accountName?.message}
@@ -224,7 +264,11 @@ const SingleTransfer = ({
                             })}
                             name="bankName"
                         >
-                            <option value="">Select Bank</option>
+                            {Object.keys(payload).length !== 0 ? (
+                                <option value={bankName}>{bankName}</option>
+                            ) : (
+                                <option value="">Select Bank</option>
+                            )}
                             <option value="Ecobank">ECOBANK</option>
                             {bank?.map((bank, index) => {
                                 return (
@@ -255,9 +299,11 @@ const SingleTransfer = ({
                                 message: 'Amount can only be number '
                             }
                         })}
+                        value={amount}
                         type="number"
                         placeholder="5,000,000,000.00"
-                        onChange={(e) => {
+                        onInput={(e) => {
+                            setAmount(e.target.value);
                             if (e?.target.value.length === 0) {
                                 setActiveBtn(false);
                             } else if (e?.target.value.length > 0) {
@@ -278,6 +324,10 @@ const SingleTransfer = ({
                                 message: 'Only Alphabelts allowed'
                             }
                         })}
+                        value={narration}
+                        onInput={(e) => {
+                            setNarration(e.target.value);
+                        }}
                         type="text"
                         placeholder="Enter Narration"
                         name="narration"
