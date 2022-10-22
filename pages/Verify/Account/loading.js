@@ -66,18 +66,23 @@ const AccountLoading = () => {
             currency: 'NGN'
         };
         dispatch(createNewUserAccount(accountData));
-        dispatch(newAccountStatusData());
         if (
-            errorMessages === 'Pending Creation, Try Again' ||
             newAccountErrorMessage ===
-                'Sorry, we could not process your request. Please chat with us to get this sorted.'
+            'Sorry, we could not process your request. Please chat with us to get this sorted.'
+        ) {
+            setError(newAccountErrorMessage);
+        } else if (
+            errorMessages === 'Pending Creation, Try Again' ||
+            errorMessages === 'Bank Account has not been created for this user'
         ) {
             console.log(errorMessages);
             dispatch(newAccountStatusData());
             setInterval(() => {
                 dispatch(newAccountStatusData());
             }, 10000);
-        } else if (accountStatuss.message === 'success') {
+        }
+
+        if (accountStatuss.message === 'success') {
             // console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         }
