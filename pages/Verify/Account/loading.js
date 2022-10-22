@@ -73,13 +73,14 @@ const AccountLoading = () => {
                 'Sorry, we could not process your request. Please chat with us to get this sorted.'
         ) {
             console.log(errorMessages);
-            dispatch(newAccountStatusData());
+            // dispatch(newAccountStatusData());
             setInterval(() => {
                 dispatch(newAccountStatusData());
+                if (accountStatuss.message === 'success') {
+                    // console.log(accountStatus.messages, errorMessages);
+                    router.push('/Succes');
+                }
             }, 10000);
-        } else if (accountStatuss.message === 'success') {
-            // console.log(accountStatus.messages, errorMessages);
-            router.push('/Succes');
         }
     };
     useEffect(() => {
