@@ -1,5 +1,6 @@
 import {
     country,
+    internationalCountry,
     languages,
     banks,
     billerCategory,
@@ -13,6 +14,7 @@ import {
     interBankEnquiry,
     balanceEnquiry,
     transactionHistory,
+    transactionFees,
     transactionElevate,
     postBeneficiaries,
     deleteBeneficiaries,
@@ -248,6 +250,34 @@ export const loadCountry = () => (dispatch) => {
 };
 //country actions end
 
+//internationalCountry actions
+export const internationalCountryLoadStart = () => ({
+    type: internationalCountry.INTERNATIONALCOUNTRY_LOAD_START
+});
+
+export const internationalCountryLoadSuccess = (countries) => ({
+    type: internationalCountry.INTERNATIONALCOUNTRY_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const internationalCountryLoadError = (errorMessage) => ({
+    type: internationalCountry.INTERNATIONALCOUNTRY_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const loadinternationalCountry = () => (dispatch) => {
+    dispatch(internationalCountryLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.internationalCountries}`)
+        .then((response) =>
+            dispatch(internationalCountryLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(internationalCountryLoadError(error.response.message))
+        );
+};
+//internationalCountry actions end
+
 //freezeTransactions actions
 export const freezeTransactionsLoadStart = () => ({
     type: freezeTransactions.FREEZETRANSACTIONS_LOAD_START
@@ -321,13 +351,9 @@ export const accountPrimaryLoadError = (errorMessage) => ({
 
 export const loadAccountPrimary = () => (dispatch) => {
     dispatch(accountPrimaryLoadStart());
-    let cookie;
 
-    if (getCookie('cookieToken') == undefined) {
-        cookie = getCookie('existingToken');
-    } else {
-        cookie = getCookie('cookieToken');
-    }
+    const cookie = getCookie('cookieToken');
+
     axiosInstance
         .get(`${apiRoutes.accountPrimary}`)
         .then((response) =>
@@ -781,13 +807,8 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
     payload: balanceEnquiryerror
 });
 export const getBalanceEnquiry = (data) => (dispatch) => {
-    let cookie;
+    const cookie = getCookie('cookieToken');
 
-    if (getCookie('cookieToken') == undefined) {
-        cookie = getCookie('existingToken');
-    } else {
-        cookie = getCookie('cookieToken');
-    }
     dispatch(balanceEnquiryLoadStart());
     axiosInstance
         .post(`${apiRoutes.balanceEnquiry}`, data, {
@@ -829,6 +850,30 @@ export const getTransactionHistory = () => (dispatch) => {
 };
 
 //transactionHistory action end
+
+//transactionFees action
+export const transactionFeesLoadStart = () => ({
+    type: transactionFees.TRANSACTIONFEES_LOAD_START
+});
+
+export const transactionFeesLoadSuccess = (bill) => ({
+    type: transactionFees.TRANSACTIONFEES_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const transactionFeesLoadError = (transactionFeeserror) => ({
+    type: transactionFees.TRANSACTIONFEES_LOAD_ERROR,
+    payload: transactionFeeserror
+});
+export const getTransactionFees = (data) => (dispatch) => {
+    dispatch(transactionFeesLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.transactionFees}`, data)
+        .then((response) => dispatch(transactionFeesLoadSuccess(response.data)))
+        .catch((error) => dispatch(transactionFeesLoadError(error.message)));
+};
+
+//transactionFees action end
 
 //transactionElevate action
 export const transactionElevateLoadStart = () => ({
@@ -950,10 +995,10 @@ export const verifyCurrencyLoadError = (verifyCurrencyerror) => ({
     type: verifyCurrency.VERIFYCURRENCY_LOAD_ERROR,
     payload: verifyCurrencyerror
 });
-export const getVerifyCurrency = (data) => (dispatch) => {
+export const getVerifyCurrency = (code) => (dispatch) => {
     dispatch(verifyCurrencyLoadStart());
     axiosInstance
-        .post(`${apiRoutes.verifyCurrency}`, data)
+        .get(`${apiRoutes.verifyCurrency}?country=${code}`)
         .then((response) =>
             dispatch(verifyCurrencyLoadSuccess(response.data.data))
         )
@@ -1231,9 +1276,9 @@ export const newAccountStatusLoadStart = () => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_START
 });
 
-export const newAccountStatusLoadSuccess = (accountStatus) => ({
+export const newAccountStatusLoadSuccess = (accountStatuss) => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_SUCCESS,
-    payload: accountStatus
+    payload: accountStatuss
 });
 
 export const newAccountStatusLoadError = (errorMessages) => ({

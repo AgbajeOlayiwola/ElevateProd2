@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import countryReducer from './country.reducer';
+import internationalCountryReducer from './internationalCountry.reducer';
 import languageReducer from './language.reducer';
 import banksReducer from './banks.reducer';
 import billerCategoryReducer from './billerCategory.reducer';
@@ -61,10 +62,12 @@ import bankStatementReducer from './bankStatement.reducer';
 import freezeTransactionsReducer from './freezeTransactions.reducer';
 import changeTransactionPinReducer from './changeTransactionPin.reducer';
 import unfreezeTransactionsReducer from './unfreezeTransactions.reducer';
-import ExistingProfileSetupReducer from './existingProfileSetup';
+import ExistingProfileSetupReducer from './exixtingUserProfile.reducer';
+import transactionFeesReducer from './transactionFees.reducer';
 
 const rootReducer = combineReducers({
     countryReducer: countryReducer,
+    internationalCountryReducer: internationalCountryReducer,
     languages: languageReducer,
     banksReducer: banksReducer,
     billerCategoryReducer: billerCategoryReducer,
@@ -76,6 +79,7 @@ const rootReducer = combineReducers({
     internalBankReducer: internalBankReducer,
     interBankReducer: interBankReducer,
     transactionHistoryReducer: transactionHistoryReducer,
+    transactionFeesReducer: transactionFeesReducer,
     transactionElevateReducer: transactionElevateReducer,
     interBankEnquiryReducer: interBankEnquiryReducer,
     balanceEnquiryReducer: balanceEnquiryReducer,
@@ -125,14 +129,12 @@ const rootReducer = combineReducers({
     resetPasswordReducer: resetPasswordReducer,
     bankStatementReducer: bankStatementReducer,
     resetOtpReducer: resetOtpReducer,
-    ExistingProfileSetupReducer:ExistingProfileSetupReducer,
+    ExistingProfileSetupReducer: ExistingProfileSetupReducer,
     completeBusinessprofileReducer,
     unfreezeTransactionsReducer,
     freezeTransactionsReducer,
     changeTransactionPinReducer,
-    completeBusinessprofileReducer,
-  
-
+    completeBusinessprofileReducer
 });
 
 export default rootReducer;

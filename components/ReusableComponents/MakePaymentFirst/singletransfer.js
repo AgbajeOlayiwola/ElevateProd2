@@ -16,7 +16,8 @@ const SingleTransfer = ({
     scheduleLater,
     isLoading,
     bankAccounts,
-    beneficiaries
+    beneficiaries,
+    payload
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [bank, setBank] = useState([]);

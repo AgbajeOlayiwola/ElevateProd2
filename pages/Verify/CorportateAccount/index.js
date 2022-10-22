@@ -18,13 +18,7 @@ const CorporateAccount = () => {
     const router = useRouter();
 
     const newUserAccountt = () => {
-        let cookie;
-        if (getCookie('cookieToken') == undefined) {
-            cookie = getCookie('existingToken');
-        } else {
-            cookie = getCookie('cookieToken');
-        }
-
+        g;
         const accountData = {
             affiliateCode: 'ENG',
             currency: 'NGN'

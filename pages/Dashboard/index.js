@@ -30,6 +30,7 @@ import Ussd from '../../components/ReusableComponents/UssdSvg';
 import SingleTrans from '../../components/ReusableComponents/SingleTransSvg';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import Link from 'next/link';
+import Paylink2 from '../../components/ReusableComponents/PaylinkSvg/paylink';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -61,6 +62,7 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     const [outType, setOutType] = useState();
     const [time, setTime] = useState();
+    const [rangeDate, setRangeDate] = useState();
     const [accountUpgrade, setAccountUpgrade] = useState(false);
     const [balance, setBalance] = useState('₦0.00');
     const [tableDetails, setTableDetails] = useState([]);
@@ -105,27 +107,24 @@ const Dashboard = () => {
         let year = newDate.getFullYear();
         setTime(`${year}-${month < 10 ? `0${month}` : `${month}`}-${date}`);
     };
+    const getDateXDaysAgo = (numOfDays, date = new Date()) => {
+        const daysAgo = new Date();
 
-    // const settings = {
-    //     className: 'center',
-    //     centerMode: true,
-    //     infinite: true,
-    //     centerPadding: '40px 0px 0px 0px',
-    //     slidesToShow: 1,
-    //     autoplay: true,
-    //     autoplaySpeed: 2000,
-    //     speed: 500,
-    //     nextArrow: <SampleNextArrow />,
-    //     prevArrow: <SamplePrevArrow />,
-    //     autoplay: true,
-    //     autoplaySpeed: 2000,
-    //     cssEase: 'linear'
-    // };
+        daysAgo.setDate(date.getDate() - numOfDays);
+        let dates = daysAgo.getDate();
+        let month = daysAgo.getMonth() + 1;
+        let year = daysAgo.getFullYear();
+        setRangeDate(
+            `${year}-${month < 10 ? `0${month}` : `${month}`}-${dates}`
+        );
+    };
+
     useEffect(() => {
         dispatch(loadAccountPrimary());
         dispatch(loadUserProfile());
         dispatch(getTransactionElevate());
         getCurrentDate();
+        getDateXDaysAgo(2);
     }, []);
 
     useEffect(() => {
@@ -167,7 +166,7 @@ const Dashboard = () => {
                         {/* <div className={styles.payEco}>
                             <div className={styles.svgTxt}>
                                 <div className={styles.svgCov}>
-                                    <Paylink />
+                                    <Paylink2 />
                                 </div>
                                 <div>
                                     <p className={styles.payp}>Paylink</p>
@@ -329,9 +328,10 @@ const Dashboard = () => {
                                     ?.filter((item) => {
                                         const newDate =
                                             item.transactionDate.split('T');
-                                        if (newDate[0].includes(time)) {
-                                            return item;
-                                        }
+                                        return (
+                                            newDate[0] >= rangeDate &&
+                                            newDate[0] <= time
+                                        );
                                     })
                                     ?.map((item, index) => {
                                         const formatter = new Intl.NumberFormat(
@@ -346,8 +346,13 @@ const Dashboard = () => {
                                             formatter.format(
                                                 item.transactionAmount
                                             );
-                                        const newBeneficiary =
-                                            item.receiversName.split(' ');
+                                        let newBeneficiary;
+                                        if (item.receiversName === null) {
+                                            newBeneficiary = '';
+                                        } else {
+                                            newBeneficiary =
+                                                item?.receiversName?.split(' ');
+                                        }
                                         return (
                                             <div key={index}>
                                                 <div

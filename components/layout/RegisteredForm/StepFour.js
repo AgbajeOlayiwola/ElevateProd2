@@ -680,6 +680,10 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                 }
                                                 value={regNo}
                                             />
+
+                                            <p className={styles.error}>
+                                                {errors.rcNumber?.message}
+                                            </p>
                                         </div>
                                         <div
                                             className={styles.existingUserCont}
@@ -718,10 +722,10 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                         type="number"
                                                         placeholder="812 345 6789"
                                                         {...register(
-                                                            'countryCode_number',
+                                                            'phoneNumber',
                                                             {
                                                                 required:
-                                                                    'Country Code is required',
+                                                                    'Phone Number is required',
                                                                 minLength: {
                                                                     value: 9,
                                                                     message:
@@ -741,6 +745,9 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                     />
                                                 </div>
                                             </div>
+                                            <p className={styles.error}>
+                                                {errors.phoneNumber?.message}
+                                            </p>
                                         </div>
                                         <div
                                             className={styles.existingUserCont}

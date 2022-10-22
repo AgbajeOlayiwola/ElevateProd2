@@ -18,8 +18,8 @@ const setTransactionPin = '/account-upgrade/transaction-pin/set';
 const changeTransactionPin = '/users/transaction-pin';
 const transactionElevate = '/transactions';
 const bulkTransfer = '/payment/bulk-transfer';
-const verifyBank = '/transfer/international/validate-bank';
-const verifyCurrency = '/transfer/international/currency';
+const verifyBank = '/payment/international-transfer/validate-bank';
+const verifyCurrency = '/payment/international-tranfer/allowed-currency';
 const internationalTransfer = '/transfer/international';
 const beneficiaries = '/beneficiaries';
 const deleteBeneficiaries = '/beneficiaries/delete/';
@@ -51,6 +51,7 @@ const businessCategories = '/business-categories';
 const states = '/lga';
 const cardLogin = '/authentication/register/card';
 const banksAccounts = '/bank-account';
+const transactionFees = '/transactions/transaction-fees/inter-bank';
 const uploadUtilityDocument = '/account-upgrade/utility-document/upload';
 const uploadIdentificationDoc =
     '/account-upgrade/identification-document/upload';
@@ -69,6 +70,7 @@ const freezeTransactions = '/users/freeze-transactions';
 const unfreezeTransactions = '/users/unfreeze-transactions';
 const businessNameCac = '/business/name';
 const verifyCac = '/document-verification/cac';
+const internationalCountries = '/international-countries';
 export default {
     getBanks,
     getCountries,
@@ -138,6 +140,8 @@ export default {
     freezeTransactions,
     unfreezeTransactions,
     resetOtp,
+    transactionFees,
     businessNameCac,
+    internationalCountries,
     verifyCac
 };

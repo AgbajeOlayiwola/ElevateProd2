@@ -5,6 +5,13 @@ export const country = {
     COUNTRY_LOAD_ERROR: 'COUNTRY_LOAD_ERROR'
 };
 //country action types end
+//internationalCountry action types
+export const internationalCountry = {
+    INTERNATIONALCOUNTRY_LOAD_START: 'INTERNATIONALCOUNTRY_LOAD_START',
+    INTERNATIONALCOUNTRY_LOAD_SUCCESS: 'INTERNATIONALCOUNTRY_LOAD_SUCCESS',
+    INTERNATIONALCOUNTRY_LOAD_ERROR: 'INTERNATIONALCOUNTRY_LOAD_ERROR'
+};
+//country action types end
 
 //banks action types
 export const banks = {
@@ -537,6 +544,14 @@ export const uploadIdDocType = {
     GET_ID_DOCUMENTATION_ERROR: 'GET_ID_DOCUMENTATION_ERROR'
 };
 //IDENTIFICATION DOCTYPE ENDS
+
+//Transaction fees STARTE
+export const transactionFees = {
+    TRANSACTIONFEES_LOAD_START: 'TRANSACTIONFEES_LOAD_START',
+    TRANSACTIONFEES_LOAD_SUCCESS: 'TRANSACTIONFEES_LOAD_SUCCESS',
+    TRANSACTIONFEES_LOAD_ERROR: 'TRANSACTIONFEES_LOAD_ERROR'
+};
+//Transaction fees ENDS
 
 //MEMART DOC TYPE STARTE
 export const uploadMemartType = {
