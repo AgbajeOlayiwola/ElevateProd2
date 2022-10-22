@@ -57,9 +57,6 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-    console.log(number);
-    console.log(indexNumber);
-    console.log(interEnquiry);
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
