@@ -42,15 +42,14 @@ a {
 * {
     box-sizing: border-box;
 }
-label{
+label {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
 
-font-family: 'Inter';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 19px;
-
-color: #3E3E3E;
+    color: #3e3e3e;
 }
 select {
     border-radius: var(--global-select-borderRadius);
@@ -76,7 +75,7 @@ input {
     padding: var(--global-inputtext-padding);
     /* border-color: var(--global-select-borderColor); */
     border: 1px solid #dbdbdb;
-    color: var(--global-select-color);
+    color: var(--global-select-color) !important;
     position: relative;
     width: 100%;
     font-size: 14px;

@@ -3,6 +3,7 @@ import {
     internationalCountry,
     languages,
     banks,
+    logout,
     billerCategory,
     billerType,
     billerPlan,
@@ -68,7 +69,7 @@ import {
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 import axios from 'axios';
 
 var loginToken = '';
@@ -125,6 +126,24 @@ export const loadussdGen = (code) => (dispatch) => {
         .catch((error) => dispatch(ussdGenLoadError(error.message)));
 };
 //uusdGen actions end
+
+//logout actions
+export const logoutLoadStart = () => ({
+    type: logout.LOGOUT_START
+});
+
+export const logoutAction = () => (dispatch) => {
+    dispatch(logoutLoadStart());
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+
+    if (getCookie('cookieToken') == undefined) {
+        deleteCookie('existingToken');
+    } else {
+        deleteCookie('cookieToken');
+    }
+};
+//logout actions end
 
 //resetPassword actions
 export const resetPasswordLoadStart = () => ({
@@ -353,17 +372,14 @@ export const loadAccountPrimary = () => (dispatch) => {
     dispatch(accountPrimaryLoadStart());
 
     const cookie = getCookie('cookieToken');
-
     axiosInstance
-        .get(`${apiRoutes.accountPrimary}`)
-        .then((response) =>
-            dispatch(accountPrimaryLoadSuccess(response.data), {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${cookie}`
-                }
-            })
-        )
+        .get(`${apiRoutes.accountPrimary}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => dispatch(accountPrimaryLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(accountPrimaryLoadError(error.response.message))
         );
@@ -787,7 +803,9 @@ export const postInterBankEnquiry = (data) => (dispatch) => {
         .then((response) =>
             dispatch(interBankEnquiryLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(interBankEnquiryLoadError(error.message)));
+        .catch((error) =>
+            dispatch(interBankEnquiryLoadError(error.response.data.message))
+        );
 };
 
 //interBankEnquiry action end
@@ -808,7 +826,6 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
 });
 export const getBalanceEnquiry = (data) => (dispatch) => {
     const cookie = getCookie('cookieToken');
-
     dispatch(balanceEnquiryLoadStart());
     axiosInstance
         .post(`${apiRoutes.balanceEnquiry}`, data, {
@@ -1941,7 +1958,9 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
             dispatch(identificationDocSuccess(response.data.message));
             console.log(response);
         })
-        .catch((error) => dispatch(identificationDocError(error.response)));
+        .catch((error) =>
+            dispatch(identificationDocError(error.response.data.message))
+        );
 };
 
 //upload identification Documentation end

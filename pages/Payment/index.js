@@ -1041,14 +1041,14 @@ const Payment = () => {
                             </div>
                             <p className={styles.avail}>Available Balance</p>
                         </div>
-                        <div className={styles.balanceButtons}>
+                        {/* <div className={styles.balanceButtons}>
                             <div className={styles.first}>
                                 <p>Scheduled Payments</p>
                             </div>
                             <div className={styles.second}>
                                 <p>Repeat Payments</p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
