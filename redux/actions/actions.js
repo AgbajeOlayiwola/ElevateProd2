@@ -372,17 +372,14 @@ export const loadAccountPrimary = () => (dispatch) => {
     dispatch(accountPrimaryLoadStart());
 
     const cookie = getCookie('cookieToken');
-    console.log(cookie);
     axiosInstance
-        .get(`${apiRoutes.accountPrimary}`)
-        .then((response) =>
-            dispatch(accountPrimaryLoadSuccess(response.data), {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${cookie}`
-                }
-            })
-        )
+        .get(`${apiRoutes.accountPrimary}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => dispatch(accountPrimaryLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(accountPrimaryLoadError(error.response.message))
         );
@@ -829,7 +826,6 @@ export const balanceEnquiryLoadError = (balanceEnquiryerror) => ({
 });
 export const getBalanceEnquiry = (data) => (dispatch) => {
     const cookie = getCookie('cookieToken');
-    console.log(cookie);
     dispatch(balanceEnquiryLoadStart());
     axiosInstance
         .post(`${apiRoutes.balanceEnquiry}`, data, {
@@ -1962,7 +1958,9 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
             dispatch(identificationDocSuccess(response.data.message));
             console.log(response);
         })
-        .catch((error) => dispatch(identificationDocError(error.response)));
+        .catch((error) =>
+            dispatch(identificationDocError(error.response.data.message))
+        );
 };
 
 //upload identification Documentation end

@@ -5,9 +5,7 @@ import { useForm } from 'react-hook-form';
 import { loadbank, postInterBankEnquiry } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
-import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import Loader from '../Loader';
-import Beneficiary from '../Beneficiary';
 
 const SingleTransfer = ({
     othersaction,
@@ -197,6 +195,8 @@ const SingleTransfer = ({
                                         accountNumber: e.target.value
                                     };
                                     dispatch(postInterBankEnquiry(details));
+                                } else if (e.target.value.length === 0) {
+                                    setInterEnquiry('');
                                 }
                             }}
                             type="number"

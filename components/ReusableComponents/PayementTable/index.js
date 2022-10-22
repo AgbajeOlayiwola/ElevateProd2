@@ -128,6 +128,8 @@ const PaymentTable = ({ title, test }) => {
                                   Bank={items.destinationBank}
                                   Dates={items.transactionDate}
                                   Status={items.transactionStatus}
+                                  accountNumber={items.destinationAccountNumber}
+                                  //   phoneNumber={}
                               />
                           );
                       })}

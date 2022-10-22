@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadbank } from '../../../redux/actions/actions';
+import { loadbank, postInterBankEnquiry } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import PlusSvg from '../ReusableSvgComponents/PlusSvg';
@@ -11,12 +11,38 @@ import Beneficiary from '../Beneficiary';
 const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [diffAmount, setDiffAmount] = useState(false);
+    const [interEnquiry, setInterEnquiry] = useState([]);
+    const [indexNumber, setIndex] = useState(0);
     const [bank, setBank] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
-    const count = 0;
+    const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
+        (state) => state.interBankEnquiryReducer
+    );
+
     const [number, setNumber] = useState([1]);
+
     useEffect(() => {}, [number]);
+    const interBankEnquiryCheck = () => {
+        if (interBankEnquiry !== null) {
+            // setInterEnquiry((arr) => [...arr, interBankEnquiry]);
+            // number.splice(index, 1, interBankEnquiry);
+            const newState = number.map((e, index) => {
+                console.log(index);
+                if (indexNumber === index) {
+                    return interBankEnquiry;
+                } else {
+                    return e;
+                }
+            });
+            setNumber(newState);
+        } else if (errorMessageInterBankEnquiry !== null) {
+            alert(errorMessageInterBankEnquiry);
+        }
+    };
+    useEffect(() => {
+        interBankEnquiryCheck();
+    }, [interBankEnquiry, errorMessageInterBankEnquiry]);
 
     useEffect(() => {
         dispatch(loadbank('ENG'));
@@ -31,6 +57,9 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
         handleSubmit,
         formState: { errors }
     } = useForm();
+    console.log(number);
+    console.log(indexNumber);
+    console.log(interEnquiry);
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
@@ -75,6 +104,21 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
                                                 }
                                             }
                                         )}
+                                        onInput={(e) => {
+                                            // setAccountNumber(e.target.value);
+                                            if (e.target.value.length === 10) {
+                                                const details = {
+                                                    accountNumber:
+                                                        e.target.value
+                                                };
+                                                setIndex(index);
+                                                dispatch(
+                                                    postInterBankEnquiry(
+                                                        details
+                                                    )
+                                                );
+                                            }
+                                        }}
                                         name={`${fieldName}.accountNumber`}
                                     />
                                 </div>
@@ -103,6 +147,21 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
                                     </select>
                                 </div>
                             </div>
+                            <div className={styles.narration}>
+                                <label> Account Name</label>
+                                <input
+                                    {...register(`${fieldName}.accountName`, {
+                                        value: e.accountName
+                                    })}
+                                    type="text"
+                                    value={e.accountName}
+                                    name={`${fieldName}.accountName`}
+                                />
+                                <p className={styles.error}>
+                                    {errors?.accountNumber?.message}
+                                </p>
+                            </div>
+
                             {diffAmount ? (
                                 <div className={styles.amountDiv}>
                                     <label className={styles.bulkLabel}>
@@ -135,7 +194,6 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
                             <div
                                 className={styles.plus}
                                 onClick={() => {
-                                    console.log(number.length);
                                     if (
                                         number.length === 10 ||
                                         number.length > 10
@@ -207,7 +265,6 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
                             <input
                                 type="checkbox"
                                 onChange={(e) => {
-                                    console.log(e.target.checked);
                                     if (e.target.checked) {
                                         setDiffAmount(true);
                                         setActiveBtn(true);

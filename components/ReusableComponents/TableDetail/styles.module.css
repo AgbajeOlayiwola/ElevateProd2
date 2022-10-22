@@ -27,17 +27,17 @@
 .TableDetailBody .amount {
     font-weight: 700;
     color: #455a64;
-    width: 15%;
+    width: 18%;
 }
 
 .bank {
-    width: 15%;
+    width: 22%;
 }
 
 .date {
-    width: 15%;
+    width: 10%;
 }
 
 .status {
-    width: 15%;
+    width: 10%;
 }

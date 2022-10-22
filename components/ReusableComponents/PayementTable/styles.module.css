@@ -102,12 +102,24 @@
     width: 25%;
 }
 
-.type,
-.amount,
-.bank,
-.date,
-.status {
+.type {
     width: 15%;
+}
+
+.amount {
+    width: 18%;
+}
+
+.status {
+    width: 10%;
+}
+
+.bank {
+    width: 22%;
+}
+
+.date {
+    width: 10%;
 }
 
 .paginationBtns {
