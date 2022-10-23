@@ -139,7 +139,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             }
         }
         // setGender(profileCont.gender);
-    }, [businessCategories]);
+    }, [businessCategories, business]);
 
     useEffect(() => {
         dispatch(businessCategoriesData());
