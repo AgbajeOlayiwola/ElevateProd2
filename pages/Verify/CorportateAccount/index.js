@@ -18,7 +18,6 @@ const CorporateAccount = () => {
     const router = useRouter();
 
     const newUserAccountt = () => {
-        g;
         const accountData = {
             affiliateCode: 'ENG',
             currency: 'NGN'
@@ -78,12 +77,20 @@ const CorporateAccount = () => {
     }, [errorMes, accountDone]);
 
     const newUserCorpAccountt = () => {
-        if (errorMes === 'Bank Account has not been created for this user') {
+        if (
+            errorMes === 'Pending Creation, Try Again' ||
+            errorMes === 'Bank Account has not been created for this user'
+        ) {
             console.log(errorMes);
             dispatch(newAccountStatusData());
             setInterval(() => {
                 dispatch(newAccountStatusData());
             }, 10000);
+        }
+
+        if (accountDone.message === 'success') {
+            // console.log(accountStatus.messages, errorMessages);
+            router.push('/Succes');
         }
     };
     useEffect(() => {
