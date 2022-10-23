@@ -31,6 +31,7 @@ import SingleTrans from '../../components/ReusableComponents/SingleTransSvg';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import Link from 'next/link';
 import Paylink2 from '../../components/ReusableComponents/PaylinkSvg/paylink';
+import AccountUpgrade from '../AccountUpgrade';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -60,10 +61,11 @@ function SamplePrevArrow(props) {
 
 const Dashboard = () => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const [outType, setOutType] = useState();
     const [time, setTime] = useState();
     const [rangeDate, setRangeDate] = useState();
-    const [accountUpgrade, setAccountUpgrade] = useState(false);
+    const [accountUpgrade, setAccountUpgrade] = useState(true);
     const [balance, setBalance] = useState('₦0.00');
     const [tableDetails, setTableDetails] = useState([]);
     const [userProfileData, setUserProfileData] = useState([]);
@@ -144,11 +146,13 @@ const Dashboard = () => {
         if (userProfile !== null) {
             setUserProfileData(userProfile);
             if (userProfileData.isUpgradedAccount === false) {
-                setAccountUpgrade(true);
+                router.push('/AccountUpgrade');
             } else if (userProfileData.isUpgradedAccount === true) {
                 setAccountUpgrade(false);
             }
         }
+
+        // console.log('upgrade check', accountUpgrade);
     }, [userProfile]);
     useEffect(() => {
         if (transactionElevate !== null) {
@@ -326,8 +330,9 @@ const Dashboard = () => {
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate =
-                                            item.transactionDate.split('T');
+                                        const newDate = item.transactionDate.split(
+                                            'T'
+                                        );
                                         return (
                                             newDate[0] >= rangeDate &&
                                             newDate[0] <= time
@@ -342,16 +347,16 @@ const Dashboard = () => {
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount =
-                                            formatter.format(
-                                                item.transactionAmount
-                                            );
+                                        const formattedAmount = formatter.format(
+                                            item.transactionAmount
+                                        );
                                         let newBeneficiary;
                                         if (item.receiversName === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary =
-                                                item?.receiversName?.split(' ');
+                                            newBeneficiary = item?.receiversName?.split(
+                                                ' '
+                                            );
                                         }
                                         return (
                                             <div key={index}>
@@ -459,17 +464,7 @@ const Dashboard = () => {
                     </div> */}
                 </section>
             </div>
-            {accountUpgrade ? (
-                <PaymentSuccess
-                    overlay="true"
-                    error="Account Upgrade is important"
-                    statusbar="error"
-                    action={() => {
-                        setAccountUpgrade(false);
-                    }}
-                    text="Close"
-                />
-            ) : null}
+            {/* {accountUpgrade ? <h1>sawdrftyu</h1> : null} */}
         </DashLayout>
     );
 };

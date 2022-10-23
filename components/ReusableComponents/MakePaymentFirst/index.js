@@ -88,6 +88,7 @@ const MakePaymentFirst = ({
                             firstTitle={firstTitle}
                             buttonText={buttonText}
                             bankAccounts={bankAccount}
+                            payload={payload}
                         />
                     ) : (
                         <BillPayment
