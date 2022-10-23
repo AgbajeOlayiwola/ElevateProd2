@@ -26,9 +26,11 @@ const Sidebar = ({ showSubnav }) => {
     const [subNavTitle, setSubNavTitle] = useState('');
 
     const handleLogOut = () => {
+        dispatch(logoutAction());
         if (!localStorage.getItem('user')) {
             router.replace('../Auth/Login');
         }
+<<<<<<< HEAD
         localStorage.removeItem('user');
         localStorage.removeItem('token');
 
@@ -37,6 +39,8 @@ const Sidebar = ({ showSubnav }) => {
         } else {
             deleteCookie('cookieToken');
         }
+=======
+>>>>>>> 917df78d5de6ff188a16a8046d4a6ffe281350c5
     };
 
     // fillColor={router.pathname == '/Dashboard'}
