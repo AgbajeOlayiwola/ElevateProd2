@@ -638,37 +638,9 @@ const Payment = () => {
                                 firstTitle="Bulk Payments"
                                 closeAction={handleClose}
                                 buttonText="Send Now"
+                                payload={paymentDetails.details}
                                 action={(data) => {
-                                    // const enquiry1 = {
-                                    //     destinationBankCode: data.bankName1,
-                                    //     beneficiaryAccountNo:
-                                    //         data.accountNumber1
-                                    // };
-                                    // dispatch(postInterBankEnquiry(enquiry1));
-                                    // const enquiry2 = {
-                                    //     destinationBankCode: data.bankName2,
-                                    //     beneficiaryAccountNo:
-                                    //         data.accountNumber2
-                                    // };
-                                    // dispatch(postInterBankEnquiry(enquiry1));
-                                    // if (
-                                    //     paymentDetails.accountNumber3 !== '' &&
-                                    //     paymentDetails.bankName3 !== ''
-                                    // ) {
-                                    //     const enquiry3 = {
-                                    //         destinationBankCode: data.bankName3,
-                                    //         beneficiaryAccountNo:
-                                    //             data.accountNumber3
-                                    //     };
-                                    //     dispatch(
-                                    //         postInterBankEnquiry(enquiry3)
-                                    //     );
-                                    // }
-                                    // dispatch(postInterBankEnquiry(enquiry1));
-                                    // dispatch(postInterBankEnquiry(enquiry2));
-
                                     setPaymentDetails(data);
-
                                     console.log(data);
                                     setCount(count + 1);
                                 }}

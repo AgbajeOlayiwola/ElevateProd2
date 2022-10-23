@@ -908,8 +908,14 @@ export const transactionElevateLoadError = (transactionElevateerror) => ({
 });
 export const getTransactionElevate = () => (dispatch) => {
     dispatch(transactionElevateLoadStart());
+    const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`${apiRoutes.transactionElevate}`)
+        .get(`${apiRoutes.transactionElevate}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(transactionElevateLoadSuccess(response.data.data))
         )

@@ -8,7 +8,13 @@ import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import PlusSvg from '../ReusableSvgComponents/PlusSvg';
 import Beneficiary from '../Beneficiary';
 
-const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
+const BulkTransfer = ({
+    action,
+    firstTitle,
+    buttonText,
+    bankAccounts,
+    payload
+}) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [diffAmount, setDiffAmount] = useState(false);
     const [interEnquiry, setInterEnquiry] = useState([]);
@@ -19,8 +25,11 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
-
-    const [number, setNumber] = useState([1]);
+    console.log(payload);
+    const [number, setNumber] = useState(
+        // payload !== undefined ? payload :
+        [1]
+    );
 
     useEffect(() => {}, [number]);
     const interBankEnquiryCheck = () => {
@@ -101,6 +110,11 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
                                                 }
                                             }
                                         )}
+                                        // value={
+                                        //     payload !== undefined
+                                        //         ? e.accountNumber
+                                        //         : null
+                                        // }
                                         onInput={(e) => {
                                             // setAccountNumber(e.target.value);
                                             if (e.target.value.length === 10) {
@@ -129,7 +143,16 @@ const BulkTransfer = ({ action, firstTitle, buttonText, bankAccounts }) => {
                                         })}
                                         name={`${fieldName}.bankName`}
                                     >
-                                        <option value="">Select Bank</option>
+                                        {payload !== undefined ? (
+                                            <option value={e.bankName}>
+                                                {e.bankName}
+                                            </option>
+                                        ) : (
+                                            <option value="">
+                                                Select Bank
+                                            </option>
+                                        )}
+
                                         <option value="Ecobank">ECOBANK</option>
                                         {banks?.map((item, index) => {
                                             return (

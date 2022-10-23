@@ -25,10 +25,10 @@ const Sidebar = ({ showSubnav }) => {
     const [subNavTitle, setSubNavTitle] = useState('');
 
     const handleLogOut = () => {
+        dispatch(logoutAction());
         if (!localStorage.getItem('user')) {
             router.replace('../Auth/Login');
         }
-        dispatch(logoutAction());
     };
 
     // fillColor={router.pathname == '/Dashboard'}
