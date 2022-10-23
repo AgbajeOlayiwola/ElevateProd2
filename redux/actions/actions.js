@@ -128,21 +128,14 @@ export const loadussdGen = (code) => (dispatch) => {
 //uusdGen actions end
 
 //logout actions
-export const logoutLoadStart = () => ({
-    type: logout.LOGOUT_START
-});
+// export const logoutLoadStart = () => ({
+//     type: logout.LOGOUT_START
+// });
 
-export const logoutAction = () => (dispatch) => {
-    dispatch(logoutLoadStart());
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
+// export const logoutAction = () => (dispatch) => {
+//     dispatch(logoutLoadStart());
 
-    if (getCookie('cookieToken') == undefined) {
-        deleteCookie('existingToken');
-    } else {
-        deleteCookie('cookieToken');
-    }
-};
+// };
 //logout actions end
 
 //resetPassword actions

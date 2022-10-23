@@ -64,10 +64,13 @@ const AccountUpgrade = () => {
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState('');
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        ''
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -874,6 +877,7 @@ const AccountUpgrade = () => {
                                         <input
                                             onChange={saveIdentificationFile}
                                             type="file"
+                                            accept="image/png, image/HEIC, image/jpeg, application/pdf"
                                         />{' '}
                                         Upload
                                     </label>
