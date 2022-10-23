@@ -58,24 +58,25 @@ const ProfileSetups = () => {
         signatory: 1
     });
     // console.log(formData.type);
-    let countryName = '';
-    let countryNames;
+    // let countryName = '';
+    // let countryNames;
 
-    if (typeof window !== 'undefined') {
-        countryName = window.localStorage.getItem('country');
-        if (countryName === null) {
-            countryNames = window.localStorage.getItem('country');
-        } else {
-            countryNames = JSON.parse(countryName);
-        }
-    }
+    // if (typeof window !== 'undefined') {
+    //     countryName = window.localStorage.getItem('country');
+    //     if (countryName === null) {
+    //         countryNames = window.localStorage.getItem('country');
+    //     } else {
+    //         countryNames = JSON.parse(countryName);
+    //     }
+    // }
     useEffect(() => {
         dispatch(loadCountry());
     }, []);
     useEffect(() => {
         if (countries !== null) {
+            console.log(countries);
             countries.filter((item) => {
-                if (item.name === countryNames.name) {
+                if (item.name === 'Nigeria') {
                     setFormData({
                         ...formData,
                         countryCode: item.countryCode,

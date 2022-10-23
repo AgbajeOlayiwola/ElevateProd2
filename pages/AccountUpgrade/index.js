@@ -272,7 +272,7 @@ const AccountUpgrade = () => {
             setOutcome(true);
             setLoading(false);
         } else if (identificationErrorMessages !== null) {
-            setMessage(identificationErrorMessages.data.message);
+            setMessage(identificationErrorMessages);
             setStatusbar('error');
             setOutcome(true);
             setLoading(false);
@@ -887,7 +887,7 @@ const AccountUpgrade = () => {
                                 onClick={IdentificationyUpload}
                                 className={styles.updateBtn}
                             >
-                                Update Profiles
+                                Update Profile
                             </button>
                         )}
                     </AccountUpgradeComponent>
@@ -1375,6 +1375,7 @@ const AccountUpgrade = () => {
                     body={message}
                     error={message}
                     statusbar={statusbar}
+                    text="Try again"
                     overlay="true"
                     action={
                         statusbar === 'error'
