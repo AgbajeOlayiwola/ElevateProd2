@@ -66,12 +66,8 @@ const AccountLoading = () => {
             currency: 'NGN'
         };
         dispatch(createNewUserAccount(accountData));
+        dispatch(newAccountStatusData());
         if (
-            newAccountErrorMessage ===
-            'Sorry, we could not process your request. Please chat with us to get this sorted.'
-        ) {
-            setError(newAccountErrorMessage);
-        } else if (
             errorMessages === 'Pending Creation, Try Again' ||
             errorMessages === 'Bank Account has not been created for this user'
         ) {
