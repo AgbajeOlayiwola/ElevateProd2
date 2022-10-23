@@ -30,17 +30,6 @@ const Sidebar = ({ showSubnav }) => {
         if (!localStorage.getItem('user')) {
             router.replace('../Auth/Login');
         }
-<<<<<<< HEAD
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-
-        if (getCookie('cookieToken') == undefined) {
-            deleteCookie('existingToken');
-        } else {
-            deleteCookie('cookieToken');
-        }
-=======
->>>>>>> 917df78d5de6ff188a16a8046d4a6ffe281350c5
     };
 
     // fillColor={router.pathname == '/Dashboard'}
