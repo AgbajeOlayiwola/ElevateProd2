@@ -84,7 +84,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        console.log(file);
+        // console.log(file);
     };
     useEffect(() => {
         dispatch(statesData());
@@ -121,7 +121,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                         bussinessName: item.documentData.companyName
                     });
                     setBusinessProfile(item.documentData.companyName);
-                    console.log(businessProfile);
+                    // console.log(businessProfile);
                     // console.log(formData.businessName);
                 }
             });
@@ -129,7 +129,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
         if (profile !== null) {
             if (userProfile !== null) {
-                console.log(userProfile);
+                // console.log(userProfile);
                 setProfileCont(userProfile);
             }
             if (profile.data[1]) {
@@ -139,19 +139,19 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             }
         }
         // setGender(profileCont.gender);
-    }, [businessCategories]);
+    }, [businessCategories, business]);
 
     useEffect(() => {
         dispatch(businessCategoriesData());
     }, []);
-    console.log(
-        'errorMessages from account',
-        newAccount,
-        newAccountErrorMessage
-    );
+    // console.log(
+    //     'errorMessages from account',
+    //     newAccount,
+    //     newAccountErrorMessage
+    // );
     useEffect(() => {
         if (newAccount.message === 'success') {
-            console.log(errorMessages);
+            // console.log(errorMessages);
             router.push('/Verify/Account/loading');
         } else if (
             newAccountErrorMessage ===
@@ -172,7 +172,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         });
     }, [business]);
 
-    if (gender === 'm') console.log(profileCont);
+    // if (gender === 'm') console.log(profileCont);
 
     const {
         register,
@@ -181,7 +181,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         formState: { errors }
     } = useForm();
 
-    console.log(type);
+    // console.log(type);
 
     // const uploadFile = async (e) => {
     //   const formData = new FormData();
@@ -236,7 +236,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             refereeCode: '',
             signature: file
         };
-        console.log(commpleteProfileData);
+        // console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
 

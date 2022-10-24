@@ -18,12 +18,18 @@ const CorporateAccount = () => {
     const router = useRouter();
 
     const newUserAccountt = () => {
-        g;
         const accountData = {
             affiliateCode: 'ENG',
             currency: 'NGN'
         };
         // const cookie = getCookie('cookieToken');
+        let cookie;
+
+        if (getCookie('cookieToken') == undefined) {
+            cookie = getCookie('existingToken');
+        } else {
+            cookie = getCookie('cookieToken');
+        }
         axiosInstance
             .post(
                 `https://ellevate-test.herokuapp.com${apiRoutes.corpNewUser}`,
@@ -36,39 +42,38 @@ const CorporateAccount = () => {
                 }
             )
             .then((response) => {
-                console.log('create New Account', response.data);
+                //console.log'create New Account', response.data);
                 if (response.data.message === 'success') {
-                    axiosInstance
-                        .get(
-                            `https://ellevate-test.herokuapp.com/bank-account/status`,
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization: `Bearer ${cookie}`
+                    setInterval(() => {
+                        axiosInstance
+                            .get(
+                                `https://ellevate-test.herokuapp.com/bank-account/status`,
+                                {
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        Authorization: `Bearer ${cookie}`
+                                    }
                                 }
-                            }
-                        )
-                        .then((response) => {
-                            // console.log('Accoutn Status', response);
-                            setAccountDone(response.data.data);
-                        })
-                        .catch((error) => {
-                            console.log(error.response.data.message);
-                        });
+                            )
+                            .then((response) => {
+                                // //console.log'Accoutn Status', response);
+                                setAccountDone(response.data.data);
+                            })
+                            .catch((error) => {
+                                //console.logerror.response.data.message);
+                            });
+                    }, 10000);
                 }
             })
             .catch((error) => {
-                console.log(
-                    'create new account Error:',
-                    error.response.data.message
-                );
+                //console.log
+                // 'create new account Error:',
+                // error.response.data.message
+                // );
                 setErrorMes(error.response.data.message);
             });
 
-        if (
-            errorMes ===
-            'You already have an account with us. Please contact us for more information'
-        ) {
+        if (accountDone.message === 'success') {
             router.push('/Succes/CorpSuccess');
         }
     };
@@ -78,12 +83,20 @@ const CorporateAccount = () => {
     }, [errorMes, accountDone]);
 
     const newUserCorpAccountt = () => {
-        if (errorMes === 'Bank Account has not been created for this user') {
-            console.log(errorMes);
+        if (
+            errorMes === 'Pending Creation, Try Again' ||
+            errorMes === 'Bank Account has not been created for this user'
+        ) {
+            //console.logerrorMes);
             dispatch(newAccountStatusData());
             setInterval(() => {
                 dispatch(newAccountStatusData());
             }, 10000);
+        }
+
+        if (accountDone.message === 'success') {
+            // //console.logaccountStatus.messages, errorMessages);
+            router.push('/Succes');
         }
     };
     useEffect(() => {
