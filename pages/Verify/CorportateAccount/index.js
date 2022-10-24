@@ -23,6 +23,13 @@ const CorporateAccount = () => {
             currency: 'NGN'
         };
         // const cookie = getCookie('cookieToken');
+        let cookie;
+
+        if (getCookie('cookieToken') == undefined) {
+            cookie = getCookie('existingToken');
+        } else {
+            cookie = getCookie('cookieToken');
+        }
         axiosInstance
             .post(
                 `https://ellevate-test.herokuapp.com${apiRoutes.corpNewUser}`,
@@ -37,23 +44,25 @@ const CorporateAccount = () => {
             .then((response) => {
                 console.log('create New Account', response.data);
                 if (response.data.message === 'success') {
-                    axiosInstance
-                        .get(
-                            `https://ellevate-test.herokuapp.com/bank-account/status`,
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization: `Bearer ${cookie}`
+                    setInterval(() => {
+                        axiosInstance
+                            .get(
+                                `https://ellevate-test.herokuapp.com/bank-account/status`,
+                                {
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        Authorization: `Bearer ${cookie}`
+                                    }
                                 }
-                            }
-                        )
-                        .then((response) => {
-                            // console.log('Accoutn Status', response);
-                            setAccountDone(response.data.data);
-                        })
-                        .catch((error) => {
-                            console.log(error.response.data.message);
-                        });
+                            )
+                            .then((response) => {
+                                // console.log('Accoutn Status', response);
+                                setAccountDone(response.data.data);
+                            })
+                            .catch((error) => {
+                                console.log(error.response.data.message);
+                            });
+                    }, 10000);
                 }
             })
             .catch((error) => {
@@ -64,10 +73,7 @@ const CorporateAccount = () => {
                 setErrorMes(error.response.data.message);
             });
 
-        if (
-            errorMes ===
-            'You already have an account with us. Please contact us for more information'
-        ) {
+        if (accountDone.message === 'success') {
             router.push('/Succes/CorpSuccess');
         }
     };
