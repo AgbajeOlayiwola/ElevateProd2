@@ -412,8 +412,8 @@ export const loadUserProfile = () => (dispatch) => {
             }
         })
         .then((response) => {
-            dispatch(userProfileLoadSuccess(response.data)),
-                console.log(response.data);
+            dispatch(userProfileLoadSuccess(response.data));
+            //console.log(response.data);
         })
         .catch((error) =>
             dispatch(userProfileLoadError(error.response.message))
@@ -1234,7 +1234,7 @@ export const existingUserProfileData = (data) => (dispatch) => {
         .post(`${apiRoutes.existingUserProfile}`, data)
         .then((response) => {
             dispatch(existingUserProfileLoadSuccess(response));
-            console.log(response.data.data.token);
+            //console.logresponse.data.data.token);
             setCookie('existingToken', response.data.data.token);
         })
         .catch((error) => dispatch(existingUserProfileLoadError(error)));
@@ -1287,7 +1287,7 @@ export const accountStatusData = (data) => (dispatch) => {
     axiosInstance
         .get(`${apiRoutes.accountStatus}/${data}`)
         .then((response) => {
-            console.log(response);
+            //console.logresponse);
             dispatch(accountStatusLoadSuccess(response));
         })
         .catch((error) =>
@@ -1320,7 +1320,7 @@ export const newAccountStatusData = () => (dispatch) => {
         })
         .then((response) => {
             dispatch(accountStatusLoadSuccess(response.data));
-            console.log(response.data.message);
+            //console.logresponse.data.message);
         })
         .catch((error) =>
             dispatch(accountStatusLoadError(error.response.data.message))
@@ -1343,7 +1343,7 @@ export const createUserAction = (postData) => {
         axiosInstance
             .post(`${apiRoutes.register}`, postData)
             .then((response) => {
-                console.log('data from action', response.data);
+                //console.log'data from action', response.data);
                 dispatch(userRegisterStart(response.data.message));
             })
             .catch((error) => {
@@ -1368,13 +1368,13 @@ export const loginUserAction = (loginData) => {
         axiosInstance
             .post(`${apiRoutes.login}`, loginData)
             .then((response) => {
-                console.log(response.data);
+                //console.logresponse.data);
                 localStorage.setItem('user', JSON.stringify(response.data));
                 localStorage.setItem(
                     'token',
                     JSON.stringify(response.data.data.token)
                 );
-                console.log(response.data);
+                //console.logresponse.data);
                 localStorage.setItem(
                     'user',
                     JSON.stringify(response.data.data.user)
@@ -1384,7 +1384,7 @@ export const loginUserAction = (loginData) => {
                 dispatch(userLoadStart(response.data));
             })
             .catch((error) => {
-                console.log(error);
+                //console.logerror);
                 dispatch(userLoadError(error.response.data.message));
             });
     };
@@ -1393,19 +1393,19 @@ export const loginUserAction = (loginData) => {
 // const getConfig = () => {
 //     try {
 //         let token = localStorage.getItem('token');
-//         console.log(token);
+//         //console.logtoken);
 //         return {
 //             headers: { Authorization: `Bearer ${token}` }
 //         };
 //     } catch (error) {
-//         console.log('getConfig error', error);
+//         //console.log'getConfig error', error);
 //         let token = JSON.parse(localStorage.getItem('token'));
-//         console.log(token);
+//         //console.logtoken);
 //         return {
 //             headers: { Authorization: token }
 //         };
 //     } catch (error) {
-//         console.log('get config error', error);
+//         //console.log'get config error', error);
 //     }
 // };
 
@@ -1464,14 +1464,14 @@ export const createProfileSetup = (profileData) => {
             .then((response) => {
                 dispatch(setupProfileSucces(response.data));
 
-                console.log('data from profile', response.data);
+                //console.log'data from profile', response.data);
                 if (
                     response.data.message ===
                     'profile setup intialized, sending otp'
                 ) {
-                    console.log('test1');
+                    //console.log'test1');
                     const cookie = getCookie('cookieToken');
-                    console.log(cookie);
+                    //console.logcookie);
                     axios
                         .post(
                             `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatus}`,
@@ -1485,19 +1485,19 @@ export const createProfileSetup = (profileData) => {
                         )
                         .then((response) => {
                             dispatch(bvnNinData(response.data.message));
-                            console.log('profile otp dispatch', response);
+                            //console.log'profile otp dispatch', response);
                         })
                         .catch((error) => {
-                            console.log('profile otp dispatch', error);
+                            //console.log'profile otp dispatch', error);
                             dispatch(bvnNinError(error.response.data.message));
                         });
                 }
             })
             .catch((error) => {
-                console.log(
-                    'profile setup dispatch',
-                    error.response.data.message
-                );
+                //console.log
+                //     'profile setup dispatch',
+                //     error.response.data.message
+                // );
                 dispatch(setupProfileError(error.response.data.message));
             });
     };
@@ -1544,7 +1544,7 @@ export const bvnBusNinData = (busBvnNin) => ({
 });
 export const createBusProfileSetup = (businessProfileData) => {
     const cookie = getCookie('cookieToken');
-    // console.log('cookie in create profile function', cookie);
+    // //console.log'cookie in create profile function', cookie);
     return async (dispatch) => {
         await axios
             .post(
@@ -1560,7 +1560,7 @@ export const createBusProfileSetup = (businessProfileData) => {
             .then((response) => {
                 dispatch(setupProfileSucces(response.data));
 
-                console.log('data from Business profile', response.data);
+                //console.log'data from Business profile', response.data);
                 if (response.data.message === 'Success') {
                     const cookie = getCookie('cookieToken');
                     axiosInstance
@@ -1577,19 +1577,19 @@ export const createBusProfileSetup = (businessProfileData) => {
                         )
                         .then((response) => {
                             dispatch(bvnNinData(response.data.message));
-                            console.log('profile otp dispatch', response);
+                            //console.log'profile otp dispatch', response);
                         })
                         .catch((error) => {
-                            console.log('profile otp dispatch', error);
+                            //console.log'profile otp dispatch', error);
                             dispatch(bvnNinError(error.response.data.message));
                         });
                 }
             })
             .catch((error) => {
-                console.log(
-                    'profile setup dispatch',
-                    error.response.data.message
-                );
+                //console.log
+                //     'profile setup dispatch',
+                //     error.response.data.message
+                // );
                 dispatch(setupProfileError(error.response.data.message));
             });
     };
@@ -1626,15 +1626,15 @@ export const verifyOtp = (otpData) => {
             )
             .then((response) => {
                 dispatch(otpLoadSuccess(response.data));
-                console.log('otp', otpData);
-                console.log('data from otp', response.data);
+                //console.log'otp', otpData);
+                //console.log'data from otp', response.data);
             })
             .catch((error) => {
-                console.log('profile otp dispatch', error);
+                //console.log'profile otp dispatch', error);
                 dispatch(bvnNinError(error.response.message));
             })
             .catch((error) => {
-                console.log('profile Bvn dispatch', error.response);
+                //console.log'profile Bvn dispatch', error.response);
             });
     };
 };
@@ -1673,7 +1673,7 @@ export const CompProfile = () => {
                 dispatch(profileLoadSuccess(response));
             })
             .catch((error) => {
-                console.log(error);
+                //console.logerror);
             });
     };
 };
@@ -1715,11 +1715,11 @@ export const CompleteBusinessProfile = (completeProfileData) => {
                 }
             )
             .then((response) => {
-                console.log('complete business profiler', response.data);
+                //console.log'complete business profiler', response.data);
                 dispatch(completeProfileLoadSuccess(response.data));
             })
             .catch((error) => {
-                console.log(error);
+                //console.logerror);
                 dispatch(completeProfileLoadError(error.response.data));
             });
     };
@@ -1756,13 +1756,13 @@ export const createNewUserAccount = (accountData) => {
                 }
             )
             .then((response) => {
-                console.log('create New Account', response.data);
+                //console.log'create New Account', response.data);
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
-                console.log('create new account:', error.response.data.message);
+                //console.log'create new account:', error.response.data.message);
                 dispatch(createNewAccountError(error.response.data.message));
-                // console.log(error);
+                // //console.logerror);
             });
     };
 };
@@ -1799,15 +1799,15 @@ export const createNewCorpUserAccount = (accountData) => {
                 }
             )
             .then((response) => {
-                console.log('create New Account', response.data);
-                // console.log('create new account:', error.response.data.message);
+                //console.log'create New Account', response.data);
+                // //console.log'create new account:', error.response.data.message);
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
-                console.log(
-                    'create new account Error:',
-                    error.response.data.message
-                );
+                //console.log
+                //     'create new account Error:',
+                //     error.response.data.message
+                // );
                 dispatch(
                     createNewCorpAccountError(error.response.data.message)
                 );
@@ -1920,7 +1920,7 @@ export const uploadUtilityData = (utilitydata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(uploadUtilitySuccess(response));
-            console.log(response);
+            //console.logresponse);
         })
         .catch((error) => dispatch(uploadUtilityError(error)));
 };
@@ -1962,7 +1962,7 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(identificationDocSuccess(response.data.message));
-            console.log(response);
+            //console.logresponse);
         })
         .catch((error) =>
             dispatch(identificationDocError(error.response.data.message))
@@ -2006,7 +2006,7 @@ export const memartData = (memartdata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(memartSuccess(response));
-            console.log(response);
+            //console.logresponse);
         })
         .catch((error) => dispatch(memartError(error.response)));
 };
@@ -2048,11 +2048,11 @@ export const cacData = (cacdata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(cacSuccess(response.data.message));
-            console.log(response);
+            //console.logresponse);
         })
         .catch((error) => {
             dispatch(cacError(error.response));
-            console.log(error.response);
+            //console.logerror.response);
         });
 };
 //upload cac document end
@@ -2092,7 +2092,7 @@ export const scmulData = (scmuldata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(scmulSuccess(response));
-            console.log(response);
+            //console.logresponse);
         })
         .catch((error) => dispatch(scmulError(error.response)));
 };
@@ -2134,7 +2134,7 @@ export const shareRefFormData = (sharerefformdata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(shareRefFormSuccess(response.data[0].accountNumber));
-            console.log(response.data.accountNumber);
+            //console.logresponse.data.accountNumber);
         })
         .catch((error) =>
             dispatch(shareRefFormError(error.response.data.message))
@@ -2178,7 +2178,7 @@ export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(uploadRefFormSuccess(response));
-            console.log(response);
+            //console.logresponse);
         })
         .catch((error) => dispatch(uploadRefFormError(error.response)));
 };
@@ -2220,7 +2220,7 @@ export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(uploadBoardResSuccess(response.data[0].accountNumber));
-            console.log(response.data.accountNumber);
+            //console.logresponse.data.accountNumber);
         })
         .catch((error) =>
             dispatch(uploadBoardResError(error.response.data.message))
@@ -2264,7 +2264,7 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(forgotPasswordSuccess(response));
-            console.log(response);
+            //console.logresponse);
         })
         .catch((error) => dispatch(forgotPasswordError(error)));
 };
@@ -2306,7 +2306,7 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(resetOtpSuccess(response));
-            console.log(response);
+            //console.logresponse);
         })
         .catch((error) => dispatch(resetOtpError(error)));
 };
@@ -2394,7 +2394,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                             }
                         )
                         .then((response) => {
-                            console.log(response.data.data);
+                            //console.logresponse.data.data);
                             dispatch(exGetBusCacSuccess(response));
 
                             //business profile setup
