@@ -25,7 +25,7 @@ const BulkTransfer = ({
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
-    console.log(payload);
+    //console.logpayload);
     const [number, setNumber] = useState(
         // payload !== undefined ? payload :
         [1]
@@ -37,7 +37,7 @@ const BulkTransfer = ({
             // setInterEnquiry((arr) => [...arr, interBankEnquiry]);
             // number.splice(index, 1, interBankEnquiry);
             const newState = number.map((e, index) => {
-                console.log(index);
+                //console.logindex);
                 if (indexNumber === index) {
                     return interBankEnquiry;
                 } else {

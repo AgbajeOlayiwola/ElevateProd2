@@ -39,7 +39,7 @@ const Liveness = ({ action, loading, setLoading }) => {
     const [error, setError] = React.useState('');
 
     const capture = React.useCallback(() => {
-        setLoading((prev) => !prev);
+        // setLoading((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
@@ -48,7 +48,7 @@ const Liveness = ({ action, loading, setLoading }) => {
 
         var buf = _base64ToArrayBuffer(base64String);
 
-        console.log(buf);
+        // console.log(buf);
         var mimeType = 'image/jpeg';
         var file = new File([buf], 'userface-1828438.jpg', { type: mimeType });
 
@@ -56,7 +56,13 @@ const Liveness = ({ action, loading, setLoading }) => {
 
         formData.append('photo', file);
 
-        const cookie = getCookie('cookieToken');
+        let cookie;
+
+        if (getCookie('cookieToken') == undefined) {
+            cookie = getCookie('existingToken');
+        } else {
+            cookie = getCookie('cookieToken');
+        }
         axios
             .post(
                 `https://ellevate-test.herokuapp.com/users/profile/image`,
@@ -69,11 +75,11 @@ const Liveness = ({ action, loading, setLoading }) => {
                 }
             )
             .then((response) => {
-                console.log(response.data.message);
+                // console.log(response.data.message);
                 setSuccess(response.data.message);
             })
             .catch((error) => {
-                console.log(error.response.data.message);
+                // console.log(error.response.data.message);
                 // setResErros(error.response.data.statusCode);
                 setError(error.response.data.message);
             });

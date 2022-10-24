@@ -90,7 +90,7 @@ const Countriess = ({
                                 >
                                     <option value="">Choose Country</option>
                                     {countrys.map((item, index) => {
-                                        console.log(item.nme);
+                                        //console.logitem.nme);
                                         return (
                                         <StyledOption
                                             key={index}

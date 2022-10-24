@@ -33,7 +33,7 @@ const RegisteredForm = ({
 
     const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
-    console.log(accountDetails);
+    // console.log(accountDetails);
     const sendAccount = localStorage.getItem('account');
     const sendAccounts = JSON.parse(sendAccount);
     const [activeBtn, setActiveBtn] = useState(true);
@@ -101,7 +101,7 @@ const RegisteredForm = ({
     // console.log(profileInfo);
     let accounts = window.localStorage.getItem('account');
     var newAccounts = JSON.parse(accounts);
-    console.log(newAccounts);
+    // console.log(newAccounts);
     // console.log('payload',emailData, password, confPassword);
 
     useEffect(() => {
@@ -111,7 +111,7 @@ const RegisteredForm = ({
             setFormData({ ...formData, userId: newAccounts.user.userId });
         }
 
-        console.log(formData.userId);
+        // console.log(formData.userId);
     }, []);
     const types = (types) => {
         setOutTypes(types);
@@ -127,7 +127,7 @@ const RegisteredForm = ({
     const [outType, setOutType] = useState();
     const [outTypes, setOutTypes] = useState();
 
-    console.log(existingUserProfilee);
+    // console.log(existingUserProfilee);
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>

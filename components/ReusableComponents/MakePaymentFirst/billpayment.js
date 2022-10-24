@@ -81,7 +81,7 @@ const BillPayment = ({
         if (airtimeNetwork !== null) {
             setAirtimeNetworkData(airtimeNetwork);
 
-            console.log(networkData);
+            //console.lognetworkData);
         }
     }, [airtimeNetwork]);
     const loadPlans = (e) => {

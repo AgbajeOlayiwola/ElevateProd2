@@ -39,8 +39,8 @@ const Omnilite = () => {
     };
 
     const OmniliteTest = () => {
-        console.log(omnilite);
-        console.log(errorMessage);
+        //console.logomnilite);
+        //console.logerrorMessage);
         if (errorMessage) {
             setError(errorMessage);
             setLoading(false);

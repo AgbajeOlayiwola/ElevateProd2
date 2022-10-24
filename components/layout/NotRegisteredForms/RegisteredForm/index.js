@@ -47,12 +47,12 @@ const RegisteredForm = ({
         setShowFirstStep(false);
     };
     const handleRegistrationStatus = () => {
-        console.log('true');
+        // console.log('true');
         setBgcolor((prevState) => !prevState);
         setFormData({ ...formData, type: 'true' });
     };
     const switchRegistrationStatus = () => {
-        console.log('false');
+        // console.log('false');
         setBgcolor((prevState) => !prevState);
         setFormData({ ...formData, type: 'false' });
     };
@@ -72,7 +72,7 @@ const RegisteredForm = ({
     } = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data);
+        // console.log(data);
     };
     const { isLoading, profile, errorMessages, bvnErrorI } = useSelector(
         (state) => state.profileSetup

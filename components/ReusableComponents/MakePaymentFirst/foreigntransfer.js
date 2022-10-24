@@ -52,7 +52,7 @@ const ForeignTransfer = ({
     }, [banks]);
     useEffect(() => {
         if (verifyCurrency !== null) {
-            console.log(verifyCurrency.currencies);
+            //console.logverifyCurrency.currencies);
             setCurrency(verifyCurrency.currencies.currencies);
         }
     }, [verifyCurrency]);

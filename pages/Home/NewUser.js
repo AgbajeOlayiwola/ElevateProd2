@@ -71,7 +71,7 @@ const NewUser = ({ selectCountry }) => {
     };
     const userName = (e) => {
         setPname(e.target.value);
-        // console.log(pName);
+        // //console.logpName);
     };
     // display Lofg in with end
     const types = (type) => {
@@ -87,7 +87,7 @@ const NewUser = ({ selectCountry }) => {
         formState: { errors }
     } = useForm();
     const onSubmit = (data) => {
-        console.log(data);
+        //console.logdata);
         if (selectCountry === '') {
             setError('Choose a country');
         } else {
@@ -106,14 +106,14 @@ const NewUser = ({ selectCountry }) => {
                 affiliateCode: 'ENG'
             };
             setLoading(true);
-            // console.log(errorMessage);
+            // //console.logerrorMessage);
             dispatch(createUserAction(postData));
         } else {
             passwordMatch;
         }
     };
     const sentSIgnUp = () => {
-        // console.log(errorMessage);
+        // //console.logerrorMessage);
         if (errorMessage !== null) {
             setError(errorMessage);
             setLoading(false);

@@ -19,7 +19,7 @@ const Verify = () => {
 
     useEffect(() => {
         var token = query['token'];
-        console.log('hello', token);
+        //console.log'hello', token);
         if (!isReady) return;
         if (token) {
             axios
@@ -27,11 +27,11 @@ const Verify = () => {
                     `https://ellevate-test.herokuapp.com/authentication/email-verification/${token}`
                 )
                 .then((response) => {
-                    console.log(response.data.message);
+                    //console.logresponse.data.message);
                     setRes(response.data.message);
                 })
                 .catch((error) => {
-                    console.log(error.response.data.statusCode);
+                    //console.logerror.response.data.statusCode);
                     setResErros(error.response.data.statusCode);
                 });
         }

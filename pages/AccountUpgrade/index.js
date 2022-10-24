@@ -108,7 +108,7 @@ const AccountUpgrade = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        //console.logdata);
         setLoading(true);
         dispatch(loadsetTransactionPin(data));
     };
@@ -148,7 +148,7 @@ const AccountUpgrade = () => {
             setLocalGovernmane(userProfile.lga);
         }
     }, [userProfile]);
-    console.log(userProfile);
+    //console.loguserProfile);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -161,18 +161,18 @@ const AccountUpgrade = () => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        // console.log(file);
+        // //console.logfile);
     };
     const cacRegistration = () => {
-        // console.log('test');
+        // //console.log'test');
         const cacDatas = {
             cacCert: file
         };
         dispatch(cacData(cacDatas));
     };
     useEffect(() => {
-        console.log(cac);
-        console.log(cacErrorMessages);
+        //console.logcac);
+        //console.logcacErrorMessages);
     }, [cac, cacErrorMessages]);
 
     //CAC Registration end
@@ -183,15 +183,15 @@ const AccountUpgrade = () => {
         setScmulFileName(e.target.files[0].name);
     };
     const uploadScmul = () => {
-        console.log('test');
+        //console.log'test');
         const scmulDatas = {
             scumlCert: scmulfile
         };
         dispatch(scmulData(scmulDatas));
     };
     useEffect(() => {
-        console.log(scmul);
-        console.log(scmulErrorMessages);
+        //console.logscmul);
+        //console.logscmulErrorMessages);
     }, [scmul, scmulErrorMessages]);
 
     //SCMUL Certificate end
@@ -205,7 +205,7 @@ const AccountUpgrade = () => {
         setCo7File(e.target.files[0]);
         setCo7FileName(e.target.files[0].name);
     };
-    // console.log(co2file);
+    // //console.logco2file);
     const memartUpload = () => {
         const mmemmartDatas = {
             co2: co2file,
@@ -214,8 +214,8 @@ const AccountUpgrade = () => {
         dispatch(memartData(mmemmartDatas));
     };
     useEffect(() => {
-        console.log(memart);
-        console.log(memartErrorMessages);
+        //console.logmemart);
+        //console.logmemartErrorMessages);
     }, [memart, memartErrorMessages]);
     //Memart Submit ENd
 
@@ -233,7 +233,7 @@ const AccountUpgrade = () => {
             utilityDocument: utilityFile
         };
         dispatch(uploadUtilityData(utilityThingd));
-        // console.log('state', localState, localGovernment, utilityFile);
+        // //console.log'state', localState, localGovernment, utilityFile);
     };
     useEffect(() => {
         if (utilityUpload !== null) {
@@ -248,8 +248,8 @@ const AccountUpgrade = () => {
             setOutcome(true);
             setLoading(false);
         }
-        console.log(utilityUpload);
-        console.log(utilityUplodaErrorMessages);
+        //console.logutilityUpload);
+        //console.logutilityUplodaErrorMessages);
     }, [utilityUpload, utilityUplodaErrorMessages]);
     //Utility Upload End
 
@@ -281,7 +281,7 @@ const AccountUpgrade = () => {
             setLoading(false);
         }
     }, [identification, identificationErrorMessages]);
-    console.log(identificationErrorMessages);
+    //console.logidentificationErrorMessages);
 
     //Identification Upload End
 
@@ -296,7 +296,7 @@ const AccountUpgrade = () => {
         const emailToshareData = {
             emailsToShare: [refoneemail, refoneno]
         };
-        console.log(emailToshareData);
+        //console.logemailToshareData);
         dispatch(uploadRefFormData(emailToshareData));
     };
 
@@ -555,7 +555,7 @@ const AccountUpgrade = () => {
                                                     setState(
                                                         event.target.value
                                                     );
-                                                    // console.log(selstate);
+                                                    // //console.logselstate);
                                                 }}
                                             >
                                                 <option value={selstate}>
@@ -729,7 +729,7 @@ const AccountUpgrade = () => {
                                                     setState(
                                                         event.target.value
                                                     );
-                                                    // console.log(selstate);
+                                                    // //console.logselstate);
                                                 }}
                                             >
                                                 <option value={selstate}>
