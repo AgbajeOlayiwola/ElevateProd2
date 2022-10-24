@@ -118,7 +118,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             city: city,
             lga: localGoverment,
             refereeCode: '',
-            signature: file
+            signature: ''
         };
         dispatch(CompleteBusinessProfile(userData));
         // console.log(existingProfileSetupPay, existingProfileSetupError);
@@ -159,7 +159,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             city: city,
             lga: localGoverment,
             refereeCode: '',
-            signature: file
+            signature: ''
         };
         dispatch(ExCreateBusProfileSetup(userData));
         // console.log(existingProfileSetupPay, existingProfileSetupError);
