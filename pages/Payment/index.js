@@ -238,9 +238,18 @@ const Payment = () => {
     const bulkcheck = () => {
         if (bulkTransfer !== null) {
             console.log(bulkTransfer);
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setStatus('success');
+            if (bulkTransfer.failedTranscations.length !== 0) {
+                setCount((count) => count + 1);
+                setIsLoading(false);
+                setError(
+                    'Some or all of the transactions failed. Please check the Payment history for more details'
+                );
+                setStatus('error');
+            } else if (bulkTransfer.successfulTranscations.length !== 0) {
+                setCount((count) => count + 1);
+                setIsLoading(false);
+                setStatus('success');
+            }
         } else if (errorMessagebulkTransfer !== null) {
             setCount((count) => count + 1);
             setIsLoading(false);
@@ -658,14 +667,37 @@ const Payment = () => {
                                                   return +a.amount + +b.amount;
                                               }
                                           )
-                                        : paymentDetails.amount
+                                        : paymentDetails.details?.map(
+                                              (item, index) => {
+                                                  if (
+                                                      item.accountNumber !== ''
+                                                  ) {
+                                                      let counts = 0;
+                                                      counts += 1;
+                                                      console.log(counts);
+                                                      return (
+                                                          paymentDetails.amount *
+                                                          parseInt(counts, 10)
+                                                      );
+                                                  }
+                                              }
+                                          )
                                 }
                                 title="Bulk Payments"
                                 // recieverName={paymentDetails.accountNumber}
                                 sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
                                 // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
-                                number={paymentDetails.details.length}
+                                number={paymentDetails.details?.map(
+                                    (item, index) => {
+                                        if (item.accountNumber !== '') {
+                                            let counts = 0;
+                                            counts += 1;
+                                            console.log(counts);
+                                            return counts;
+                                        }
+                                    }
+                                )}
                                 backAction={() => {
                                     setCount(count - 1);
                                 }}
@@ -680,33 +712,40 @@ const Payment = () => {
                                         transactions:
                                             paymentDetails.details?.map(
                                                 (details, index) => {
-                                                    return {
-                                                        isEcobankToEcobankTransaction:
-                                                            details.bankName ===
-                                                            'Ecobank'
-                                                                ? true
-                                                                : false,
-                                                        destinationBank:
-                                                            details.bankName,
-                                                        destinationBankCode:
-                                                            details.bankName,
-                                                        beneficiaryName:
-                                                            'HIJIOKE   NWANKWO',
-                                                        destinationAccountNo:
-                                                            details.accountNumber,
-                                                        transactionAmount:
-                                                            paymentDetails.amount ===
-                                                            ''
-                                                                ? parseInt(
-                                                                      details.amount,
-                                                                      10
-                                                                  )
-                                                                : parseInt(
-                                                                      paymentDetails.amount,
-                                                                      10
-                                                                  ),
-                                                        narration: ''
-                                                    };
+                                                    if (
+                                                        details.accountNumber ===
+                                                        ''
+                                                    ) {
+                                                        return null;
+                                                    } else {
+                                                        return {
+                                                            isEcobankToEcobankTransaction:
+                                                                details.bankName ===
+                                                                'Ecobank'
+                                                                    ? true
+                                                                    : false,
+                                                            destinationBank:
+                                                                details.bankName,
+                                                            destinationBankCode:
+                                                                details.bankName,
+                                                            beneficiaryName:
+                                                                'HIJIOKE   NWANKWO',
+                                                            destinationAccountNo:
+                                                                details.accountNumber,
+                                                            transactionAmount:
+                                                                paymentDetails.amount ===
+                                                                ''
+                                                                    ? parseInt(
+                                                                          details.amount,
+                                                                          10
+                                                                      )
+                                                                    : parseInt(
+                                                                          paymentDetails.amount,
+                                                                          10
+                                                                      ),
+                                                            narration: ''
+                                                        };
+                                                    }
                                                 }
                                             )
                                     };

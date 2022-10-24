@@ -139,7 +139,6 @@ const appReducer = combineReducers({
     completeBusinessprofileReducer
 });
 const rootReducer = (state, action) => {
-    console.log(action);
     if (action.type === 'LOGOUT_START') {
         return appReducer(undefined, action);
     }

@@ -25,7 +25,6 @@ const BulkTransfer = ({
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
-    console.log(payload);
     const [number, setNumber] = useState(
         // payload !== undefined ? payload :
         [1]
@@ -37,7 +36,6 @@ const BulkTransfer = ({
             // setInterEnquiry((arr) => [...arr, interBankEnquiry]);
             // number.splice(index, 1, interBankEnquiry);
             const newState = number.map((e, index) => {
-                console.log(index);
                 if (indexNumber === index) {
                     return interBankEnquiry;
                 } else {
@@ -66,6 +64,7 @@ const BulkTransfer = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
+    console.log(number);
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
@@ -173,8 +172,9 @@ const BulkTransfer = ({
                                     {...register(`${fieldName}.accountName`, {
                                         value: e.accountName
                                     })}
+                                    defaultValue={e.accountName}
                                     type="text"
-                                    value={e.accountName}
+                                    // value={e.accountName}
                                     name={`${fieldName}.accountName`}
                                 />
                                 <p className={styles.error}>
