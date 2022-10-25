@@ -10,10 +10,13 @@ import styles from './styles.module.css';
 import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticator';
 import { existingUserProfileData } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Liveness from '../NotRegisteredForms/Liveness';
+import { login } from '../../../redux/types/actionTypes';
 
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
     const [pageType, setPageType] = useState('');
+
     const dispatch = useDispatch();
     const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
@@ -40,6 +43,8 @@ const ExistingMultiStep = () => {
     if (typeof window !== 'undefined') {
         let accounts = window.localStorage.getItem('account');
         var newAccounts = JSON.parse(accounts);
+        let loginWith = localStorage.getItem('LoginWith');
+        // console.log(loginWith);
         // console.log(newAccounts.user.email);
     }
     // console.log(formData.emailData, newAccounts.user?.email);
@@ -49,12 +54,13 @@ const ExistingMultiStep = () => {
         switch (page) {
             case 0:
                 return <FirstStep action={handleSubmit} />;
+
             case 1:
                 return (
                     <SecondStep
                         errorMessage={errorMessage}
                         move={() => {
-                            console.log(formData.emailData);
+                            // console.log(formData.emailData);
                             let userEmail;
                             if (
                                 newAccounts?.email !== null &&
@@ -69,16 +75,16 @@ const ExistingMultiStep = () => {
                             } else {
                                 userEmail = formData.emailData;
                             }
-                            console.log(newAccounts.email);
-                            console.log(newAccounts.user);
-                            console.log(formData.emailData);
+                            // console.log(newAccounts.email);
+                            // console.log(newAccounts.user);
+                            // console.log(formData.emailData);
                             const userData = {
                                 userId: formData.userId,
                                 email: userEmail,
                                 password: formData.password,
                                 confirmPassword: formData.confPassword
                             };
-                            console.log(userData);
+                            // console.log(userData);
                             dispatch(existingUserProfileData(userData));
                             setLoading((prev) => !prev);
                             // console.log(existingUserProfilee.data.message);
@@ -92,16 +98,20 @@ const ExistingMultiStep = () => {
                         setLoading={setLoading}
                     />
                 );
-            // case 2:
-            //     return (
-            //     <Liveness
-            //     action={() => {
-            //         setPage(page + 1);
-            //     }}
-            //     // action={handleSubmitt}
-            // />
-            //     );
+
             case 2:
+                return (
+                    <Liveness
+                        action={() => {
+                            setPage(page + 1);
+                        }}
+                        loading={loading}
+                        setLoading={setLoading}
+                        // action={handleSubmitt}
+                    />
+                );
+
+            case 3:
                 return (
                     <StepThree
                         action={() => {
@@ -111,7 +121,7 @@ const ExistingMultiStep = () => {
                         handleSubmitNew={handleSubmitNew}
                     />
                 );
-            case 3:
+            case 4:
                 return (
                     <StepFour
                         title={pageType}
@@ -142,7 +152,15 @@ const ExistingMultiStep = () => {
                 existingUserProfilee.data.message ==
                 'Profile setup Intialization completed'
             ) {
-                setPage(page + 1);
+                let loginWith = localStorage.getItem('LoginWith');
+                if (loginWith !== null) {
+                    console.log(loginWith);
+                    setPage(page + 1);
+                    setFormData({ ...formData, type: 'true' });
+                } else if (loginWith === null) {
+                    setPage(page + 2);
+                    setFormData({ ...formData, type: 'true' });
+                }
             }
         }
     }, [existingUserProfilee]);

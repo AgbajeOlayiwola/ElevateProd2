@@ -32,12 +32,12 @@ const ForgotPassword = () => {
 
         dispatch(forgotPasswordData(forgotPassworEmail));
 
-        console.log(forgotPassword, forgotPasswordErrorMessages);
+        //console.logforgotPassword, forgotPasswordErrorMessages);
         // fogrotPasswordReducer
     };
     useEffect(() => {
-        console.log(forgotPassword);
-        console.log(forgotPasswordErrorMessages);
+        //console.logforgotPassword);
+        //console.logforgotPasswordErrorMessages);
     }, [forgotPassword, forgotPasswordErrorMessages]);
     // if (forgotPassword) {
     //     if (forgotPassword.data.message === 'password reset email sent') {
@@ -46,7 +46,7 @@ const ForgotPassword = () => {
     //         router.push('../../Onboarding/ProfileSetup');
     //     }
     // } else {
-    //     console.log('hg');
+    //     //console.log'hg');
     // }
 
     return (

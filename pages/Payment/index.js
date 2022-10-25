@@ -73,8 +73,10 @@ const Payment = () => {
     const { transactionFees, errorMessageTransactionFees } = useSelector(
         (state) => state.transactionFeesReducer
     );
-    const { internationalTransfer, errorMessageinternationalTransfer } =
-        useSelector((state) => state.internationalTransferReducer);
+    const {
+        internationalTransfer,
+        errorMessageinternationalTransfer
+    } = useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
@@ -150,7 +152,7 @@ const Payment = () => {
     }, [accountPrimary]);
     const interBankCheck = () => {
         if (interBank !== null) {
-            console.log(interBank);
+            //console.loginterBank);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -166,7 +168,7 @@ const Payment = () => {
     }, [interBank, errorMessageInterBank]);
     const ussdGenCheck = () => {
         if (ussdGen !== null) {
-            console.log(ussdGen);
+            //console.logussdGen);
             setRecieveLink(ussdGen.paymentReference);
             setTrack(ussdGen.transactionId);
             setCount((count) => count + 1);
@@ -188,7 +190,7 @@ const Payment = () => {
     }, [ussdGen, errorMessageussdGen]);
     const ussdStatusCheck = () => {
         if (ussdStatus !== null) {
-            console.log(ussdStatus);
+            //console.logussdStatus);
             setCount((count) => count + 1);
             setIsLoading(false);
             // setStatus('success');
@@ -204,7 +206,7 @@ const Payment = () => {
     }, [ussdStatus, errorMessageussdStatus]);
     const billsCheck = () => {
         if (bills !== null) {
-            console.log(bills);
+            //console.logbills);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -220,7 +222,7 @@ const Payment = () => {
     }, [bills, errorMessageBills]);
     const transactionFeesCheck = () => {
         if (transactionFees !== null) {
-            console.log(bills);
+            //console.logbills);
             setTransactionFee(transactionFees.data.transactionFee);
             setCount((count) => count + 1);
             setIsLoading(false);
@@ -237,6 +239,7 @@ const Payment = () => {
     }, [transactionFees, errorMessageTransactionFees]);
     const bulkcheck = () => {
         if (bulkTransfer !== null) {
+<<<<<<< HEAD
             console.log(bulkTransfer);
             if (bulkTransfer.failedTranscations.length !== 0) {
                 setCount((count) => count + 1);
@@ -250,6 +253,12 @@ const Payment = () => {
                 setIsLoading(false);
                 setStatus('success');
             }
+=======
+            //console.logbulkTransfer);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+>>>>>>> 23b9eafba310d753245da6879f0a52ce362a86db
         } else if (errorMessagebulkTransfer !== null) {
             setCount((count) => count + 1);
             setIsLoading(false);
@@ -262,12 +271,12 @@ const Payment = () => {
     }, [bulkTransfer, errorMessagebulkTransfer]);
     const airtimeCheck = () => {
         if (airtime !== null) {
-            console.log(airtime);
+            //console.logairtime);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
         } else if (errorMessageAirtime !== null) {
-            console.log(errorMessageAirtime);
+            //console.logerrorMessageAirtime);
             setCount((count) => count + 1);
             setIsLoading(false);
             setError(errorMessageAirtime);
@@ -330,7 +339,7 @@ const Payment = () => {
                                 buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    console.log(data);
+                                    //console.logdata);
                                     setCount(count + 1);
                                 }}
                             />
@@ -359,7 +368,7 @@ const Payment = () => {
                                 buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    console.log(data);
+                                    //console.logdata);
                                     setPaymentDetails(data);
                                     const ussdData = {
                                         amount: parseInt(data.amount, 10),
@@ -397,7 +406,7 @@ const Payment = () => {
                                 buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    console.log(data);
+                                    //console.logdata);
                                     setCount(count + 1);
                                 }}
                             />
@@ -424,7 +433,7 @@ const Payment = () => {
                                 buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    console.log(data);
+                                    //console.logdata);
                                     setCount(count + 1);
                                 }}
                             />
@@ -506,7 +515,7 @@ const Payment = () => {
                                         );
                                     }
 
-                                    console.log(data);
+                                    //console.logdata);
                                     setPaymentDetails(data);
                                 }}
                                 scheduleLater={() => {
@@ -559,7 +568,7 @@ const Payment = () => {
                                             postBeneficiariesData(newBene)
                                         );
                                     }
-                                    console.log(interEnquiry);
+                                    //console.loginterEnquiry);
 
                                     const paymentData = {
                                         isEcobankToEcobankTransaction: ecobank,
@@ -650,7 +659,7 @@ const Payment = () => {
                                 payload={paymentDetails.details}
                                 action={(data) => {
                                     setPaymentDetails(data);
-                                    console.log(data);
+                                    //console.logdata);
                                     setCount(count + 1);
                                 }}
                             />
@@ -805,7 +814,7 @@ const Payment = () => {
                                 airtimeAction={(data) => {
                                     setCount(count + 1);
                                     setPaymentDetails(data);
-                                    console.log(data);
+                                    //console.logdata);
                                 }}
                                 // scheduleLater={() => {
                                 //     setCount(count + 3);
@@ -940,7 +949,7 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 action={(data) => {
-                                    console.log(data);
+                                    //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 scheduleLater={() => {
@@ -957,7 +966,7 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 secondAction={(data) => {
-                                    console.log(data);
+                                    //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 scheduleLater={() => {
@@ -971,7 +980,7 @@ const Payment = () => {
                                 overlay={overlay}
                                 closeAction={handleClose}
                                 transferAction={(data) => {
-                                    console.log(data);
+                                    //console.logdata);
                                     setCount(count + 1);
                                 }}
                             />

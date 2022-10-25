@@ -45,8 +45,8 @@ const Ecoonline = () => {
     };
 
     const onlineTest = () => {
-        console.log(ecobankOnline);
-        console.log(errorMessage);
+        // console.log(ecobankOnline);
+        // console.log(errorMessage);
         if (errorMessage !== '') {
             setError(errorMessage);
             setLoading(false);
@@ -58,7 +58,7 @@ const Ecoonline = () => {
         }
     };
     const accountTest = () => {
-        console.log(accountNumber);
+        // console.log(accountNumber);
         if (accountNumber.message === 'SUCCESS') {
             window.localStorage.setItem(
                 'account',

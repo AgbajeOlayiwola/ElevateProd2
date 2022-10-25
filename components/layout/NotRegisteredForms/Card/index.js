@@ -36,7 +36,7 @@ const Card = ({ children, className, ...restProps }) => {
         //     offsetHeight
         // );
 
-        console.log(offsetHeight - scrollBoxHeight);
+        // console.log(offsetHeight - scrollBoxHeight);
         // newTop = newTop + parseInt(scrollTop, 10);
         newTop = Math.min(newTop, offsetHeight - scrollBoxHeight);
         setScrollBoxTop(newTop);

@@ -26,7 +26,7 @@ const PaymentTable = ({ title, test }) => {
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
-            console.log(transactionElevate.transactions);
+            //console.logtransactionElevate.transactions);
         }
     }, [transactionElevate]);
     useEffect(() => {

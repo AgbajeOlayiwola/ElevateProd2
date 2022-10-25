@@ -242,7 +242,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     useEffect(() => {
         setLoading((prev) => !prev);
-        console.log(compBusprofile);
+        // console.log(compBusprofile);
         if (compBusprofile) {
             if (
                 compBusprofile.message === 'Successful' ||
@@ -260,7 +260,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         }
     }, [newAccount, comperrorMessage]);
     const basicAction = () => {
-        console.log(business);
+        // console.log(business);
         if (business === '' && businesses === '') {
             setBusinessError(true);
             setBusinessTypeError(true);
@@ -273,7 +273,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     const [activeBtn, setActiveBtn] = useState(true);
     //console.log(test)
-    console.log(type);
+    // console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>

@@ -81,21 +81,21 @@ const StepFour = ({ title, action, setFormData, formData }) => {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
     const [regNo, setRegNo] = useState('');
-    console.log(localGoverment);
+    //console.loglocalGoverment);
     const [phones, setPhones] = useState();
 
-    console.log(formData.type);
+    //console.logformData.type);
 
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        console.log(formData.type);
+        //console.logformData.type);
     };
     useEffect(() => {
         if (window.typeof !== 'undefined') {
             setPhones(JSON.parse(window.localStorage.getItem('account')));
-            console.log(phones);
+            //console.logphones);
         }
     }, []);
     const [profileInfo, setProfileInfo] = useState([]);
@@ -104,7 +104,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
 
     const onSubmitNew = (data) => {
         setLoading((prev) => !prev);
-        // console.log(data);
+        // //console.logdata);
         const userData = {
             isRegistered: 'true',
             businessName: businessName,
@@ -121,14 +121,14 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             // signature: ''
         };
         dispatch(CompleteBusinessProfile(userData));
-        // console.log(existingProfileSetupPay, existingProfileSetupError);
+        // //console.logexistingProfileSetupPay, existingProfileSetupError);
     };
 
     const profileTest = () => {
-        console.log(compBusprofile, comperrorMessage);
+        //console.logcompBusprofile, comperrorMessage);
         setLoading((prev) => !prev);
         if (compBusprofile) {
-            console.log(errorMessages);
+            //console.logerrorMessages);
             router.push('/Verify/ExistingSuccess');
         } else if (
             comperrorMessage.message === 'your have already setup your business'
@@ -162,14 +162,14 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             // signature: ''
         };
         dispatch(ExCreateBusProfileSetup(userData));
-        // console.log(existingProfileSetupPay, existingProfileSetupError);
+        // //console.logexistingProfileSetupPay, existingProfileSetupError);
     };
 
     useEffect(() => {
         setLoading((prev) => !prev);
 
         if (existingProfileSetupPay) {
-            console.log(existingProfileSetupPay, existingProfileSetupError);
+            //console.logexistingProfileSetupPay, existingProfileSetupError);
             if (existingProfileSetupPay.data.message === 'Successful') {
                 if (formData.type !== 'true') {
                     router.push('/Verify/ExistingSuccess');
@@ -229,7 +229,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
         } else if (accountDetails.user !== undefined) {
             setProfileInfo(accountDetails.user.profile);
         }
-        console.log(profileInfo);
+        //console.logprofileInfo);
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
         }

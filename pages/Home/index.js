@@ -85,7 +85,7 @@ const HomeMain = () => {
     const { cardLogin, cardLoginerrorMessages } = useSelector(
         (state) => state.cardLoginReducer
     );
-    console.log(omniliteData);
+    //console.logomniliteData);
     const { language } = useSelector((state) => state.languages);
 
     useEffect(() => {
@@ -302,7 +302,7 @@ const HomeMain = () => {
         }
     };
     const onSubmit = (data) => {
-        console.log(data);
+        //console.logdata);
         if (selectCountry === '') {
             setError('Choose a country');
         } else {
@@ -322,16 +322,16 @@ const HomeMain = () => {
                 password: data.omnilitePassword
             };
             dispatch(omniliteDataa(postData));
-            console.log('new');
+            //console.log'new');
         } else if (page === 1) {
             const postData = {
                 username: ecoonlineUserName,
                 password: ecoonlinePassword
             };
-            // console.log('ecoOnlineData', ecoonlinePassword, ecoonlineUserName);
-            // console.log(ecobankOnline);
+            // //console.log'ecoOnlineData', ecoonlinePassword, ecoonlineUserName);
+            // //console.logecobankOnline);
             dispatch(ecobankOnlineData(postData));
-            console.log(ecobankOnline);
+            //console.logecobankOnline);
 
             //ecoBank Online Login End
 
@@ -388,15 +388,16 @@ const HomeMain = () => {
                     'account',
                     JSON.stringify(omniliteData.data.user)
                 );
+
                 router.push('/Onboarding/ExistingProfileSetup');
             }
             setError(cardLoginerrorMessages);
         }
-        console.log(accountNumbers);
+        //console.logaccountNumbers);
     };
     const OmniliteTest = () => {
-        console.log(omniliteData);
-        console.log(errorMessage);
+        //console.logomniliteData);
+        //console.logerrorMessage);
         if (errorMessage) {
             setError(errorMessage);
             setLoading(false);
@@ -420,7 +421,7 @@ const HomeMain = () => {
     }, [omniliteData, errorMessage]);
 
     const acctTest = () => {
-        console.log(accountNumbers);
+        //console.logaccountNumbers);
         if (errorMessages === 'Account already exists with the phone') {
             router.push('/Auth/Login');
         } else if (errorMessages) {
@@ -436,6 +437,7 @@ const HomeMain = () => {
             };
 
             window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            window.localStorage.setItem('LoginWith', 'AccountNumber');
             if (accountNumbers.data.email === null) {
                 accountNumbers.data = {
                     ...accountNumbers.data,
@@ -472,7 +474,7 @@ const HomeMain = () => {
         }
     };
     useEffect(() => {
-        // console.log(ecobankOnline, ecoOnlineErrorMessage);
+        // //console.logecobankOnline, ecoOnlineErrorMessage);
         ecoOnlineTest();
     }, [ecobankOnline, ecoOnlineErrorMessage]);
     const types = (type) => {

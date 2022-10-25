@@ -74,7 +74,7 @@ const ProfileSetups = () => {
     }, []);
     useEffect(() => {
         if (countries !== null) {
-            console.log(countries);
+            // console.log(countries);
             countries.filter((item) => {
                 if (item.name === 'Nigeria') {
                     setFormData({
@@ -141,7 +141,7 @@ const ProfileSetups = () => {
                             dispatch(verifyOtp(otpData));
                             // dispatch(CompProfile());
                             if (otpErrorMessage) {
-                                console.log('otpError');
+                                // console.log('otpError');
                             } else if (!otpErrorMessage) {
                                 setPage(page + 1);
                             }
@@ -185,7 +185,7 @@ const ProfileSetups = () => {
     // }, []);
 
     function regsiteredBus() {
-        console.log('firstAPi');
+        // console.log('firstAPi');
 
         const businessProfileData = {
             bvnNumber: formData.bvNumber,
@@ -224,7 +224,7 @@ const ProfileSetups = () => {
         ) {
             setPage(page + 1);
         } else {
-            console.log('move');
+            // console.log('move');
             setErrorM(errorMessages);
             setErrorI(bvnError);
             setLoading(false);

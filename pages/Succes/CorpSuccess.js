@@ -23,11 +23,11 @@ const CorporateSuccess = () => {
                 }
             )
             .then((response) => {
-                console.log('Accoutn Status', response);
+                // console.log('Accoutn Status', response);
                 setAccountDone(response.data.data);
             })
             .catch((error) => {
-                console.log(error.response.data.message);
+                // console.log(error.response.data.message);
             });
     }, []);
     return (
