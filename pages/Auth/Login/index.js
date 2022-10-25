@@ -56,7 +56,8 @@ const Login = () => {
         dispatch(loginUserAction(loginData));
         // dispatch(createNewUserAccount());
     };
-    console.log(user);
+    // console.log(prevPath);
+    // console.log(user);
     const sentLogin = () => {
         if (errorMessages !== null) {
             setError(errorMessages);

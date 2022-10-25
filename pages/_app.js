@@ -1,4 +1,5 @@
 import { Layout } from '../components';
+import React, { useEffect, useState } from 'react';
 import '../styles/globals.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { wrapper, store } from '../store';
@@ -10,6 +11,20 @@ function MyApp({ Component, pageProps, router }) {
         enter: { opacity: 1, x: 0, y: 0 },
         exit: { opacity: 0, x: 0, y: -200 }
     };
+    const [previous, setPrevious] = useState();
+    useEffect(() => storePathValues, [router.asPath]);
+    function storePathValues() {
+        const storage = globalThis?.sessionStorage;
+        if (!storage) return;
+        // Set the previous path as the value of the current path.
+        const prevPath = storage.getItem('currentPath');
+        storage.setItem('prevPath', prevPath);
+        // Set the current path value by looking at the browser's location object.
+        storage.setItem('currentPath', globalThis.location.pathname);
+        console.log(prevPath);
+        setPrevious(prevPath);
+    }
+
     // const pageMotionProps = {
     //     initial: 'pageInitial',
     //     animate: 'pageAnimate',
