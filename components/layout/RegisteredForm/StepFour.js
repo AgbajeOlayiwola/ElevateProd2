@@ -742,6 +742,16 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                                             phoneNumber
                                                             // profileInfo.phoneNumber
                                                         }
+                                                        // onChange={(e) =>
+                                                        //     setPhoneNumber(
+                                                        //         e.target.value
+                                                        //     )
+                                                        // }
+                                                        // value={
+                                                        //     profileInfo.phoneNumber
+                                                        //         ? profileInfo.phoneNumber
+                                                        //         : phoneNumber
+                                                        // }
                                                     />
                                                 </div>
                                             </div>

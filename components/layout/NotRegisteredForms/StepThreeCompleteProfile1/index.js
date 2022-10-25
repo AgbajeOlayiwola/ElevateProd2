@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import { CardHeadingBVN, LeftHeading, ButtonWrapper } from './styles.module';
@@ -59,9 +59,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const { compBusprofile, comperrorMessage } = useSelector(
         (state) => state.completeBusProfileReducer
     );
-    const { isLoading, profile, errorMessage } = useSelector(
-        (state) => state.profile
-    );
+    const { profile, errorMessage } = useSelector((state) => state.profile);
 
     const { newCorpAccount, newCorpAccountErrorMMessage } = useSelector(
         (state) => state.newuserCorpAccount
@@ -77,7 +75,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         (state) => state.newUserAccountDets
     );
 
-    const { userProfile } = useSelector((state) => state.userProfileReducer);
+    const { isLoading, userProfile } = useSelector(
+        (state) => state.userProfileReducer
+    );
 
     const router = useRouter();
     const saveFile = (e) => {
@@ -108,11 +108,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // useEffect(() => {
 
     // }, [businessProfile]);
+    const [relaod, setReload] = useState(false);
+
     useEffect(() => {
         dispatch(CompProfile());
         dispatch(loadUserProfile());
-        // console.log(profile.data);
+    }, []);
 
+    useEffect(() => {
+        // console.log(profile.data);
         if (profile) {
             profile.data?.map((item) => {
                 if (item.documentType === 'CAC') {
@@ -126,8 +130,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                 }
             });
         }
-
         if (profile !== null) {
+            setReload(true);
             if (userProfile !== null) {
                 // console.log(userProfile);
                 setProfileCont(userProfile);
@@ -138,8 +142,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                 setBusinessProfile('');
             }
         }
-        // setGender(profileCont.gender);
-    }, [businessCategories, business]);
+        setGender(profileCont.gender);
+    }, [profile]);
 
     useEffect(() => {
         dispatch(businessCategoriesData());
@@ -333,9 +337,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <input
                                         type="text"
                                         value={
-                                            profileCont
-                                                ? `${profileCont.lastName} ${profileCont.firstName}`
-                                                : null
+                                            profileCont.lastName === undefined
+                                                ? 'Full Name'
+                                                : `${profileCont.lastName} ${profileCont.firstName}`
                                         }
                                         disabled
                                     />
