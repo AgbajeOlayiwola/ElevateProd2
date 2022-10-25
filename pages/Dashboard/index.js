@@ -142,19 +142,35 @@ const Dashboard = () => {
             setAcctNumber('Pending');
         }
     }, [accountPrimary]);
-    // useEffect(() => {
-    //     if (userProfile !== null) {
-    //         setUserProfileData(userProfile);
-    //         console.log(userProfileData.isUpgradedAccount);
-    //         if (userProfileData.isUpgradedAccount === false) {
-    //             router.push('/AccountUpgrade');
-    //         } else if (userProfileData.isUpgradedAccount === true) {
-    //             // setAccountUpgrade(false);
-    //         }
-    //     }
+    const [previousRoute, setPreviousRoute] = useState('');
+    useEffect(() => storePathValues, [router.asPath]);
+    function storePathValues() {
+        const storage = globalThis?.sessionStorage;
+        if (!storage) return;
+        // Set the previous path as the value of the current path.
+        var prevPath = storage.getItem('currentPath');
+        storage.setItem('prevPath', prevPath);
+        // Set the current path value by looking at the browser's location object.
+        storage.setItem('currentPath', globalThis.location.pathname);
+        setPreviousRoute(prevPath);
+        // console.log(prevPath);
+    }
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+            // console.log(userProfileData.isUpgradedAccount);
 
-    // console.log('upgrade check', accountUpgrade);
-    // }, [userProfile]);
+            if (userProfileData.isUpgradedAccount === true) {
+                if (previousRoute === 'Auth/login') {
+                    router.push('/AccountUpgrade');
+                } else if (userProfileData.isUpgradedAccount === true) {
+                    // setAccountUpgrade(false);
+                }
+            }
+        }
+
+        console.log('upgrade check', accountUpgrade);
+    }, [userProfile]);
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);

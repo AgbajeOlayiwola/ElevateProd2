@@ -1476,7 +1476,7 @@ export const createProfileSetup = (profileData) => {
                         axios
                             .post(
                                 `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatus}`,
-
+                                [],
                                 {
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -1494,7 +1494,7 @@ export const createProfileSetup = (profileData) => {
                                     bvnNinError(error.response.data.message)
                                 );
                             });
-                    }, 15000);
+                    }, 5000);
                 }
             })
             .catch((error) => {
@@ -1589,7 +1589,7 @@ export const createBusProfileSetup = (businessProfileData) => {
                                     bvnNinError(error.response.data.message)
                                 );
                             });
-                    }, 15000);
+                    }, 5000);
                 }
             })
             .catch((error) => {
