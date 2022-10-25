@@ -99,7 +99,7 @@ const Liveness = ({ action, loading, setLoading }) => {
                         <div
                             className={
                                 // succes === 'facial verification successful'
-                                succes === 'success'
+                                succes === 'facial verification successful'
                                     ? styles.imageOuter
                                     : error
                                     ? styles.errorInner
@@ -122,13 +122,18 @@ const Liveness = ({ action, loading, setLoading }) => {
                 {/* {loading ? <Loader /> : null} */}
 
                 <ButtonComp
-                    onClick={succes === 'success' ? action : capture}
+                    onClick={
+                        succes === 'facial verification successful'
+                            ? action
+                            : capture
+                    }
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
                     type="button"
                     text={
-                        // succes === 'facial verification successful'
-                        succes === 'success' ? 'Continue' : 'Snap'
+                        succes === 'facial verification successful'
+                            ? 'Continue'
+                            : 'Snap'
                     }
                     // action={action}
                 />

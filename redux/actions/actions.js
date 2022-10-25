@@ -1472,25 +1472,29 @@ export const createProfileSetup = (profileData) => {
                     //console.log'test1');
                     const cookie = getCookie('cookieToken');
                     //console.logcookie);
-                    axios
-                        .post(
-                            `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatus}`,
-                            [],
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization: `Bearer ${cookie}`
+                    setTimeout(() => {
+                        axios
+                            .post(
+                                `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatus}`,
+
+                                {
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        Authorization: `Bearer ${cookie}`
+                                    }
                                 }
-                            }
-                        )
-                        .then((response) => {
-                            dispatch(bvnNinData(response.data.message));
-                            //console.log'profile otp dispatch', response);
-                        })
-                        .catch((error) => {
-                            //console.log'profile otp dispatch', error);
-                            dispatch(bvnNinError(error.response.data.message));
-                        });
+                            )
+                            .then((response) => {
+                                dispatch(bvnNinData(response.data.message));
+                                //console.log'profile otp dispatch', response);
+                            })
+                            .catch((error) => {
+                                //console.log'profile otp dispatch', error);
+                                dispatch(
+                                    bvnNinError(error.response.data.message)
+                                );
+                            });
+                    }, 15000);
                 }
             })
             .catch((error) => {
@@ -1563,26 +1567,29 @@ export const createBusProfileSetup = (businessProfileData) => {
                 //console.log'data from Business profile', response.data);
                 if (response.data.message === 'Success') {
                     const cookie = getCookie('cookieToken');
-                    axiosInstance
-                        .post(
-                            `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatusBus}`,
-                            [],
-
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization: `Bearer ${cookie}`
+                    setTimeout(() => {
+                        axiosInstance
+                            .post(
+                                `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatusBus}`,
+                                [],
+                                {
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        Authorization: `Bearer ${cookie}`
+                                    }
                                 }
-                            }
-                        )
-                        .then((response) => {
-                            dispatch(bvnNinData(response.data.message));
-                            //console.log'profile otp dispatch', response);
-                        })
-                        .catch((error) => {
-                            //console.log'profile otp dispatch', error);
-                            dispatch(bvnNinError(error.response.data.message));
-                        });
+                            )
+                            .then((response) => {
+                                dispatch(bvnNinData(response.data.message));
+                                //console.log'profile otp dispatch', response);
+                            })
+                            .catch((error) => {
+                                //console.log'profile otp dispatch', error);
+                                dispatch(
+                                    bvnNinError(error.response.data.message)
+                                );
+                            });
+                    }, 15000);
                 }
             })
             .catch((error) => {
