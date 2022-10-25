@@ -142,22 +142,23 @@ const Dashboard = () => {
             setAcctNumber('Pending');
         }
     }, [accountPrimary]);
-    useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-            if (userProfileData.isUpgradedAccount === false) {
-                router.push('/AccountUpgrade');
-            } else if (userProfileData.isUpgradedAccount === true) {
-                setAccountUpgrade(false);
-            }
-        }
+    // useEffect(() => {
+    //     if (userProfile !== null) {
+    //         setUserProfileData(userProfile);
+    //         console.log(userProfileData.isUpgradedAccount);
+    //         if (userProfileData.isUpgradedAccount === false) {
+    //             router.push('/AccountUpgrade');
+    //         } else if (userProfileData.isUpgradedAccount === true) {
+    //             // setAccountUpgrade(false);
+    //         }
+    //     }
 
-        // console.log('upgrade check', accountUpgrade);
-    }, [userProfile]);
+    // console.log('upgrade check', accountUpgrade);
+    // }, [userProfile]);
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
-            console.log(transactionElevate.transactions);
+            // console.log(transactionElevate.transactions);
         }
     }, [transactionElevate]);
     return (

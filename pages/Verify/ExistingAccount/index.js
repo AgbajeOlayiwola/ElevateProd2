@@ -25,10 +25,10 @@ const ExistingAccount = () => {
         dispatch(accountStatusData(userId));
     }, []);
     const newAccountTest1 = () => {
-        console.log(accountStatus);
+        //console.logaccountStatus);
         if (errorMessages) {
             //  setError(errorMessages);
-            console.log(errorMessages);
+            //console.logerrorMessages);
         } else if (accountStatus.message === 'Try Again') {
             setTimeout(() => {
                 dispatch(accountStatusData(userId));

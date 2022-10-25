@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import { CardHeadingBVN, LeftHeading, ButtonWrapper } from './styles.module';
@@ -59,9 +59,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const { compBusprofile, comperrorMessage } = useSelector(
         (state) => state.completeBusProfileReducer
     );
-    const { isLoading, profile, errorMessage } = useSelector(
-        (state) => state.profile
-    );
+    const { profile, errorMessage } = useSelector((state) => state.profile);
 
     const { newCorpAccount, newCorpAccountErrorMMessage } = useSelector(
         (state) => state.newuserCorpAccount
@@ -77,14 +75,16 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         (state) => state.newUserAccountDets
     );
 
-    const { userProfile } = useSelector((state) => state.userProfileReducer);
+    const { isLoading, userProfile } = useSelector(
+        (state) => state.userProfileReducer
+    );
 
     const router = useRouter();
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        console.log(file);
+        // console.log(file);
     };
     useEffect(() => {
         dispatch(statesData());
@@ -108,11 +108,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // useEffect(() => {
 
     // }, [businessProfile]);
+    const [relaod, setReload] = useState(false);
+
     useEffect(() => {
         dispatch(CompProfile());
         dispatch(loadUserProfile());
-        // console.log(profile.data);
+    }, []);
 
+    useEffect(() => {
+        // console.log(profile.data);
         if (profile) {
             profile.data?.map((item) => {
                 if (item.documentType === 'CAC') {
@@ -121,15 +125,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                         bussinessName: item.documentData.companyName
                     });
                     setBusinessProfile(item.documentData.companyName);
-                    console.log(businessProfile);
+                    // console.log(businessProfile);
                     // console.log(formData.businessName);
                 }
             });
         }
-
         if (profile !== null) {
+            setReload(true);
             if (userProfile !== null) {
-                console.log(userProfile);
+                // console.log(userProfile);
                 setProfileCont(userProfile);
             }
             if (profile.data[1]) {
@@ -138,20 +142,20 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                 setBusinessProfile('');
             }
         }
-        // setGender(profileCont.gender);
-    }, [businessCategories, business]);
+        setGender(profileCont.gender);
+    }, [profile]);
 
     useEffect(() => {
         dispatch(businessCategoriesData());
     }, []);
-    console.log(
-        'errorMessages from account',
-        newAccount,
-        newAccountErrorMessage
-    );
+    // console.log(
+    //     'errorMessages from account',
+    //     newAccount,
+    //     newAccountErrorMessage
+    // );
     useEffect(() => {
         if (newAccount.message === 'success') {
-            console.log(errorMessages);
+            // console.log(errorMessages);
             router.push('/Verify/Account/loading');
         } else if (
             newAccountErrorMessage ===
@@ -172,7 +176,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         });
     }, [business]);
 
-    if (gender === 'm') console.log(profileCont);
+    // if (gender === 'm') console.log(profileCont);
 
     const {
         register,
@@ -181,7 +185,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         formState: { errors }
     } = useForm();
 
-    console.log(type);
+    // console.log(type);
 
     // const uploadFile = async (e) => {
     //   const formData = new FormData();
@@ -236,13 +240,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             refereeCode: '',
             signature: file
         };
-        console.log(commpleteProfileData);
+        // console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
 
     useEffect(() => {
         setLoading((prev) => !prev);
-        console.log(compBusprofile);
+        // console.log(compBusprofile);
         if (compBusprofile) {
             if (
                 compBusprofile.message === 'Successful' ||
@@ -260,7 +264,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         }
     }, [newAccount, comperrorMessage]);
     const basicAction = () => {
-        console.log(business);
+        // console.log(business);
         if (business === '' && businesses === '') {
             setBusinessError(true);
             setBusinessTypeError(true);
@@ -273,7 +277,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     const [activeBtn, setActiveBtn] = useState(true);
     //console.log(test)
-    console.log(type);
+    // console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
@@ -333,9 +337,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <input
                                         type="text"
                                         value={
-                                            profileCont
-                                                ? `${profileCont.lastName} ${profileCont.firstName}`
-                                                : null
+                                            profileCont.lastName === undefined
+                                                ? 'Full Name'
+                                                : `${profileCont.lastName} ${profileCont.firstName}`
                                         }
                                         disabled
                                     />

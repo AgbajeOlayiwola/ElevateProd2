@@ -42,7 +42,7 @@ const CorporateAccount = () => {
                 }
             )
             .then((response) => {
-                console.log('create New Account', response.data);
+                //console.log'create New Account', response.data);
                 if (response.data.message === 'success') {
                     setInterval(() => {
                         axiosInstance
@@ -56,20 +56,20 @@ const CorporateAccount = () => {
                                 }
                             )
                             .then((response) => {
-                                // console.log('Accoutn Status', response);
+                                // //console.log'Accoutn Status', response);
                                 setAccountDone(response.data.data);
                             })
                             .catch((error) => {
-                                console.log(error.response.data.message);
+                                //console.logerror.response.data.message);
                             });
                     }, 10000);
                 }
             })
             .catch((error) => {
-                console.log(
-                    'create new account Error:',
-                    error.response.data.message
-                );
+                //console.log
+                // 'create new account Error:',
+                // error.response.data.message
+                // );
                 setErrorMes(error.response.data.message);
             });
 
@@ -87,7 +87,7 @@ const CorporateAccount = () => {
             errorMes === 'Pending Creation, Try Again' ||
             errorMes === 'Bank Account has not been created for this user'
         ) {
-            console.log(errorMes);
+            //console.logerrorMes);
             dispatch(newAccountStatusData());
             setInterval(() => {
                 dispatch(newAccountStatusData());
@@ -95,7 +95,7 @@ const CorporateAccount = () => {
         }
 
         if (accountDone.message === 'success') {
-            // console.log(accountStatus.messages, errorMessages);
+            // //console.logaccountStatus.messages, errorMessages);
             router.push('/Succes');
         }
     };

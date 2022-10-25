@@ -956,19 +956,17 @@ const Profile = () => {
                                                                     .length ===
                                                                 10
                                                             ) {
-                                                                const details =
-                                                                    {
-                                                                        accountNumber:
-                                                                            e
-                                                                                .target
-                                                                                .value
-                                                                    };
+                                                                const details = {
+                                                                    accountNumber:
+                                                                        e.target
+                                                                            .value
+                                                                };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
-                                                                console.log();
+                                                                // console.log();
                                                             }
                                                         }}
                                                         type="number"

@@ -4,7 +4,7 @@ const Dropdownicon = ({ item }) => {
     const [subNav, setSubNav] = useState(false);
     const showSubnav = () => {
         setSubNav((prev) => !prev);
-        console.log('clicked');
+        //console.log'clicked');
     };
     return (
         <div>

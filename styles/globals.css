@@ -87,6 +87,10 @@ input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #dcdcdc;
+    opacity: 1; /* Firefox */
+  }
 button {
     padding: var(--global-button-padding);
     color: var(--global-button-color);

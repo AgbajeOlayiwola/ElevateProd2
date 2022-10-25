@@ -58,8 +58,8 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
         } else if (accountDetails.user !== undefined) {
             setProfileInfo(accountDetails.user.profile);
         }
-        console.log(profileInfo);
-        console.log(bankAccounts[0]?.accountNumber);
+        // console.log(profileInfo);
+        // console.log(bankAccounts[0]?.accountNumber);
     }, []);
 
     const [activeBtn, setActiveBtn] = useState(true);
