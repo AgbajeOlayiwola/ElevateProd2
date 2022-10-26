@@ -57,7 +57,7 @@ const CorporateAccount = () => {
                             )
                             .then((response) => {
                                 // //console.log'Accoutn Status', response);
-                                setAccountDone(response.data.data);
+                                setAccountDone(response.data.message);
                             })
                             .catch((error) => {
                                 //console.logerror.response.data.message);
@@ -71,13 +71,38 @@ const CorporateAccount = () => {
                 // error.response.data.message
                 // );
                 setErrorMes(error.response.data.message);
+                if (
+                    errorMes ===
+                    'You already have an account with us. Please contact us for more information'
+                ) {
+                    setInterval(() => {
+                        axiosInstance
+                            .get(
+                                `https://ellevate-test.herokuapp.com/bank-account/status`,
+                                {
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        Authorization: `Bearer ${cookie}`
+                                    }
+                                }
+                            )
+                            .then((response) => {
+                                // //console.log'Accoutn Status', response);
+                                setAccountDone(response.data.message);
+                            })
+                            .catch((error) => {
+                                //console.logerror.response.data.message);
+                            });
+                    }, 10000);
+                }
             });
-
-        if (accountDone.message === 'success') {
+    };
+    console.log(accountDone);
+    useEffect(() => {
+        if (accountDone === 'success') {
             router.push('/Succes/CorpSuccess');
         }
-    };
-
+    }, [errorMes, accountDone]);
     useEffect(() => {
         newUserAccountt();
     }, [errorMes, accountDone]);

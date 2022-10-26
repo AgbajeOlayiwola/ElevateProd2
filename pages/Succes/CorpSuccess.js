@@ -14,7 +14,7 @@ const CorporateSuccess = () => {
         const cookie = getCookie('cookieToken');
         axiosInstance
             .get(
-                `https://ellevate-test.herokuapp.com${apiRoutes.corpAccountStatus}`,
+                `https://ellevate-test.herokuapp.com${apiRoutes.accountStatus}`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
