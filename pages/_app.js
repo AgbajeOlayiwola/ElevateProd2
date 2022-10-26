@@ -12,18 +12,6 @@ function MyApp({ Component, pageProps, router }) {
         exit: { opacity: 0, x: 0, y: -200 }
     };
     const [previous, setPrevious] = useState();
-    useEffect(() => storePathValues, [router.asPath]);
-    function storePathValues() {
-        const storage = globalThis?.sessionStorage;
-        if (!storage) return;
-        // Set the previous path as the value of the current path.
-        const prevPath = storage.getItem('currentPath');
-        storage.setItem('prevPath', prevPath);
-        // Set the current path value by looking at the browser's location object.
-        storage.setItem('currentPath', globalThis.location.pathname);
-        console.log(prevPath);
-        setPrevious(prevPath);
-    }
 
     // const pageMotionProps = {
     //     initial: 'pageInitial',

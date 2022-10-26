@@ -155,22 +155,22 @@ const Dashboard = () => {
         setPreviousRoute(prevPath);
         // console.log(prevPath);
     }
-    useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-            // console.log(userProfileData.isUpgradedAccount);
 
-            if (userProfileData.isUpgradedAccount === true) {
-                if (previousRoute === 'Auth/login') {
-                    router.push('/AccountUpgrade');
-                } else if (userProfileData.isUpgradedAccount === true) {
-                    // setAccountUpgrade(false);
-                }
-            }
-        }
+    // useEffect(() => {
+    //     if (userProfile !== null) {
+    //         setUserProfileData(userProfile);
+    //         // console.log(userProfileData.isUpgradedAccount);
+    //         if (userProfileData.isUpgradedAccount === true) {
+    //             if (previousRoute !== 'Auth/login') {
+    //             } else if (userProfileData.isUpgradedAccount === true) {
+    //                 // setAccountUpgrade(false);
+    //                 router.push('/AccountUpgrade');
+    //             }
+    //         }
+    //     }
 
-        console.log('upgrade check', accountUpgrade);
-    }, [userProfile]);
+    //     console.log('upgrade check', accountUpgrade);
+    // }, [userProfile]);
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
