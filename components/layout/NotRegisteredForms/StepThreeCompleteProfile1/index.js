@@ -118,6 +118,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     useEffect(() => {
         // console.log(profile.data);
         if (profile) {
+            // setProfileCont(userProfile);
             profile.data?.map((item) => {
                 if (item.documentType === 'CAC') {
                     setFormData({
@@ -130,21 +131,26 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                 }
             });
         }
-        if (profile !== null) {
-            setReload(true);
-            if (userProfile !== null) {
-                // console.log(userProfile);
-                setProfileCont(userProfile);
-            }
-            if (profile.data[1]) {
-                setBusinessProfile(profile.data[1].documentData);
-            } else {
-                setBusinessProfile('');
-            }
+        // setProfileCont(userProfile);
+        // if (profile) {
+        if (userProfile) {
+            // console.log(userProfile);
+            setProfileCont(userProfile);
         }
-        setGender(profileCont.gender);
+        //     if (profile.data[1]) {
+        //         setBusinessProfile(profile.data[1].documentData);
+        //     } else {
+        //         setBusinessProfile('');
+        //     }
+        // }
+        // setGender(profileCont.gender);
     }, [profile]);
-
+    useEffect(() => {
+        if (userProfile) {
+            // console.log(userProfile);
+            setProfileCont(userProfile);
+        }
+    }, [userProfile]);
     useEffect(() => {
         dispatch(businessCategoriesData());
     }, []);
@@ -337,9 +343,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <input
                                         type="text"
                                         value={
-                                            profileCont.lastName === undefined
-                                                ? 'Full Name'
-                                                : `${profileCont.lastName} ${profileCont.firstName}`
+                                            profileCont.lastName !== undefined
+                                                ? `${profileCont.lastName} ${profileCont.firstName}`
+                                                : 'Full Name'
                                         }
                                         disabled
                                     />

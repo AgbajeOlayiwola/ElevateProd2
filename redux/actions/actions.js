@@ -1273,9 +1273,9 @@ export const accountStatusLoadStart = () => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_START
 });
 
-export const accountStatusLoadSuccess = (bill) => ({
+export const accountStatusLoadSuccess = (accountStatusData) => ({
     type: accountStatus.ACCOUNTSTATUS_LOAD_SUCCESS,
-    payload: bill
+    payload: accountStatusData
 });
 
 export const accountStatusLoadError = (errorMessages) => ({
