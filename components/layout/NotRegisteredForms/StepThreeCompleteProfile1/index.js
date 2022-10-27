@@ -81,6 +81,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     const router = useRouter();
     const saveFile = (e) => {
+        console.log(e.target.filles);
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
         // console.log(file);
