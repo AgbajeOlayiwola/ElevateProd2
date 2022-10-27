@@ -65,7 +65,7 @@ const Liveness = ({ action, loading, setLoading }) => {
         }
         axios
             .post(
-                `https://ellevate-test.herokuapp.com/users/profile/image`,
+                `https://ellevate-test.herokuapp.com/authentication/facematch`,
                 formData,
                 {
                     headers: {
