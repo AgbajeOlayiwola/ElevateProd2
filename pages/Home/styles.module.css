@@ -395,7 +395,9 @@
     filter: grayscale(100%);
     margin: 0px auto;
 }
-
+.error{
+    color: red;
+}
 .cov {
     width: 22%;
 }
@@ -704,12 +706,17 @@
     margin-left: 12px;
     text-transform: uppercase;
 }
-
+.sameErroSize{
+    font-size: 11px;
+}
 .error {
     color: red;
     font-size: 12px;
     margin: 0px;
     margin-top: 0.5rem;
+}
+.success{
+    color: #6ccf00;
 }
 @keyframes spaceshow {
     0% {

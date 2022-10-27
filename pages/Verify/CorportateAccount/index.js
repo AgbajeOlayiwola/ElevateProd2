@@ -70,10 +70,11 @@ const CorporateAccount = () => {
                 // 'create new account Error:',
                 // error.response.data.message
                 // );
-                setErrorMes(error.response.data.message);
+                // setErrorMes(error.response.data.message);
                 if (
-                    errorMes ===
-                    'You already have an account with us. Please contact us for more information'
+                    // errorMes ===
+                    //     'You already have an account with us. Please contact us for more information' ||
+                    error
                 ) {
                     setInterval(() => {
                         axiosInstance

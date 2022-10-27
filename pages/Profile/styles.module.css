@@ -764,3 +764,19 @@
 .signRights .profileBodyButton {
     margin-top: 64px;
 }
+.contactEmail{
+    color:#235b7f;
+    font-size: 14px;
+    margin: 30px 0px 20px 0px;
+}
+.contactWeb{
+    color:#235b7f;
+    font-size: 14px; 
+    margin: 30px 0px 20px 0px;
+}
+.contactUs{
+    margin: 30px 0px 20px 0px;
+}
+.Hello{
+    text-align: center;
+}

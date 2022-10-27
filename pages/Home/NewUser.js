@@ -27,6 +27,8 @@ const NewUser = ({ selectCountry }) => {
     const [outTyped, setOutTyped] = useState();
     const [activeBtn, setActiveBtn] = useState(true);
     const [passwordMatch, setPasswordMatch] = useState('');
+    const [symbol, setSymbol] = useState(false);
+    const [numbers, setNumbers] = useState(false);
 
     const { user, errorMessage } = useSelector((state) => state.registered);
     const handlePaswword = (e) => {
@@ -38,6 +40,34 @@ const NewUser = ({ selectCountry }) => {
     };
     const handlePwd = (e) => {
         setCount(e.target.value.length);
+        if (
+            validator.isStrongPassword(e.target.value, {
+                minLength: 0,
+                minLowercase: 0,
+                minUppercase: 0,
+                minNumbers: 0,
+                minSymbols: 1
+            })
+        ) {
+            setSymbol(true);
+        } else {
+            setSymbol(false);
+        }
+
+        if (
+            validator.isStrongPassword(e.target.value, {
+                minLength: 0,
+                minLowercase: 0,
+                minUppercase: 0,
+                minNumbers: 1,
+                minSymbols: 0
+            })
+        ) {
+            setNumbers(true);
+        } else {
+            setNumbers(false);
+        }
+
         if (
             validator.isStrongPassword(e.target.value, {
                 minLength: 8,
@@ -218,7 +248,25 @@ const NewUser = ({ selectCountry }) => {
                         <Visbility typeSet={typed} />
                     </div>
                     {password == confirmPassword ? null : (
-                        <p className={styles.error}>{passwordMatch}</p>
+                        <>
+                            <p className={styles.error}>{passwordMatch}</p>
+                            <div className={styles.sameErroSize}>
+                                <p
+                                    className={
+                                        numbers ? styles.success : styles.error
+                                    }
+                                >
+                                    must have up to 1 number
+                                </p>
+                                <p
+                                    className={
+                                        symbol ? styles.success : styles.error
+                                    }
+                                >
+                                    must have up to 1 symmbol
+                                </p>
+                            </div>
+                        </>
                     )}
                 </div>
             </div>

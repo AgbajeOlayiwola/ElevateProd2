@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './styles.module.css';
 
@@ -13,19 +13,20 @@ const ButtonComp = ({
     color,
     margin,
     active,
-    disabled
+    disabled,
+    err
 }) => {
-    // console.log(disabled);
-    // const [loading, setLoading] = useState(false);
+    console.log(disabled);
+    const [loading, setLoading] = useState(false);
 
-    // const click = () => {
-    //     setLoading((prevState) => !prevState);
-    // };
-    // useEffect(() => {
-    //     if (err) {
-    //         setLoading((prevState) => !prevState);
-    //     }
-    // }, [err]);
+    const click = () => {
+        setLoading((prevState) => !prevState);
+    };
+    useEffect(() => {
+        if (err) {
+            setLoading((prevState) => !prevState);
+        }
+    }, [err]);
     return (
         <>
             {disabled ? (
