@@ -4,10 +4,10 @@ const getCountries = '/affiliates-countries';
 const getLanguages = '/languages';
 const getBillerCategories = '/payment/billers/categories';
 const getBillerType = '/payment/billers';
-const getBillerPlan = 'billers/details/';
+const getBillerPlan = '/payment/billers/details';
 const airtime = '/payment/airtime-topup';
 const airtimeNetwork = '/payment/airtime-topup/networks';
-const bills = '/payments/bill-payment';
+const bills = '/payment/biller-payment';
 const internalBank = '/transfer/internal-transfer';
 const interBank = '/payment/single-transfer';
 const interBankEnquiry = '/bank-account/intra-bank/info';
@@ -71,6 +71,7 @@ const unfreezeTransactions = '/users/unfreeze-transactions';
 const businessNameCac = '/business/name';
 const verifyCac = '/document-verification/cac';
 const internationalCountries = '/international-countries';
+const pushDocuments = '/account-upgrade/push-document-for-review';
 export default {
     getBanks,
     getCountries,
@@ -143,5 +144,6 @@ export default {
     transactionFees,
     businessNameCac,
     internationalCountries,
+    pushDocuments,
     verifyCac
 };

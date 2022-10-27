@@ -5,9 +5,11 @@ import OtpInput from '../Otpinput';
 import Overlay from '../Overlay';
 import Loader from '../Loader';
 import ConfirmLockSvg from '../ReusableSvgComponents/ConfirmLockSvg';
+import { loadUserProfile } from '../../../redux/actions/actions';
 import CloseButton from '../CloseButtonSvg';
 import { useForm } from 'react-hook-form';
 import ArrowBackSvg from '../ArrowBackSvg';
+import { useDispatch, useSelector } from 'react-redux';
 const numOfFields = 6;
 
 const useSSNFields = () => {
@@ -63,6 +65,8 @@ const MakePaymentSecond = ({
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [newAmount, setNewAmount] = useState('');
+    const [userProfileData, setUserProfileData] = useState({});
+    const dispatch = useDispatch();
     useEffect(() => {
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -73,6 +77,16 @@ const MakePaymentSecond = ({
         setNewAmount(formattedAmount);
     }, []);
     const { handleChange } = useSSNFields();
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
+    useEffect(() => {
+        dispatch(loadUserProfile());
+    }, []);
+
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
+    }, [userProfile]);
     const {
         register,
         handleSubmit,
@@ -106,92 +120,6 @@ const MakePaymentSecond = ({
                             <h3>{newAmount}</h3>
                         </div>
                         {title === 'Bills Payment' ? (
-                            // <div className={styles.PaymentSecond}>
-                            //     <div className={styles.PaymentSecondCont}>
-                            //         <h2>Confirm Transaction</h2>
-                            //         <p>Enter your transaction pin to continue.</p>
-                            //         <div className={styles.transactionamount}>
-                            //             <p>Amount</p>
-                            //             <h3>N{amount}</h3>
-                            //         </div>
-                            //         <div className={styles.transactiondetails}>
-                            //             <div className={styles.transactionsingles}>
-                            //                 <p className={styles.transactionTitle}>
-                            //                     Category
-                            //                 </p>
-                            //                 <h3>{recieverName}</h3>
-                            //             </div>
-                            //             <div className={styles.transactionsingle}>
-                            //                 <p className={styles.transactionTitle}>
-                            //                     Platform
-                            //                 </p>
-                            //                 <h3>
-                            //                     <span></span> {recieverBank}
-                            //                 </h3>
-                            //             </div>
-                            //             {recieverName === 'Utilities' ? (
-                            //                 <>
-                            //                     <div className={styles.transactionsingle}>
-                            //                         <p className={styles.transactionTitle}>
-                            //                             Meter Type
-                            //                         </p>
-                            //                         <h3>{sender}</h3>
-                            //                     </div>
-                            //                     <div className={styles.transactionsingle}>
-                            //                         <p className={styles.transactionTitle}>
-                            //                             Reference Number
-                            //                         </p>
-                            //                         <h3>{refNuber}</h3>
-                            //                     </div>
-                            //                 </>
-                            //             ) : null}
-
-                            //             <div className={styles.transactionsingle}>
-                            //                 <p className={styles.transactionTitle}>
-                            //                     Charges
-                            //                 </p>
-                            //                 <h3>N50.50</h3>
-                            //             </div>
-                            //             <div className={styles.transactionsingle}>
-                            //                 <p className={styles.transactionTitle}>
-                            //                     Number
-                            //                 </p>
-                            //                 <h3>{number}</h3>
-                            //             </div>
-                            //         </div>
-                            //         <h4>Enter Transaction Pin</h4>
-                            //         <OtpInput />
-                            //         <div className={styles.resendFlex}>
-                            //             <p
-                            //                 style={{
-                            //                     color: '#005B82',
-                            //                     cursor: 'pointer'
-                            //                 }}
-                            //             >
-                            //                 Resend OTP
-                            //             </p>
-                            //             <button
-                            //                 style={{ cursor: 'pointer' }}
-                            //                 className={styles.clr}
-                            //                 type="reset"
-                            //             >
-                            //                 Clear
-                            //             </button>
-                            //         </div>
-                            //         {isLoading ? (
-                            //             <Loader />
-                            //         ) : (
-                            //             <ButtonComp
-                            //                 disabled={activeBtn}
-                            //                 active={activeBtn ? 'active' : 'inactive'}
-                            //                 text="Make Transfer"
-                            //                 type="submit"
-                            //                 onClick={transferAction}
-                            //             />
-                            //         )}
-                            //     </div>
-                            // </div>
-
                             <div className={styles.transactiondetails}>
                                 <div className={styles.transactionsingles}>
                                     <p className={styles.transactionTitle}>
@@ -254,7 +182,12 @@ const MakePaymentSecond = ({
                                 </div>
                             </div>
                         )}
-                        <h4>Enter Transaction Pin</h4>
+                        {userProfileData.hasSetTransactionPin === false ? (
+                            <h4>Enter your desired Transaction Pin</h4>
+                        ) : userProfileData.hasSetTransactionPin === true ? (
+                            <h4>Enter Transaction Pin</h4>
+                        ) : null}
+
                         <form onSubmit={handleSubmit(transferAction)}>
                             <div className={styles.otpInps}>
                                 <input

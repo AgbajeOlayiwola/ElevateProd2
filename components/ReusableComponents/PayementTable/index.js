@@ -110,6 +110,11 @@ const PaymentTable = ({ title, test }) => {
             {!tableDetails.length
                 ? 'No Recent transaction'
                 : tableDetails
+                      ?.sort((x, y) => {
+                          let a = new Date(x.transactionDate),
+                              b = new Date(y.transactionDate);
+                          return b - a;
+                      })
                       ?.filter((item) => {
                           if (searchValue === '') {
                               return item;

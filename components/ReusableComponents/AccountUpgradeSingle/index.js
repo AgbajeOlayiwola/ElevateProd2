@@ -24,8 +24,8 @@ const AccountUpgradeSingle = ({ icon, text, index, action, statusInfo }) => {
                     </div>
                 </div>
                 <div className={styles.accountUpgradeSingleChecked}>
-                    <AccountChecked />
-                    <p>{statusInfo}</p>
+                    <AccountChecked statusInfo={statusInfo} />
+                    <p>pending</p>
                 </div>
             </div>
         </>

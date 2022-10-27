@@ -65,6 +65,7 @@ import {
     resetOtpType,
     existingBusnessSetup,
     sendCac,
+    pushDocuments,
     getCAC
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
@@ -449,6 +450,34 @@ export const businessCategoriesData = () => (dispatch) => {
 };
 //businessCategories actions end
 
+//pushDocuments actions
+export const pushDocumentsLoadStart = () => ({
+    type: pushDocuments.PUSHDOCUMENTS_LOAD_START
+});
+
+export const pushDocumentsLoadSuccess = (countries) => ({
+    type: pushDocuments.PUSHDOCUMENTS_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const pushDocumentsLoadError = (errorMessage) => ({
+    type: pushDocuments.PUSHDOCUMENTS_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const pushDocumentsData = () => (dispatch) => {
+    dispatch(pushDocumentsLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.pushDocuments}`)
+        .then((response) =>
+            dispatch(pushDocumentsLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(pushDocumentsLoadError(error.response.data.message))
+        );
+};
+//pushDocuments actions end
+
 //states actions
 export const statesLoadStart = () => ({
     type: states.STATES_LOAD_START
@@ -565,7 +594,7 @@ export const billerPlanLoadError = (errorMessage) => ({
 export const loadbillerPlan = (code) => (dispatch) => {
     dispatch(billerPlanLoadStart());
     axiosInstance
-        .get(`${apiRoutes.getBillerPlan}${code}`)
+        .get(`${apiRoutes.getBillerPlan}?billerCode=${code}`)
         .then((response) => dispatch(billerPlanLoadSuccess(response.data.data)))
         .catch((error) => dispatch(billerPlanLoadError(error.message)));
 };

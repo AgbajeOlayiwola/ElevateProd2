@@ -22,6 +22,14 @@ export const banks = {
 //banks action types end
 
 //banks action types
+export const pushDocuments = {
+    PUSHDOCUMENTS_LOAD_START: 'PUSHDOCUMENTS_LOAD_START',
+    PUSHDOCUMENTS_LOAD_SUCCESS: 'PUSHDOCUMENTS_LOAD_SUCCESS',
+    PUSHDOCUMENTS_LOAD_ERROR: 'PUSHDOCUMENTS_LOAD_ERROR'
+};
+//banks action types end
+
+//banks action types
 export const logout = {
     LOGOUT_START: 'LOGOUT_START'
 };

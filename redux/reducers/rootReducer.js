@@ -65,6 +65,7 @@ import unfreezeTransactionsReducer from './unfreezeTransactions.reducer';
 import ExistingProfileSetupReducer from './exixtingUserProfile.reducer';
 import transactionFeesReducer from './transactionFees.reducer';
 import logoutReducer from './logout.reducer';
+import pushDocumentsReducer from './pushDocuments.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -136,10 +137,10 @@ const appReducer = combineReducers({
     unfreezeTransactionsReducer,
     freezeTransactionsReducer,
     changeTransactionPinReducer,
+    pushDocumentsReducer,
     completeBusinessprofileReducer
 });
 const rootReducer = (state, action) => {
-    // console.log(action);
     if (action.type === 'LOGOUT_START') {
         return appReducer(undefined, action);
     }
