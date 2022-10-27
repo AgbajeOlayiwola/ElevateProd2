@@ -28,6 +28,13 @@ export const pushDocuments = {
     PUSHDOCUMENTS_LOAD_ERROR: 'PUSHDOCUMENTS_LOAD_ERROR'
 };
 //banks action types end
+//banks action types
+export const shareDocuments = {
+    SHAREDOCUMENTS_LOAD_START: 'SHAREDOCUMENTS_LOAD_START',
+    SHAREDOCUMENTS_LOAD_SUCCESS: 'SHAREDOCUMENTS_LOAD_SUCCESS',
+    SHAREDOCUMENTS_LOAD_ERROR: 'SHAREDOCUMENTS_LOAD_ERROR'
+};
+//banks action types end
 
 //banks action types
 export const logout = {

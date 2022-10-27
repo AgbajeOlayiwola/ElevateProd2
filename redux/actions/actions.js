@@ -66,6 +66,7 @@ import {
     existingBusnessSetup,
     sendCac,
     pushDocuments,
+    shareDocuments,
     getCAC
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
@@ -477,6 +478,34 @@ export const pushDocumentsData = () => (dispatch) => {
         );
 };
 //pushDocuments actions end
+
+//shareDocuments actions
+export const shareDocumentsLoadStart = () => ({
+    type: shareDocuments.SHAREDOCUMENTS_LOAD_START
+});
+
+export const shareDocumentsLoadSuccess = (countries) => ({
+    type: shareDocuments.SHAREDOCUMENTS_LOAD_SUCCESS,
+    payload: countries
+});
+
+export const shareDocumentsLoadError = (errorMessage) => ({
+    type: shareDocuments.SHAREDOCUMENTS_LOAD_ERROR,
+    payload: errorMessage
+});
+
+export const shareDocumentsData = () => (dispatch) => {
+    dispatch(shareDocumentsLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.shareDocuments}`)
+        .then((response) =>
+            dispatch(shareDocumentsLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(shareDocumentsLoadError(error.response.data.message))
+        );
+};
+//shareDocuments actions end
 
 //states actions
 export const statesLoadStart = () => ({
@@ -2130,7 +2159,7 @@ export const scmulData = (scmuldata) => (dispatch) => {
             dispatch(scmulSuccess(response));
             //console.logresponse);
         })
-        .catch((error) => dispatch(scmulError(error.response)));
+        .catch((error) => dispatch(scmulError(error.response.data.message)));
 };
 //upload scmul document end
 

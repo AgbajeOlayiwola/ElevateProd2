@@ -72,6 +72,7 @@ const businessNameCac = '/business/name';
 const verifyCac = '/document-verification/cac';
 const internationalCountries = '/international-countries';
 const pushDocuments = '/account-upgrade/push-document-for-review';
+const shareDocuments = '/share-point-document';
 export default {
     getBanks,
     getCountries,
@@ -145,5 +146,6 @@ export default {
     businessNameCac,
     internationalCountries,
     pushDocuments,
+    shareDocuments,
     verifyCac
 };
