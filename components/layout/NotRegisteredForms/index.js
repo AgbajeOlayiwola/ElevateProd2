@@ -69,6 +69,7 @@ const ProfileSetups = () => {
     //         countryNames = JSON.parse(countryName);
     //     }
     // }
+    const [loads, setLoads] = useState(false);
     useEffect(() => {
         dispatch(loadCountry());
     }, []);
@@ -123,6 +124,7 @@ const ProfileSetups = () => {
                         actionI={regsiteredBus}
                         loading={loading}
                         setLoading={setLoading}
+                        loads={loads}
                     />
                 );
             case 1:
@@ -186,7 +188,7 @@ const ProfileSetups = () => {
 
     function regsiteredBus() {
         // console.log('firstAPi');
-
+        setLoads((prev) => !prev);
         const businessProfileData = {
             bvnNumber: formData.bvNumber,
             phoneNumber: formData.phoneNumber,
@@ -203,6 +205,7 @@ const ProfileSetups = () => {
     function handleSubmit() {
         // console.log('firstAPi');
 
+        setLoads((prev) => !prev);
         const profileData = {
             bvnNumber: formData.bvNumber,
             phoneNumber: formData.phoneNumber,

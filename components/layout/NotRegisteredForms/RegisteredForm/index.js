@@ -20,7 +20,8 @@ const RegisteredForm = ({
     bvnError,
     actionI,
     loading,
-    setLoading
+    setLoading,
+    loads
 }) => {
     // const [progress, setProgress] = useState('25%');
     // const [loading, setLoading] = useState(false);
@@ -308,6 +309,7 @@ const RegisteredForm = ({
                             type="submit"
                             text={'Next'}
                             err={errorM}
+                            loads={loads}
                             // onClick={actionI}
                         />
                     </form>
@@ -438,6 +440,7 @@ const RegisteredForm = ({
                             type="submit"
                             text={'Next'}
                             err={errorM}
+                            loads={loads}
                             // onClick={action}
                         />
                     </form>

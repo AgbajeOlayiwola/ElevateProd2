@@ -38,7 +38,9 @@ const Liveness = ({ action, loading, setLoading }) => {
     const [imageSrcI, setImageSrcI] = React.useState(null);
     const [error, setError] = React.useState('');
 
+    const [loads, setLoads] = useState(false);
     const capture = React.useCallback(() => {
+        setLoads((prev) => !prev);
         // setLoading((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
@@ -136,6 +138,8 @@ const Liveness = ({ action, loading, setLoading }) => {
                               'Continue'
                             : 'Snap'
                     }
+                    err={succes}
+                    loads={loads}
                     // action={action}
                 />
 
