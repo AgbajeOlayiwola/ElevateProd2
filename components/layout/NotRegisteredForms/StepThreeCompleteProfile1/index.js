@@ -83,7 +83,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
-
         // console.log(file);
     };
     useEffect(() => {
