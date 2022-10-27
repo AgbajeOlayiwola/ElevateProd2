@@ -555,6 +555,17 @@
     color: #7a7978;
 }
 
+.beneTitle {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 15px;
+    display: block;
+    margin-top: 16px;
+    color: #102572;
+}
+
 .addedFormCont div {
     width: 47%;
 }

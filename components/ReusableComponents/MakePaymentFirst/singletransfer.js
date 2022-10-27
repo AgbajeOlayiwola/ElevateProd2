@@ -22,6 +22,7 @@ const SingleTransfer = ({
     );
     const [bank, setBank] = useState([]);
     const [beneActive, setBeneActive] = useState();
+    const [showInterEnquiry, setshowInterEnquiry] = useState(false);
     const [interEnquiry, setInterEnquiry] = useState('');
     const [accountName, setAccountName] = useState(
         payload.accountName !== '' ? payload.accountName : ''
@@ -233,7 +234,7 @@ const SingleTransfer = ({
                     </div>
                 ) : (
                     <>
-                        {interEnquiry ? (
+                        {showInterEnquiry ? (
                             <div className={styles.narration}>
                                 <label> Account Name</label>
                                 <input
@@ -263,6 +264,9 @@ const SingleTransfer = ({
                                 required: 'Choose a bank'
                             })}
                             name="bankName"
+                            onChange={() => {
+                                setshowInterEnquiry(true);
+                            }}
                         >
                             {Object.keys(payload).length !== 0 ? (
                                 <option value={bankName}>{bankName}</option>
@@ -360,10 +364,10 @@ const SingleTransfer = ({
                         type="submit"
                     />
                 )}
-                <p className={styles.schedule}>
+                {/* <p className={styles.schedule}>
                     Not paying now?{' '}
                     <span onClick={scheduleLater}>Schedule for Later</span>
-                </p>
+                </p> */}
             </form>
         </div>
     );

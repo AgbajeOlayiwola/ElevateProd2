@@ -25,7 +25,6 @@ const BulkTransfer = ({
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
-    //console.logpayload);
     const [number, setNumber] = useState(
         // payload !== undefined ? payload :
         [1]
@@ -37,7 +36,6 @@ const BulkTransfer = ({
             // setInterEnquiry((arr) => [...arr, interBankEnquiry]);
             // number.splice(index, 1, interBankEnquiry);
             const newState = number.map((e, index) => {
-                //console.logindex);
                 if (indexNumber === index) {
                     return interBankEnquiry;
                 } else {
@@ -66,6 +64,7 @@ const BulkTransfer = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
+    console.log(number);
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
@@ -86,6 +85,7 @@ const BulkTransfer = ({
                         })}
                     </select>
                 </div>
+                <p className={styles.beneTitle}>Beneficiary Details</p>
                 {number?.map((e, index) => {
                     const fieldName = `details[${index}]`;
                     return (
@@ -170,9 +170,8 @@ const BulkTransfer = ({
                             <div className={styles.narration}>
                                 <label> Account Name</label>
                                 <input
-                                    {...register(`${fieldName}.accountName`, {
-                                        value: e.accountName
-                                    })}
+                                    {...register(`${fieldName}.accountName`)}
+                                    // defaultValue={...e.accountName}
                                     type="text"
                                     value={e.accountName}
                                     name={`${fieldName}.accountName`}
@@ -215,11 +214,11 @@ const BulkTransfer = ({
                                 className={styles.plus}
                                 onClick={() => {
                                     if (
-                                        number.length === 10 ||
-                                        number.length > 10
+                                        number.length === 5 ||
+                                        number.length > 5
                                     ) {
                                         alert(
-                                            'You can only carry out 10 transactions at the same time. Use CSV file instead'
+                                            'You can only carry out 5 transactions at the same time. Use CSV file instead'
                                         );
                                     } else {
                                         setNumber((arr) => [
@@ -306,9 +305,9 @@ const BulkTransfer = ({
                         text={buttonText}
                         type="submit"
                     />
-                    <p className={styles.schedule}>
+                    {/* <p className={styles.schedule}>
                         Not paying now?<span>Schedule for Later</span>
-                    </p>
+                    </p> */}
                 </div>
                 {/* <div className={styles.destinationCountry}>
                     <div>

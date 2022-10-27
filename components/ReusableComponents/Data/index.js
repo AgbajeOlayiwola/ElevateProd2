@@ -47,39 +47,47 @@ export const SidebarData = [
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
     },
+    // {
+    //     title: 'Tools',
+    //     path: '/Tools',
+    //     icon: <ToolSvg />,
+    //     iconActive: <ToolsActiveSvg />,
+    //     iconClosed: <RiIcons.RiArrowDownSLine />,
+    //     iconOpened: <RiIcons.RiArrowUpSLine />,
+    //     subNav: [
+    //         {
+    //             title: 'Analysis',
+    //             path: '/Analysis',
+    //             icon: <BiIcons.BiTransfer />
+    //         },
+    //         {
+    //             title: 'Inventory',
+    //             path: '/Inventory',
+    //             icon: <BulkTransfer />
+    //         },
+    //         {
+    //             title: 'e invoice',
+    //             path: '/invoice',
+    //             icon: <NairaSvg />
+    //         },
+    //         {
+    //             title: 'Others',
+    //             path: '/others',
+    //             icon: <FaIcons.FaHandHoldingUsd />
+    //         }
+    //     ]
+    // },
+    // {
+    //     title: 'Storefront',
+    //     path: '/Storefront',
+    //     icon: <StorefrontSvg />,
+    //     iconActive: <StorefrontActiveSvg />,
+    //     iconClosed: <RiIcons.RiArrowDownSLine />,
+    //     iconOpened: <RiIcons.RiArrowUpSLine />
+    // },
     {
-        title: 'Tools',
-        path: '/Tools',
-        icon: <ToolSvg />,
-        iconActive: <ToolsActiveSvg />,
-        iconClosed: <RiIcons.RiArrowDownSLine />,
-        iconOpened: <RiIcons.RiArrowUpSLine />,
-        subNav: [
-            {
-                title: 'Analysis',
-                path: '/Analysis',
-                icon: <BiIcons.BiTransfer />
-            },
-            {
-                title: 'Inventory',
-                path: '/Inventory',
-                icon: <BulkTransfer />
-            },
-            {
-                title: 'e invoice',
-                path: '/invoice',
-                icon: <NairaSvg />
-            },
-            {
-                title: 'Others',
-                path: '/others',
-                icon: <FaIcons.FaHandHoldingUsd />
-            }
-        ]
-    },
-    {
-        title: 'Storefront',
-        path: '/Storefront',
+        title: 'Dispute ',
+        path: '/Dispute',
         icon: <StorefrontSvg />,
         iconActive: <StorefrontActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,

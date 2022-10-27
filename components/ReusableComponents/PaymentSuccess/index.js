@@ -128,12 +128,12 @@ const PaymentSuccess = ({
                                         type="button"
                                         onClick={action}
                                     />
-                                    <p className={styles.repeat}>
+                                    {/* <p className={styles.repeat}>
                                         Set this transaction as{' '}
                                         <span onClick={repeatAction}>
                                             Repeat
                                         </span>
-                                    </p>
+                                    </p> */}
                                 </RegistrationStatus>
                             </BodyWrapper>
                         )}
