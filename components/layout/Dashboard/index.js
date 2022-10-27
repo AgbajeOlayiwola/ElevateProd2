@@ -71,6 +71,7 @@ const DashLayout = ({
             deleteCookie('cookieToken');
         }
     };
+
     return (
         <div className={styles.dash}>
             <div className={sideActive ? styles.sidebar : styles.sidebarActive}>
