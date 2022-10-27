@@ -21,6 +21,8 @@ import LogoutSvg from '../../components/ReusableComponents/ReusableSvgComponents
 import RmSvg from '../../components/ReusableComponents/RmSvg';
 import ShareSvg from '../../components/ReusableComponents/ShareSvg';
 import styles from './styles.module.css';
+import Lottie from 'react-lottie';
+import animationData from '../../components/ReusableComponents/Lotties/contact-us.json';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getBeneficiariesData,
@@ -37,8 +39,11 @@ import {
 import { useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
+import Link from 'next/link';
+import { ButtonComp } from '../../components';
 
 const Profile = () => {
+    const [activeBtn, setActiveBtn] = useState(true);
     const [type, setType] = useState('Account');
     const [loading, setLoading] = useState(false);
     const [outcome, setOutcome] = useState(false);
@@ -86,7 +91,14 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
-
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     const interBankEnquiryCheck = () => {
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
@@ -230,11 +242,6 @@ const Profile = () => {
             text: 'Share App/Refer a Friend',
             icon: <ShareSvg color="#102572" />,
             color: '#7A7978'
-        },
-        {
-            text: 'Log Out',
-            icon: <LogoutSvg />,
-            color: '#FF0000'
         }
     ];
     const benes = {
@@ -701,6 +708,48 @@ const Profile = () => {
             //                 />
             //             );
             //     }
+            case 'Contact us':
+                switch (count) {
+                    case 0:
+                        return (
+                            <div>
+                                <Lottie
+                                    options={defaultOptions}
+                                    height={400}
+                                    width={400}
+                                />
+                                <div className={styles.name}>
+                                    <div className={styles.Hello}>
+                                        <h2>
+                                            Hello {userProfileData.firstName}
+                                        </h2>
+                                        <p>How can we help you</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className={styles.contactEmail}>
+                                        <div className={styles.contactUs}>
+                                            Contact Us
+                                        </div>
+                                        <p>
+                                            Email: engcontactcenter@ecobank.com
+                                        </p>
+                                    </div>
+                                    <hr />
+                                    <div className={styles.contactWeb}>
+                                        <div></div>
+                                        <p>
+                                            OUR WEBSITE:
+                                            <Link href="https://www.ecobank.com">
+                                                https://www.ecobank.com
+                                            </Link>
+                                        </p>
+                                    </div>
+                                    <hr />
+                                </div>
+                            </div>
+                        );
+                }
             case 'Manage Beneficiaries':
                 switch (count) {
                     case 0:
@@ -858,6 +907,7 @@ const Profile = () => {
                                 </div>
                             </>
                         );
+
                     case 1:
                         return (
                             <>
@@ -957,13 +1007,11 @@ const Profile = () => {
                                                                     .length ===
                                                                 10
                                                             ) {
-                                                                const details =
-                                                                    {
-                                                                        accountNumber:
-                                                                            e
-                                                                                .target
-                                                                                .value
-                                                                    };
+                                                                const details = {
+                                                                    accountNumber:
+                                                                        e.target
+                                                                            .value
+                                                                };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details

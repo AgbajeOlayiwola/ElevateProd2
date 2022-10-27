@@ -63,7 +63,7 @@ const StepTwoBVNAuthenticator = ({
         //console.logresetOtpErrorMessages);
     }, [resetOtp, resetOtpErrorMessages]);
     return (
-        <form>
+        <form onSubmit={handleSubmit(action)}>
             <div className={styles.bvnBody}>
                 <div className={styles.cover}>
                     <div>
@@ -110,8 +110,8 @@ const StepTwoBVNAuthenticator = ({
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
-                        onClick={action}
-                        type="button"
+                        // onClick={action}
+                        type="submit"
                         margin="80px 0px 0px 0px"
                         text="Proceed"
                     />

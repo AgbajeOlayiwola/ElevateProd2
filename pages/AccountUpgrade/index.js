@@ -23,6 +23,7 @@ import {
     loadsetTransactionPin,
     loadUserProfile,
     uploadRefFormData,
+    shareDocumentsData,
     pushDocumentsData
 } from '../../redux/actions/actions';
 
@@ -104,6 +105,9 @@ const AccountUpgrade = () => {
     const { pushDocuments, pushDocumentsError } = useSelector(
         (state) => state.pushDocumentsReducer
     );
+    const { shareDocuments, shareDocumentsError } = useSelector(
+        (state) => state.shareDocumentsReducer
+    );
     const { identification, identificationErrorMessages } = useSelector(
         (state) => state.documentIdentificationReducer
     );
@@ -146,6 +150,7 @@ const AccountUpgrade = () => {
     }, [setTransactionPin, setTransactionPinError]);
     useEffect(() => {
         dispatch(loadUserProfile());
+        dispatch(shareDocumentsData());
     }, []);
 
     useEffect(() => {
@@ -160,6 +165,34 @@ const AccountUpgrade = () => {
             }
         }
     }, [userProfile]);
+    useEffect(() => {
+        if (shareDocuments !== null) {
+            console.log(shareDocuments);
+            shareDocuments?.map((document) => {
+                if (document.documentType === 'UTILITY') {
+                    setUtilityStatus('done');
+                } else if (document.documentType === 'CAC') {
+                    setCacStatus('done');
+                } else if (document.documentType === 'MEMART') {
+                    setMematStatus('done');
+                } else if (document.documentType === 'SCUML') {
+                    setScumlStatus('done');
+                } else if (document.documentType === 'REFERENCE_FORM') {
+                    setRefereeStatus('done');
+                } else if (document.documentType === 'IDENTIFICATION') {
+                    setidCardStatus('done');
+                }
+            });
+            // setText(userProfile.customerCategory);
+            // setStreetName(userProfile.address);
+            // setCity(userProfile.city);
+            // setState(userProfile.state);
+            // setLocalGovernmane(userProfile.lga);
+            // if (userProfile.hasSetTransactionPin === true) {
+            //     setTransactionPinStatus('done');
+            // }
+        }
+    }, [shareDocuments]);
     //console.loguserProfile);
 
     useEffect(() => {
@@ -230,8 +263,10 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
+            ('IdentificationDocument');
             setScumlStatus('done');
         } else if (scmulErrorMessages !== null) {
+            console.log(scmulErrorMessages);
             setMessage(scmulErrorMessages);
             setStatusbar('error');
             setOutcome(true);
