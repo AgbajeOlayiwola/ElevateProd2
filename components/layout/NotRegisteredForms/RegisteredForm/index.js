@@ -307,6 +307,7 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text={'Next'}
+                            err={errorM}
                             // onClick={actionI}
                         />
                     </form>
@@ -436,6 +437,7 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text={'Next'}
+                            err={errorM}
                             // onClick={action}
                         />
                     </form>
