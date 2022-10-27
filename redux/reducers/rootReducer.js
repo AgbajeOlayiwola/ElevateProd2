@@ -66,6 +66,7 @@ import ExistingProfileSetupReducer from './exixtingUserProfile.reducer';
 import transactionFeesReducer from './transactionFees.reducer';
 import logoutReducer from './logout.reducer';
 import pushDocumentsReducer from './pushDocuments.reducer';
+import shareDocumentsReducer from './shareDocuments.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -138,6 +139,7 @@ const appReducer = combineReducers({
     freezeTransactionsReducer,
     changeTransactionPinReducer,
     pushDocumentsReducer,
+    shareDocumentsReducer,
     completeBusinessprofileReducer
 });
 const rootReducer = (state, action) => {
