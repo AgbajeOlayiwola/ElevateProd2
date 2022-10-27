@@ -27,8 +27,10 @@ import {
     getInternationalTransfer,
     getVerifyCurrency,
     getverifyBank,
+    loadUserProfile,
     postBeneficiariesData,
-    loadAccountPrimary
+    loadAccountPrimary,
+    loadsetTransactionPin
 } from '../../redux/actions/actions';
 import ChartDiv from './chartDivStyled';
 import ChartContent from './chartContentStyled';
@@ -52,6 +54,9 @@ const Payment = () => {
     const { bills, errorMessageBills } = useSelector(
         (state) => state.billsReducer
     );
+    const { setTransactionPin, setTransactionPinError } = useSelector(
+        (state) => state.setTransactionPinReducer
+    );
     const { internalBank, errorMessageInternalBank } = useSelector(
         (state) => state.internalBankReducer
     );
@@ -73,28 +78,27 @@ const Payment = () => {
     const { transactionFees, errorMessageTransactionFees } = useSelector(
         (state) => state.transactionFeesReducer
     );
-    const {
-        internationalTransfer,
-        errorMessageinternationalTransfer
-    } = useSelector((state) => state.internationalTransferReducer);
+    const { internationalTransfer, errorMessageinternationalTransfer } =
+        useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
     const { verifyCurrency, errorMessageverifyCurrency } = useSelector(
         (state) => state.verifyCurrencyReducer
     );
-    const { billerPlan } = useSelector((state) => state.billerPlanReducer);
 
     const { postBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
     const { banks } = useSelector((state) => state.banksReducer);
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     const dispatch = useDispatch();
     const [formType, setFormType] = useState('');
     const [ecobank, setEcobank] = useState('true');
     const [overlay, setOverlay] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [transactionPinDone, setTransactionPinDone] = useState(false);
     const [count, setCount] = useState(0);
     const [active, setActive] = useState(true);
     const [outType, setOutType] = useState();
@@ -109,13 +113,9 @@ const Payment = () => {
     const [recieveLink, setRecieveLink] = useState('');
     const [bill, setBill] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
+    const [userProfileData, setUserProfileData] = useState({});
     const [bank, setBank] = useState({});
-    let userProfile;
-    let userProfileData = {};
-    if (typeof window !== 'undefined') {
-        userProfile = window.localStorage.getItem('user');
-        userProfileData = JSON.parse(userProfile);
-    }
+
     let airtimeData;
     let airtimeNetData = {};
     if (typeof window !== 'undefined') {
@@ -124,7 +124,13 @@ const Payment = () => {
     }
     useEffect(() => {
         dispatch(loadAccountPrimary());
+        dispatch(loadUserProfile());
     }, []);
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
+    }, [userProfile]);
     useEffect(() => {
         if (balanceEnquiry !== null) {
             const formatter = new Intl.NumberFormat('en-US', {
@@ -237,9 +243,18 @@ const Payment = () => {
     useEffect(() => {
         transactionFeesCheck();
     }, [transactionFees, errorMessageTransactionFees]);
+    useEffect(() => {
+        if (setTransactionPin !== null) {
+            setTransactionPinDone(true);
+        } else if (setTransactionPinError !== null) {
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(setTransactionPinError);
+            setStatus('error');
+        }
+    });
     const bulkcheck = () => {
         if (bulkTransfer !== null) {
-<<<<<<< HEAD
             console.log(bulkTransfer);
             if (bulkTransfer.failedTranscations.length !== 0) {
                 setCount((count) => count + 1);
@@ -253,12 +268,6 @@ const Payment = () => {
                 setIsLoading(false);
                 setStatus('success');
             }
-=======
-            //console.logbulkTransfer);
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setStatus('success');
->>>>>>> 23b9eafba310d753245da6879f0a52ce362a86db
         } else if (errorMessagebulkTransfer !== null) {
             setCount((count) => count + 1);
             setIsLoading(false);
@@ -533,7 +542,7 @@ const Payment = () => {
                                     parseInt(transactionFee, 10)
                                 }
                                 recieverName={paymentDetails.accountName}
-                                sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
+                                sender={`${userProfileData.lastName} ${userProfileData.firstName}`}
                                 recieverBank={
                                     paymentDetails.bankName === ''
                                         ? paymentDetails.bankNameBene
@@ -597,8 +606,22 @@ const Payment = () => {
                                             .replaceAll(',', ''),
                                         accountId: senderDetails.accountId
                                     };
-
-                                    dispatch(postInterBank(paymentData));
+                                    const transactionData = {
+                                        transactionPin: Object.values(data)
+                                            .toString()
+                                            .replaceAll(',', '')
+                                    };
+                                    userProfileData.hasSetTransactionPin ===
+                                    false
+                                        ? dispatch(
+                                              loadsetTransactionPin(
+                                                  transactionData
+                                              )
+                                          )
+                                        : dispatch(postInterBank(paymentData));
+                                    if (setTransactionPinDone) {
+                                        dispatch(postInterBank(paymentData));
+                                    }
                                 }}
                             />
                         );
@@ -659,7 +682,7 @@ const Payment = () => {
                                 payload={paymentDetails.details}
                                 action={(data) => {
                                     setPaymentDetails(data);
-                                    //console.logdata);
+                                    console.log(data);
                                     setCount(count + 1);
                                 }}
                             />
@@ -694,7 +717,7 @@ const Payment = () => {
                                 }
                                 title="Bulk Payments"
                                 // recieverName={paymentDetails.accountNumber}
-                                sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
+                                sender={`${userProfileData.lastName} ${userProfileData.firstName}`}
                                 // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
                                 number={paymentDetails.details?.map(
@@ -826,11 +849,19 @@ const Payment = () => {
                             <MakePaymentSecond
                                 isLoading={isLoading}
                                 closeAction={handleClose}
-                                recieverName={paymentDetails.phoneNumber}
+                                recieverName={
+                                    bill === 'AIRTIME'
+                                        ? paymentDetails.phoneNumber
+                                        : 'UTILITIES'
+                                }
                                 amount={paymentDetails.amount}
                                 title="Bills Payment"
-                                recieverBank={airtimeNetData.name}
-                                sender={`${userProfileData.profile.lastName} ${userProfileData.profile.firstName}`}
+                                recieverBank={
+                                    bill === 'AIRTIME'
+                                        ? airtimeNetData.name
+                                        : airtimeNetData.billerDetail.billerName
+                                }
+                                sender={`${userProfileData.lastName} ${userProfileData.firstName}`}
                                 overlay={overlay}
                                 transferAction={(data) => {
                                     setIsLoading(true);
@@ -859,53 +890,32 @@ const Payment = () => {
                                         };
 
                                         dispatch(postAirtime(billerdata));
+                                    } else if (bill === 'UTILITY') {
+                                        console.log(
+                                            airtimeNetData.billerDetail.billerID
+                                        );
+                                        const billerData = {
+                                            accountId: senderDetails.accountId,
+                                            transactionPin: Object.values(data)
+                                                .toString()
+                                                .replaceAll(',', ''),
+                                            transactionAmount:
+                                                paymentDetails.amount,
+                                            billerCode:
+                                                airtimeNetData.billerDetail
+                                                    .billerCode,
+                                            billerId:
+                                                airtimeNetData.billerDetail
+                                                    .billerID,
+                                            productCode:
+                                                airtimeNetData
+                                                    .billerProductInfo[0]
+                                                    .productCode,
+                                            paymentDescription:
+                                                paymentDetails.paymentDescription
+                                        };
+                                        dispatch(postBills(billerData));
                                     }
-                                    // else {
-                                    //     dispatch(
-                                    //         loadbillerPlan(
-                                    //             paymentDetails.billerCategory
-                                    //         )
-                                    //     );
-                                    //     if (billerPlan !== null) {
-                                    //         const billerData = {
-                                    //             amount: paymentDetails.amount,
-                                    //             ccy: billerPlan
-                                    //                 .billerProductInfo[0].ccy,
-                                    //             billerCode:
-                                    //                 billerPlan.billerDetail
-                                    //                     .billerCode,
-                                    //             billerID: String(
-                                    //                 billerPlan.billerDetail
-                                    //                     .billerID
-                                    //             ),
-                                    //             sourceAccount:
-                                    //                 senderDetails.accountNo,
-                                    //             sourceAccountType: 'A',
-                                    //             productCode:
-                                    //                 billerPlan
-                                    //                     .billerProductInfo[0]
-                                    //                     .productCode,
-                                    //             customerName: String(
-                                    //                 paymentDetails.acountDebit
-                                    //             ),
-                                    //             customerRefNo: String(
-                                    //                 paymentDetails.billerDetail
-                                    //             ),
-                                    //             paymentDescription: 'Testing',
-                                    //             mobileNo: '2348111380591',
-                                    //             formDataValue: [
-                                    //                 {
-                                    //                     fieldName:
-                                    //                         'BEN_PHONE_NO',
-                                    //                     fieldValue:
-                                    //                         paymentDetails.phoneNumber,
-                                    //                     dataType: 'string'
-                                    //                 }
-                                    //             ]
-                                    //         };
-                                    //         dispatch(postBills(billerData));
-                                    //     }
-                                    // }
                                 }}
                             />
                         );

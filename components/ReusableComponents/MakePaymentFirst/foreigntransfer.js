@@ -127,12 +127,12 @@ const ForeignTransfer = ({
                             />
                         </div>
                         <button>Next</button>
-                        <p className={styles.schedule}>
+                        {/* <p className={styles.schedule}>
                             Not paying now?
                             <span onClick={scheduleLater}>
                                 Schedule for Later
                             </span>
-                        </p>
+                        </p> */}
                     </div>
                 </form>
             ) : (

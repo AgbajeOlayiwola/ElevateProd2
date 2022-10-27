@@ -22,7 +22,8 @@ import {
     statesData,
     loadsetTransactionPin,
     loadUserProfile,
-    uploadRefFormData
+    uploadRefFormData,
+    pushDocumentsData
 } from '../../redux/actions/actions';
 
 import { useForm } from 'react-hook-form';
@@ -60,17 +61,22 @@ const AccountUpgrade = () => {
     const [streetName, setStreetName] = useState('');
     const [localGovernmane, setLocalGovernmane] = useState('');
     const [statusbar, setStatusbar] = useState('');
-    const [verifyStatus, setVerifyStatus] = useState('pending');
+    const [verifyStatus, setVerifyStatus] = useState('notDone');
+    const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
+    const [utilityStatus, setUtilityStatus] = useState('notDone');
+    const [idCardStatus, setidCardStatus] = useState('notDone');
+    const [documentStatus, setDocumentStatus] = useState('notDone');
+    const [refereeStatus, setRefereeStatus] = useState('notDone');
+    const [cacStatus, setCacStatus] = useState('notDone');
+    const [scumlStatus, setScumlStatus] = useState('notDone');
+    const [mematStatus, setMematStatus] = useState('notDone');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState('');
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -94,6 +100,9 @@ const AccountUpgrade = () => {
     );
     const { setTransactionPin, setTransactionPinError } = useSelector(
         (state) => state.setTransactionPinReducer
+    );
+    const { pushDocuments, pushDocumentsError } = useSelector(
+        (state) => state.pushDocumentsReducer
     );
     const { identification, identificationErrorMessages } = useSelector(
         (state) => state.documentIdentificationReducer
@@ -146,6 +155,9 @@ const AccountUpgrade = () => {
             setCity(userProfile.city);
             setState(userProfile.state);
             setLocalGovernmane(userProfile.lga);
+            if (userProfile.hasSetTransactionPin === true) {
+                setTransactionPinStatus('done');
+            }
         }
     }, [userProfile]);
     //console.loguserProfile);
@@ -164,16 +176,39 @@ const AccountUpgrade = () => {
         // //console.logfile);
     };
     const cacRegistration = () => {
-        // //console.log'test');
+        setLoading(true);
         const cacDatas = {
             cacCert: file
         };
         dispatch(cacData(cacDatas));
     };
     useEffect(() => {
-        //console.logcac);
-        //console.logcacErrorMessages);
+        if (cac !== null) {
+            setMessage('CAC Document uploaded Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setCacStatus('done');
+        } else if (cacErrorMessages !== null) {
+            setMessage(cacErrorMessages);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
     }, [cac, cacErrorMessages]);
+    useEffect(() => {
+        if (pushDocuments !== null) {
+            setMessage(' Uploaded Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+        } else if (pushDocumentsError !== null) {
+            setMessage(pushDocumentsError);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [cac, pushDocumentsError]);
 
     //CAC Registration end
 
@@ -183,15 +218,25 @@ const AccountUpgrade = () => {
         setScmulFileName(e.target.files[0].name);
     };
     const uploadScmul = () => {
-        //console.log'test');
+        setLoading(true);
         const scmulDatas = {
             scumlCert: scmulfile
         };
         dispatch(scmulData(scmulDatas));
     };
     useEffect(() => {
-        //console.logscmul);
-        //console.logscmulErrorMessages);
+        if (scmul !== null) {
+            setMessage('SCUML uploaded Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setScumlStatus('done');
+        } else if (scmulErrorMessages !== null) {
+            setMessage(scmulErrorMessages);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
     }, [scmul, scmulErrorMessages]);
 
     //SCMUL Certificate end
@@ -207,6 +252,7 @@ const AccountUpgrade = () => {
     };
     // //console.logco2file);
     const memartUpload = () => {
+        setLoading(true);
         const mmemmartDatas = {
             co2: co2file,
             co7: co7file
@@ -214,8 +260,18 @@ const AccountUpgrade = () => {
         dispatch(memartData(mmemmartDatas));
     };
     useEffect(() => {
-        //console.logmemart);
-        //console.logmemartErrorMessages);
+        if (memart !== null) {
+            setMessage('MEMAT uploaded Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setMematStatus('done');
+        } else if (memartErrorMessages !== null) {
+            setMessage(memartErrorMessages);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
     }, [memart, memartErrorMessages]);
     //Memart Submit ENd
 
@@ -241,7 +297,8 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
-            setVerifyStatus('completed');
+            setUtilityStatus('done');
+            // setVerifyStatus('completed');
         } else if (utilityUplodaErrorMessages !== null) {
             setMessage(utilityUplodaErrorMessages);
             setStatusbar('error');
@@ -274,6 +331,7 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
+            setidCardStatus('done');
         } else if (identificationErrorMessages !== null) {
             setMessage(identificationErrorMessages);
             setStatusbar('error');
@@ -313,58 +371,66 @@ const AccountUpgrade = () => {
             {
                 title: 'Set Transaction Pin',
                 icon: <SignatureRuleSvg />,
-                statusReport: 'pending'
+                statusReport: transactionPinStatus
             },
             {
                 title: 'Upload Utility BIll',
                 icon: <BillSvg />,
-                statusReport: 'pending'
+                statusReport: utilityStatus
             },
             {
                 title: 'Upload ID Card',
                 icon: <IdCard />,
-                statusReport: 'pending'
+                statusReport: idCardStatus
             }
         ],
         corporate: [
             {
                 title: 'Documents',
-                icon: <AddressSvg />
+                icon: <AddressSvg />,
+                statusReport: documentStatus
             },
             {
                 title: 'Set Transaction Pin',
-                icon: <SignatureRuleSvg />
+                icon: <SignatureRuleSvg />,
+                statusReport: transactionPinStatus
             },
             {
                 title: 'Upload Utility BIll',
-                icon: <BillSvg />
+                icon: <BillSvg />,
+                statusReport: utilityStatus
             },
             {
                 title: 'Upload ID Card',
-                icon: <IdCard />
+                icon: <IdCard />,
+                statusReport: idCardStatus
             },
-            {
-                title: 'Directors',
-                icon: <DirectorsSvg />
-            },
+            // {
+            //     title: 'Directors',
+            //     icon: <DirectorsSvg />
+            // },
             {
                 title: 'Referee',
-                icon: <DirectorsSvg />
-            },
-            {
-                title: 'Signature Rule',
-                icon: <SignatureRuleSvg />
+                icon: <DirectorsSvg />,
+                statusReport: refereeStatus
             }
+            // {
+            //     title: 'Signature Rule',
+            //     icon: <SignatureRuleSvg />
+            // }
         ],
         document: [
             {
-                title: 'CAC Registration'
+                title: 'CAC Registration',
+                statusReport: cacStatus
             },
             {
-                title: 'SCUML Certificate'
+                title: 'SCUML Certificate',
+                statusReport: scumlStatus
             },
             {
-                title: 'MEMAT'
+                title: 'MEMAT',
+                statusReport: mematStatus
             }
         ]
     };
@@ -415,11 +481,14 @@ const AccountUpgrade = () => {
                                 <p className={styles.perc}>70%</p>
                             </div>
                             <div className={styles.currentLeveltext}>
-                                <h2>You’re currently at Level xxx</h2>
-                                <div>
+                                <h2>
+                                    Your account is currently 70 percent
+                                    upgraded
+                                </h2>
+                                {/* <div>
                                     <p>Account Limit: N1,000,000 </p>
                                     <p>Loan Limit: xxxxxx</p>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div className={styles.verifyText}>
@@ -445,14 +514,16 @@ const AccountUpgrade = () => {
                                       );
                                   }
                               )
-                            : text === 'Corporate'
+                            : text === 'CORPORATE'
                             ? AccountUpgradeData.corporate.map(
                                   (item, index) => {
                                       if (item.title === 'Documents') {
                                           return (
                                               <>
                                                   <AccountUpgradeSingle
-                                                      statusInfo="Pending"
+                                                      statusInfo={
+                                                          item.statusReport
+                                                      }
                                                       icon={item.icon}
                                                       text={item.title}
                                                       key={index}
@@ -473,7 +544,9 @@ const AccountUpgrade = () => {
                                                                         key={
                                                                             index
                                                                         }
-                                                                        statusInfo="Pending"
+                                                                        statusInfo={
+                                                                            item.statusReport
+                                                                        }
                                                                         action={() => {
                                                                             setTitle(
                                                                                 item.title
@@ -489,7 +562,7 @@ const AccountUpgrade = () => {
                                       } else {
                                           return (
                                               <AccountUpgradeSingle
-                                                  statusInfo="Pending"
+                                                  statusInfo={item.statusReport}
                                                   icon={item.icon}
                                                   text={item.title}
                                                   key={index}
@@ -502,7 +575,19 @@ const AccountUpgrade = () => {
                                   }
                               )
                             : null}
-                        <button className={styles.buttonDone}>Done</button>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                className={styles.buttonDone}
+                                onClick={() => {
+                                    setLoading(true);
+                                    dispatch(pushDocumentsData());
+                                }}
+                            >
+                                Done
+                            </button>
+                        )}
                     </AccountUpgradeComponent>
                 );
             case 'Verify your Address':
@@ -1085,10 +1170,8 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            {cac === 'success' ? (
-                                <>
-                                    <p>Document Upload SUccessful</p>
-                                </>
+                            {loading ? (
+                                <Loader />
                             ) : (
                                 <button
                                     className={styles.updateBtn}
@@ -1137,8 +1220,8 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            {scmul ? (
-                                scmul.data.message
+                            {loading ? (
+                                <Loader />
                             ) : (
                                 <button
                                     className={styles.updateBtn}
@@ -1199,8 +1282,8 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            {memart ? (
-                                memart.data.message
+                            {loading ? (
+                                <Loader />
                             ) : (
                                 <button
                                     onClick={memartUpload}

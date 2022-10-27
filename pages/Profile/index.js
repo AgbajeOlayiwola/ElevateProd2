@@ -58,6 +58,7 @@ const Profile = () => {
     const [outTyped, setOutTyped] = useState();
     const [bank, setBank] = useState([]);
     const [interEnquiry, setInterEnquiry] = useState('');
+    const [showinterEnquiry, setshowInterEnquiry] = useState(false);
     const dispatch = useDispatch();
     const { getBeneficiaries } = useSelector(
         (state) => state.getBeneficiariesReducer
@@ -956,11 +957,13 @@ const Profile = () => {
                                                                     .length ===
                                                                 10
                                                             ) {
-                                                                const details = {
-                                                                    accountNumber:
-                                                                        e.target
-                                                                            .value
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        accountNumber:
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                    };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -979,7 +982,7 @@ const Profile = () => {
                                                             ?.message
                                                     }
                                                 </p>
-                                                {interEnquiry ? (
+                                                {showinterEnquiry ? (
                                                     <div
                                                         className={
                                                             styles.formGroup
@@ -1024,6 +1027,11 @@ const Profile = () => {
                                                             }
                                                         )}
                                                         name="bankName"
+                                                        onChange={() => {
+                                                            setshowInterEnquiry(
+                                                                true
+                                                            );
+                                                        }}
                                                     >
                                                         <option value="">
                                                             Select Bank
@@ -1178,6 +1186,7 @@ const Profile = () => {
                                                 navigator.clipboard.writeText(
                                                     acctNumber.accountNumber
                                                 );
+                                                alert('Copied');
                                             }
                                         }}
                                     >

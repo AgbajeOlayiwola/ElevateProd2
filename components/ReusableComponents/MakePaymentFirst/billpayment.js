@@ -24,7 +24,7 @@ const BillPayment = ({
 }) => {
     const [network, setNetwork] = useState('MTN Nigeria');
     const [networkData, setNetworkData] = useState({});
-    const [activeBtn, setActiveBtn] = useState(false);
+    // const [activeBtn, setActiveBtn] = useState(false);
     const [billerCategories, setBillerCategories] = useState([]);
     const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const [billerTypes, setBillerTypes] = useState([]);
@@ -67,6 +67,8 @@ const BillPayment = ({
         setBillerPlans([]);
         if (firstTitle === 'AIRTIME') {
             dispatch(postAirtimeNetwork());
+        } else if (firstTitle === 'UTILITY') {
+            loadbillerType('UTILITY');
         }
     };
     useEffect(() => {
@@ -77,6 +79,7 @@ const BillPayment = ({
             setBillerTypes(billerType);
         }
     }, [billerType]);
+    console.log(billerTypes);
     useEffect(() => {
         if (airtimeNetwork !== null) {
             setAirtimeNetworkData(airtimeNetwork);
@@ -84,13 +87,9 @@ const BillPayment = ({
             //console.lognetworkData);
         }
     }, [airtimeNetwork]);
-    const loadPlans = (e) => {
-        dispatch(loadbillerPlan(e.target.value));
-    };
-    useEffect(() => {}, [billerId]);
     useEffect(() => {
         if (billerPlan !== null) {
-            setBillerPlans(billerPlan.billerProductInfo);
+            localStorage.setItem('Airtime', JSON.stringify(billerPlan));
         }
     }, [billerPlan]);
     const bills = [
@@ -413,6 +412,167 @@ const BillPayment = ({
                                     Schedule for Later
                                 </span>
                             </p>
+                        </form>
+                    </div>
+                </>
+            ) : firstTitle === 'UTILITY' ? (
+                <>
+                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                    <div className={styles.body}>
+                        <form onSubmit={handleSubmit(airtimeAction)}>
+                            <div className={styles.narration}>
+                                <label>Source Account</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    {...register('sourceAccount')}
+                                >
+                                    {bankAccounts?.map((accounts, index) => {
+                                        return (
+                                            <option
+                                                value={accounts.accountId}
+                                                key={index}
+                                            >
+                                                {accounts.accountNumber}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            <div className={styles.narration}>
+                                <label>Biller Type</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    {...register('billerTypes', {
+                                        required: 'Amount  is required'
+                                    })}
+                                    onChange={(e) => {
+                                        dispatch(
+                                            loadbillerPlan(e.target.value)
+                                        );
+                                    }}
+                                >
+                                    <option value="">Select biller Type</option>
+                                    {billerTypes.billerInfoList?.map(
+                                        (accounts, index) => {
+                                            return (
+                                                <option
+                                                    value={accounts.billerCode}
+                                                    key={index}
+                                                >
+                                                    {accounts.billerName}
+                                                </option>
+                                            );
+                                        }
+                                    )}
+                                </select>
+                            </div>
+                            {/* <div className={styles.networkCarrier}>
+                                <h2>Network</h2>
+                                <div className={styles.networkBody}>
+                                    {airtimeNetworkData.networks?.map(
+                                        (networks, index) => {
+                                            if (
+                                                networks.name === 'SOCHIENGMTN'
+                                            ) {
+                                                return null;
+                                            } else {
+                                                return (
+                                                    <div
+                                                        className={
+                                                            network ===
+                                                            networks.name
+                                                                ? styles.networkActive
+                                                                : styles.networkSingle
+                                                        }
+                                                        onClick={() => {
+                                                            setNetwork(
+                                                                networks.name
+                                                            );
+                                                            localStorage.setItem(
+                                                                'Airtime',
+                                                                JSON.stringify(
+                                                                    networks
+                                                                )
+                                                            );
+                                                        }}
+                                                        key={index}
+                                                    >
+                                                        <div>
+                                                            {networks.name ===
+                                                            'MTN Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/mtn.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : networks.name ===
+                                                              'Airtel Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/airtel.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : networks.name ===
+                                                              'GLO Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/glo.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : networks.name ===
+                                                              'Etisalat Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/9mobile.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : null}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            }
+                                        }
+                                    )}
+                                </div>
+                            </div> */}
+
+                            <div className={styles.networkForm}>
+                                <div className={styles.formGroup}>
+                                    <label>Amount</label>
+                                    <input
+                                        type="text"
+                                        placeholder="0.00"
+                                        name="amount"
+                                        {...register('amount', {
+                                            required: 'Amount  is required',
+
+                                            pattern: {
+                                                value: /^[0-9]/i,
+                                                message:
+                                                    'Amount can only be number '
+                                            }
+                                        })}
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Payment Description</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter payment Description"
+                                        name="paymentDescription"
+                                        {...register('paymentDescription', {
+                                            required:
+                                                'Payment Description is required'
+                                        })}
+                                    />
+                                </div>
+
+                                <button type="submit">Get Utility</button>
+                            </div>
+                            {/* <p className={styles.schedule}>
+                                Not paying now?{' '}
+                                <span onClick={scheduleLater}>
+                                    Schedule for Later
+                                </span>
+                            </p> */}
                         </form>
                     </div>
                 </>
