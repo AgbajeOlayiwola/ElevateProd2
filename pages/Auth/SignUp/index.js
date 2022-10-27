@@ -318,20 +318,15 @@ const Signup = ({ type }) => {
                                     {errors.exampleRequired && (
                                         <span>This field is required</span>
                                     )}
-                                    {loading ? (
-                                        <Loader />
-                                    ) : (
-                                        <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            text="Proceed"
-                                            type="submit"
-                                        />
-                                    )}
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Proceed"
+                                        type="submit"
+                                        err={errorMessage}
+                                    />
                                 </form>
                             ) : (
                                 <>

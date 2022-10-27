@@ -162,17 +162,15 @@ const Login = () => {
                                 </Link>
                             </div>
                         </div>
-                        {loading ? (
-                            <Loader />
-                        ) : (
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                margin="0px 0 0 0"
-                                text="Login"
-                                type="submit"
-                            />
-                        )}
+
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            margin="0px 0 0 0"
+                            text="Login"
+                            type="submit"
+                            err={errorMessages}
+                        />
                     </form>
                     <div>
                         <p className={styles.accout}>

@@ -16,7 +16,16 @@ const ButtonComp = ({
     disabled
 }) => {
     // console.log(disabled);
+    // const [loading, setLoading] = useState(false);
 
+    // const click = () => {
+    //     setLoading((prevState) => !prevState);
+    // };
+    // useEffect(() => {
+    //     if (err) {
+    //         setLoading((prevState) => !prevState);
+    //     }
+    // }, [err]);
     return (
         <>
             {disabled ? (

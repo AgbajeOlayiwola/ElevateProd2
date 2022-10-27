@@ -81,7 +81,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     const router = useRouter();
     const saveFile = (e) => {
-        console.log(e.target.filles);
+        console.log(e.target.files[0]);
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
         // console.log(file);
@@ -849,6 +849,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         }
                                         text="Save & Continue"
                                         type="submit"
+                                        err={comperrorMessage}
                                     />
                                 </div>
                                 <div className={styles.formGroup}>

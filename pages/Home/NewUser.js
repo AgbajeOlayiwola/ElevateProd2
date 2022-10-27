@@ -223,16 +223,13 @@ const NewUser = ({ selectCountry }) => {
                 </div>
             </div>
             <div className={styles.secondSectionMidCountry}>
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text="Create account"
-                        type="submit"
-                    />
-                )}
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    text="Create account"
+                    type="submit"
+                    err={errorMessage}
+                />
 
                 <p className={styles.already}>
                     Already have an account?{' '}
