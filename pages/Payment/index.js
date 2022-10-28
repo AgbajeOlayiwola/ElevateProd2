@@ -115,6 +115,8 @@ const Payment = () => {
     const [senderDetails, setSenderDetails] = useState({});
     const [userProfileData, setUserProfileData] = useState({});
     const [bank, setBank] = useState({});
+    const [successfulTrans, setSuccessfulTrans] = useState([]);
+    const [failedTrans, setFailedTrans] = useState([]);
 
     let airtimeData;
     let airtimeNetData = {};
@@ -265,15 +267,17 @@ const Payment = () => {
             if (bulkTransfer.failedTranscations.length !== 0) {
                 setCount((count) => count + 1);
                 setIsLoading(false);
-                setError(
-                    'Some or all of the transactions failed. Please check the Payment history for more details'
-                );
+                // setError(
+                //     'Some or all of the transactions failed. Please check the Payment history for more details'
+                // );
                 setStatus('error');
             } else if (bulkTransfer.successfulTranscations.length !== 0) {
                 setCount((count) => count + 1);
                 setIsLoading(false);
                 setStatus('success');
             }
+            setSuccessfulTrans(bulkTransfer.successfulTranscations);
+            setFailedTrans(bulkTransfer.failedTranscations);
         } else if (errorMessagebulkTransfer !== null) {
             setCount((count) => count + 1);
             setIsLoading(false);
@@ -759,6 +763,8 @@ const Payment = () => {
                                     setOverlay(false);
                                     setFormType('');
                                 }}
+                                successfulTrans={successfulTrans}
+                                failedTrans={failedTrans}
                                 number={paymentDetails.details.length}
                                 title="Bulk Payment"
                                 amount={paymentDetails.amount}

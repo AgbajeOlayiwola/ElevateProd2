@@ -10,6 +10,8 @@ import ButtonComp from '../Button';
 import Overlay from '../Overlay';
 import ErrorSvg from '../ReusableSvgComponents/ErrorSvg';
 import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 const PaymentSuccess = ({
     action,
@@ -26,9 +28,12 @@ const PaymentSuccess = ({
     isLoading,
     statusbar,
     error,
+    successfulTrans,
+    failedTrans,
     repeatAction
 }) => {
     const myref = useRef();
+    const printRef = useRef();
     useEffect(() => {
         myref.current.scrollTo(0, 0);
         window.scrollTo(0, 0);
@@ -70,71 +75,194 @@ const PaymentSuccess = ({
                             </BodyWrapper>
                         ) : (
                             <BodyWrapper>
-                                <div className={styles.successCheck}>
-                                    <div>
-                                        <SuccessCheckSvg />
+                                <div ref={printRef}>
+                                    <div className={styles.successCheck}>
+                                        <div>
+                                            <SuccessCheckSvg />
+                                        </div>
                                     </div>
-                                </div>
+                                    <RegistrationStatus>
+                                        <SuccessMainHeading>
+                                            Transfer Successful
+                                        </SuccessMainHeading>
+                                        {title === 'Bill payment' ? (
+                                            <h6
+                                                className={
+                                                    styles.elevateSuccess
+                                                }
+                                            >
+                                                Your recharge of
+                                                <span>{amount} </span> for
+                                                Airtime on {current}
+                                            </h6>
+                                        ) : title ===
+                                          'Foreign Transfer Payments' ? (
+                                            <h6
+                                                className={
+                                                    styles.elevateSuccess
+                                                }
+                                            >
+                                                <span>{amount} </span> has been
+                                                successfully transferred to
+                                                <span>{beneName}</span> on{' '}
+                                                {current}
+                                            </h6>
+                                        ) : title === 'Bulk Payment' ? (
+                                            <>
+                                                {successfulTrans.map(
+                                                    (tran, index) => {
+                                                        return (
+                                                            <div
+                                                                className={
+                                                                    styles.bulkTransfer
+                                                                }
+                                                                key={index}
+                                                            >
+                                                                <p
+                                                                    className={
+                                                                        styles.name
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        tran.receiversName
+                                                                    }
+                                                                </p>
+                                                                <p
+                                                                    className={
+                                                                        styles.amount
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        tran.transactionAmount
+                                                                    }
+                                                                </p>
+                                                                <p
+                                                                    className={
+                                                                        styles.status
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        tran.transactionStatus
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        );
+                                                    }
+                                                )}
+                                                {failedTrans.map(
+                                                    (tran, index) => {
+                                                        return (
+                                                            <div
+                                                                className={
+                                                                    styles.bulkTransfer
+                                                                }
+                                                                key={index}
+                                                            >
+                                                                <p
+                                                                    className={
+                                                                        styles.name
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        tran.receiversName
+                                                                    }
+                                                                </p>
+                                                                <p
+                                                                    className={
+                                                                        styles.amount
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        tran.transactionAmount
+                                                                    }
+                                                                </p>
+                                                                <p
+                                                                    className={
+                                                                        styles.status
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        tran.transactionStatus
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        );
+                                                    }
+                                                )}
+                                            </>
+                                        ) : title ===
+                                          'Single Transfer Payment' ? (
+                                            <h6
+                                                className={
+                                                    styles.elevateSuccess
+                                                }
+                                            >
+                                                <span>₦{amount}</span> has been
+                                                successfully transferred to
+                                                <span> {beneName}</span> on{' '}
+                                                {current}
+                                            </h6>
+                                        ) : null}
 
-                                <RegistrationStatus>
-                                    <SuccessMainHeading>
-                                        Transfer Successful
-                                    </SuccessMainHeading>
-                                    {title === 'Bill payment' ? (
-                                        <h6 className={styles.elevateSuccess}>
-                                            Your recharge of
-                                            <span>{amount} </span> for Airtime
-                                            on {current}
-                                        </h6>
-                                    ) : title ===
-                                      'Foreign Transfer Payments' ? (
-                                        <h6 className={styles.elevateSuccess}>
-                                            <span>{amount} </span> has been
-                                            successfully transferred to
-                                            <span>{beneName}</span> on {current}
-                                        </h6>
-                                    ) : title === 'Bulk Payment' ? (
-                                        <h6 className={styles.elevateSuccess}>
-                                            {amount} was transferred to {number}
-                                            Accounts on {current}
-                                        </h6>
-                                    ) : title === 'Single Transfer Payment' ? (
-                                        <h6 className={styles.elevateSuccess}>
-                                            <span>₦{amount}</span> has been
-                                            successfully transferred to
-                                            <span> {beneName}</span> on{' '}
-                                            {current}
-                                        </h6>
-                                    ) : null}
-
-                                    {title === 'Foreign Transfer Payments' ? (
-                                        <h6 className={styles.elevateSuccess}>
-                                            <span>Country: </span> {country}
-                                        </h6>
-                                    ) : title === 'Bill Payment' ? (
-                                        <p>
-                                            Recharge details have been shared to
-                                            your email and your provided phone
-                                            number.
-                                        </p>
-                                    ) : null}
-
-                                    <ButtonComp
-                                        disabled={activeBtn}
-                                        active={
-                                            activeBtn ? 'active' : 'inactive'
-                                        }
-                                        text="Return to Payments"
-                                        type="button"
-                                        onClick={action}
-                                    />
-                                    {/* <p className={styles.repeat}>
+                                        {title ===
+                                        'Foreign Transfer Payments' ? (
+                                            <h6
+                                                className={
+                                                    styles.elevateSuccess
+                                                }
+                                            >
+                                                <span>Country: </span> {country}
+                                            </h6>
+                                        ) : title === 'Bill Payment' ? (
+                                            <p>
+                                                Recharge details have been
+                                                shared to your email and your
+                                                provided phone number.
+                                            </p>
+                                        ) : null}
+                                        {/* <p className={styles.repeat}>
                                         Set this transaction as{' '}
                                         <span onClick={repeatAction}>
                                             Repeat
                                         </span>
                                     </p> */}
-                                </RegistrationStatus>
+                                    </RegistrationStatus>
+                                </div>
+
+                                <ButtonComp
+                                    disabled={activeBtn}
+                                    active={activeBtn ? 'active' : 'inactive'}
+                                    text="Download"
+                                    type="button"
+                                    onClick={async () => {
+                                        const element = printRef.current;
+                                        const canvas = await html2canvas(
+                                            element
+                                        );
+                                        const data =
+                                            canvas.toDataURL('image/png');
+
+                                        const pdf = new jsPDF();
+                                        const imgProperties =
+                                            pdf.getImageProperties(data);
+                                        const pdfWidth =
+                                            pdf.internal.pageSize.getWidth();
+                                        const pdfHeight =
+                                            (imgProperties.height * pdfWidth) /
+                                            imgProperties.width;
+
+                                        pdf.addImage(
+                                            data,
+                                            'PNG',
+                                            0,
+                                            0,
+                                            pdfWidth,
+                                            pdfHeight
+                                        );
+                                        pdf.save('print.pdf');
+                                    }}
+                                />
+                                <button onClick={action}>Close</button>
                             </BodyWrapper>
                         )}
                     </div>
@@ -144,7 +272,49 @@ const PaymentSuccess = ({
                             <ErrorSvg />
                         </div>
                         <h2>Oops.</h2>
-                        <p>{error}</p>
+                        {title === 'Bulk Payment' ? (
+                            <>
+                                {successfulTrans.map((tran, index) => {
+                                    return (
+                                        <div
+                                            className={styles.bulkTransfer}
+                                            key={index}
+                                        >
+                                            <p className={styles.name}>
+                                                {tran.receiversName}
+                                            </p>
+                                            <p className={styles.amount}>
+                                                {tran.transactionAmount}
+                                            </p>
+                                            <p className={styles.status}>
+                                                {tran.transactionStatus}
+                                            </p>
+                                        </div>
+                                    );
+                                })}
+                                {failedTrans.map((tran, index) => {
+                                    return (
+                                        <div
+                                            className={styles.bulkTransfer}
+                                            key={index}
+                                        >
+                                            <p className={styles.name}>
+                                                {tran.receiversName}
+                                            </p>
+                                            <p className={styles.amount}>
+                                                {tran.transactionAmount}
+                                            </p>
+                                            <p className={styles.status}>
+                                                {tran.transactionStatus}
+                                            </p>
+                                        </div>
+                                    );
+                                })}
+                            </>
+                        ) : (
+                            <p>{error}</p>
+                        )}
+
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
