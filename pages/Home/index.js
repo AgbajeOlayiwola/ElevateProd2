@@ -324,6 +324,7 @@ const HomeMain = () => {
             dispatch(omniliteDataa(postData));
             //console.log'new');
         } else if (page === 1) {
+            setLoading(true);
             const postData = {
                 username: ecoonlineUserName,
                 password: ecoonlinePassword
@@ -355,6 +356,7 @@ const HomeMain = () => {
             //omnilite login end
         } else if (page === 2) {
             // setLoading(true);
+            setLoading(true);
 
             const postData = {
                 accountNo: data.accountNumber
@@ -363,6 +365,7 @@ const HomeMain = () => {
             dispatch(accountNumberData(postData));
         } else if (page === 3) {
             // setLoading(true);
+            setLoading(true);
 
             const postData = {
                 pan: cardPan,
@@ -422,6 +425,7 @@ const HomeMain = () => {
 
     const acctTest = () => {
         //console.logaccountNumbers);
+        // setLoading(true);
         if (errorMessages === 'Account already exists with the phone') {
             router.push('/Auth/Login');
         } else if (errorMessages) {
@@ -474,7 +478,7 @@ const HomeMain = () => {
         }
     };
     useEffect(() => {
-        // //console.logecobankOnline, ecoOnlineErrorMessage);
+        console.log(ecobankOnline, ecoOnlineErrorMessage);
         ecoOnlineTest();
     }, [ecobankOnline, ecoOnlineErrorMessage]);
     const types = (type) => {
@@ -797,16 +801,14 @@ const HomeMain = () => {
                             </div>
                         </div>
                         <div className={styles.secondSectionMidCountry}>
-                            {loading ? (
-                                <Loader />
-                            ) : (
-                                <ButtonComp
-                                    disabled={activeBtn}
-                                    active={activeBtn ? 'active' : 'inactive'}
-                                    text="Create account"
-                                    type="submit"
-                                />
-                            )}
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Create account"
+                                type="submit"
+                                loads={loading}
+                                err={ecoOnlineErrorMessage}
+                            />
 
                             <p className={styles.already}>
                                 Already have an account?{' '}

@@ -29,6 +29,8 @@
     justify-content: space-between;
     display: flex;
     padding: 24px;
+    overflow: scroll;
+    height: 40vh;
 }
 
 .Tpwh p {
@@ -42,6 +44,15 @@
     /* width: 34%; */
     max-width: 162px;
     margin: 70px auto 80px;
+}
+.transPs{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #102572;
+    margin-bottom: 40px;
 }
 
 .transP {
@@ -381,6 +392,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 8vh;
 }
 /* .names {
     width: 50%;
