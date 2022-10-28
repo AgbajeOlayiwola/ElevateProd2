@@ -38,7 +38,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                 </div>
                 <div className={styles.successBody}>
                     <h2 className={styles.h2}>
-                        Your Business account is ready!
+                        Your profile has been successfully setup
                     </h2>
                     <h3>
                         Your Account Number is <span>{acctNo}</span>

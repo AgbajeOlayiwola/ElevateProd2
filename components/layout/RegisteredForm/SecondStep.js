@@ -21,7 +21,9 @@ const RegisteredForm = ({
     formData,
     setFormData,
     loading,
-    setLoading
+    setLoading,
+    loads,
+    err
     // errorMessage
 }) => {
     const dispatch = useDispatch();
@@ -228,6 +230,8 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text="Next"
+                            loads={loads}
+                            err={err}
                         />
                         {/* )} */}
                     </form>

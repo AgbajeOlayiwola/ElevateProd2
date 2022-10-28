@@ -43,7 +43,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
         getCacNameError,
         existingProfileSetupPay,
         existingProfileSetupError
-    } = useSelector((state) => state.ExistingProfileSetupReducer);
+    } = useSelector((state) => state.existReducer);
     const { accountStatus, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
     );
@@ -125,7 +125,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
     };
 
     const profileTest = () => {
-        //console.logcompBusprofile, comperrorMessage);
+        // console.log(compBusprofile, comperrorMessage);
         setLoading((prev) => !prev);
         if (compBusprofile) {
             //console.logerrorMessages);
@@ -162,14 +162,15 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             // signature: ''
         };
         dispatch(ExCreateBusProfileSetup(userData));
-        // //console.logexistingProfileSetupPay, existingProfileSetupError);
+        // console.log(existingProfileSetupPay, existingProfileSetupError);
     };
 
     useEffect(() => {
+        console.log(existingProfileSetupPay, existingProfileSetupError);
         setLoading((prev) => !prev);
 
         if (existingProfileSetupPay) {
-            //console.logexistingProfileSetupPay, existingProfileSetupError);
+            console.log(existingProfileSetupPay, existingProfileSetupError);
             if (existingProfileSetupPay.data.message === 'Successful') {
                 if (formData.type !== 'true') {
                     router.push('/Verify/ExistingSuccess');
