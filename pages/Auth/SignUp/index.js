@@ -61,9 +61,9 @@ const Signup = ({ type }) => {
                 minSymbols: 0
             })
         ) {
-            setErrorMessages('Medium');
+            setErrorMessages('Add a symbol');
         } else {
-            setErrorMessages('Weak');
+            setErrorMessages('Add a Number');
         }
         setPassword(e.target.value);
         if (e.target.value === '') {
@@ -274,10 +274,10 @@ const Signup = ({ type }) => {
                                                         'Strong'
                                                             ? styles.strong
                                                             : errorMessages ===
-                                                              'Medium'
+                                                              'Add a symbol'
                                                             ? styles.medium
                                                             : errorMessages ===
-                                                              'Weak'
+                                                              'Add a Number'
                                                             ? styles.errors
                                                             : styles.strong
                                                     }
@@ -318,20 +318,15 @@ const Signup = ({ type }) => {
                                     {errors.exampleRequired && (
                                         <span>This field is required</span>
                                     )}
-                                    {loading ? (
-                                        <Loader />
-                                    ) : (
-                                        <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            text="Proceed"
-                                            type="submit"
-                                        />
-                                    )}
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Proceed"
+                                        type="submit"
+                                        err={errorMessage}
+                                    />
                                 </form>
                             ) : (
                                 <>

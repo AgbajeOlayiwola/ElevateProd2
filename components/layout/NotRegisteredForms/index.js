@@ -69,6 +69,7 @@ const ProfileSetups = () => {
     //         countryNames = JSON.parse(countryName);
     //     }
     // }
+    const [loads, setLoads] = useState(false);
     useEffect(() => {
         dispatch(loadCountry());
     }, []);
@@ -123,6 +124,7 @@ const ProfileSetups = () => {
                         actionI={regsiteredBus}
                         loading={loading}
                         setLoading={setLoading}
+                        loads={loads}
                     />
                 );
             case 1:
@@ -133,18 +135,18 @@ const ProfileSetups = () => {
                         // setPage={page+1}
                         page={page}
                         action={() => {
-                            const otpData = {
-                                phoneNumber:
-                                    formData.countryCode + formData.phoneNumber,
-                                otp: '123456'
-                            };
-                            dispatch(verifyOtp(otpData));
-                            // dispatch(CompProfile());
-                            if (otpErrorMessage) {
-                                // console.log('otpError');
-                            } else if (!otpErrorMessage) {
-                                setPage(page + 1);
-                            }
+                            // const otpData = {
+                            //     phoneNumber:
+                            //         formData.countryCode + formData.phoneNumber,
+                            //     otp: '123456'
+                            // };
+                            // dispatch(verifyOtp(otpData));
+                            // // dispatch(CompProfile());
+                            // if (otpErrorMessage) {
+                            //     // console.log('otpError');
+                            // } else if (!otpErrorMessage) {
+                            setPage(page + 1);
+                            // }
                         }}
                     />
                 );
@@ -186,7 +188,7 @@ const ProfileSetups = () => {
 
     function regsiteredBus() {
         // console.log('firstAPi');
-
+        setLoads((prev) => !prev);
         const businessProfileData = {
             bvnNumber: formData.bvNumber,
             phoneNumber: formData.phoneNumber,
@@ -203,6 +205,7 @@ const ProfileSetups = () => {
     function handleSubmit() {
         // console.log('firstAPi');
 
+        setLoads((prev) => !prev);
         const profileData = {
             bvnNumber: formData.bvNumber,
             phoneNumber: formData.phoneNumber,

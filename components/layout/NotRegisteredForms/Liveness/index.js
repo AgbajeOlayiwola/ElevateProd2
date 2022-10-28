@@ -38,7 +38,9 @@ const Liveness = ({ action, loading, setLoading }) => {
     const [imageSrcI, setImageSrcI] = React.useState(null);
     const [error, setError] = React.useState('');
 
+    const [loads, setLoads] = useState(false);
     const capture = React.useCallback(() => {
+        setLoads((prev) => !prev);
         // setLoading((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
@@ -54,7 +56,7 @@ const Liveness = ({ action, loading, setLoading }) => {
 
         var formData = new FormData();
 
-        formData.append('photo', file);
+        formData.append('userFace', file);
 
         let cookie;
 
@@ -65,7 +67,7 @@ const Liveness = ({ action, loading, setLoading }) => {
         }
         axios
             .post(
-                `https://ellevate-test.herokuapp.com/users/profile/image`,
+                `https://ellevate-test.herokuapp.com/authentication/facematch`,
                 formData,
                 {
                     headers: {
@@ -98,9 +100,9 @@ const Liveness = ({ action, loading, setLoading }) => {
                         {error ? <p>{error}</p> : null}
                         <div
                             className={
-                                // succes === 'facial verification successful'
-                                succes === 'success'
-                                    ? styles.imageOuter
+                                succes === 'facial verification successful'
+                                    ? // succes === 'success'
+                                      styles.imageOuter
                                     : error
                                     ? styles.errorInner
                                     : styles.imageInner
@@ -122,14 +124,22 @@ const Liveness = ({ action, loading, setLoading }) => {
                 {/* {loading ? <Loader /> : null} */}
 
                 <ButtonComp
-                    onClick={succes === 'success' ? action : capture}
+                    onClick={
+                        succes === 'facial verification successful'
+                            ? action
+                            : capture
+                    }
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
                     type="button"
                     text={
-                        // succes === 'facial verification successful'
-                        succes === 'success' ? 'Continue' : 'Snap'
+                        succes === 'facial verification successful'
+                            ? // succes === 'success'
+                              'Continue'
+                            : 'Snap'
                     }
+                    err={succes}
+                    loads={loads}
                     // action={action}
                 />
 
