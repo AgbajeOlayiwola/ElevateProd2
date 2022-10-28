@@ -12,7 +12,7 @@ import Image from 'next/image';
 import Overlay from '../../components/ReusableComponents/Overlay';
 import SchedulePayment from '../../components/ReusableComponents/Schedulepayment';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
-import { getCookie } from 'cookies-next';
+import { RWebShare } from 'react-web-share';
 import {
     postAirtime,
     postInterBank,
@@ -121,6 +121,12 @@ const Payment = () => {
     if (typeof window !== 'undefined') {
         airtimeData = window.localStorage.getItem('Airtime');
         airtimeNetData = JSON.parse(airtimeData);
+    }
+    let number;
+    let numberofBene = {};
+    if (typeof window !== 'undefined') {
+        number = window.localStorage.getItem('number');
+        numberofBene = JSON.parse(number);
     }
     useEffect(() => {
         dispatch(loadAccountPrimary());
@@ -490,11 +496,12 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 buttonText="Next"
                                 othersaction={(data) => {
-                                    if (data.bankName === 'Ecobank') {
+                                    console.log(data);
+                                    if (data.bankName === 'ECOBANK') {
                                         setEcobank(true);
                                         setCount(count + 1);
                                     } else if (
-                                        data.bankNameBene === 'Ecobank'
+                                        data.bankNameBene === 'ECOBANK'
                                     ) {
                                         setEcobank(true);
                                         setCount(count + 1);
@@ -554,31 +561,6 @@ const Payment = () => {
                                 }}
                                 transferAction={(data) => {
                                     setIsLoading(true);
-                                    if (paymentDetails.bene === true) {
-                                        const newBene = {
-                                            name: interEnquiry.accountName,
-                                            accountNumber:
-                                                interEnquiry.accountNo,
-                                            bankName:
-                                                // bank.filter(
-                                                //     (item) => {
-                                                //         if (
-                                                //             item.institutionId ===
-                                                //             paymentDetails.bankName
-                                                //         ) {
-                                                //             return item.institutionName;
-                                                //         }
-                                                //     }
-                                                // )
-                                                'Zenith Bank',
-                                            bankCode: paymentDetails.bankName
-                                        };
-                                        dispatch(
-                                            postBeneficiariesData(newBene)
-                                        );
-                                    }
-                                    //console.loginterEnquiry);
-
                                     const paymentData = {
                                         isEcobankToEcobankTransaction: ecobank,
                                         destinationBank:
@@ -699,37 +681,15 @@ const Payment = () => {
                                                   return +a.amount + +b.amount;
                                               }
                                           )
-                                        : paymentDetails.details?.map(
-                                              (item, index) => {
-                                                  if (
-                                                      item.accountNumber !== ''
-                                                  ) {
-                                                      let counts = 0;
-                                                      counts += 1;
-                                                      console.log(counts);
-                                                      return (
-                                                          paymentDetails.amount *
-                                                          parseInt(counts, 10)
-                                                      );
-                                                  }
-                                              }
-                                          )
+                                        : paymentDetails.amount *
+                                          numberofBene.length
                                 }
                                 title="Bulk Payments"
                                 // recieverName={paymentDetails.accountNumber}
                                 sender={`${userProfileData.lastName} ${userProfileData.firstName}`}
                                 // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
-                                number={paymentDetails.details?.map(
-                                    (item, index) => {
-                                        if (item.accountNumber !== '') {
-                                            let counts = 0;
-                                            counts += 1;
-                                            console.log(counts);
-                                            return counts;
-                                        }
-                                    }
-                                )}
+                                number={numberofBene.length}
                                 backAction={() => {
                                     setCount(count - 1);
                                 }}
@@ -761,7 +721,9 @@ const Payment = () => {
                                                             destinationBankCode:
                                                                 details.bankName,
                                                             beneficiaryName:
-                                                                'HIJIOKE   NWANKWO',
+                                                                numberofBene[
+                                                                    index
+                                                                ].accountName,
                                                             destinationAccountNo:
                                                                 details.accountNumber,
                                                             transactionAmount:
@@ -1067,6 +1029,18 @@ const Payment = () => {
                                 <p className={styles.thousand}>
                                     {outType ? '*******' : balance}
                                 </p>
+                                {/* <RWebShare
+                                    data={{
+                                        text: 'Like humans, flamingos make friends for life',
+                                        url: 'https://on.natgeo.com/2zHaNup',
+                                        title: 'Flamingos'
+                                    }}
+                                    onClick={() =>
+                                        console.log('shared successfully!')
+                                    }
+                                >
+                                    <button>Share 🔗</button>
+                                </RWebShare> */}
                                 <Visbility color="green" typeSet={types} />
                             </div>
                             <p className={styles.avail}>Available Balance</p>

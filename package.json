@@ -35,6 +35,7 @@
     "react-redux": "^8.0.2",
     "react-slick": "^0.29.0",
     "react-toastify": "^9.0.5",
+    "react-web-share": "^2.0.2",
     "react-webcam": "^7.0.1",
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",

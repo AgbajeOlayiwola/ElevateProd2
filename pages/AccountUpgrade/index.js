@@ -136,6 +136,7 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
+            setTransactionPinStatus('done');
             // setOutcome('First');
         } else if (setTransactionPinError !== null) {
             setMessage(setTransactionPinError);

@@ -3395,6 +3395,11 @@ react-toastify@^9.0.5:
   dependencies:
     clsx "^1.1.1"
 
+react-web-share@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-web-share/-/react-web-share-2.0.2.tgz#ed0f08fd07ec28777b8fc7290bd59f0be78f1410"
+  integrity sha512-bGm1TJc6xtC0MhAnYFsrzT4En7l2oAdLTgCK7nk7b4xGTg3L5gOldiPrmYQ8a/dEXNydgekvOj/tfjduIlIRVA==
+
 react-webcam@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/react-webcam/-/react-webcam-7.0.1.tgz#8249e1d621eb4bba7e3f52135f562439d0528df3"

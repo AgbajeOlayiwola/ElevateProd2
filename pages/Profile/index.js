@@ -892,6 +892,7 @@ const Profile = () => {
                                             bankName: data.bankName,
                                             bankCode: data.bankName
                                         };
+                                        console.log(beneData);
                                         dispatch(
                                             postBeneficiariesData(beneData)
                                         );
@@ -982,14 +983,13 @@ const Profile = () => {
                                                             ?.message
                                                     }
                                                 </p>
-                                                {showinterEnquiry ? (
+                                                {interEnquiry ? (
                                                     <div
                                                         className={
                                                             styles.formGroup
                                                         }
                                                     >
                                                         <label>
-                                                            {' '}
                                                             Account Name
                                                         </label>
                                                         <input
@@ -1036,7 +1036,7 @@ const Profile = () => {
                                                         <option value="">
                                                             Select Bank
                                                         </option>
-                                                        <option value="Ecobank">
+                                                        <option value="ECOBANK">
                                                             ECOBANK
                                                         </option>
                                                         {bank?.map(
