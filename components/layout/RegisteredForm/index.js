@@ -16,7 +16,7 @@ import { login } from '../../../redux/types/actionTypes';
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
     const [pageType, setPageType] = useState('');
-
+    const [loads, setLoads] = useState(false);
     const dispatch = useDispatch();
     const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
@@ -59,6 +59,7 @@ const ExistingMultiStep = () => {
                 return (
                     <SecondStep
                         errorMessage={errorMessage}
+                        loads={loads}
                         move={() => {
                             // console.log(formData.emailData);
                             let userEmail;
@@ -86,7 +87,8 @@ const ExistingMultiStep = () => {
                             };
                             // console.log(userData);
                             dispatch(existingUserProfileData(userData));
-                            setLoading((prev) => !prev);
+                            // setLoading((prev) => !prev);
+                            setLoads((prev) => !prev);
                             // console.log(existingUserProfilee.data.message);
                         }}
                         formData={formData}
@@ -96,6 +98,7 @@ const ExistingMultiStep = () => {
                         }}
                         loading={loading}
                         setLoading={setLoading}
+                        err={errorMessage}
                     />
                 );
 
@@ -103,6 +106,7 @@ const ExistingMultiStep = () => {
                 return (
                     <Liveness
                         action={() => {
+                            setLoads((prev) => !prev);
                             setPage(page + 1);
                         }}
                         loading={loading}
@@ -138,6 +142,7 @@ const ExistingMultiStep = () => {
         }
     };
     function handleSubmit() {
+        // setLoads((prev) => !prev);
         setPage(page + 1);
         setFormData({ ...formData, type: 'true' });
     }

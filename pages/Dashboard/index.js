@@ -204,7 +204,82 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div> */}
-                        <p>No transactions has been made today.</p>
+
+                        {tableDetails.length === 0 ? (
+                            <div className={styles.transactionBody}>
+                                <div>
+                                    <div className={styles.transactionSvg}>
+                                        <TransactionSvg />
+                                    </div>
+                                    <p>No transactions has been made today.</p>
+                                </div>
+                            </div>
+                        ) : (
+                            tableDetails
+                                ?.filter((item) => {
+                                    const newDate = item.transactionDate.split(
+                                        'T'
+                                    );
+                                    return (
+                                        newDate[0] >= rangeDate &&
+                                        newDate[0] <= time
+                                    );
+                                })
+                                ?.map((item, index) => {
+                                    const formatter = new Intl.NumberFormat(
+                                        'en-US',
+                                        {
+                                            style: 'currency',
+                                            currency: 'NGN',
+                                            currencyDisplay: 'narrowSymbol'
+                                        }
+                                    );
+                                    const formattedAmount = formatter.format(
+                                        item.transactionAmount
+                                    );
+                                    let newBeneficiary;
+                                    if (item.receiversName === null) {
+                                        newBeneficiary = '';
+                                    } else {
+                                        newBeneficiary = item?.receiversName?.split(
+                                            ' '
+                                        );
+                                    }
+                                    return (
+                                        <div key={index}>
+                                            <div className={styles.transaction}>
+                                                <div className={styles.names}>
+                                                    <p>
+                                                        {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                    </p>
+                                                </div>
+                                                <div className={styles.type}>
+                                                    <p>
+                                                        {item.transactionType}
+                                                    </p>
+                                                </div>
+                                                <div className={styles.money}>
+                                                    <p>{formattedAmount}</p>
+                                                </div>
+                                                <div className={item.status}>
+                                                    <div
+                                                        className={
+                                                            styles.statusColor
+                                                        }
+                                                    >
+                                                        <p>
+                                                            {
+                                                                item.transactionStatus
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr className={styles.hr} />
+                                        </div>
+                                    );
+                                })
+                        )}
                     </div>
 
                     <div className={styles.otherTrans}>

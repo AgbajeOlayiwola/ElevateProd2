@@ -67,6 +67,7 @@ import transactionFeesReducer from './transactionFees.reducer';
 import logoutReducer from './logout.reducer';
 import pushDocumentsReducer from './pushDocuments.reducer';
 import shareDocumentsReducer from './shareDocuments.reducer';
+import existReducer from './exist.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -140,7 +141,8 @@ const appReducer = combineReducers({
     changeTransactionPinReducer,
     pushDocumentsReducer,
     shareDocumentsReducer,
-    completeBusinessprofileReducer
+    completeBusinessprofileReducer,
+    existReducer: existReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

@@ -29,7 +29,7 @@ const NewUser = ({ selectCountry }) => {
     const [passwordMatch, setPasswordMatch] = useState('');
     const [symbol, setSymbol] = useState(false);
     const [numbers, setNumbers] = useState(false);
-
+    const [loads, setLoads] = useState(false);
     const { user, errorMessage } = useSelector((state) => state.registered);
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
@@ -127,7 +127,12 @@ const NewUser = ({ selectCountry }) => {
             );
         }
         setError('');
-        if (password === confirmPassword) {
+        if (
+            password === confirmPassword &&
+            symbol === true &&
+            numbers === true
+        ) {
+            setLoads((prev) => !prev);
             const postData = {
                 preferredName,
                 email,
@@ -250,24 +255,27 @@ const NewUser = ({ selectCountry }) => {
                     {password == confirmPassword ? null : (
                         <>
                             <p className={styles.error}>{passwordMatch}</p>
-                            <div className={styles.sameErroSize}>
-                                <p
-                                    className={
-                                        numbers ? styles.success : styles.error
-                                    }
-                                >
-                                    must have up to 1 number
-                                </p>
-                                <p
-                                    className={
-                                        symbol ? styles.success : styles.error
-                                    }
-                                >
-                                    must have up to 1 symmbol
-                                </p>
-                            </div>
                         </>
                     )}
+                    {
+                        <div className={styles.sameErroSize}>
+                            <p
+                                className={
+                                    numbers ? styles.success : styles.error
+                                }
+                            >
+                                password should Contain atleast 1 number
+                            </p>
+                            <p
+                                className={
+                                    symbol ? styles.success : styles.error
+                                }
+                            >
+                                password should Contain atleast 1 special
+                                character
+                            </p>
+                        </div>
+                    }
                 </div>
             </div>
             <div className={styles.secondSectionMidCountry}>
@@ -276,6 +284,7 @@ const NewUser = ({ selectCountry }) => {
                     active={activeBtn ? 'active' : 'inactive'}
                     text="Create account"
                     type="submit"
+                    loads={loads}
                     err={errorMessage}
                 />
 

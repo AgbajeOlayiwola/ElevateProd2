@@ -23,6 +23,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
+    const [loads, setLoads] = useState(false);
     const router = useRouter();
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
@@ -48,7 +49,7 @@ const Login = () => {
 
     const onSubmit = (data) => {
         setError('');
-        setLoading((prev) => !prev);
+        setLoads((prev) => !prev);
         const loginData = {
             identifier,
             password
@@ -59,10 +60,11 @@ const Login = () => {
     // console.log(prevPath);
     // console.log(user);
     const sentLogin = () => {
+        setLoads((prev) => !prev);
         if (errorMessages !== null) {
             setError(errorMessages);
             // setLoading(false);
-            setLoading((prev) => !prev);
+
             // } else if (
             //     newAccountErrorMessage ===
             //     'You already have an account with us. Please contact us for more information'
@@ -169,6 +171,7 @@ const Login = () => {
                             margin="0px 0 0 0"
                             text="Login"
                             type="submit"
+                            loads={loads}
                             err={errorMessages}
                         />
                     </form>
