@@ -873,8 +873,7 @@ const Payment = () => {
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
                                             billerId:
-                                                airtimeNetData.billerDetail
-                                                    .billerID,
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 airtimeNetData
                                                     .billerProductInfo[0]

@@ -19,6 +19,7 @@ const BulkTransfer = ({
     const [diffAmount, setDiffAmount] = useState(false);
     const [interEnquiry, setInterEnquiry] = useState([]);
     const [indexNumber, setIndex] = useState('');
+    const [acctNo, setAcctNo] = useState('');
     const [bank, setBank] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
@@ -121,16 +122,8 @@ const BulkTransfer = ({
                                         onInput={(e) => {
                                             // setAccountNumber(e.target.value);
                                             if (e.target.value.length === 10) {
-                                                const details = {
-                                                    accountNumber:
-                                                        e.target.value
-                                                };
                                                 setIndex(index);
-                                                dispatch(
-                                                    postInterBankEnquiry(
-                                                        details
-                                                    )
-                                                );
+                                                setAcctNo(e.target.value);
                                             }
                                         }}
                                         name={`${fieldName}.accountNumber`}
@@ -145,6 +138,14 @@ const BulkTransfer = ({
                                             required: 'Bank name is required'
                                         })}
                                         name={`${fieldName}.bankName`}
+                                        onChange={() => {
+                                            const details = {
+                                                accountNumber: acctNo
+                                            };
+                                            dispatch(
+                                                postInterBankEnquiry(details)
+                                            );
+                                        }}
                                     >
                                         {payload !== undefined ? (
                                             <option value={e.bankName}>

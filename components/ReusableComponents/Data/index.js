@@ -245,7 +245,7 @@ export const PaymentData = {
 
         {
             icon: <FxTrans />,
-            text: 'FX Transfer '
+            text: 'FX Transfer'
         }
     ],
     receive: [
