@@ -39,7 +39,7 @@ const LineChart = () => {
             amounts[30]
         ]);
     }, [transactionElevate]);
-
+    console.log(transactionElevate);
     // console.log(datas, nxtdata);
 
     useEffect(() => {
