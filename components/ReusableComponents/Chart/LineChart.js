@@ -13,6 +13,10 @@ const LineChart = () => {
     const [datas, setDatas] = useState([]);
     const [nxtdata, setNxtData] = useState([]);
     // set data
+    const [lineData, setLineData] = useState({
+        labels: ['Sun', 'Mon', 'Tue', 'Thr', 'Fri', 'Sat'],
+        datasets: []
+    });
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getTransactionElevate());
@@ -37,11 +41,6 @@ const LineChart = () => {
     }, [transactionElevate]);
 
     // console.log(datas, nxtdata);
-
-    const [lineData, setLineData] = useState({
-        labels: ['Sun', 'Mon', 'Tue', 'Thr', 'Fri', 'Sat'],
-        datasets: []
-    });
 
     useEffect(() => {
         setLineData({
@@ -68,7 +67,7 @@ const LineChart = () => {
         //    setLineData(...lineData,[])
     }, [transactionElevate]);
 
-    // console.log(`${amounts[0]}`);
+    console.log(`${amounts[0]}`);
     // set options
     const [lineOptions, setLineOptions] = useState({
         scales: {
