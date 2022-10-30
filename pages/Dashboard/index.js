@@ -174,9 +174,9 @@ const Dashboard = () => {
     // }, [userProfile]);
 
     const current = new Date();
-    const date = `${current.getDate()}/${
+    const date = `${current.getFullYear()}-${
         current.getMonth() + 1
-    }/${current.getFullYear()}`;
+    }-${current.getDate()}`;
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
@@ -197,6 +197,7 @@ const Dashboard = () => {
             // });
         }
     }, [transactionElevate]);
+    console.log(date);
     return (
         <DashLayout page="Dashboard">
             <Levelup />
@@ -268,11 +269,11 @@ const Dashboard = () => {
                                     return (
                                         <div key={index}>
                                             <div className={styles.transaction}>
-                                                <div className={styles.names}>
+                                                {/* <div className={styles.names}>
                                                     <p>
                                                         {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
                                                     </p>
-                                                </div>
+                                                </div> */}
                                                 <div className={styles.type}>
                                                     <p>
                                                         {item.transactionType}
