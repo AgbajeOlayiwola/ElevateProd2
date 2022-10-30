@@ -102,20 +102,20 @@ const ExistingMultiStep = () => {
                     />
                 );
 
-            case 2:
-                return (
-                    <Liveness
-                        action={() => {
-                            setLoads((prev) => !prev);
-                            setPage(page + 1);
-                        }}
-                        loading={loading}
-                        setLoading={setLoading}
-                        // action={handleSubmitt}
-                    />
-                );
+            // case 2:
+            //     return (
+            //         <Liveness
+            //             action={() => {
+            //                 setLoads((prev) => !prev);
+            //                 setPage(page + 1);
+            //             }}
+            //             loading={loading}
+            //             setLoading={setLoading}
+            //             // action={handleSubmitt}
+            //         />
+            //     );
 
-            case 3:
+            case 2:
                 return (
                     <StepThree
                         action={() => {
@@ -125,7 +125,7 @@ const ExistingMultiStep = () => {
                         handleSubmitNew={handleSubmitNew}
                     />
                 );
-            case 4:
+            case 3:
                 return (
                     <StepFour
                         title={pageType}
@@ -163,7 +163,7 @@ const ExistingMultiStep = () => {
                     setPage(page + 1);
                     setFormData({ ...formData, type: 'true' });
                 } else if (loginWith === null) {
-                    setPage(page + 2);
+                    setPage(page + 1);
                     setFormData({ ...formData, type: 'true' });
                 }
             }
