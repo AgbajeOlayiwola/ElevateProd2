@@ -49,7 +49,7 @@ const Login = () => {
 
     const onSubmit = (data) => {
         setError('');
-        setLoads((prev) => !prev);
+        setLoads(true);
         const loginData = {
             identifier,
             password
@@ -60,8 +60,8 @@ const Login = () => {
     // console.log(prevPath);
     // console.log(user);
     const sentLogin = () => {
-        setLoads((prev) => !prev);
         if (errorMessages !== null) {
+            setLoads(false);
             setError(errorMessages);
             // setLoading(false);
 
