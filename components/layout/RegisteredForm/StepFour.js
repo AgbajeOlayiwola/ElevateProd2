@@ -625,6 +625,8 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
+                                        loads={loading}
+                                        err={comperrorMessage}
                                         text="Save and Continue"
                                         type="submit"
                                         // onClick={handleShowFourthStep}
@@ -1045,6 +1047,8 @@ const StepFour = ({ title, action, setFormData, formData }) => {
                                         }
                                         text="Save and Continue"
                                         type="submit"
+                                        loads={loading}
+                                        err={existingProfileSetupError}
                                         // onClick={handleShowSuccessStep}
                                         // onClick={handleShowFourthStep}
                                     />
