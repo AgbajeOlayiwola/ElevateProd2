@@ -85,17 +85,15 @@ const Ecoacct = () => {
             </div>
             <div className={styles.btn}>
                 {/* <Link href="/Onboarding/ExistingProfileSetup"> */}
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text="Login"
-                        type="submit"
-                    />
-                )}
-                {/* </Link> */}
+
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    text="Login"
+                    type="submit"
+                    loads={loading}
+                    err={errorMessages}
+                />
             </div>
         </form>
     );

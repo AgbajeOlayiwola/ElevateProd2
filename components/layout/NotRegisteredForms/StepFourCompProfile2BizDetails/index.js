@@ -87,7 +87,9 @@ const StepFourCompProfile2BizDetails = ({
     const [businessCategory, setBusinessCategory] = useState([]);
     const [businessType, setBusinessType] = useState([]);
     const [business, setBusiness] = useState('');
+    const [loading, setLoading] = useState(false);
     const handleSubmitIII = () => {
+        setLoading(true);
         const commpleteProfileData = {
             businessName: formData.bussinessName,
             businessType: formData.businessType,
