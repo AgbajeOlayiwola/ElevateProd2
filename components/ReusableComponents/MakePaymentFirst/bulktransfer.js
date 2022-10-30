@@ -16,6 +16,7 @@ const BulkTransfer = ({
     payload
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [diffAmount, setDiffAmount] = useState(false);
     const [interEnquiry, setInterEnquiry] = useState([]);
     const [indexNumber, setIndex] = useState('');
@@ -33,6 +34,7 @@ const BulkTransfer = ({
 
     useEffect(() => {}, [number]);
     const interBankEnquiryCheck = () => {
+        setLoading((prev) => !prev);
         if (interBankEnquiry !== null) {
             // setInterEnquiry((arr) => [...arr, interBankEnquiry]);
             // number.splice(index, 1, interBankEnquiry);
@@ -308,6 +310,8 @@ const BulkTransfer = ({
                         active={activeBtn ? 'active' : 'inactive'}
                         text={buttonText}
                         type="submit"
+                        loads={loading}
+                        err={errorMessageInterBankEnquiry}
                     />
                     {/* <p className={styles.schedule}>
                         Not paying now?<span>Schedule for Later</span>

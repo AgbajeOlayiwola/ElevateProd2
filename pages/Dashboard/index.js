@@ -69,6 +69,7 @@ const Dashboard = () => {
     const [balance, setBalance] = useState('₦0.00');
     const [tableDetails, setTableDetails] = useState([]);
     const [userProfileData, setUserProfileData] = useState([]);
+    const [dateState, setDateState] = useState(false);
 
     const [acctNumber, setAcctNumber] = useState('');
 
@@ -171,12 +172,32 @@ const Dashboard = () => {
 
     //     console.log('upgrade check', accountUpgrade);
     // }, [userProfile]);
+
+    const current = new Date();
+    const date = `${current.getFullYear()}-${
+        current.getMonth() + 1
+    }-${current.getDate()}`;
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
-            // console.log(transactionElevate.transactions);
+
+            tableDetails?.filter((item) => {
+                const newDate = item.transactionDate.split('T');
+
+                if (date === newDate[0]) {
+                    setDateState(true);
+                } else {
+                    setDateState(false);
+                }
+                console.log(newDate[0]);
+            });
+
+            // tableDetails.data?.map((item) => {
+            //     console.log(item.transactionDate);
+            // });
         }
     }, [transactionElevate]);
+    console.log(date);
     return (
         <DashLayout page="Dashboard">
             <Levelup />
@@ -205,7 +226,7 @@ const Dashboard = () => {
                             </div>
                         </div> */}
 
-                        {tableDetails.length === 0 ? (
+                        {dateState === false ? (
                             <div className={styles.transactionBody}>
                                 <div>
                                     <div className={styles.transactionSvg}>
@@ -248,11 +269,11 @@ const Dashboard = () => {
                                     return (
                                         <div key={index}>
                                             <div className={styles.transaction}>
-                                                <div className={styles.names}>
+                                                {/* <div className={styles.names}>
                                                     <p>
                                                         {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
                                                     </p>
-                                                </div>
+                                                </div> */}
                                                 <div className={styles.type}>
                                                     <p>
                                                         {item.transactionType}

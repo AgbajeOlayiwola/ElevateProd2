@@ -18,6 +18,7 @@
     padding: 120px 0px;
     max-width: 682px;
     width: 53%;
+    overflow: scroll;
 }
 
 .loginCont {

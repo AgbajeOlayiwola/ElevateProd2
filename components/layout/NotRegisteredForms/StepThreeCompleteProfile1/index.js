@@ -849,6 +849,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         }
                                         text="Save & Continue"
                                         type="submit"
+                                        loads={loading}
                                         err={comperrorMessage}
                                     />
                                 </div>

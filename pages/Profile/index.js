@@ -23,6 +23,8 @@ import ShareSvg from '../../components/ReusableComponents/ShareSvg';
 import styles from './styles.module.css';
 import Lottie from 'react-lottie';
 import animationData from '../../components/ReusableComponents/Lotties/contact-us.json';
+import socialdata from '../../components/ReusableComponents/Lotties/social-media-marketing.json';
+
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getBeneficiariesData,
@@ -95,6 +97,15 @@ const Profile = () => {
         loop: true,
         autoplay: true,
         animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
+
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
         rendererSettings: {
             preserveAspectRatio: 'xMidYMid slice'
         }
@@ -490,6 +501,37 @@ const Profile = () => {
                                     )}
                                 </div>
                             </form>
+                        );
+                }
+            case 'RM Name and Contact Details ':
+                switch (count) {
+                    case 0:
+                        return (
+                            <>
+                                <div>
+                                    <Lottie
+                                        options={defaultOptions}
+                                        height={200}
+                                        width={200}
+                                    />
+                                </div>
+                                <label styles={{ marginBottom: '30px' }}>
+                                    RM name
+                                </label>
+                                <br />
+                                <InputTag
+                                    type="text"
+                                    placeholder="Micheal Alalbi"
+                                />
+                                <br />
+                                <br />
+                                <label>RM Phone Number</label>
+                                <br />
+                                <InputTag
+                                    type="text"
+                                    placeholder="081 234 5678"
+                                />
+                            </>
                         );
                 }
 
@@ -1172,8 +1214,24 @@ const Profile = () => {
                             </>
                         );
                 }
+            case 'Share App/Refer a Friend':
+                switch (count) {
+                    case 0:
+                        return (
+                            <>
+                                <div>
+                                    <Lottie
+                                        options={socialOptions}
+                                        height={200}
+                                        width={200}
+                                    />
+                                </div>
+                            </>
+                        );
+                }
         }
     };
+
     return (
         <DashLayout page="Profile Management">
             <ProfileLayout
