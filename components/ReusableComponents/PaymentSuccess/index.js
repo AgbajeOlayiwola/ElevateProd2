@@ -12,6 +12,7 @@ import ErrorSvg from '../ReusableSvgComponents/ErrorSvg';
 import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import { FaUser } from 'react-icons/fa';
 
 const PaymentSuccess = ({
     action,
@@ -228,7 +229,35 @@ const PaymentSuccess = ({
                                     </p> */}
                                     </RegistrationStatus>
                                 </div>
-
+                                {/* <div className={styles.receiptHead}>
+                                    <h2>Successful</h2>
+                                    <p>NGN {amount}</p>
+                                </div>
+                                <div className={styles.receiptBody}>
+                                    <p className={styles.name}>{beneName}</p>
+                                    <p className={styles.date}> {current}</p>
+                                    <div className={styles.receiptSingle}>
+                                        <div className={styles.receiptIcon}>
+                                            <FaUser/>
+                                        </div>
+                                        <div className={styles.receiptText}>
+                                            <p className={styles.receiptTitle}>Beneficiary Account</p>
+                                            <p className={styles.receiptValue}>Beneficiary Account</p>
+                                        </div>
+                                        <div className={styles.receiptText}>
+                                            <p className={styles.receiptTitle}>Beneficiary Account</p>
+                                            <p className={styles.receiptValue}>Beneficiary Account</p>
+                                        </div>
+                                        <div className={styles.receiptText}>
+                                            <p className={styles.receiptTitle}>Beneficiary Account</p>
+                                            <p className={styles.receiptValue}>Beneficiary Account</p>
+                                        </div>
+                                        <div className={styles.receiptText}>
+                                            <p className={styles.receiptTitle}>Beneficiary Account</p>
+                                            <p className={styles.receiptValue}>Beneficiary Account</p>
+                                        </div>
+                                    </div>
+                                </div> */}
                                 <ButtonComp
                                     disabled={activeBtn}
                                     active={activeBtn ? 'active' : 'inactive'}

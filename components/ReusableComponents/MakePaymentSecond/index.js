@@ -221,7 +221,7 @@ const MakePaymentSecond = ({
                                 <ButtonComp
                                     disabled={activeBtn}
                                     active={activeBtn ? 'active' : 'inactive'}
-                                    text="Make Transfer"
+                                    text="Confirm"
                                     type="submit"
                                 />
                             )}

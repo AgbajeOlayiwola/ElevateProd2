@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from './styles.module.css';
 const PaymentSingleBody = ({
     data: { icon, text },
@@ -5,6 +6,7 @@ const PaymentSingleBody = ({
     type,
     handleFormChange
 }) => {
+    const [time, setTime] = useState(false);
     return (
         <>
             {text === 'FX Transfer' ? (
@@ -12,6 +14,12 @@ const PaymentSingleBody = ({
                     className={styles.paymentSingleBodyGrey}
                     key={index}
                     // onClick={() => handleFormChange(text.toLowerCase())}
+                    onMouseEnter={() => {
+                        setTime(true);
+                    }}
+                    onMouseLeave={() => {
+                        setTime(false);
+                    }}
                 >
                     <div>
                         <div className={styles.paymentSingleImg}>{icon}</div>
@@ -23,7 +31,7 @@ const PaymentSingleBody = ({
                                         : styles.makePara
                                 }
                             >
-                                {text}
+                                {time ? 'Coming Soon' : text}
                             </p>
                         </div>
                     </div>

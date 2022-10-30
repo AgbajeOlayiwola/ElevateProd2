@@ -1157,6 +1157,7 @@ export const postBeneficiariesLoadError = (postBeneficiarieserror) => ({
     payload: postBeneficiarieserror
 });
 export const postBeneficiariesData = (data) => (dispatch) => {
+    // const cookie = getCookie('cookieToken');
     dispatch(postBeneficiariesLoadStart());
     axiosInstance
         .post(`${apiRoutes.beneficiaries}`, data)

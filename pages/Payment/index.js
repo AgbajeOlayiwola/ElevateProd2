@@ -251,16 +251,6 @@ const Payment = () => {
     useEffect(() => {
         transactionFeesCheck();
     }, [transactionFees, errorMessageTransactionFees]);
-    useEffect(() => {
-        if (setTransactionPin !== null) {
-            setTransactionPinDone(true);
-        } else if (setTransactionPinError !== null) {
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setError(setTransactionPinError);
-            setStatus('error');
-        }
-    });
     const bulkcheck = () => {
         if (bulkTransfer !== null) {
             console.log(bulkTransfer);
@@ -545,9 +535,9 @@ const Payment = () => {
                                     //console.logdata);
                                     setPaymentDetails(data);
                                 }}
-                                scheduleLater={() => {
-                                    setCount(count + 4);
-                                }}
+                                // scheduleLater={() => {
+                                //     setCount(count + 4);
+                                // }}
                             />
                         );
                     case 1:
@@ -599,22 +589,8 @@ const Payment = () => {
                                             .replaceAll(',', ''),
                                         accountId: senderDetails.accountId
                                     };
-                                    const transactionData = {
-                                        transactionPin: Object.values(data)
-                                            .toString()
-                                            .replaceAll(',', '')
-                                    };
-                                    userProfileData.hasSetTransactionPin ===
-                                    false
-                                        ? dispatch(
-                                              loadsetTransactionPin(
-                                                  transactionData
-                                              )
-                                          )
-                                        : dispatch(postInterBank(paymentData));
-                                    if (setTransactionPinDone) {
-                                        dispatch(postInterBank(paymentData));
-                                    }
+
+                                    dispatch(postInterBank(paymentData));
                                 }}
                             />
                         );
@@ -637,9 +613,9 @@ const Payment = () => {
                                 title="Single Transfer Payment"
                                 amount={paymentDetails.amount}
                                 beneName={paymentDetails.accountName}
-                                repeatAction={() => {
-                                    setCount(count + 1);
-                                }}
+                                // repeatAction={() => {
+                                //     setCount(count + 1);
+                                // }}
                             />
                         );
                     case 3:

@@ -147,10 +147,13 @@ const Profile = () => {
         }
     }, [accountPrimary]);
     useEffect(() => {
+        dispatch(getBeneficiariesData());
+    }, [deleteBeneficiaries, postBeneficiaries]);
+    useEffect(() => {
         if (getBeneficiaries !== null) {
             setBeneficiaries(getBeneficiaries);
         }
-    }, [getBeneficiaries, deleteBeneficiaries]);
+    }, [getBeneficiaries]);
     useEffect(() => {
         if (userProfile !== null) {
             setUserProfileData(userProfile);
@@ -1008,11 +1011,13 @@ const Profile = () => {
                                                                     .length ===
                                                                 10
                                                             ) {
-                                                                const details = {
-                                                                    accountNumber:
-                                                                        e.target
-                                                                            .value
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        accountNumber:
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                    };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -1031,7 +1036,7 @@ const Profile = () => {
                                                             ?.message
                                                     }
                                                 </p>
-                                                {interEnquiry ? (
+                                                {showinterEnquiry ? (
                                                     <div
                                                         className={
                                                             styles.formGroup
