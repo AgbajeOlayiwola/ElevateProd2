@@ -74,6 +74,7 @@ const AccountUpgrade = () => {
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
+    const [link, setLink] = useState('');
     const [identificationDocumentFile, setIdentificationDocument] =
         useState('');
     const [identificationDocumentFileName, setIdentificationDocumentName] =
@@ -128,7 +129,20 @@ const AccountUpgrade = () => {
 
     useEffect(() => {
         setMessage('');
+        const {
+            query: { id }
+        } = router;
+        setLink({ id }.id);
     }, []);
+
+    useEffect(() => {
+        if (link !== undefined) {
+            setTitle('Set Transaction Pin');
+        } else {
+            setTitle('First');
+        }
+    }, [link]);
+    console.log(link);
 
     const transactionPin = () => {
         if (setTransactionPin !== null) {
@@ -136,6 +150,7 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
+            setTransactionPinStatus('done');
             // setOutcome('First');
         } else if (setTransactionPinError !== null) {
             setMessage(setTransactionPinError);
@@ -183,14 +198,6 @@ const AccountUpgrade = () => {
                     setidCardStatus('done');
                 }
             });
-            // setText(userProfile.customerCategory);
-            // setStreetName(userProfile.address);
-            // setCity(userProfile.city);
-            // setState(userProfile.state);
-            // setLocalGovernmane(userProfile.lga);
-            // if (userProfile.hasSetTransactionPin === true) {
-            //     setTransactionPinStatus('done');
-            // }
         }
     }, [shareDocuments]);
     //console.loguserProfile);
