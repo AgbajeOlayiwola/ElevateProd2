@@ -5,11 +5,9 @@ import OtpInput from '../Otpinput';
 import Overlay from '../Overlay';
 import Loader from '../Loader';
 import ConfirmLockSvg from '../ReusableSvgComponents/ConfirmLockSvg';
-import { loadUserProfile } from '../../../redux/actions/actions';
 import CloseButton from '../CloseButtonSvg';
 import { useForm } from 'react-hook-form';
 import ArrowBackSvg from '../ArrowBackSvg';
-import { useDispatch, useSelector } from 'react-redux';
 const numOfFields = 6;
 
 const useSSNFields = () => {
@@ -65,8 +63,6 @@ const MakePaymentSecond = ({
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [newAmount, setNewAmount] = useState('');
-    const [userProfileData, setUserProfileData] = useState({});
-    const dispatch = useDispatch();
     useEffect(() => {
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -77,16 +73,6 @@ const MakePaymentSecond = ({
         setNewAmount(formattedAmount);
     }, []);
     const { handleChange } = useSSNFields();
-    const { userProfile } = useSelector((state) => state.userProfileReducer);
-    useEffect(() => {
-        dispatch(loadUserProfile());
-    }, []);
-
-    useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-        }
-    }, [userProfile]);
     const {
         register,
         handleSubmit,
@@ -182,11 +168,7 @@ const MakePaymentSecond = ({
                                 </div>
                             </div>
                         )}
-                        {userProfileData.hasSetTransactionPin === false ? (
-                            <h4>Enter your desired Transaction Pin</h4>
-                        ) : userProfileData.hasSetTransactionPin === true ? (
-                            <h4>Enter Transaction Pin</h4>
-                        ) : null}
+                        <h4>Enter Transaction Pin</h4>
 
                         <form onSubmit={handleSubmit(transferAction)}>
                             <div className={styles.otpInps}>

@@ -326,8 +326,15 @@ const Payment = () => {
         }
     }, [link]);
     const handleFormChange = (formTitle) => {
-        setFormType(formTitle);
-        setOverlay(true);
+        if (userProfileData.hasSetTransactionPin === false) {
+            router.push({
+                pathname: '/AccountUpgrade',
+                query: { id: 'Transaction Pin' }
+            });
+        } else {
+            setFormType(formTitle);
+            setOverlay(true);
+        }
     };
     const handleClose = () => {
         setOverlay(false);
