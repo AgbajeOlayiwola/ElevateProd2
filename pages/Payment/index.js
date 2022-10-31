@@ -489,25 +489,54 @@ const Payment = () => {
                 switch (count) {
                     case 0:
                         return (
-                            <PaymentSuccess
-                                statusbar={'success'}
-                                error={error}
+                            <MakePaymentFirst
                                 overlay={overlay}
-                                action={() => {
-                                    if (status === 'error') {
-                                        setCount(count - 2);
-                                        setIsLoading(false);
+                                payload={paymentDetails}
+                                firstTitle="Single Transfer Payment"
+                                isLoading={isLoading}
+                                closeAction={handleClose}
+                                buttonText="Next"
+                                othersaction={(data) => {
+                                    console.log(data);
+                                    if (data.bankName === 'ECOBANK') {
+                                        setEcobank(true);
+                                        setCount(count + 1);
+                                    } else if (
+                                        data.bankNameBene === 'ECOBANK'
+                                    ) {
+                                        setEcobank(true);
+                                        setCount(count + 1);
                                     } else {
-                                        setCount(0);
-                                        setOverlay(false);
-                                        setFormType('');
+                                        const payload = {
+                                            accountId: senderDetails.accountId,
+                                            destinationBankCode: data.bankName,
+                                            transactionAmount: parseInt(
+                                                data.amount,
+                                                10
+                                            )
+                                        };
+                                        dispatch(getTransactionFees(payload));
+                                        setIsLoading(true);
                                     }
+                                    if (data.beneficiary === true) {
+                                        const beneficiaryData = {
+                                            beneficiaryName: data.accountName,
+                                            accountNumber: data.accountNumber,
+                                            bankName: data.bankName,
+                                            bankCode: data.bankName
+                                        };
+                                        dispatch(
+                                            postBeneficiariesData(
+                                                beneficiaryData
+                                            )
+                                        );
+                                    }
+
+                                    //console.logdata);
+                                    setPaymentDetails(data);
                                 }}
-                                title="Single Transfer Payment"
-                                amount={paymentDetails.amount}
-                                beneName={paymentDetails.accountName}
-                                // repeatAction={() => {
-                                //     setCount(count + 1);
+                                // scheduleLater={() => {
+                                //     setCount(count + 4);
                                 // }}
                             />
                         );
