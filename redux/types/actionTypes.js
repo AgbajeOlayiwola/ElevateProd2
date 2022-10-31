@@ -173,6 +173,16 @@ export const interBankEnquiry = {
 
 //Inter action type ends
 
+//Inter action types
+
+export const intraBankEnquiry = {
+    INTRABANKENQUIRY_LOAD_START: 'INTRABANKENQUIRY_LOAD_START',
+    INTRABANKENQUIRY_LOAD_SUCCESS: 'INTRABANKENQUIRY_LOAD_SUCCESS',
+    INTRABANKENQUIRY_LOAD_ERROR: 'INTRABANKENQUIRY_LOAD_ERROR'
+};
+
+//Inter action type ends
+
 //balanceEnquiry action types
 
 export const balanceEnquiry = {

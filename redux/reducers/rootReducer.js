@@ -11,6 +11,7 @@ import airtimeNetworkReducer from './airtimeNetwork.reducer';
 import billsReducer from './bills.reducer';
 import internalBankReducer from './internalBank.reducer';
 import interBankEnquiryReducer from './interBankEnquiry.reducer';
+import intraBankEnquiryReducer from './intraBankEnquiry.reducer';
 import balanceEnquiryReducer from './balanceEnquiry.reducer';
 import interBankReducer from './interBank.reducer';
 import transactionHistoryReducer from './transactionHistory.reducer';
@@ -86,6 +87,7 @@ const appReducer = combineReducers({
     transactionFeesReducer: transactionFeesReducer,
     transactionElevateReducer: transactionElevateReducer,
     interBankEnquiryReducer: interBankEnquiryReducer,
+    intraBankEnquiryReducer: intraBankEnquiryReducer,
     balanceEnquiryReducer: balanceEnquiryReducer,
     billerTypeReducer: billerTypeReducer,
     bulkTransferReducer: bulkTransferReducer,

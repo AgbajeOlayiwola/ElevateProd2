@@ -10,7 +10,8 @@ const airtimeNetwork = '/payment/airtime-topup/networks';
 const bills = '/payment/biller-payment';
 const internalBank = '/transfer/internal-transfer';
 const interBank = '/payment/single-transfer';
-const interBankEnquiry = '/bank-account/intra-bank/info';
+const intraBankEnquiry = '/bank-account/intra-bank/info';
+const interBankEnquiry = '/bank-account/inter-bank/info';
 const balanceEnquiry = '/bank-account/balance';
 const accountPrimary = '/bank-account/primary';
 const transactionHistory = '/account/transaction';
@@ -88,6 +89,7 @@ export default {
     internalBank,
     interBank,
     interBankEnquiry,
+    intraBankEnquiry,
     balanceEnquiry,
     getLanguages,
     register,

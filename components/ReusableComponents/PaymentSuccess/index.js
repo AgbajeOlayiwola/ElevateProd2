@@ -12,7 +12,7 @@ import ErrorSvg from '../ReusableSvgComponents/ErrorSvg';
 import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import { FaUser } from 'react-icons/fa';
+import { FaDownload, FaShareAlt, FaUser } from 'react-icons/fa';
 
 const PaymentSuccess = ({
     action,
@@ -258,39 +258,46 @@ const PaymentSuccess = ({
                                         </div>
                                     </div>
                                 </div> */}
-                                <ButtonComp
-                                    disabled={activeBtn}
-                                    active={activeBtn ? 'active' : 'inactive'}
-                                    text="Download"
-                                    type="button"
-                                    onClick={async () => {
-                                        const element = printRef.current;
-                                        const canvas = await html2canvas(
-                                            element
-                                        );
-                                        const data =
-                                            canvas.toDataURL('image/png');
+                                <div className={styles.icons}>
+                                    <FaShareAlt
+                                        color="#005b82"
+                                        fontSize="25px"
+                                        cursor="pointer"
+                                    />
+                                    <FaDownload
+                                        color="#005b82"
+                                        fontSize="25px"
+                                        cursor="pointer"
+                                        onClick={async () => {
+                                            const element = printRef.current;
+                                            const canvas = await html2canvas(
+                                                element
+                                            );
+                                            const data =
+                                                canvas.toDataURL('image/png');
 
-                                        const pdf = new jsPDF();
-                                        const imgProperties =
-                                            pdf.getImageProperties(data);
-                                        const pdfWidth =
-                                            pdf.internal.pageSize.getWidth();
-                                        const pdfHeight =
-                                            (imgProperties.height * pdfWidth) /
-                                            imgProperties.width;
+                                            const pdf = new jsPDF();
+                                            const imgProperties =
+                                                pdf.getImageProperties(data);
+                                            const pdfWidth =
+                                                pdf.internal.pageSize.getWidth();
+                                            const pdfHeight =
+                                                (imgProperties.height *
+                                                    pdfWidth) /
+                                                imgProperties.width;
 
-                                        pdf.addImage(
-                                            data,
-                                            'PNG',
-                                            0,
-                                            0,
-                                            pdfWidth,
-                                            pdfHeight
-                                        );
-                                        pdf.save('print.pdf');
-                                    }}
-                                />
+                                            pdf.addImage(
+                                                data,
+                                                'PNG',
+                                                0,
+                                                0,
+                                                pdfWidth,
+                                                pdfHeight
+                                            );
+                                            pdf.save('Receipt.pdf');
+                                        }}
+                                    />
+                                </div>
                                 <button onClick={action}>Close</button>
                             </BodyWrapper>
                         )}

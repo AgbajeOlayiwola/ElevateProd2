@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadbank, postInterBankEnquiry } from '../../../redux/actions/actions';
+import {
+    loadbank,
+    postInterBankEnquiry,
+    postIntraBankEnquiry
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import Loader from '../Loader';
@@ -55,10 +59,14 @@ const SingleTransfer = ({
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
+    const { intraBankEnquiry, errorMessageIntraBankEnquiry } = useSelector(
+        (state) => state.intraBankEnquiryReducer
+    );
 
     const interBankEnquiryCheck = () => {
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
+            setshowInterEnquiry(true);
         } else if (errorMessageInterBankEnquiry !== null) {
             alert(errorMessageInterBankEnquiry);
         }
@@ -66,6 +74,17 @@ const SingleTransfer = ({
     useEffect(() => {
         interBankEnquiryCheck();
     }, [interBankEnquiry, errorMessageInterBankEnquiry]);
+
+    const intraBankEnquiryCheck = () => {
+        if (intraBankEnquiry !== null) {
+            setInterEnquiry(intraBankEnquiry);
+        } else if (errorMessageIntraBankEnquiry !== null) {
+            alert(errorMessageIntraBankEnquiry);
+        }
+    };
+    useEffect(() => {
+        intraBankEnquiryCheck();
+    }, [intraBankEnquiry, errorMessageIntraBankEnquiry]);
     useEffect(() => {
         dispatch(loadbank('ENG'));
     }, []);
@@ -78,6 +97,7 @@ const SingleTransfer = ({
         register,
         handleSubmit,
         setValue,
+        reset,
         formState: { errors }
     } = useForm();
     useEffect(() => {
@@ -97,6 +117,13 @@ const SingleTransfer = ({
                     }
                     onClick={() => {
                         setType('Ecobank');
+                        setAccountNumber('');
+                        setInterEnquiry('');
+                        setAmount('');
+                        setNarration('');
+                        setBankName('ECOBANK');
+                        setAccountName('');
+                        reset();
                     }}
                 >
                     <p> Ecobank</p>
@@ -107,6 +134,13 @@ const SingleTransfer = ({
                     }
                     onClick={() => {
                         setType('Other');
+                        setAccountNumber('');
+                        setAmount('');
+                        setNarration('');
+                        setBankName('');
+                        setAccountName('');
+                        setInterEnquiry('');
+                        reset();
                     }}
                 >
                     <p>Other Banks</p>
@@ -258,9 +292,8 @@ const SingleTransfer = ({
                                                 accountNumber: e.target.value
                                             };
                                             dispatch(
-                                                postInterBankEnquiry(details)
+                                                postIntraBankEnquiry(details)
                                             );
-                                            setshowInterEnquiry(true);
                                             setValue(
                                                 'accountName',
                                                 interEnquiry.accountName
@@ -310,8 +343,8 @@ const SingleTransfer = ({
                                         <label> Account Name</label>
                                         <input
                                             type="text"
-                                            value={interEnquiry.accountName}
                                             {...register('accountName')}
+                                            value={interEnquiry.accountName}
                                             name="accountName"
                                         />
                                         <p className={styles.error}>
@@ -570,9 +603,6 @@ const SingleTransfer = ({
                                             const details = {
                                                 accountNumber: e.target.value
                                             };
-                                            dispatch(
-                                                postInterBankEnquiry(details)
-                                            );
                                         } else if (
                                             e.target.value.length === 0
                                         ) {
@@ -646,8 +676,12 @@ const SingleTransfer = ({
                                         required: 'Choose a bank'
                                     })}
                                     name="bankName"
-                                    onChange={() => {
-                                        setshowInterEnquiry(true);
+                                    onChange={(e) => {
+                                        const details = {
+                                            destinationBankCode: e.target.value,
+                                            accountNo: accountNumber
+                                        };
+                                        dispatch(postInterBankEnquiry(details));
                                     }}
                                 >
                                     {Object.keys(payload).length !== 0 ? (

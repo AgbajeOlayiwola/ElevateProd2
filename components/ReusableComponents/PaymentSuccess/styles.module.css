@@ -186,3 +186,10 @@
     /* identical to box height */
     color: #005b82;
 }
+
+.icons {
+    display: flex;
+    width: 50%;
+    margin: 20px auto;
+    justify-content: space-around;
+}
