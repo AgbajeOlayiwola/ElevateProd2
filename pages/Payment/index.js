@@ -311,8 +311,16 @@ const Payment = () => {
 
     useEffect(() => {
         if (link !== undefined) {
-            setFormType(link.toLowerCase());
-            setOverlay(true);
+            if (userProfileData.hasSetTransactionPin === false) {
+                router.push({
+                    pathname: '/AccountUpgrade',
+                    query: { id: 'Transaction Pin' }
+                });
+            } else if (userProfileData.hasSetTransactionPin === true) {
+                setFormType(link.toLowerCase());
+                setOverlay(true);
+                alert('Test');
+            }
         }
     }, [link]);
     const handleFormChange = (formTitle) => {
@@ -321,7 +329,7 @@ const Payment = () => {
                 pathname: '/AccountUpgrade',
                 query: { id: 'Transaction Pin' }
             });
-        } else {
+        } else if (userProfileData.hasSetTransactionPin === true) {
             setFormType(formTitle);
             setOverlay(true);
         }
@@ -842,8 +850,8 @@ const Payment = () => {
                                                     dataType: 'string'
                                                 }
                                             ],
-                                            beneficiaryName: 'optional',
-                                            paymentDescription: 'optional'
+                                            beneficiaryName: '',
+                                            paymentDescription: ''
                                         };
 
                                         dispatch(postAirtime(billerdata));

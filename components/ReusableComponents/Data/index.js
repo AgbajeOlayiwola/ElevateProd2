@@ -209,13 +209,13 @@ export const MakePayment = [
         title: 'Bulk Transfer',
         path: 'Bulk Transfer',
         icon: <BulkTransfer />
-    },
-
-    {
-        title: 'FX Transfer',
-        path: 'FX Transfer ',
-        icon: <FaIcons.FaHandHoldingUsd />
     }
+
+    // {
+    //     title: 'FX Transfer',
+    //     path: 'FX Transfer ',
+    //     icon: <FaIcons.FaHandHoldingUsd />
+    // }
 ];
 export const OtherAccounts = [
     {
