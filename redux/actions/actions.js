@@ -1103,9 +1103,15 @@ export const getBeneficiariesLoadError = (getBeneficiarieserror) => ({
     payload: getBeneficiarieserror
 });
 export const getBeneficiariesData = () => (dispatch) => {
+    const cookie = getCookie('cookieToken');
     dispatch(getBeneficiariesLoadStart());
     axiosInstance
-        .get(`${apiRoutes.beneficiaries}`)
+        .get(`${apiRoutes.beneficiaries}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(getBeneficiariesLoadSuccess(response.data.data))
         )
@@ -1157,7 +1163,6 @@ export const postBeneficiariesLoadError = (postBeneficiarieserror) => ({
     payload: postBeneficiarieserror
 });
 export const postBeneficiariesData = (data) => (dispatch) => {
-    // const cookie = getCookie('cookieToken');
     dispatch(postBeneficiariesLoadStart());
     axiosInstance
         .post(`${apiRoutes.beneficiaries}`, data)
