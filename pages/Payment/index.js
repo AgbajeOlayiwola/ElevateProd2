@@ -331,6 +331,7 @@ const Payment = () => {
         setFormType('');
         setCount(0);
         setIsLoading(false);
+        setPaymentDetails({});
     };
 
     const buttonHandleClose = () => {
@@ -340,6 +341,7 @@ const Payment = () => {
             setOverlay(false);
             setFormType('');
             setCount(0);
+            setPaymentDetails({});
         }
     };
     let sum;
@@ -608,6 +610,7 @@ const Payment = () => {
                                         setCount(0);
                                         setOverlay(false);
                                         setFormType('');
+                                        setPaymentDetails({});
                                     }
                                 }}
                                 title="Single Transfer Payment"
@@ -819,12 +822,15 @@ const Payment = () => {
                                     if (bill === 'AIRTIME') {
                                         setIsLoading(true);
                                         const billerdata = {
-                                            amount: paymentDetails.amount,
+                                            amount: parseInt(
+                                                paymentDetails.amount,
+                                                10
+                                            ),
                                             transactionPin: Object.values(data)
                                                 .toString()
                                                 .replaceAll(',', ''),
                                             accountId: senderDetails.accountId,
-                                            billerCode: airtimeNetData.name,
+                                            billerCode: airtimeNetData.code,
                                             billerId: airtimeNetData.id,
                                             productCode: airtimeNetData.code,
                                             mobileNo:

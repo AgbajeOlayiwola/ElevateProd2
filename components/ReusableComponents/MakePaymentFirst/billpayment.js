@@ -54,6 +54,7 @@ const BillPayment = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
+    console.log(billerCategories);
     const loadbillerTypeData = () => {
         if (firstTitle !== 'Bill Payment') {
             if (firstTitle === 'Cable Tv') {
@@ -79,7 +80,6 @@ const BillPayment = ({
             setBillerTypes(billerType);
         }
     }, [billerType]);
-    console.log(billerTypes);
     useEffect(() => {
         if (airtimeNetwork !== null) {
             setAirtimeNetworkData(airtimeNetwork);
@@ -92,27 +92,20 @@ const BillPayment = ({
             localStorage.setItem('Airtime', JSON.stringify(billerPlan));
         }
     }, [billerPlan]);
-    const bills = [
-        'AIRTIME',
-        'Data',
-        'Cable TV',
-        'UTILITY',
-        'Airtime and Data'
-    ];
     return (
         <div>
             {firstTitle === 'Bill Payment' ? (
                 <>
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
 
-                    <div className={styles.beneficiary}>
+                    {/* <div className={styles.beneficiary}>
                         <div className={styles.beneficiaryHeader}>
                             <h2>Recent</h2>
                             <p>View all</p>
                         </div>
                         <div className={styles.beneficiaryBody}>
                             <h2>No Recent Transactions</h2>
-                            {/* <div className={styles.beneficiarySingle}>
+                            <div className={styles.beneficiarySingle}>
                                 <div>
                                     <img
                                         src="../../Assets/Svgs/IkejaLogo.svg"
@@ -129,10 +122,6 @@ const BillPayment = ({
                                     />
                                 </div>
                                 <p className={styles.name}>GOtv Subscriti...</p>
-                            </div> */}
-                            {/* <div className={styles.beneficiarySingle}>
-                                <BeneficiaryAvatarSvg />
-                                <p className={styles.name}>Ikeja Electric</p>
                             </div>
                             <div className={styles.beneficiarySingle}>
                                 <BeneficiaryAvatarSvg />
@@ -141,22 +130,28 @@ const BillPayment = ({
                             <div className={styles.beneficiarySingle}>
                                 <BeneficiaryAvatarSvg />
                                 <p className={styles.name}>Ikeja Electric</p>
-                            </div> */}
+                            </div>
+                            <div className={styles.beneficiarySingle}>
+                                <BeneficiaryAvatarSvg />
+                                <p className={styles.name}>Ikeja Electric</p>
+                            </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className={styles.billBody}>
-                        {bills.map((bill, index) => {
-                            return (
-                                <div
-                                    className={styles.billSingle}
-                                    onClick={arrowAction}
-                                    key={index}
-                                >
-                                    <p>{bill}</p>
-                                    <ArrowRightSvg />
-                                </div>
-                            );
-                        })}
+                        {billerCategories.billerCategoryInfoList?.map(
+                            (bill, index) => {
+                                return (
+                                    <div
+                                        className={styles.billSingle}
+                                        onClick={arrowAction}
+                                        key={index}
+                                    >
+                                        <p>{bill.categoryCode}</p>
+                                        <ArrowRightSvg />
+                                    </div>
+                                );
+                            }
+                        )}
                     </div>
                 </>
             ) : firstTitle === 'AIRTIME' ? (
@@ -293,12 +288,12 @@ const BillPayment = ({
                                 </div>
                                 <button type="submit">Get Airtime</button>
                             </div>
-                            <p className={styles.schedule}>
+                            {/* <p className={styles.schedule}>
                                 Not paying now?{' '}
                                 <span onClick={scheduleLater}>
                                     Schedule for Later
                                 </span>
-                            </p>
+                            </p> */}
                         </form>
                     </div>
                 </>
@@ -406,12 +401,12 @@ const BillPayment = ({
                                 </div>
                                 <button>Get Data</button>{' '}
                             </div>
-                            <p className={styles.schedule}>
+                            {/* <p className={styles.schedule}>
                                 Not paying now?{' '}
                                 <span onClick={scheduleLater}>
                                     Schedule for Later
                                 </span>
-                            </p>
+                            </p> */}
                         </form>
                     </div>
                 </>

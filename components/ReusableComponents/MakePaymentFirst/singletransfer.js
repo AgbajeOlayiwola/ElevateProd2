@@ -121,9 +121,9 @@ const SingleTransfer = ({
                         setInterEnquiry('');
                         setAmount('');
                         setNarration('');
-                        setBankName('ECOBANK');
                         setAccountName('');
                         reset();
+                        setBeneActive();
                     }}
                 >
                     <p> Ecobank</p>
@@ -134,6 +134,7 @@ const SingleTransfer = ({
                     }
                     onClick={() => {
                         setType('Other');
+                        setBeneActive();
                         setAccountNumber('');
                         setAmount('');
                         setNarration('');
@@ -304,7 +305,7 @@ const SingleTransfer = ({
                                             setInterEnquiry('');
                                         }
                                     }}
-                                    type="number"
+                                    type="text"
                                     placeholder="Enter account number here"
                                 />
                             ) : null}
@@ -388,7 +389,7 @@ const SingleTransfer = ({
                                     }
                                 })}
                                 value={amount}
-                                type="number"
+                                type="text"
                                 placeholder="5,000,000,000.00"
                                 onInput={(e) => {
                                     setAmount(e.target.value);
@@ -607,9 +608,10 @@ const SingleTransfer = ({
                                             e.target.value.length === 0
                                         ) {
                                             setInterEnquiry('');
+                                            setshowInterEnquiry(false);
                                         }
                                     }}
-                                    type="number"
+                                    type="text"
                                     placeholder="Enter account number here"
                                 />
                             ) : null}
@@ -721,7 +723,7 @@ const SingleTransfer = ({
                                     }
                                 })}
                                 value={amount}
-                                type="number"
+                                type="text"
                                 placeholder="5,000,000,000.00"
                                 onInput={(e) => {
                                     setAmount(e.target.value);
