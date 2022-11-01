@@ -652,6 +652,10 @@
     color: #a5a5a5;
 }
 
+.displayNone {
+    display: none;
+}
+
 .plus {
     width: 50px;
     height: 50px;

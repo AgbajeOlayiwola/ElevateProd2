@@ -518,7 +518,10 @@ const Payment = () => {
                                     } else {
                                         const payload = {
                                             accountId: senderDetails.accountId,
-                                            destinationBankCode: data.bankName,
+                                            destinationBankCode:
+                                                data.bankName === ''
+                                                    ? data.bankNameBene
+                                                    : data.bankName,
                                             transactionAmount: parseInt(
                                                 data.amount,
                                                 10
@@ -552,6 +555,8 @@ const Payment = () => {
                             <MakePaymentSecond
                                 closeAction={handleClose}
                                 isLoading={isLoading}
+                                title="Single Transfer"
+                                charges={transactionFee}
                                 amount={
                                     parseInt(paymentDetails.amount, 10) +
                                     parseInt(transactionFee, 10)

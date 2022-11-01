@@ -59,7 +59,8 @@ const MakePaymentSecond = ({
     number,
     isLoading,
     closeAction,
-    backAction
+    backAction,
+    charges
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [newAmount, setNewAmount] = useState('');
@@ -151,14 +152,23 @@ const MakePaymentSecond = ({
                                             : recieverBank}
                                     </h3>
                                 </div>
-                                {/* {recieverBank === 'Ecobank' ? null : (
-                                    <div className={styles.transactionsingle}>
-                                        <p className={styles.transactionTitle}>
-                                            Charges
-                                        </p>
-                                        <h3>N50.50</h3>
-                                    </div>
-                                )} */}
+
+                                {title === 'Single Transfer' ? (
+                                    recieverBank === 'ECOBANK' ? null : (
+                                        <div
+                                            className={styles.transactionsingle}
+                                        >
+                                            <p
+                                                className={
+                                                    styles.transactionTitle
+                                                }
+                                            >
+                                                Charges
+                                            </p>
+                                            <h3>{charges}</h3>
+                                        </div>
+                                    )
+                                ) : null}
 
                                 <div className={styles.transactionsingle}>
                                     <p className={styles.transactionTitle}>

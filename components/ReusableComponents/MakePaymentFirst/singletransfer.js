@@ -27,6 +27,7 @@ const SingleTransfer = ({
     const [bank, setBank] = useState([]);
     const [beneActive, setBeneActive] = useState();
     const [showInterEnquiry, setshowInterEnquiry] = useState(false);
+    // const [inputType, setinputType] = useState(true);
     const [interEnquiry, setInterEnquiry] = useState('');
     const [accountName, setAccountName] = useState(
         payload.accountName !== '' ? payload.accountName : ''
@@ -52,7 +53,15 @@ const SingleTransfer = ({
         payload.amount !== '' ? payload.amount : ''
     );
     const [search, setSearch] = useState('');
-    const [type, setType] = useState('Ecobank');
+    const [type, setType] = useState(
+        payload.type === ''
+            ? 'Ecobank'
+            : payload.type === 'Ecobank'
+            ? payload.type
+            : payload.type === 'Other'
+            ? payload.type
+            : 'Ecobank'
+    );
     // const [beneficiaries, setBeneficiaries] = useState([]);
     const dispatch = useDispatch();
     const { banks } = useSelector((state) => state.banksReducer);
@@ -124,6 +133,7 @@ const SingleTransfer = ({
                         setAccountName('');
                         reset();
                         setBeneActive();
+                        setActiveBtn(false);
                     }}
                 >
                     <p> Ecobank</p>
@@ -141,6 +151,7 @@ const SingleTransfer = ({
                         setBankName('');
                         setAccountName('');
                         setInterEnquiry('');
+                        setActiveBtn(false);
                         reset();
                     }}
                 >
@@ -240,6 +251,13 @@ const SingleTransfer = ({
                         </div>
                     </div>
                     <form onSubmit={handleSubmit(othersaction)}>
+                        <input
+                            type="text"
+                            {...register('type')}
+                            value={type}
+                            className={styles.displayNone}
+                        />
+
                         <div className={styles.narration}>
                             <label>Source Account</label>
                             <select
@@ -552,6 +570,13 @@ const SingleTransfer = ({
                         </div>
                     </div>
                     <form onSubmit={handleSubmit(othersaction)}>
+                        <input
+                            type="text"
+                            {...register('type')}
+                            value={type}
+                            className={styles.displayNone}
+                        />
+
                         <div className={styles.narration}>
                             <label>Source Account</label>
                             <select

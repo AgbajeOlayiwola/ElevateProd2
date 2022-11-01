@@ -103,7 +103,7 @@ const PaymentTable = ({ title, test }) => {
                 <p className={styles.beneficiary}>Beneficiary </p>
                 <p className={styles.type}>Type</p>
                 <p className={styles.amount}>Amount</p>
-                <p className={styles.bank}>Bank</p>
+                <p className={styles.bank}>Bank/Network</p>
                 <p className={styles.date}>Date</p>
                 <p className={styles.status}>Status</p>
             </div>
@@ -134,6 +134,7 @@ const PaymentTable = ({ title, test }) => {
                                   Dates={items.transactionDate}
                                   Status={items.transactionStatus}
                                   accountNumber={items.destinationAccountNumber}
+                                  network={items.billerCode}
                                   //   phoneNumber={}
                               />
                           );

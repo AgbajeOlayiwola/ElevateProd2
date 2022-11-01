@@ -238,9 +238,8 @@ const Dashboard = () => {
                         ) : (
                             tableDetails
                                 ?.filter((item) => {
-                                    const newDate = item.transactionDate.split(
-                                        'T'
-                                    );
+                                    const newDate =
+                                        item.transactionDate.split('T');
                                     return (
                                         newDate[0] >= rangeDate &&
                                         newDate[0] <= time
@@ -262,9 +261,8 @@ const Dashboard = () => {
                                     if (item.receiversName === null) {
                                         newBeneficiary = '';
                                     } else {
-                                        newBeneficiary = item?.receiversName?.split(
-                                            ' '
-                                        );
+                                        newBeneficiary =
+                                            item?.receiversName?.split(' ');
                                     }
                                     return (
                                         <div key={index}>
@@ -426,7 +424,6 @@ const Dashboard = () => {
                         <div className={styles.btmII}>
                             <div className={styles.btmIIp}>
                                 <p>Recent Transactions</p>
-                                <p>View All</p>
                             </div>
                             {tableDetails.length === 0 ? (
                                 <div className={styles.transactionBody}>
@@ -443,9 +440,8 @@ const Dashboard = () => {
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate = item.transactionDate.split(
-                                            'T'
-                                        );
+                                        const newDate =
+                                            item.transactionDate.split('T');
                                         return (
                                             newDate[0] >= rangeDate &&
                                             newDate[0] <= time
@@ -460,16 +456,16 @@ const Dashboard = () => {
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount = formatter.format(
-                                            item.transactionAmount
-                                        );
+                                        const formattedAmount =
+                                            formatter.format(
+                                                item.transactionAmount
+                                            );
                                         let newBeneficiary;
                                         if (item.receiversName === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary = item?.receiversName?.split(
-                                                ' '
-                                            );
+                                            newBeneficiary =
+                                                item?.receiversName?.split(' ');
                                         }
                                         return (
                                             <div key={index}>
