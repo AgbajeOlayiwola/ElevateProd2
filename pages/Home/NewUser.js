@@ -40,6 +40,7 @@ const NewUser = ({ selectCountry }) => {
     };
     const handlePwd = (e) => {
         setCount(e.target.value.length);
+
         if (
             validator.isStrongPassword(e.target.value, {
                 minLength: 0,
@@ -255,26 +256,24 @@ const NewUser = ({ selectCountry }) => {
                     {password == confirmPassword ? null : (
                         <>
                             <p className={styles.error}>{passwordMatch}</p>
+                            <div className={styles.sameErroSize}>
+                                <p
+                                    className={
+                                        numbers ? styles.success : styles.error
+                                    }
+                                >
+                                    password should Contain atleast 1 number
+                                </p>
+                                <p
+                                    className={
+                                        symbol ? styles.success : styles.error
+                                    }
+                                >
+                                    password should Contain atleast 1 special
+                                    character
+                                </p>
+                            </div>
                         </>
-                    )}
-                    {count === 0 ? null : (
-                        <div className={styles.sameErroSize}>
-                            <p
-                                className={
-                                    numbers ? styles.success : styles.error
-                                }
-                            >
-                                password should Contain atleast 1 number
-                            </p>
-                            <p
-                                className={
-                                    symbol ? styles.success : styles.error
-                                }
-                            >
-                                password should Contain atleast 1 special
-                                character
-                            </p>
-                        </div>
                     )}
                 </div>
             </div>
