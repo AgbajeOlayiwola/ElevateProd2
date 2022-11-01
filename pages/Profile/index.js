@@ -35,10 +35,11 @@ import {
     loadUserProfile,
     loadAccountPrimary,
     postInterBankEnquiry,
+    postIntraBankEnquiry,
     loadbank,
     postBeneficiariesData
 } from '../../redux/actions/actions';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import Link from 'next/link';
@@ -57,6 +58,7 @@ const Profile = () => {
     const [alertType, setAlertType] = useState('');
     const [bvn, setBvn] = useState('');
     const [acctNumber, setAcctNumber] = useState('');
+    const [accountNumber, setAccountNumber] = useState('');
     const [count, setCount] = useState(0);
     const [outType, setOutType] = useState();
     const [beneficiaries, setBeneficiaries] = useState([]);
@@ -90,6 +92,9 @@ const Profile = () => {
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
+    const { intraBankEnquiry, errorMessageIntraBankEnquiry } = useSelector(
+        (state) => state.intraBankEnquiryReducer
+    );
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
@@ -113,11 +118,21 @@ const Profile = () => {
     const interBankEnquiryCheck = () => {
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
+            setshowInterEnquiry(true);
         }
     };
     useEffect(() => {
         interBankEnquiryCheck();
     }, [interBankEnquiry]);
+    const intraBankEnquiryCheck = () => {
+        if (intraBankEnquiry !== null) {
+            setInterEnquiry(intraBankEnquiry);
+            setshowInterEnquiry(true);
+        }
+    };
+    useEffect(() => {
+        intraBankEnquiryCheck();
+    }, [intraBankEnquiry]);
     const newBene = () => {
         if (postBeneficiaries !== null) {
             setOutcome(true);
@@ -263,20 +278,23 @@ const Profile = () => {
         airtime: [],
         signatories: []
     };
-    const [countryName, setCountryName] = useState();
     const [countryNames, setCountryNames] = useState();
     const [searchItem, setSearchItem] = useState('');
     const [beneType, setBeneType] = useState('');
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            setCountryName(window.localStorage.getItem('country'));
+            setCountryNames({
+                affiliateCode: 'ENG',
+                baseCurrency: 'NGN',
+                countryCode: '234',
+                flags: {
+                    svg: 'https://flagcdn.com/ng.svg',
+                    png: 'https://flagcdn.com/w320/ng.png'
+                },
+                name: 'Nigeria'
+            });
         }
     }, []);
-    useEffect(() => {
-        if (countryName !== undefined) {
-            setCountryNames(JSON.parse(countryName));
-        }
-    }, [countryName]);
     // console.log(countryNames.flags.svg);
     const types = (type) => {
         setOutType(type);
@@ -968,15 +986,6 @@ const Profile = () => {
                                         </span>
                                         Manage Beneficiaries
                                     </h2>
-                                    <div
-                                        className={styles.add}
-                                        // onClick={() => {
-                                        //     setCount(count + 1);
-                                        // }}
-                                    >
-                                        <AddSvg />
-                                        <p>Add</p>
-                                    </div>
                                 </div>
                                 <form
                                     onSubmit={handleSubmit((data) => {
@@ -1053,17 +1062,9 @@ const Profile = () => {
                                                                     .length ===
                                                                 10
                                                             ) {
-                                                                const details =
-                                                                    {
-                                                                        accountNumber:
-                                                                            e
-                                                                                .target
-                                                                                .value
-                                                                    };
-                                                                dispatch(
-                                                                    postInterBankEnquiry(
-                                                                        details
-                                                                    )
+                                                                setAccountNumber(
+                                                                    e.target
+                                                                        .value
                                                                 );
                                                                 // console.log();
                                                             }
@@ -1122,10 +1123,38 @@ const Profile = () => {
                                                             }
                                                         )}
                                                         name="bankName"
-                                                        onChange={() => {
-                                                            setshowInterEnquiry(
-                                                                true
-                                                            );
+                                                        onChange={(e) => {
+                                                            if (
+                                                                e.target
+                                                                    .value ===
+                                                                'ECOBANK'
+                                                            ) {
+                                                                const details =
+                                                                    {
+                                                                        accountNumber:
+                                                                            accountNumber
+                                                                    };
+                                                                dispatch(
+                                                                    postIntraBankEnquiry(
+                                                                        details
+                                                                    )
+                                                                );
+                                                            } else {
+                                                                const details =
+                                                                    {
+                                                                        destinationBankCode:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        accountNo:
+                                                                            accountNumber
+                                                                    };
+                                                                dispatch(
+                                                                    postInterBankEnquiry(
+                                                                        details
+                                                                    )
+                                                                );
+                                                            }
                                                         }}
                                                     >
                                                         <option value="">

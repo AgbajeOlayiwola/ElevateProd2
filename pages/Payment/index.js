@@ -319,7 +319,6 @@ const Payment = () => {
             } else if (userProfileData.hasSetTransactionPin === true) {
                 setFormType(link.toLowerCase());
                 setOverlay(true);
-                alert('Test');
             }
         }
     }, [link]);
