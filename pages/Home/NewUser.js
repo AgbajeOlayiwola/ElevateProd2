@@ -257,7 +257,7 @@ const NewUser = ({ selectCountry }) => {
                             <p className={styles.error}>{passwordMatch}</p>
                         </>
                     )}
-                    {
+                    {count === 0 ? null : (
                         <div className={styles.sameErroSize}>
                             <p
                                 className={
@@ -275,7 +275,7 @@ const NewUser = ({ selectCountry }) => {
                                 character
                             </p>
                         </div>
-                    }
+                    )}
                 </div>
             </div>
             <div className={styles.secondSectionMidCountry}>

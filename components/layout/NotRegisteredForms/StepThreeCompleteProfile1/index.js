@@ -209,7 +209,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // };
 
     const handleSubmitIII = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
         const commpleteProfileData = {
             isRegistered: type,
             businessName: formData.bussinessName,
@@ -230,7 +230,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     };
 
     const handleSubmitReg = () => {
-        setLoading((prev) => !prev);
+        setLoading(true);
         const commpleteProfileData = {
             isRegistered: type,
             businessName: formData.bussinessName,
@@ -251,7 +251,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     };
 
     useEffect(() => {
-        setLoading((prev) => !prev);
+        setLoading(false);
         // console.log(compBusprofile);
         if (compBusprofile) {
             if (
