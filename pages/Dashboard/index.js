@@ -176,7 +176,8 @@ const Dashboard = () => {
     const current = new Date();
     const date = `${current.getFullYear()}-${
         current.getMonth() + 1
-    }-${current.getDate()}`;
+    }-0${current.getDate()}`;
+    console.log(date);
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
@@ -184,7 +185,7 @@ const Dashboard = () => {
             tableDetails?.filter((item) => {
                 const newDate = item.transactionDate.split('T');
 
-                if (date === newDate[0]) {
+                if (newDate[0] == date) {
                     setDateState(true);
                 } else {
                     setDateState(false);
@@ -197,7 +198,7 @@ const Dashboard = () => {
             // });
         }
     }, [transactionElevate]);
-    console.log(date);
+    // console.log(newDate[0]);
     return (
         <DashLayout page="Dashboard">
             <Levelup />
@@ -238,8 +239,9 @@ const Dashboard = () => {
                         ) : (
                             tableDetails
                                 ?.filter((item) => {
-                                    const newDate =
-                                        item.transactionDate.split('T');
+                                    const newDate = item.transactionDate.split(
+                                        'T'
+                                    );
                                     return (
                                         newDate[0] >= rangeDate &&
                                         newDate[0] <= time
@@ -261,8 +263,9 @@ const Dashboard = () => {
                                     if (item.receiversName === null) {
                                         newBeneficiary = '';
                                     } else {
-                                        newBeneficiary =
-                                            item?.receiversName?.split(' ');
+                                        newBeneficiary = item?.receiversName?.split(
+                                            ' '
+                                        );
                                     }
                                     return (
                                         <div key={index}>
@@ -440,8 +443,9 @@ const Dashboard = () => {
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate =
-                                            item.transactionDate.split('T');
+                                        const newDate = item.transactionDate.split(
+                                            'T'
+                                        );
                                         return (
                                             newDate[0] >= rangeDate &&
                                             newDate[0] <= time
@@ -456,16 +460,16 @@ const Dashboard = () => {
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount =
-                                            formatter.format(
-                                                item.transactionAmount
-                                            );
+                                        const formattedAmount = formatter.format(
+                                            item.transactionAmount
+                                        );
                                         let newBeneficiary;
                                         if (item.receiversName === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary =
-                                                item?.receiversName?.split(' ');
+                                            newBeneficiary = item?.receiversName?.split(
+                                                ' '
+                                            );
                                         }
                                         return (
                                             <div key={index}>
