@@ -206,7 +206,7 @@ const Dashboard = () => {
                     <div className={styles.Tpwh}>
                         <h2 className={styles.transP}>Transactions Today</h2>
                         {/* <div className={styles.payEco}>
-                            <div className={styles.svgTxt}>
+                            <div className={styles.svgTxt}
                                 <div className={styles.svgCov}>
                                     <Paylink2 />
                                 </div>

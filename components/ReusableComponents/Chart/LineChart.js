@@ -21,6 +21,7 @@ const LineChart = () => {
     useEffect(() => {
         dispatch(getTransactionElevate());
     }, []);
+
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
@@ -38,11 +39,7 @@ const LineChart = () => {
             amounts[25],
             amounts[30]
         ]);
-    }, [transactionElevate]);
-    console.log(transactionElevate);
-    // console.log(datas, nxtdata);
 
-    useEffect(() => {
         setLineData({
             ...lineData,
             datasets: [
