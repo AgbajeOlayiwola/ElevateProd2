@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import { loadbank, postInterBankEnquiry } from '../../../redux/actions/actions';
+import {
+    loadbank,
+    postInterBankEnquiry,
+    postIntraBankEnquiry
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import PlusSvg from '../ReusableSvgComponents/PlusSvg';
@@ -27,6 +31,9 @@ const BulkTransfer = ({
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
+    const { intraBankEnquiry, errorMessageIntraBankEnquiry } = useSelector(
+        (state) => state.intraBankEnquiryReducer
+    );
     const [number, setNumber] = useState(
         // payload !== undefined ? payload :
         [1]
@@ -36,8 +43,6 @@ const BulkTransfer = ({
     const interBankEnquiryCheck = () => {
         setLoading((prev) => !prev);
         if (interBankEnquiry !== null) {
-            // setInterEnquiry((arr) => [...arr, interBankEnquiry]);
-            // number.splice(index, 1, interBankEnquiry);
             const newState = number.map((e, index) => {
                 if (indexNumber === index) {
                     return interBankEnquiry;
@@ -50,12 +55,30 @@ const BulkTransfer = ({
             alert(errorMessageInterBankEnquiry);
         }
     };
+    const intraBankEnquiryCheck = () => {
+        setLoading((prev) => !prev);
+        if (intraBankEnquiry !== null) {
+            const newState = number.map((e, index) => {
+                if (indexNumber === index) {
+                    return intraBankEnquiry;
+                } else {
+                    return e;
+                }
+            });
+            setNumber(newState);
+        } else if (errorMessageIntraBankEnquiry !== null) {
+            alert(errorMessageIntraBankEnquiry);
+        }
+    };
     useEffect(() => {
         localStorage.setItem('number', JSON.stringify(number));
     }, [number]);
     useEffect(() => {
         interBankEnquiryCheck();
     }, [interBankEnquiry, errorMessageInterBankEnquiry]);
+    useEffect(() => {
+        intraBankEnquiryCheck();
+    }, [intraBankEnquiry, errorMessageIntraBankEnquiry]);
 
     useEffect(() => {
         dispatch(loadbank('ENG'));
@@ -140,13 +163,28 @@ const BulkTransfer = ({
                                             required: 'Bank name is required'
                                         })}
                                         name={`${fieldName}.bankName`}
-                                        onChange={() => {
-                                            const details = {
-                                                accountNumber: acctNo
-                                            };
-                                            dispatch(
-                                                postInterBankEnquiry(details)
-                                            );
+                                        onChange={(e) => {
+                                            if (e.target.value === 'ECOBANK') {
+                                                const details = {
+                                                    accountNumber: acctNo
+                                                };
+                                                dispatch(
+                                                    postIntraBankEnquiry(
+                                                        details
+                                                    )
+                                                );
+                                            } else {
+                                                const details = {
+                                                    destinationBankCode:
+                                                        e.target.value,
+                                                    accountNo: acctNo
+                                                };
+                                                dispatch(
+                                                    postInterBankEnquiry(
+                                                        details
+                                                    )
+                                                );
+                                            }
                                         }}
                                     >
                                         {payload !== undefined ? (
@@ -159,7 +197,7 @@ const BulkTransfer = ({
                                             </option>
                                         )}
 
-                                        <option value="Ecobank">ECOBANK</option>
+                                        <option value="ECOBANK">ECOBANK</option>
                                         {banks?.map((item, index) => {
                                             return (
                                                 <option

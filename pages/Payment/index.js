@@ -541,8 +541,6 @@ const Payment = () => {
                                             )
                                         );
                                     }
-
-                                    //console.logdata);
                                     setPaymentDetails(data);
                                 }}
                                 // scheduleLater={() => {
@@ -608,6 +606,13 @@ const Payment = () => {
                         return (
                             <PaymentSuccess
                                 statusbar={status}
+                                accountNumber={
+                                    paymentDetails.accountNumber === ''
+                                        ? paymentDetails.accountNumberBene
+                                        : paymentDetails.accountNumber
+                                }
+                                narration={paymentDetails.narration}
+                                senderName={`${userProfileData.lastName} ${userProfileData.firstName}`}
                                 error={error}
                                 overlay={overlay}
                                 action={() => {
@@ -629,25 +634,25 @@ const Payment = () => {
                                 // }}
                             />
                         );
-                    case 3:
-                        return (
-                            <PaymentRepeat
-                                overlay={overlay}
-                                closeAction={handleClose}
-                                type="Single Transfer"
-                            />
-                        );
-                    case 4:
-                        return (
-                            <SchedulePayment
-                                overlay={overlay}
-                                action={() => {
-                                    setCount(count - 4);
-                                    // setFormType('');
-                                }}
-                                closeAction={handleClose}
-                            />
-                        );
+                    // case 3:
+                    //     return (
+                    //         <PaymentRepeat
+                    //             overlay={overlay}
+                    //             closeAction={handleClose}
+                    //             type="Single Transfer"
+                    //         />
+                    //     );
+                    // case 4:
+                    // return (
+                    //     <SchedulePayment
+                    //         overlay={overlay}
+                    //         action={() => {
+                    //             setCount(count - 4);
+                    //             // setFormType('');
+                    //         }}
+                    //         closeAction={handleClose}
+                    //     />
+                    // );
                 }
 
             case 'bulk transfer':
@@ -762,6 +767,7 @@ const Payment = () => {
                                 number={paymentDetails.details.length}
                                 title="Bulk Payment"
                                 amount={paymentDetails.amount}
+                                senderName={`${userProfileData.lastName} ${userProfileData.firstName}`}
                             />
                         );
                 }
@@ -900,17 +906,17 @@ const Payment = () => {
                                 amount={paymentDetails.amount}
                             />
                         );
-                    case 4:
-                        return (
-                            <SchedulePayment
-                                overlay={overlay}
-                                action={() => {
-                                    setCount(0);
-                                    setFormType('');
-                                }}
-                                closeAction={handleClose}
-                            />
-                        );
+                    // case 4:
+                    //     return (
+                    //         <SchedulePayment
+                    //             overlay={overlay}
+                    //             action={() => {
+                    //                 setCount(0);
+                    //                 setFormType('');
+                    //             }}
+                    //             closeAction={handleClose}
+                    //         />
+                    //     );
                 }
 
             case 'fx transfer ':

@@ -12,7 +12,9 @@ import ErrorSvg from '../ReusableSvgComponents/ErrorSvg';
 import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import { FaDownload, FaShareAlt, FaUser } from 'react-icons/fa';
+import { FaDownload, FaUser } from 'react-icons/fa';
+import SingleTrans from '../SingleTransSvg';
+import ManageSignSvg from '../ManageSignSvg';
 
 const PaymentSuccess = ({
     action,
@@ -31,6 +33,9 @@ const PaymentSuccess = ({
     error,
     successfulTrans,
     failedTrans,
+    accountNumber,
+    senderName,
+    narration,
     repeatAction
 }) => {
     const myref = useRef();
@@ -76,7 +81,7 @@ const PaymentSuccess = ({
                             </BodyWrapper>
                         ) : (
                             <BodyWrapper>
-                                <div>
+                                {/* <div>
                                     <div className={styles.successCheck}>
                                         <div>
                                             <SuccessCheckSvg />
@@ -221,81 +226,224 @@ const PaymentSuccess = ({
                                                 provided phone number.
                                             </p>
                                         ) : null}
-                                        {/* <p className={styles.repeat}>
+                                        <p className={styles.repeat}>
                                         Set this transaction as{' '}
                                         <span onClick={repeatAction}>
                                             Repeat
                                         </span>
-                                    </p> */}
+                                    </p>
                                     </RegistrationStatus>
-                                </div>
-                                {/* <div ref={printRef}>
+                                </div> */}
+                                <div ref={printRef}>
                                     <div className={styles.receiptHead}>
-                                        <h2>Successful</h2>
+                                        <h2>Successful!</h2>
                                         <p>NGN {amount}</p>
                                     </div>
                                     <div className={styles.receiptBody}>
-                                        <p className={styles.name}>
+                                        <p className={styles.beneName}>
                                             {beneName}
                                         </p>
-                                        <p className={styles.date}>{current}</p>
-                                        <div className={styles.receiptSingle}>
-                                            <div className={styles.receiptIcon}>
-                                                <FaUser />
+                                        <p className={styles.currentDate}>
+                                            {current}
+                                        </p>
+                                        <div>
+                                            {title === 'Bulk Payment' ? null : (
+                                                <div
+                                                    className={
+                                                        styles.receiptSingle
+                                                    }
+                                                >
+                                                    <div
+                                                        className={
+                                                            styles.receiptIcon
+                                                        }
+                                                    >
+                                                        <FaUser
+                                                            color="#005b82"
+                                                            fontSize="25px"
+                                                        />
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            styles.receiptText
+                                                        }
+                                                    >
+                                                        <p
+                                                            className={
+                                                                styles.receiptTitle
+                                                            }
+                                                        >
+                                                            Beneficiary Account
+                                                        </p>
+                                                        <p
+                                                            className={
+                                                                styles.receiptValue
+                                                            }
+                                                        >
+                                                            {accountNumber}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            )}
+                                            <div
+                                                className={styles.receiptSingle}
+                                            >
+                                                <div
+                                                    className={
+                                                        styles.receiptIcon
+                                                    }
+                                                >
+                                                    <SingleTrans />
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.receiptText
+                                                    }
+                                                >
+                                                    <p
+                                                        className={
+                                                            styles.receiptTitle
+                                                        }
+                                                    >
+                                                        Transaction Type
+                                                    </p>
+                                                    <p
+                                                        className={
+                                                            styles.receiptValue
+                                                        }
+                                                    >
+                                                        {title}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div className={styles.receiptText}>
-                                                <p
+                                            <div
+                                                className={styles.receiptSingle}
+                                            >
+                                                <div
                                                     className={
-                                                        styles.receiptTitle
+                                                        styles.receiptIcon
                                                     }
                                                 >
-                                                    Beneficiary Account
-                                                </p>
-                                                <p
+                                                    <FaUser
+                                                        fontSize="25px"
+                                                        color="#005b82"
+                                                    />
+                                                </div>
+                                                <div
                                                     className={
-                                                        styles.receiptValue
+                                                        styles.receiptText
                                                     }
                                                 >
-                                                    Beneficiary Account
-                                                </p>
+                                                    <p
+                                                        className={
+                                                            styles.receiptTitle
+                                                        }
+                                                    >
+                                                        Sender Name
+                                                    </p>
+                                                    <p
+                                                        className={
+                                                            styles.receiptValue
+                                                        }
+                                                    >
+                                                        {senderName}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className={styles.receiptSingle}>
-                                            <div className={styles.receiptText}>
-                                                <p
+                                            <div
+                                                className={styles.receiptSingle}
+                                            >
+                                                <div
                                                     className={
-                                                        styles.receiptTitle
+                                                        styles.receiptIcon
                                                     }
                                                 >
-                                                    Beneficiary Account
-                                                </p>
-                                                <p
+                                                    <ManageSignSvg />
+                                                </div>
+                                                <div
                                                     className={
-                                                        styles.receiptValue
+                                                        styles.receiptText
                                                     }
                                                 >
-                                                    Beneficiary Account
-                                                </p>
+                                                    <p
+                                                        className={
+                                                            styles.receiptTitle
+                                                        }
+                                                    >
+                                                        Narration
+                                                    </p>
+                                                    <p
+                                                        className={
+                                                            styles.receiptValue
+                                                        }
+                                                    >
+                                                        {narration}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>{' '}
-                                        <div className={styles.receiptText}>
-                                            <p className={styles.receiptTitle}>
-                                                Beneficiary Account
-                                            </p>
-                                            <p className={styles.receiptValue}>
-                                                Beneficiary Account
-                                            </p>
-                                        </div>
-                                        <div className={styles.receiptText}>
-                                            <p className={styles.receiptTitle}>
-                                                Beneficiary Account
-                                            </p>
-                                            <p className={styles.receiptValue}>
-                                                Beneficiary Account
-                                            </p>
                                         </div>
                                     </div>
-                                </div> */}
+                                </div>
+                                {title === 'Bulk Payment' ? (
+                                    <>
+                                        {successfulTrans.map((tran, index) => {
+                                            return (
+                                                <div
+                                                    className={
+                                                        styles.bulkTransfer
+                                                    }
+                                                    key={index}
+                                                >
+                                                    <p className={styles.name}>
+                                                        {tran.receiversName}
+                                                    </p>
+                                                    <p
+                                                        className={
+                                                            styles.amount
+                                                        }
+                                                    >
+                                                        {tran.transactionAmount}
+                                                    </p>
+                                                    <p
+                                                        className={
+                                                            styles.status
+                                                        }
+                                                    >
+                                                        {tran.transactionStatus}
+                                                    </p>
+                                                </div>
+                                            );
+                                        })}
+                                        {failedTrans.map((tran, index) => {
+                                            return (
+                                                <div
+                                                    className={
+                                                        styles.bulkTransfer
+                                                    }
+                                                    key={index}
+                                                >
+                                                    <p className={styles.name}>
+                                                        {tran.receiversName}
+                                                    </p>
+                                                    <p
+                                                        className={
+                                                            styles.amount
+                                                        }
+                                                    >
+                                                        {tran.transactionAmount}
+                                                    </p>
+                                                    <p
+                                                        className={
+                                                            styles.status
+                                                        }
+                                                    >
+                                                        {tran.transactionStatus}
+                                                    </p>
+                                                </div>
+                                            );
+                                        })}
+                                    </>
+                                ) : null}
                                 <div className={styles.icons}>
                                     <FaDownload
                                         color="#005b82"
