@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 import DirectorsSvg from '../../components/ReusableComponents/ReusableSvgComponents/DirectorsSvg';
 import SignatureRuleSvg from '../../components/ReusableComponents/ReusableSvgComponents/SignatureRuleSvg';
 import { useEffect } from 'react';
+import Iframe from 'react-iframe';
+import Modal from 'react-modal';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -31,7 +33,21 @@ import { useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
+import { ButtonComp } from '../../components';
 
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+    }
+};
+
+// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+// Modal.setAppElement('#yourAppElement');
 const AccountUpgrade = () => {
     const router = useRouter();
     const [text, setText] = useState('');
@@ -75,16 +91,20 @@ const AccountUpgrade = () => {
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState('');
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        ''
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
     const [reftwoemail, setRefTwoEmail] = useState('');
     const [outType, setOutType] = useState();
     const [outTyped, setOutTyped] = useState();
+    const [activeBtn, setActiveBtn] = useState(true);
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
     );
@@ -113,7 +133,8 @@ const AccountUpgrade = () => {
         (state) => state.documentIdentificationReducer
     );
     const { userProfile } = useSelector((state) => state.userProfileReducer);
-
+    let subtitle;
+    const [modalIsOpen, setIsOpen] = React.useState(false);
     const dispatch = useDispatch();
     const {
         register,
@@ -501,6 +522,19 @@ const AccountUpgrade = () => {
             }
         });
     }, [selstate]);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    // function afterOpenModal() {
+    //     // references are now sync'd and can be accessed.
+    //     subtitle.style.color = '#f00';
+    // }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
     const multiStep = () => {
         switch (title) {
             case 'First':
@@ -762,33 +796,54 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Link
-                                href={{
-                                    pathname:
-                                        'https://ecocomonoreact.azurewebsites.net/customer-details/',
-                                    query: {
-                                        workitemId: 'AO-095734358976187628-CO',
-                                        customerName:
-                                            userProfile?.preferredName,
-                                        customerEmail: userProfile?.email,
-                                        branchCode: 'A02',
-                                        segmentId: 'ADB',
-                                        // houseNumber: '25',
-                                        address: streetName,
-                                        // streetName: 'Igbobi College Road',
-                                        // areaName: 'Yaba',
-                                        landmark: landMark,
-                                        state: selstate,
-                                        lga: localGovernmane,
-                                        createdBy: 'RealMg',
-                                        customerImage: '',
-                                        Latitude: latitude,
-                                        Longitude: longitude
-                                    }
-                                }}
+                            <Modal
+                                isOpen={modalIsOpen}
+                                // onAfterOpen={afterOpenModal}
+                                onRequestClose={closeModal}
+                                style={customStyles}
+                                contentLabel="Example Modal"
                             >
-                                <button>Confirm Address</button>
-                            </Link>
+                                <Iframe
+                                    url={{
+                                        pathname:
+                                            'https://ecocomonoreact.azurewebsites.net/customer-details/',
+                                        query: {
+                                            workitemId:
+                                                'AO-095734358976187628-CO',
+                                            customerName:
+                                                userProfile?.preferredName,
+                                            customerEmail: userProfile?.email,
+                                            branchCode: 'A02',
+                                            segmentId: 'ADB',
+                                            // houseNumber: '25',
+                                            address: streetName,
+                                            // streetName: 'Igbobi College Road',
+                                            // areaName: 'Yaba',
+                                            landmark: landMark,
+                                            state: selstate,
+                                            lga: localGovernmane,
+                                            createdBy: 'RealMg',
+                                            customerImage: '',
+                                            Latitude: latitude,
+                                            Longitude: longitude
+                                        }
+                                    }}
+                                    width="640px"
+                                    height="620px"
+                                    id=""
+                                    className=""
+                                    display="block"
+                                    position="relative"
+                                />
+                            </Modal>
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                type="submit"
+                                text=" Confirm Address"
+                                onClick={openModal}
+                            ></ButtonComp>
+                            {/* </Iframe> */}
                         </div>
                     </AccountUpgradeComponent>
                 );
