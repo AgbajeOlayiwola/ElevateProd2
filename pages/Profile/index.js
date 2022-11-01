@@ -1129,26 +1129,21 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details =
-                                                                    {
-                                                                        accountNumber:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    accountNumber: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details =
-                                                                    {
-                                                                        destinationBankCode:
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                        accountNo:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    destinationBankCode:
+                                                                        e.target
+                                                                            .value,
+                                                                    accountNo: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
