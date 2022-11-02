@@ -43,6 +43,7 @@ const LineChart = () => {
                 }
             ]
         });
+        consoldoe.log(lineData);
         //    setLineData(...lineData,[])
     }, [transactionElevate]);
     useEffect(() => {
