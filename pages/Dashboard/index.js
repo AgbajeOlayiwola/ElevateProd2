@@ -176,7 +176,8 @@ const Dashboard = () => {
     const current = new Date();
     const date = `${current.getFullYear()}-${
         current.getMonth() + 1
-    }-${current.getDate()}`;
+    }-0${current.getDate()}`;
+    console.log(date);
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
@@ -184,7 +185,7 @@ const Dashboard = () => {
             tableDetails?.filter((item) => {
                 const newDate = item.transactionDate.split('T');
 
-                if (date === newDate[0]) {
+                if (newDate[0] == date) {
                     setDateState(true);
                 } else {
                     setDateState(false);
@@ -197,6 +198,7 @@ const Dashboard = () => {
             // });
         }
     }, [transactionElevate]);
+    // console.log(newDate[0]);
     return (
         <DashLayout page="Dashboard">
             <Levelup />

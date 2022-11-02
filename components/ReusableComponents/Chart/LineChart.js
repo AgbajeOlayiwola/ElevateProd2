@@ -21,25 +21,7 @@ const LineChart = () => {
     useEffect(() => {
         dispatch(getTransactionElevate());
     }, []);
-
     useEffect(() => {
-        if (transactionElevate !== null) {
-            setTableDetails(transactionElevate.transactions);
-            tableDetails?.filter((item) => {
-                setAmount(item.transactionAmount);
-                setAmounts((amount) => [...amount, item.transactionAmount]);
-            });
-        }
-
-        setDatas([
-            amounts[1],
-            amounts[10],
-            amounts[15],
-            amounts[20],
-            amounts[25],
-            amounts[30]
-        ]);
-
         setLineData({
             ...lineData,
             datasets: [
@@ -61,6 +43,27 @@ const LineChart = () => {
                 }
             ]
         });
+        console.log(datas);
+        //    setLineData(...lineData,[])
+    }, [transactionElevate]);
+    useEffect(() => {
+        if (transactionElevate !== null) {
+            setTableDetails(transactionElevate.transactions);
+            tableDetails?.filter((item) => {
+                setAmount(item.transactionAmount);
+                setAmounts((amount) => [...amount, item.transactionAmount]);
+            });
+        }
+
+        setDatas([
+            amounts[1],
+            amounts[10],
+            amounts[15],
+            amounts[20],
+            amounts[25],
+            amounts[30]
+        ]);
+
         //    setLineData(...lineData,[])
     }, [transactionElevate]);
 
