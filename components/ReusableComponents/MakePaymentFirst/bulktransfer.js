@@ -41,7 +41,7 @@ const BulkTransfer = ({
 
     useEffect(() => {}, [number]);
     const interBankEnquiryCheck = () => {
-        setLoading((prev) => !prev);
+        // setLoading((prev) => !prev);
         if (interBankEnquiry !== null) {
             const newState = number.map((e, index) => {
                 if (indexNumber === index) {
@@ -56,7 +56,7 @@ const BulkTransfer = ({
         }
     };
     const intraBankEnquiryCheck = () => {
-        setLoading((prev) => !prev);
+        // setLoading((prev) => !prev);
         if (intraBankEnquiry !== null) {
             const newState = number.map((e, index) => {
                 if (indexNumber === index) {

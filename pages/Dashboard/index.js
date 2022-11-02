@@ -197,7 +197,6 @@ const Dashboard = () => {
             // });
         }
     }, [transactionElevate]);
-    console.log(date);
     return (
         <DashLayout page="Dashboard">
             <Levelup />

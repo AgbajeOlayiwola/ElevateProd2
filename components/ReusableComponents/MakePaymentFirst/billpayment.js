@@ -83,8 +83,6 @@ const BillPayment = ({
     useEffect(() => {
         if (airtimeNetwork !== null) {
             setAirtimeNetworkData(airtimeNetwork);
-
-            //console.lognetworkData);
         }
     }, [airtimeNetwork]);
     useEffect(() => {
@@ -183,6 +181,14 @@ const BillPayment = ({
                                 <div className={styles.networkBody}>
                                     {airtimeNetworkData.networks?.map(
                                         (networks, index) => {
+                                            if (
+                                                networks.name === 'MTN Nigeria'
+                                            ) {
+                                                localStorage.setItem(
+                                                    'Airtime',
+                                                    JSON.stringify(networks)
+                                                );
+                                            }
                                             if (
                                                 networks.name === 'SOCHIENGMTN'
                                             ) {
@@ -547,7 +553,7 @@ const BillPayment = ({
                                         })}
                                     />
                                 </div>
-                                <div className={styles.formGroup}>
+                                {/* <div className={styles.formGroup}>
                                     <label>Payment Description</label>
                                     <input
                                         type="text"
@@ -558,7 +564,7 @@ const BillPayment = ({
                                                 'Payment Description is required'
                                         })}
                                     />
-                                </div>
+                                </div> */}
 
                                 <button type="submit">Get Utility</button>
                             </div>

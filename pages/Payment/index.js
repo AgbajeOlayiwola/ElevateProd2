@@ -850,18 +850,22 @@ const Payment = () => {
                                             accountId: senderDetails.accountId,
                                             billerCode: airtimeNetData.code,
                                             billerId: airtimeNetData.id,
-                                            productCode: airtimeNetData.code,
-                                            mobileNo:
-                                                paymentDetails.phoneNumber,
-                                            formDataValue: [
-                                                {
-                                                    fieldName: 'BEN_PHONE_NO',
-                                                    fieldValue: 2348111380591,
-                                                    dataType: 'string'
-                                                }
-                                            ],
-                                            beneficiaryName: '',
-                                            paymentDescription: ''
+                                            // productCode: airtimeNetData.name,
+                                            productCode:
+                                                airtimeNetData.name ===
+                                                'MTN Nigeria'
+                                                    ? 'MTN-ANY'
+                                                    : airtimeNetData.name ===
+                                                      'GLO Nigeria'
+                                                    ? 'GLO-ANY'
+                                                    : airtimeNetData.name ===
+                                                      'Airtel Nigeria'
+                                                    ? 'AIRTEL-ANY'
+                                                    : airtimeNetData.name ===
+                                                      'Etisalat Nigeria'
+                                                    ? 'ETISALAT-ANY'
+                                                    : null,
+                                            mobileNo: paymentDetails.phoneNumber
                                         };
 
                                         dispatch(postAirtime(billerdata));
@@ -886,7 +890,9 @@ const Payment = () => {
                                                     .billerProductInfo[0]
                                                     .productCode,
                                             paymentDescription:
-                                                paymentDetails.paymentDescription
+                                                airtimeNetData
+                                                    .billerProductInfo[0]
+                                                    .productDescription
                                         };
                                         dispatch(postBills(billerData));
                                     }
@@ -908,6 +914,7 @@ const Payment = () => {
                                 paymentType={paymentDetails.billerType}
                                 number={paymentDetails.phoneNumber}
                                 amount={paymentDetails.amount}
+                                senderName={`${userProfileData.lastName} ${userProfileData.firstName}`}
                             />
                         );
                     // case 4:

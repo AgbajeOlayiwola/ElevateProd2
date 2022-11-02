@@ -64,7 +64,6 @@ const LineChart = () => {
         //    setLineData(...lineData,[])
     }, [transactionElevate]);
 
-    console.log(`${amounts[0]}`);
     // set options
     const [lineOptions, setLineOptions] = useState({
         scales: {
