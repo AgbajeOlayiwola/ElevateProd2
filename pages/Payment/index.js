@@ -770,7 +770,16 @@ const Payment = () => {
                                 failedTrans={failedTrans}
                                 number={paymentDetails.details.length}
                                 title="Bulk Payment"
-                                amount={paymentDetails.amount}
+                                amount={
+                                    paymentDetails.amount === ''
+                                        ? paymentDetails.details.reduce(
+                                              (a, b) => {
+                                                  return +a.amount + +b.amount;
+                                              }
+                                          )
+                                        : paymentDetails.amount *
+                                          numberofBene.length
+                                }
                                 senderName={`${userProfileData.lastName} ${userProfileData.firstName}`}
                             />
                         );
