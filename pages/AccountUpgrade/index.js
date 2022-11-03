@@ -793,6 +793,33 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
+                            {/* <Link
+                                href={{
+                                    pathname:
+                                        'https://ecocomonoreact.azurewebsites.net/customer-details/',
+                                    query: {
+                                        workitemId: 'AO-095734358976187628-CO',
+                                        customerName:
+                                            userProfile?.preferredName,
+                                        customerEmail: userProfile?.email,
+                                        branchCode: 'A02',
+                                        segmentId: 'ADB',
+                                        // houseNumber: '25',
+                                        address: streetName,
+                                        // streetName: 'Igbobi College Road',
+                                        // areaName: 'Yaba',
+                                        landmark: landMark,
+                                        state: selstate,
+                                        lga: localGovernmane,
+                                        createdBy: 'RealMg',
+                                        customerImage: '',
+                                        Latitude: latitude,
+                                        Longitude: longitude
+                                    }
+                                }}
+                            >
+                                Links
+                            </Link> */}
                             <Modal
                                 isOpen={modalIsOpen}
                                 // onAfterOpen={afterOpenModal}
@@ -800,31 +827,40 @@ const AccountUpgrade = () => {
                                 style={customStyles}
                                 contentLabel="Example Modal"
                             >
+                                {/* //When adding latituted add them the way i did with vartiable */}
+                                {/* `https://ecocomonoreact.azurewebsites.net/customer-details/
+                                ?workitemId=AO-095734358976187628-CO&
+                                customerName=MUSA&customerEmail=musa%40gmail.comm
+                                &branchCode=A02
+                                &segmentId=ADB&address=ZUBIARU%20HOUSE%20ZANGO&landmark&state=Lagos
+                                &lga=Badagry&createdBy=RealMg&customerImage&Latitude&Longitude` */}
                                 <Iframe
-                                    url={{
-                                        pathname:
-                                            'https://ecocomonoreact.azurewebsites.net/customer-details/',
-                                        query: {
-                                            workitemId:
-                                                'AO-095734358976187628-CO',
-                                            customerName:
-                                                userProfile?.preferredName,
-                                            customerEmail: userProfile?.email,
-                                            branchCode: 'A02',
-                                            segmentId: 'ADB',
-                                            // houseNumber: '25',
-                                            address: streetName,
-                                            // streetName: 'Igbobi College Road',
-                                            // areaName: 'Yaba',
-                                            landmark: landMark,
-                                            state: selstate,
-                                            lga: localGovernmane,
-                                            createdBy: 'RealMg',
-                                            customerImage: '',
-                                            Latitude: latitude,
-                                            Longitude: longitude
-                                        }
-                                    }}
+                                    src={
+                                        // {
+                                        // pathname:
+                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude&Longitude`
+                                        // query: {
+                                        //     workitemId:
+                                        //         'AO-095734358976187628-CO',
+                                        //     customerName:
+                                        //         userProfile?.preferredName,
+                                        //     customerEmail: userProfile?.email,
+                                        //     branchCode: 'A02',
+                                        //     segmentId: 'ADB',
+                                        //     // houseNumber: '25',
+                                        //     address: streetName,
+                                        //     // streetName: 'Igbobi College Road',
+                                        //     // areaName: 'Yaba',
+                                        //     landmark: landMark,
+                                        //     state: selstate,
+                                        //     lga: localGovernmane,
+                                        //     createdBy: 'RealMg',
+                                        //     customerImage: '',
+                                        //     Latitude: latitude,
+                                        //     Longitude: longitude
+                                        // }
+                                        // }
+                                    }
                                     width="640px"
                                     height="620px"
                                     id=""
