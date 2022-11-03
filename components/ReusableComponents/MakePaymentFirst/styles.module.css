@@ -702,12 +702,17 @@
     font-size: 12px;
     line-height: 15px;
     color: #a5a5a5;
+    margin-top: 10px;
 }
 
 .uploadCsv p span {
     font-weight: 700;
     color: #102572;
     cursor: pointer;
+}
+
+.uploadCsv input {
+    display: none;
 }
 
 .actionButtons {
