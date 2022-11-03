@@ -723,9 +723,9 @@ const AccountUpgrade = () => {
                                                     // //console.logselstate);
                                                 }}
                                             >
-                                                <option value={selstate}>
+                                                {/* <option value={selstate}>
                                                     {selstate}
-                                                </option>
+                                                </option> */}
                                                 {location?.map(
                                                     (state, index) => {
                                                         return (
@@ -772,9 +772,9 @@ const AccountUpgrade = () => {
                                                     );
                                                 }}
                                             >
-                                                <option value={localGovernmane}>
+                                                {/* <option value={localGovernmane}>
                                                     {localGovernmane}
-                                                </option>
+                                                </option> */}
                                                 {localGovernment
                                                     ? localGovernment?.map(
                                                           (item, index) => {
@@ -805,11 +805,11 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Link
+                            {/* <Link
                                 href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333`}
                             >
                                 Links
-                            </Link>
+                            </Link> */}
                             <Modal
                                 isOpen={modalIsOpen}
                                 // onAfterOpen={afterOpenModal}
