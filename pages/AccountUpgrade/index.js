@@ -91,13 +91,10 @@ const AccountUpgrade = () => {
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState('');
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -543,7 +540,7 @@ const AccountUpgrade = () => {
                         title={
                             text === 'INDIVIDUAL'
                                 ? 'Individual Account Upgrade'
-                                : text === 'CORPORATE'
+                                : text === 'COMMERCIAL'
                                 ? 'Corporate Account Upgrade'
                                 : null
                         }
@@ -590,7 +587,7 @@ const AccountUpgrade = () => {
                                       );
                                   }
                               )
-                            : text === 'CORPORATE'
+                            : text === 'COMMERCIAL'
                             ? AccountUpgradeData.corporate.map(
                                   (item, index) => {
                                       if (item.title === 'Documents') {

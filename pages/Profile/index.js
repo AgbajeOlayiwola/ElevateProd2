@@ -305,6 +305,7 @@ const Profile = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors }
     } = useForm();
     const renderForm = () => {
@@ -1020,9 +1021,9 @@ const Profile = () => {
                                                 <option value="Account">
                                                     Account
                                                 </option>
-                                                <option value="Airtime and Data">
+                                                {/* <option value="Airtime and Data">
                                                     Airtime and Data
-                                                </option>
+                                                </option> */}
                                             </select>
                                         </div>
                                         {beneType === 'Account' ? (
@@ -1340,7 +1341,7 @@ const Profile = () => {
                                         index={index}
                                         action={() => {
                                             setText(item.text);
-                                            // setOverlay(true);
+                                            reset();
                                             setCount(0);
                                             setBvn('');
                                         }}
@@ -1378,6 +1379,7 @@ const Profile = () => {
                             ? () => {
                                   setOutcome(false);
                                   setText('View Profile');
+                                  reset();
                               }
                             : null
                     }

@@ -22,6 +22,7 @@ const BulkTransfer = ({
     const [activeBtn, setActiveBtn] = useState(false);
     const [loading, setLoading] = useState(false);
     const [diffAmount, setDiffAmount] = useState(false);
+    const [csv, setCsv] = useState();
     const [interEnquiry, setInterEnquiry] = useState([]);
     const [indexNumber, setIndex] = useState('');
     const [acctNo, setAcctNo] = useState('');
@@ -38,10 +39,11 @@ const BulkTransfer = ({
         // payload !== undefined ? payload :
         [1]
     );
-
+    const XLSX = require('xlsx');
+    // const fs = require('fs');
     useEffect(() => {}, [number]);
     const interBankEnquiryCheck = () => {
-        setLoading((prev) => !prev);
+        // setLoading((prev) => !prev);
         if (interBankEnquiry !== null) {
             const newState = number.map((e, index) => {
                 if (indexNumber === index) {
@@ -56,7 +58,7 @@ const BulkTransfer = ({
         }
     };
     const intraBankEnquiryCheck = () => {
-        setLoading((prev) => !prev);
+        // setLoading((prev) => !prev);
         if (intraBankEnquiry !== null) {
             const newState = number.map((e, index) => {
                 if (indexNumber === index) {
@@ -250,9 +252,54 @@ const BulkTransfer = ({
                 })}
                 <div className={styles.narration}>
                     <div className={styles.uploadCsv}>
-                        <p>
-                            Tap to <span>Upload CSV File</span>
-                        </p>
+                        <div>
+                            <p>
+                                <label>
+                                    Tap to
+                                    <input
+                                        type="file"
+                                        onChange={(e) => {
+                                            if (e.target.files) {
+                                                const reader = new FileReader();
+                                                reader.onload = (e) => {
+                                                    const data =
+                                                        e.target.result;
+                                                    const workbook = XLSX.read(
+                                                        data,
+                                                        { type: 'array' }
+                                                    );
+                                                    const sheetName =
+                                                        workbook.SheetNames[0];
+                                                    const worksheet =
+                                                        workbook.Sheets[
+                                                            sheetName
+                                                        ];
+                                                    const json =
+                                                        XLSX.utils.sheet_to_json(
+                                                            worksheet
+                                                        );
+                                                    console.log(json);
+                                                };
+                                                reader.readAsArrayBuffer(
+                                                    e.target.files[0]
+                                                );
+                                            }
+                                        }}
+                                    />
+                                    <span> Upload CSV File</span>
+                                </label>
+                            </p>
+                            <p>
+                                <a
+                                    href="../../../Assets/CSV.xlsm"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    download="CSV Template"
+                                >
+                                    <span>Download CSV File</span>
+                                </a>
+                            </p>
+                        </div>
                         <div className={styles.actionButtons}>
                             <div
                                 className={styles.plus}
