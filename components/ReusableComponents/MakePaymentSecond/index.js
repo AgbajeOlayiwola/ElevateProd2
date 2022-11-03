@@ -225,16 +225,15 @@ const MakePaymentSecond = ({
                                     onChange={handleChange}
                                 />
                             </div>
-                            {isLoading ? (
-                                <Loader />
-                            ) : (
-                                <ButtonComp
-                                    disabled={activeBtn}
-                                    active={activeBtn ? 'active' : 'inactive'}
-                                    text="Confirm"
-                                    type="submit"
-                                />
-                            )}
+
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Confirm"
+                                type="submit"
+                                loads={isLoading}
+                                // err={isLoading}
+                            />
                         </form>
                     </div>
                 </div>
