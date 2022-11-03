@@ -77,6 +77,8 @@ const AccountUpgrade = () => {
     const [city, setCity] = useState('');
     const [streetName, setStreetName] = useState('');
     const [localGovernmane, setLocalGovernmane] = useState('');
+    const [lgaCode, setLgaCode] = useState('');
+    const [stateCode, setStateCode] = useState('');
     const [statusbar, setStatusbar] = useState('');
     const [verifyStatus, setVerifyStatus] = useState('notDone');
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
@@ -91,10 +93,13 @@ const AccountUpgrade = () => {
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState('');
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        ''
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -193,14 +198,16 @@ const AccountUpgrade = () => {
             setCity(userProfile.city);
             setState(userProfile.state);
             setLocalGovernmane(userProfile.lga);
+
             if (userProfile.hasSetTransactionPin === true) {
                 setTransactionPinStatus('done');
             }
         }
+        console.log(userProfile);
     }, [userProfile]);
     useEffect(() => {
         if (shareDocuments !== null) {
-            console.log(shareDocuments);
+            // console.log(shareDocuments);
             shareDocuments?.map((document) => {
                 if (document.documentType === 'UTILITY') {
                     setUtilityStatus('done');
@@ -345,7 +352,7 @@ const AccountUpgrade = () => {
         const utilityThingd = {
             streetName: streetName,
             lga: localGovernmane,
-            state: selstate,
+            state: selstatde,
             utilityDocument: utilityFile
         };
         dispatch(uploadUtilityData(utilityThingd));
@@ -771,6 +778,11 @@ const AccountUpgrade = () => {
                                                 {localGovernment
                                                     ? localGovernment?.map(
                                                           (item, index) => {
+                                                              //   {
+                                                              //       console.log(
+                                                              //           item
+                                                              //       );
+                                                              //   }
                                                               return (
                                                                   <option
                                                                       value={
@@ -794,29 +806,7 @@ const AccountUpgrade = () => {
                                 </div>
                             </div>
                             {/* <Link
-                                href={{
-                                    pathname:
-                                        'https://ecocomonoreact.azurewebsites.net/customer-details/',
-                                    query: {
-                                        workitemId: 'AO-095734358976187628-CO',
-                                        customerName:
-                                            userProfile?.preferredName,
-                                        customerEmail: userProfile?.email,
-                                        branchCode: 'A02',
-                                        segmentId: 'ADB',
-                                        // houseNumber: '25',
-                                        address: streetName,
-                                        // streetName: 'Igbobi College Road',
-                                        // areaName: 'Yaba',
-                                        landmark: landMark,
-                                        state: selstate,
-                                        lga: localGovernmane,
-                                        createdBy: 'RealMg',
-                                        customerImage: '',
-                                        Latitude: latitude,
-                                        Longitude: longitude
-                                    }
-                                }}
+                                href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333`}
                             >
                                 Links
                             </Link> */}
@@ -838,7 +828,9 @@ const AccountUpgrade = () => {
                                     src={
                                         // {
                                         // pathname:
-                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude&Longitude`
+                                        // 'https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test Customer&customerEmail=boluwatobi@gmail.com&branchCode=A02&segmentId=ADB&address=25 pilot crescent off bode thomas surulere&landmark&state=LA&lga=LA020&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333'
+                                        //  https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=MUSA&customerEmail=musa%40gmail.comm&branchCode=A02&segmentId=ADB&address=ZUBIARU%20HOUSE%20ZANGO&landmark=Yabatech&state=Lagos&lga=Badagry&createdBy=RealMg&customerImage&Latitude&Longitude
+                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333`
                                         // query: {
                                         //     workitemId:
                                         //         'AO-095734358976187628-CO',
