@@ -805,11 +805,11 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <Link
+                            <Link
                                 href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333`}
                             >
                                 Links
-                            </Link> */}
+                            </Link>
                             <Modal
                                 isOpen={modalIsOpen}
                                 // onAfterOpen={afterOpenModal}
@@ -830,7 +830,7 @@ const AccountUpgrade = () => {
                                         // pathname:
                                         // 'https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test Customer&customerEmail=boluwatobi@gmail.com&branchCode=A02&segmentId=ADB&address=25 pilot crescent off bode thomas surulere&landmark&state=LA&lga=LA020&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333'
                                         //  https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=MUSA&customerEmail=musa%40gmail.comm&branchCode=A02&segmentId=ADB&address=ZUBIARU%20HOUSE%20ZANGO&landmark=Yabatech&state=Lagos&lga=Badagry&createdBy=RealMg&customerImage&Latitude&Longitude
-                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333`
+                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude&Longitude`
                                         // query: {
                                         //     workitemId:
                                         //         'AO-095734358976187628-CO',
