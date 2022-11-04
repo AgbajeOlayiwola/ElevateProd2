@@ -27,6 +27,8 @@ const TableDetail = ({
                 <p className={styles.bene}>
                     {newBeneficiary === ''
                         ? ''
+                        : newBeneficiary[1] === undefined
+                        ? newBeneficiary[0]
                         : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
                 </p>
                 <p className={styles.transfer}>{Type}</p>

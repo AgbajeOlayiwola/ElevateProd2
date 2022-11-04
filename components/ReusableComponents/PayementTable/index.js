@@ -127,7 +127,7 @@ const PaymentTable = ({ title, test }) => {
                           return (
                               <TableDetail
                                   key={index}
-                                  Beneficiary={items.receiversName}
+                                  Beneficiary={items.receiver}
                                   Type={items.transactionType}
                                   Amount={items.transactionAmount}
                                   Bank={items.destinationBank}
