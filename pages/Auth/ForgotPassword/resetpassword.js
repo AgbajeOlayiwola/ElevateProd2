@@ -6,7 +6,7 @@ import { ButtonComp } from '../../../components';
 import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 
-const ResetPassword = () => {
+const ResetPassword = ({ onSubmit }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const router = useRouter();
     // function handleSubmit() {
@@ -72,7 +72,7 @@ const ResetPassword = () => {
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
-                        onClick={handleSubmit}
+                        onClick={onSubmit}
                         type="submit"
                         text="Create New Password"
                     />
