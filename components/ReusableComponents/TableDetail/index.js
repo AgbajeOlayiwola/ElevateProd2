@@ -15,10 +15,12 @@ const TableDetail = ({
     let newBeneficiary;
     if (Beneficiary === null) {
         newBeneficiary = '';
+    } else if (Beneficiary === undefined) {
+        newBeneficiary = '';
     } else {
-        newBeneficiary = Beneficiary.split(' ');
+        newBeneficiary = Beneficiary?.split(' ');
     }
-    const newDate = Dates.split('T');
+    const newDate = Dates?.split('T');
     return (
         <>
             <div className={styles.TableDetailBody} key={keys}>
