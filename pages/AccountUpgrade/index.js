@@ -93,13 +93,10 @@ const AccountUpgrade = () => {
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState('');
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -456,6 +453,11 @@ const AccountUpgrade = () => {
                 title: 'Documents',
                 icon: <AddressSvg />,
                 statusReport: documentStatus
+            },
+            {
+                title: 'Verify your Address',
+                icon: <AddressSvg />,
+                statusReport: verifyStatus
             },
             {
                 title: 'Set Transaction Pin',

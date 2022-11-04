@@ -269,7 +269,7 @@ const NewUser = ({ selectCountry }) => {
                                         symbol ? styles.success : styles.error
                                     }
                                 >
-                                    password should Contain atleast 1 special
+                                    password should Contain at least 1 special
                                     character
                                 </p>
                             </div>
