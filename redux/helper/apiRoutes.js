@@ -63,6 +63,7 @@ const shareRefForm = '/account-upgrade/reference-form/share';
 const uploadRefForm = '/account-upgrade/reference-form/share';
 const uploadBoardRes = '/account-upgrade/board-resolution/upload';
 const forgotPassword = '/authentication/forget-password';
+const forgotPasswordReset = '/authentication/reset-password';
 const resetOtp = '/authentication/otp/re-send';
 const viewBvn = '/users/bvn/view';
 const resetPassword = '/users/password';
@@ -138,6 +139,7 @@ export default {
     ussdGen,
     ussdStatus,
     forgotPassword,
+    forgotPasswordReset,
     viewBvn,
     resetPassword,
     bankStatement,

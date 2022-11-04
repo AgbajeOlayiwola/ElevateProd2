@@ -4,16 +4,21 @@ import styles from './styles.module.css';
 import EmailSent from './emailsent';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { forgotPasswordData } from '../../../redux/actions/actions';
+import {
+    forgotPasswordData,
+    forgotPasswordResetData
+} from '../../../redux/actions/actions';
 import ResetPassword from './resetpassword';
 
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
     const [errorMessage, setErrorMessage] = useState('');
-    const { query } = useRouter();
+    const { query, push } = useRouter();
     const { forgotPassword, forgotPasswordErrorMessages } = useSelector(
         (state) => state.fogrotPasswordReducer
     );
+    const { forgotPasswordReset, forgotPasswordResetErrorMessages } =
+        useSelector((state) => state.forgotPasswordResetReducer);
     const dispatch = useDispatch();
     useEffect(() => {
         if (Object.keys(query).length !== 0) {
@@ -35,8 +40,15 @@ const ExistingMultiStep = () => {
             case 2:
                 return (
                     <ResetPassword
-                        onSubmit={() => {
-                            console.log(query.token);
+                        onSubmit={(e) => {
+                            console.log(e);
+                            console.log();
+                            const data = {
+                                token: query.token,
+                                password: e.newPassword,
+                                confirmPassword: e.confnewPassword
+                            };
+                            dispatch(forgotPasswordResetData(data));
                         }}
                     />
                 );
@@ -54,6 +66,13 @@ const ExistingMultiStep = () => {
             setErrorMessage(forgotPasswordErrorMessages.response.data.message);
         }
     }, [forgotPassword, forgotPasswordErrorMessages]);
+    useEffect(() => {
+        if (forgotPasswordReset !== null) {
+            push('./Auth/Login');
+        } else if (forgotPasswordResetErrorMessages !== null) {
+            setErrorMessage(forgotPasswordResetErrorMessages);
+        }
+    }, [forgotPasswordReset, forgotPasswordResetErrorMessages]);
     const handleClick = () => {
         setPage(page - 1);
     };

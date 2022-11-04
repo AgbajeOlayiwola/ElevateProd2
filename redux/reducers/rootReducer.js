@@ -54,6 +54,7 @@ import cacUploadReducer from './cac.reducer';
 import accountPrimaryReducer from './accountPrimary.reducer';
 import setTransactionPinReducer from './setTransactionPin.reducer';
 import fogrotPasswordReducer from './forgotpassword.reducer';
+import forgotPasswordResetReducer from './forgotpasswordReset.reducer';
 import resetOtpReducer from './resetotp.reducer';
 import ussdGenReducer from './ussdGen.reducer';
 import ussdStatusReducer from './ussdStatus.reducer';
@@ -132,6 +133,7 @@ const appReducer = combineReducers({
     setTransactionPinReducer: setTransactionPinReducer,
     userProfileReducer: userProfileReducer,
     fogrotPasswordReducer: fogrotPasswordReducer,
+    forgotPasswordResetReducer,
     viewBvnReducer: viewBvnReducer,
     resetPasswordReducer: resetPasswordReducer,
     bankStatementReducer: bankStatementReducer,

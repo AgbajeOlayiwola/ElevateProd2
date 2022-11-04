@@ -36,7 +36,10 @@ const ResetPassword = ({ onSubmit }) => {
                         passwords used.
                     </p>
                 </div>
-                <form className={styles.formCre}>
+                <form
+                    className={styles.formCre}
+                    onSubmit={handleSubmit(onSubmit)}
+                >
                     <div>
                         <label htmlFor="newPassword">New Password</label>
                         <div className={styles.divs}>
@@ -51,6 +54,9 @@ const ResetPassword = ({ onSubmit }) => {
                             />
                             <Visbility typeSet={types} />
                         </div>
+                        <p className={styles.errors}>
+                            {errors.newPassword?.message}
+                        </p>
                     </div>
                     <div>
                         <label htmlFor="confnewPassword">
@@ -68,11 +74,13 @@ const ResetPassword = ({ onSubmit }) => {
                             />
                             <Visbility typeSet={type} />
                         </div>
+                        <p className={styles.errors}>
+                            {errors.confnewPassword?.message}
+                        </p>
                     </div>
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
-                        onClick={onSubmit}
                         type="submit"
                         text="Create New Password"
                     />

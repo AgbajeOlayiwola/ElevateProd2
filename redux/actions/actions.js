@@ -60,6 +60,7 @@ import {
     ussdGen,
     ussdStatus,
     forgotPasswordtype,
+    forgotPasswordReset,
     resetPassword,
     bankStatement,
     viewBvn,
@@ -2369,6 +2370,50 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
         .catch((error) => dispatch(forgotPasswordError(error)));
 };
 //forgot password resolution end
+
+//forgot password Reset start
+export const forgotPasswordResetStart = () => ({
+    type: forgotPasswordReset.FORGOT_PASSWORD_RESET_START
+});
+
+export const forgotPasswordResetSuccess = (forgotPasswordReset) => ({
+    type: forgotPasswordReset.FORGOT_PASSWORD_RESET_SUCCESS,
+    payload: forgotPasswordReset
+});
+
+export const forgotPasswordResetError = (forgotPasswordResetErrorMessages) => ({
+    type: forgotPasswordReset.FORGOT_PASSWORD_RESET_ERROR,
+    payload: forgotPasswordResetErrorMessages
+});
+export const forgotPasswordResetData = (data) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.forgotPassword}`,
+            data,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(forgotPasswordResetSuccess(response.message));
+            //console.logresponse);
+        })
+        .catch((error) =>
+            dispatch(forgotPasswordResetError(error.response.message))
+        );
+};
+//forgot password reset end
 
 //RESET OTP resolution start
 export const resetOtpStart = () => ({

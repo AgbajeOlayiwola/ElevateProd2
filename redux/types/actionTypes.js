@@ -632,6 +632,14 @@ export const forgotPasswordtype = {
 };
 // Forgot Password ENDS
 
+//Forgot Password Reset TYPE STARTE
+export const forgotPasswordReset = {
+    FORGOT_PASSWORD_RESET_START: 'FORGOT_PASSWORD_RESET_START',
+    FORGOT_PASSWORD_RESET_SUCCESS: 'FORGOT_PASSWORD_RESET_SUCCESS',
+    FORGOT_PASSWORD_RESET_ERROR: 'FORGOT_PASSWORD_RESET_ERROR'
+};
+// Forgot Password ENDS
+
 //Reset otp TYPE STARTE
 export const resetOtpType = {
     RESET_OTP_START: 'RESET_OTP_START',
