@@ -6,7 +6,7 @@ import { ButtonComp } from '../../../components';
 import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 
-const ResetPassword = ({ onSubmit }) => {
+const ResetPassword = ({ onSubmit, forgotPasswordErrorMessages }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const router = useRouter();
     // function handleSubmit() {
@@ -36,6 +36,11 @@ const ResetPassword = ({ onSubmit }) => {
                 </p>
             </div>
             <form className={styles.formCre} onSubmit={handleSubmit(onSubmit)}>
+                {forgotPasswordErrorMessages ? (
+                    <p className={styles.errors}>
+                        {forgotPasswordErrorMessages}
+                    </p>
+                ) : null}
                 <div>
                     <label htmlFor="newPassword">New Password</label>
                     <div className={styles.divs}>

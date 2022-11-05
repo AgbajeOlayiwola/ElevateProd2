@@ -920,6 +920,16 @@ const Payment = () => {
                                     setFormType('');
                                 }}
                                 title="Bill Payment"
+                                beneName={
+                                    bill === 'AIRTIME'
+                                        ? paymentDetails.phoneNumber
+                                        : ''
+                                }
+                                accountNumber={
+                                    bill === 'AIRTIME'
+                                        ? paymentDetails.phoneNumber
+                                        : ''
+                                }
                                 paymentType={paymentDetails.billerType}
                                 number={paymentDetails.phoneNumber}
                                 amount={paymentDetails.amount}

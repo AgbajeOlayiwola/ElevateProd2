@@ -108,7 +108,11 @@ const Dashboard = () => {
         let date = newDate.getDate();
         let month = newDate.getMonth() + 1;
         let year = newDate.getFullYear();
-        setTime(`${year}-${month < 10 ? `0${month}` : `${month}`}-${date}`);
+        setTime(
+            `${year}-${month < 10 ? `0${month}` : `${month}`}-${
+                date < 10 ? `0${date}` : `${date}`
+            }`
+        );
     };
     const getDateXDaysAgo = (numOfDays, date = new Date()) => {
         const daysAgo = new Date();
@@ -118,7 +122,9 @@ const Dashboard = () => {
         let month = daysAgo.getMonth() + 1;
         let year = daysAgo.getFullYear();
         setRangeDate(
-            `${year}-${month < 10 ? `0${month}` : `${month}`}-${dates}`
+            `${year}-${month < 10 ? `0${month}` : `${month}`}-${
+                dates < 10 ? `0${dates}` : `${dates}`
+            }`
         );
     };
 
@@ -177,11 +183,9 @@ const Dashboard = () => {
     const date = `${current.getFullYear()}-${
         current.getMonth() + 1
     }-0${current.getDate()}`;
-    console.log(date);
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
-
             tableDetails?.filter((item) => {
                 const newDate = item.transactionDate.split('T');
 
@@ -190,7 +194,6 @@ const Dashboard = () => {
                 } else {
                     setDateState(false);
                 }
-                console.log(newDate[0]);
             });
 
             // tableDetails.data?.map((item) => {
@@ -239,9 +242,8 @@ const Dashboard = () => {
                         ) : (
                             tableDetails
                                 ?.filter((item) => {
-                                    const newDate = item.transactionDate.split(
-                                        'T'
-                                    );
+                                    const newDate =
+                                        item.transactionDate.split('T');
                                     return (
                                         newDate[0] >= rangeDate &&
                                         newDate[0] <= time
@@ -263,9 +265,8 @@ const Dashboard = () => {
                                     if (item.receiversName === null) {
                                         newBeneficiary = '';
                                     } else {
-                                        newBeneficiary = item?.receiversName?.split(
-                                            ' '
-                                        );
+                                        newBeneficiary =
+                                            item?.receiversName?.split(' ');
                                     }
                                     {
                                         console.log(item);
@@ -446,9 +447,8 @@ const Dashboard = () => {
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate = item.transactionDate.split(
-                                            'T'
-                                        );
+                                        const newDate =
+                                            item.transactionDate.split('T');
                                         return (
                                             newDate[0] >= rangeDate &&
                                             newDate[0] <= time
@@ -463,16 +463,16 @@ const Dashboard = () => {
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount = formatter.format(
-                                            item.transactionAmount
-                                        );
+                                        const formattedAmount =
+                                            formatter.format(
+                                                item.transactionAmount
+                                            );
                                         let newBeneficiary;
-                                        if (item.receiversName === null) {
+                                        if (item.receiver === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary = item?.receiversName?.split(
-                                                ' '
-                                            );
+                                            newBeneficiary =
+                                                item?.receiver?.split(' ');
                                         }
                                         return (
                                             <div key={index}>
@@ -485,7 +485,13 @@ const Dashboard = () => {
                                                         className={styles.names}
                                                     >
                                                         <p>
-                                                            {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                            {newBeneficiary ===
+                                                            ''
+                                                                ? ''
+                                                                : newBeneficiary[1] ===
+                                                                  undefined
+                                                                ? newBeneficiary[0]
+                                                                : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
                                                         </p>
                                                     </div>
                                                     <div

@@ -40,9 +40,8 @@ const ExistingMultiStep = () => {
             case 2:
                 return (
                     <ResetPassword
+                        forgotPasswordErrorMessages={errorMessage}
                         onSubmit={(e) => {
-                            console.log(e);
-                            console.log();
                             const data = {
                                 token: query.token,
                                 password: e.newPassword,

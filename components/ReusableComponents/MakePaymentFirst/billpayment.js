@@ -44,6 +44,14 @@ const BillPayment = ({
         dispatch(loadbillerCategory('ENG'));
     }, []);
     useEffect(() => {
+        airtimeNetworkData.networks?.map((networks) => {
+            if (networks.name === 'MTN Nigeria') {
+                localStorage.setItem('Airtime', JSON.stringify(networks));
+            }
+        });
+        console.log(airtimeNetworkData);
+    }, [airtimeNetworkData]);
+    useEffect(() => {
         if (billerCategory !== null) {
             setBillerCategories(billerCategory);
         }
@@ -181,14 +189,6 @@ const BillPayment = ({
                                 <div className={styles.networkBody}>
                                     {airtimeNetworkData.networks?.map(
                                         (networks, index) => {
-                                            if (
-                                                networks.name === 'MTN Nigeria'
-                                            ) {
-                                                localStorage.setItem(
-                                                    'Airtime',
-                                                    JSON.stringify(networks)
-                                                );
-                                            }
                                             if (
                                                 networks.name === 'SOCHIENGMTN'
                                             ) {

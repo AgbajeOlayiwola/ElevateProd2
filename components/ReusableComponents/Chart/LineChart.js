@@ -14,7 +14,7 @@ const LineChart = () => {
     const [nxtdata, setNxtData] = useState([]);
     // set data
     const [lineData, setLineData] = useState({
-        labels: ['Sun', 'Mon', 'Tue', 'Thr', 'Fri', 'Sat'],
+        labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'],
         datasets: []
     });
     const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const LineChart = () => {
                 setAmounts((amount) => [...amount, item.transactionAmount]);
             });
         }
-
+        console.log(amounts);
         setDatas([
             amounts[1],
             amounts[10],
