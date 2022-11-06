@@ -63,8 +63,55 @@ const SingleTransfer = ({
             : 'Ecobank'
     );
     // const [beneficiaries, setBeneficiaries] = useState([]);
+    let bankString = `ACCESS BANK:044:000014~ACCESS BANK PLC (DIAMOND):063:000005~CITI BANK:023:000009~ECOBANK BANK:050:000010~FIDELITY BANK:070:000007~FIRST BANK OF NIGERIA:011:000016~FCMB:214:000003~GTBANK PLC:058:000013~HERITAGE:030:000020~POLARIS BANK:076:000008~STANBICIBTC BANK:221:000012~STANDARD CHARTERED:068:000021~STERLING BANK:232:000001~UNION BANK:032:000018~UNITED BANK FOR AFRICA:033:000004~UNITY BANK:215:000011~WEMA BANK:035:000017~ZENITH BANK PLC:057:000015~SUNTRUST BANK:100:000022`;
+
+    let testNUBAN = accountNumber;
+
+    const bankArray = bankString
+        .split('~')
+        .map((bankdet) => bankdet.split(':'));
+    // .sort((a,b) => a - b)
+
+    const isValidNUBAN = (accountNo, bankCode) => {
+        let accountNumber = (accountNo + bankCode).trim();
+        if (accountNumber.length != 13) return false;
+        let accountNumberDigits = Array.from(accountNumber, (x) => Number(x));
+
+        let sumOfNumbers =
+            accountNumberDigits[0] * 3 +
+            accountNumberDigits[1] * 7 +
+            accountNumberDigits[2] * 3 +
+            accountNumberDigits[3] * 3 +
+            accountNumberDigits[4] * 7 +
+            accountNumberDigits[5] * 3 +
+            accountNumberDigits[6] * 3 +
+            accountNumberDigits[7] * 7 +
+            accountNumberDigits[8] * 3 +
+            accountNumberDigits[9] * 3 +
+            accountNumberDigits[10] * 7 +
+            accountNumberDigits[11] * 3;
+
+        let mod = sumOfNumbers % 10;
+
+        let checkDigit = mod == 0 ? mod : 10 - mod;
+
+        return checkDigit == accountNumberDigits[12];
+    };
+    useEffect(() => {
+        const bankList = [];
+        bankArray.map((split) => {
+            // alert('Test');
+            let accountNo = testNUBAN?.trim();
+            let bankCode = split[1]?.trim();
+            if (isValidNUBAN(accountNo, bankCode)) {
+                bankList[bankList.length] = split;
+                setBank(bankList);
+            }
+        });
+    }, [accountNumber]);
+
     const dispatch = useDispatch();
-    const { banks } = useSelector((state) => state.banksReducer);
+    // const { banks } = useSelector((state) => state.banksReducer);
     const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
         (state) => state.interBankEnquiryReducer
     );
@@ -94,14 +141,14 @@ const SingleTransfer = ({
     useEffect(() => {
         intraBankEnquiryCheck();
     }, [intraBankEnquiry, errorMessageIntraBankEnquiry]);
-    useEffect(() => {
-        dispatch(loadbank('ENG'));
-    }, []);
-    useEffect(() => {
-        if (banks !== null) {
-            setBank(banks);
-        }
-    }, [banks]);
+    // useEffect(() => {
+    //     dispatch(loadbank('ENG'));
+    // }, []);
+    // useEffect(() => {
+    //     if (banks !== null) {
+    //         setBank(banks);
+    //     }
+    // }, [banks]);
     const {
         register,
         handleSubmit,
@@ -626,9 +673,6 @@ const SingleTransfer = ({
                                     onInput={(e) => {
                                         setAccountNumber(e.target.value);
                                         if (e.target.value.length === 10) {
-                                            const details = {
-                                                accountNumber: e.target.value
-                                            };
                                         } else if (
                                             e.target.value.length === 0
                                         ) {
@@ -720,11 +764,8 @@ const SingleTransfer = ({
                                     )}
                                     {bank?.map((bank, index) => {
                                         return (
-                                            <option
-                                                value={bank.institutionId}
-                                                key={index}
-                                            >
-                                                {bank.institutionName}
+                                            <option value={bank[0]} key={index}>
+                                                {bank[0]}
                                             </option>
                                         );
                                     })}

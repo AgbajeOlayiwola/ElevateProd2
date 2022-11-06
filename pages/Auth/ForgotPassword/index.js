@@ -13,6 +13,7 @@ import ResetPassword from './resetpassword';
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
     const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(false);
     const { query, push } = useRouter();
     const { forgotPassword, forgotPasswordErrorMessages } = useSelector(
         (state) => state.fogrotPasswordReducer
@@ -33,6 +34,7 @@ const ExistingMultiStep = () => {
                     <ForgotPassword
                         onSubmit={handleSubmit}
                         forgotPasswordErrorMessages={errorMessage}
+                        loading={loading}
                     />
                 );
             case 1:
@@ -41,13 +43,15 @@ const ExistingMultiStep = () => {
                 return (
                     <ResetPassword
                         forgotPasswordErrorMessages={errorMessage}
-                        onSubmit={(e) => {
+                        loading={loading}
+                        submit={(e) => {
                             const data = {
                                 token: query.token,
                                 password: e.newPassword,
                                 confirmPassword: e.confnewPassword
                             };
                             dispatch(forgotPasswordResetData(data));
+                            setLoading(true);
                         }}
                     />
                 );
@@ -57,19 +61,25 @@ const ExistingMultiStep = () => {
     };
     function handleSubmit(e) {
         dispatch(forgotPasswordData(e));
+        setLoading(true);
     }
     useEffect(() => {
         if (forgotPassword !== '') {
             setPage(page + 1);
+            setLoading(false);
         } else if (forgotPasswordErrorMessages !== '') {
-            setErrorMessage(forgotPasswordErrorMessages.response.data.message);
+            setErrorMessage(forgotPasswordErrorMessages);
+            setLoading(false);
         }
     }, [forgotPassword, forgotPasswordErrorMessages]);
     useEffect(() => {
+        console.log(forgotPasswordReset);
         if (forgotPasswordReset !== null) {
-            push('./Auth/Login');
+            push('./Login');
+            setLoading(false);
         } else if (forgotPasswordResetErrorMessages !== null) {
             setErrorMessage(forgotPasswordResetErrorMessages);
+            setLoading(false);
         }
     }, [forgotPasswordReset, forgotPasswordResetErrorMessages]);
     const handleClick = () => {

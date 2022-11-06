@@ -6,7 +6,10 @@ const initialState = {
     forgotPasswordResetErrorMessages: null
 };
 
-const fogrotPasswordReducer = (state = initialState, { type, payload }) => {
+const forgotPasswordResetReducer = (
+    state = initialState,
+    { type, payload }
+) => {
     // console.log(payload);÷ss
     switch (type) {
         case forgotPasswordReset.FORGOT_PASSWORD_RESET_START:
@@ -34,4 +37,4 @@ const fogrotPasswordReducer = (state = initialState, { type, payload }) => {
     }
 };
 
-export default fogrotPasswordReducer;
+export default forgotPasswordResetReducer;

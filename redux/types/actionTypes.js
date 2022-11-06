@@ -640,6 +640,14 @@ export const forgotPasswordReset = {
 };
 // Forgot Password ENDS
 
+//Forgot Password Reset TYPE STARTE
+export const fetchRM = {
+    FETCHRM_START: 'FETCHRM_START',
+    FETCHRM_SUCCESS: 'FETCHRM_SUCCESS',
+    FETCHRM_ERROR: 'FETCHRM_ERROR'
+};
+// Forgot Password ENDS
+
 //Reset otp TYPE STARTE
 export const resetOtpType = {
     RESET_OTP_START: 'RESET_OTP_START',

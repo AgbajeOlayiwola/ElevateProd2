@@ -75,6 +75,7 @@ const verifyCac = '/document-verification/cac';
 const internationalCountries = '/international-countries';
 const pushDocuments = '/account-upgrade/push-document-for-review';
 const shareDocuments = '/share-point-document';
+const fetchRM = '/bank-account/account-manager';
 export default {
     getBanks,
     getCountries,
@@ -151,5 +152,6 @@ export default {
     internationalCountries,
     pushDocuments,
     shareDocuments,
+    fetchRM,
     verifyCac
 };

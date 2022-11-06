@@ -15,57 +15,57 @@ const LineChart = () => {
     // set data
     const [lineData, setLineData] = useState({
         labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'],
-        datasets: []
+        datasets: [100, 120, 130, 900]
     });
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getTransactionElevate());
-    }, []);
-    useEffect(() => {
-        setLineData({
-            ...lineData,
-            datasets: [
-                // {
-                //     data: nxtdata,
-                //     fill: true,
-                //     backgroundColor: 'rgba(75,192,192,0.1)',
-                //     borderColor: 'rgba(75,192,192,1)',
-                //     tension: 0.6,
-                //     label: 'Inflow'
-                // },
-                {
-                    label: 'Outflow',
-                    data: datas,
-                    // data: [150, 100, 150, 100, 150, 100],
-                    fill: false,
-                    borderColor: '#742774',
-                    tension: 0.6
-                }
-            ]
-        });
-        console.log(datas);
-        //    setLineData(...lineData,[])
-    }, [transactionElevate]);
-    useEffect(() => {
-        if (transactionElevate !== null) {
-            setTableDetails(transactionElevate.transactions);
-            tableDetails?.filter((item) => {
-                setAmount(item.transactionAmount);
-                setAmounts((amount) => [...amount, item.transactionAmount]);
-            });
-        }
-        console.log(amounts);
-        setDatas([
-            amounts[1],
-            amounts[10],
-            amounts[15],
-            amounts[20],
-            amounts[25],
-            amounts[30]
-        ]);
+    // useEffect(() => {
+    //     dispatch(getTransactionElevate());
+    // }, []);
+    // useEffect(() => {
+    //     setLineData({
+    //         ...lineData,
+    //         datasets: [
+    //             // {
+    //             //     data: nxtdata,
+    //             //     fill: true,
+    //             //     backgroundColor: 'rgba(75,192,192,0.1)',
+    //             //     borderColor: 'rgba(75,192,192,1)',
+    //             //     tension: 0.6,
+    //             //     label: 'Inflow'
+    //             // },
+    //             {
+    //                 label: 'Outflow',
+    //                 data: datas,
+    //                 // data: [150, 100, 150, 100, 150, 100],
+    //                 fill: false,
+    //                 borderColor: '#742774',
+    //                 tension: 0.6
+    //             }
+    //         ]
+    //     });
+    //     console.log(datas);
+    //     //    setLineData(...lineData,[])
+    // }, [transactionElevate]);
+    // useEffect(() => {
+    //     if (transactionElevate !== null) {
+    //         setTableDetails(transactionElevate.transactions);
+    //         tableDetails?.filter((item) => {
+    //             setAmount(item.transactionAmount);
+    //             setAmounts((amount) => [...amount, item.transactionAmount]);
+    //         });
+    //     }
+    //     console.log(amounts);
+    //     setDatas([
+    //         amounts[1],
+    //         amounts[10],
+    //         amounts[15],
+    //         amounts[20],
+    //         amounts[25],
+    //         amounts[30]
+    //     ]);
 
-        //    setLineData(...lineData,[])
-    }, [transactionElevate]);
+    //     //    setLineData(...lineData,[])
+    // }, [transactionElevate]);
 
     // set options
     const [lineOptions, setLineOptions] = useState({

@@ -37,6 +37,7 @@ import {
     postInterBankEnquiry,
     postIntraBankEnquiry,
     loadbank,
+    loadfetchRM,
     postBeneficiariesData
 } from '../../redux/actions/actions';
 import { set, useForm } from 'react-hook-form';
@@ -65,6 +66,7 @@ const Profile = () => {
     const [bene, setBene] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const [outTyped, setOutTyped] = useState();
+    const [RMDetails, setRMDetails] = useState();
     const [bank, setBank] = useState([]);
     const [interEnquiry, setInterEnquiry] = useState('');
     const [showinterEnquiry, setshowInterEnquiry] = useState(false);
@@ -97,6 +99,9 @@ const Profile = () => {
     );
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
+    );
+    const { fetchRM, fetchRMErrorMessages } = useSelector(
+        (state) => state.fetchRMReducer
     );
     const defaultOptions = {
         loop: true,
@@ -168,10 +173,19 @@ const Profile = () => {
     useEffect(() => {
         if (accountPrimary !== null) {
             setAcctNumber(accountPrimary);
+            const test = { accountId: accountPrimary.accountId };
+            dispatch(loadfetchRM(test));
         } else {
             setAcctNumber('Pending');
         }
     }, [accountPrimary]);
+    useEffect(() => {
+        if (fetchRM !== null) {
+            setRMDetails(fetchRM);
+        } else if (fetchRMErrorMessages !== null) {
+            setRMDetails(fetchRMErrorMessages);
+        }
+    }, [fetchRM, fetchRMErrorMessages]);
     useEffect(() => {
         dispatch(getBeneficiariesData());
     }, [deleteBeneficiaries, postBeneficiaries]);
@@ -330,7 +344,7 @@ const Profile = () => {
                                     <InputTag
                                         type="text"
                                         placeholder="Babatune Abiodun"
-                                        value={
+                                        def={
                                             !userProfileData
                                                 ? null
                                                 : `${userProfileData.lastName} ${userProfileData.firstName}`
@@ -1130,21 +1144,26 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details = {
-                                                                    accountNumber: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        accountNumber:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details = {
-                                                                    destinationBankCode:
-                                                                        e.target
-                                                                            .value,
-                                                                    accountNo: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        destinationBankCode:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        accountNo:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -1340,10 +1359,25 @@ const Profile = () => {
                                         icon={item.icon}
                                         index={index}
                                         action={() => {
-                                            setText(item.text);
+                                            if (
+                                                item.text ===
+                                                'RM Name and Contact Details '
+                                            ) {
+                                                if (
+                                                    RMDetails ===
+                                                    'No account details found for customer'
+                                                ) {
+                                                    setText('Contact us');
+                                                } else {
+                                                    setText(item.text);
+                                                }
+                                            } else {
+                                                setText(item.text);
+                                            }
                                             reset();
                                             setCount(0);
                                             setBvn('');
+                                            setshowInterEnquiry;
                                         }}
                                         color={item.color}
                                     />

@@ -6,12 +6,9 @@ import { ButtonComp } from '../../../components';
 import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 
-const ResetPassword = ({ onSubmit, forgotPasswordErrorMessages }) => {
+const ResetPassword = ({ submit, forgotPasswordErrorMessages, loading }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const router = useRouter();
-    // function handleSubmit() {
-    //     router.push('../../Auth/Login');
-    // }
     const [outType, setOutType] = useState();
     const [outTypes, setOutTypes] = useState();
     const types = (type) => {
@@ -35,7 +32,7 @@ const ResetPassword = ({ onSubmit, forgotPasswordErrorMessages }) => {
                     used.
                 </p>
             </div>
-            <form className={styles.formCre} onSubmit={handleSubmit(onSubmit)}>
+            <form className={styles.formCre} onSubmit={handleSubmit(submit)}>
                 {forgotPasswordErrorMessages ? (
                     <p className={styles.errors}>
                         {forgotPasswordErrorMessages}
@@ -84,6 +81,7 @@ const ResetPassword = ({ onSubmit, forgotPasswordErrorMessages }) => {
                     active={activeBtn ? 'active' : 'inactive'}
                     type="submit"
                     text="Create New Password"
+                    loads={loading}
                 />
             </form>
         </div>

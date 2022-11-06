@@ -8,8 +8,9 @@ import { useRouter } from 'next/router';
 import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPasswordData } from '../../../redux/actions/actions';
-const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages }) => {
+const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages, loading }) => {
     const [activeBtn, setActiveBtn] = useState(true);
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -69,6 +70,7 @@ const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages }) => {
                     onClick={handleSubmit}
                     type="submit"
                     text="Reset Password"
+                    loads={loading}
                 />
             </form>
         </>

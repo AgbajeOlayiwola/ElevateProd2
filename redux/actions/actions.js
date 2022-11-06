@@ -68,6 +68,7 @@ import {
     existingBusnessSetup,
     sendCac,
     pushDocuments,
+    fetchRM,
     shareDocuments,
     getCAC
 } from '../types/actionTypes';
@@ -200,6 +201,31 @@ export const loadbankStatement = (code) => (dispatch) => {
         .catch((error) => dispatch(bankStatementLoadError(error.message)));
 };
 //bankStatement actions end
+
+//fetchRM actions
+export const fetchRMLoadStart = () => ({
+    type: fetchRM.FETCHRM_START
+});
+
+export const fetchRMLoadSuccess = (billers) => ({
+    type: fetchRM.FETCHRM_SUCCESS,
+    payload: billers
+});
+
+export const fetchRMLoadError = (errorMessage) => ({
+    type: fetchRM.FETCHRM_ERROR,
+    payload: errorMessage
+});
+export const loadfetchRM = (code) => (dispatch) => {
+    dispatch(fetchRMLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.fetchRM}`, code)
+        .then((response) => dispatch(fetchRMLoadSuccess(response.data.data)))
+        .catch((error) =>
+            dispatch(fetchRMLoadError(error.response.data.message))
+        );
+};
+//fetchRM actions end
 
 //viewBvn actions
 export const viewBvnLoadStart = () => ({
@@ -2364,10 +2390,12 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
             }
         )
         .then((response) => {
-            dispatch(forgotPasswordSuccess(response));
-            //console.logresponse);
+            dispatch(forgotPasswordSuccess(response.data.message));
+            console.log(response);
         })
-        .catch((error) => dispatch(forgotPasswordError(error)));
+        .catch((error) =>
+            dispatch(forgotPasswordError(error.response.data.message))
+        );
 };
 //forgot password resolution end
 
@@ -2376,9 +2404,9 @@ export const forgotPasswordResetStart = () => ({
     type: forgotPasswordReset.FORGOT_PASSWORD_RESET_START
 });
 
-export const forgotPasswordResetSuccess = (forgotPasswordReset) => ({
+export const forgotPasswordResetSuccess = (forgotPasswordResets) => ({
     type: forgotPasswordReset.FORGOT_PASSWORD_RESET_SUCCESS,
-    payload: forgotPasswordReset
+    payload: forgotPasswordResets
 });
 
 export const forgotPasswordResetError = (forgotPasswordResetErrorMessages) => ({
@@ -2396,7 +2424,7 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.forgotPassword}`,
+            `https://ellevate-test.herokuapp.com${apiRoutes.forgotPasswordReset}`,
             data,
             {
                 headers: {
@@ -2406,12 +2434,10 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
             }
         )
         .then((response) => {
-            dispatch(forgotPasswordResetSuccess(response.message));
-            //console.logresponse);
+            dispatch(forgotPasswordResetSuccess(response.data.message));
+            console.log(response);
         })
-        .catch((error) =>
-            dispatch(forgotPasswordResetError(error.response.message))
-        );
+        .catch((error) => dispatch(forgotPasswordResetError(error)));
 };
 //forgot password reset end
 

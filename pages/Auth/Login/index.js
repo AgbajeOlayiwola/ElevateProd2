@@ -17,19 +17,16 @@ import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponent
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [newUser, setNewUser] = useState();
     const [circle, setCircle] = useState(false);
     const [error, setError] = useState('');
     const [identifier, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
-    const [loads, setLoads] = useState(false);
     const router = useRouter();
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
-    );
-    const { userProfile, errorMessage } = useSelector(
-        (state) => state.userProfileReducer
     );
     const {
         register,
@@ -49,7 +46,7 @@ const Login = () => {
 
     const onSubmit = (data) => {
         setError('');
-        setLoads(true);
+        setLoading((prev) => !prev);
         const loginData = {
             identifier,
             password
@@ -57,20 +54,19 @@ const Login = () => {
         dispatch(loginUserAction(loginData));
         // dispatch(createNewUserAccount());
     };
-    // console.log(prevPath);
-    // console.log(user);
+    console.log(user);
     const sentLogin = () => {
         if (errorMessages !== null) {
-            setLoads(false);
             setError(errorMessages);
             // setLoading(false);
-
+            setLoading((prev) => !prev);
             // } else if (
             //     newAccountErrorMessage ===
             //     'You already have an account with us. Please contact us for more information'
             // ) {
             // router.push('/Dashboard');,
         } else if (user !== null) {
+            setNewUser(user);
             if (user.statusCode === 200) {
                 if (
                     user.data.user.profile.profileSetupStatus ===
@@ -164,16 +160,17 @@ const Login = () => {
                                 </Link>
                             </div>
                         </div>
-
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            margin="0px 0 0 0"
-                            text="Login"
-                            type="submit"
-                            loads={loads}
-                            err={errorMessages}
-                        />
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                margin="0px 0 0 0"
+                                text="Login"
+                                type="submit"
+                            />
+                        )}
                     </form>
                     <div>
                         <p className={styles.accout}>

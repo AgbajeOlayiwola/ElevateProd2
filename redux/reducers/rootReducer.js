@@ -70,6 +70,7 @@ import logoutReducer from './logout.reducer';
 import pushDocumentsReducer from './pushDocuments.reducer';
 import shareDocumentsReducer from './shareDocuments.reducer';
 import existReducer from './exist.reducer';
+import fetchRMReducer from './fetchRM.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -133,7 +134,7 @@ const appReducer = combineReducers({
     setTransactionPinReducer: setTransactionPinReducer,
     userProfileReducer: userProfileReducer,
     fogrotPasswordReducer: fogrotPasswordReducer,
-    forgotPasswordResetReducer,
+    forgotPasswordResetReducer: forgotPasswordResetReducer,
     viewBvnReducer: viewBvnReducer,
     resetPasswordReducer: resetPasswordReducer,
     bankStatementReducer: bankStatementReducer,
@@ -145,6 +146,7 @@ const appReducer = combineReducers({
     changeTransactionPinReducer,
     pushDocumentsReducer,
     shareDocumentsReducer,
+    fetchRMReducer,
     completeBusinessprofileReducer,
     existReducer: existReducer
 });
