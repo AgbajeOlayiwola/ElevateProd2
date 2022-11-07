@@ -68,7 +68,7 @@ const ExistingMultiStep = () => {
             setPage(page + 1);
             setLoading(false);
         } else if (forgotPasswordErrorMessages !== '') {
-            setErrorMessage(forgotPasswordErrorMessages);
+            console.log(forgotPasswordErrorMessages);
             setLoading(false);
         }
     }, [forgotPassword, forgotPasswordErrorMessages]);
@@ -78,7 +78,7 @@ const ExistingMultiStep = () => {
             push('./Login');
             setLoading(false);
         } else if (forgotPasswordResetErrorMessages !== null) {
-            setErrorMessage(forgotPasswordResetErrorMessages);
+            setErrorMessage(forgotPasswordResetErrorMessages[0]);
             setLoading(false);
         }
     }, [forgotPasswordReset, forgotPasswordResetErrorMessages]);

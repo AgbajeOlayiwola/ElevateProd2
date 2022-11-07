@@ -2444,7 +2444,9 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
             dispatch(forgotPasswordResetSuccess(response.data.message));
             console.log(response);
         })
-        .catch((error) => dispatch(forgotPasswordResetError(error)));
+        .catch((error) =>
+            dispatch(forgotPasswordResetError(error.response.data.message))
+        );
 };
 //forgot password reset end
 
