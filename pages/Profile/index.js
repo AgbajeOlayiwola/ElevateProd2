@@ -344,7 +344,7 @@ const Profile = () => {
                                     <InputTag
                                         type="text"
                                         placeholder="Babatune Abiodun"
-                                        def={
+                                        value={
                                             !userProfileData
                                                 ? null
                                                 : `${userProfileData.lastName} ${userProfileData.firstName}`
@@ -548,22 +548,38 @@ const Profile = () => {
                                         width={200}
                                     />
                                 </div>
-                                <label styles={{ marginBottom: '30px' }}>
-                                    RM name
-                                </label>
-                                <br />
-                                <InputTag
-                                    type="text"
-                                    placeholder="Micheal Alalbi"
-                                />
-                                <br />
-                                <br />
-                                <label>RM Phone Number</label>
-                                <br />
-                                <InputTag
-                                    type="text"
-                                    placeholder="081 234 5678"
-                                />
+                                <div className={styles.formGroup}>
+                                    <label>RM Name</label>
+                                    <InputTag
+                                        type="text"
+                                        placeholder="Babatune Abiodun"
+                                        value={RMDetails?.crm?.name}
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>RM Phone Number</label>
+                                    <InputTag
+                                        type="text"
+                                        placeholder="081 234 5678"
+                                        value={
+                                            RMDetails?.crm?.phone === null
+                                                ? 'No Phone Number'
+                                                : RMDetails?.crm.phone
+                                        }
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>RM Email</label>
+                                    <InputTag
+                                        type="text"
+                                        placeholder="081 234 5678"
+                                        value={
+                                            RMDetails?.crm?.email === null
+                                                ? 'No Email'
+                                                : RMDetails?.crm.email
+                                        }
+                                    />
+                                </div>
                             </>
                         );
                 }
@@ -1372,7 +1388,13 @@ const Profile = () => {
                                                     setText(item.text);
                                                 }
                                             } else {
-                                                setText(item.text);
+                                                if (
+                                                    RMDetails?.crm.name === null
+                                                ) {
+                                                    setText('Contact us');
+                                                } else {
+                                                    setText(item.text);
+                                                }
                                             }
                                             reset();
                                             setCount(0);

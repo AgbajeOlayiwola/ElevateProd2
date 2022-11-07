@@ -218,8 +218,15 @@ export const fetchRMLoadError = (errorMessage) => ({
 });
 export const loadfetchRM = (code) => (dispatch) => {
     dispatch(fetchRMLoadStart());
+
+    const cookie = getCookie('cookieToken');
     axiosInstance
-        .post(`${apiRoutes.fetchRM}`, code)
+        .post(`${apiRoutes.fetchRM}`, code, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) => dispatch(fetchRMLoadSuccess(response.data.data)))
         .catch((error) =>
             dispatch(fetchRMLoadError(error.response.data.message))
