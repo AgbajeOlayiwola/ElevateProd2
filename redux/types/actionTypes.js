@@ -233,6 +233,51 @@ export const deleteBeneficiaries = {
 
 //deleteBeneficiaries action type ends
 
+//postBeneficiaries action types
+
+export const postBeneficiaries = {
+    POSTBENEFICIARIES_LOAD_START: 'POSTBENEFICIARIES_LOAD_START',
+    POSTBENEFICIARIES_LOAD_SUCCESS: 'POSTBENEFICIARIES_LOAD_SUCCESS',
+    POSTBENEFICIARIES_LOAD_ERROR: 'POSTBENEFICIARIES_LOAD_ERROR'
+};
+
+//postBeneficiaries action type ends
+
+//getAirtimeBeneficiaries action types
+
+export const getAirtimeBeneficiaries = {
+    GETAIRTIMEBENEFICIARIES_LOAD_START: 'GETAIRTIMEBENEFICIARIES_LOAD_START',
+    GETAIRTIMEBENEFICIARIES_LOAD_SUCCESS:
+        'GETAIRTIMEBENEFICIARIES_LOAD_SUCCESS',
+    GETAIRTIMEBENEFICIARIES_LOAD_ERROR: 'GETAIRTIMEBENEFICIARIES_LOAD_ERROR'
+};
+
+//getAirtimeBeneficiaries action type ends
+
+//deleteAirtimeBeneficiaries action types
+
+export const deleteAirtimeBeneficiaries = {
+    DELETEAIRTIMEBENEFICIARIES_LOAD_START:
+        'DELETEAIRTIMEBENEFICIARIES_LOAD_START',
+    DELETEAIRTIMEBENEFICIARIES_LOAD_SUCCESS:
+        'DELETEAIRTIMEBENEFICIARIES_LOAD_SUCCESS',
+    DELETEAIRTIMEBENEFICIARIES_LOAD_ERROR:
+        'DELETEAIRTIMEBENEFICIARIES_LOAD_ERROR'
+};
+
+//deleteAirtimeBeneficiaries  type ends
+
+//postAirtimeBeneficiaries action types
+
+export const postAirtimeBeneficiaries = {
+    POSTAIRTIMEBENEFICIARIES_LOAD_START: 'POSTAIRTIMEBENEFICIARIES_LOAD_START',
+    POSTAIRTIMEBENEFICIARIES_LOAD_SUCCESS:
+        'POSTAIRTIMEBENEFICIARIES_LOAD_SUCCESS',
+    POSTAIRTIMEBENEFICIARIES_LOAD_ERROR: 'POSTAIRTIMEBENEFICIARIES_LOAD_ERROR'
+};
+
+//postAirtimeBeneficiaries action type ends
+
 //viewBvn action types
 
 export const viewBvn = {
@@ -282,16 +327,6 @@ export const ussdStatus = {
 };
 
 //ussdStatus action type ends
-
-//postBeneficiaries action types
-
-export const postBeneficiaries = {
-    POSTBENEFICIARIES_LOAD_START: 'POSTBENEFICIARIES_LOAD_START',
-    POSTBENEFICIARIES_LOAD_SUCCESS: 'POSTBENEFICIARIES_LOAD_SUCCESS',
-    POSTBENEFICIARIES_LOAD_ERROR: 'POSTBENEFICIARIES_LOAD_ERROR'
-};
-
-//postBeneficiaries action type ends
 
 //transactionHistory action types
 

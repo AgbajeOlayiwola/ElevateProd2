@@ -24,6 +24,8 @@ const verifyCurrency = '/payment/international-tranfer/allowed-currency';
 const internationalTransfer = '/transfer/international';
 const beneficiaries = '/beneficiaries';
 const deleteBeneficiaries = '/beneficiaries/delete/';
+const airtimeBeneficiaries = '/phone-number-beneficiaries';
+const deleteAirtimeBeneficiaries = '/phone-number-beneficiaries/delete/';
 const ussdGen = '/payment/ussd/generate';
 const ussdStatus = '/payment/ussd/status';
 const register = '/authentication/register';
@@ -109,6 +111,8 @@ export default {
     bulkTransfer,
     beneficiaries,
     deleteBeneficiaries,
+    airtimeBeneficiaries,
+    deleteAirtimeBeneficiaries,
     profileSetupBus,
     verifyOtp,
     verifyDob,

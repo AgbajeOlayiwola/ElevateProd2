@@ -69,8 +69,8 @@ const SingleTransfer = ({
 
     const bankArray = bankString
         .split('~')
-        .map((bankdet) => bankdet.split(':'));
-    // .sort((a,b) => a - b)
+        .map((bankdet) => bankdet.split(':'))
+        .sort((a, b) => a - b);
 
     const isValidNUBAN = (accountNo, bankCode) => {
         let accountNumber = (accountNo + bankCode).trim();

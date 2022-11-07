@@ -28,7 +28,7 @@ const BillPayment = ({
     const [billerCategories, setBillerCategories] = useState([]);
     const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const [billerTypes, setBillerTypes] = useState([]);
-    const [billerPlans, setBillerPlans] = useState([]);
+    const [billerPlans, setBillerPlans] = useState();
     const [billerId, setBillerId] = useState('');
 
     const dispatch = useDispatch();
@@ -65,19 +65,15 @@ const BillPayment = ({
     console.log(billerCategories);
     const loadbillerTypeData = () => {
         if (firstTitle !== 'Bill Payment') {
-            if (firstTitle === 'Cable Tv') {
-                dispatch(loadbillerType('CABLETV'));
-            } else {
-                dispatch(loadbillerType(firstTitle));
-            }
+            dispatch(loadbillerType(firstTitle));
         }
         // setBillerId(e.target.value);
         setBillerTypes([]);
-        setBillerPlans([]);
+        setBillerPlans();
         if (firstTitle === 'AIRTIME') {
             dispatch(postAirtimeNetwork());
-        } else if (firstTitle === 'UTILITY') {
-            loadbillerType('UTILITY');
+        } else {
+            loadbillerType(firstTitle);
         }
     };
     useEffect(() => {
@@ -88,6 +84,7 @@ const BillPayment = ({
             setBillerTypes(billerType);
         }
     }, [billerType]);
+    console.log(billerTypes);
     useEffect(() => {
         if (airtimeNetwork !== null) {
             setAirtimeNetworkData(airtimeNetwork);
@@ -96,6 +93,7 @@ const BillPayment = ({
     useEffect(() => {
         if (billerPlan !== null) {
             localStorage.setItem('Airtime', JSON.stringify(billerPlan));
+            setBillerPlans(billerPlan);
         }
     }, [billerPlan]);
     return (
@@ -416,7 +414,7 @@ const BillPayment = ({
                         </form>
                     </div>
                 </>
-            ) : firstTitle === 'UTILITY' ? (
+            ) : firstTitle !== 'Bill Payment' ? (
                 <>
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     <div className={styles.body}>
@@ -446,12 +444,13 @@ const BillPayment = ({
                                     name=""
                                     id=""
                                     {...register('billerTypes', {
-                                        required: 'Amount  is required'
+                                        required: 'Biller Type  is required'
                                     })}
                                     onChange={(e) => {
                                         dispatch(
                                             loadbillerPlan(e.target.value)
                                         );
+                                        setBillerPlans();
                                     }}
                                 >
                                     <option value="">Select biller Type</option>
@@ -469,6 +468,74 @@ const BillPayment = ({
                                     )}
                                 </select>
                             </div>
+                            {billerPlans ? (
+                                <>
+                                    <div className={styles.narration}>
+                                        <label>
+                                            {
+                                                billerPlans.billFormData[0]
+                                                    .fieldTitle
+                                            }
+                                        </label>
+                                        <input
+                                            type="text"
+                                            placeholder={`Enter your ${billerPlans.billFormData[0].fieldTitle}`}
+                                            name="paymentDescription"
+                                            {...register('paymentDescription', {
+                                                required:
+                                                    'Payment Description is required'
+                                            })}
+                                        />
+                                    </div>
+                                    <div className={styles.narration}>
+                                        <label>Select Package</label>
+                                        <select
+                                            name="desiredPackage"
+                                            id=""
+                                            {...register('desiredPackage', {
+                                                required:
+                                                    'Desired Package is required'
+                                            })}
+                                            onChange={(e) => {
+                                                billerPlans.billerProductInfo?.map(
+                                                    (item) => {
+                                                        if (
+                                                            item.productName ===
+                                                            e.target.value
+                                                        ) {
+                                                            localStorage.setItem(
+                                                                'DesiredPackage',
+                                                                JSON.stringify(
+                                                                    item
+                                                                )
+                                                            );
+                                                        }
+                                                    }
+                                                );
+                                            }}
+                                        >
+                                            <option value="">
+                                                Select Desired Pacakge
+                                            </option>
+                                            {billerPlans.billerProductInfo?.map(
+                                                (item, index) => {
+                                                    return (
+                                                        <option
+                                                            value={
+                                                                item.productName
+                                                            }
+                                                            key={index}
+                                                        >
+                                                            {item.productName}
+                                                        </option>
+                                                    );
+                                                }
+                                            )}
+                                        </select>
+                                    </div>
+                                </>
+                            ) : null}
+
                             {/* <div className={styles.networkCarrier}>
                                 <h2>Network</h2>
                                 <div className={styles.networkBody}>
@@ -553,18 +620,6 @@ const BillPayment = ({
                                         })}
                                     />
                                 </div>
-                                {/* <div className={styles.formGroup}>
-                                    <label>Payment Description</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Enter payment Description"
-                                        name="paymentDescription"
-                                        {...register('paymentDescription', {
-                                            required:
-                                                'Payment Description is required'
-                                        })}
-                                    />
-                                </div> */}
 
                                 <button type="submit">Get Utility</button>
                             </div>

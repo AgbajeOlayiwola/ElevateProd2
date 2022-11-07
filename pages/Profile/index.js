@@ -27,6 +27,8 @@ import socialdata from '../../components/ReusableComponents/Lotties/social-media
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    getAirtimeBeneficiariesData,
+    deleteAirtimeBeneficiariesData,
     getBeneficiariesData,
     deleteBeneficiariesData,
     loadViewBvn,
@@ -38,7 +40,9 @@ import {
     postIntraBankEnquiry,
     loadbank,
     loadfetchRM,
-    postBeneficiariesData
+    postBeneficiariesData,
+    postAirtimeNetwork,
+    postAirtimeBeneficiariesData
 } from '../../redux/actions/actions';
 import { set, useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
@@ -63,6 +67,7 @@ const Profile = () => {
     const [count, setCount] = useState(0);
     const [outType, setOutType] = useState();
     const [beneficiaries, setBeneficiaries] = useState([]);
+    const [airtimebeneficiaries, setAirtimeBeneficiaries] = useState([]);
     const [bene, setBene] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const [outTyped, setOutTyped] = useState();
@@ -70,12 +75,19 @@ const Profile = () => {
     const [bank, setBank] = useState([]);
     const [interEnquiry, setInterEnquiry] = useState('');
     const [showinterEnquiry, setshowInterEnquiry] = useState(false);
+    const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const dispatch = useDispatch();
     const { getBeneficiaries } = useSelector(
         (state) => state.getBeneficiariesReducer
     );
+    const { getAirtimeBeneficiaries } = useSelector(
+        (state) => state.getAirtimeBeneficiariesReducer
+    );
     const { deleteBeneficiaries } = useSelector(
         (state) => state.deleteBeneficiariesReducer
+    );
+    const { deleteAirtimeBeneficiaries } = useSelector(
+        (state) => state.deleteAirtimeBeneficiariesReducer
     );
     const { viewBvn, errorMessageviewBvn } = useSelector(
         (state) => state.viewBvnReducer
@@ -100,8 +112,13 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
+    const { postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries } =
+        useSelector((state) => state.postAirtimeBeneficiariesReducer);
     const { fetchRM, fetchRMErrorMessages } = useSelector(
         (state) => state.fetchRMReducer
+    );
+    const { airtimeNetwork } = useSelector(
+        (state) => state.airtimeNetworkReducer
     );
     const defaultOptions = {
         loop: true,
@@ -156,17 +173,36 @@ const Profile = () => {
         newBene();
     }, [postBeneficiaries, errorMessagepostBeneficiaries]);
     useEffect(() => {
+        if (postAirtimeBeneficiaries !== null) {
+            setOutcome(true);
+            setMessage('Beneficary added successfully');
+            setStatusbar('success');
+            setLoading(false);
+        } else if (errorMessagepostAirtimeBeneficiaries !== null) {
+            setOutcome(true);
+            setMessage(errorMessagepostAirtimeBeneficiaries);
+            setStatusbar('error');
+            setLoading(false);
+        }
+    }, [postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries]);
+    useEffect(() => {
         if (banks !== null) {
             setBank(banks);
         }
     }, [banks]);
     useEffect(() => {
         dispatch(getBeneficiariesData());
+        dispatch(getAirtimeBeneficiariesData());
         dispatch(loadUserProfile());
         dispatch(loadAccountPrimary());
         dispatch(loadbank('ENG'));
+        dispatch(postAirtimeNetwork());
     }, []);
-
+    useEffect(() => {
+        if (airtimeNetwork !== null) {
+            setAirtimeNetworkData(airtimeNetwork);
+        }
+    }, [airtimeNetwork]);
     useEffect(() => {
         setInterEnquiry('');
     }, []);
@@ -195,6 +231,14 @@ const Profile = () => {
         }
     }, [getBeneficiaries]);
     useEffect(() => {
+        dispatch(getAirtimeBeneficiariesData());
+    }, [deleteAirtimeBeneficiaries, postAirtimeBeneficiaries]);
+    useEffect(() => {
+        if (getAirtimeBeneficiaries !== null) {
+            setAirtimeBeneficiaries(getAirtimeBeneficiaries);
+        }
+    }, [getAirtimeBeneficiaries]);
+    useEffect(() => {
         if (userProfile !== null) {
             setUserProfileData(userProfile);
             setFreeze(userProfile.freezeTransactions);
@@ -205,6 +249,11 @@ const Profile = () => {
             dispatch(getBeneficiariesData());
         }
     }, [deleteBeneficiaries]);
+    useEffect(() => {
+        if (deleteAirtimeBeneficiaries !== null) {
+            dispatch(getAirtimeBeneficiariesData());
+        }
+    }, [deleteAirtimeBeneficiaries]);
 
     useEffect(() => {
         if (freezeTransactions !== null) {
@@ -961,6 +1010,9 @@ const Profile = () => {
                                                                             setBene(
                                                                                 account.beneficiaryId
                                                                             );
+                                                                            setBeneType(
+                                                                                'Account'
+                                                                            );
                                                                         }}
                                                                     />
                                                                 );
@@ -972,24 +1024,49 @@ const Profile = () => {
                                     ) : type === 'Airtime' ? (
                                         <>
                                             {/* <p className={styles.text}>A</p> */}
-                                            {!benes.airtime.length ? (
+                                            {console.log(
+                                                airtimebeneficiaries.phoneNumberBeneficiaries
+                                            )}
+                                            {!airtimebeneficiaries
+                                                .phoneNumberBeneficiaries
+                                                .length ? (
                                                 <h2 className={styles.dontHave}>
                                                     You do not have any
                                                     Beneficiary at the moment
                                                 </h2>
                                             ) : (
                                                 <>
-                                                    {bene.airtime?.map(
+                                                    {airtimebeneficiaries.phoneNumberBeneficiaries?.map(
                                                         (account, index) => {
                                                             return (
                                                                 <ManageBeneSingle
                                                                     beneAccount={
-                                                                        account.account
+                                                                        account.mobileNetwork
                                                                     }
                                                                     beneName={
-                                                                        account.name
+                                                                        account.phoneNumber
                                                                     }
                                                                     key={index}
+                                                                    deleteAction={() => {
+                                                                        setOutcome(
+                                                                            true
+                                                                        );
+                                                                        setMessage(
+                                                                            'Are you sure you want to Delete'
+                                                                        );
+                                                                        setStatusbar(
+                                                                            'error'
+                                                                        );
+                                                                        setAlertType(
+                                                                            'bene'
+                                                                        );
+                                                                        setBene(
+                                                                            account.beneficiaryId
+                                                                        );
+                                                                        setBeneType(
+                                                                            'Airtime and Data'
+                                                                        );
+                                                                    }}
                                                                 />
                                                             );
                                                         }
@@ -1020,17 +1097,33 @@ const Profile = () => {
                                 </div>
                                 <form
                                     onSubmit={handleSubmit((data) => {
-                                        setLoading(true);
-                                        const beneData = {
-                                            beneficiaryName: data.accountName,
-                                            accountNumber: data.accountNumber,
-                                            bankName: data.bankName,
-                                            bankCode: data.bankName
-                                        };
-                                        console.log(beneData);
-                                        dispatch(
-                                            postBeneficiariesData(beneData)
-                                        );
+                                        if (beneType === 'Account') {
+                                            setLoading(true);
+                                            const beneData = {
+                                                beneficiaryName:
+                                                    data.accountName,
+                                                accountNumber:
+                                                    data.accountNumber,
+                                                bankName: data.bankName,
+                                                bankCode: data.bankName
+                                            };
+                                            console.log(beneData);
+                                            dispatch(
+                                                postBeneficiariesData(beneData)
+                                            );
+                                        } else if (
+                                            beneType === 'Airtime and Data'
+                                        ) {
+                                            const airtimeData = {
+                                                phoneNumber: data.phoneNumber,
+                                                mobileNetwork: data.network
+                                            };
+                                            dispatch(
+                                                postAirtimeBeneficiariesData(
+                                                    airtimeData
+                                                )
+                                            );
+                                        }
                                     })}
                                 >
                                     <div className={styles.beneForm}>
@@ -1043,6 +1136,7 @@ const Profile = () => {
                                                 id=""
                                                 onChange={(e) => {
                                                     setBeneType(e.target.value);
+                                                    reset();
                                                 }}
                                             >
                                                 <option value="">
@@ -1051,9 +1145,9 @@ const Profile = () => {
                                                 <option value="Account">
                                                     Account
                                                 </option>
-                                                {/* <option value="Airtime and Data">
+                                                <option value="Airtime and Data">
                                                     Airtime and Data
-                                                </option> */}
+                                                </option>
                                             </select>
                                         </div>
                                         {beneType === 'Account' ? (
@@ -1222,7 +1316,13 @@ const Profile = () => {
                                                 >
                                                     <label> Phone Number</label>
                                                     <input
-                                                        // {...register('accountName')}
+                                                        {...register(
+                                                            'phoneNumber',
+                                                            {
+                                                                required:
+                                                                    'Phone Number is required'
+                                                            }
+                                                        )}
                                                         type="text"
                                                         placeholder="Enter Phone Number"
                                                         // value={
@@ -1240,14 +1340,43 @@ const Profile = () => {
                                                     className={styles.formGroup}
                                                 >
                                                     <label> Network</label>
-                                                    <input
-                                                        // {...register('accountName')}
-                                                        type="text"
-                                                        placeholder="Enter Network"
-                                                        // value={
-                                                        //     interEnquiry.accountName
-                                                        // }
-                                                    />
+                                                    <select
+                                                        name=""
+                                                        id=""
+                                                        {...register(
+                                                            'network',
+                                                            {
+                                                                required:
+                                                                    'Network is required'
+                                                            }
+                                                        )}
+                                                    >
+                                                        <option value="">
+                                                            Select Network
+                                                        </option>
+                                                        {airtimeNetworkData.networks?.map(
+                                                            (item, index) => {
+                                                                if (
+                                                                    item.name ===
+                                                                    'SOCHIENGMTN'
+                                                                ) {
+                                                                    return null;
+                                                                } else {
+                                                                    return (
+                                                                        <option
+                                                                            value={
+                                                                                item.name
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                item.name
+                                                                            }
+                                                                        </option>
+                                                                    );
+                                                                }
+                                                            }
+                                                        )}
+                                                    </select>
                                                     {/* <p className={styles.error}>
                                                     {
                                                         errors?.accountNumber
@@ -1384,18 +1513,17 @@ const Profile = () => {
                                                     'No account details found for customer'
                                                 ) {
                                                     setText('Contact us');
-                                                } else {
-                                                    setText(item.text);
-                                                }
-                                            } else {
-                                                if (
+                                                } else if (
                                                     RMDetails?.crm.name === null
                                                 ) {
                                                     setText('Contact us');
                                                 } else {
                                                     setText(item.text);
                                                 }
+                                            } else {
+                                                setText(item.text);
                                             }
+
                                             reset();
                                             setCount(0);
                                             setBvn('');
@@ -1423,8 +1551,15 @@ const Profile = () => {
                         setOutcome(false);
                     }}
                     actionYes={() => {
-                        dispatch(deleteBeneficiariesData(bene));
-                        setOutcome(false);
+                        if (beneType === 'Account') {
+                            dispatch(deleteBeneficiariesData(bene));
+                            setOutcome(false);
+                            setBeneType('');
+                        } else if (beneType === 'Airtime and Data') {
+                            dispatch(deleteAirtimeBeneficiariesData(bene));
+                            setOutcome(false);
+                            setBeneType('');
+                        }
                     }}
                     action={
                         statusbar === 'error'

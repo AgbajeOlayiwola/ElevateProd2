@@ -23,6 +23,9 @@ import verifyCurrencyReducer from './verifyCurrency.reducer';
 import postBeneficiariesReducer from './postBeneficiary.reducer';
 import getBeneficiariesReducer from './getBeneficiaries.reducer';
 import deleteBeneficiariesReducer from './deleteBeneficiary.reducer';
+import postAirtimeBeneficiariesReducer from './postAirtimeBeneficiary.reducer';
+import getAirtimeBeneficiariesReducer from './getAirtimeBeneficiaries.reducer';
+import deleteAirtimeBeneficiariesReducer from './deleteAirtimeBeneficiary.reducer';
 import authReducer from './auth.reducer';
 import registerReducer from './register.reducer';
 import profileReducer from './completeprofile.reducer';
@@ -99,6 +102,9 @@ const appReducer = combineReducers({
     getBeneficiariesReducer: getBeneficiariesReducer,
     deleteBeneficiariesReducer: deleteBeneficiariesReducer,
     postBeneficiariesReducer: postBeneficiariesReducer,
+    getAirtimeBeneficiariesReducer: getAirtimeBeneficiariesReducer,
+    deleteAirtimeBeneficiariesReducer: deleteAirtimeBeneficiariesReducer,
+    postAirtimeBeneficiariesReducer: postAirtimeBeneficiariesReducer,
     auth: authReducer,
     logoutReducer: logoutReducer,
     registered: registerReducer,

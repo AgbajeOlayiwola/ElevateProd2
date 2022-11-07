@@ -21,6 +21,9 @@ import {
     postBeneficiaries,
     deleteBeneficiaries,
     getBeneficiaries,
+    postAirtimeBeneficiaries,
+    deleteAirtimeBeneficiaries,
+    getAirtimeBeneficiaries,
     bulkTransfer,
     internationalTransfer,
     verifyBank,
@@ -758,9 +761,15 @@ export const airtimeLoadError = (errorMessageAirtime) => ({
     payload: errorMessageAirtime
 });
 export const postAirtime = (data) => (dispatch) => {
+    const cookie = getCookie('cookieToken');
     dispatch(airtimeLoadStart());
     axiosInstance
-        .post(`${apiRoutes.airtime}`, data)
+        .post(`${apiRoutes.airtime}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) => dispatch(airtimeLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(airtimeLoadError(error.response.data.message))
@@ -1183,6 +1192,40 @@ export const getBeneficiariesData = () => (dispatch) => {
 
 //getBeneficiaries action end
 
+//getAirtimeBeneficiaries action
+export const getAirtimeBeneficiariesLoadStart = () => ({
+    type: getAirtimeBeneficiaries.GETAIRTIMEBENEFICIARIES_LOAD_START
+});
+
+export const getAirtimeBeneficiariesLoadSuccess = (bill) => ({
+    type: getAirtimeBeneficiaries.GETAIRTIMEBENEFICIARIES_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const getAirtimeBeneficiariesLoadError = (getBeneficiarieserror) => ({
+    type: getAirtimeBeneficiaries.GETAIRTIMEBENEFICIARIES_LOAD_ERROR,
+    payload: getBeneficiarieserror
+});
+export const getAirtimeBeneficiariesData = () => (dispatch) => {
+    const cookie = getCookie('cookieToken');
+    dispatch(getAirtimeBeneficiariesLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.airtimeBeneficiaries}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) =>
+            dispatch(getAirtimeBeneficiariesLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(getAirtimeBeneficiariesLoadError(error.message))
+        );
+};
+
+//getAirtimeBeneficiaries action end
+
 //deleteBeneficiaries action
 export const deleteBeneficiariesLoadStart = () => ({
     type: deleteBeneficiaries.DELETEBENEFICIARIES_LOAD_START
@@ -1206,6 +1249,36 @@ export const deleteBeneficiariesData = (data) => (dispatch) => {
         )
         .catch((error) =>
             dispatch(deleteBeneficiariesLoadError(error.message))
+        );
+};
+
+//deleteBeneficiaries action end
+
+//deleteAirtimeBeneficiaries action
+export const deleteAirtimeBeneficiariesLoadStart = () => ({
+    type: deleteAirtimeBeneficiaries.DELETEAIRTIMEBENEFICIARIES_LOAD_START
+});
+
+export const deleteAirtimeBeneficiariesLoadSuccess = (bill) => ({
+    type: deleteAirtimeBeneficiaries.DELETEAIRTIMEBENEFICIARIES_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const deleteAirtimeBeneficiariesLoadError = (
+    deleteAirtimeBeneficiarieserror
+) => ({
+    type: deleteAirtimeBeneficiaries.DELETEAIRTIMEBENEFICIARIES_LOAD_ERROR,
+    payload: deleteAirtimeBeneficiarieserror
+});
+export const deleteAirtimeBeneficiariesData = (data) => (dispatch) => {
+    dispatch(deleteAirtimeBeneficiariesLoadStart());
+    axiosInstance
+        .delete(`${apiRoutes.deleteAirtimeBeneficiaries}${data}`)
+        .then((response) =>
+            dispatch(deleteAirtimeBeneficiariesLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(deleteAirtimeBeneficiariesLoadError(error.message))
         );
 };
 
@@ -1236,6 +1309,36 @@ export const postBeneficiariesData = (data) => (dispatch) => {
 };
 
 //postBeneficiaries action end
+
+//postAirtimeBeneficiaries action
+export const postAirtimeBeneficiariesLoadStart = () => ({
+    type: postAirtimeBeneficiaries.POSTAIRTIMEBENEFICIARIES_LOAD_START
+});
+
+export const postAirtimeBeneficiariesLoadSuccess = (bill) => ({
+    type: postAirtimeBeneficiaries.POSTAIRTIMEBENEFICIARIES_LOAD_SUCCESS,
+    payload: bill
+});
+
+export const postAirtimeBeneficiariesLoadError = (
+    postAirtimeBeneficiarieserror
+) => ({
+    type: postAirtimeBeneficiaries.POSTAIRTIMEBENEFICIARIES_LOAD_ERROR,
+    payload: postAirtimeBeneficiarieserror
+});
+export const postAirtimeBeneficiariesData = (data) => (dispatch) => {
+    dispatch(postAirtimeBeneficiariesLoadStart());
+    axiosInstance
+        .post(`${apiRoutes.airtimeBeneficiaries}`, data)
+        .then((response) =>
+            dispatch(postAirtimeBeneficiariesLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(postAirtimeBeneficiariesLoadError(error.message))
+        );
+};
+
+//postAirtimeBeneficiaries action end
 
 //omnilite action
 export const omniliteLoadStart = () => ({

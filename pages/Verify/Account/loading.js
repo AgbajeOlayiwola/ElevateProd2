@@ -76,9 +76,7 @@ const AccountLoading = () => {
             setInterval(() => {
                 dispatch(newAccountStatusData());
             }, 10000);
-        }
-
-        if (accountStatuss.message === 'success') {
+        } else if (accountStatuss.message === 'success') {
             // console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         }

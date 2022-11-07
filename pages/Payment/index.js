@@ -124,6 +124,12 @@ const Payment = () => {
         airtimeData = window.localStorage.getItem('Airtime');
         airtimeNetData = JSON.parse(airtimeData);
     }
+    let desiredPackage;
+    let desiredPackageData = {};
+    if (typeof window !== 'undefined') {
+        desiredPackage = window.localStorage.getItem('DesiredPackage');
+        desiredPackageData = JSON.parse(desiredPackage);
+    }
     let number;
     let numberofBene = {};
     if (typeof window !== 'undefined') {
@@ -878,10 +884,7 @@ const Payment = () => {
                                         };
 
                                         dispatch(postAirtime(billerdata));
-                                    } else if (bill === 'UTILITY') {
-                                        console.log(
-                                            airtimeNetData.billerDetail.billerID
-                                        );
+                                    } else {
                                         const billerData = {
                                             accountId: senderDetails.accountId,
                                             transactionPin: Object.values(data)
@@ -895,13 +898,20 @@ const Payment = () => {
                                             billerId:
                                                 airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
-                                                airtimeNetData
-                                                    .billerProductInfo[0]
-                                                    .productCode,
+                                                desiredPackageData.productCode,
                                             paymentDescription:
-                                                airtimeNetData
-                                                    .billerProductInfo[0]
-                                                    .productDescription
+                                                desiredPackageData.productDescription,
+                                            formDataValue: [
+                                                {
+                                                    fieldName:
+                                                        airtimeNetData
+                                                            .billFormData[0]
+                                                            .fieldTitle,
+                                                    fieldValue:
+                                                        paymentDetails.paymentDescription,
+                                                    dataType: 'string'
+                                                }
+                                            ]
                                         };
                                         dispatch(postBills(billerData));
                                     }
@@ -923,12 +933,12 @@ const Payment = () => {
                                 beneName={
                                     bill === 'AIRTIME'
                                         ? paymentDetails.phoneNumber
-                                        : ''
+                                        : paymentDetails?.desiredPackage
                                 }
                                 accountNumber={
                                     bill === 'AIRTIME'
                                         ? paymentDetails.phoneNumber
-                                        : ''
+                                        : paymentDetails.paymentDescription
                                 }
                                 paymentType={paymentDetails.billerType}
                                 number={paymentDetails.phoneNumber}
