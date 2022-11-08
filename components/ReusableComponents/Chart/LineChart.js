@@ -15,16 +15,23 @@ const LineChart = () => {
     // set data
     const [lineData, setLineData] = useState({
         labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'],
-        datasets: [100, 120, 130, 900]
+        datasets: [
+            {
+                data: [],
+                fill: true,
+                backgroundColor: 'rgba(75,192,192,0.1)',
+                borderColor: 'rgba(75,192,192,1)',
+                tension: 0.6,
+                label: 'Inflow'
+            },
+        ]
     });
-    const getDate = () => {
-        const currentDay = new Date();
-        // conso
-    };
+
     const dispatch = useDispatch();
-    // useEffect(() => {
-    //     dispatch(getTransactionElevate());
-    // }, []);
+    useEffect(() => populateLineData(), [])
+    useEffect(() => {
+        dispatch(getTransactionElevate());
+    }, []);
     // useEffect(() => {
     //     setLineData({
     //         ...lineData,
@@ -50,26 +57,42 @@ const LineChart = () => {
     //     console.log(datas);
     //     //    setLineData(...lineData,[])
     // }, [transactionElevate]);
-    // useEffect(() => {
-    //     if (transactionElevate !== null) {
-    //         setTableDetails(transactionElevate.transactions);
-    //         tableDetails?.filter((item) => {
-    //             setAmount(item.transactionAmount);
-    //             setAmounts((amount) => [...amount, item.transactionAmount]);
-    //         });
-    //     }
-    //     console.log(amounts);
-    //     setDatas([
-    //         amounts[1],
-    //         amounts[10],
-    //         amounts[15],
-    //         amounts[20],
-    //         amounts[25],
-    //         amounts[30]
-    //     ]);
+    useEffect(() => populateLineData, [transactionElevate]);
 
-    //     //    setLineData(...lineData,[])
-    // }, [transactionElevate]);
+
+    const populateLineData = () => {
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+        const transactionArray = ['BILL_PAYMENT', 'AIRTIME_TOPUP', 'SINGLE_TRANSFER']
+        let dayIndex = new Date().getDay()
+        const labelsData = []
+        const datasetsArray = [0,0,0,0,0,0,0]
+        
+        if (transactionElevate !== null) {
+            for (let i = 0; i <= 6; i++) {
+                const index = dayIndex + i > 6 ? (dayIndex + i) % 7 : dayIndex + i
+                labelsData[i] = days[index]
+
+                transactionElevate.transactions.map((trans) => {
+                    if (index = new Date(trans.transactionDate).getDay()) {
+                        if (transactionArray.indexOf(trans.transactionType)) {
+                            datasetsArray[index] = datasetsArray[index] + Number(trans.transactionAmount)
+                        }
+                    }
+                })
+            }
+        }
+
+        setLineData({
+            ...lineData,
+            labels: labelsData,
+            datasets: [
+                {
+                    ...lineData.datasets[0],
+                    data: datasetsArray
+                }
+            ]
+        })
+    }
 
     // set options
     const [lineOptions, setLineOptions] = useState({

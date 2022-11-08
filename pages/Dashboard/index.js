@@ -268,9 +268,9 @@ const Dashboard = () => {
                                         newBeneficiary =
                                             item?.receiversName?.split(' ');
                                     }
-                                    {
-                                        console.log(item);
-                                    }
+                                    // {
+                                    //     console.log(item);
+                                    // }
                                     return (
                                         <div key={index}>
                                             <div className={styles.transaction}>
