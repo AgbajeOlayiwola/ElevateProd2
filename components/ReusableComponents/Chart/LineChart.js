@@ -17,6 +17,10 @@ const LineChart = () => {
         labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'],
         datasets: [100, 120, 130, 900]
     });
+    const getDate = () => {
+        const currentDay = new Date();
+        // conso
+    };
     const dispatch = useDispatch();
     // useEffect(() => {
     //     dispatch(getTransactionElevate());
@@ -72,7 +76,7 @@ const LineChart = () => {
         scales: {
             x: {
                 grid: {
-                    display: false
+                    display: true
                 }
             },
             y: {

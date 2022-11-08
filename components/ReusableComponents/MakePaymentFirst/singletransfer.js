@@ -64,25 +64,19 @@ const SingleTransfer = ({
             : 'Ecobank'
     );
     // const [beneficiaries, setBeneficiaries] = useState([]);
-    let bankString = `ACCESS BANK:044:000014:999044~ACCESS BANK:063:000005:999044~Citi Bank:023:000009:CITI-ACC~Fidelity Bank:070:000007:FIDELITY-ACC~First Bank of Nigeria:011:000016:FIRST-ACC~First City Monument Bank:214:000003:FCMB-ACC~GT Bank Plc:058:000013:GUARANTY-ACC~Heritage:030:000020:HERITAGE-ACC~POLARIS BANK:076:000008:POLARIS~Stanbic IBTC Bank:221:000012:STANBIC-IBTC-ACC~Standard Chartered:068:000021:STANDARD-CHARTERED~Sterling Bank:232:000001:STERLING-ACC~Union Bank:032:000018:UNION-ACC~United Bank for Africa:033:000004:UNITED-ACC~Unity Bank:215:000011:UNITY-ACC~Wema Bank:035:000017:WEMA-ACC~Zenith Bank:057:000015:ZENITH-ACC~Sun Trust Account:100:000022:SUNTRUST-ACC`;
+    const isValidNUBAN = (accountNumber, bankCode) => {
+        return isValidNUBANAcct(bankCode.trim() + accountNumber.trim());
+    };
+    const isValidNUBANAcct = (accountNumber) => {
+        accountNumber = accountNumber.trim();
 
-    let testNUBAN = accountNumber;
+        if (accountNumber.length != 13) return false; // 3-digit bank code + 10-digit NUBAN
 
-    const bankArray = bankString
-        .split('~')
-        .map((bankdet) => bankdet.split(':'))
-        .sort((a, b) => a - b);
-    useEffect(() => {
-        setApiBank(bankArray);
-    }, []);
-    useEffect(() => {}, [bank]);
+        let accountNumberDigits = accountNumber.split('');
 
-    const isValidNUBAN = (accountNo, bankCode) => {
-        let accountNumber = (accountNo + bankCode).trim();
-        if (accountNumber.length != 13) return false;
-        let accountNumberDigits = Array.from(accountNumber, (x) => Number(x));
+        //   console.log("accountNumberDigits: ", accountNumberDigits);
 
-        let sumOfNumbers =
+        let sum =
             accountNumberDigits[0] * 3 +
             accountNumberDigits[1] * 7 +
             accountNumberDigits[2] * 3 +
@@ -96,23 +90,36 @@ const SingleTransfer = ({
             accountNumberDigits[10] * 7 +
             accountNumberDigits[11] * 3;
 
-        let mod = sumOfNumbers % 10;
-
+        let mod = sum % 10;
         let checkDigit = mod == 0 ? mod : 10 - mod;
 
         return checkDigit == accountNumberDigits[12];
     };
-    useEffect(() => {
-        const bankList = [];
-        bankArray.map((split) => {
-            let accountNo = testNUBAN?.trim();
-            let bankCode = split[1]?.trim();
-            if (isValidNUBAN(accountNo, bankCode)) {
-                bankList[bankList.length] = split;
-                setBank(bankList);
+
+    const getAllBanksByAccount = (accountNo) => {
+        //NOTE, This can be fetched from the Database
+        let bankArray = `ACCESS BANK:044:000014:999044~ACCESS BANK:063:000005:999044~Citi Bank:023:000009:CITI-ACC~Fidelity Bank:070:000007:FIDELITY-ACC~First Bank of Nigeria:011:000016:FIRST-ACC~First City Monument Bank:214:000003:FCMB-ACC~GT Bank Plc:058:000013:GUARANTY-ACC~Heritage:030:000020:HERITAGE-ACC~POLARIS BANK:076:000008:POLARIS~Stanbic IBTC Bank:221:000012:STANBIC-IBTC-ACC~Standard Chartered:068:000021:STANDARD-CHARTERED~Sterling Bank:232:000001:STERLING-ACC~Union Bank:032:000018:UNION-ACC~United Bank for Africa:033:000004:UNITED-ACC~Unity Bank:215:000011:UNITY-ACC~Wema Bank:035:000017:WEMA-ACC~Zenith Bank:057:000015:ZENITH-ACC~Sun Trust Account:100:000022:SUNTRUST-ACC`;
+
+        let bankList = [];
+        let bankDets = bankArray.split('~');
+        //   console.log("bankDets", bankDets);
+
+        for (var bankdet of bankDets) {
+            let split = bankdet.split(':');
+            // console.log("split", split);
+
+            if (isValidNUBAN(accountNo, split[1])) {
+                bankList.push({
+                    bankname: split[0],
+                    cbncode: split[1],
+                    bankcode: split[2],
+                    bankCodes: split[3]
+                });
             }
-        });
-    }, [accountNumber]);
+        }
+
+        return bankList.map((bank) => bank);
+    };
 
     const dispatch = useDispatch();
     // const { banks } = useSelector((state) => state.banksReducer);
@@ -677,6 +684,11 @@ const SingleTransfer = ({
                                     onInput={(e) => {
                                         setAccountNumber(e.target.value);
                                         if (e.target.value.length === 10) {
+                                            setBank(
+                                                getAllBanksByAccount(
+                                                    e.target.value
+                                                )
+                                            );
                                         } else if (
                                             e.target.value.length === 0
                                         ) {
@@ -776,10 +788,10 @@ const SingleTransfer = ({
                                         {bank?.map((bank, index) => {
                                             return (
                                                 <option
-                                                    value={bank[3]}
+                                                    value={bank.bankCodes}
                                                     key={index}
                                                 >
-                                                    {bank[0]}
+                                                    {bank.bankname}
                                                 </option>
                                             );
                                         })}

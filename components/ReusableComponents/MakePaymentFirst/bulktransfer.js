@@ -22,6 +22,7 @@ const BulkTransfer = ({
     const [activeBtn, setActiveBtn] = useState(false);
     const [loading, setLoading] = useState(false);
     const [diffAmount, setDiffAmount] = useState(false);
+    const [csvUpload, setCsvUpload] = useState(false);
     const [csv, setCsv] = useState();
     const [interEnquiry, setInterEnquiry] = useState([]);
     const [indexNumber, setIndex] = useState('');
@@ -95,7 +96,6 @@ const BulkTransfer = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
-    console.log(number);
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
@@ -117,139 +117,162 @@ const BulkTransfer = ({
                     </select>
                 </div>
                 <p className={styles.beneTitle}>Beneficiary Details</p>
-                {number?.map((e, index) => {
-                    const fieldName = `details[${index}]`;
-                    return (
-                        <div key={index}>
-                            <div className={styles.addedFormCont}>
-                                <div className={styles.formNumber}>
-                                    <label className={styles.bulkLabel}>
-                                        Account Number
-                                    </label>
-                                    <input
-                                        type="number"
-                                        placeholder="Enter Account Number"
-                                        {...register(
-                                            `${fieldName}.accountNumber`,
-                                            {
-                                                required:
-                                                    'Account Number  is required',
-                                                pattern: {
-                                                    value: /^[0-9]/i,
-                                                    message:
-                                                        'Account Number can only be number '
+                {csvUpload ? (
+                    <p>File Successfully uploaded!!!</p>
+                ) : (
+                    number?.map((e, index) => {
+                        const fieldName = `details[${index}]`;
+                        return (
+                            <div key={index}>
+                                <div className={styles.addedFormCont}>
+                                    <div className={styles.formNumber}>
+                                        <label className={styles.bulkLabel}>
+                                            Account Number
+                                        </label>
+                                        <input
+                                            type="number"
+                                            placeholder="Enter Account Number"
+                                            {...register(
+                                                `${fieldName}.accountNumber`,
+                                                {
+                                                    required:
+                                                        'Account Number  is required',
+                                                    pattern: {
+                                                        value: /^[0-9]/i,
+                                                        message:
+                                                            'Account Number can only be number '
+                                                    }
                                                 }
-                                            }
-                                        )}
-                                        // value={
-                                        //     payload !== undefined
-                                        //         ? e.accountNumber
-                                        //         : null
-                                        // }
-                                        onInput={(e) => {
-                                            // setAccountNumber(e.target.value);
-                                            if (e.target.value.length === 10) {
-                                                setIndex(index);
-                                                setAcctNo(e.target.value);
-                                            }
-                                        }}
-                                        name={`${fieldName}.accountNumber`}
-                                    />
-                                </div>
-                                <div className={styles.formBank}>
-                                    <label className={styles.bulkLabel}>
-                                        Choose Bank
-                                    </label>
-                                    <select
-                                        {...register(`${fieldName}.bankName`, {
-                                            required: 'Bank name is required'
-                                        })}
-                                        name={`${fieldName}.bankName`}
-                                        onChange={(e) => {
-                                            if (e.target.value === 'ECOBANK') {
-                                                const details = {
-                                                    accountNumber: acctNo
-                                                };
-                                                dispatch(
-                                                    postIntraBankEnquiry(
-                                                        details
-                                                    )
-                                                );
-                                            } else {
-                                                const details = {
-                                                    destinationBankCode:
-                                                        e.target.value,
-                                                    accountNo: acctNo
-                                                };
-                                                dispatch(
-                                                    postInterBankEnquiry(
-                                                        details
-                                                    )
-                                                );
-                                            }
-                                        }}
-                                    >
-                                        {payload !== undefined ? (
-                                            <option value={e.bankName}>
-                                                {e.bankName}
-                                            </option>
-                                        ) : (
-                                            <option value="">
-                                                Select Bank
-                                            </option>
-                                        )}
-
-                                        <option value="ECOBANK">ECOBANK</option>
-                                        {banks?.map((item, index) => {
-                                            return (
-                                                <option
-                                                    value={item.institutionId}
-                                                    key={index}
-                                                >
-                                                    {item.institutionName}
+                                            )}
+                                            // value={
+                                            //     payload !== undefined
+                                            //         ? e.accountNumber
+                                            //         : null
+                                            // }
+                                            onInput={(e) => {
+                                                // setAccountNumber(e.target.value);
+                                                if (
+                                                    e.target.value.length === 10
+                                                ) {
+                                                    setIndex(index);
+                                                    setAcctNo(e.target.value);
+                                                }
+                                            }}
+                                            name={`${fieldName}.accountNumber`}
+                                        />
+                                    </div>
+                                    <div className={styles.formBank}>
+                                        <label className={styles.bulkLabel}>
+                                            Choose Bank
+                                        </label>
+                                        <select
+                                            {...register(
+                                                `${fieldName}.bankName`,
+                                                {
+                                                    required:
+                                                        'Bank name is required'
+                                                }
+                                            )}
+                                            name={`${fieldName}.bankName`}
+                                            onChange={(e) => {
+                                                if (
+                                                    e.target.value === 'ECOBANK'
+                                                ) {
+                                                    const details = {
+                                                        accountNumber: acctNo
+                                                    };
+                                                    dispatch(
+                                                        postIntraBankEnquiry(
+                                                            details
+                                                        )
+                                                    );
+                                                } else {
+                                                    const details = {
+                                                        destinationBankCode:
+                                                            e.target.value,
+                                                        accountNo: acctNo
+                                                    };
+                                                    dispatch(
+                                                        postInterBankEnquiry(
+                                                            details
+                                                        )
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            {payload !== undefined ? (
+                                                <option value={e.bankName}>
+                                                    {e.bankName}
                                                 </option>
-                                            );
-                                        })}
-                                    </select>
-                                </div>
-                            </div>
-                            <div className={styles.narration}>
-                                <label> Account Name</label>
-                                <input
-                                    {...register(`${fieldName}.accountName`)}
-                                    // defaultValue={...e.accountName}
-                                    type="text"
-                                    value={e.accountName}
-                                    name={`${fieldName}.accountName`}
-                                />
-                                <p className={styles.error}>
-                                    {errors?.accountNumber?.message}
-                                </p>
-                            </div>
+                                            ) : (
+                                                <option value="">
+                                                    Select Bank
+                                                </option>
+                                            )}
 
-                            {diffAmount ? (
-                                <div className={styles.amountDiv}>
-                                    <label className={styles.bulkLabel}>
-                                        Amount
-                                    </label>
-                                    <input
-                                        {...register(`${fieldName}.amount`, {
-                                            required: 'Amount  is required',
-                                            pattern: {
-                                                value: /^[0-9]/i,
-                                                message:
-                                                    'Amount can only be number '
-                                            }
-                                        })}
-                                        name={`${fieldName}.amount`}
-                                        type="number"
-                                        placeholder="0.00"
-                                    />
+                                            <option value="ECOBANK">
+                                                ECOBANK
+                                            </option>
+                                            {banks?.map((item, index) => {
+                                                return (
+                                                    <option
+                                                        value={
+                                                            item.institutionId
+                                                        }
+                                                        key={index}
+                                                    >
+                                                        {item.institutionName}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </div>
                                 </div>
-                            ) : null}
-                        </div>
-                    );
-                })}
+                                <div className={styles.narration}>
+                                    <label> Account Name</label>
+                                    <input
+                                        {...register(
+                                            `${fieldName}.accountName`
+                                        )}
+                                        // defaultValue={...e.accountName}
+                                        type="text"
+                                        value={e.accountName}
+                                        name={`${fieldName}.accountName`}
+                                    />
+                                    <p className={styles.error}>
+                                        {errors?.accountNumber?.message}
+                                    </p>
+                                </div>
+
+                                {diffAmount ? (
+                                    <div className={styles.amountDiv}>
+                                        <label className={styles.bulkLabel}>
+                                            Amount
+                                        </label>
+                                        <input
+                                            {...register(
+                                                `${fieldName}.amount`,
+                                                {
+                                                    required:
+                                                        'Amount  is required',
+                                                    pattern: {
+                                                        value: /^[0-9]/i,
+                                                        message:
+                                                            'Amount can only be number '
+                                                    }
+                                                }
+                                            )}
+                                            name={`${fieldName}.amount`}
+                                            type="number"
+                                            placeholder="0.00"
+                                        />
+                                    </div>
+                                ) : null}
+                            </div>
+                        );
+                    })
+                )}
+
                 <div className={styles.narration}>
                     <div className={styles.uploadCsv}>
                         <div>
@@ -283,6 +306,7 @@ const BulkTransfer = ({
                                                 reader.readAsArrayBuffer(
                                                     e.target.files[0]
                                                 );
+                                                setCsvUpload(true);
                                             }
                                         }}
                                     />
@@ -300,50 +324,54 @@ const BulkTransfer = ({
                                 </a>
                             </p>
                         </div>
-                        <div className={styles.actionButtons}>
-                            <div
-                                className={styles.plus}
-                                onClick={() => {
-                                    if (
-                                        number.length === 5 ||
-                                        number.length > 5
-                                    ) {
-                                        alert(
-                                            'You can only carry out 5 transactions at the same time. Use CSV file instead'
-                                        );
-                                    } else {
-                                        setNumber((arr) => [
-                                            ...arr,
-                                            `${arr.length}`
-                                        ]);
-                                    }
-                                }}
-                            >
-                                <PlusSvg />
+                        {csvUpload ? null : (
+                            <div className={styles.actionButtons}>
+                                <div
+                                    className={styles.plus}
+                                    onClick={() => {
+                                        if (
+                                            number.length === 5 ||
+                                            number.length > 5
+                                        ) {
+                                            alert(
+                                                'You can only carry out 5 transactions at the same time. Use CSV file instead'
+                                            );
+                                        } else {
+                                            setNumber((arr) => [
+                                                ...arr,
+                                                `${arr.length}`
+                                            ]);
+                                        }
+                                    }}
+                                >
+                                    <PlusSvg />
+                                </div>
+                                <div
+                                    className={styles.minus}
+                                    onClick={() => {
+                                        if (
+                                            number.length === 1 ||
+                                            number.length < 1
+                                        ) {
+                                            alert('Minimum of one Beneficiary');
+                                        } else {
+                                            setNumber(
+                                                number.filter((item) => {
+                                                    return (
+                                                        item !==
+                                                        number[
+                                                            number.length - 1
+                                                        ]
+                                                    );
+                                                })
+                                            );
+                                        }
+                                    }}
+                                >
+                                    -
+                                </div>
                             </div>
-                            <div
-                                className={styles.minus}
-                                onClick={() => {
-                                    if (
-                                        number.length === 1 ||
-                                        number.length < 1
-                                    ) {
-                                        alert('Minimum of one Beneficiary');
-                                    } else {
-                                        setNumber(
-                                            number.filter((item) => {
-                                                return (
-                                                    item !==
-                                                    number[number.length - 1]
-                                                );
-                                            })
-                                        );
-                                    }
-                                }}
-                            >
-                                -
-                            </div>
-                        </div>
+                        )}
                     </div>
                     {diffAmount ? null : (
                         <div className={styles.amountDiv}>
