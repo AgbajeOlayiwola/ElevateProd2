@@ -343,7 +343,7 @@ const Profile = () => {
     };
     const [countryNames, setCountryNames] = useState();
     const [searchItem, setSearchItem] = useState('');
-    const [beneType, setBeneType] = useState('');
+    const [beneType, setBeneType] = useState('Account');
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setCountryNames({
@@ -919,6 +919,7 @@ const Profile = () => {
                                         }
                                         onClick={() => {
                                             setType('Account');
+                                            setBeneType('Account');
                                         }}
                                     >
                                         <p>Account</p>
@@ -931,6 +932,7 @@ const Profile = () => {
                                         }
                                         onClick={() => {
                                             setType('Airtime');
+                                            setBeneType('Airtime and Data');
                                         }}
                                     >
                                         <p>Airtime/Data</p>
@@ -1127,29 +1129,6 @@ const Profile = () => {
                                     })}
                                 >
                                     <div className={styles.beneForm}>
-                                        <div className={styles.formGroup}>
-                                            <label>
-                                                Choose Beneficiary Type
-                                            </label>
-                                            <select
-                                                name=""
-                                                id=""
-                                                onChange={(e) => {
-                                                    setBeneType(e.target.value);
-                                                    reset();
-                                                }}
-                                            >
-                                                <option value="">
-                                                    Select Type
-                                                </option>
-                                                <option value="Account">
-                                                    Account
-                                                </option>
-                                                <option value="Airtime and Data">
-                                                    Airtime and Data
-                                                </option>
-                                            </select>
-                                        </div>
                                         {beneType === 'Account' ? (
                                             <>
                                                 <div
@@ -1554,11 +1533,11 @@ const Profile = () => {
                         if (beneType === 'Account') {
                             dispatch(deleteBeneficiariesData(bene));
                             setOutcome(false);
-                            setBeneType('');
+                            setBeneType('Account');
                         } else if (beneType === 'Airtime and Data') {
                             dispatch(deleteAirtimeBeneficiariesData(bene));
                             setOutcome(false);
-                            setBeneType('');
+                            setBeneType('Account');
                         }
                     }}
                     action={

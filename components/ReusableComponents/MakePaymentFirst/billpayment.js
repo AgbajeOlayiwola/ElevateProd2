@@ -479,7 +479,10 @@ const BillPayment = ({
                                         </label>
                                         <input
                                             type="text"
-                                            placeholder={`Enter your ${billerPlans.billFormData[0].fieldTitle}`}
+                                            placeholder={
+                                                billerPlans.billFormData[0]
+                                                    .fieldTitle
+                                            }
                                             name="paymentDescription"
                                             {...register('paymentDescription', {
                                                 required:

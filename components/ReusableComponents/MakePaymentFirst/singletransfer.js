@@ -25,6 +25,7 @@ const SingleTransfer = ({
         Object.keys(payload).length !== 0 ? true : false
     );
     const [bank, setBank] = useState([]);
+    const [apibank, setApiBank] = useState([]);
     const [beneActive, setBeneActive] = useState();
     const [showInterEnquiry, setshowInterEnquiry] = useState(false);
     // const [inputType, setinputType] = useState(true);
@@ -63,7 +64,7 @@ const SingleTransfer = ({
             : 'Ecobank'
     );
     // const [beneficiaries, setBeneficiaries] = useState([]);
-    let bankString = `ACCESS BANK:044:000014~ACCESS BANK PLC (DIAMOND):063:000005~CITI BANK:023:000009~ECOBANK BANK:050:000010~FIDELITY BANK:070:000007~FIRST BANK OF NIGERIA:011:000016~FCMB:214:000003~GTBANK PLC:058:000013~HERITAGE:030:000020~POLARIS BANK:076:000008~STANBICIBTC BANK:221:000012~STANDARD CHARTERED:068:000021~STERLING BANK:232:000001~UNION BANK:032:000018~UNITED BANK FOR AFRICA:033:000004~UNITY BANK:215:000011~WEMA BANK:035:000017~ZENITH BANK PLC:057:000015~SUNTRUST BANK:100:000022`;
+    let bankString = `ACCESS BANK:044:000014:999044~ACCESS BANK:063:000005:999044~Citi Bank:023:000009:CITI-ACC~Fidelity Bank:070:000007:FIDELITY-ACC~First Bank of Nigeria:011:000016:FIRST-ACC~First City Monument Bank:214:000003:FCMB-ACC~GT Bank Plc:058:000013:GUARANTY-ACC~Heritage:030:000020:HERITAGE-ACC~POLARIS BANK:076:000008:POLARIS~Stanbic IBTC Bank:221:000012:STANBIC-IBTC-ACC~Standard Chartered:068:000021:STANDARD-CHARTERED~Sterling Bank:232:000001:STERLING-ACC~Union Bank:032:000018:UNION-ACC~United Bank for Africa:033:000004:UNITED-ACC~Unity Bank:215:000011:UNITY-ACC~Wema Bank:035:000017:WEMA-ACC~Zenith Bank:057:000015:ZENITH-ACC~Sun Trust Account:100:000022:SUNTRUST-ACC`;
 
     let testNUBAN = accountNumber;
 
@@ -71,6 +72,10 @@ const SingleTransfer = ({
         .split('~')
         .map((bankdet) => bankdet.split(':'))
         .sort((a, b) => a - b);
+    useEffect(() => {
+        setApiBank(bankArray);
+    }, []);
+    useEffect(() => {}, [bank]);
 
     const isValidNUBAN = (accountNo, bankCode) => {
         let accountNumber = (accountNo + bankCode).trim();
@@ -100,7 +105,6 @@ const SingleTransfer = ({
     useEffect(() => {
         const bankList = [];
         bankArray.map((split) => {
-            // alert('Test');
             let accountNo = testNUBAN?.trim();
             let bankCode = split[1]?.trim();
             if (isValidNUBAN(accountNo, bankCode)) {
@@ -141,12 +145,12 @@ const SingleTransfer = ({
     useEffect(() => {
         intraBankEnquiryCheck();
     }, [intraBankEnquiry, errorMessageIntraBankEnquiry]);
-    // useEffect(() => {
-    //     dispatch(loadbank('ENG'));
-    // }, []);
+    useEffect(() => {
+        dispatch(loadbank('ENG'));
+    }, []);
     // useEffect(() => {
     //     if (banks !== null) {
-    //         setBank(banks);
+    //         setApiBank(banks);
     //     }
     // }, [banks]);
     const {
@@ -742,34 +746,71 @@ const SingleTransfer = ({
                                     </option>
                                 </select>
                             ) : (
-                                <select
-                                    {...register('bankName', {
-                                        required: 'Choose a bank'
-                                    })}
-                                    name="bankName"
-                                    onChange={(e) => {
-                                        const details = {
-                                            destinationBankCode: e.target.value,
-                                            accountNo: accountNumber
-                                        };
-                                        dispatch(postInterBankEnquiry(details));
-                                    }}
-                                >
-                                    {Object.keys(payload).length !== 0 ? (
-                                        <option value={bankName}>
-                                            {bankName}
-                                        </option>
-                                    ) : (
-                                        <option value="">Select Bank</option>
-                                    )}
-                                    {bank?.map((bank, index) => {
-                                        return (
-                                            <option value={bank[0]} key={index}>
-                                                {bank[0]}
+                                <>
+                                    <select
+                                        {...register('bankName', {
+                                            required: 'Choose a bank'
+                                        })}
+                                        name="bankName"
+                                        onChange={(e) => {
+                                            const details = {
+                                                destinationBankCode:
+                                                    e.target.value,
+                                                accountNo: accountNumber
+                                            };
+                                            dispatch(
+                                                postInterBankEnquiry(details)
+                                            );
+                                        }}
+                                    >
+                                        {Object.keys(payload).length !== 0 ? (
+                                            <option value={bankName}>
+                                                {bankName}
                                             </option>
-                                        );
-                                    })}
-                                </select>
+                                        ) : (
+                                            <option value="">
+                                                Select Bank
+                                            </option>
+                                        )}
+                                        {/* {console.log(bank)} */}
+                                        {bank?.map((bank, index) => {
+                                            return (
+                                                <option
+                                                    value={bank[3]}
+                                                    key={index}
+                                                >
+                                                    {bank[0]}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                    {/* <input
+                                        type="text"
+                                        name=""
+                                        id=""
+                                        placeholder="Cant Find Bank? Enter First three letters of bank"
+                                        onChange={(item) => {
+                                            setBank([]);
+                                            apibank?.filter((e) => {
+                                                if (
+                                                    e[0]
+                                                        .toLowerCase()
+                                                        .includes(
+                                                            item.target.value.toLowerCase()
+                                                        )
+                                                ) {
+                                                    let newBank = [];
+                                                    newBank.splice(1, e);
+                                                    console.log(newBank);
+                                                    console.log(e);
+                                                    setBank(newBank);
+                                                    // console.log(e);
+                                                    console.log(bank);
+                                                }
+                                            });
+                                        }}
+                                    /> */}
+                                </>
                             )}
 
                             {errors.bankName && (
