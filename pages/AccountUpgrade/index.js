@@ -836,11 +836,11 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <Link
+                            <Link
                                 href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333`}
                             >
                                 Links
-                            </Link> */}
+                            </Link> 
                             <Modal
                                 isOpen={modalIsOpen}
                                 // onAfterOpen={afterOpenModal}
@@ -849,7 +849,7 @@ const AccountUpgrade = () => {
                                 contentLabel="Example Modal"
                             >
                                 {/* //When adding latituted add them the way i did with vartiable */}
-                                {/* `https://ecocomonoreact.azurewebsites.net/customer-details/
+                               {/* `https://ecocomonoreact.azurewebsites.net/customer-details/
                                 ?workitemId=AO-095734358976187628-CO&
                                 customerName=MUSA&customerEmail=musa%40gmail.comm
                                 &branchCode=A02
