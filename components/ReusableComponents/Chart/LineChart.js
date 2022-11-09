@@ -12,7 +12,6 @@ const LineChart = () => {
     const [amounts, setAmounts] = useState([]);
     const [datas, setDatas] = useState([]);
     const [nxtdata, setNxtData] = useState([]);
-    // set data
     const [lineData, setLineData] = useState({
         labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'],
         datasets: [
@@ -23,62 +22,43 @@ const LineChart = () => {
                 borderColor: 'rgba(75,192,192,1)',
                 tension: 0.6,
                 label: 'Inflow'
-            },
+            }
         ]
     });
 
     const dispatch = useDispatch();
-    useEffect(() => populateLineData(), [])
+    useEffect(() => populateLineData(), []);
     useEffect(() => {
         dispatch(getTransactionElevate());
     }, []);
-    // useEffect(() => {
-    //     setLineData({
-    //         ...lineData,
-    //         datasets: [
-    //             // {
-    //             //     data: nxtdata,
-    //             //     fill: true,
-    //             //     backgroundColor: 'rgba(75,192,192,0.1)',
-    //             //     borderColor: 'rgba(75,192,192,1)',
-    //             //     tension: 0.6,
-    //             //     label: 'Inflow'
-    //             // },
-    //             {
-    //                 label: 'Outflow',
-    //                 data: datas,
-    //                 // data: [150, 100, 150, 100, 150, 100],
-    //                 fill: false,
-    //                 borderColor: '#742774',
-    //                 tension: 0.6
-    //             }
-    //         ]
-    //     });
-    //     console.log(datas);
-    //     //    setLineData(...lineData,[])
-    // }, [transactionElevate]);
     useEffect(() => populateLineData, [transactionElevate]);
 
-
     const populateLineData = () => {
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-        const transactionArray = ['BILL_PAYMENT', 'AIRTIME_TOPUP', 'SINGLE_TRANSFER']
-        let dayIndex = new Date().getDay()
-        const labelsData = []
-        const datasetsArray = [0,0,0,0,0,0,0]
-        
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const transactionArray = [
+            'BILL_PAYMENT',
+            'AIRTIME_TOPUP',
+            'SINGLE_TRANSFER'
+        ];
+        let dayIndex = new Date().getDay();
+        const labelsData = [];
+        const datasetsArray = [0, 0, 0, 0, 0, 0, 0];
+
         if (transactionElevate !== null) {
             for (let i = 0; i <= 6; i++) {
-                const index = dayIndex + i > 6 ? (dayIndex + i) % 7 : dayIndex + i
-                labelsData[i] = days[index]
+                const index =
+                    dayIndex + i > 6 ? (dayIndex + i) % 7 : dayIndex + i;
+                labelsData[i] = days[index];
 
                 transactionElevate.transactions.map((trans) => {
-                    if (index = new Date(trans.transactionDate).getDay()) {
+                    if ((index = new Date(trans.transactionDate).getDay())) {
                         if (transactionArray.indexOf(trans.transactionType)) {
-                            datasetsArray[index] = datasetsArray[index] + Number(trans.transactionAmount)
+                            datasetsArray[index] =
+                                datasetsArray[index] +
+                                Number(trans.transactionAmount);
                         }
                     }
-                })
+                });
             }
         }
 
@@ -91,8 +71,8 @@ const LineChart = () => {
                     data: datasetsArray
                 }
             ]
-        })
-    }
+        });
+    };
 
     // set options
     const [lineOptions, setLineOptions] = useState({

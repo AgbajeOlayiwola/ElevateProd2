@@ -301,12 +301,16 @@ const BulkTransfer = ({
                                                         XLSX.utils.sheet_to_json(
                                                             worksheet
                                                         );
-                                                    console.log(json);
+                                                    localStorage.setItem(
+                                                        'csvData',
+                                                        JSON.stringify(json)
+                                                    );
                                                 };
                                                 reader.readAsArrayBuffer(
                                                     e.target.files[0]
                                                 );
                                                 setCsvUpload(true);
+                                                setActiveBtn(true);
                                             }
                                         }}
                                     />
@@ -373,7 +377,7 @@ const BulkTransfer = ({
                             </div>
                         )}
                     </div>
-                    {diffAmount ? null : (
+                    {csvUpload ? null : diffAmount ? null : (
                         <div className={styles.amountDiv}>
                             <label className={styles.bulkLabel}>Amount</label>
                             <input

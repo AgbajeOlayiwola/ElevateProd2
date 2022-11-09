@@ -130,6 +130,12 @@ const Payment = () => {
         desiredPackage = window.localStorage.getItem('DesiredPackage');
         desiredPackageData = JSON.parse(desiredPackage);
     }
+    let csvUpload;
+    let csvData = [];
+    if (typeof window !== 'undefined') {
+        csvUpload = window.localStorage.getItem('csvData');
+        csvData = JSON.parse(csvUpload);
+    }
     let number;
     let numberofBene = {};
     if (typeof window !== 'undefined') {
@@ -158,7 +164,6 @@ const Payment = () => {
             setBalance(formattedAmount);
         }
     }, [balanceEnquiry]);
-
     useEffect(() => {
         if (accountPrimary !== null) {
             setSenderDetails(accountPrimary);
@@ -688,21 +693,31 @@ const Payment = () => {
                                 isLoading={isLoading}
                                 closeAction={handleClose}
                                 amount={
-                                    paymentDetails.amount === ''
-                                        ? paymentDetails.details.reduce(
-                                              (a, b) => {
-                                                  return +a.amount + +b.amount;
-                                              }
-                                          )
-                                        : paymentDetails.amount *
-                                          numberofBene.length
+                                    csvData === null
+                                        ? paymentDetails.amount === ''
+                                            ? paymentDetails.details.reduce(
+                                                  (a, b) => {
+                                                      return (
+                                                          +a.amount + +b.amount
+                                                      );
+                                                  }
+                                              )
+                                            : paymentDetails.amount *
+                                              numberofBene.length
+                                        : csvData.slice(2).reduce((a, b) => {
+                                              return +a.Amount + +b.Amount;
+                                          })
                                 }
                                 title="Bulk Payments"
                                 // recieverName={paymentDetails.accountNumber}
                                 sender={`${userProfileData.lastName} ${userProfileData.firstName}`}
                                 // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
-                                number={numberofBene.length}
+                                number={
+                                    csvData !== null
+                                        ? csvData.slice(2).length
+                                        : numberofBene.length
+                                }
                                 backAction={() => {
                                     setCount(count - 1);
                                 }}
@@ -715,46 +730,116 @@ const Payment = () => {
                                             .toString()
                                             .replaceAll(',', ''),
                                         transactions:
-                                            paymentDetails.details?.map(
-                                                (details, index) => {
-                                                    if (
-                                                        details.accountNumber ===
-                                                        ''
-                                                    ) {
-                                                        return null;
-                                                    } else {
-                                                        return {
-                                                            isEcobankToEcobankTransaction:
-                                                                details.bankName ===
-                                                                'Ecobank'
-                                                                    ? true
-                                                                    : false,
-                                                            destinationBank:
-                                                                details.bankName,
-                                                            destinationBankCode:
-                                                                details.bankName,
-                                                            beneficiaryName:
-                                                                numberofBene[
-                                                                    index
-                                                                ].accountName,
-                                                            destinationAccountNo:
-                                                                details.accountNumber,
-                                                            transactionAmount:
-                                                                paymentDetails.amount ===
-                                                                ''
-                                                                    ? parseInt(
-                                                                          details.amount,
-                                                                          10
-                                                                      )
-                                                                    : parseInt(
-                                                                          paymentDetails.amount,
-                                                                          10
-                                                                      ),
-                                                            narration: ''
-                                                        };
-                                                    }
-                                                }
-                                            )
+                                            csvData !== null
+                                                ? csvData.slice(2).map((e) => {
+                                                      return {
+                                                          isEcobankToEcobankTransaction:
+                                                              e.bankName ===
+                                                              'Ecobank'
+                                                                  ? true
+                                                                  : false,
+                                                          destinationBank:
+                                                              e.Bank,
+                                                          destinationBankCode:
+                                                              e.Bank ===
+                                                              'ACCESS BANK'
+                                                                  ? '999044'
+                                                                  : e.Bank ===
+                                                                    'Citi Bank'
+                                                                  ? 'CITI-ACC'
+                                                                  : e.Bank ===
+                                                                    'Fidelity Bank'
+                                                                  ? 'FIDELITY-ACC'
+                                                                  : e.Bank ===
+                                                                    'First Bank of Nigeria'
+                                                                  ? 'FIRST-ACC'
+                                                                  : e.Bank ===
+                                                                    'First City Monument Bank'
+                                                                  ? 'FCMB-ACC'
+                                                                  : e.Bank ===
+                                                                    'GT Bank Plc'
+                                                                  ? 'GUARANTY-ACC'
+                                                                  : e.Bank ===
+                                                                    'Heritage'
+                                                                  ? 'HERITAGE-ACC'
+                                                                  : e.Bank ===
+                                                                    'Stanbic IBTC Bank'
+                                                                  ? 'STANBIC-IBTC-ACC'
+                                                                  : e.Bank ===
+                                                                    'Standard Chartered'
+                                                                  ? 'STANDARD-CHARTERED'
+                                                                  : e.Bank ===
+                                                                    'Sterling Bank'
+                                                                  ? 'STERLING-ACC'
+                                                                  : e.Bank ===
+                                                                    'Union Bank'
+                                                                  ? 'UNION-ACC'
+                                                                  : e.Bank ===
+                                                                    'United Bank for Africa'
+                                                                  ? 'UNITED-ACC'
+                                                                  : e.Bank ===
+                                                                    'Unity Bank'
+                                                                  ? 'UNITY-ACC'
+                                                                  : e.Bank ===
+                                                                    'Wema Bank'
+                                                                  ? 'WEMA-ACC'
+                                                                  : e.Bank ===
+                                                                    'Zenith Bank'
+                                                                  ? 'ZENITH-ACC'
+                                                                  : null,
+                                                          beneficiaryName:
+                                                              e.BeneName,
+                                                          destinationAccountNo:
+                                                              e.AccountNo,
+                                                          transactionAmount:
+                                                              parseInt(
+                                                                  e.Amount,
+                                                                  10
+                                                              ),
+                                                          narration: e.narration
+                                                      };
+                                                  })
+                                                : paymentDetails.details?.map(
+                                                      (details, index) => {
+                                                          if (
+                                                              details.accountNumber ===
+                                                              ''
+                                                          ) {
+                                                              return null;
+                                                          } else {
+                                                              return {
+                                                                  isEcobankToEcobankTransaction:
+                                                                      details.bankName ===
+                                                                      'Ecobank'
+                                                                          ? true
+                                                                          : false,
+                                                                  destinationBank:
+                                                                      details.bankName,
+                                                                  destinationBankCode:
+                                                                      details.bankName,
+                                                                  beneficiaryName:
+                                                                      numberofBene[
+                                                                          index
+                                                                      ]
+                                                                          .accountName,
+                                                                  destinationAccountNo:
+                                                                      details.accountNumber,
+                                                                  transactionAmount:
+                                                                      paymentDetails.amount ===
+                                                                      ''
+                                                                          ? parseInt(
+                                                                                details.amount,
+                                                                                10
+                                                                            )
+                                                                          : parseInt(
+                                                                                paymentDetails.amount,
+                                                                                10
+                                                                            ),
+                                                                  narration: ''
+                                                              };
+                                                          }
+                                                      }
+                                                  )
                                     };
 
                                     dispatch(getBulkTransfer(paymentData));
@@ -774,17 +859,27 @@ const Payment = () => {
                                 }}
                                 successfulTrans={successfulTrans}
                                 failedTrans={failedTrans}
-                                number={paymentDetails.details.length}
+                                number={
+                                    csvData !== null
+                                        ? csvData.slice(2).length
+                                        : paymentDetails?.details?.length
+                                }
                                 title="Bulk Payment"
                                 amount={
-                                    paymentDetails.amount === ''
-                                        ? paymentDetails.details.reduce(
-                                              (a, b) => {
-                                                  return +a.amount + +b.amount;
-                                              }
-                                          )
-                                        : paymentDetails.amount *
-                                          numberofBene.length
+                                    csvData === null
+                                        ? paymentDetails.amount === ''
+                                            ? paymentDetails.details.reduce(
+                                                  (a, b) => {
+                                                      return (
+                                                          +a.amount + +b.amount
+                                                      );
+                                                  }
+                                              )
+                                            : paymentDetails.amount *
+                                              numberofBene.length
+                                        : csvData.slice(2).reduce((a, b) => {
+                                              return +a.Amount + +b.Amount;
+                                          })
                                 }
                                 senderName={`${userProfileData.lastName} ${userProfileData.firstName}`}
                             />
