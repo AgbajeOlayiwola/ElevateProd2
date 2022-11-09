@@ -6,11 +6,13 @@ import {
     loadbillerCategory,
     loadbillerType,
     loadbillerPlan,
-    postAirtimeNetwork
+    postAirtimeNetwork,
+    getAirtimeBeneficiariesData
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowRightSvg from '../ReusableSvgComponents/ArrowRightSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
+import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 
 const BillPayment = ({
     action,
@@ -24,12 +26,14 @@ const BillPayment = ({
 }) => {
     const [network, setNetwork] = useState('MTN Nigeria');
     const [networkData, setNetworkData] = useState({});
+    const [beneActive, setBeneActive] = useState();
     // const [activeBtn, setActiveBtn] = useState(false);
     const [billerCategories, setBillerCategories] = useState([]);
     const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const [billerTypes, setBillerTypes] = useState([]);
     const [billerPlans, setBillerPlans] = useState();
     const [billerId, setBillerId] = useState('');
+    const [airtimebeneficiaries, setAirtimeBeneficiaries] = useState([]);
 
     const dispatch = useDispatch();
     const { billerCategory } = useSelector(
@@ -40,8 +44,12 @@ const BillPayment = ({
     );
     const { billerType } = useSelector((state) => state.billerTypeReducer);
     const { billerPlan } = useSelector((state) => state.billerPlanReducer);
+    const { getAirtimeBeneficiaries } = useSelector(
+        (state) => state.getAirtimeBeneficiariesReducer
+    );
     useEffect(() => {
         dispatch(loadbillerCategory('ENG'));
+        dispatch(getAirtimeBeneficiariesData());
     }, []);
     useEffect(() => {
         airtimeNetworkData.networks?.map((networks) => {
@@ -51,6 +59,11 @@ const BillPayment = ({
         });
         console.log(airtimeNetworkData);
     }, [airtimeNetworkData]);
+    useEffect(() => {
+        if (getAirtimeBeneficiaries !== null) {
+            setAirtimeBeneficiaries(getAirtimeBeneficiaries);
+        }
+    }, [getAirtimeBeneficiaries]);
     useEffect(() => {
         if (billerCategory !== null) {
             setBillerCategories(billerCategory);
@@ -163,6 +176,55 @@ const BillPayment = ({
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     <div className={styles.body}>
                         <form onSubmit={handleSubmit(airtimeAction)}>
+                            {airtimebeneficiaries.phoneNumberBeneficiaries?.map(
+                                (account, index) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            className={styles.beneficiarySingle}
+                                            onClick={() => {
+                                                setBeneActive(account);
+                                                setNetwork(
+                                                    account.mobileNetwork
+                                                );
+                                                {
+                                                    airtimeNetworkData.networks?.filter(
+                                                        (e) => {
+                                                            if (
+                                                                e.name ===
+                                                                account.mobileNetwork
+                                                            ) {
+                                                                localStorage.setItem(
+                                                                    'Airtime',
+                                                                    JSON.stringify(
+                                                                        e
+                                                                    )
+                                                                );
+                                                            }
+                                                        }
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            <div
+                                                className={
+                                                    styles.beneficiaryIcon
+                                                }
+                                            >
+                                                <BeneficiaryAvatarSvg />
+                                            </div>
+                                            <div>
+                                                <p className={styles.name}>
+                                                    {account.phoneNumber}
+                                                </p>
+                                                <p className={styles.benebank}>
+                                                    {account.mobileNetwork}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                }
+                            )}
                             <div className={styles.narration}>
                                 <label>Source Account</label>
                                 <select
@@ -249,30 +311,39 @@ const BillPayment = ({
                             </div>
                             <div className={styles.networkForm}>
                                 <div className={styles.formGroup}>
-                                    <label>Phone Number</label>
-                                    <input
-                                        type="text"
-                                        placeholder="0801 234 5678"
-                                        name="phoneNumber"
-                                        {...register('phoneNumber', {
-                                            required:
-                                                'Phone Number is required',
-                                            minLength: {
-                                                value: 11,
-                                                message: 'Min length is 11'
-                                            },
-                                            maxLength: {
-                                                value: 11,
-                                                message: 'Max length is 11'
-                                            },
-                                            pattern: {
-                                                value: /^[0-9]/i,
-                                                message:
-                                                    'Phone Number can only be number '
-                                            }
-                                        })}
-                                    />
+                                    <label>Phone Number</label>{' '}
+                                    {beneActive ? (
+                                        <input
+                                            {...register('phoneNumberBene')}
+                                            type="number"
+                                            value={beneActive.phoneNumber}
+                                        />
+                                    ) : !beneActive ? (
+                                        <input
+                                            type="text"
+                                            placeholder="0801 234 5678"
+                                            name="phoneNumber"
+                                            {...register('phoneNumber', {
+                                                required:
+                                                    'Phone Number is required',
+                                                minLength: {
+                                                    value: 11,
+                                                    message: 'Min length is 11'
+                                                },
+                                                maxLength: {
+                                                    value: 11,
+                                                    message: 'Max length is 11'
+                                                },
+                                                pattern: {
+                                                    value: /^[0-9]/i,
+                                                    message:
+                                                        'Phone Number can only be number '
+                                                }
+                                            })}
+                                        />
+                                    ) : null}
                                 </div>
+
                                 <div className={styles.formGroup}>
                                     <label>Amount</label>
                                     <input

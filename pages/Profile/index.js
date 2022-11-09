@@ -1534,10 +1534,12 @@ const Profile = () => {
                             dispatch(deleteBeneficiariesData(bene));
                             setOutcome(false);
                             setBeneType('Account');
+                            setType('Account');
                         } else if (beneType === 'Airtime and Data') {
                             dispatch(deleteAirtimeBeneficiariesData(bene));
                             setOutcome(false);
                             setBeneType('Account');
+                            setType('Account');
                         }
                     }}
                     action={

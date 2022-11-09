@@ -275,59 +275,7 @@ const BulkTransfer = ({
 
                 <div className={styles.narration}>
                     <div className={styles.uploadCsv}>
-                        <div>
-                            <p>
-                                <label>
-                                    Tap to
-                                    <input
-                                        type="file"
-                                        onChange={(e) => {
-                                            if (e.target.files) {
-                                                const reader = new FileReader();
-                                                reader.onload = (e) => {
-                                                    const data =
-                                                        e.target.result;
-                                                    const workbook = XLSX.read(
-                                                        data,
-                                                        { type: 'array' }
-                                                    );
-                                                    const sheetName =
-                                                        workbook.SheetNames[0];
-                                                    const worksheet =
-                                                        workbook.Sheets[
-                                                            sheetName
-                                                        ];
-                                                    const json =
-                                                        XLSX.utils.sheet_to_json(
-                                                            worksheet
-                                                        );
-                                                    localStorage.setItem(
-                                                        'csvData',
-                                                        JSON.stringify(json)
-                                                    );
-                                                };
-                                                reader.readAsArrayBuffer(
-                                                    e.target.files[0]
-                                                );
-                                                setCsvUpload(true);
-                                                setActiveBtn(true);
-                                            }
-                                        }}
-                                    />
-                                    <span> Upload CSV File</span>
-                                </label>
-                            </p>
-                            <p>
-                                <a
-                                    href="../../../Assets/CSV.xlsm"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    download="CSV Template"
-                                >
-                                    <span>Download CSV File</span>
-                                </a>
-                            </p>
-                        </div>
+                        <p>Tap to carry out up to 5 transactions</p>
                         {csvUpload ? null : (
                             <div className={styles.actionButtons}>
                                 <div
@@ -421,6 +369,64 @@ const BulkTransfer = ({
                             </span>
                         </label>
                         <p>Input Different Amount</p>
+                    </div>
+                    <div className={styles.amountDiv}>
+                        <p className={styles.beneTitle}>
+                            For more than 5 transaction
+                        </p>
+                        <div className={styles.uploadCsvs}>
+                            <p>
+                                <label>
+                                    Tap to
+                                    <input
+                                        type="file"
+                                        onChange={(e) => {
+                                            if (e.target.files) {
+                                                const reader = new FileReader();
+                                                reader.onload = (e) => {
+                                                    const data =
+                                                        e.target.result;
+                                                    const workbook = XLSX.read(
+                                                        data,
+                                                        { type: 'array' }
+                                                    );
+                                                    const sheetName =
+                                                        workbook.SheetNames[0];
+                                                    const worksheet =
+                                                        workbook.Sheets[
+                                                            sheetName
+                                                        ];
+                                                    const json =
+                                                        XLSX.utils.sheet_to_json(
+                                                            worksheet
+                                                        );
+                                                    localStorage.setItem(
+                                                        'csvData',
+                                                        JSON.stringify(json)
+                                                    );
+                                                };
+                                                reader.readAsArrayBuffer(
+                                                    e.target.files[0]
+                                                );
+                                                setCsvUpload(true);
+                                                setActiveBtn(true);
+                                            }
+                                        }}
+                                    />
+                                    <span> Upload CSV File</span>
+                                </label>
+                            </p>
+                            <p>
+                                <a
+                                    href="../../../Assets/CSV.xlsm"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    download="CSV Template"
+                                >
+                                    <span>Download CSV File</span>
+                                </a>
+                            </p>
+                        </div>
                     </div>
                     <ButtonComp
                         disabled={activeBtn}

@@ -933,7 +933,9 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 recieverName={
                                     bill === 'AIRTIME'
-                                        ? paymentDetails.phoneNumber
+                                        ? paymentDetails.phoneNumber === ''
+                                            ? paymentDetails.phoneNumberBene
+                                            : paymentDetails.phoneNumber
                                         : 'UTILITIES'
                                 }
                                 amount={paymentDetails.amount}
@@ -975,7 +977,11 @@ const Payment = () => {
                                                       'Etisalat Nigeria'
                                                     ? 'ETISALAT-ANY'
                                                     : null,
-                                            mobileNo: paymentDetails.phoneNumber
+                                            mobileNo:
+                                                paymentDetails.phoneNumber ===
+                                                ''
+                                                    ? paymentDetails.phoneNumberBene
+                                                    : paymentDetails.phoneNumber
                                         };
 
                                         dispatch(postAirtime(billerdata));
@@ -1036,7 +1042,11 @@ const Payment = () => {
                                         : paymentDetails.paymentDescription
                                 }
                                 paymentType={paymentDetails.billerType}
-                                number={paymentDetails.phoneNumber}
+                                number={
+                                    paymentDetails.phoneNumber === ''
+                                        ? paymentDetails.phoneNumberBene
+                                        : paymentDetails.phoneNumber
+                                }
                                 amount={paymentDetails.amount}
                                 senderName={`${userProfileData.lastName} ${userProfileData.firstName}`}
                             />
