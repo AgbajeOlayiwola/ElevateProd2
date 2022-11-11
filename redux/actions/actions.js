@@ -1242,8 +1242,14 @@ export const deleteBeneficiariesLoadError = (deleteBeneficiarieserror) => ({
 });
 export const deleteBeneficiariesData = (data) => (dispatch) => {
     dispatch(deleteBeneficiariesLoadStart());
+    const cookie = getCookie('cookieToken');
     axiosInstance
-        .delete(`${apiRoutes.deleteBeneficiaries}${data}`)
+        .delete(`${apiRoutes.deleteBeneficiaries}${data}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(deleteBeneficiariesLoadSuccess(response.data.data))
         )
@@ -1272,8 +1278,14 @@ export const deleteAirtimeBeneficiariesLoadError = (
 });
 export const deleteAirtimeBeneficiariesData = (data) => (dispatch) => {
     dispatch(deleteAirtimeBeneficiariesLoadStart());
+    const cookie = getCookie('cookieToken');
     axiosInstance
-        .delete(`${apiRoutes.deleteAirtimeBeneficiaries}${data}`)
+        .delete(`${apiRoutes.deleteAirtimeBeneficiaries}${data}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(deleteAirtimeBeneficiariesLoadSuccess(response.data.data))
         )
@@ -1300,8 +1312,14 @@ export const postBeneficiariesLoadError = (postBeneficiarieserror) => ({
 });
 export const postBeneficiariesData = (data) => (dispatch) => {
     dispatch(postBeneficiariesLoadStart());
+    const cookie = getCookie('cookieToken');
     axiosInstance
-        .post(`${apiRoutes.beneficiaries}`, data)
+        .post(`${apiRoutes.beneficiaries}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(postBeneficiariesLoadSuccess(response.data.data))
         )
@@ -1328,8 +1346,14 @@ export const postAirtimeBeneficiariesLoadError = (
 });
 export const postAirtimeBeneficiariesData = (data) => (dispatch) => {
     dispatch(postAirtimeBeneficiariesLoadStart());
+    const cookie = getCookie('cookieToken');
     axiosInstance
-        .post(`${apiRoutes.airtimeBeneficiaries}`, data)
+        .post(`${apiRoutes.airtimeBeneficiaries}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(postAirtimeBeneficiariesLoadSuccess(response.data.data))
         )

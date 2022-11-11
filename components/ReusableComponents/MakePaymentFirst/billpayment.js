@@ -275,7 +275,16 @@ const BillPayment = ({
                                                         }}
                                                         key={index}
                                                     >
-                                                        <div>
+                                                        <div
+                                                            className={
+                                                                styles.greye
+                                                            }
+                                                        ></div>
+                                                        <div
+                                                            className={
+                                                                styles.networkContent
+                                                            }
+                                                        >
                                                             {networks.name ===
                                                             'MTN Nigeria' ? (
                                                                 <img

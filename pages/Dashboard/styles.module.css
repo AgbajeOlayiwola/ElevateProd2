@@ -45,7 +45,7 @@
     max-width: 162px;
     margin: 20px auto 20px;
 }
-.transPs{
+.transPs {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 700;
@@ -401,9 +401,21 @@
     align-items: center;
     height: 8vh;
 }
-/* .names {
-    width: 50%;
-} */
+.names {
+    width: 40%;
+}
+.type {
+    width: 30%;
+}
+
+.money {
+    width: 20%;
+}
+
+.status {
+    width: 10%;
+}
+
 .names p {
     font-family: 'Inter', sans-serif;
     font-style: normal;

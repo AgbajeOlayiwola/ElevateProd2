@@ -45,7 +45,12 @@ const PaymentSuccess = ({
         window.scrollTo(0, 0);
     }, []);
     const [activeBtn, setActiveBtn] = useState(true);
-    const current = Date().toLocaleString();
+    const current = new Date().toLocaleDateString('en-us', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
     return (
         <Overlay overlay={overlay}>
             <div ref={myref} className={styles.successcont}>

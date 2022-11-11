@@ -688,6 +688,15 @@ const Payment = () => {
                             />
                         );
                     case 1:
+                        // console.log(
+                        //     csvData.slice(2).map((a) => {
+                        //         return a.Amount;
+                        //     })
+                        // );
+                        // console.log(
+                        const sum = csvData.slice(2).reduce((a, b, i) => {
+                            return a + b.Amount;
+                        }, 0);
                         return (
                             <MakePaymentSecond
                                 isLoading={isLoading}
@@ -704,9 +713,7 @@ const Payment = () => {
                                               )
                                             : paymentDetails.amount *
                                               numberofBene.length
-                                        : csvData.slice(2).reduce((a, b) => {
-                                              return +a.Amount + +b.Amount;
-                                          })
+                                        : sum
                                 }
                                 title="Bulk Payments"
                                 // recieverName={paymentDetails.accountNumber}
@@ -868,13 +875,7 @@ const Payment = () => {
                                 amount={
                                     csvData === null
                                         ? paymentDetails.amount === ''
-                                            ? paymentDetails.details.reduce(
-                                                  (a, b) => {
-                                                      return (
-                                                          +a.amount + +b.amount
-                                                      );
-                                                  }
-                                              )
+                                            ? sum
                                             : paymentDetails.amount *
                                               numberofBene.length
                                         : csvData.slice(2).reduce((a, b) => {

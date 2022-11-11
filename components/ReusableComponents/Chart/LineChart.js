@@ -19,7 +19,7 @@ const LineChart = () => {
                 data: [],
                 fill: true,
                 backgroundColor: 'rgba(75,192,192,0.1)',
-                borderColor: 'rgba(75,192,192,1)',
+                borderColor: 'red',
                 tension: 0.6,
                 label: 'Inflow'
             }
