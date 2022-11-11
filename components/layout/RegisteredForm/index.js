@@ -44,11 +44,11 @@ const ExistingMultiStep = () => {
         let accounts = window.localStorage.getItem('account');
         var newAccounts = JSON.parse(accounts);
         let loginWith = localStorage.getItem('LoginWith');
-        // console.log(loginWith);
-        // console.log(newAccounts.user.email);
+        //console.log(loginWith);
+        //console.log(newAccounts.user.email);
     }
-    // console.log(formData.emailData, newAccounts.user?.email);
-    // console.log(formData.emailData, newAccounts.email);
+    //console.log(formData.emailData, newAccounts.user?.email);
+    //console.log(formData.emailData, newAccounts.email);
 
     const conditionalComponent = () => {
         switch (page) {
@@ -61,7 +61,7 @@ const ExistingMultiStep = () => {
                         errorMessage={errorMessage}
                         loads={loads}
                         move={() => {
-                            // console.log(formData.emailData);
+                            //console.log(formData.emailData);
                             let userEmail;
                             if (
                                 newAccounts?.email !== null &&
@@ -76,20 +76,20 @@ const ExistingMultiStep = () => {
                             } else {
                                 userEmail = formData.emailData;
                             }
-                            // console.log(newAccounts.email);
-                            // console.log(newAccounts.user);
-                            // console.log(formData.emailData);
+                            //console.log(newAccounts.email);
+                            //console.log(newAccounts.user);
+                            //console.log(formData.emailData);
                             const userData = {
                                 userId: formData.userId,
                                 email: userEmail,
                                 password: formData.password,
                                 confirmPassword: formData.confPassword
                             };
-                            // console.log(userData);
+                            //console.log(userData);
                             dispatch(existingUserProfileData(userData));
                             // setLoading((prev) => !prev);
                             setLoads((prev) => !prev);
-                            // console.log(existingUserProfilee.data.message);
+                            //console.log(existingUserProfilee.data.message);
                         }}
                         formData={formData}
                         setFormData={setFormData}
@@ -151,7 +151,7 @@ const ExistingMultiStep = () => {
         setPageType('New');
     }
     useEffect(() => {
-        // console.log('new bvn:', bvnNin.message);
+        //console.log('new bvn:', bvnNin.message);
         if (existingUserProfilee.data) {
             if (
                 existingUserProfilee.data.message ==
@@ -159,7 +159,7 @@ const ExistingMultiStep = () => {
             ) {
                 let loginWith = localStorage.getItem('LoginWith');
                 if (loginWith !== null) {
-                    console.log(loginWith);
+                    //console.log(loginWith);
                     setPage(page + 1);
                     setFormData({ ...formData, type: 'true' });
                 } else if (loginWith === null) {

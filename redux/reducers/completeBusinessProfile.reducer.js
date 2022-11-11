@@ -11,7 +11,7 @@ const completeBusinessprofileReducer = (
     state = initialState,
     { type, payload }
 ) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case completeProfile.COMP_PROFILE_LOAD_SUCCESS:
             return {

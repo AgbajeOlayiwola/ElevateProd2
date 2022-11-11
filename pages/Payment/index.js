@@ -264,7 +264,7 @@ const Payment = () => {
     }, [transactionFees, errorMessageTransactionFees]);
     const bulkcheck = () => {
         if (bulkTransfer !== null) {
-            console.log(bulkTransfer);
+            //console.log(bulkTransfer);
             if (bulkTransfer.failedTranscations.length !== 0) {
                 setCount((count) => count + 1);
                 setIsLoading(false);
@@ -517,7 +517,7 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 buttonText="Next"
                                 othersaction={(data) => {
-                                    console.log(data);
+                                    //console.log(data);
                                     if (data.bankName === 'ECOBANK') {
                                         setEcobank(true);
                                         setCount(count + 1);
@@ -682,7 +682,7 @@ const Payment = () => {
                                 payload={paymentDetails.details}
                                 action={(data) => {
                                     setPaymentDetails(data);
-                                    console.log(data);
+                                    //console.log(data);
                                     setCount(count + 1);
                                 }}
                             />
@@ -1184,7 +1184,7 @@ const Payment = () => {
                                         title: 'Flamingos'
                                     }}
                                     onClick={() =>
-                                        console.log('shared successfully!')
+                                        //console.log('shared successfully!')
                                     }
                                 >
                                     <button>Share 🔗</button>

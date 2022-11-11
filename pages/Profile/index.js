@@ -358,7 +358,7 @@ const Profile = () => {
             });
         }
     }, []);
-    // console.log(countryNames.flags.svg);
+    //console.log(countryNames.flags.svg);
     const types = (type) => {
         setOutType(type);
     };
@@ -1026,9 +1026,7 @@ const Profile = () => {
                                     ) : type === 'Airtime' ? (
                                         <>
                                             {/* <p className={styles.text}>A</p> */}
-                                            {console.log(
-                                                airtimebeneficiaries.phoneNumberBeneficiaries
-                                            )}
+
                                             {!airtimebeneficiaries
                                                 .phoneNumberBeneficiaries
                                                 .length ? (
@@ -1109,7 +1107,7 @@ const Profile = () => {
                                                 bankName: data.bankName,
                                                 bankCode: data.bankName
                                             };
-                                            console.log(beneData);
+                                            //console.log(beneData);
                                             dispatch(
                                                 postBeneficiariesData(beneData)
                                             );
@@ -1170,7 +1168,7 @@ const Profile = () => {
                                                                     e.target
                                                                         .value
                                                                 );
-                                                                // console.log();
+                                                                //console.log();
                                                             }
                                                         }}
                                                         type="number"

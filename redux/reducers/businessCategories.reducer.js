@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const businessCategoriesReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case businessCategories.BUSINESSCATEGORIES_LOAD_START:
             return {

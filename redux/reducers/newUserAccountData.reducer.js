@@ -10,7 +10,7 @@ const newUsercreateCorpAccountData = (
     state = initialState,
     { type, payload }
 ) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case newUserCreateCorpAccount.CREATE_NEW_CORP_ACCOUNT_LOAD_START:
             return {

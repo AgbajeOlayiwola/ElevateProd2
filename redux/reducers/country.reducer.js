@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const countryReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case country.COUNTRY_LOAD_START:
             return {

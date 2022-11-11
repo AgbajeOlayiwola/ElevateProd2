@@ -329,8 +329,8 @@ const HomeMain = () => {
                 username: ecoonlineUserName,
                 password: ecoonlinePassword
             };
-            // //console.log'ecoOnlineData', ecoonlinePassword, ecoonlineUserName);
-            // //console.logecobankOnline);
+            //console.log'ecoOnlineData', ecoonlinePassword, ecoonlineUserName);
+            //console.logecobankOnline);
             dispatch(ecobankOnlineData(postData));
             //console.logecobankOnline);
 
@@ -478,7 +478,7 @@ const HomeMain = () => {
         }
     };
     useEffect(() => {
-        console.log(ecobankOnline, ecoOnlineErrorMessage);
+        //console.log(ecobankOnline, ecoOnlineErrorMessage);
         ecoOnlineTest();
     }, [ecobankOnline, ecoOnlineErrorMessage]);
     const types = (type) => {

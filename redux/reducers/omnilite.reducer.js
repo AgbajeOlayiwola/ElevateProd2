@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const omniliteReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case omnilite.OMNILITE_LOAD_START:
             return {

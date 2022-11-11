@@ -1802,7 +1802,7 @@ export const bvnBusNinData = (busBvnNin) => ({
 });
 export const createBusProfileSetup = (businessProfileData) => {
     const cookie = getCookie('cookieToken');
-    // //console.log'cookie in create profile function', cookie);
+    //console.log'cookie in create profile function', cookie);
     return async (dispatch) => {
         await axios
             .post(
@@ -2023,7 +2023,7 @@ export const createNewUserAccount = (accountData) => {
             .catch((error) => {
                 //console.log'create new account:', error.response.data.message);
                 dispatch(createNewAccountError(error.response.data.message));
-                // //console.logerror);
+                //console.logerror);
             });
     };
 };
@@ -2061,7 +2061,7 @@ export const createNewCorpUserAccount = (accountData) => {
             )
             .then((response) => {
                 //console.log'create New Account', response.data);
-                // //console.log'create new account:', error.response.data.message);
+                //console.log'create new account:', error.response.data.message);
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
@@ -2525,7 +2525,7 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(forgotPasswordSuccess(response.data.message));
-            console.log(response);
+            //console.log(response);
         })
         .catch((error) =>
             dispatch(forgotPasswordError(error.response.data.message))
@@ -2569,7 +2569,7 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
         )
         .then((response) => {
             dispatch(forgotPasswordResetSuccess(response.data.message));
-            console.log(response);
+            //console.log(response);
         })
         .catch((error) =>
             dispatch(forgotPasswordResetError(error.response.data.message))

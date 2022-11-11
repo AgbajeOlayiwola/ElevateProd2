@@ -160,13 +160,13 @@ const Dashboard = () => {
         // Set the current path value by looking at the browser's location object.
         storage.setItem('currentPath', globalThis.location.pathname);
         setPreviousRoute(prevPath);
-        // console.log(prevPath);
+        //console.log(prevPath);
     }
 
     // useEffect(() => {
     //     if (userProfile !== null) {
     //         setUserProfileData(userProfile);
-    //         // console.log(userProfileData.isUpgradedAccount);
+    //         //console.log(userProfileData.isUpgradedAccount);
     //         if (userProfileData.isUpgradedAccount === true) {
     //             if (previousRoute !== 'Auth/login') {
     //             } else if (userProfileData.isUpgradedAccount === true) {
@@ -176,7 +176,7 @@ const Dashboard = () => {
     //         }
     //     }
 
-    //     console.log('upgrade check', accountUpgrade);
+    //     //console.log('upgrade check', accountUpgrade);
     // }, [userProfile]);
 
     const current = new Date();
@@ -196,11 +196,11 @@ const Dashboard = () => {
             });
 
             // tableDetails.data?.map((item) => {
-            //     console.log(item.transactionDate);
+            //     //console.log(item.transactionDate);
             // });
         }
     }, [transactionElevate]);
-    // console.log(newDate[0]);
+    //console.log(newDate[0]);
     return (
         <DashLayout page="Dashboard">
             <Levelup />
@@ -268,7 +268,7 @@ const Dashboard = () => {
                                             item?.receiversName?.split(' ');
                                     }
                                     // {
-                                    //     console.log(item);
+                                    //     //console.log(item);
                                     // }
                                     return (
                                         <div key={index}>

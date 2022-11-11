@@ -48,16 +48,16 @@ const RegisteredForm = ({
         setShowFirstStep(false);
     };
     const handleRegistrationStatus = () => {
-        // console.log('true');
+        //console.log('true');
         setBgcolor((prevState) => !prevState);
         setFormData({ ...formData, type: 'true' });
     };
     const switchRegistrationStatus = () => {
-        // console.log('false');
+        //console.log('false');
         setBgcolor((prevState) => !prevState);
         setFormData({ ...formData, type: 'false' });
     };
-    // console.log(
+    //console.log(
     //     formData.type,
     //     formData.rcnumber,
     //     formData.tinNumber,
@@ -65,7 +65,7 @@ const RegisteredForm = ({
     //     formData.phoneNumber,
     //     formData.dateOfBirth
     // );
-    // console.log(formData.flag);
+    //console.log(formData.flag);
     const {
         register,
         handleSubmit,
@@ -73,28 +73,28 @@ const RegisteredForm = ({
     } = useForm();
 
     const onSubmit = async (data) => {
-        // console.log(data);
+        //console.log(data);
     };
     const { isLoading, profile, errorMessages, bvnErrorI } = useSelector(
         (state) => state.profileSetup
     );
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
 
-    // console.log('error essage', otpErrorMessage);
+    //console.log('error essage', otpErrorMessage);
     // useEffect(() => {
     //     setLoading((prev) => !prev);
     // }, [isLoading, profile, errorMessages]);
 
     // useEffect(() => {
-    //     // console.log('bvnError', bvnErrorI);
-    //     console.log(errorMessages);
+    //     //console.log('bvnError', bvnErrorI);
+    //     //console.log(errorMessages);
     //     setErrorM(errorMessages);
 
     //     //change to no error messages boss
     //     if (!errorMessages) {
-    //         console.log(errorMessages);
+    //         //console.log(errorMessages);
     //     } else {
-    //         console.log('moved');
+    //         //console.log('moved');
     //     }
     // }, [errorMessages]);
 

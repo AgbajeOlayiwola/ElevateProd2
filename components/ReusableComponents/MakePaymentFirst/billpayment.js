@@ -57,7 +57,7 @@ const BillPayment = ({
                 localStorage.setItem('Airtime', JSON.stringify(networks));
             }
         });
-        console.log(airtimeNetworkData);
+        //console.log(airtimeNetworkData);
     }, [airtimeNetworkData]);
     useEffect(() => {
         if (getAirtimeBeneficiaries !== null) {
@@ -75,7 +75,7 @@ const BillPayment = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
-    console.log(billerCategories);
+    //console.log(billerCategories);
     const loadbillerTypeData = () => {
         if (firstTitle !== 'Bill Payment') {
             dispatch(loadbillerType(firstTitle));
@@ -97,7 +97,7 @@ const BillPayment = ({
             setBillerTypes(billerType);
         }
     }, [billerType]);
-    console.log(billerTypes);
+    //console.log(billerTypes);
     useEffect(() => {
         if (airtimeNetwork !== null) {
             setAirtimeNetworkData(airtimeNetwork);

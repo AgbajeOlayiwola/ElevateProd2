@@ -31,7 +31,7 @@ const ReceivePaymentFirst = ({
         //     );
         //     const countriesData = await countriesApi.json();
         //     setAmount(countriesData);
-        //     console.log(countriesData);
+        //     //console.log(countriesData);
         //     fetchCountryApi();
         // };
     }, []);
@@ -40,7 +40,7 @@ const ReceivePaymentFirst = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
-    // console.log(amount);
+    //console.log(amount);
 
     return (
         <Overlay overlay={overlay}>

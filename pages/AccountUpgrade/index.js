@@ -162,7 +162,7 @@ const AccountUpgrade = () => {
             setTitle('First');
         }
     }, [link]);
-    console.log(link);
+    //console.log(link);
 
     const transactionPin = () => {
         if (setTransactionPin !== null) {
@@ -200,11 +200,11 @@ const AccountUpgrade = () => {
                 setTransactionPinStatus('done');
             }
         }
-        console.log(userProfile);
+        //console.log(userProfile);
     }, [userProfile]);
     useEffect(() => {
         if (shareDocuments !== null) {
-            // console.log(shareDocuments);
+            //console.log(shareDocuments);
             shareDocuments?.map((document) => {
                 if (document.documentType === 'UTILITY') {
                     setUtilityStatus('done');
@@ -235,7 +235,7 @@ const AccountUpgrade = () => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        // //console.logfile);
+        //console.logfile);
     };
     const cacRegistration = () => {
         setLoading(true);
@@ -295,7 +295,7 @@ const AccountUpgrade = () => {
             ('IdentificationDocument');
             setScumlStatus('done');
         } else if (scmulErrorMessages !== null) {
-            console.log(scmulErrorMessages);
+            //console.log(scmulErrorMessages);
             setMessage(scmulErrorMessages);
             setStatusbar('error');
             setOutcome(true);
@@ -314,7 +314,7 @@ const AccountUpgrade = () => {
         setCo7File(e.target.files[0]);
         setCo7FileName(e.target.files[0].name);
     };
-    // //console.logco2file);
+    //console.logco2file);
     const memartUpload = () => {
         setLoading(true);
         const mmemmartDatas = {
@@ -353,7 +353,7 @@ const AccountUpgrade = () => {
             utilityDocument: utilityFile
         };
         dispatch(uploadUtilityData(utilityThingd));
-        // //console.log'state', localState, localGovernment, utilityFile);
+        //console.log'state', localState, localGovernment, utilityFile);
     };
     useEffect(() => {
         if (utilityUpload !== null) {
@@ -723,7 +723,7 @@ const AccountUpgrade = () => {
                                                     setState(
                                                         event.target.value
                                                     );
-                                                    // //console.log(selstate);
+                                                    //console.log(selstate);
                                                 }}
                                             >
                                                 <option value="">
@@ -810,7 +810,7 @@ const AccountUpgrade = () => {
                                                     ? localGovernment?.map(
                                                           (item, index) => {
                                                               //   {
-                                                              //       console.log(
+                                                              //       //console.log(
                                                               //           item
                                                               //       );
                                                               //   }
@@ -840,7 +840,7 @@ const AccountUpgrade = () => {
                                 href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333`}
                             >
                                 Links
-                            </Link> 
+                            </Link>
                             <Modal
                                 isOpen={modalIsOpen}
                                 // onAfterOpen={afterOpenModal}
@@ -849,7 +849,7 @@ const AccountUpgrade = () => {
                                 contentLabel="Example Modal"
                             >
                                 {/* //When adding latituted add them the way i did with vartiable */}
-                               {/* `https://ecocomonoreact.azurewebsites.net/customer-details/
+                                {/* `https://ecocomonoreact.azurewebsites.net/customer-details/
                                 ?workitemId=AO-095734358976187628-CO&
                                 customerName=MUSA&customerEmail=musa%40gmail.comm
                                 &branchCode=A02
@@ -968,7 +968,7 @@ const AccountUpgrade = () => {
                                                     setState(
                                                         event.target.value
                                                     );
-                                                    // //console.logselstate);
+                                                    //console.logselstate);
                                                 }}
                                             >
                                                 <option value={selstate}>

@@ -56,7 +56,7 @@ const CorporateAccount = () => {
                                 }
                             )
                             .then((response) => {
-                                // //console.log'Accoutn Status', response);
+                                //console.log'Accoutn Status', response);
                                 setAccountDone(response.data.message);
                             })
                             .catch((error) => {
@@ -88,7 +88,7 @@ const CorporateAccount = () => {
                                 }
                             )
                             .then((response) => {
-                                // //console.log'Accoutn Status', response);
+                                //console.log'Accoutn Status', response);
                                 setAccountDone(response.data.message);
                             })
                             .catch((error) => {
@@ -98,7 +98,7 @@ const CorporateAccount = () => {
                 }
             });
     };
-    console.log(accountDone);
+    //console.log(accountDone);
     useEffect(() => {
         if (accountDone === 'success') {
             router.push('/Succes/CorpSuccess');
@@ -121,7 +121,7 @@ const CorporateAccount = () => {
         }
 
         if (accountDone.message === 'success') {
-            // //console.logaccountStatus.messages, errorMessages);
+            //console.logaccountStatus.messages, errorMessages);
             router.push('/Succes');
         }
     };

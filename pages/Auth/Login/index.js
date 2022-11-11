@@ -54,7 +54,7 @@ const Login = () => {
         dispatch(loginUserAction(loginData));
         // dispatch(createNewUserAccount());
     };
-    console.log(user);
+    //console.log(user);
     const sentLogin = () => {
         if (errorMessages !== null) {
             setError(errorMessages);
@@ -86,8 +86,8 @@ const Login = () => {
     const types = (type) => {
         setOutType(type);
     };
-    // console.log(user);
-    // console.log(data); // watch input value by passing the name of it
+    //console.log(user);
+    //console.log(data); // watch input value by passing the name of it
 
     return (
         <div className={styles.sectionCove}>

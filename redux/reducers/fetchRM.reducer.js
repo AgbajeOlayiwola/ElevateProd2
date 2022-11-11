@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const fetchRMReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case fetchRM.FETCHRM_START:
             return {

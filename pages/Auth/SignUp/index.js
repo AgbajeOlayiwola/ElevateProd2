@@ -100,7 +100,7 @@ const Signup = ({ type }) => {
                 affiliateCode: 'ENG'
             };
             setLoading(true);
-            // console.log(errorMessage);
+            //console.log(errorMessage);
             dispatch(createUserAction(postData));
         } else {
             passwordMatch;
@@ -118,7 +118,7 @@ const Signup = ({ type }) => {
         sentSIgnUp();
     }, [errorMessage, user]);
 
-    // console.log(confPassword);
+    //console.log(confPassword);
     return (
         <>
             <div className={styles.cover}>

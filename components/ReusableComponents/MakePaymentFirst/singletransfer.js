@@ -74,7 +74,7 @@ const SingleTransfer = ({
 
         let accountNumberDigits = accountNumber.split('');
 
-        //   console.log("accountNumberDigits: ", accountNumberDigits);
+        //   //console.log("accountNumberDigits: ", accountNumberDigits);
 
         let sum =
             accountNumberDigits[0] * 3 +
@@ -102,11 +102,11 @@ const SingleTransfer = ({
 
         let bankList = [];
         let bankDets = bankArray.split('~');
-        //   console.log("bankDets", bankDets);
+        //   //console.log("bankDets", bankDets);
 
         for (var bankdet of bankDets) {
             let split = bankdet.split(':');
-            // console.log("split", split);
+            //console.log('split', split);
 
             if (isValidNUBAN(accountNo, split[1])) {
                 bankList.push({
@@ -784,7 +784,7 @@ const SingleTransfer = ({
                                                 Select Bank
                                             </option>
                                         )}
-                                        {/* {console.log(bank)} */}
+                                        {/* {//console.log(bank)} */}
                                         {bank?.map((bank, index) => {
                                             return (
                                                 <option
@@ -813,11 +813,11 @@ const SingleTransfer = ({
                                                 ) {
                                                     let newBank = [];
                                                     newBank.splice(1, e);
-                                                    console.log(newBank);
-                                                    console.log(e);
+                                                    //console.log(newBank);
+                                                    //console.log(e);
                                                     setBank(newBank);
-                                                    // console.log(e);
-                                                    console.log(bank);
+                                                    //console.log(e);
+                                                    //console.log(bank);
                                                 }
                                             });
                                         }}

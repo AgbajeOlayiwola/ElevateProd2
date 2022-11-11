@@ -9,7 +9,7 @@
 //         setHeight(document.documentElement.scrollHeight);
 //     }, []);
 
-//     console.log(height);
+//     //console.log(height);
 //
 
 //     const mainOverlay = {
@@ -75,7 +75,7 @@ const DashLayout = ({
                 />
             </div>
             <Idle
-                timeout={30000000}
+                timeout={300000}
                 onChange={({ idle }) => {
                     if (idle) {
                         preloadCornify();

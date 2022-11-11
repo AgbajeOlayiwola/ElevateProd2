@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const profileReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case compProfile.PROFILE_LOAD_SUCCESS:
             return {

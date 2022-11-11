@@ -81,10 +81,10 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     const router = useRouter();
     const saveFile = (e) => {
-        console.log(e.target.files[0]);
+        //console.log(e.target.files[0]);
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
-        // console.log(file);
+        //console.log(file);
     };
     useEffect(() => {
         dispatch(statesData());
@@ -116,7 +116,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     }, []);
 
     useEffect(() => {
-        // console.log(profile.data);
+        //console.log(profile.data);
         if (profile) {
             // setProfileCont(userProfile);
             profile.data?.map((item) => {
@@ -126,15 +126,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                         bussinessName: item.documentData.companyName
                     });
                     setBusinessProfile(item.documentData.companyName);
-                    // console.log(businessProfile);
-                    // console.log(formData.businessName);
+                    //console.log(businessProfile);
+                    //console.log(formData.businessName);
                 }
             });
         }
         // setProfileCont(userProfile);
         // if (profile) {
         if (userProfile) {
-            // console.log(userProfile);
+            //console.log(userProfile);
             setProfileCont(userProfile);
         }
         //     if (profile.data[1]) {
@@ -147,21 +147,21 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     }, [profile]);
     useEffect(() => {
         if (userProfile) {
-            // console.log(userProfile);
+            //console.log(userProfile);
             setProfileCont(userProfile);
         }
     }, [userProfile]);
     useEffect(() => {
         dispatch(businessCategoriesData());
     }, []);
-    // console.log(
+    //console.log(
     //     'errorMessages from account',
     //     newAccount,
     //     newAccountErrorMessage
     // );
     useEffect(() => {
         if (newAccount.message === 'success') {
-            // console.log(errorMessages);
+            //console.log(errorMessages);
             router.push('/Verify/Account/loading');
         } else if (
             newAccountErrorMessage ===
@@ -182,7 +182,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         });
     }, [business]);
 
-    // if (gender === 'm') console.log(profileCont);
+    // if (gender === 'm') //console.log(profileCont);
 
     const {
         register,
@@ -191,7 +191,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         formState: { errors }
     } = useForm();
 
-    // console.log(type);
+    //console.log(type);
 
     // const uploadFile = async (e) => {
     //   const formData = new FormData();
@@ -202,9 +202,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     //       "http://localhost:3000/upload",
     //       formData
     //     );
-    //     console.log(res);
+    //     //console.log(res);
     //   } catch (ex) {
-    //     console.log(ex);
+    //     //console.log(ex);
     //   }
     // };
 
@@ -225,7 +225,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             refereeCode: '',
             signature: file
         };
-        // console.log(commpleteProfileData);
+        //console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
 
@@ -246,13 +246,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             refereeCode: '',
             signature: file
         };
-        // console.log(commpleteProfileData);
+        //console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
 
     useEffect(() => {
         setLoading(false);
-        // console.log(compBusprofile);
+        //console.log(compBusprofile);
         if (compBusprofile) {
             if (
                 compBusprofile.message === 'Successful' ||
@@ -270,7 +270,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         }
     }, [newAccount, comperrorMessage]);
     const basicAction = () => {
-        // console.log(business);
+        //console.log(business);
         if (business === '' && businesses === '') {
             setBusinessError(true);
             setBusinessTypeError(true);
@@ -282,8 +282,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     };
 
     const [activeBtn, setActiveBtn] = useState(true);
-    //console.log(test)
-    // console.log(type);
+    //console.log(test);
+    //console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
@@ -352,7 +352,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                 </div>
                                 {/* {alluserData[1].documentData.map(
                                     (usersData, index) => {
-                                        console.log(alluserData);
+                                        //console.log(alluserData);
                                         return <></>;
                                     }
                                 )} */}

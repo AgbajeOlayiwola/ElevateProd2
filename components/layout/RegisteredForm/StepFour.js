@@ -104,7 +104,7 @@ const StepFour = ({ title, action, setFormData, formData }) => {
 
     const onSubmitNew = (data) => {
         setLoading((prev) => !prev);
-        // //console.logdata);
+        //console.logdata);
         const userData = {
             isRegistered: 'true',
             businessName: businessName,
@@ -121,11 +121,11 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             // signature: ''
         };
         dispatch(CompleteBusinessProfile(userData));
-        // //console.logexistingProfileSetupPay, existingProfileSetupError);
+        //console.logexistingProfileSetupPay, existingProfileSetupError);
     };
 
     const profileTest = () => {
-        // console.log(compBusprofile, comperrorMessage);
+        //console.log(compBusprofile, comperrorMessage);
         setLoading((prev) => !prev);
         if (compBusprofile) {
             //console.logerrorMessages);
@@ -162,15 +162,15 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             // signature: ''
         };
         dispatch(ExCreateBusProfileSetup(userData));
-        // console.log(existingProfileSetupPay, existingProfileSetupError);
+        //console.log(existingProfileSetupPay, existingProfileSetupError);
     };
 
     useEffect(() => {
-        console.log(existingProfileSetupPay, existingProfileSetupError);
+        //console.log(existingProfileSetupPay, existingProfileSetupError);
         setLoading((prev) => !prev);
 
         if (existingProfileSetupPay) {
-            console.log(existingProfileSetupPay, existingProfileSetupError);
+            //console.log(existingProfileSetupPay, existingProfileSetupError);
             if (existingProfileSetupPay.data.message === 'Successful') {
                 if (formData.type !== 'true') {
                     router.push('/Verify/ExistingSuccess');

@@ -102,7 +102,7 @@ const NewUser = ({ selectCountry }) => {
     };
     const userName = (e) => {
         setPname(e.target.value);
-        // //console.logpName);
+        //console.logpName);
     };
     // display Lofg in with end
     const types = (type) => {
@@ -142,14 +142,14 @@ const NewUser = ({ selectCountry }) => {
                 affiliateCode: 'ENG'
             };
             setLoading(true);
-            // //console.logerrorMessage);
+            //console.logerrorMessage);
             dispatch(createUserAction(postData));
         } else {
             passwordMatch;
         }
     };
     const sentSIgnUp = () => {
-        // //console.logerrorMessage);
+        //console.logerrorMessage);
         if (errorMessage !== null) {
             setError(errorMessage);
             setLoading(false);

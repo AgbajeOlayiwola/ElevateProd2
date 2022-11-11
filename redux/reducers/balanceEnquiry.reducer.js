@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const balanceEnquiryReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case balanceEnquiry.BALANCEENQUIRY_LOAD_START:
             return {

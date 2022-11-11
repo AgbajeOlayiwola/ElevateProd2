@@ -68,12 +68,12 @@ const ExistingMultiStep = () => {
             setPage(page + 1);
             setLoading(false);
         } else if (forgotPasswordErrorMessages !== '') {
-            console.log(forgotPasswordErrorMessages);
+            //console.log(forgotPasswordErrorMessages);
             setLoading(false);
         }
     }, [forgotPassword, forgotPasswordErrorMessages]);
     useEffect(() => {
-        console.log(forgotPasswordReset);
+        //console.log(forgotPasswordReset);
         if (forgotPasswordReset !== null) {
             push('./Login');
             setLoading(false);

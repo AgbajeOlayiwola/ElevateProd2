@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const banksReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case banks.BANK_LOAD_START:
             return {

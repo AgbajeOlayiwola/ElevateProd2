@@ -31,7 +31,7 @@ const ProfileSetups = () => {
     // router.replace(router.asPath);
 
     const cookie = getCookie('cookieToken');
-    // console.log('register page', cookie);
+    //console.log('register page', cookie);
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
@@ -57,7 +57,7 @@ const ProfileSetups = () => {
         referralCode: '',
         signatory: 1
     });
-    // console.log(formData.type);
+    //console.log(formData.type);
     // let countryName = '';
     // let countryNames;
 
@@ -75,7 +75,7 @@ const ProfileSetups = () => {
     }, []);
     useEffect(() => {
         if (countries !== null) {
-            // console.log(countries);
+            //console.log(countries);
             countries.filter((item) => {
                 if (item.name === 'Nigeria') {
                     setFormData({
@@ -143,7 +143,7 @@ const ProfileSetups = () => {
                             // dispatch(verifyOtp(otpData));
                             // // dispatch(CompProfile());
                             // if (otpErrorMessage) {
-                            //     // console.log('otpError');
+                            //     //console.log('otpError');
                             // } else if (!otpErrorMessage) {
                             setPage(page + 1);
                             // }
@@ -183,11 +183,11 @@ const ProfileSetups = () => {
         }
     };
     // useEffect(() => {
-    //     console.log(errorMessages, otpErrorMessages);
+    //     //console.log(errorMessages, otpErrorMessages);
     // }, []);
 
     function regsiteredBus() {
-        // console.log('firstAPi');
+        //console.log('firstAPi');
         setLoads((prev) => !prev);
         const businessProfileData = {
             bvnNumber: formData.bvNumber,
@@ -203,7 +203,7 @@ const ProfileSetups = () => {
     }
 
     function handleSubmit() {
-        // console.log('firstAPi');
+        //console.log('firstAPi');
 
         setLoads((prev) => !prev);
         const profileData = {
@@ -216,18 +216,18 @@ const ProfileSetups = () => {
         setErrorM('');
         setErrorI('');
         dispatch(createProfileSetup(profileData));
-        // console.log('lol');
+        //console.log('lol');
     }
 
     useEffect(() => {
-        // console.log('new bvn:', bvnNin.message);
+        //console.log('new bvn:', bvnNin.message);
         if (
             bvnNin === 'verification successful' ||
             errorMessages === 'you have already setup your profile'
         ) {
             setPage(page + 1);
         } else {
-            // console.log('move');
+            //console.log('move');
             setErrorM(errorMessages);
             setErrorI(bvnError);
             setLoading(false);
@@ -237,7 +237,7 @@ const ProfileSetups = () => {
     // const handleSubmitt = () => {
     //     setPage(page + 1);
     // };
-    // console.log(errorM, errorI);
+    //console.log(errorM, errorI);
 
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {
