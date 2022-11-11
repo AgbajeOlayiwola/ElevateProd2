@@ -188,8 +188,7 @@ const Dashboard = () => {
             setTableDetails(transactionElevate.transactions);
             tableDetails?.filter((item) => {
                 const newDate = item.transactionDate.split('T');
-
-                if (newDate[0] == date) {
+                if (newDate[0] == time) {
                     setDateState(true);
                 } else {
                     setDateState(false);

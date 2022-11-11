@@ -688,12 +688,6 @@ const Payment = () => {
                             />
                         );
                     case 1:
-                        // console.log(
-                        //     csvData.slice(2).map((a) => {
-                        //         return a.Amount;
-                        //     })
-                        // );
-                        // console.log(
                         const sum = csvData.slice(2).reduce((a, b, i) => {
                             return a + b.Amount;
                         }, 0);

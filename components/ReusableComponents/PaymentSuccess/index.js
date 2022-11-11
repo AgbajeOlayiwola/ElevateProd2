@@ -532,6 +532,7 @@ const PaymentSuccess = ({
                                         </div>
                                     );
                                 })}
+                                <p>{error}</p>
                             </>
                         ) : (
                             <p>{error}</p>

@@ -433,8 +433,7 @@ const BulkTransfer = ({
                         active={activeBtn ? 'active' : 'inactive'}
                         text={buttonText}
                         type="submit"
-                        loads={loading}
-                        err={errorMessageInterBankEnquiry}
+                        // err={errorMessageInterBankEnquiry}
                     />
                     {/* <p className={styles.schedule}>
                         Not paying now?<span>Schedule for Later</span>
