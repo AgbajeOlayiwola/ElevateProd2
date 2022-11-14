@@ -375,9 +375,7 @@ const SingleTransfer = ({
                                                 'accountName',
                                                 interEnquiry.accountName
                                             );
-                                        } else if (
-                                            e.target.value.length === 0
-                                        ) {
+                                        } else if (e.target.value.length < 10) {
                                             setInterEnquiry('');
                                         }
                                     }}
@@ -689,11 +687,10 @@ const SingleTransfer = ({
                                                     e.target.value
                                                 )
                                             );
-                                        } else if (
-                                            e.target.value.length === 0
-                                        ) {
+                                        } else if (e.target.value.length < 10) {
                                             setInterEnquiry('');
                                             setshowInterEnquiry(false);
+                                            setBank([]);
                                         }
                                     }}
                                     type="text"
@@ -784,7 +781,6 @@ const SingleTransfer = ({
                                                 Select Bank
                                             </option>
                                         )}
-                                        {/* {//console.log(bank)} */}
                                         {bank?.map((bank, index) => {
                                             return (
                                                 <option

@@ -36,10 +36,7 @@ const BulkTransfer = ({
     const { intraBankEnquiry, errorMessageIntraBankEnquiry } = useSelector(
         (state) => state.intraBankEnquiryReducer
     );
-    const [number, setNumber] = useState(
-        // payload !== undefined ? payload :
-        [1]
-    );
+    const [number, setNumber] = useState([1]);
     const XLSX = require('xlsx');
     // const fs = require('fs');
     useEffect(() => {}, [number]);
@@ -58,6 +55,7 @@ const BulkTransfer = ({
             alert(errorMessageInterBankEnquiry);
         }
     };
+    console.log(number);
     const intraBankEnquiryCheck = () => {
         // setLoading((prev) => !prev);
         if (intraBankEnquiry !== null) {
@@ -236,7 +234,7 @@ const BulkTransfer = ({
                                         )}
                                         // defaultValue={...e.accountName}
                                         type="text"
-                                        value={e.accountName}
+                                        value={e?.accountName}
                                         name={`${fieldName}.accountName`}
                                     />
                                     <p className={styles.error}>

@@ -1634,7 +1634,7 @@ export const loginUserAction = (loginData) => {
                     JSON.stringify(response.data.data.user)
                 );
 
-                setCookie('cookieToken', response.data.data.token, 1 / 24);
+                setCookie('cookieToken', response.data.data.token);
                 dispatch(userLoadStart(response.data));
             })
             .catch((error) => {

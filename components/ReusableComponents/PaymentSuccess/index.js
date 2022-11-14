@@ -503,7 +503,7 @@ const PaymentSuccess = ({
                                             key={index}
                                         >
                                             <p className={styles.name}>
-                                                {tran.receiversName}
+                                                {tran.receiver}
                                             </p>
                                             <p className={styles.amount}>
                                                 {tran.transactionAmount}
@@ -521,7 +521,7 @@ const PaymentSuccess = ({
                                             key={index}
                                         >
                                             <p className={styles.name}>
-                                                {tran.receiversName}
+                                                {tran.receiver}
                                             </p>
                                             <p className={styles.amount}>
                                                 {tran.transactionAmount}
