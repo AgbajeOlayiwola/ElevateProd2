@@ -135,7 +135,7 @@ const PaymentSuccess = ({
                                                                     }
                                                                 >
                                                                     {
-                                                                        tran.receiversName
+                                                                        tran.receiver
                                                                     }
                                                                 </p>
                                                                 <p
@@ -175,7 +175,7 @@ const PaymentSuccess = ({
                                                                     }
                                                                 >
                                                                     {
-                                                                        tran.receiversName
+                                                                        tran.receiver
                                                                     }
                                                                 </p>
                                                                 <p
@@ -388,67 +388,85 @@ const PaymentSuccess = ({
                                             </div>
                                         </div>
                                     </div>
+                                    {title === 'Bulk Payment' ? (
+                                        <>
+                                            {successfulTrans.map(
+                                                (tran, index) => {
+                                                    return (
+                                                        <div
+                                                            className={
+                                                                styles.bulkTransfer
+                                                            }
+                                                            key={index}
+                                                        >
+                                                            <p
+                                                                className={
+                                                                    styles.name
+                                                                }
+                                                            >
+                                                                {tran.receiver}
+                                                            </p>
+                                                            <p
+                                                                className={
+                                                                    styles.amount
+                                                                }
+                                                            >
+                                                                {
+                                                                    tran.transactionAmount
+                                                                }
+                                                            </p>
+                                                            <p
+                                                                className={
+                                                                    styles.status
+                                                                }
+                                                            >
+                                                                {
+                                                                    tran.transactionStatus
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    );
+                                                }
+                                            )}
+                                            {failedTrans.map((tran, index) => {
+                                                return (
+                                                    <div
+                                                        className={
+                                                            styles.bulkTransfer
+                                                        }
+                                                        key={index}
+                                                    >
+                                                        <p
+                                                            className={
+                                                                styles.name
+                                                            }
+                                                        >
+                                                            {tran.receiver}
+                                                        </p>
+                                                        <p
+                                                            className={
+                                                                styles.amount
+                                                            }
+                                                        >
+                                                            {
+                                                                tran.transactionAmount
+                                                            }
+                                                        </p>
+                                                        <p
+                                                            className={
+                                                                styles.status
+                                                            }
+                                                        >
+                                                            {
+                                                                tran.transactionStatus
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                );
+                                            })}
+                                        </>
+                                    ) : null}
                                 </div>
-                                {title === 'Bulk Payment' ? (
-                                    <>
-                                        {successfulTrans.map((tran, index) => {
-                                            return (
-                                                <div
-                                                    className={
-                                                        styles.bulkTransfer
-                                                    }
-                                                    key={index}
-                                                >
-                                                    <p className={styles.name}>
-                                                        {tran.receiversName}
-                                                    </p>
-                                                    <p
-                                                        className={
-                                                            styles.amount
-                                                        }
-                                                    >
-                                                        {tran.transactionAmount}
-                                                    </p>
-                                                    <p
-                                                        className={
-                                                            styles.status
-                                                        }
-                                                    >
-                                                        {tran.transactionStatus}
-                                                    </p>
-                                                </div>
-                                            );
-                                        })}
-                                        {failedTrans.map((tran, index) => {
-                                            return (
-                                                <div
-                                                    className={
-                                                        styles.bulkTransfer
-                                                    }
-                                                    key={index}
-                                                >
-                                                    <p className={styles.name}>
-                                                        {tran.receiversName}
-                                                    </p>
-                                                    <p
-                                                        className={
-                                                            styles.amount
-                                                        }
-                                                    >
-                                                        {tran.transactionAmount}
-                                                    </p>
-                                                    <p
-                                                        className={
-                                                            styles.status
-                                                        }
-                                                    >
-                                                        {tran.transactionStatus}
-                                                    </p>
-                                                </div>
-                                            );
-                                        })}
-                                    </>
-                                ) : null}
                                 <div className={styles.icons}>
                                     <FaDownload
                                         color="#005b82"

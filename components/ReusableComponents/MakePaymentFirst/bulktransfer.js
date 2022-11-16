@@ -55,7 +55,6 @@ const BulkTransfer = ({
             alert(errorMessageInterBankEnquiry);
         }
     };
-    console.log(number);
     const intraBankEnquiryCheck = () => {
         // setLoading((prev) => !prev);
         if (intraBankEnquiry !== null) {

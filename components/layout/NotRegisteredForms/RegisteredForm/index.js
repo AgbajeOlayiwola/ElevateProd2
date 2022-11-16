@@ -102,7 +102,7 @@ const RegisteredForm = ({
         <div className={styles.bodyWrapper}>
             <div className={styles.cardHeading}>
                 <h3 className={styles.LeftHeading}>Profile Setup</h3>
-                <p>We recommend you use a phone number linked to NIN</p>
+                <p>We recommend you use a phone number linked to BVN</p>
             </div>
             <div className={styles.formWrapper}>
                 <InputWrapper>
