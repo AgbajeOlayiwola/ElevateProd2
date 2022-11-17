@@ -26,16 +26,8 @@ const AccountLoading = () => {
 
     const router = useRouter();
 
-    // const { isLoading, profile, errorMessage } = useSelector(
-    //     (state) => state.profile
-    // );
     const dispatch = useDispatch();
 
-    //console.log(profile);
-
-    //console.log(accountStatus, errorMessages);
-    //error message
-    //Bank Account has not been created for this user
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
@@ -71,9 +63,7 @@ const AccountLoading = () => {
             errorMessages === 'Pending Creation, Try Again' ||
             errorMessages === 'Bank Account has not been created for this user'
         ) {
-            //console.log(errorMessages);
-            dispatch(newAccountStatusData());
-            setInterval(() => {
+            setTimeout(() => {
                 dispatch(newAccountStatusData());
             }, 10000);
         } else if (accountStatuss.message === 'success') {

@@ -459,7 +459,7 @@ const HomeMain = () => {
         acctTest();
     }, [accountNumbers, errorMessages]);
     const ecoOnlineTest = () => {
-        if (ecobankOnline.message === 'success') {
+        if (ecobankOnline !== null) {
             const data = {
                 email: ecobankOnline.data.user.email,
                 firstName: ecobankOnline.data.user.profile.firstName,
@@ -472,7 +472,7 @@ const HomeMain = () => {
                 JSON.stringify(ecobankOnline.data.user)
             );
             router.push('/Onboarding/ExistingProfileSetup');
-        } else if (ecoOnlineErrorMessage) {
+        } else if (ecoOnlineErrorMessage !== null) {
             setError(ecoOnlineErrorMessage);
             setLoading(false);
         }
@@ -577,7 +577,6 @@ const HomeMain = () => {
                     </div>
                     <div className={styles.languages}>
                         <div className={styles.select2}>
-                            {/* {error ? <p className={styles.error}>{error}</p> : null} */}
                             <div className={styles.selectLanguage}>
                                 <div
                                     className={styles.selectLanguageBody}

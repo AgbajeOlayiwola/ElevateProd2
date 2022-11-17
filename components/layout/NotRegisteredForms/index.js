@@ -57,18 +57,6 @@ const ProfileSetups = () => {
         referralCode: '',
         signatory: 1
     });
-    //console.log(formData.type);
-    // let countryName = '';
-    // let countryNames;
-
-    // if (typeof window !== 'undefined') {
-    //     countryName = window.localStorage.getItem('country');
-    //     if (countryName === null) {
-    //         countryNames = window.localStorage.getItem('country');
-    //     } else {
-    //         countryNames = JSON.parse(countryName);
-    //     }
-    // }
     const [loads, setLoads] = useState(false);
     useEffect(() => {
         dispatch(loadCountry());

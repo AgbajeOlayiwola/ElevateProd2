@@ -15,7 +15,7 @@ const RegisteredForm = ({
     formData,
     setFormData,
     action,
-    // errorM,
+    errorM,
     errorI,
     bvnError,
     actionI,
@@ -28,7 +28,6 @@ const RegisteredForm = ({
     const [switchs, setSwitch] = useState(true);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
-    const [errorM, setErrorM] = useState('');
     // const dispatch = useDispatch();
     // const { countries } = useSelector((state) => state.countryReducer);
 
@@ -106,7 +105,16 @@ const RegisteredForm = ({
             </div>
             <div className={styles.formWrapper}>
                 <InputWrapper>
-                    <p className={styles.error}>{errorI}</p> <br />
+                    {errorI !== null ? (
+                        <p className={styles.error}>{errorI}</p>
+                    ) : null}
+                    {errorM !== null ? (
+                        <p className={styles.error}>{errorM}</p>
+                    ) : null}
+                    {bvnError !== null ? (
+                        <p className={styles.error}> {bvnError}</p>
+                    ) : null}
+
                     <Label>Is your Business Registered?</Label>
                     <select
                         name=""
@@ -125,8 +133,6 @@ const RegisteredForm = ({
                 </InputWrapper>
                 {formData.type == 'true' ? (
                     <form onSubmit={handleSubmit(actionI)}>
-                        <p className={styles.error}>{errorM}</p>
-                        <p className={styles.error}> {bvnError}</p>
                         <InputWrapper>
                             <Label>
                                 Enter your RC Number/Business Registration
@@ -212,7 +218,7 @@ const RegisteredForm = ({
                                     // setNumber(event?.target.value); //saving input to state
                                 }}
                             />
-                            <p className={styles.error}>{errorM}</p>
+                            {/* <p className={styles.error}>{errorM}</p> */}
                             <div className={styles.errors}>
                                 {errors.bvn?.message}
                             </div>
@@ -342,8 +348,6 @@ const RegisteredForm = ({
                                     //setNumber(event?.target.value); //saving input to state
                                 }}
                             />
-                            <p className={styles.error}>{errorM}</p>
-                            <p className={styles.error}> {bvnError}</p>
                             <div className={styles.errors}>
                                 {errors.bvnFalse?.message}
                             </div>

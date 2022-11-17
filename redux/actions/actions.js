@@ -821,9 +821,15 @@ export const billsLoadError = (errorMessageBills) => ({
     payload: errorMessageBills
 });
 export const postBills = (data) => (dispatch) => {
+    const cookie = getCookie('cookieToken');
     dispatch(billsLoadStart());
     axiosInstance
-        .post(`${apiRoutes.bills}`, data)
+        .post(`${apiRoutes.bills}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) => dispatch(billsLoadSuccess(response.data.data)))
         .catch((error) =>
             dispatch(billsLoadError(error.response.data.message))
@@ -873,9 +879,15 @@ export const interBankLoadError = (interBankerror) => ({
     payload: interBankerror
 });
 export const postInterBank = (data) => (dispatch) => {
+    const cookie = getCookie('cookieToken');
     dispatch(interBankLoadStart());
     axiosInstance
-        .post(`${apiRoutes.interBank}`, data)
+        .post(`${apiRoutes.interBank}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) => dispatch(interBankLoadSuccess(response.data)))
         .catch((error) =>
             dispatch(interBankLoadError(error.response.data.message))
@@ -1069,9 +1081,15 @@ export const bulkTransferLoadError = (bulkTransfererror) => ({
     payload: bulkTransfererror
 });
 export const getBulkTransfer = (data) => (dispatch) => {
+    const cookie = getCookie('cookieToken');
     dispatch(bulkTransferLoadStart());
     axiosInstance
-        .post(`${apiRoutes.bulkTransfer}`, data)
+        .post(`${apiRoutes.bulkTransfer}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(bulkTransferLoadSuccess(response.data.data))
         )

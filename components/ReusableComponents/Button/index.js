@@ -20,7 +20,6 @@ const ButtonComp = ({
 }) => {
     //console.log(disabled);
     const [loading, setLoading] = useState(false);
-    //console.log('loading', loads);
 
     useEffect(() => {
         setLoading(loads);
@@ -28,7 +27,7 @@ const ButtonComp = ({
 
     useEffect(() => {
         if (err) {
-            setLoading((prevState) => !prevState);
+            setLoading(false);
         }
     }, [err]);
     return (

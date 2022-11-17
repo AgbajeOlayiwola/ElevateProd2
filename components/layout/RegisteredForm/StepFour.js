@@ -24,7 +24,7 @@ import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg'
 import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 
-const StepFour = ({ title, action, setFormData, formData }) => {
+const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const dispatch = useDispatch();
     const router = useRouter();
     // const account = localStorage.getItem('meta');
@@ -242,18 +242,6 @@ const StepFour = ({ title, action, setFormData, formData }) => {
             }
         });
     }, [business]);
-    let countryName = '';
-    let countryNames;
-
-    if (typeof window !== 'undefined') {
-        countryName = window.localStorage.getItem('country');
-
-        if (countryName === null) {
-            countryNames = window.localStorage.getItem('country');
-        } else {
-            countryNames = JSON.parse(countryName);
-        }
-    }
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>

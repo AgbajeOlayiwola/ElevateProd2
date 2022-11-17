@@ -113,9 +113,7 @@ const CorporateAccount = () => {
             errorMes === 'Pending Creation, Try Again' ||
             errorMes === 'Bank Account has not been created for this user'
         ) {
-            //console.logerrorMes);
-            dispatch(newAccountStatusData());
-            setInterval(() => {
+            setTimeout(() => {
                 dispatch(newAccountStatusData());
             }, 10000);
         }

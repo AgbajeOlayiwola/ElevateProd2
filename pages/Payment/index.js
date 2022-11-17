@@ -688,7 +688,7 @@ const Payment = () => {
                             />
                         );
                     case 1:
-                        const sum = csvData?.slice(2).reduce((a, b, i) => {
+                        const sum = csvData?.slice(2).reduce((a, b) => {
                             return a + b.Amount;
                         }, 0);
                         return (

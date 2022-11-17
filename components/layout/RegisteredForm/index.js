@@ -8,19 +8,23 @@ import StepFour from './StepFour';
 import Link from 'next/link';
 import styles from './styles.module.css';
 import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticator';
-import { existingUserProfileData } from '../../../redux/actions/actions';
+import {
+    existingUserProfileData,
+    loadCountry
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Liveness from '../NotRegisteredForms/Liveness';
-import { login } from '../../../redux/types/actionTypes';
 
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
     const [pageType, setPageType] = useState('');
+    const [country, setCountry] = useState();
     const [loads, setLoads] = useState(false);
     const dispatch = useDispatch();
     const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
+    const { countries } = useSelector((state) => state.countryReducer);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         type: 'false',
@@ -29,6 +33,18 @@ const ExistingMultiStep = () => {
         password: '',
         confPassword: ''
     });
+    useEffect(() => {
+        dispatch(loadCountry());
+    }, []);
+    useEffect(() => {
+        if (countries !== null) {
+            countries.filter((item) => {
+                if (item.name === 'Nigeria') {
+                    setCountry(item);
+                }
+            });
+        }
+    }, [countries]);
     const [setType, typeset] = useState('false');
     // useEffect(() => {
     //     if (!errorMessage) {
@@ -54,7 +70,6 @@ const ExistingMultiStep = () => {
         switch (page) {
             case 0:
                 return <FirstStep action={handleSubmit} />;
-
             case 1:
                 return (
                     <SecondStep
@@ -89,7 +104,6 @@ const ExistingMultiStep = () => {
                             dispatch(existingUserProfileData(userData));
                             // setLoading((prev) => !prev);
                             setLoads((prev) => !prev);
-                            //console.log(existingUserProfilee.data.message);
                         }}
                         formData={formData}
                         setFormData={setFormData}
@@ -123,6 +137,7 @@ const ExistingMultiStep = () => {
                         }}
                         handleSubmit={handleSubmit}
                         handleSubmitNew={handleSubmitNew}
+                        countryNames={country}
                     />
                 );
             case 3:
@@ -135,6 +150,7 @@ const ExistingMultiStep = () => {
                         }}
                         formData={formData}
                         setFormData={setFormData}
+                        countryNames={country}
                     />
                 );
             default:

@@ -395,7 +395,7 @@
     filter: grayscale(100%);
     margin: 0px auto;
 }
-.error{
+.error {
     color: red;
 }
 .cov {
@@ -706,7 +706,7 @@
     margin-left: 12px;
     text-transform: uppercase;
 }
-.sameErroSize{
+.sameErroSize {
     font-size: 11px;
 }
 .error {
@@ -715,7 +715,7 @@
     margin: 0px;
     margin-top: 0.5rem;
 }
-.success{
+.success {
     color: #6ccf00;
 }
 @keyframes spaceshow {

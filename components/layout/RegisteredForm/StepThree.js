@@ -8,11 +8,11 @@ import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { useDispatch, useSelector } from 'react-redux';
 import { bankAccountsData } from '../../../redux/actions/actions';
 
-const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
+const StepThree = ({ action, handleSubmit, handleSubmitNew, countryNames }) => {
     const dispatch = useDispatch();
     const [profileInfo, setProfileInfo] = useState([]);
-    const account = localStorage.getItem('account');
-    const accountDetails = JSON.parse(account);
+    // const account = localStorage.getItem('account');
+    // const accountDetails = JSON.parse(account);
 
     const [isRegistered, setIsRegistered] = useState(false);
 
@@ -35,30 +35,18 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
     const handleBusinessTog = () => {
         setBColor(true);
     };
-    let countryName = '';
-    let countryNames;
-
-    if (typeof window !== 'undefined') {
-        countryName = window.localStorage.getItem('country');
-        //console.log(window.localStorage.getItem('country'));
-        if (countryName === null) {
-            countryNames = window.localStorage.getItem('country');
-        } else {
-            countryNames = JSON.parse(countryName);
-        }
-    }
 
     const { bankAccounts, errorMessage } = useSelector(
         (state) => state.bankAccountsReducer
     );
     useEffect(() => {
         dispatch(bankAccountsData());
-        if (accountDetails.profile !== undefined) {
-            setProfileInfo(accountDetails.profile);
-        } else if (accountDetails.user !== undefined) {
-            setProfileInfo(accountDetails.user.profile);
-        }
-        //console.log(profileInfo);
+        // if (accountDetails?.profile !== undefined) {
+        //     setProfileInfo(accountDetails.profile);
+        // } else if (accountDetails?.user !== undefined) {
+        //     setProfileInfo(accountDetails.user.profile);
+        // }
+        // console.log(profileInfo);
         //console.log(bankAccounts[0]?.accountNumber);
     }, []);
 
@@ -70,6 +58,11 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>
+                    <p className={styles.email}>
+                        An Email has been sent to your email account,Please
+                        check your inbox and verify your email before
+                        continuing.
+                    </p>
                     <div className={styles.cardHeading}>
                         <ArrowBackSvg action={action} color="#102572" />
                         <div>
@@ -80,10 +73,9 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                     </div>
                     <div className={styles.formWrapper}>
                         <div className={styles.formInner}>
-                            {accountDetails.email === null ? null : (
+                            {/* {accountDetails.email === null ? null : (
                                 <div>
                                     <label>Email </label>
-
                                     <input
                                         placeholder="Enter Your Email"
                                         className={styles.textInput}
@@ -92,11 +84,9 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                         value={accountDetails.email}
                                     />
                                 </div>
-                            )}
-
+                            )} */}
                             <div>
                                 <label>Account Number </label>
-
                                 <input
                                     placeholder="Fetching Account Number ...."
                                     className={styles.textInput}
@@ -107,7 +97,6 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                             </div>
                             <div>
                                 <label>Full Name </label>
-
                                 <input
                                     placeholder="Full Name"
                                     className={styles.textInput}
@@ -122,14 +111,14 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                     <div className={styles.phoneHeader}>
                                         <span>
                                             <img
-                                                src={countryNames.flags.svg}
+                                                src={countryNames?.flags.svg}
                                                 alt=""
                                             />
                                         </span>
-                                        <p>{countryNames.baseCurrency}</p>
+                                        <p>{countryNames?.baseCurrency}</p>
                                     </div>
                                     <div className={styles.phoneDetails}>
-                                        {/* <p>{countryNames.countryCode}</p> */}
+                                        <p>{countryNames?.countryCode}</p>
                                         <input
                                             type="number"
                                             placeholder="812 345 6789"
@@ -143,7 +132,6 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew }) => {
                                 style={{ marginBottom: '0px' }}
                             >
                                 <label> Gender </label>
-
                                 <select name="" id="">
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
