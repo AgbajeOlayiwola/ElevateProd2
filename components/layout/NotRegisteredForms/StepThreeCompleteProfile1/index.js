@@ -512,18 +512,18 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     <input
                                                         type="number"
                                                         placeholder="812 345 6789"
-                                                        {...register(
-                                                            'countryCode_number',
-                                                            {
-                                                                required:
-                                                                    'Phone number is required',
-                                                                minLength: {
-                                                                    value: 9,
-                                                                    message:
-                                                                        'Min length is 9'
-                                                                }
-                                                            }
-                                                        )}
+                                                        // {...register(
+                                                        //     'countryCode_number',
+                                                        //     {
+                                                        //         required:
+                                                        //             'Phone number is required',
+                                                        //         minLength: {
+                                                        //             value: 9,
+                                                        //             message:
+                                                        //                 'Min length is 9'
+                                                        //         }
+                                                        //     }
+                                                        // )}
                                                         value={
                                                             formData.phoneNumber
                                                         }
