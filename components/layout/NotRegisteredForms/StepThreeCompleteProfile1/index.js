@@ -139,7 +139,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     console.log(formData.bussinessName);
     useEffect(() => {
         if (userProfile) {
-            //console.log(userProfile);
             setProfileCont(userProfile);
             if (type !== true) {
                 setFormData({
