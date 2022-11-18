@@ -120,12 +120,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         //console.log(profile.data);
         if (profile) {
             // setProfileCont(userProfile);
-            if (type === true) {
-                setFormData({
-                    ...formData,
-                    bussinessName: `${profileCont?.lastName} ${profileCont?.firstName}`
-                });
-            } else {
+            if (type !== true) {
                 profile.data?.map((item) => {
                     if (item.documentType === 'CAC') {
                         setFormData({
@@ -157,6 +152,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         if (userProfile) {
             //console.log(userProfile);
             setProfileCont(userProfile);
+            if (type === true) {
+                setFormData({
+                    ...formData,
+                    bussinessName: `${profileCont?.lastName} ${profileCont?.firstName}`
+                });
+            }
         }
     }, [userProfile]);
     //console.log(
