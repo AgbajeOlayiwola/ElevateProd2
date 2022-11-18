@@ -134,25 +134,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                 });
             }
         }
-        // setProfileCont(userProfile);
-        // if (profile) {
-        if (userProfile) {
-            //console.log(userProfile);
-            setProfileCont(userProfile);
-        }
-        //     if (profile.data[1]) {
-        //         setBusinessProfile(profile.data[1].documentData);
-        //     } else {
-        //         setBusinessProfile('');
-        //     }
-        // }
-        // setGender(profileCont.gender);
     }, [profile]);
     useEffect(() => {
         if (userProfile) {
             //console.log(userProfile);
             setProfileCont(userProfile);
-            if (type === true) {
+            if (type === false) {
                 setFormData({
                     ...formData,
                     bussinessName: `${profileCont?.lastName} ${profileCont?.firstName}`
