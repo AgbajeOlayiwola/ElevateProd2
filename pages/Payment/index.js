@@ -279,6 +279,8 @@ const Payment = () => {
             }
             setSuccessfulTrans(bulkTransfer.successfulTranscations);
             setFailedTrans(bulkTransfer.failedTranscations);
+            localStorage.removeItem('number');
+            localStorage.removeItem('csvData');
         } else if (errorMessagebulkTransfer !== null) {
             setCount((count) => count + 1);
             setIsLoading(false);
@@ -700,10 +702,9 @@ const Payment = () => {
                                         ? paymentDetails.amount === ''
                                             ? paymentDetails.details.reduce(
                                                   (a, b) => {
-                                                      return (
-                                                          +a.amount + +b.amount
-                                                      );
-                                                  }
+                                                      return a + +b.amount;
+                                                  },
+                                                  0
                                               )
                                             : paymentDetails.amount *
                                               numberofBene.length

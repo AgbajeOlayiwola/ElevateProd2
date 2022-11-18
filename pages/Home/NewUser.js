@@ -28,6 +28,7 @@ const NewUser = ({ selectCountry }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [passwordMatch, setPasswordMatch] = useState('');
     const [symbol, setSymbol] = useState(false);
+    const [uppercase, setUppercase] = useState(false);
     const [numbers, setNumbers] = useState(false);
     const [loads, setLoads] = useState(false);
     const { user, errorMessage } = useSelector((state) => state.registered);
@@ -53,6 +54,19 @@ const NewUser = ({ selectCountry }) => {
             setSymbol(true);
         } else {
             setSymbol(false);
+        }
+        if (
+            validator.isStrongPassword(e.target.value, {
+                minLength: 0,
+                minLowercase: 0,
+                minUppercase: 1,
+                minNumbers: 0,
+                minSymbols: 0
+            })
+        ) {
+            setUppercase(true);
+        } else {
+            setUppercase(false);
         }
 
         if (
@@ -262,14 +276,24 @@ const NewUser = ({ selectCountry }) => {
                                         numbers ? styles.success : styles.error
                                     }
                                 >
-                                    password should Contain atleast 1 number
+                                    Password should contain atleast 1 number
                                 </p>
                                 <p
                                     className={
                                         symbol ? styles.success : styles.error
                                     }
                                 >
-                                    password should Contain at least 1 special
+                                    Password should contain at least 1 special
+                                    character
+                                </p>
+                                <p
+                                    className={
+                                        uppercase
+                                            ? styles.success
+                                            : styles.error
+                                    }
+                                >
+                                    Password should contain at least 1 Uppercase
                                     character
                                 </p>
                             </div>

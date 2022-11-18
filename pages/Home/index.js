@@ -370,31 +370,11 @@ const HomeMain = () => {
             const postData = {
                 pan: cardPan,
                 affiliateCode: 'ENG',
-                expiry: cardExp,
+                expiry: cardExp.split('/').toString().replaceAll(',', ''),
                 cvv: cvv
             };
 
             dispatch(cardLoginData(postData));
-
-            if (cardLogin.message === 'success') {
-                const data = {
-                    email: omniliteData.data.user.email,
-                    // accountNumber: omniliteData.data.user.profile.firstName,
-                    fullName: omniliteData.data.user.profile.lastName,
-                    phoneNumber: omniliteData.data.user.phoneNumber
-                };
-                window.localStorage.setItem(
-                    'displayAccount',
-                    JSON.stringify(data)
-                );
-                window.localStorage.setItem(
-                    'account',
-                    JSON.stringify(omniliteData.data.user)
-                );
-
-                router.push('/Onboarding/ExistingProfileSetup');
-            }
-            setError(cardLoginerrorMessages);
         }
         //console.logaccountNumbers);
     };
@@ -477,6 +457,31 @@ const HomeMain = () => {
             setLoading(false);
         }
     };
+
+    const cardTest = () => {
+        if (cardLogin.message === 'success') {
+            console.log(cardLogin);
+            const data = {
+                email: omniliteData.data.user.email,
+                // accountNumber: omniliteData.data.user.profile.firstName,
+                fullName: omniliteData.data.user.profile.lastName,
+                phoneNumber: omniliteData.data.user.phoneNumber
+            };
+            window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            window.localStorage.setItem(
+                'account',
+                JSON.stringify(omniliteData.data.user)
+            );
+
+            router.push('/Onboarding/ExistingProfileSetup');
+        } else if (cardLoginerrorMessages) {
+            setLoading(false);
+            setError(cardLoginerrorMessages);
+        }
+    };
+    useEffect(() => {
+        cardTest();
+    }, [cardLogin, cardLoginerrorMessages]);
     useEffect(() => {
         //console.log(ecobankOnline, ecoOnlineErrorMessage);
         ecoOnlineTest();
