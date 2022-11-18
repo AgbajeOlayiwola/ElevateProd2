@@ -11,8 +11,8 @@ import { bankAccountsData } from '../../../redux/actions/actions';
 const StepThree = ({ action, handleSubmit, handleSubmitNew, countryNames }) => {
     const dispatch = useDispatch();
     const [profileInfo, setProfileInfo] = useState([]);
-    // const account = localStorage.getItem('account');
-    // const accountDetails = JSON.parse(account);
+    const account = localStorage.getItem('account');
+    const accountDetails = JSON.parse(account);
 
     const [isRegistered, setIsRegistered] = useState(false);
 
@@ -41,13 +41,11 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew, countryNames }) => {
     );
     useEffect(() => {
         dispatch(bankAccountsData());
-        // if (accountDetails?.profile !== undefined) {
-        //     setProfileInfo(accountDetails.profile);
-        // } else if (accountDetails?.user !== undefined) {
-        //     setProfileInfo(accountDetails.user.profile);
-        // }
-        // console.log(profileInfo);
-        //console.log(bankAccounts[0]?.accountNumber);
+        if (accountDetails?.profile !== undefined) {
+            setProfileInfo(accountDetails.profile);
+        } else if (accountDetails?.user !== undefined) {
+            setProfileInfo(accountDetails.user.profile);
+        }
     }, []);
 
     const [activeBtn, setActiveBtn] = useState(true);
