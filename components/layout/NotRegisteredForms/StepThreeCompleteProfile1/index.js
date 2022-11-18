@@ -135,11 +135,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             }
         }
     }, [profile]);
+    console.log(type);
+    console.log(formData.bussinessName);
     useEffect(() => {
         if (userProfile) {
             //console.log(userProfile);
             setProfileCont(userProfile);
-            if (type === false) {
+            if (type !== true) {
                 setFormData({
                     ...formData,
                     bussinessName: `${profileCont?.lastName} ${profileCont?.firstName}`
