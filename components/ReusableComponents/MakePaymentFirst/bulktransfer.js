@@ -235,6 +235,7 @@ const BulkTransfer = ({
                                         type="text"
                                         value={e?.accountName}
                                         name={`${fieldName}.accountName`}
+                                        disabled
                                     />
                                     <p className={styles.error}>
                                         {errors?.accountNumber?.message}
@@ -260,7 +261,7 @@ const BulkTransfer = ({
                                                 }
                                             )}
                                             name={`${fieldName}.amount`}
-                                            type="number"
+                                            type="text"
                                             placeholder="0.00"
                                         />
                                     </div>
@@ -334,7 +335,7 @@ const BulkTransfer = ({
                                     }
                                 })}
                                 name="amount"
-                                type="number"
+                                type="text"
                                 placeholder="0.00"
                                 onChange={(e) => {
                                     if (e?.target.value.length === 0) {

@@ -870,12 +870,15 @@ const Payment = () => {
                                 amount={
                                     csvData === null
                                         ? paymentDetails.amount === ''
-                                            ? sum
+                                            ? paymentDetails.details.reduce(
+                                                  (a, b) => {
+                                                      return a + +b.amount;
+                                                  },
+                                                  0
+                                              )
                                             : paymentDetails.amount *
                                               numberofBene.length
-                                        : csvData.slice(2).reduce((a, b) => {
-                                              return +a.Amount + +b.Amount;
-                                          })
+                                        : sum
                                 }
                                 senderName={`${userProfileData.lastName} ${userProfileData.firstName}`}
                             />

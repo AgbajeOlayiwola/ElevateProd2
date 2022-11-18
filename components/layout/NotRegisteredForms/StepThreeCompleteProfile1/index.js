@@ -113,23 +113,31 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     useEffect(() => {
         dispatch(CompProfile());
         dispatch(loadUserProfile());
+        dispatch(businessCategoriesData());
     }, []);
 
     useEffect(() => {
         //console.log(profile.data);
         if (profile) {
             // setProfileCont(userProfile);
-            profile.data?.map((item) => {
-                if (item.documentType === 'CAC') {
-                    setFormData({
-                        ...formData,
-                        bussinessName: item.documentData.companyName
-                    });
-                    setBusinessProfile(item.documentData.companyName);
-                    //console.log(businessProfile);
-                    //console.log(formData.businessName);
-                }
-            });
+            if (type === true) {
+                profile.data?.map((item) => {
+                    if (item.documentType === 'CAC') {
+                        setFormData({
+                            ...formData,
+                            bussinessName: item.documentData.companyName
+                        });
+                        setBusinessProfile(item.documentData.companyName);
+                        //console.log(businessProfile);
+                        //console.log(formData.businessName);
+                    }
+                });
+            } else {
+                setFormData({
+                    ...formData,
+                    bussinessName: `${profileCont?.lastName} ${profileCont?.firstName}`
+                });
+            }
         }
         // setProfileCont(userProfile);
         // if (profile) {
@@ -151,9 +159,6 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             setProfileCont(userProfile);
         }
     }, [userProfile]);
-    useEffect(() => {
-        dispatch(businessCategoriesData());
-    }, []);
     //console.log(
     //     'errorMessages from account',
     //     newAccount,
@@ -378,43 +383,19 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     <div className={styles.formGroup}>
                                         <div className={styles.singleFormGroup}>
                                             <label>Enter Business Name</label>
-                                            {type === 'true' ? (
-                                                <input
-                                                    type="text"
-                                                    placeholder="Enter Business Full Name"
-                                                    value={
-                                                        formData.bussinessName
-                                                    }
-                                                    onInput={(event) => {
-                                                        setFormData({
-                                                            ...formData,
-                                                            bussinessName:
-                                                                event.target
-                                                                    .value
-                                                        });
-                                                    }}
-                                                />
-                                            ) : (
-                                                <input
-                                                    type="text"
-                                                    placeholder="Enter Business Full Name"
-                                                    {...register(
-                                                        'businessName',
-                                                        {
-                                                            required:
-                                                                'Business Name is required'
-                                                        }
-                                                    )}
-                                                    onInput={(event) => {
-                                                        setFormData({
-                                                            ...formData,
-                                                            bussinessName:
-                                                                event.target
-                                                                    .value
-                                                        });
-                                                    }}
-                                                />
-                                            )}
+                                            <input
+                                                type="text"
+                                                placeholder="Enter Business Full Name"
+                                                value={formData.bussinessName}
+                                                onInput={(event) => {
+                                                    setFormData({
+                                                        ...formData,
+                                                        bussinessName:
+                                                            event.target.value
+                                                    });
+                                                }}
+                                                disabled
+                                            />
 
                                             <p className={styles.error}>
                                                 {errors.businessName?.message}
@@ -554,6 +535,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                                         .value
                                                             });
                                                         }}
+                                                        disabled
                                                     />
                                                 </div>
                                             </div>
