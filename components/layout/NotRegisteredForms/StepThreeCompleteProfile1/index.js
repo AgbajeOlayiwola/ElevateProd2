@@ -120,7 +120,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         //console.log(profile.data);
         if (profile) {
             // setProfileCont(userProfile);
-            if (type !== true) {
+            if (type === 'true') {
                 profile.data?.map((item) => {
                     if (item.documentType === 'CAC') {
                         setFormData({
@@ -140,7 +140,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     useEffect(() => {
         if (userProfile) {
             setProfileCont(userProfile);
-            if (type !== true) {
+            if (type === 'false') {
                 setFormData({
                     ...formData,
                     bussinessName: `${profileCont?.lastName} ${profileCont?.firstName}`
