@@ -32,3 +32,8 @@
     text-align: left;
 }
 
+@media screen and (max-width: 1253px) {
+    .profileSingle {
+        padding: 16px;
+    }
+}

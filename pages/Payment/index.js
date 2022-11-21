@@ -106,6 +106,7 @@ const Payment = () => {
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
     const [balance, setBalance] = useState('₦ 0.00');
+    const [sum, setSum] = useState('');
     const [error, setError] = useState('');
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');
@@ -279,8 +280,8 @@ const Payment = () => {
             }
             setSuccessfulTrans(bulkTransfer.successfulTranscations);
             setFailedTrans(bulkTransfer.failedTranscations);
-            localStorage.removeItem('number');
-            localStorage.removeItem('csvData');
+            // localStorage.removeItem('number');
+            // localStorage.removeItem('csvData');
         } else if (errorMessagebulkTransfer !== null) {
             setCount((count) => count + 1);
             setIsLoading(false);
@@ -364,7 +365,13 @@ const Payment = () => {
             setPaymentDetails({});
         }
     };
-    let sum;
+    useEffect(() => {
+        setSum(
+            csvData?.slice(2).reduce((a, b) => {
+                return a + b.Amount;
+            }, 0)
+        );
+    }, [csvData]);
     const renderForm = () => {
         switch (formType) {
             case 'paylink':
@@ -690,9 +697,6 @@ const Payment = () => {
                             />
                         );
                     case 1:
-                        const sum = csvData?.slice(2).reduce((a, b) => {
-                            return a + b.Amount;
-                        }, 0);
                         return (
                             <MakePaymentSecond
                                 isLoading={isLoading}
@@ -1143,7 +1147,7 @@ const Payment = () => {
     };
     return (
         <DashLayout page="Payments">
-            {active && (
+            {/* {active && (
                 <div className={styles.greencard}>
                     <div className={styles.greencardDetails}>
                         <div>
@@ -1171,7 +1175,7 @@ const Payment = () => {
                         classes={styles.closeButton}
                     />
                 </div>
-            )}
+            )} */}
 
             <div className={styles.cov}>
                 <div className={styles.whiteboard}>
@@ -1181,18 +1185,6 @@ const Payment = () => {
                                 <p className={styles.thousand}>
                                     {outType ? '*******' : balance}
                                 </p>
-                                {/* <RWebShare
-                                    data={{
-                                        text: 'Like humans, flamingos make friends for life',
-                                        url: 'https://on.natgeo.com/2zHaNup',
-                                        title: 'Flamingos'
-                                    }}
-                                    onClick={() =>
-                                        //console.log('shared successfully!')
-                                    }
-                                >
-                                    <button>Share 🔗</button>
-                                </RWebShare> */}
                                 <Visbility color="green" typeSet={types} />
                             </div>
                             <p className={styles.avail}>Available Balance</p>
