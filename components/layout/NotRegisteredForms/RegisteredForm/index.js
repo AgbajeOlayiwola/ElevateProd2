@@ -49,13 +49,17 @@ const RegisteredForm = ({
     const handleRegistrationStatus = () => {
         //console.log('true');
         setBgcolor((prevState) => !prevState);
-        setFormData({ ...formData, type: 'true' });
+        setFormData({ ...formData, type: true });
     };
     const switchRegistrationStatus = () => {
         //console.log('false');
         setBgcolor((prevState) => !prevState);
-        setFormData({ ...formData, type: 'false' });
+        setFormData({ ...formData, type: false });
     };
+    useEffect(() => {
+        setBgcolor((prevState) => !prevState);
+        setFormData({ ...formData, type: false });
+    }, []);
     //console.log(
     //     formData.type,
     //     formData.rcnumber,
@@ -131,7 +135,7 @@ const RegisteredForm = ({
                         <option value="Yes">Yes</option>
                     </select>
                 </InputWrapper>
-                {formData.type == 'true' ? (
+                {formData.type == true ? (
                     <form onSubmit={handleSubmit(actionI)}>
                         <InputWrapper>
                             <Label>
@@ -322,7 +326,7 @@ const RegisteredForm = ({
                 ) : (
                     ''
                 )}
-                {formData.type == 'false' ? (
+                {formData.type === false ? (
                     <form onSubmit={handleSubmit(action)}>
                         <InputWrapper>
                             <Label>Enter your BVN</Label>

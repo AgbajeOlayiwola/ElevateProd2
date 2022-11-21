@@ -117,10 +117,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     }, []);
 
     useEffect(() => {
-        //console.log(profile.data);
         if (profile) {
-            // setProfileCont(userProfile);
-            if (type === 'true') {
+            if (type === true) {
                 profile.data?.map((item) => {
                     if (item.documentType === 'CAC') {
                         setFormData({
@@ -128,31 +126,24 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                             bussinessName: item.documentData.companyName
                         });
                         setBusinessProfile(item.documentData.companyName);
-                        //console.log(businessProfile);
-                        //console.log(formData.businessName);
                     }
                 });
             }
         }
     }, [profile]);
-    console.log(type);
-    console.log(formData.bussinessName);
     useEffect(() => {
         if (userProfile) {
             setProfileCont(userProfile);
-            if (type === 'false') {
-                setFormData({
-                    ...formData,
-                    bussinessName: `${profileCont?.lastName} ${profileCont?.firstName}`
-                });
-            }
         }
     }, [userProfile]);
-    //console.log(
-    //     'errorMessages from account',
-    //     newAccount,
-    //     newAccountErrorMessage
-    // );
+    useEffect(() => {
+        if (type === false) {
+            setFormData({
+                ...formData,
+                bussinessName: `${profileCont?.lastName} ${profileCont?.firstName}`
+            });
+        }
+    }, [profileCont]);
     useEffect(() => {
         if (newAccount.message === 'success') {
             //console.log(errorMessages);
