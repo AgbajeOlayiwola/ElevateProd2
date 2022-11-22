@@ -280,8 +280,6 @@ const Payment = () => {
             }
             setSuccessfulTrans(bulkTransfer.successfulTranscations);
             setFailedTrans(bulkTransfer.failedTranscations);
-            // localStorage.removeItem('number');
-            // localStorage.removeItem('csvData');
         } else if (errorMessagebulkTransfer !== null) {
             setCount((count) => count + 1);
             setIsLoading(false);
@@ -862,6 +860,8 @@ const Payment = () => {
                                     setCount(0);
                                     setOverlay(false);
                                     setFormType('');
+                                    localStorage.removeItem('number');
+                                    localStorage.removeItem('csvData');
                                 }}
                                 successfulTrans={successfulTrans}
                                 failedTrans={failedTrans}

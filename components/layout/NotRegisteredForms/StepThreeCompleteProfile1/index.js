@@ -608,7 +608,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                     ) : (
                         <form
                             onSubmit={handleSubmit(
-                                type === 'true'
+                                type === true
                                     ? handleSubmitReg
                                     : handleSubmitIII
                             )}

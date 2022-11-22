@@ -197,15 +197,15 @@ const BulkTransfer = ({
                                                 }
                                             }}
                                         >
-                                            {payload !== undefined ? (
+                                            {/* {payload !== undefined ? (
                                                 <option value={e.bankName}>
                                                     {e.bankName}
                                                 </option>
-                                            ) : (
-                                                <option value="">
-                                                    Select Bank
-                                                </option>
-                                            )}
+                                            ) : ( */}
+                                            <option value="">
+                                                Select Bank
+                                            </option>
+                                            {/* )} */}
 
                                             <option value="ECOBANK">
                                                 ECOBANK
