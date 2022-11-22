@@ -14,7 +14,7 @@ const getRCReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 isLoading: true,
                 getRC: null,
-                RCErrorMessage: null
+                getRCErrorMessage: null
             };
         case getRC.GETRC_SUCCESS:
             return {

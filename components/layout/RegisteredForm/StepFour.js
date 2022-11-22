@@ -57,7 +57,9 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const { compBusprofile, comperrorMessage } = useSelector(
         (state) => state.completeBusinessprofileReducer
     );
-    const { getRC, getRCError } = useSelector((state) => state.getRCReducer);
+    const { getRC, getRCErrorMessage } = useSelector(
+        (state) => state.getRCReducer
+    );
 
     const {
         register,
@@ -92,7 +94,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
         if (getRC !== null) {
             setBusinessName(getRC.companyName);
         }
-    }, [getRC, getRCError]);
+    }, [getRC, getRCErrorMessage]);
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
