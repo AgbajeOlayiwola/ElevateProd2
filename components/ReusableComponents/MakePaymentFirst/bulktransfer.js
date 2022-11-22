@@ -127,7 +127,7 @@ const BulkTransfer = ({
                                             Account Number
                                         </label>
                                         <input
-                                            type="number"
+                                            type="text"
                                             placeholder="Enter Account Number"
                                             {...register(
                                                 `${fieldName}.accountNumber`,
