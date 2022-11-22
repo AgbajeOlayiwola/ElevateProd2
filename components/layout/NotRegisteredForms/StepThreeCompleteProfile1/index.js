@@ -245,9 +245,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                     'your have already setup your business'
             ) {
                 profile.data?.map((item) => {
-                    if (type === 'true') {
+                    if (type === true) {
                         router.push('/Verify/CorportateAccount');
-                    } else if (type === 'false') {
+                    } else if (type === false) {
                         router.push('/Verify/Account/loading');
                     }
                 });
