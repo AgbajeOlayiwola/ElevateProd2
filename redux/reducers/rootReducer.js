@@ -74,6 +74,7 @@ import pushDocumentsReducer from './pushDocuments.reducer';
 import shareDocumentsReducer from './shareDocuments.reducer';
 import existReducer from './exist.reducer';
 import fetchRMReducer from './fetchRM.reducer';
+import getRCReducer from './getRC.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -112,6 +113,7 @@ const appReducer = combineReducers({
     otp: otpReducer,
     profileSetup: profileSetupReducer,
     omniliteReducer: omniliteReducer,
+    getRCReducer: getRCReducer,
     accountNumberReducer: accountNumberReducer,
     existingUserProfileReducer: existingUserProfileReducer,
     ecobankOnlineReducer: ecobankOnlineReducer,

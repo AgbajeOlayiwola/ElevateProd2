@@ -10,7 +10,8 @@ import {
     statesData,
     businessCategoriesData,
     CompleteBusinessProfile,
-    ExCreateBusProfileSetup
+    ExCreateBusProfileSetup,
+    getRCDetails
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
@@ -56,6 +57,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const { compBusprofile, comperrorMessage } = useSelector(
         (state) => state.completeBusinessprofileReducer
     );
+    const { getRC, getRCError } = useSelector((state) => state.getRCReducer);
 
     const {
         register,
@@ -69,6 +71,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const [localGovernment, setLocalGovernment] = useState('');
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
+    const [getRCFirst, setGetRCFirst] = useState(false);
     const { states } = useSelector((state) => state.statesReducer);
     const [businessName, setBusinessName] = useState('');
     const [refferalCode, setRefferalCode] = useState('');
@@ -85,7 +88,11 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const [phones, setPhones] = useState();
 
     //console.logformData.type);
-
+    useEffect(() => {
+        if (getRC !== null) {
+            setBusinessName(getRC.companyName);
+        }
+    }, [getRC, getRCError]);
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
@@ -123,7 +130,6 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
         dispatch(CompleteBusinessProfile(userData));
         //console.logexistingProfileSetupPay, existingProfileSetupError);
     };
-
     const profileTest = () => {
         //console.log(compBusprofile, comperrorMessage);
         setLoading((prev) => !prev);
@@ -224,6 +230,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     useEffect(() => {
         dispatch(businessCategoriesData());
     }, []);
+
     useEffect(() => {
         if (accountDetails.profile !== undefined) {
             setProfileInfo(accountDetails.profile);
@@ -235,6 +242,13 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             setBusinessCategory(businessCategories);
         }
     }, [businessCategories]);
+    useEffect(() => {
+        if (title === 'New') {
+            setBusinessName(
+                `${profileInfo?.lastName} ${profileInfo?.firstName}`
+            );
+        }
+    }, [profileInfo]);
     useEffect(() => {
         Object.keys(businessCategory)?.filter((item) => {
             if (item === business) {
@@ -281,6 +295,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                         e.target.value
                                                     )
                                                 }
+                                                disabled
                                             />
                                         </div>
                                         <div
@@ -479,6 +494,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                                 ? profileInfo.phoneNumber
                                                                 : phoneNumber
                                                         }
+                                                        disabled
                                                     />
                                                 </div>
                                             </div>
@@ -666,9 +682,25 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                             'Only Alphabelts/Number allowed'
                                                     }
                                                 })}
-                                                onChange={(e) =>
-                                                    setRegNo(e.target.value)
-                                                }
+                                                onChange={(e) => {
+                                                    setRegNo(e.target.value);
+                                                    if (
+                                                        e.target.value
+                                                            .length === 9
+                                                    ) {
+                                                        setGetRCFirst(true);
+                                                        const data = {
+                                                            registerationNumber:
+                                                                e.target.value
+                                                        };
+                                                        dispatch(
+                                                            getRCDetails(data)
+                                                        );
+                                                    } else {
+                                                        setBusinessName('');
+                                                        setGetRCFirst(false);
+                                                    }
+                                                }}
                                                 value={regNo}
                                             />
 
@@ -730,9 +762,11 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                             )
                                                         }
                                                         value={
-                                                            phoneNumber
-                                                            // profileInfo.phoneNumber
+                                                            profileInfo.phoneNumber
+                                                                ? profileInfo.phoneNumber
+                                                                : phoneNumber
                                                         }
+                                                        disabled
                                                         // onChange={(e) =>
                                                         //     setPhoneNumber(
                                                         //         e.target.value
@@ -827,13 +861,18 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                             </label>
                                             <input
                                                 type="text"
-                                                placeholder="Enter Your Business Name"
+                                                placeholder={
+                                                    getRCFirst
+                                                        ? 'Fetching'
+                                                        : 'Enter Your Business Name'
+                                                }
                                                 value={businessName}
                                                 onChange={(e) =>
                                                     setBusinessName(
                                                         e.target.value
                                                     )
                                                 }
+                                                disabled
                                             />
                                         </div>
                                         <div
@@ -1051,362 +1090,3 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
 };
 
 export default StepFour;
-
-//   <div className={styles.bord}>
-//       <div className={styles.inps}>
-//           {errors.businessName?.message}
-//           <label>Enter Business Name</label>
-
-//           <br />
-
-//           <input
-//               placeholder="Enter Business Name"
-//               className={styles.textInput}
-//               required
-//               {...register('businessName', {
-//                   required: 'Business Name is Required',
-//                   pattern: {
-//                       // eslint-disable-next-line
-//                       value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-//                       message: 'Invalid email address'
-//                   }
-//               })}
-//           />
-//       </div>
-//       <div className={styles.inps}>
-//                                     <label>
-//                                         Enter TIN <i>(optional)</i>{' '}
-//                                     </label>
-//                                     <br />
-
-//                                     <input
-//                                         placeholder="Enter Tin"
-//                                         className={styles.textInput}
-//                                         required
-//                                         {...register('tin', {
-//                                             required: 'Tin is Required'
-//                                             // pattern: {
-//                                             //     // eslint-disable-next-line
-//                                             //     value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-//                                             //     message: 'Invalid email address'
-//                                             // }
-//                                         })}
-//                                     />
-//                                 </div>
-
-//       <div className={styles.inps}>
-//           <label>Select Your Business Type </label>
-//           {errors.email?.message}
-//           <br />
-
-//           <select>
-//               <option value="">Search Your Business Type</option>
-
-//               <option value="Retail business">Retail business</option>
-//               <option value="Perishable business">Perishable business</option>
-//           </select>
-//       </div>
-//       <p className={styles.ent}>Enter Business Address</p>
-//       <div className={styles.busAdd}>
-//           <div className={styles.inps}>
-//               <label>Address </label>
-//               {errors.streetName?.message}
-//               <br />
-
-//               <input
-//                   placeholder="407  Bornoway"
-//                   className={styles.textInput}
-//                   required
-//                   {...register('streetName', {
-//                       required: 'Address is Required',
-//                       pattern: {
-//                           // eslint-disable-next-line
-//                           value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-//                           message: 'Invalid email address'
-//                       }
-//                   })}
-//               />
-//           </div>
-//           <div className={styles.inps}>
-//               <label>State </label>
-//               {errors.email?.message}
-//               <br />
-
-//               <select
-//                   className={styles.busInp}
-//                   onChange={(event) => {
-//                       setLocalState(event.target.value);
-//                   }}
-//               >
-//                   <option>Enter State</option>
-//                   {location?.map((item, index) => {
-//                       return (
-//                           <option value={item.state} key={index}>
-//                               {item.state}
-//                           </option>
-//                       );
-//                   })}
-//               </select>
-//           </div>
-//           <div className={styles.inps}>
-//               <label>Select Your Local Government </label>
-//               {errors.email?.message}
-//               <br />
-
-//               <select className={styles.busInp}>
-//                   <option value="">Select Local Government</option>
-//                   {localGovernment
-//                       ? localGovernment?.map((item, index) => {
-//                             return (
-//                                 <option value={item.lgaName} key={index}>
-//                                     {item.lgaName}
-//                                 </option>
-//                             );
-//                         })
-//                       : null}
-//               </select>
-//           </div>
-//           <div className={styles.inps}>
-//               <label>City </label>
-//               {errors.city?.message}
-//               <br />
-
-//               <input
-//                   placeholder="Enter City"
-//                   className={styles.textInput}
-//                   {...register('city', {
-//                       required: 'City is Required',
-//                       pattern: {
-//                           // eslint-disable-next-line
-//                           value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-//                           message: 'Invalid email address'
-//                       }
-//                   })}
-//               />
-//           </div>
-//       </div>
-//   </div>;
-{
-    /* <div className={styles.bord}>
-                                    <div className={styles.inps}>
-                                        <label>
-                                            Enter RC Number/Business
-                                            Registration Number
-                                        </label>
-
-                                        <br />
-
-                                        <input
-                                            placeholder="Enter RC Number"
-                                            className={styles.textInput}
-                                            {...register('rcNumber', {
-                                                required:
-                                                    'RC Number is Required'
-                                                maxLength: {
-                                                    value: 15,
-                                                    message:
-                                                        'RC Number  cannot be more than 15 digits'
-                                                },
-                                                minLength: {
-                                                    value: 15,
-                                                    message:
-                                                        'RC Number  cannot be more than 15 digits'
-                                                }
-                                                pattern: {
-                                                    // eslint-disable-next-line
-                                                    value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                                    message: 'Invalid email address'
-                                                }
-                                            })}
-                                            type="text"
-                                        />
-                                        <p className={styles.error}>
-                                            {errors.rcNumber?.message}
-                                        </p>
-                                    </div>
-                                    <div className={styles.inps}>
-                                        <label>
-                                            Enter TIN <i>(optional)</i>{' '}
-                                        </label>
-                                        <br />
-
-                                        <input
-                                            placeholder="Enter Tin"
-                                            className={styles.textInput}
-                                        />
-                                    </div>
-
-                                    <div className={styles.inps}>
-                                <label>Select Your Business Category </label>
-
-                                <br />
-
-                                <select
-                                    onChange={(e) => {
-                                        setBusiness(e.target.value);
-                                    }}
-                                >
-                                    <option>
-                                        Search Your Business Category
-                                    </option>
-                                    {Object.keys(businessCategory)?.map(
-                                        (business, index) => {
-                                            return (
-                                                <option
-                                                    value={business}
-                                                    key={index}
-                                                >
-                                                    {business}
-                                                </option>
-                                            );
-                                        }
-                                    )}
-                                </select>
-                            </div>
-                            <div className={styles.inps}>
-                                <label>Select Your Business Type </label>
-
-                                <br />
-
-                                <select>
-                                    <option>Select Your Business Type</option>
-                                    {businessType?.map((business, index) => {
-                                        return (
-                                            <option
-                                                value={business}
-                                                key={index}
-                                            >
-                                                {business}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </div>
-                                    <BusinessCategory />
-                                    <p className={styles.ent}>
-                                        Enter Business Address
-                                    </p>
-                                    <div className={styles.busAdd}>
-                                        <div className={styles.inps}>
-                                            <label>Address </label>
-
-                                            <br />
-
-                                            <input
-                                                type="text"
-                                                placeholder="407  Bornoway"
-                                                className={styles.textInput}
-                                            />
-                                        </div>
-                                        <div className={styles.inps}>
-                                            <label>State </label>
-
-                                            <br />
-
-                                            <select
-                                                className={styles.busInp}
-                                                onChange={(event) => {
-                                                    setLocalState(
-                                                        event.target.value
-                                                    );
-                                                }}
-                                            >
-                                                <option>Enter State</option>
-                                                {location?.map(
-                                                    (item, index) => {
-                                                        return (
-                                                            <option
-                                                                value={
-                                                                    item.state
-                                                                }
-                                                                key={index}
-                                                            >
-                                                                {item.state}
-                                                            </option>
-                                                        );
-                                                    }
-                                                )}
-                                            </select>
-                                        </div>
-                                        <div className={styles.inps}>
-                                            <label>
-                                                Select Your Local Government{' '}
-                                            </label>
-                                            {errors.email?.message}
-                                            <br />
-
-                                            <select className={styles.busInp}>
-                                                <option value="">
-                                                    Select Local Government
-                                                </option>
-                                                {localGovernment
-                                                    ? localGovernment?.map(
-                                                          (item, index) => {
-                                                              return (
-                                                                  <option
-                                                                      value={
-                                                                          item.lgaName
-                                                                      }
-                                                                      key={
-                                                                          index
-                                                                      }
-                                                                  >
-                                                                      {
-                                                                          item.lgaName
-                                                                      }
-                                                                  </option>
-                                                              );
-                                                          }
-                                                      )
-                                                    : null}
-                                            </select>
-                                        </div>
-                                        <div className={styles.inps}>
-                                            <label>City </label>
-
-                                            <br />
-
-                                            <input
-                                                type="text"
-                                                placeholder="Enter City"
-                                                className={styles.textInput}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className={styles.inps}>
-                                    <label>
-                                        Enter Referal Code <i>(optional)</i>{' '}
-                                    </label>
-
-                                    <br />
-
-                                    <input
-                                        placeholder="Enter Referal Code"
-                                        className={styles.textInput}
-                                        {...register('email', {
-                                            required: 'Business Address is Required',
-                                            pattern: {
-                                                // eslint-disable-next-line
-                                                value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                                message: 'Invalid email address'
-                                            }
-                                        })}
-                                    />
-                                </div>
-                                <div>
-                                    <div className={styles.terms}>
-                                        <CircleSvg
-                                            action={() => {
-                                                setActiveBtn(!activeBtn);
-                                            }}
-                                            circleStatus={activeBtn}
-                                        />
-                                        <label>
-                                            I agree with Ellevate App
-                                            <span>Terms and Conditions</span>
-                                        </label>
-                                    </div>
-                                </div> */
-}

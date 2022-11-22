@@ -72,6 +72,7 @@ import {
     sendCac,
     pushDocuments,
     fetchRM,
+    getRC,
     shareDocuments,
     getCAC
 } from '../types/actionTypes';
@@ -1507,7 +1508,7 @@ export const existingUserProfileData = (data) => (dispatch) => {
         .then((response) => {
             dispatch(existingUserProfileLoadSuccess(response));
             //console.logresponse.data.data.token);
-            setCookie('existingToken', response.data.data.token);
+            setCookie('cookieToken', response.data.data.token);
         })
         .catch((error) => dispatch(existingUserProfileLoadError(error)));
 };
@@ -2764,6 +2765,59 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                 dispatch(exSetupBusSendCacError(error.response.data.message));
             });
     };
+};
+
+export const getRCLoad = () => ({
+    type: getRC.GETRC_START
+});
+export const getRCSuccess = (existingProfileSetupPay) => ({
+    type: getRC.GETRC_SUCCESS,
+    payload: existingProfileSetupPay
+});
+export const getRCError = (existingProfileSetupError) => ({
+    type: getRC.GETRC_ERROR,
+    payload: existingProfileSetupError
+});
+export const getRCDetails = (resetOtpdata) => (dispatch) => {
+    dispatch(getRCLoad());
+    let cookie;
+
+    cookie = getCookie('cookieToken');
+
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://ellevate-test.herokuapp.com${apiRoutes.businessNameCac}`,
+            resetOtpdata,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            if (response.data) {
+                axios
+                    .get(
+                        `https://ellevate-test.herokuapp.com${apiRoutes.verifyCac}`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${cookie}`
+                            }
+                        }
+                    )
+                    .then((response) => {
+                        //console.logresponse.data.data);
+                        dispatch(getRCSuccess(response.data.data.dataFromCac));
+                    })
+                    .catch((error) =>
+                        dispatch(getRCError(error.response.message))
+                    );
+            }
+        })
+        .catch((error) => dispatch(getRCError(error.response.data.message)));
 };
 
 // business profile setuo action end

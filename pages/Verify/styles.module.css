@@ -51,3 +51,15 @@
 .body button {
     width: 300px;
 }
+
+@media screen and (max-width: 475px) {
+    .body {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 374px) {
+    .body {
+        width: 90%;
+    }
+}

@@ -35,7 +35,7 @@ const ProfileSetups = () => {
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
-        type: 'false',
+        type: false,
         rcnumber: '',
         tinNumber: '',
         bvNumber: '',

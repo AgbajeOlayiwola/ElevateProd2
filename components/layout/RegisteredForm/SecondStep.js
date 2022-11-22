@@ -142,7 +142,7 @@ const RegisteredForm = ({
                         <div>
                             {errorMessage ? (
                                 <p className={styles.error}>
-                                    {errorMessage.response.data.message}
+                                    {errorMessage?.response?.data?.message}
                                 </p>
                             ) : null}
                             <h3 className={styles.LeftHeading}>

@@ -713,3 +713,11 @@ export const existingBusnessSetup = {
     EXISTING_BUSINESS_ERROR: 'EXISTING_BUSINESS_ERROR'
 };
 // existing business setup End
+//GET CAC END
+//existing business setup TYPE STARTE
+export const getRC = {
+    GETRC_START: 'GETRC_START',
+    GETRC_SUCCESS: 'GETRC_SUCCESS',
+    GETRC_ERROR: 'GETRC_ERROR'
+};
+// existing business setup End

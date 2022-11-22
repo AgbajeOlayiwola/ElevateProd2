@@ -48,18 +48,12 @@ const RegisteredForm = ({
     };
     const handleRegistrationStatus = () => {
         //console.log('true');
-        setBgcolor((prevState) => !prevState);
         setFormData({ ...formData, type: true });
     };
     const switchRegistrationStatus = () => {
         //console.log('false');
-        setBgcolor((prevState) => !prevState);
         setFormData({ ...formData, type: false });
     };
-    useEffect(() => {
-        setBgcolor((prevState) => !prevState);
-        setFormData({ ...formData, type: false });
-    }, []);
     //console.log(
     //     formData.type,
     //     formData.rcnumber,
