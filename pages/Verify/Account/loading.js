@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import StepFiveSuccessPage from '../../../components/layout/NotRegisteredForms/StepFiveSucceesPage';
 import FailedModal from '../../../components/ReusableComponents/FailedModal';
 import axiosInstance from '../../../redux/helper/apiClient';
@@ -31,27 +31,7 @@ const AccountLoading = () => {
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
     );
-
-    // useEffect(() => {
-    //     const accountData = {
-    //         affiliateCode: 'ENG',
-    //         currency: 'NGN'
-    //     };
-    //     dispatch(createNewUserAccount(accountData));
-    //     dispatch(newAccountStatusData());
-
-    //     if (accountStatus.message === 'success') {
-    //         //console.log(accountStatus.messages, errorMessages);
-    //         router.push('/Succes');
-    //     } else if (
-    //         newAccountErrorMessage ===
-    //         'Sorry, we could not process your request. Please chat with us to get this sorted.'
-    //     ) {
-    //         setError(newAccountErrorMessage);
-    //     }
-    // }, [accountStatus.messages]);
-
-    //console.log(errorMessages);
+    const [count, setCount] = useState(0);
     const newUserAccountt = () => {
         const accountData = {
             affiliateCode: 'ENG',
@@ -59,20 +39,34 @@ const AccountLoading = () => {
         };
         dispatch(createNewUserAccount(accountData));
         dispatch(newAccountStatusData());
+    };
+    useEffect(() => {
+        newUserAccountt();
+    }, []);
+    // useEffect(() => {
+    //     setCount(count + 1);
+    // }, [errorMessages]);
+    useEffect(() => {
         if (
             errorMessages === 'Pending Creation, Try Again' ||
             errorMessages === 'Bank Account has not been created for this user'
         ) {
-            setTimeout(() => {
+            // if (count === 1) {
+            const interval = setInterval(() => {
+                console.log(count);
                 dispatch(newAccountStatusData());
-            }, 10000);
+            }, 20000);
+            return () => {
+                clearInterval(interval);
+            };
+            // }
+            // else {
+            //     router.push('/Verify/Waiting');
+            // }
         } else if (accountStatuss.message === 'success') {
             //console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         }
-    };
-    useEffect(() => {
-        newUserAccountt();
     }, [errorMessages, accountStatuss.message]);
 
     return (

@@ -30,9 +30,13 @@ const ExistingAccount = () => {
             //  setError(errorMessages);
             //console.logerrorMessages);
         } else if (accountStatus.message === 'Try Again') {
-            setTimeout(() => {
-                dispatch(accountStatusData(userId));
-            }, 40000);
+            if (count >= 5) {
+                router.push('/Verify/Waiting');
+            } else {
+                setTimeout(() => {
+                    dispatch(accountStatusData(userId));
+                }, 40000);
+            }
         } else if (accountStatus.message === 'SUCCESS') {
             window.localStorage.setItem(
                 'accountNumber',

@@ -104,7 +104,6 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     useEffect(() => {
         if (window.typeof !== 'undefined') {
             setPhones(JSON.parse(window.localStorage.getItem('account')));
-            //console.logphones);
         }
     }, []);
     const [profileInfo, setProfileInfo] = useState([]);
@@ -113,7 +112,6 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
 
     const onSubmitNew = (data) => {
         setLoading((prev) => !prev);
-        //console.logdata);
         const userData = {
             isRegistered: 'true',
             businessName: businessName,
