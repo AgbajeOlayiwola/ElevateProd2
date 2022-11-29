@@ -12,7 +12,7 @@ if (loginToken === null) {
 }
 
 const axiosInstance = axios.create({
-    baseURL: 'https://ellevate-app.herokuapp.com/'
+    baseURL: 'http://137.184.64.30'
 });
 
 export default axiosInstance;
