@@ -825,7 +825,7 @@ const AccountUpgrade = () => {
                                                                   >
                                                                       {
                                                                           item.lgaName
-                                                                      }
+                                          n                           }
                                                                   </option>
                                                               );
                                                           }
