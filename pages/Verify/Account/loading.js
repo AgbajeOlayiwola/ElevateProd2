@@ -63,11 +63,11 @@ const AccountLoading = () => {
             // else {
             //     router.push('/Verify/Waiting');
             // }
-        } else if (accountStatuss.message === 'success') {
+        } else if (accountStatuss !== null) {
             //console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         }
-    }, [errorMessages, accountStatuss.message]);
+    }, [errorMessages, accountStatuss]);
 
     return (
         <>

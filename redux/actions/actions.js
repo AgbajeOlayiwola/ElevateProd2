@@ -106,7 +106,7 @@ if (loginToken === null) {
 //     };
 // };
 const axiosInstance = axios.create({
-    baseURL: 'https://ellevate-test.herokuapp.com',
+    baseURL: 'http://137.184.64.30',
     headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Token}`
@@ -446,7 +446,7 @@ export const loadUserProfile = () => (dispatch) => {
     dispatch(userProfileLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`https://ellevate-test.herokuapp.com${apiRoutes.userProfile}`, {
+        .get(`http://137.184.64.30${apiRoutes.userProfile}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -1585,7 +1585,7 @@ export const newAccountStatusData = () => (dispatch) => {
     const cookie = getCookie('cookieToken');
     // dispatch(accountStatusLoadStart());
     axiosInstance
-        .get(`https://ellevate-test.herokuapp.com${apiRoutes.accountStatus}`, {
+        .get(`http://137.184.64.30${apiRoutes.accountStatus}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -1725,7 +1725,7 @@ export const createProfileSetup = (profileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://ellevate-test.herokuapp.com${apiRoutes.profileSetup}`,
+                `http://137.184.64.30${apiRoutes.profileSetup}`,
                 profileData,
                 {
                     headers: {
@@ -1748,7 +1748,7 @@ export const createProfileSetup = (profileData) => {
                     setTimeout(() => {
                         axios
                             .post(
-                                `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatus}`,
+                                `http://137.184.64.30${apiRoutes.verifyStatus}`,
                                 [],
                                 {
                                     headers: {
@@ -1825,7 +1825,7 @@ export const createBusProfileSetup = (businessProfileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://ellevate-test.herokuapp.com${apiRoutes.profileSetupBus}`,
+                `http://137.184.64.30${apiRoutes.profileSetupBus}`,
                 businessProfileData,
                 {
                     headers: {
@@ -1843,7 +1843,7 @@ export const createBusProfileSetup = (businessProfileData) => {
                     setTimeout(() => {
                         axiosInstance
                             .post(
-                                `https://ellevate-test.herokuapp.com${apiRoutes.verifyStatusBus}`,
+                                `http://137.184.64.30${apiRoutes.verifyStatusBus}`,
                                 [],
                                 {
                                     headers: {
@@ -1894,16 +1894,12 @@ export const verifyOtp = (otpData) => {
     const cookie = getCookie('cookieToken');
     return async (dispatch) => {
         await axiosInstance
-            .post(
-                `https://ellevate-test.herokuapp.com${apiRoutes.verifyOtp}`,
-                otpData,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            .post(`http://137.184.64.30${apiRoutes.verifyOtp}`, otpData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
+            })
             .then((response) => {
                 dispatch(otpLoadSuccess(response.data));
                 //console.log'otp', otpData);
@@ -1940,15 +1936,12 @@ export const CompProfile = () => {
     return (dispatch) => {
         dispatch(profileLoadStart());
         axiosInstance
-            .get(
-                `https://ellevate-test.herokuapp.com${apiRoutes.authProfile}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            .get(`http://137.184.64.30${apiRoutes.authProfile}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
+            })
             .then((response) => {
                 dispatch(profileLoadSuccess(response));
             })
@@ -1985,7 +1978,7 @@ export const CompleteBusinessProfile = (completeProfileData) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
             .post(
-                `https://ellevate-test.herokuapp.com${apiRoutes.completesBusinessProfile}`,
+                `http://137.184.64.30${apiRoutes.completesBusinessProfile}`,
                 completeProfileData,
                 {
                     headers: {
@@ -2026,7 +2019,7 @@ export const createNewUserAccount = (accountData) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
             .post(
-                `https://ellevate-test.herokuapp.com${apiRoutes.newCreateAccount}`,
+                `http://137.184.64.30${apiRoutes.newCreateAccount}`,
                 accountData,
                 {
                     headers: {
@@ -2149,7 +2142,7 @@ export const bankAccountsData = () => (dispatch) => {
     }
     dispatch(accountNumberLoadStart());
     axiosInstance
-        .get(`https://ellevate-test.herokuapp.com${apiRoutes.banksAccounts}`, {
+        .get(`http://137.184.64.30${apiRoutes.banksAccounts}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${cookie}`
@@ -2189,7 +2182,7 @@ export const uploadUtilityData = (utilitydata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.uploadUtilityDocument}`,
+            `http://137.184.64.30${apiRoutes.uploadUtilityDocument}`,
             utilitydata,
             {
                 headers: {
@@ -2231,7 +2224,7 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.uploadIdentificationDoc}`,
+            `http://137.184.64.30${apiRoutes.uploadIdentificationDoc}`,
             identificationdata,
             {
                 headers: {
@@ -2274,16 +2267,12 @@ export const memartData = (memartdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.uploadMemart}`,
-            memartdata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`http://137.184.64.30${apiRoutes.uploadMemart}`, memartdata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(memartSuccess(response));
             //console.logresponse);
@@ -2316,16 +2305,12 @@ export const cacData = (cacdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.uploadCacCert}`,
-            cacdata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`http://137.184.64.30${apiRoutes.uploadCacCert}`, cacdata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(cacSuccess(response.data.message));
             //console.logresponse);
@@ -2360,16 +2345,12 @@ export const scmulData = (scmuldata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.uploadScmul}`,
-            scmuldata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`http://137.184.64.30${apiRoutes.uploadScmul}`, scmuldata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(scmulSuccess(response));
             //console.logresponse);
@@ -2403,7 +2384,7 @@ export const shareRefFormData = (sharerefformdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.shareRefForm}`,
+            `http://137.184.64.30${apiRoutes.shareRefForm}`,
             sharerefformdata,
             {
                 headers: {
@@ -2447,7 +2428,7 @@ export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.uploadRefForm}`,
+            `http://137.184.64.30${apiRoutes.uploadRefForm}`,
             uploadrefformdata,
             {
                 headers: {
@@ -2489,7 +2470,7 @@ export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.uploadBoardRes}`,
+            `http://137.184.64.30${apiRoutes.uploadBoardRes}`,
             uploadboardresdata,
             {
                 headers: {
@@ -2533,7 +2514,7 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.forgotPassword}`,
+            `http://137.184.64.30${apiRoutes.forgotPassword}`,
             forgotPassworddata,
             {
                 headers: {
@@ -2576,16 +2557,12 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.forgotPasswordReset}`,
-            data,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`http://137.184.64.30${apiRoutes.forgotPasswordReset}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(forgotPasswordResetSuccess(response.data.message));
             //console.log(response);
@@ -2620,16 +2597,12 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.resetOtp}`,
-            resetOtpdata,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`http://137.184.64.30${apiRoutes.resetOtp}`, resetOtpdata, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(resetOtpSuccess(response));
             //console.logresponse);
@@ -2685,7 +2658,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://ellevate-test.herokuapp.com${apiRoutes.businessNameCac}`,
+                `http://137.184.64.30${apiRoutes.businessNameCac}`,
                 {
                     registerationNumber: businessProfileData.registerationNumber
                 },
@@ -2710,15 +2683,12 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                     }
                     // dispatch(accountNumberLoadStart());
                     axios
-                        .get(
-                            `https://ellevate-test.herokuapp.com${apiRoutes.verifyCac}`,
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization: `Bearer ${cookie}`
-                                }
+                        .get(`http://137.184.64.30${apiRoutes.verifyCac}`, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${cookie}`
                             }
-                        )
+                        })
                         .then((response) => {
                             //console.logresponse.data.data);
                             dispatch(exGetBusCacSuccess(response));
@@ -2736,7 +2706,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                                 }
                                 axios
                                     .post(
-                                        `https://ellevate-test.herokuapp.com${apiRoutes.completesBusinessProfile}`,
+                                        `http://137.184.64.30${apiRoutes.completesBusinessProfile}`,
                                         businessProfileData,
                                         {
                                             headers: {
@@ -2787,7 +2757,7 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://ellevate-test.herokuapp.com${apiRoutes.businessNameCac}`,
+            `http://137.184.64.30${apiRoutes.businessNameCac}`,
             resetOtpdata,
             {
                 headers: {
@@ -2799,15 +2769,12 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
         .then((response) => {
             if (response.data) {
                 axios
-                    .get(
-                        `https://ellevate-test.herokuapp.com${apiRoutes.verifyCac}`,
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                Authorization: `Bearer ${cookie}`
-                            }
+                    .get(`http://137.184.64.30${apiRoutes.verifyCac}`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${cookie}`
                         }
-                    )
+                    })
                     .then((response) => {
                         //console.logresponse.data.data);
                         dispatch(getRCSuccess(response.data.data.dataFromCac));

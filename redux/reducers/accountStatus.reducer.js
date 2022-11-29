@@ -2,7 +2,7 @@ import { accountStatus } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    accountStatuss: [],
+    accountStatuss: null,
     errorMessages: ''
 };
 
@@ -13,7 +13,7 @@ const accountStatusReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: true,
-                accountStatuss: payload,
+                accountStatuss: null,
                 errorMessages: ''
             };
         case accountStatus.ACCOUNTSTATUS_LOAD_SUCCESS:
