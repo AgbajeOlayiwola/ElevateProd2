@@ -744,18 +744,18 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                     <input
                                                         type="number"
                                                         placeholder="812 345 6789"
-                                                        {...register(
-                                                            'phoneNumber',
-                                                            {
-                                                                required:
-                                                                    'Phone Number is required',
-                                                                minLength: {
-                                                                    value: 9,
-                                                                    message:
-                                                                        'Min length is 9'
-                                                                }
-                                                            }
-                                                        )}
+                                                        // {...register(
+                                                        //     'phoneNumber',
+                                                        //     {
+                                                        //         required:
+                                                        //             'Phone Number is required',
+                                                        //         minLength: {
+                                                        //             value: 9,
+                                                        //             message:
+                                                        //                 'Min length is 9'
+                                                        //         }
+                                                        //     }
+                                                        // )}
                                                         onChange={(e) =>
                                                             setPhoneNumber(
                                                                 e.target.value
