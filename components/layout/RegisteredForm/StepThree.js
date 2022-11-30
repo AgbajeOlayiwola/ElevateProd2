@@ -137,7 +137,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew, countryNames }) => {
                             </div>
                         </div>
                         <button onClick={handleSubmitNew}>
-                            Contine with this Personal account
+                            Click to use this Account
                         </button>
                         <p onClick={handleSubmit} className={styles.open}>
                             Click to open a <span>New Business Account</span>

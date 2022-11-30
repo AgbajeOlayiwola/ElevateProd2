@@ -1414,7 +1414,7 @@ const Profile = () => {
                                 )}
                             </div>
                             <div className={styles.profileBodyHeaderCont}>
-                                <h2>Marvelous Solutions</h2>
+                                {/* <h2>Marvelous Solutions</h2> */}
                                 <p>
                                     {!userProfileData
                                         ? null
