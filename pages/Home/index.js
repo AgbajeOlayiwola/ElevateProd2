@@ -651,8 +651,10 @@ const HomeMain = () => {
                             onInput={(e) => {
                                 if (e.target.value === 'No') {
                                     setEcobankAccount('No');
+                                    setError('');
                                 } else if (e.target.value === 'Yes') {
                                     setEcobankAccount('Yes');
+                                    setError('');
                                 }
                             }}
                         >

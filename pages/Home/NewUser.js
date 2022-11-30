@@ -175,7 +175,7 @@ const NewUser = ({ selectCountry }) => {
         sentSIgnUp();
     }, [errorMessage, user]);
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.formTag}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             {error ? <p className={styles.error}>{error}</p> : null}
             <div className={styles.homeForm}>
                 <div className={styles.secondSectionMidCountry}>
