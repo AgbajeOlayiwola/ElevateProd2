@@ -24,7 +24,7 @@ const Verify = () => {
         if (token) {
             axios
                 .get(
-                    `https://ellevate-test.herokuapp.com/authentication/email-verification/${token}`
+                    `https://testvate.live/authentication/email-verification/${token}`
                 )
                 .then((response) => {
                     //console.logresponse.data.message);
