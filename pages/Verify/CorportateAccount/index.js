@@ -78,15 +78,12 @@ const CorporateAccount = () => {
                 ) {
                     setInterval(() => {
                         axiosInstance
-                            .get(
-                                `https://ellevate-test.herokuapp.com/bank-account/status`,
-                                {
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        Authorization: `Bearer ${cookie}`
-                                    }
+                            .get(`https://testvate.live/bank-account/status`, {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${cookie}`
                                 }
-                            )
+                            })
                             .then((response) => {
                                 //console.log'Accoutn Status', response);
                                 setAccountDone(response.data.message);
