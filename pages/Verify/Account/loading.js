@@ -56,17 +56,24 @@ const AccountLoading = () => {
                 console.log(count);
                 dispatch(newAccountStatusData());
             }, 20000);
-            return () => {
-                clearInterval(interval);
-            };
+            // return () => {
+            //     clearInterval(interval);
+            // };
             // }
             // else {
             //     router.push('/Verify/Waiting');
             // }
-        } else if (accountStatuss !== null) {
+        }
+        if (accountStatuss !== null) {
             //console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         }
+
+        setTimeout(() => {
+            setError(
+                'Your account creatio is taking a while, once its completed an email will be sent to you'
+            );
+        }, 60000);
     }, [errorMessages, accountStatuss]);
 
     return (

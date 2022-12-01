@@ -941,3 +941,21 @@
         overflow-y: unset;
     } */
 }
+.termms{
+    width: 12%;
+}
+.alreadyTC{
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 17px;
+    margin: 0px;
+    margin-top: 24px;
+    color: #3e3e3e; 
+}
+.alreadyTC span {
+    font-weight: 700;
+    color: #102572;
+    cursor: pointer;
+}

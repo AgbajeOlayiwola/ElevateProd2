@@ -221,7 +221,37 @@ const RegisteredForm = ({
                                 {errors.bvn?.message}
                             </div>
                         </InputWrapper>
-
+                        <InputWrapper>
+                            <Label>Enter your NIN</Label>
+                            {/* <div className={styles.errors}>
+                                Dial *321# yo get your nin
+                            </div> */}
+                            <FormInput
+                                type="number"
+                                placeholder="Enter Your NIN"
+                                name="nin"
+                                {...register('ninFalse', {
+                                    required: 'NIN is required',
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Min length is 10'
+                                    }
+                                })}
+                                value={formData.bvNumber}
+                                onInput={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        bvNumber: event.target.value
+                                    });
+                                    //if (event.target.value.length == 12)
+                                    //  return false; //limits to 10 digit entry
+                                    //setNumber(event?.target.value); //saving input to state
+                                }}
+                            />
+                            <div className={styles.errors}>
+                                {errors.bvnFalse?.message}
+                            </div>
+                        </InputWrapper>
                         <InputWrapper>
                             <Label>Phone Number</Label>
                             <div className={styles.phone}>
@@ -330,6 +360,37 @@ const RegisteredForm = ({
                                 name="bvn"
                                 {...register('bvnFalse', {
                                     required: 'BVN is required',
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Min length is 10'
+                                    }
+                                })}
+                                value={formData.bvNumber}
+                                onInput={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        bvNumber: event.target.value
+                                    });
+                                    //if (event.target.value.length == 12)
+                                    //  return false; //limits to 10 digit entry
+                                    //setNumber(event?.target.value); //saving input to state
+                                }}
+                            />
+                            <div className={styles.errors}>
+                                {errors.bvnFalse?.message}
+                            </div>
+                        </InputWrapper>
+                        <InputWrapper>
+                            <Label>Enter your NIN</Label>
+                            {/* <div className={styles.errors}>
+                                Dial *321# yo get your nin
+                            </div> */}
+                            <FormInput
+                                type="number"
+                                placeholder="Enter Your NIN"
+                                name="nin"
+                                {...register('bvnFalse', {
+                                    required: 'NIN is required',
                                     minLength: {
                                         value: 10,
                                         message: 'Min length is 10'
