@@ -21,7 +21,7 @@ import { getCookie } from 'cookies-next';
 import Head from 'next/head';
 import HomeSvg from '../../ReusableComponents/HomeSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
-
+import { Scrollbars } from 'react-custom-scrollbars';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
@@ -266,6 +266,7 @@ const ProfileSetups = () => {
                 )}
                 {/* {error ? <div className={styles.error}>{error}</div> : null} */}
                 {conditionalComponent()}
+                <Scrollbars style={{ width: 500, height: 300 }}></Scrollbars>
             </section>
         </div>
     );
