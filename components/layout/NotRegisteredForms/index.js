@@ -39,6 +39,7 @@ const ProfileSetups = () => {
         rcnumber: '',
         tinNumber: '',
         bvNumber: '',
+        ninNumber: '',
         phoneNumber: '',
         countryCode: '',
         flag: '',

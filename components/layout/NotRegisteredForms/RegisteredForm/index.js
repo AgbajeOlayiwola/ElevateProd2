@@ -237,11 +237,11 @@ const RegisteredForm = ({
                                         message: 'Min length is 10'
                                     }
                                 })}
-                                value={formData.bvNumber}
+                                value={formData.ninNumber}
                                 onInput={(event) => {
                                     setFormData({
                                         ...formData,
-                                        bvNumber: event.target.value
+                                        ninNumber: event.target.value
                                     });
                                     //if (event.target.value.length == 12)
                                     //  return false; //limits to 10 digit entry
@@ -396,11 +396,11 @@ const RegisteredForm = ({
                                         message: 'Min length is 10'
                                     }
                                 })}
-                                value={formData.bvNumber}
+                                value={formData.ninNumber}
                                 onInput={(event) => {
                                     setFormData({
                                         ...formData,
-                                        bvNumber: event.target.value
+                                        ninNumber: event.target.value
                                     });
                                     //if (event.target.value.length == 12)
                                     //  return false; //limits to 10 digit entry
