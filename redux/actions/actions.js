@@ -507,8 +507,14 @@ export const pushDocumentsLoadError = (errorMessage) => ({
 
 export const pushDocumentsData = () => (dispatch) => {
     dispatch(pushDocumentsLoadStart());
+    const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`${apiRoutes.pushDocuments}`)
+        .get(`https://testvate.live${apiRoutes.pushDocuments}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(pushDocumentsLoadSuccess(response.data.data))
         )
@@ -711,8 +717,14 @@ export const setTransactionPinLoadError = (errorMessage) => ({
 });
 export const loadsetTransactionPin = (code) => (dispatch) => {
     dispatch(setTransactionPinLoadStart());
+    const cookie = getCookie('cookieToken');
     axiosInstance
-        .post(`${apiRoutes.setTransactionPin}`, code)
+        .post(`https://testvate.live${apiRoutes.setTransactionPin}`, code, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(setTransactionPinLoadSuccess(response.data))
         )
