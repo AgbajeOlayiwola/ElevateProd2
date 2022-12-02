@@ -248,7 +248,6 @@ const Payment = () => {
     }, [bills, errorMessageBills]);
     const transactionFeesCheck = () => {
         if (transactionFees !== null) {
-            //console.logbills);
             setTransactionFee(transactionFees.data.transactionFee);
             setCount((count) => count + 1);
             setIsLoading(false);
@@ -543,7 +542,8 @@ const Payment = () => {
                                             transactionAmount: parseInt(
                                                 data.amount,
                                                 10
-                                            )
+                                            ),
+                                            transactionType: 'INTERBANK'
                                         };
                                         dispatch(getTransactionFees(payload));
                                         setIsLoading(true);
@@ -915,13 +915,28 @@ const Payment = () => {
                                 firstTitle={bill}
                                 buttonText="Send Now"
                                 closeAction={handleClose}
+                                isLoading={isLoading}
                                 // dataAction={(data) => {
                                 // setCount(count + 1);
                                 //     setPaymentDetails(data);
                                 // }}
                                 airtimeAction={(data) => {
-                                    setCount(count + 1);
                                     setPaymentDetails(data);
+                                    const payload = {
+                                        accountId: senderDetails.accountId,
+                                        billerCode:
+                                            bill === 'AIRTIME'
+                                                ? airtimeNetData.code
+                                                : airtimeNetData?.billerDetail
+                                                      ?.billerCode,
+                                        transactionAmount: parseInt(
+                                            data.amount,
+                                            10
+                                        ),
+                                        transactionType: 'BILLPAY'
+                                    };
+                                    dispatch(getTransactionFees(payload));
+                                    setIsLoading(true);
                                     //console.logdata);
                                 }}
                                 // scheduleLater={() => {
@@ -941,8 +956,12 @@ const Payment = () => {
                                             : paymentDetails.phoneNumber
                                         : 'UTILITIES'
                                 }
-                                amount={paymentDetails.amount}
+                                amount={
+                                    parseInt(paymentDetails.amount, 10) +
+                                    parseInt(transactionFee, 10)
+                                }
                                 title="Bills Payment"
+                                charges={transactionFee}
                                 recieverBank={
                                     bill === 'AIRTIME'
                                         ? airtimeNetData.name

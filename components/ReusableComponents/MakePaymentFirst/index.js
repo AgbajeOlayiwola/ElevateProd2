@@ -100,6 +100,7 @@ const MakePaymentFirst = ({
                             dataAction={dataAction}
                             airtimeAction={airtimeAction}
                             bankAccounts={bankAccount}
+                            isLoading={isLoading}
                         />
                     )}
                 </div>

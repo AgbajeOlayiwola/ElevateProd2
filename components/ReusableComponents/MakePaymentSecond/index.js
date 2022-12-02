@@ -124,6 +124,12 @@ const MakePaymentSecond = ({
                                 </div>
                                 <div className={styles.transactionsingle}>
                                     <p className={styles.transactionTitle}>
+                                        Charges
+                                    </p>
+                                    <h3>{charges}</h3>
+                                </div>
+                                <div className={styles.transactionsingle}>
+                                    <p className={styles.transactionTitle}>
                                         From
                                     </p>
                                     <h3>{sender}</h3>

@@ -1030,7 +1030,9 @@ export const getTransactionFees = (data) => (dispatch) => {
     axiosInstance
         .post(`${apiRoutes.transactionFees}`, data)
         .then((response) => dispatch(transactionFeesLoadSuccess(response.data)))
-        .catch((error) => dispatch(transactionFeesLoadError(error.message)));
+        .catch((error) =>
+            dispatch(transactionFeesLoadError(error.response.data.message))
+        );
 };
 
 //transactionFees action end

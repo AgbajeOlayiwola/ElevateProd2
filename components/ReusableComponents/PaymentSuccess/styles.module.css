@@ -252,6 +252,12 @@
     margin-bottom: 48px;
 }
 
+.logo {
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+}
+
 .receiptSingle {
     display: flex;
     align-items: center;

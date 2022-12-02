@@ -240,6 +240,11 @@ const PaymentSuccess = ({
                                     </RegistrationStatus>
                                 </div> */}
                                 <div ref={printRef}>
+                                    <img
+                                        src="../Assets/Images/ecobankLogo.png"
+                                        alt=""
+                                        className={styles.logo}
+                                    />
                                     <div className={styles.receiptHead}>
                                         <h2>Successful!</h2>
                                         <p>NGN {amount}</p>

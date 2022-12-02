@@ -54,7 +54,7 @@ const businessCategories = '/business-categories';
 const states = '/lga';
 const cardLogin = '/authentication/register/card';
 const banksAccounts = '/bank-account';
-const transactionFees = '/transactions/transaction-fees/inter-bank';
+const transactionFees = '/transactions/transaction-fees';
 const uploadUtilityDocument = '/account-upgrade/utility-document/upload';
 const uploadIdentificationDoc =
     '/account-upgrade/identification-document/upload';

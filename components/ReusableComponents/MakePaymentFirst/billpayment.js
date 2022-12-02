@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ArrowRightSvg from '../ReusableSvgComponents/ArrowRightSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
+import Loader from '../Loader';
 
 const BillPayment = ({
     action,
@@ -22,6 +23,7 @@ const BillPayment = ({
     airtimeAction,
     scheduleLater,
     dataAction,
+    isLoading,
     bankAccounts
 }) => {
     const [network, setNetwork] = useState('MTN Nigeria');
@@ -370,7 +372,11 @@ const BillPayment = ({
                                         })}
                                     />
                                 </div>
-                                <button type="submit">Get Airtime</button>
+                                {isLoading ? (
+                                    <Loader />
+                                ) : (
+                                    <button type="submit">Get Airtime</button>
+                                )}
                             </div>
                             {/* <p className={styles.schedule}>
                                 Not paying now?{' '}
@@ -704,7 +710,11 @@ const BillPayment = ({
                                     />
                                 </div>
 
-                                <button type="submit">Get Utility</button>
+                                {isLoading ? (
+                                    <Loader />
+                                ) : (
+                                    <button type="submit">Get Utility</button>
+                                )}
                             </div>
                             {/* <p className={styles.schedule}>
                                 Not paying now?{' '}
