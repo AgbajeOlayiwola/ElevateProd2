@@ -69,11 +69,11 @@ const AccountLoading = () => {
             router.push('/Succes');
         }
 
-        setTimeout(() => {
-            setError(
-                'Your account creatio is taking a while, once its completed an email will be sent to you'
-            );
-        }, 60000);
+        // setTimeout(() => {
+        //     setError(
+        //         'Your account creatio is taking a while, once its completed an email will be sent to you'
+        //     );
+        // }, 60000);
     }, [errorMessages, accountStatuss]);
 
     return (

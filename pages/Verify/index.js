@@ -7,12 +7,13 @@ import Loading from './Loading';
 import Failed from './Failed';
 import Success from '../../components/ReusableComponents/Success';
 const Verify = () => {
-    // const router = useRouter();
+    const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
     const [res, setRes] = useState('');
     const [resError, setResErros] = useState('');
     const [timeInterval, setTimeInterval] = useState(0);
     const { query, isReady, push } = useRouter();
+    // const dispatch = useDispatch();
     const handleClick = () => {
         push('./Auth/Login');
     };
@@ -29,6 +30,9 @@ const Verify = () => {
                 .then((response) => {
                     //console.logresponse.data.message);
                     setRes(response.data.message);
+                    if (response.data.message) {
+                        router.push('/Auth/Login');
+                    }
                 })
                 .catch((error) => {
                     //console.logerror.response.data.statusCode);
