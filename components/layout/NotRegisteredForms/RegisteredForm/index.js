@@ -389,7 +389,7 @@ const RegisteredForm = ({
                                 type="number"
                                 placeholder="Enter Your NIN"
                                 name="nin"
-                                {...register('bvnFalse', {
+                                {...register('ninFalse', {
                                     required: 'NIN is required',
                                     minLength: {
                                         value: 10,
