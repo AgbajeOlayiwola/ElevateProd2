@@ -12,7 +12,7 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
-.cover::-webkit-scrollbar {
+/* .cover::-webkit-scrollbar {
     display: none;
 }
 .scrollBar {
@@ -24,4 +24,4 @@
     border-radius: 7px;
     bottom: 0px;
     background-color: rgba(0, 0, 0, 0.35);
-}
+} */
