@@ -221,12 +221,12 @@ const RegisteredForm = ({
                                 {errors.bvn?.message}
                             </div>
                         </InputWrapper>
-                        <InputWrapper>
-                            <Label>Enter your NIN</Label>
-                            {/* <div className={styles.errors}>
+                        {/* <InputWrapper> */}
+                        {/* <Label>Enter your NIN</Label> */}
+                        {/* <div className={styles.errors}>
                                 Dial *321# yo get your nin
                             </div> */}
-                            <FormInput
+                        {/* <FormInput
                                 type="number"
                                 placeholder="Enter Your NIN"
                                 name="nin"
@@ -237,11 +237,11 @@ const RegisteredForm = ({
                                         message: 'Min length is 10'
                                     }
                                 })}
-                                value={formData.ninNumber}
+                                value={formData.bvNumber}
                                 onInput={(event) => {
                                     setFormData({
                                         ...formData,
-                                        ninNumber: event.target.value
+                                        Number: event.target.value
                                     });
                                     //if (event.target.value.length == 12)
                                     //  return false; //limits to 10 digit entry
@@ -251,7 +251,7 @@ const RegisteredForm = ({
                             <div className={styles.errors}>
                                 {errors.bvnFalse?.message}
                             </div>
-                        </InputWrapper>
+                        </InputWrapper> */}
                         <InputWrapper>
                             <Label>Phone Number</Label>
                             <div className={styles.phone}>
@@ -380,12 +380,12 @@ const RegisteredForm = ({
                                 {errors.bvnFalse?.message}
                             </div>
                         </InputWrapper>
-                        <InputWrapper>
-                            <Label>Enter your NIN</Label>
-                            {/* <div className={styles.errors}>
+                        {/* <InputWrapper> */}
+                        {/* <Label>Enter your NIN</Label> */}
+                        {/* <div className={styles.errors}>
                                 Dial *321# yo get your nin
                             </div> */}
-                            <FormInput
+                        {/* <FormInput
                                 type="number"
                                 placeholder="Enter Your NIN"
                                 name="nin"
@@ -396,7 +396,7 @@ const RegisteredForm = ({
                                         message: 'Min length is 10'
                                     }
                                 })}
-                                value={formData.ninNumber}
+                                value={formData.bvNumber}
                                 onInput={(event) => {
                                     setFormData({
                                         ...formData,
@@ -409,8 +409,8 @@ const RegisteredForm = ({
                             />
                             <div className={styles.errors}>
                                 {errors.bvnFalse?.message}
-                            </div>
-                        </InputWrapper>
+                            </div> */}
+                        {/* </InputWrapper> */}
                         <InputWrapper>
                             <Label>Phone Number</Label>
                             <div className={styles.phone}>
