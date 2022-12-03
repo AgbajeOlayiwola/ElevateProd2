@@ -103,7 +103,7 @@ const RegisteredForm = ({
             </div>
             <div className={styles.formWrapper}>
                 <InputWrapper>
-                    {errorI !== null ? (
+                    {/* {errorI !== null ? (
                         <p className={styles.error}>{errorI}</p>
                     ) : null}
                     {errorM !== null ? (
@@ -111,7 +111,7 @@ const RegisteredForm = ({
                     ) : null}
                     {bvnError !== null ? (
                         <p className={styles.error}> {bvnError}</p>
-                    ) : null}
+                    ) : null} */}
 
                     <Label>Is your Business Registered?</Label>
                     <select
