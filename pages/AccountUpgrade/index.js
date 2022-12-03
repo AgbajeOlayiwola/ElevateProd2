@@ -270,7 +270,7 @@ const AccountUpgrade = () => {
             setOutcome(true);
             setLoading(false);
         }
-    }, [cac, pushDocumentsError]);
+    }, [pushDocuments, pushDocumentsError]);
 
     //CAC Registration end
 
