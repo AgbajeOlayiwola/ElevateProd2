@@ -335,10 +335,17 @@ const Payment = () => {
     }, [link]);
     const handleFormChange = (formTitle) => {
         if (userProfileData.hasSetTransactionPin === false) {
-            router.push({
-                pathname: '/AccountUpgrade',
-                query: { id: 'Transaction Pin' }
-            });
+            if (userProfileData.createdFromEcobankCred === false) {
+                router.push({
+                    pathname: '/AccountUpgrade',
+                    query: { id: 'Transaction Pin' }
+                });
+            } else {
+                router.push({
+                    pathname: '/Profile',
+                    query: { id: 'Transaction Pin' }
+                });
+            }
         } else if (userProfileData.hasSetTransactionPin === true) {
             setFormType(formTitle);
             setOverlay(true);

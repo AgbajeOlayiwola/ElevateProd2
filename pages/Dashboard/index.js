@@ -163,21 +163,13 @@ const Dashboard = () => {
         //console.log(prevPath);
     }
 
-    // useEffect(() => {
-    //     if (userProfile !== null) {
-    //         setUserProfileData(userProfile);
-    //         //console.log(userProfileData.isUpgradedAccount);
-    //         if (userProfileData.isUpgradedAccount === true) {
-    //             if (previousRoute !== 'Auth/login') {
-    //             } else if (userProfileData.isUpgradedAccount === true) {
-    //                 // setAccountUpgrade(false);
-    //                 router.push('/AccountUpgrade');
-    //             }
-    //         }
-    //     }
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
 
-    //     //console.log('upgrade check', accountUpgrade);
-    // }, [userProfile]);
+        //console.log('upgrade check', accountUpgrade);
+    }, [userProfile]);
 
     const current = new Date();
     const date = `${current.getFullYear()}-${
@@ -203,7 +195,9 @@ const Dashboard = () => {
     //console.log(newDate[0]);
     return (
         <DashLayout page="Dashboard">
-            <Levelup />
+            {userProfileData.createdFromEcobankCred === false ? (
+                <Levelup />
+            ) : null}
             <div className={styles.cove}>
                 <section className={styles.sectionI}>
                     <div className={styles.Tpwh}>

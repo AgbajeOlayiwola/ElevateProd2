@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import DashLayout from '../../components/layout/Dashboard';
 import ProfileLayout from '../../components/layout/ProfileLayout';
 import ArrowBackSvg from '../../components/ReusableComponents/ArrowBackSvg';
@@ -42,25 +42,29 @@ import {
     loadfetchRM,
     postBeneficiariesData,
     postAirtimeNetwork,
+    loadsetTransactionPin,
     postAirtimeBeneficiariesData
 } from '../../redux/actions/actions';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import Link from 'next/link';
 import { ButtonComp } from '../../components';
+import { useRouter } from 'next/router';
 
 const Profile = () => {
+    const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
     const [type, setType] = useState('Account');
     const [loading, setLoading] = useState(false);
     const [outcome, setOutcome] = useState(false);
     const [freeze, setFreeze] = useState();
-    const [text, setText] = useState('View Profile');
+    const [text, setText] = useState('');
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
     const [statusbar, setStatusbar] = useState('');
     const [alertType, setAlertType] = useState('');
+    const [link, setLink] = useState('');
     const [bvn, setBvn] = useState('');
     const [acctNumber, setAcctNumber] = useState('');
     const [accountNumber, setAccountNumber] = useState('');
@@ -71,6 +75,8 @@ const Profile = () => {
     const [bene, setBene] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const [outTyped, setOutTyped] = useState();
+    const [outPin, setOutPin] = useState();
+    const [outPinn, setOutPinn] = useState();
     const [RMDetails, setRMDetails] = useState();
     const [bank, setBank] = useState([]);
     const [interEnquiry, setInterEnquiry] = useState('');
@@ -88,6 +94,9 @@ const Profile = () => {
     );
     const { deleteAirtimeBeneficiaries } = useSelector(
         (state) => state.deleteAirtimeBeneficiariesReducer
+    );
+    const { setTransactionPin, setTransactionPinError } = useSelector(
+        (state) => state.setTransactionPinReducer
     );
     const { viewBvn, errorMessageviewBvn } = useSelector(
         (state) => state.viewBvnReducer
@@ -185,6 +194,24 @@ const Profile = () => {
             setLoading(false);
         }
     }, [postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries]);
+    const transactionPin = () => {
+        if (setTransactionPin !== null) {
+            setMessage('Transaction Pin Set Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            // setOutcome('First');
+        } else if (setTransactionPinError !== null) {
+            setMessage(setTransactionPinError);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        transactionPin();
+    }, [setTransactionPin, setTransactionPinError]);
     useEffect(() => {
         if (banks !== null) {
             setBank(banks);
@@ -293,12 +320,24 @@ const Profile = () => {
     useEffect(() => {
         viewBvnAction();
     }, [viewBvn, errorMessageviewBvn]);
+    const setTransactionPinAction = (data) => {
+        setLoading(true);
+        dispatch(loadsetTransactionPin(data));
+    };
     const profileData = [
         {
             text: 'View Profile',
             icon: <EditProfileSvg />,
             color: '#7A7978'
         },
+        userProfileData.hasSetTransactionPin === true
+            ? ''
+            : {
+                  text: 'Set Transaction Pin',
+                  icon: <ManageSignSvg />,
+                  color: '#7A7978'
+              },
+
         {
             text: 'Manage Beneficiaries',
             icon: <BeneSvg />,
@@ -336,11 +375,6 @@ const Profile = () => {
             color: '#7A7978'
         }
     ];
-    const benes = {
-        account: [],
-        airtime: [],
-        signatories: []
-    };
     const [countryNames, setCountryNames] = useState();
     const [searchItem, setSearchItem] = useState('');
     const [beneType, setBeneType] = useState('Account');
@@ -365,6 +399,27 @@ const Profile = () => {
     const typed = (type) => {
         setOutTyped(type);
     };
+    const pin = (type) => {
+        setOutPin(type);
+    };
+    const pins = (type) => {
+        setOutPinn(type);
+    };
+    useEffect(() => {
+        setMessage('');
+        const {
+            query: { id }
+        } = router;
+        setLink({ id }.id);
+    }, []);
+
+    useEffect(() => {
+        if (link !== undefined) {
+            setText('Set Transaction Pin');
+        } else {
+            setText('View Profile');
+        }
+    }, [link]);
     const {
         register,
         handleSubmit,
@@ -434,11 +489,11 @@ const Profile = () => {
                                             </p>
                                         </div>
                                         <div className={styles.phoneDetails}>
-                                            <p>
+                                            {/* <p>
                                                 {countryNames
                                                     ? countryNames.countryCode
                                                     : null}
-                                            </p>
+                                            </p> */}
                                             <input
                                                 type="number"
                                                 placeholder="812 345 6789"
@@ -851,6 +906,88 @@ const Profile = () => {
             //                 />
             //             );
             //     }
+            case 'Set Transaction Pin':
+                switch (count) {
+                    case 0:
+                        return (
+                            <>
+                                <h2 className={styles.title}>
+                                    Set Transaction Pin
+                                </h2>
+                                <form
+                                    onSubmit={handleSubmit(
+                                        setTransactionPinAction
+                                    )}
+                                >
+                                    <div className={styles.formGroup}>
+                                        <label>
+                                            Enter your Transaction Pin
+                                        </label>
+                                        <div className={styles.divs}>
+                                            <input
+                                                placeholder="Enter your Password"
+                                                {...register('transactionPin', {
+                                                    required:
+                                                        'Transaction Pin is required',
+                                                    minLength: {
+                                                        value: 6,
+                                                        message:
+                                                            'Min length is 6'
+                                                    },
+                                                    maxLength: {
+                                                        value: 6,
+                                                        message:
+                                                            'Max length is 6'
+                                                    },
+                                                    pattern: {
+                                                        value: /^[0-9]/i,
+                                                        message:
+                                                            'Transaction Pin can only be number '
+                                                    }
+                                                })}
+                                                name="transactionPin"
+                                                type={
+                                                    outPin ? 'text' : 'password'
+                                                }
+                                            />
+                                            <Visbility typeSet={pin} />
+                                        </div>
+                                        <p className={styles.error}>
+                                            {errors?.transactionPin?.message}
+                                        </p>
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label>Enter your Password</label>
+                                        <div className={styles.divs}>
+                                            <input
+                                                placeholder="Enter your Password"
+                                                {...register('password', {
+                                                    required:
+                                                        'Password is Required'
+                                                })}
+                                                name="password"
+                                                type={
+                                                    outPinn
+                                                        ? 'text'
+                                                        : 'password'
+                                                }
+                                            />
+                                            <Visbility typeSet={pins} />
+                                        </div>
+                                        <p className={styles.error}>
+                                            {errors?.password?.message}
+                                        </p>
+                                    </div>
+                                    {loading ? (
+                                        <Loader />
+                                    ) : (
+                                        <button>Set Transaction Pin</button>
+                                    )}
+                                </form>
+                            </>
+                        );
+                }
+
             case 'Contact us':
                 switch (count) {
                     case 0:
@@ -1474,41 +1611,46 @@ const Profile = () => {
                         </div>
                         <div>
                             {profileData.map((item, index) => {
-                                return (
-                                    <ProfileSingle
-                                        key={index}
-                                        profileText={item.text}
-                                        icon={item.icon}
-                                        index={index}
-                                        action={() => {
-                                            if (
-                                                item.text ===
-                                                'RM Name and Contact Details '
-                                            ) {
+                                if (item === '') {
+                                    return null;
+                                } else {
+                                    return (
+                                        <ProfileSingle
+                                            key={index}
+                                            profileText={item?.text}
+                                            icon={item?.icon}
+                                            index={index}
+                                            action={() => {
                                                 if (
-                                                    RMDetails ===
-                                                    'No account details found for customer'
+                                                    item.text ===
+                                                    'RM Name and Contact Details '
                                                 ) {
-                                                    setText('Contact us');
-                                                } else if (
-                                                    RMDetails?.crm.name === null
-                                                ) {
-                                                    setText('Contact us');
+                                                    if (
+                                                        RMDetails ===
+                                                        'No account details found for customer'
+                                                    ) {
+                                                        setText('Contact us');
+                                                    } else if (
+                                                        RMDetails?.crm.name ===
+                                                        null
+                                                    ) {
+                                                        setText('Contact us');
+                                                    } else {
+                                                        setText(item.text);
+                                                    }
                                                 } else {
                                                     setText(item.text);
                                                 }
-                                            } else {
-                                                setText(item.text);
-                                            }
 
-                                            reset();
-                                            setCount(0);
-                                            setBvn('');
-                                            setshowInterEnquiry;
-                                        }}
-                                        color={item.color}
-                                    />
-                                );
+                                                reset();
+                                                setCount(0);
+                                                setBvn('');
+                                                setshowInterEnquiry;
+                                            }}
+                                            color={item?.color}
+                                        />
+                                    );
+                                }
                             })}
                         </div>
                     </>
