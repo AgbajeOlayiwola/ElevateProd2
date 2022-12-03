@@ -103,7 +103,7 @@ const RegisteredForm = ({
             </div>
             <div className={styles.formWrapper}>
                 <InputWrapper>
-                    {errorI !== null ? (
+                    {/* {errorI !== null ? (
                         <p className={styles.error}>{errorI}</p>
                     ) : null}
                     {errorM !== null ? (
@@ -111,7 +111,7 @@ const RegisteredForm = ({
                     ) : null}
                     {bvnError !== null ? (
                         <p className={styles.error}> {bvnError}</p>
-                    ) : null}
+                    ) : null} */}
 
                     <Label>Is your Business Registered?</Label>
                     <select
@@ -221,12 +221,12 @@ const RegisteredForm = ({
                                 {errors.bvn?.message}
                             </div>
                         </InputWrapper>
-                        <InputWrapper>
-                            <Label>Enter your NIN</Label>
-                            {/* <div className={styles.errors}>
+                        {/* <InputWrapper> */}
+                        {/* <Label>Enter your NIN</Label> */}
+                        {/* <div className={styles.errors}>
                                 Dial *321# yo get your nin
                             </div> */}
-                            <FormInput
+                        {/* <FormInput
                                 type="number"
                                 placeholder="Enter Your NIN"
                                 name="nin"
@@ -241,7 +241,7 @@ const RegisteredForm = ({
                                 onInput={(event) => {
                                     setFormData({
                                         ...formData,
-                                        bvNumber: event.target.value
+                                        Number: event.target.value
                                     });
                                     //if (event.target.value.length == 12)
                                     //  return false; //limits to 10 digit entry
@@ -251,7 +251,7 @@ const RegisteredForm = ({
                             <div className={styles.errors}>
                                 {errors.bvnFalse?.message}
                             </div>
-                        </InputWrapper>
+                        </InputWrapper> */}
                         <InputWrapper>
                             <Label>Phone Number</Label>
                             <div className={styles.phone}>
@@ -380,16 +380,16 @@ const RegisteredForm = ({
                                 {errors.bvnFalse?.message}
                             </div>
                         </InputWrapper>
-                        <InputWrapper>
-                            <Label>Enter your NIN</Label>
-                            {/* <div className={styles.errors}>
+                        {/* <InputWrapper> */}
+                        {/* <Label>Enter your NIN</Label> */}
+                        {/* <div className={styles.errors}>
                                 Dial *321# yo get your nin
                             </div> */}
-                            <FormInput
+                        {/* <FormInput
                                 type="number"
                                 placeholder="Enter Your NIN"
                                 name="nin"
-                                {...register('bvnFalse', {
+                                {...register('ninFalse', {
                                     required: 'NIN is required',
                                     minLength: {
                                         value: 10,
@@ -400,7 +400,7 @@ const RegisteredForm = ({
                                 onInput={(event) => {
                                     setFormData({
                                         ...formData,
-                                        bvNumber: event.target.value
+                                        ninNumber: event.target.value
                                     });
                                     //if (event.target.value.length == 12)
                                     //  return false; //limits to 10 digit entry
@@ -409,8 +409,8 @@ const RegisteredForm = ({
                             />
                             <div className={styles.errors}>
                                 {errors.bvnFalse?.message}
-                            </div>
-                        </InputWrapper>
+                            </div> */}
+                        {/* </InputWrapper> */}
                         <InputWrapper>
                             <Label>Phone Number</Label>
                             <div className={styles.phone}>
