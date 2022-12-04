@@ -541,8 +541,14 @@ export const shareDocumentsLoadError = (errorMessage) => ({
 
 export const shareDocumentsData = () => (dispatch) => {
     dispatch(shareDocumentsLoadStart());
+    const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`${apiRoutes.shareDocuments}`)
+        .get(`https://testvate.live${apiRoutes.shareDocuments}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(shareDocumentsLoadSuccess(response.data.data))
         )
