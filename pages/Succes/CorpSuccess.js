@@ -35,7 +35,7 @@ const CorporateSuccess = () => {
                 </div>
                 <div className={styles.successBody}>
                     <h2 className={styles.h2}>
-                        Your Business account is ready!
+                        Your business account is ready!.
                     </h2>
                     <h3>
                         Your Account Number is{' '}
@@ -51,8 +51,8 @@ const CorporateSuccess = () => {
                         />
                     </Link>
                     <p>
-                        With your Ellevate Account, you have Deposit/Inflow
-                        Limit: N1,000,000
+                        Your Corporate Account has been Created, Kindly update
+                        your documents to activate account.
                     </p>
                 </div>
             </>

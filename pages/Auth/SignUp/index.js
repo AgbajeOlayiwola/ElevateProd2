@@ -210,7 +210,7 @@ const Signup = ({ type }) => {
                                     <div className={styles.error}>{error}</div>
                                     {/* register your input into the hook by invoking the "register" function */}
                                     <div>
-                                        <label>Preffered Name</label>
+                                        <label>Preferred user name/alias</label>
                                         <br />
 
                                         <input
