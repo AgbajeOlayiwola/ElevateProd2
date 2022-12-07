@@ -102,7 +102,7 @@ const BulkTransfer = ({
         if (interBankEnquiry !== null) {
             const newState = number.map((e, index) => {
                 if (indexNumber === index) {
-                    return interBankEnquiry;
+                    return { ...e, number: interBankEnquiry };
                 } else {
                     return e;
                 }
@@ -117,7 +117,7 @@ const BulkTransfer = ({
         if (intraBankEnquiry !== null) {
             const newState = number.map((e, index) => {
                 if (indexNumber === index) {
-                    return intraBankEnquiry;
+                    return { ...e, number: intraBankEnquiry };
                 } else {
                     return e;
                 }
@@ -212,6 +212,10 @@ const BulkTransfer = ({
                                                     setAcctNo(e.target.value);
                                                     const newState = number.map(
                                                         (s, indexx) => {
+                                                            console.log(
+                                                                index,
+                                                                indexx
+                                                            );
                                                             if (
                                                                 index === indexx
                                                             ) {
@@ -222,6 +226,8 @@ const BulkTransfer = ({
                                                                             .value
                                                                     )
                                                                 };
+                                                            } else {
+                                                                return s;
                                                             }
                                                         }
                                                     );
@@ -283,15 +289,13 @@ const BulkTransfer = ({
                                             <option value="ECOBANK">
                                                 ECOBANK
                                             </option>
-                                            {banks?.map((item, index) => {
+                                            {e?.bank?.map((item, index) => {
                                                 return (
                                                     <option
-                                                        value={
-                                                            item.institutionId
-                                                        }
+                                                        value={item.bankCodes}
                                                         key={index}
                                                     >
-                                                        {item.institutionName}
+                                                        {item.bankname}
                                                     </option>
                                                 );
                                             })}
@@ -306,7 +310,7 @@ const BulkTransfer = ({
                                         )}
                                         // defaultValue={...e.accountName}
                                         type="text"
-                                        value={e?.accountName}
+                                        value={e?.number?.accountName}
                                         name={`${fieldName}.accountName`}
                                         disabled
                                     />
