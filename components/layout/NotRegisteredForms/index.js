@@ -267,7 +267,6 @@ const ProfileSetups = () => {
                 )}
                 {/* {error ? <div className={styles.error}>{error}</div> : null} */}
                 {conditionalComponent()}
-                <Scrollbars style={{ width: 500, height: 300 }}></Scrollbars>
             </section>
         </div>
     );

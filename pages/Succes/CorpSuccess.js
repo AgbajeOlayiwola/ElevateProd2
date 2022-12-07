@@ -38,7 +38,8 @@ const CorporateSuccess = () => {
                 </div>
                 <div className={styles.successBody}>
                     <h2 className={styles.h2}>
-                        Your Business account is ready!
+                        Your Corporate Account has been Created, Kindly update
+                        your documents to activate account.
                     </h2>
                     <h3>
                         Your Account Number is{' '}

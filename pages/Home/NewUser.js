@@ -209,11 +209,11 @@ const NewUser = ({ selectCountry }) => {
             {error ? <p className={styles.error}>{error}</p> : null}
             <div className={styles.homeForm}>
                 <div className={styles.secondSectionMidCountry}>
-                    <label htmlFor="">Preferred Name</label>
+                    <label htmlFor="">Preferred user name/alias</label>
                     <input
                         type="text"
                         {...register('userName', {
-                            required: 'Preferred name  is required',
+                            required: 'Preferred user name/alias  is required',
                             pattern: {
                                 value: /^[A-Za-z ]+$/i,
                                 message: 'Only Alphabelts allowed'
@@ -221,7 +221,7 @@ const NewUser = ({ selectCountry }) => {
                         })}
                         onInput={userName}
                         value={preferredName}
-                        placeholder="Preferred Name"
+                        placeholder="Preferred user name/alias"
                     />
                     {/* <InputTag
                         label="Preferred Name"

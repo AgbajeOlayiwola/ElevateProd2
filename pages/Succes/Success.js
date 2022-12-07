@@ -24,8 +24,7 @@ const SuccessN = () => {
                     />
                 </Link>
                 <p>
-                    With your Ellevate Account, you have Deposit/Inflow Limit:
-                    N1,000,000
+                    With your Account, you have Deposit/Inflow Limit: N1,000,000
                 </p>
             </div>
         </div>
