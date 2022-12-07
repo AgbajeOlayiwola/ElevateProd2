@@ -170,7 +170,13 @@ const RegisteredForm = ({
                                 type="number"
                                 placeholder="Your Tax Identification number"
                                 {...register('tin', {
-                                    required: 'TIN Number is required'
+                                    required: 'TIN is required',
+
+                                    pattern: {
+                                        value: /^[A-Za-z0-9 ]+$/i,
+                                        message:
+                                            'Only Alphabelts/Number allowed'
+                                    }
                                 })}
                                 value={formData.tinNumber}
                                 onInput={(event) => {

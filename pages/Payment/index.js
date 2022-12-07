@@ -111,6 +111,7 @@ const Payment = () => {
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');
     const [track, setTrack] = useState('');
+    const [csvData, setCsvData] = useState([]);
     const [recieveLink, setRecieveLink] = useState('');
     const [bill, setBill] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
@@ -131,12 +132,14 @@ const Payment = () => {
         desiredPackage = window.localStorage.getItem('DesiredPackage');
         desiredPackageData = JSON.parse(desiredPackage);
     }
-    let csvUpload;
-    let csvData = [];
-    if (typeof window !== 'undefined') {
-        csvUpload = window.localStorage.getItem('csvData');
-        csvData = JSON.parse(csvUpload);
-    }
+    useEffect(() => {
+        let csvUpload;
+        if (typeof window !== 'undefined') {
+            csvUpload = window.localStorage.getItem('csvData');
+            setCsvData(JSON.parse(csvUpload));
+        }
+    }, []);
+
     let number;
     let numberofBene = {};
     if (typeof window !== 'undefined') {

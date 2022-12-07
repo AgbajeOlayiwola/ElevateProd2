@@ -55,16 +55,12 @@ const Liveness = ({ action }) => {
 
         const cookie = getCookie('cookieToken');
         axios
-            .post(
-                `https://ellevate-test.herokuapp.com/authentication/facematch`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            .post(`https://testvate.liveauthentication/facematch`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
+            })
             .then((response) => {
                 //console.logresponse.data.message);
                 setSuccess(response.data.message);

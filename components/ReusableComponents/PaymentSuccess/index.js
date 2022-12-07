@@ -479,31 +479,23 @@ const PaymentSuccess = ({
                                         cursor="pointer"
                                         onClick={async () => {
                                             const element = printRef.current;
-                                            const canvas = await html2canvas(
-                                                element
-                                            );
-                                            const data =
-                                                canvas.toDataURL('image/png');
 
-                                            const pdf = new jsPDF();
-                                            const imgProperties =
-                                                pdf.getImageProperties(data);
+                                            const pdf = new jsPDF({
+                                                unit: 'px',
+                                                format: 'letter',
+                                                userUnit: 'px'
+                                            });
+
                                             const pdfWidth =
                                                 pdf.internal.pageSize.getWidth();
-                                            const pdfHeight =
-                                                (imgProperties.height *
-                                                    pdfWidth) /
-                                                imgProperties.width;
-
-                                            pdf.addImage(
-                                                data,
-                                                'PNG',
-                                                0,
-                                                0,
-                                                pdfWidth,
-                                                pdfHeight
-                                            );
-                                            pdf.save('Receipt.pdf');
+                                            pdf.html(element, {
+                                                html2canvas: {
+                                                    scale: 0.57,
+                                                    width: pdfWidth
+                                                }
+                                            }).then(() => {
+                                                pdf.save('Receipt.pdf');
+                                            });
                                         }}
                                     />
                                 </div>

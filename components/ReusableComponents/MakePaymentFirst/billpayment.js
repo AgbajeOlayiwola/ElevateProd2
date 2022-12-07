@@ -14,6 +14,7 @@ import ArrowRightSvg from '../ReusableSvgComponents/ArrowRightSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import Loader from '../Loader';
+import ArrowBackSvg from '../ArrowBackSvg';
 
 const BillPayment = ({
     action,
@@ -115,6 +116,9 @@ const BillPayment = ({
         <div>
             {firstTitle === 'Bill Payment' ? (
                 <>
+                    {/* <div className={styles.backIcon}>
+                        <ArrowBackSvg color="#102572" action={backAction} />
+                    </div> */}
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
 
                     {/* <div className={styles.beneficiary}>
