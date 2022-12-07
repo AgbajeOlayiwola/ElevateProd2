@@ -210,9 +210,20 @@ const BulkTransfer = ({
                                                 ) {
                                                     setIndex(index);
                                                     setAcctNo(e.target.value);
-                                                    getAllBanksByAccount(
-                                                        e.target.value
-                                                    );
+                                                    number.map((s, indexx) => {
+                                                        if (index === indexx) {
+                                                            setNumber((arr) => [
+                                                                ...arr,
+                                                                {
+                                                                    number: `${arr.length}`,
+                                                                    bank: getAllBanksByAccount(
+                                                                        e.target
+                                                                            .value
+                                                                    )
+                                                                }
+                                                            ]);
+                                                        }
+                                                    });
                                                 }
                                             }}
                                             name={`${fieldName}.accountNumber`}
