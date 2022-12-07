@@ -3,7 +3,7 @@ import DounutComp from '../Chart/Dougnut';
 import styles from './styles.module.css';
 import Link from 'next/link';
 
-const Levelup = () => {
+const Levelup = ({ account }) => {
     return (
         <div className={styles.cove}>
             <div className={styles.coveBody}>
@@ -21,7 +21,13 @@ const Levelup = () => {
                 </div>
             </div>
             <Link href="./AccountUpgrade">
-                <button>Upgrade Account</button>
+                <button>
+                    {account === 'INDIVIDUAL'
+                        ? 'Upgrade Account'
+                        : account === 'COMMERCIAL'
+                        ? 'Update Documents'
+                        : null}{' '}
+                </button>
             </Link>
         </div>
     );
