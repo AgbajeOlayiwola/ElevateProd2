@@ -12,7 +12,7 @@ const PopupStyle = styled.div`
     display: flex;
     position: absolute;
     top: 10%;
-    left: 40%;
+    left: 30%;
     z-index: 10;
 `;
 

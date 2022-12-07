@@ -32,6 +32,7 @@ import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import Link from 'next/link';
 import Paylink2 from '../../components/ReusableComponents/PaylinkSvg/paylink';
 import AccountUpgrade from '../AccountUpgrade';
+import Popup from '../../components/layout/Popup';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -167,8 +168,6 @@ const Dashboard = () => {
         if (userProfile !== null) {
             setUserProfileData(userProfile);
         }
-
-        //console.log('upgrade check', accountUpgrade);
     }, [userProfile]);
 
     const current = new Date();
@@ -196,7 +195,7 @@ const Dashboard = () => {
     return (
         <DashLayout page="Dashboard">
             {userProfileData.createdFromEcobankCred === false ? (
-                <Levelup />
+                <Levelup account={userProfileData.customerCategory} />
             ) : null}
             <div className={styles.cove}>
                 <section className={styles.sectionI}>
@@ -580,6 +579,15 @@ const Dashboard = () => {
                 </section>
             </div>
             {/* {accountUpgrade ? <h1>sawdrftyu</h1> : null} */}
+
+            {userProfileData?.test === false ? (
+                <Popup overlay={true} title="Virtual NIN">
+                    <div>
+                        <label>Enter Virtual NIN</label>
+                        <input type="text" placeholder="Enter Virtual NIN" />
+                    </div>
+                </Popup>
+            ) : null}
         </DashLayout>
     );
 };
