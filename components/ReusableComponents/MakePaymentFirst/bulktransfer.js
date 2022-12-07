@@ -210,20 +210,22 @@ const BulkTransfer = ({
                                                 ) {
                                                     setIndex(index);
                                                     setAcctNo(e.target.value);
-                                                    number.map((s, indexx) => {
-                                                        if (index === indexx) {
-                                                            setNumber((arr) => [
-                                                                ...arr,
-                                                                {
-                                                                    number: `${arr.length}`,
+                                                    const newState = number.map(
+                                                        (s, indexx) => {
+                                                            if (
+                                                                index === indexx
+                                                            ) {
+                                                                return {
+                                                                    number: indexx,
                                                                     bank: getAllBanksByAccount(
                                                                         e.target
                                                                             .value
                                                                     )
-                                                                }
-                                                            ]);
+                                                                };
+                                                            }
                                                         }
-                                                    });
+                                                    );
+                                                    setNumber(newState);
                                                 }
                                             }}
                                             name={`${fieldName}.accountNumber`}

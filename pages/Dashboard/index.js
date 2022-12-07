@@ -32,11 +32,8 @@ import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import Link from 'next/link';
 import Paylink2 from '../../components/ReusableComponents/PaylinkSvg/paylink';
 import AccountUpgrade from '../AccountUpgrade';
-<<<<<<< HEAD
 import withAuth from '../../components/HOC/withAuth';
-=======
 import Popup from '../../components/layout/Popup';
->>>>>>> 460fa6a084fae2a166670b2feb404c7c4fcea0cf
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -238,9 +235,8 @@ const Dashboard = () => {
                         ) : (
                             tableDetails
                                 ?.filter((item) => {
-                                    const newDate = item.transactionDate.split(
-                                        'T'
-                                    );
+                                    const newDate =
+                                        item.transactionDate.split('T');
                                     return (
                                         newDate[0] >= rangeDate &&
                                         newDate[0] <= time
@@ -262,9 +258,8 @@ const Dashboard = () => {
                                     if (item.receiversName === null) {
                                         newBeneficiary = '';
                                     } else {
-                                        newBeneficiary = item?.receiversName?.split(
-                                            ' '
-                                        );
+                                        newBeneficiary =
+                                            item?.receiversName?.split(' ');
                                     }
                                     // {
                                     //     //console.log(item);
@@ -445,9 +440,8 @@ const Dashboard = () => {
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate = item.transactionDate.split(
-                                            'T'
-                                        );
+                                        const newDate =
+                                            item.transactionDate.split('T');
                                         return (
                                             newDate[0] >= rangeDate &&
                                             newDate[0] <= time
@@ -462,16 +456,16 @@ const Dashboard = () => {
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount = formatter.format(
-                                            item.transactionAmount
-                                        );
+                                        const formattedAmount =
+                                            formatter.format(
+                                                item.transactionAmount
+                                            );
                                         let newBeneficiary;
                                         if (item.receiver === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary = item?.receiver?.split(
-                                                ' '
-                                            );
+                                            newBeneficiary =
+                                                item?.receiver?.split(' ');
                                         }
                                         return (
                                             <div key={index}>
