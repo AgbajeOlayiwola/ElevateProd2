@@ -729,11 +729,11 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                             alt=""
                                                         />
                                                     </span>
-                                                    <p>
+                                                    {/* <p>
                                                         {
                                                             countryNames.baseCurrency
                                                         }
-                                                    </p>
+                                                    </p> */}
                                                 </div>
                                                 <div
                                                     className={

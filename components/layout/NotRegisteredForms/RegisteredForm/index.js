@@ -164,14 +164,20 @@ const RegisteredForm = ({
                             {errors.rc_number?.message}
                         </div>
                         <InputWrapper>
-                            <Label>
-                                Enter your TIN <i>(optional)</i>{' '}
-                            </Label>
+                            <Label>Enter your TIN</Label>
                             <FormInput
                                 name="tin"
                                 type="number"
                                 placeholder="Your Tax Identification number"
-                                {...register('tin')}
+                                {...register('tin', {
+                                    required: 'TIN is required',
+
+                                    pattern: {
+                                        value: /^[A-Za-z0-9 ]+$/i,
+                                        message:
+                                            'Only Alphabelts/Number allowed'
+                                    }
+                                })}
                                 value={formData.tinNumber}
                                 onInput={(event) => {
                                     setFormData({
