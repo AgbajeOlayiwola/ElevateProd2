@@ -31,6 +31,7 @@ import CardSvg from '../../components/ReusableComponents/ReusableSvgComponents/C
 import Slider from 'react-slick';
 import Modal from 'react-modal';
 import 'slick-carousel/slick/slick.css';
+import { Tooltip } from 'react-tooltip';
 
 const customStyles = {
     content: {

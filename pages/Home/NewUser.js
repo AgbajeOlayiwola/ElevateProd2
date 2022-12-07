@@ -12,6 +12,9 @@ import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import { useRouter } from 'next/router';
 import InputTag from '../../components/ReusableComponents/Input';
 import Modal from 'react-modal';
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
+
 const customStyles = {
     content: {
         top: '50%',
@@ -207,9 +210,16 @@ const NewUser = ({ selectCountry }) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             {error ? <p className={styles.error}>{error}</p> : null}
+            <Tooltip anchorId="my-element" />
             <div className={styles.homeForm}>
                 <div className={styles.secondSectionMidCountry}>
-                    <label htmlFor="">Preferred user name/alias</label>
+                    <label
+                        htmlFor=""
+                        id="my-element"
+                        data-tooltip-content="This is the name you will be known on the app with"
+                    >
+                        Preferred user name/alias
+                    </label>
                     <input
                         type="text"
                         {...register('userName', {
