@@ -198,7 +198,7 @@ const Dashboard = () => {
     return (
         <DashLayout page="Dashboard">
             {userProfileData.createdFromEcobankCred === false ? (
-                <Levelup />
+                <Levelup account={userProfileData.customerCategory} />
             ) : null}
             <div className={styles.cove}>
                 <section className={styles.sectionI}>
@@ -237,9 +237,8 @@ const Dashboard = () => {
                         ) : (
                             tableDetails
                                 ?.filter((item) => {
-                                    const newDate = item.transactionDate.split(
-                                        'T'
-                                    );
+                                    const newDate =
+                                        item.transactionDate.split('T');
                                     return (
                                         newDate[0] >= rangeDate &&
                                         newDate[0] <= time
@@ -261,9 +260,8 @@ const Dashboard = () => {
                                     if (item.receiversName === null) {
                                         newBeneficiary = '';
                                     } else {
-                                        newBeneficiary = item?.receiversName?.split(
-                                            ' '
-                                        );
+                                        newBeneficiary =
+                                            item?.receiversName?.split(' ');
                                     }
                                     // {
                                     //     //console.log(item);
@@ -444,9 +442,8 @@ const Dashboard = () => {
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate = item.transactionDate.split(
-                                            'T'
-                                        );
+                                        const newDate =
+                                            item.transactionDate.split('T');
                                         return (
                                             newDate[0] >= rangeDate &&
                                             newDate[0] <= time
@@ -461,16 +458,16 @@ const Dashboard = () => {
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount = formatter.format(
-                                            item.transactionAmount
-                                        );
+                                        const formattedAmount =
+                                            formatter.format(
+                                                item.transactionAmount
+                                            );
                                         let newBeneficiary;
                                         if (item.receiver === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary = item?.receiver?.split(
-                                                ' '
-                                            );
+                                            newBeneficiary =
+                                                item?.receiver?.split(' ');
                                         }
                                         return (
                                             <div key={index}>
@@ -589,5 +586,5 @@ const Dashboard = () => {
     );
 };
 
-// export default withAuth(Dashboard);
-export default Dashboard;
+export default withAuth(Dashboard);
+// export default Dashboard;
