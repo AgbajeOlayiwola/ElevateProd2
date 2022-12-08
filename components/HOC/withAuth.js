@@ -28,11 +28,7 @@ const withAuth = (WrappedComponent) => {
                     //console.log(error.response.data.message);
                     setErrorMes(error.response.data.message);
                 });
-            if (
-                localStorage.getItem('user') &&
-                accountDone.accountNumber == null &&
-                errorMMes
-            ) {
+            if (localStorage.getItem('user')) {
                 setAccessGranted(true);
             } else {
                 Router.replace('../Auth/Login');

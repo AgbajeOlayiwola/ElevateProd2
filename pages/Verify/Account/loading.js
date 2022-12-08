@@ -49,6 +49,7 @@ const AccountLoading = () => {
     useEffect(() => {
         if (
             errorMessages === 'Pending Creation, Try Again' ||
+            errorMessages === 'Try Again' ||
             errorMessages === 'Bank Account has not been created for this user'
         ) {
             // if (count === 1) {

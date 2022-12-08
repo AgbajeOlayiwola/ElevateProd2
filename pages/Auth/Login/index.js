@@ -73,6 +73,16 @@ const Login = () => {
                     'PROFILE_SETUP_COMPLETED'
                 ) {
                     router.push('../../Dashboard');
+                } else if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'AWAITING_ACCOUNT_NUMBER'
+                ) {
+                    router.push('../../Verify/Account/loading');
+                } else if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'ACCOUNT_NUMBER_RETRIEVED'
+                ) {
+                    router.push('../../Dashboard');
                 } else {
                     router.push('../../Onboarding/ProfileSetup');
                 }
