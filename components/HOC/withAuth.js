@@ -25,7 +25,7 @@ const withAuth = (WrappedComponent) => {
                     setAccountDone(response.data.data);
                 })
                 .catch((error) => {
-                    //console.log(error.response.data.message);
+                    console.log(error.response.data.message);
                     setErrorMes(error.response.data.message);
                 });
             if (localStorage.getItem('user')) {
@@ -34,11 +34,13 @@ const withAuth = (WrappedComponent) => {
                 Router.replace('../Auth/Login');
                 setAccessGranted(false);
             }
-            if (errorMMes) {
+            if (
+                errorMMes === 'Bank Account has not been created for this user'
+            ) {
                 Router.replace('../Auth/Login');
                 setAccessGranted(false);
             }
-        }, []);
+        }, [errorMMes]);
 
         if (accessGranted) {
             return <WrappedComponent {...props} />;

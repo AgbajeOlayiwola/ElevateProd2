@@ -176,7 +176,7 @@ const ProfileSetups = () => {
     // }, []);
 
     function regsiteredBus() {
-        //console.log('firstAPi');
+        console.log(formData.tinNumber);
         setLoads((prev) => !prev);
         const businessProfileData = {
             bvnNumber: formData.bvNumber,
