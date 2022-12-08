@@ -33,6 +33,7 @@ import Link from 'next/link';
 import Paylink2 from '../../components/ReusableComponents/PaylinkSvg/paylink';
 import AccountUpgrade from '../AccountUpgrade';
 import withAuth from '../../components/HOC/withAuth';
+import Popup from '../../components/layout/Popup';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -589,4 +590,4 @@ const Dashboard = () => {
 };
 
 // export default withAuth(Dashboard);
-export default withAuth(Dashboard);
+export default Dashboard;
