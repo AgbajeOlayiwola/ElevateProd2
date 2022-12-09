@@ -12,7 +12,8 @@ import {
     CompProfile,
     createNewUserAccount,
     getNewUserAccountDetails,
-    newAccountStatusData
+    newAccountStatusData,
+    logoutAction
 } from '../../../redux/actions/actions';
 import { IoMdGift } from 'react-icons/io';
 
@@ -148,7 +149,10 @@ const AccountLoading = () => {
             router.push('/Succes');
         }
         if (timer === '00:00:00') {
-            router.push('/Auth/Login');
+            dispatch(logoutAction());
+            if (!localStorage.getItem('user')) {
+                router.replace('../Auth/Login');
+            }
         }
         if (timer === '00:00:10') {
             setAccountWait('Your Account Number will be sent to your Email');
