@@ -721,3 +721,12 @@ export const getRC = {
     GETRC_ERROR: 'GETRC_ERROR'
 };
 // existing business setup End
+
+//Ellevate Profiling Types
+
+export const postEllevateProfilling = {
+    POST_ELLEVATE_PROFILLING_START: 'POST_ELLEVATE_PROFILLING_START',
+    POST_ELLEVATE_PROFILLING_SUCCESS: 'POST_ELLEVATE_PROFILLING_SUCCESS',
+    POST_ELLEVATE_PROFILLING_ERROR: 'POST_ELLEVATE_PROFILLING_ERROR'
+};
+//Ellevate Profiling Types

@@ -26,7 +26,8 @@ import {
     loadUserProfile,
     uploadRefFormData,
     shareDocumentsData,
-    pushDocumentsData
+    pushDocumentsData,
+    postEllevateProfilingDetails
 } from '../../redux/actions/actions';
 
 import { useForm } from 'react-hook-form';
@@ -93,10 +94,13 @@ const AccountUpgrade = () => {
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState('');
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        ''
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -104,6 +108,9 @@ const AccountUpgrade = () => {
     const [outType, setOutType] = useState();
     const [outTyped, setOutTyped] = useState();
     const [activeBtn, setActiveBtn] = useState(true);
+    const [checked, setChecked] = useState(false);
+    const [checkedI, setCheckedI] = useState(false);
+    const [checkedII, setCheckedII] = useState(false);
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
     );
@@ -130,6 +137,9 @@ const AccountUpgrade = () => {
     );
     const { identification, identificationErrorMessages } = useSelector(
         (state) => state.documentIdentificationReducer
+    );
+    const { ellevateProfilingSeccess, ellevateProfillingError } = useSelector(
+        (state) => state.postEllevateReducer
     );
     const { userProfile } = useSelector((state) => state.userProfileReducer);
     let subtitle;
@@ -389,6 +399,30 @@ const AccountUpgrade = () => {
         dispatch(identificationDocData(identificationThings));
     };
 
+    const profillingSetup = () => {
+        setLoading(true);
+        const profileSetupItems = {
+            surveyReport: [
+                {
+                    index: 0,
+                    isAnswerYes: checked
+                },
+                {
+                    index: 1,
+                    isAnswerYes: checkedI
+                },
+                {
+                    index: 2,
+                    isAnswerYes: checkedII
+                }
+            ]
+        };
+        dispatch(postEllevateProfilingDetails(profileSetupItems));
+    };
+    useEffect(() => {
+        setLoading(false);
+    }, [ellevateProfilingSeccess]);
+
     useEffect(() => {
         if (identification !== null) {
             setMessage(identification);
@@ -446,6 +480,11 @@ const AccountUpgrade = () => {
                 title: 'Upload ID Card',
                 icon: <IdCard />,
                 statusReport: idCardStatus
+            },
+            {
+                title: 'Ellevate Profiling',
+                icon: <IdCard />,
+                statusReport: idCardStatus
             }
         ],
         corporate: [
@@ -482,6 +521,11 @@ const AccountUpgrade = () => {
                 title: 'Referee',
                 icon: <DirectorsSvg />,
                 statusReport: refereeStatus
+            },
+            {
+                title: 'Ellevate Profiling',
+                icon: <IdCard />,
+                statusReport: idCardStatus
             }
             // {
             //     title: 'Signature Rule',
@@ -658,6 +702,7 @@ const AccountUpgrade = () => {
                                   }
                               )
                             : null}
+
                         {loading ? (
                             <Loader />
                         ) : (
@@ -1135,6 +1180,59 @@ const AccountUpgrade = () => {
                         )}
                     </AccountUpgradeComponent>
                 );
+            case 'Ellevate Profiling':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Ellevate Profiling"
+                    >
+                        <div className={styles.profilingDiv}>
+                            <input
+                                className={styles.profilingInput}
+                                type="checkbox"
+                                onChange={(e) => setChecked(!checked)}
+                            />
+                            <label>
+                                Do you produce or sell women consumable goods?
+                            </label>
+                        </div>
+                        <div className={styles.profilingDiv}>
+                            <input
+                                className={styles.profilingInput}
+                                type="checkbox"
+                                onChange={(e) => setCheckedI(!checkedI)}
+                            />
+                            <label>
+                                Do you have up to 20% of women in senior
+                                management in your organization?
+                            </label>
+                        </div>
+                        <div className={styles.profilingDiv}>
+                            <input
+                                className={styles.profilingInput}
+                                type="checkbox"
+                                onChange={(e) => setChecked(!checkedII)}
+                            />
+                            <label>
+                                Do female staff make up 30% of your
+                                organization?
+                            </label>
+                        </div>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                onClick={profillingSetup}
+                                className={styles.updateBtn}
+                            >
+                                Ellevate Profiling
+                            </button>
+                        )}
+                    </AccountUpgradeComponent>
+                );
+
             case 'Document':
                 return (
                     <AccountUpgradeComponent

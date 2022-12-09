@@ -396,3 +396,20 @@
         width: 48%;
     }
 }
+.profilingInput{
+    width: 4%;
+    margin-right: 25px;
+    accent-color: #6ccf00;
+    transition: all 0.5s ease-in-out ;
+}
+.profilingInput:hover{
+    transition: all 0.5s ease-in-out ;
+    width: 6%;
+}
+ .profilingDiv{
+    display: flex;
+    margin-bottom: 36px;
+    margin-top: 42px;
+
+    margin-right: 26px;
+ }

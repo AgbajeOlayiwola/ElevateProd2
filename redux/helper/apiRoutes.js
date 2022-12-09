@@ -78,6 +78,7 @@ const internationalCountries = '/international-countries';
 const pushDocuments = '/account-upgrade/push-document-for-review';
 const shareDocuments = '/share-point-document';
 const fetchRM = '/bank-account/account-manager';
+const postEllevateProfiling = '/ellevate-profiling';
 export default {
     getBanks,
     getCountries,
@@ -157,5 +158,6 @@ export default {
     pushDocuments,
     shareDocuments,
     fetchRM,
-    verifyCac
+    verifyCac,
+    postEllevateProfiling
 };

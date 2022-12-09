@@ -75,6 +75,7 @@ import shareDocumentsReducer from './shareDocuments.reducer';
 import existReducer from './exist.reducer';
 import fetchRMReducer from './fetchRM.reducer';
 import getRCReducer from './getRC.reducer';
+import postEllevateReducer from './ellevateProfiling.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -156,7 +157,8 @@ const appReducer = combineReducers({
     shareDocumentsReducer,
     fetchRMReducer,
     completeBusinessprofileReducer,
-    existReducer: existReducer
+    existReducer: existReducer,
+    postEllevateReducer: postEllevateReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {
