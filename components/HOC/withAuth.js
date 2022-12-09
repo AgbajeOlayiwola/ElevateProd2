@@ -4,43 +4,33 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../redux/helper/apiClient';
 import apiRoutes from '../../redux/helper/apiRoutes';
 import { getCookie } from 'cookies-next';
+import { loadAccountPrimary } from '../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 const withAuth = (WrappedComponent) => {
     return (props) => {
+        const dispatch = useDispatch();
         const Router = useRouter();
         const [accessGranted, setAccessGranted] = useState(false);
         const [accountDone, setAccountDone] = useState('');
         const [errorMMes, setErrorMes] = useState('');
+        const { accountPrimary, accountPrimaryError } = useSelector(
+            (state) => state.accountPrimaryReducer
+        );
 
         useEffect(() => {
-            const cookie = getCookie('cookieToken');
-            axiosInstance
-                .get(`https://testvate.live${apiRoutes.accountStatus}`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
-                })
-                .then((response) => {
-                    console.log('Accoutn Status', response);
-                    setAccountDone(response.data.data);
-                })
-                .catch((error) => {
-                    console.log(error.response.data.message);
-                    setErrorMes(error.response.data.message);
-                });
+            dispatch(loadAccountPrimary());
+            console.log(accountPrimary, accountPrimaryError);
             if (localStorage.getItem('user')) {
                 setAccessGranted(true);
             } else {
                 Router.replace('../Auth/Login');
                 setAccessGranted(false);
             }
-            if (
-                errorMMes === 'Bank Account has not been created for this user'
-            ) {
+            if (accountPrimary === null) {
                 Router.replace('../Auth/Login');
                 setAccessGranted(false);
             }
-        }, [errorMMes]);
+        }, []);
 
         if (accessGranted) {
             return <WrappedComponent {...props} />;
