@@ -111,6 +111,7 @@ const AccountUpgrade = () => {
     const [checked, setChecked] = useState(false);
     const [checkedI, setCheckedI] = useState(false);
     const [checkedII, setCheckedII] = useState(false);
+    const [ellevateProfilingDone, setEllevateProfilingzDone] = useState('');
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
     );
@@ -421,6 +422,7 @@ const AccountUpgrade = () => {
     };
     useEffect(() => {
         setLoading(false);
+        setEllevateProfilingzDone('Done');
     }, [ellevateProfilingSeccess]);
 
     useEffect(() => {
@@ -1227,7 +1229,11 @@ const AccountUpgrade = () => {
                                 onClick={profillingSetup}
                                 className={styles.updateBtn}
                             >
-                                Ellevate Profiling
+                                {ellevateProfilingDone ? (
+                                    <p>{ellevateProfilingDone}</p>
+                                ) : (
+                                    <p>Ellevate Profiling</p>
+                                )}
                             </button>
                         )}
                     </AccountUpgradeComponent>

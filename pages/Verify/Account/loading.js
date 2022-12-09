@@ -19,6 +19,7 @@ import { IoMdGift } from 'react-icons/io';
 const AccountLoading = () => {
     const [accountInfo, setAccountInfo] = useState('');
     const [profileCont, setProfileCont] = useState([]);
+    const [accountWait, setAccountWait] = useState();
     const [errorT, setError] = useState();
     const { accountStatuss, errorMessages } = useSelector(
         (state) => state.accountStatusReducer
@@ -149,6 +150,9 @@ const AccountLoading = () => {
         if (timer === '00:00:00') {
             router.push('/Auth/Login');
         }
+        if (timer === '00:00:10') {
+            setAccountWait('Your Account Number will be sent to your Email');
+        }
 
         // setTimeout(() => {
         //     setError(
@@ -168,41 +172,48 @@ const AccountLoading = () => {
                                 <h2 className={styles.error}>{errorT}</h2>
                                 <br />
                             </div>
+                        ) : timer <= '00:00:10' ? (
+                            <div>
+                                <p className={styles.error}>{timer}</p>
+                                <p>{accountWait}</p>
+                            </div>
                         ) : (
-                            <svg
-                                width="59"
-                                height="15"
-                                viewBox="0 0 59 15"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                className={styles.svg}
-                            >
-                                <circle
-                                    cx="7.5"
-                                    cy="7.25684"
-                                    r="7"
-                                    fill="#6CCF00"
-                                />
-                                <circle
-                                    cx="29.5"
-                                    cy="7.25684"
-                                    r="7"
-                                    fill="#6CCF00"
-                                />
-                                <circle
-                                    cx="51.5"
-                                    cy="7.25684"
-                                    r="7"
-                                    fill="#6CCF00"
-                                />
-                            </svg>
+                            <>
+                                <svg
+                                    width="59"
+                                    height="15"
+                                    viewBox="0 0 59 15"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className={styles.svg}
+                                >
+                                    <circle
+                                        cx="7.5"
+                                        cy="7.25684"
+                                        r="7"
+                                        fill="#6CCF00"
+                                    />
+                                    <circle
+                                        cx="29.5"
+                                        cy="7.25684"
+                                        r="7"
+                                        fill="#6CCF00"
+                                    />
+                                    <circle
+                                        cx="51.5"
+                                        cy="7.25684"
+                                        r="7"
+                                        fill="#6CCF00"
+                                    />
+                                </svg>
+                                <p className={styles.kindly}>
+                                    Kindly wait while the system fetches your
+                                    account number, this will take a moment.
+                                </p>
+                            </>
                         )}
                         <br />{' '}
                     </div>
-                    <p className={styles.kindly}>
-                        Kindly wait while the system fetches your account
-                        number, this will take a moment.
-                    </p>
                 </div>
             </div>
         </>
