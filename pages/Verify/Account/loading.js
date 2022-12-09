@@ -151,7 +151,7 @@ const AccountLoading = () => {
         if (timer === '00:00:00') {
             dispatch(logoutAction());
             if (!localStorage.getItem('user')) {
-                router.replace('../Auth/Login');
+                router.replace('/Auth/Login');
             }
         }
         if (timer === '00:00:10') {
