@@ -82,6 +82,7 @@ const AccountUpgrade = () => {
     const [lgaCode, setLgaCode] = useState('');
     const [stateCode, setStateCode] = useState('');
     const [statusbar, setStatusbar] = useState('');
+    const [status, setStatus] = useState('pending');
     const [verifyStatus, setVerifyStatus] = useState('notDone');
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
     const [utilityStatus, setUtilityStatus] = useState('notDone');
@@ -95,20 +96,17 @@ const AccountUpgrade = () => {
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState('');
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
     const [reftwoemail, setRefTwoEmail] = useState('');
     const [outType, setOutType] = useState();
     const [outTyped, setOutTyped] = useState();
-    const [activeBtn, setActiveBtn] = useState(true);
+    const [activeBtn, setActiveBtn] = useState(false);
     const [checked, setChecked] = useState(false);
     const [checkedI, setCheckedI] = useState(false);
     const [checkedII, setCheckedII] = useState(false);
@@ -472,31 +470,36 @@ const AccountUpgrade = () => {
                 title: 'Verify your Address',
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
-                statusReport: verifyStatus
+                statusReport: verifyStatus,
+                status: status
             },
             {
                 title: 'Set Transaction Pin',
                 textII: 'SetTransactionPin',
                 icon: <SignatureRuleSvg />,
-                statusReport: transactionPinStatus
+                statusReport: transactionPinStatus,
+                status: status
             },
             {
                 title: 'Upload Utility BIll',
                 textII: 'UtilityBill',
                 icon: <BillSvg />,
-                statusReport: utilityStatus
+                statusReport: utilityStatus,
+                status: status
             },
             {
                 title: 'Upload ID Card',
                 textII: 'IdCard',
                 icon: <IdCard />,
-                statusReport: idCardStatus
+                statusReport: idCardStatus,
+                status: status
             },
             {
                 title: 'Ellevate Profiling',
                 textII: 'EllevateProfilling',
                 icon: <IdCard />,
-                statusReport: idCardStatus
+                statusReport: idCardStatus,
+                status: status
             }
         ],
         corporate: [
@@ -504,31 +507,36 @@ const AccountUpgrade = () => {
                 title: 'Documents',
                 textII: 'Documments',
                 icon: <AddressSvg />,
-                statusReport: documentStatus
+                statusReport: documentStatus,
+                status: status
             },
             {
                 title: 'Verify your Address',
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
-                statusReport: verifyStatus
+                statusReport: verifyStatus,
+                status: status
             },
             {
                 title: 'Set Transaction Pin',
                 textII: 'TransactionPin',
                 icon: <SignatureRuleSvg />,
-                statusReport: transactionPinStatus
+                statusReport: transactionPinStatus,
+                status: status
             },
             {
                 title: 'Upload Utility BIll',
                 textII: 'UtilityBill',
                 icon: <BillSvg />,
-                statusReport: utilityStatus
+                statusReport: utilityStatus,
+                status: status
             },
             {
                 title: 'Upload ID Card',
                 textII: 'UIdCard',
                 icon: <IdCard />,
-                statusReport: idCardStatus
+                statusReport: idCardStatus,
+                status: status
             },
             // {
             //     title: 'Directors',
@@ -538,13 +546,15 @@ const AccountUpgrade = () => {
                 title: 'Referee',
                 textII: 'Referee',
                 icon: <DirectorsSvg />,
-                statusReport: refereeStatus
+                statusReport: refereeStatus,
+                status: status
             },
             {
                 title: 'Ellevate Profiling',
                 textII: 'Profilling',
                 icon: <IdCard />,
-                statusReport: idCardStatus
+                statusReport: idCardStatus,
+                status: status
             }
             // {
             //     title: 'Signature Rule',
@@ -555,17 +565,20 @@ const AccountUpgrade = () => {
             {
                 title: 'CAC Registration',
                 textII: 'CACREG',
-                statusReport: cacStatus
+                statusReport: cacStatus,
+                status: status
             },
             {
                 title: 'SCUML Certificate',
                 textII: 'SCMULREG',
-                statusReport: scumlStatus
+                statusReport: scumlStatus,
+                status: status
             },
             {
                 title: 'MEMAT',
                 textII: 'MEMRT',
-                statusReport: mematStatus
+                statusReport: mematStatus,
+                status: status
             }
         ]
     };
@@ -657,6 +670,7 @@ const AccountUpgrade = () => {
                                               icon={item.icon}
                                               text={item.title}
                                               key={index}
+                                              status={item.status}
                                               action={() => {
                                                   setTitle(item.title);
                                               }}
@@ -675,6 +689,7 @@ const AccountUpgrade = () => {
                                                           item.statusReport
                                                       }
                                                       textII={item.textII}
+                                                      status={item.status}
                                                       icon={item.icon}
                                                       text={item.title}
                                                       key={index}
@@ -692,6 +707,9 @@ const AccountUpgrade = () => {
                                                                         <AccountUpgradeSingle
                                                                             text={
                                                                                 item.title
+                                                                            }
+                                                                            status={
+                                                                                item.status
                                                                             }
                                                                             textII={
                                                                                 item.textII
@@ -723,6 +741,7 @@ const AccountUpgrade = () => {
                                                   icon={item.icon}
                                                   text={item.title}
                                                   key={index}
+                                                  status={item.status}
                                                   action={() => {
                                                       setTitle(item.title);
                                                   }}
@@ -736,15 +755,21 @@ const AccountUpgrade = () => {
                         {loading ? (
                             <Loader />
                         ) : (
-                            <button
-                                className={styles.buttonDone}
-                                onClick={() => {
-                                    setLoading(true);
-                                    dispatch(pushDocumentsData());
-                                }}
-                            >
-                                Done
-                            </button>
+                            <ButtonComp
+                                text={'Done'}
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                type="submit"
+                            />
+                            // <button
+                            //     className={styles.buttonDone}
+                            //     onClick={() => {
+                            //         setLoading(true);
+                            //         dispatch(pushDocumentsData());
+                            //     }}
+                            // >
+                            //     Done
+                            // </button>
                         )}
                     </AccountUpgradeComponent>
                 );
@@ -968,13 +993,16 @@ const AccountUpgrade = () => {
                                     position="relative"
                                 />
                             </Modal>
-                            <ButtonComp
+                            <button type="submit" onClick={openModal}>
+                                Confirm Address
+                            </button>
+                            {/* <ButtonComp
                                 disabled={activeBtn}
                                 active={activeBtn ? 'active' : 'inactive'}
                                 type="submit"
                                 text=" Confirm Address"
                                 onClick={openModal}
-                            ></ButtonComp>
+                            ></ButtonComp> */}
                             {/* </Iframe> */}
                         </div>
                     </AccountUpgradeComponent>

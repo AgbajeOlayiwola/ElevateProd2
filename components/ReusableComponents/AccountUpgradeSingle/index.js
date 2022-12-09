@@ -12,7 +12,8 @@ const AccountUpgradeSingle = ({
     text,
     index,
     action,
-    statusInfo
+    statusInfo,
+    status
 }) => {
     return (
         <>
@@ -37,7 +38,7 @@ const AccountUpgradeSingle = ({
                 <div className={styles.accountUpgradeSingleChecked}>
                     <AccountChecked statusInfo={statusInfo} />
 
-                    <p id={textII}>pending</p>
+                    <p id={textII}>{status}</p>
                 </div>
             </div>
         </>
