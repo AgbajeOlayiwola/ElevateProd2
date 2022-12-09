@@ -755,21 +755,21 @@ const AccountUpgrade = () => {
                         {loading ? (
                             <Loader />
                         ) : (
-                            <ButtonComp
-                                text={'Done'}
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                type="submit"
-                            />
-                            // <button
-                            //     className={styles.buttonDone}
-                            //     onClick={() => {
-                            //         setLoading(true);
-                            //         dispatch(pushDocumentsData());
-                            //     }}
-                            // >
-                            //     Done
-                            // </button>
+                            // <ButtonComp
+                            //     text={'Done'}
+                            //     disabled={activeBtn}
+                            //     active={activeBtn ? 'active' : 'inactive'}
+                            //     type="submit"
+                            // />
+                            <button
+                                className={styles.buttonDone}
+                                onClick={() => {
+                                    setLoading(true);
+                                    dispatch(pushDocumentsData());
+                                }}
+                            >
+                                Done
+                            </button>
                         )}
                     </AccountUpgradeComponent>
                 );
