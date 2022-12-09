@@ -116,7 +116,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew, countryNames }) => {
                                         <p>{countryNames?.baseCurrency}</p>
                                     </div>
                                     <div className={styles.phoneDetails}>
-                                        <p>{countryNames?.countryCode}</p>
+                                        {/* <p>{countryNames?.countryCode}</p> */}
                                         <input
                                             type="number"
                                             placeholder="812 345 6789"

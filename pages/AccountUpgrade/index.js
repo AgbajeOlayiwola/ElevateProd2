@@ -29,12 +29,13 @@ import {
     pushDocumentsData,
     postEllevateProfilingDetails
 } from '../../redux/actions/actions';
-
+import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import { ButtonComp } from '../../components';
+import { Tooltip } from 'react-tooltip';
 
 const customStyles = {
     content: {
@@ -469,26 +470,31 @@ const AccountUpgrade = () => {
         individual: [
             {
                 title: 'Verify your Address',
+                textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus
             },
             {
                 title: 'Set Transaction Pin',
+                textII: 'SetTransactionPin',
                 icon: <SignatureRuleSvg />,
                 statusReport: transactionPinStatus
             },
             {
                 title: 'Upload Utility BIll',
+                textII: 'UtilityBill',
                 icon: <BillSvg />,
                 statusReport: utilityStatus
             },
             {
                 title: 'Upload ID Card',
+                textII: 'IdCard',
                 icon: <IdCard />,
                 statusReport: idCardStatus
             },
             {
                 title: 'Ellevate Profiling',
+                textII: 'EllevateProfilling',
                 icon: <IdCard />,
                 statusReport: idCardStatus
             }
@@ -496,26 +502,31 @@ const AccountUpgrade = () => {
         corporate: [
             {
                 title: 'Documents',
+                textII: 'Documments',
                 icon: <AddressSvg />,
                 statusReport: documentStatus
             },
             {
                 title: 'Verify your Address',
+                textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus
             },
             {
                 title: 'Set Transaction Pin',
+                textII: 'TransactionPin',
                 icon: <SignatureRuleSvg />,
                 statusReport: transactionPinStatus
             },
             {
                 title: 'Upload Utility BIll',
+                textII: 'UtilityBill',
                 icon: <BillSvg />,
                 statusReport: utilityStatus
             },
             {
                 title: 'Upload ID Card',
+                textII: 'UIdCard',
                 icon: <IdCard />,
                 statusReport: idCardStatus
             },
@@ -525,11 +536,13 @@ const AccountUpgrade = () => {
             // },
             {
                 title: 'Referee',
+                textII: 'Referee',
                 icon: <DirectorsSvg />,
                 statusReport: refereeStatus
             },
             {
                 title: 'Ellevate Profiling',
+                textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: idCardStatus
             }
@@ -541,14 +554,17 @@ const AccountUpgrade = () => {
         document: [
             {
                 title: 'CAC Registration',
+                textII: 'CACREG',
                 statusReport: cacStatus
             },
             {
                 title: 'SCUML Certificate',
+                textII: 'SCMULREG',
                 statusReport: scumlStatus
             },
             {
                 title: 'MEMAT',
+                textII: 'MEMRT',
                 statusReport: mematStatus
             }
         ]
@@ -637,6 +653,7 @@ const AccountUpgrade = () => {
                                       return (
                                           <AccountUpgradeSingle
                                               statusInfo={item.statusReport}
+                                              textII={item.textII}
                                               icon={item.icon}
                                               text={item.title}
                                               key={index}
@@ -657,6 +674,7 @@ const AccountUpgrade = () => {
                                                       statusInfo={
                                                           item.statusReport
                                                       }
+                                                      textII={item.textII}
                                                       icon={item.icon}
                                                       text={item.title}
                                                       key={index}
@@ -670,22 +688,27 @@ const AccountUpgrade = () => {
                                                       ? AccountUpgradeData.document.map(
                                                             (item, index) => {
                                                                 return (
-                                                                    <AccountUpgradeSingle
-                                                                        text={
-                                                                            item.title
-                                                                        }
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        statusInfo={
-                                                                            item.statusReport
-                                                                        }
-                                                                        action={() => {
-                                                                            setTitle(
+                                                                    <>
+                                                                        <AccountUpgradeSingle
+                                                                            text={
                                                                                 item.title
-                                                                            );
-                                                                        }}
-                                                                    />
+                                                                            }
+                                                                            textII={
+                                                                                item.textII
+                                                                            }
+                                                                            key={
+                                                                                index
+                                                                            }
+                                                                            statusInfo={
+                                                                                item.statusReport
+                                                                            }
+                                                                            action={() => {
+                                                                                setTitle(
+                                                                                    item.title
+                                                                                );
+                                                                            }}
+                                                                        />
+                                                                    </>
                                                                 );
                                                             }
                                                         )
@@ -695,6 +718,7 @@ const AccountUpgrade = () => {
                                       } else {
                                           return (
                                               <AccountUpgradeSingle
+                                                  textII={item.textII}
                                                   statusInfo={item.statusReport}
                                                   icon={item.icon}
                                                   text={item.title}

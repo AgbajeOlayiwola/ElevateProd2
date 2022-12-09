@@ -3,8 +3,17 @@ import AccountChecked from '../ReusableSvgComponents/AccountCheckedSvg';
 import InfoSvg from '../ReusableSvgComponents/InfoSvg';
 import styles from './styles.module.css';
 import * as RiIcons from 'react-icons/ri';
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 
-const AccountUpgradeSingle = ({ icon, text, index, action, statusInfo }) => {
+const AccountUpgradeSingle = ({
+    textII,
+    icon,
+    text,
+    index,
+    action,
+    statusInfo
+}) => {
     return (
         <>
             <div key={index} className={styles.accountUpgradeSingle}>
@@ -23,9 +32,12 @@ const AccountUpgradeSingle = ({ icon, text, index, action, statusInfo }) => {
                         <InfoSvg />
                     </div>
                 </div>
+
+                <Tooltip anchorId={textII} content="hello world!" />
                 <div className={styles.accountUpgradeSingleChecked}>
                     <AccountChecked statusInfo={statusInfo} />
-                    <p>pending</p>
+
+                    <p id={textII}>pending</p>
                 </div>
             </div>
         </>
