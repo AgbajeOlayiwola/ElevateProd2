@@ -53,8 +53,8 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                         />
                     </Link>
                     <p>
-                        With your Ellevate Account, you have Deposit/Inflow
-                        Limit: N1,000,000
+                        Your Corporate Account has been Created, Kindly update
+                        your documents to activate account.
                     </p>
                 </div>
             </>
