@@ -53,8 +53,8 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                         />
                     </Link>
                     <p>
-                        Your Corporate Account has been Created, Kindly update
-                        your documents to activate account.
+                        With your Account,you have a Deposit/Inflow Limit:
+                        #1,000,000
                     </p>
                 </div>
             </>

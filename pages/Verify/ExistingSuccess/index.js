@@ -52,10 +52,6 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                             text="Proceed To Dashboard"
                         />
                     </Link>
-                    <p>
-                        Your Corporate Account has been Created, Kindly update
-                        your documents to activate account.
-                    </p>
                 </div>
             </>
         </div>
