@@ -148,7 +148,7 @@ const AccountLoading = () => {
             router.push('/Succes');
         }
         if (timer === '00:00:00') {
-            router.push('/Auth/Login');
+            router.replace('/Auth/Login');
         }
         if (timer === '00:00:10') {
             setAccountWait('Your Account Number will be sent to your Email');
