@@ -326,10 +326,17 @@ const Payment = () => {
     useEffect(() => {
         if (link !== undefined) {
             if (userProfileData.hasSetTransactionPin === false) {
-                router.push({
-                    pathname: '/AccountUpgrade',
-                    query: { id: 'Transaction Pin' }
-                });
+                if (userProfileData.createdFromEcobankCred === false) {
+                    router.push({
+                        pathname: '/AccountUpgrade',
+                        query: { id: 'Transaction Pin' }
+                    });
+                } else if (userProfileData.createdFromEcobankCred === true) {
+                    router.push({
+                        pathname: '/Profile',
+                        query: { id: 'Transaction Pin' }
+                    });
+                }
             } else if (userProfileData.hasSetTransactionPin === true) {
                 setFormType(link.toLowerCase());
                 setOverlay(true);
@@ -338,12 +345,13 @@ const Payment = () => {
     }, [link]);
     const handleFormChange = (formTitle) => {
         if (userProfileData.hasSetTransactionPin === false) {
+            console.log(userProfileData.createdFromEcobankCred);
             if (userProfileData.createdFromEcobankCred === false) {
                 router.push({
                     pathname: '/AccountUpgrade',
                     query: { id: 'Transaction Pin' }
                 });
-            } else {
+            } else if (userProfileData.createdFromEcobankCred === true) {
                 router.push({
                     pathname: '/Profile',
                     query: { id: 'Transaction Pin' }

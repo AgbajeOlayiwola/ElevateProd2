@@ -87,7 +87,6 @@ const AccountUpgrade = () => {
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
     const [utilityStatus, setUtilityStatus] = useState('notDone');
     const [idCardStatus, setidCardStatus] = useState('notDone');
-    const [profillingStatus, setProfillingStatus] = useState('notDone');
     const [documentStatus, setDocumentStatus] = useState('notDone');
     const [refereeStatus, setRefereeStatus] = useState('notDone');
     const [cacStatus, setCacStatus] = useState('notDone');
@@ -387,28 +386,16 @@ const AccountUpgrade = () => {
 
     //Identification Upload
     const saveIdentificationFile = (e) => {
-        console.log(e.target.files);
         setIdentificationDocument(e.target.files[0]);
         setIdentificationDocumentName(e.target.files[0].name);
     };
     const IdentificationyUpload = () => {
         setLoading(true);
-
         const identificationThings = {
             meansOfIdentification: IDType,
             idNumber: idNumber,
-            identificationDocument: {
-                base64String: 'string',
-                fileName: identificationDocumentFileName,
-                fileExtension: 'string'
-            },
             identificationDocument: identificationDocumentFile
         };
-        // const identificationThings = {
-        //     meansOfIdentification: IDType,
-        //     idNumber: idNumber,
-        //     identificationDocument: identificationDocumentFile
-        // };
         dispatch(identificationDocData(identificationThings));
     };
 
@@ -455,21 +442,6 @@ const AccountUpgrade = () => {
             setLoading(false);
         }
     }, [identification, identificationErrorMessages]);
-
-    useEffect(() => {
-        if (ellevateProfilingSeccess !== null) {
-            setMessage(ellevateProfilingSeccess);
-            setStatusbar('success');
-            setOutcome(true);
-            setLoading(false);
-            setProfillingStatus('done');
-        } else if (ellevateProfillingError !== null) {
-            setMessage(identificationErrorMessages);
-            setStatusbar('error');
-            setOutcome(true);
-            setLoading(false);
-        }
-    }, [ellevateProfilingSeccess, ellevateProfillingError]);
     //console.logidentificationErrorMessages);
 
     //Identification Upload End
@@ -526,12 +498,8 @@ const AccountUpgrade = () => {
                 title: 'Ellevate Profiling',
                 textII: 'EllevateProfilling',
                 icon: <IdCard />,
-<<<<<<< HEAD
                 statusReport: idCardStatus,
                 status: status
-=======
-                statusReport: profillingStatus
->>>>>>> 2ce06677db81056a43c16a7f6c1883fab8ff2603
             }
         ],
         corporate: [

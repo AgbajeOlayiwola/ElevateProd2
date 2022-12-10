@@ -19,7 +19,6 @@ const withAuth = (WrappedComponent) => {
 
         useEffect(() => {
             dispatch(loadAccountPrimary());
-            console.log(accountPrimary, accountPrimaryError);
             if (localStorage.getItem('user')) {
                 setAccessGranted(true);
             } else {
