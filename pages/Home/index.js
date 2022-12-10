@@ -804,7 +804,7 @@ const HomeMain = () => {
                                             Account Number
                                         </p>
                                     </div>
-                                    {/* <div className={styles.cov}>
+                                    <div className={styles.cov}>
                                         <div
                                             className={
                                                 card
@@ -832,7 +832,7 @@ const HomeMain = () => {
                                         >
                                             Bank Card Details
                                         </p>
-                                    </div> */}
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.existingUserBody}>
