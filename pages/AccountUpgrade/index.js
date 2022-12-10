@@ -386,16 +386,28 @@ const AccountUpgrade = () => {
 
     //Identification Upload
     const saveIdentificationFile = (e) => {
+        console.log(e.target.files);
         setIdentificationDocument(e.target.files[0]);
         setIdentificationDocumentName(e.target.files[0].name);
     };
     const IdentificationyUpload = () => {
         setLoading(true);
+
         const identificationThings = {
             meansOfIdentification: IDType,
             idNumber: idNumber,
+            identificationDocument: {
+                base64String: 'string',
+                fileName: identificationDocumentFileName,
+                fileExtension: 'string'
+            },
             identificationDocument: identificationDocumentFile
         };
+        // const identificationThings = {
+        //     meansOfIdentification: IDType,
+        //     idNumber: idNumber,
+        //     identificationDocument: identificationDocumentFile
+        // };
         dispatch(identificationDocData(identificationThings));
     };
 

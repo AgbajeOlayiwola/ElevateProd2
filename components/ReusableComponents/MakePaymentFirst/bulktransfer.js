@@ -95,7 +95,6 @@ const BulkTransfer = ({
         return bankList.map((bank) => bank);
     };
     // const fs = require('fs');
-    console.log(number);
     useEffect(() => {}, [number]);
     const interBankEnquiryCheck = () => {
         // setLoading((prev) => !prev);
@@ -204,7 +203,6 @@ const BulkTransfer = ({
                                             //         : null
                                             // }
                                             onInput={(e) => {
-                                                // setAccountNumber(e.target.value);
                                                 if (
                                                     e.target.value.length === 10
                                                 ) {
@@ -212,10 +210,6 @@ const BulkTransfer = ({
                                                     setAcctNo(e.target.value);
                                                     const newState = number.map(
                                                         (s, indexx) => {
-                                                            console.log(
-                                                                index,
-                                                                indexx
-                                                            );
                                                             if (
                                                                 index === indexx
                                                             ) {

@@ -834,7 +834,7 @@ const Payment = () => {
                                                                   beneficiaryName:
                                                                       numberofBene[
                                                                           index
-                                                                      ]
+                                                                      ].number
                                                                           .accountName,
                                                                   destinationAccountNo:
                                                                       details.accountNumber,
