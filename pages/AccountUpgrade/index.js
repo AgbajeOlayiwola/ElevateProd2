@@ -1382,11 +1382,7 @@ const AccountUpgrade = () => {
                                     className={styles.updateBtn}
                                     type="submit"
                                 >
-                                    {ellevateProfilingDone === 'Done' ? (
-                                        <p>{ellevateProfilingDone}</p>
-                                    ) : (
-                                        <p>Ellevate Profiling</p>
-                                    )}
+                                    Ellevate Profiling
                                 </button>
                             )}
                         </form>
