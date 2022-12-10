@@ -86,6 +86,7 @@ const AccountUpgrade = () => {
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
     const [utilityStatus, setUtilityStatus] = useState('notDone');
     const [idCardStatus, setidCardStatus] = useState('notDone');
+    const [profillingStatus, setProfillingStatus] = useState('notDone');
     const [documentStatus, setDocumentStatus] = useState('notDone');
     const [refereeStatus, setRefereeStatus] = useState('notDone');
     const [cacStatus, setCacStatus] = useState('notDone');
@@ -444,6 +445,21 @@ const AccountUpgrade = () => {
             setLoading(false);
         }
     }, [identification, identificationErrorMessages]);
+
+    useEffect(() => {
+        if (ellevateProfilingSeccess !== null) {
+            setMessage(ellevateProfilingSeccess);
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setProfillingStatus('done');
+        } else if (ellevateProfillingError !== null) {
+            setMessage(identificationErrorMessages);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [ellevateProfilingSeccess, ellevateProfillingError]);
     //console.logidentificationErrorMessages);
 
     //Identification Upload End
@@ -496,7 +512,7 @@ const AccountUpgrade = () => {
                 title: 'Ellevate Profiling',
                 textII: 'EllevateProfilling',
                 icon: <IdCard />,
-                statusReport: idCardStatus
+                statusReport: profillingStatus
             }
         ],
         corporate: [
