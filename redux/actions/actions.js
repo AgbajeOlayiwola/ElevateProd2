@@ -75,7 +75,8 @@ import {
     getRC,
     shareDocuments,
     getCAC,
-    postEllevateProfilling
+    postEllevateProfilling,
+    profilingQuestions
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -310,6 +311,33 @@ export const loadCountry = () => (dispatch) => {
         .catch((error) => dispatch(countryLoadError(error.response.message)));
 };
 //country actions end
+//profilingQuestions actions
+export const profilingQuestionsLoadStart = () => ({
+    type: profilingQuestions.PROFILING_QUESTIONS_START
+});
+
+export const profilingQuestionsLoadSuccess = (profilingQuestion) => ({
+    type: profilingQuestions.PROFILING_QUESTIONS_SUCCESS,
+    payload: profilingQuestion
+});
+
+export const profilingQuestionsLoadError = (errorMessage) => ({
+    type: profilingQuestions.PROFILING_QUESTIONS_ERROR,
+    payload: errorMessage
+});
+
+export const loadprofilingQuestions = () => (dispatch) => {
+    dispatch(profilingQuestionsLoadStart());
+    axiosInstance
+        .get(`${apiRoutes.profilingQuestions}`)
+        .then((response) =>
+            dispatch(profilingQuestionsLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(profilingQuestionsLoadError(error.response.message))
+        );
+};
+//profilingQuestions actions end
 
 //internationalCountry actions
 export const internationalCountryLoadStart = () => ({
@@ -2249,7 +2277,8 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
             identificationdata,
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    // 'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -2822,34 +2851,35 @@ export const postEllevateProfilingError = (ellevateProfillingError) => ({
     type: postEllevateProfilling.POST_ELLEVATE_PROFILLING_ERROR,
     payload: ellevateProfillingError
 });
-export const postEllevateProfilingDetails = (profileSetupItems) => (
-    dispatch
-) => {
-    let cookie;
+export const postEllevateProfilingDetails =
+    (profileSetupItems) => (dispatch) => {
+        let cookie;
 
-    if (getCookie('cookieToken') == undefined) {
-        cookie = getCookie('existingToken');
-    } else {
-        cookie = getCookie('cookieToken');
-    }
+        if (getCookie('cookieToken') == undefined) {
+            cookie = getCookie('existingToken');
+        } else {
+            cookie = getCookie('cookieToken');
+        }
 
-    // dispatch(accountNumberLoadStart());
-    axios
-        .post(
-            `https://testvate.live${apiRoutes.postEllevateProfiling}`,
-            profileSetupItems,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${cookie}`
+        // dispatch(accountNumberLoadStart());
+        axios
+            .post(
+                `https://testvate.live${apiRoutes.postEllevateProfiling}`,
+                profileSetupItems,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
                 }
-            }
-        )
-        .then((response) => {
-            dispatch(postEllevateProfilingSuccess(response.data.message));
-        })
-        .catch((error) =>
-            dispatch(postEllevateProfilingError(error.response.data.message))
-        );
-};
+            )
+            .then((response) => {
+                dispatch(postEllevateProfilingSuccess(response.data.message));
+            })
+            .catch((error) =>
+                dispatch(
+                    postEllevateProfilingError(error.response.data.message)
+                )
+            );
+    };
 //Ellevate Profiling end

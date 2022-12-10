@@ -730,3 +730,12 @@ export const postEllevateProfilling = {
     POST_ELLEVATE_PROFILLING_ERROR: 'POST_ELLEVATE_PROFILLING_ERROR'
 };
 //Ellevate Profiling Types
+
+//Ellevate Profiling Types
+
+export const profilingQuestions = {
+    PROFILING_QUESTIONS_START: 'PROFILING_QUESTIONS_START',
+    PROFILING_QUESTIONS_SUCCESS: 'PROFILING_QUESTIONS_SUCCESS',
+    PROFILING_QUESTIONS_ERROR: 'PROFILING_QUESTIONS_ERROR'
+};
+//Ellevate Profiling Types

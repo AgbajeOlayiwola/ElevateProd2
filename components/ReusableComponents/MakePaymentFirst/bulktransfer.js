@@ -479,6 +479,10 @@ const BulkTransfer = ({
                                                 reader.readAsArrayBuffer(
                                                     e.target.files[0]
                                                 );
+
+                                                localStorage.removeItem(
+                                                    'number'
+                                                );
                                                 setCsvUpload(true);
                                                 setActiveBtn(true);
                                             }

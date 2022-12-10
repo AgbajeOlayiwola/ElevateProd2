@@ -27,7 +27,8 @@ import {
     uploadRefFormData,
     shareDocumentsData,
     pushDocumentsData,
-    postEllevateProfilingDetails
+    postEllevateProfilingDetails,
+    loadprofilingQuestions
 } from '../../redux/actions/actions';
 import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
@@ -82,7 +83,9 @@ const AccountUpgrade = () => {
     const [lgaCode, setLgaCode] = useState('');
     const [stateCode, setStateCode] = useState('');
     const [statusbar, setStatusbar] = useState('');
-    const [status, setStatus] = useState('pending');
+    const [pending, setPending] = useState('pending');
+    const [review, setReview] = useState('In Review');
+    const [status, setStatus] = useState('Done');
     const [verifyStatus, setVerifyStatus] = useState('notDone');
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
     const [utilityStatus, setUtilityStatus] = useState('notDone');
@@ -107,9 +110,8 @@ const AccountUpgrade = () => {
     const [outType, setOutType] = useState();
     const [outTyped, setOutTyped] = useState();
     const [activeBtn, setActiveBtn] = useState(false);
-    const [checked, setChecked] = useState(false);
-    const [checkedI, setCheckedI] = useState(false);
-    const [checkedII, setCheckedII] = useState(false);
+    const [questions, setQuestions] = useState();
+    const [base64Code, setBase64Code] = useState('');
     const [ellevateProfilingDone, setEllevateProfilingzDone] = useState();
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
@@ -119,6 +121,9 @@ const AccountUpgrade = () => {
     );
     const { memart, memartErrorMessages } = useSelector(
         (state) => state.uploadMemartReducer
+    );
+    const { profilingQuestions } = useSelector(
+        (state) => state.profilingQuestionsReducer
     );
     const { uploadRefForm, uploadRefFormErrorMessages } = useSelector(
         (state) => state.uploadMemartReducer
@@ -196,6 +201,7 @@ const AccountUpgrade = () => {
     useEffect(() => {
         dispatch(loadUserProfile());
         dispatch(shareDocumentsData());
+        dispatch(loadprofilingQuestions());
     }, []);
 
     useEffect(() => {
@@ -212,6 +218,11 @@ const AccountUpgrade = () => {
         }
         //console.log(userProfile);
     }, [userProfile]);
+    useEffect(() => {
+        if (profilingQuestions !== null) {
+            setQuestions(profilingQuestions);
+        }
+    }, [profilingQuestions]);
     useEffect(() => {
         if (shareDocuments !== null) {
             //console.log(shareDocuments);
@@ -388,46 +399,52 @@ const AccountUpgrade = () => {
     const saveIdentificationFile = (e) => {
         setIdentificationDocument(e.target.files[0]);
         setIdentificationDocumentName(e.target.files[0].name);
+        getbase64(e.target.files[0]);
+    };
+    const getbase64 = (file) => {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            onLoad(reader.result);
+        };
+    };
+    const onLoad = (fileString) => {
+        setBase64Code(fileString);
     };
     const IdentificationyUpload = () => {
         setLoading(true);
+        const data = identificationDocumentFileName.split('.');
         const identificationThings = {
             meansOfIdentification: IDType,
             idNumber: idNumber,
-            identificationDocument: identificationDocumentFile
+            identificationDocument: {
+                base64String: base64Code.split(',')[1],
+                fileName: identificationDocumentFileName,
+                fileExtension: data[data.length - 1]
+            }
         };
+        // const identificationThings = {
+        //     meansOfIdentification: IDType,
+        //     idNumber: idNumber,
+        //     identificationDocument: identificationDocumentFile
+        // };
         dispatch(identificationDocData(identificationThings));
     };
 
-    const profillingSetup = () => {
-        setLoading(true);
-        const profileSetupItems = {
-            surveyReport: [
-                {
-                    index: 0,
-                    isAnswerYes: checked
-                },
-                {
-                    index: 1,
-                    isAnswerYes: checkedI
-                },
-                {
-                    index: 2,
-                    isAnswerYes: checkedII
-                }
-            ]
-        };
-        dispatch(postEllevateProfilingDetails(profileSetupItems));
-    };
     useEffect(() => {
-        setLoading(false);
-        setEllevateProfilingzDone('Done');
-
-        if (ellevateProfilingSeccess) {
-            setTitle('First');
+        if (ellevateProfilingSeccess !== null) {
+            setEllevateProfilingzDone('Done');
+            setMessage(ellevateProfilingSeccess);
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+        } else if (ellevateProfillingError !== null) {
+            setMessage(ellevateProfillingError);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
         }
-    }, [ellevateProfilingSeccess]);
-
+    }, [ellevateProfilingSeccess, ellevateProfillingError]);
     useEffect(() => {
         if (identification !== null) {
             setMessage(identification);
@@ -471,35 +488,53 @@ const AccountUpgrade = () => {
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
-                status: status
+                status: pending
             },
             {
                 title: 'Set Transaction Pin',
                 textII: 'SetTransactionPin',
                 icon: <SignatureRuleSvg />,
                 statusReport: transactionPinStatus,
-                status: status
+                status:
+                    userProfile?.hasSetTransactionPin === true
+                        ? status
+                        : pending
             },
             {
                 title: 'Upload Utility BIll',
                 textII: 'UtilityBill',
                 icon: <BillSvg />,
                 statusReport: utilityStatus,
-                status: status
+                status:
+                    utilityStatus === 'done'
+                        ? review
+                        : utilityStatus === 'notDone'
+                        ? pending
+                        : null
             },
             {
                 title: 'Upload ID Card',
                 textII: 'IdCard',
                 icon: <IdCard />,
                 statusReport: idCardStatus,
-                status: status
+                status:
+                    idCardStatus === 'done'
+                        ? review
+                        : idCardStatus === 'notDone'
+                        ? pending
+                        : null
             },
             {
                 title: 'Ellevate Profiling',
                 textII: 'EllevateProfilling',
                 icon: <IdCard />,
                 statusReport: idCardStatus,
-                status: status
+                status:
+                    utilityStatus === 'done'
+                        ? review
+                        : utilityStatus === 'notDone'
+                        ? pending
+                        : null
             }
         ],
         corporate: [
@@ -508,35 +543,48 @@ const AccountUpgrade = () => {
                 textII: 'Documments',
                 icon: <AddressSvg />,
                 statusReport: documentStatus,
-                status: status
+                status: pending
             },
             {
                 title: 'Verify your Address',
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
-                status: status
+                status: pending
             },
             {
                 title: 'Set Transaction Pin',
                 textII: 'TransactionPin',
                 icon: <SignatureRuleSvg />,
                 statusReport: transactionPinStatus,
-                status: status
+                status:
+                    userProfile?.hasSetTransactionPin === true
+                        ? status
+                        : pending
             },
             {
                 title: 'Upload Utility BIll',
                 textII: 'UtilityBill',
                 icon: <BillSvg />,
                 statusReport: utilityStatus,
-                status: status
+                status:
+                    utilityStatus === 'done'
+                        ? review
+                        : utilityStatus === 'notDone'
+                        ? pending
+                        : null
             },
             {
                 title: 'Upload ID Card',
                 textII: 'UIdCard',
                 icon: <IdCard />,
                 statusReport: idCardStatus,
-                status: status
+                status:
+                    idCardStatus === 'done'
+                        ? review
+                        : idCardStatus === 'notDone'
+                        ? pending
+                        : null
             },
             // {
             //     title: 'Directors',
@@ -547,14 +595,24 @@ const AccountUpgrade = () => {
                 textII: 'Referee',
                 icon: <DirectorsSvg />,
                 statusReport: refereeStatus,
-                status: status
+                status:
+                    refereeStatus === 'done'
+                        ? review
+                        : refereeStatus === 'notDone'
+                        ? pending
+                        : null
             },
             {
                 title: 'Ellevate Profiling',
                 textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: idCardStatus,
-                status: status
+                status:
+                    idCardStatus === 'done'
+                        ? review
+                        : idCardStatus === 'notDone'
+                        ? pending
+                        : null
             }
             // {
             //     title: 'Signature Rule',
@@ -566,19 +624,34 @@ const AccountUpgrade = () => {
                 title: 'CAC Registration',
                 textII: 'CACREG',
                 statusReport: cacStatus,
-                status: status
+                status:
+                    cacStatus === 'done'
+                        ? review
+                        : cacStatus === 'notDone'
+                        ? pending
+                        : null
             },
             {
                 title: 'SCUML Certificate',
                 textII: 'SCMULREG',
                 statusReport: scumlStatus,
-                status: status
+                status:
+                    scumlStatus === 'done'
+                        ? review
+                        : scumlStatus === 'notDone'
+                        ? pending
+                        : null
             },
             {
                 title: 'MEMAT',
                 textII: 'MEMRT',
                 statusReport: mematStatus,
-                status: status
+                status:
+                    mematStatus === 'done'
+                        ? review
+                        : mematStatus === 'notDone'
+                        ? pending
+                        : null
             }
         ]
     };
@@ -667,6 +740,18 @@ const AccountUpgrade = () => {
                                           <AccountUpgradeSingle
                                               statusInfo={item.statusReport}
                                               textII={item.textII}
+                                              content={shareDocuments?.map(
+                                                  (items) => {
+                                                      if (
+                                                          items.documentType ===
+                                                          item.title
+                                                      ) {
+                                                          return items.comment;
+                                                      } else {
+                                                          return '';
+                                                      }
+                                                  }
+                                              )}
                                               icon={item.icon}
                                               text={item.title}
                                               key={index}
@@ -1246,17 +1331,67 @@ const AccountUpgrade = () => {
                         }}
                         title="Ellevate Profiling"
                     >
-                        <div className={styles.profilingDiv}>
-                            <input
-                                className={styles.profilingInput}
-                                type="checkbox"
-                                onChange={(e) => setChecked(!checked)}
-                            />
-                            <label>
-                                Do you produce or sell women consumable goods?
-                            </label>
-                        </div>
-                        <div className={styles.profilingDiv}>
+                        <form
+                            onSubmit={handleSubmit((data) => {
+                                console.log(data);
+                                setLoading(true);
+                                const profileSetupItems = {
+                                    surveyReport: data.details.map(
+                                        (item, index) => {
+                                            return {
+                                                index: index,
+                                                isAnswerYes: item.input
+                                            };
+                                        }
+                                    )
+                                };
+                                dispatch(
+                                    postEllevateProfilingDetails(
+                                        profileSetupItems
+                                    )
+                                );
+                            })}
+                        >
+                            {Object.values(questions.questions).map(
+                                (item, index) => {
+                                    const fieldName = `details[${index}]`;
+                                    return (
+                                        <div
+                                            className={styles.profilingDiv}
+                                            key={index}
+                                        >
+                                            <input
+                                                className={
+                                                    styles.profilingInput
+                                                }
+                                                type="checkbox"
+                                                {...register(
+                                                    `${fieldName}.input`
+                                                )}
+                                            />
+                                            <label>{item}</label>
+                                        </div>
+                                    );
+                                }
+                            )}
+                            {loading ? (
+                                <Loader />
+                            ) : (
+                                <button
+                                    // onClick={profillingSetup}
+                                    className={styles.updateBtn}
+                                    type="submit"
+                                >
+                                    {ellevateProfilingDone === 'Done' ? (
+                                        <p>{ellevateProfilingDone}</p>
+                                    ) : (
+                                        <p>Ellevate Profiling</p>
+                                    )}
+                                </button>
+                            )}
+                        </form>
+
+                        {/* <div className={styles.profilingDiv}>
                             <input
                                 className={styles.profilingInput}
                                 type="checkbox"
@@ -1278,20 +1413,14 @@ const AccountUpgrade = () => {
                                 organization?
                             </label>
                         </div>
-                        {loading ? (
-                            <Loader />
-                        ) : (
-                            <button
-                                onClick={profillingSetup}
-                                className={styles.updateBtn}
-                            >
-                                {ellevateProfilingDone === 'Done' ? (
-                                    <p>{ellevateProfilingDone}</p>
-                                ) : (
-                                    <p>Ellevate Profiling</p>
-                                )}
-                            </button>
-                        )}
+                        <div className={styles.profilingDiv}>
+                            <input
+                                className={styles.profilingInput}
+                                type="checkbox"
+                                onChange={(e) => setChecked(!checkedIII)}
+                            />
+                            <label>None of the above</label>
+                        </div> */}
                     </AccountUpgradeComponent>
                 );
 

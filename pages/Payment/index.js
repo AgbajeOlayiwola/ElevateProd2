@@ -386,6 +386,7 @@ const Payment = () => {
                 return a + b.Amount;
             }, 0)
         );
+        console.log(csvData?.slice(2));
     }, [csvData]);
     const renderForm = () => {
         switch (formType) {
@@ -731,6 +732,9 @@ const Payment = () => {
                                         : sum
                                 }
                                 title="Bulk Payments"
+                                // charges={csvData === null?: csvData.slice(2).map((item)=>{
+
+                                // })}
                                 // recieverName={paymentDetails.accountNumber}
                                 sender={`${userProfileData.lastName} ${userProfileData.firstName}`}
                                 // recieverBank={paymentDetails.bankName}
@@ -738,14 +742,13 @@ const Payment = () => {
                                 number={
                                     csvData !== null
                                         ? csvData.slice(2).length
-                                        : numberofBene.length
+                                        : numberofBene?.length
                                 }
                                 backAction={() => {
                                     setCount(count - 1);
                                 }}
                                 transferAction={(data) => {
                                     setIsLoading(true);
-                                    console;
                                     const paymentData = {
                                         accountId: senderDetails.accountId,
                                         transactionPin: Object.values(data)

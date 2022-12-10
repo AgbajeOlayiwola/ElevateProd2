@@ -1,5 +1,5 @@
 import { postEllevateProfilingDetails } from '../actions/actions';
-import { ecobankOnline, postEllevateProfilling } from '../types/actionTypes';
+import { postEllevateProfilling } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,

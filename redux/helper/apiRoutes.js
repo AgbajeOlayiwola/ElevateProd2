@@ -57,7 +57,7 @@ const banksAccounts = '/bank-account';
 const transactionFees = '/transactions/transaction-fees';
 const uploadUtilityDocument = '/account-upgrade/utility-document/upload';
 const uploadIdentificationDoc =
-    '/account-upgrade/identification-document/upload';
+    '/account-upgrade/identification-document/upload-json';
 const uploadMemart = '/account-upgrade/memart/upload';
 const uploadCacCert = '/account-upgrade/cac-cert/upload';
 const uploadScmul = '/account-upgrade/scuml/upload';
@@ -79,6 +79,7 @@ const pushDocuments = '/account-upgrade/push-document-for-review';
 const shareDocuments = '/share-point-document';
 const fetchRM = '/bank-account/account-manager';
 const postEllevateProfiling = '/ellevate-profiling';
+const profilingQuestions = '/ellevate-profiling/questions';
 export default {
     getBanks,
     getCountries,
@@ -159,5 +160,6 @@ export default {
     shareDocuments,
     fetchRM,
     verifyCac,
-    postEllevateProfiling
+    postEllevateProfiling,
+    profilingQuestions
 };

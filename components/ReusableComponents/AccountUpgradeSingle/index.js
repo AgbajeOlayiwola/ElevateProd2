@@ -13,7 +13,8 @@ const AccountUpgradeSingle = ({
     index,
     action,
     statusInfo,
-    status
+    status,
+    content
 }) => {
     return (
         <>
@@ -34,7 +35,7 @@ const AccountUpgradeSingle = ({
                     </div>
                 </div>
 
-                <Tooltip anchorId={textII} content="hello world!" />
+                <Tooltip anchorId={textII} content={content} />
                 <div className={styles.accountUpgradeSingleChecked}>
                     <AccountChecked statusInfo={statusInfo} />
 

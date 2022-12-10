@@ -133,7 +133,6 @@ const AccountLoading = () => {
         ) {
             // if (count === 1) {
             const interval = setInterval(() => {
-                console.log(count);
                 dispatch(newAccountStatusData());
             }, 20000);
             // return () => {

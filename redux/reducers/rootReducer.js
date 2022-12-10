@@ -76,6 +76,7 @@ import existReducer from './exist.reducer';
 import fetchRMReducer from './fetchRM.reducer';
 import getRCReducer from './getRC.reducer';
 import postEllevateReducer from './ellevateProfiling.reducer';
+import profilingQuestionsReducer from './profilingQuestion.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -158,7 +159,8 @@ const appReducer = combineReducers({
     fetchRMReducer,
     completeBusinessprofileReducer,
     existReducer: existReducer,
-    postEllevateReducer: postEllevateReducer
+    postEllevateReducer: postEllevateReducer,
+    profilingQuestionsReducer: profilingQuestionsReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {
