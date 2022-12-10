@@ -94,7 +94,6 @@ const BulkTransfer = ({
 
         return bankList.map((bank) => bank);
     };
-    // const fs = require('fs');
     useEffect(() => {}, [number]);
     const interBankEnquiryCheck = () => {
         // setLoading((prev) => !prev);
