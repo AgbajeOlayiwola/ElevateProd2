@@ -784,7 +784,7 @@ const AccountUpgrade = () => {
                             </p>
                         </div>
 
-                        {userProfileData.createdFromEcobankCred === false
+                        {userProfileData.createdFromEcobankCred === true
                             ? AccountUpgradeData.existing.map((item, index) => {
                                   return (
                                       <AccountUpgradeSingle
