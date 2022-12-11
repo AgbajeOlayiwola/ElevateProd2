@@ -94,6 +94,7 @@ const AccountUpgrade = () => {
     const [status, setStatus] = useState('Done');
     const [verifyStatus, setVerifyStatus] = useState('notDone');
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
+    const [vninStatus, setVninStatus] = useState('notDone');
     const [utilityStatus, setUtilityStatus] = useState('notDone');
     const [idCardStatus, setidCardStatus] = useState('notDone');
     const [documentStatus, setDocumentStatus] = useState('notDone');
@@ -228,6 +229,9 @@ const AccountUpgrade = () => {
 
             if (userProfile.hasSetTransactionPin === true) {
                 setTransactionPinStatus('done');
+            }
+            if (userProfile.hasDoneVNINVerification === true) {
+                setVninStatus('done');
             }
         }
         //console.log(userProfile);
@@ -546,13 +550,11 @@ const AccountUpgrade = () => {
                 title: 'Virtual NIN',
                 textII: 'VirtualNIN',
                 icon: <IdCard />,
-                statusReport: idCardStatus,
+                statusReport: vninStatus,
                 status:
-                    utilityStatus === 'done'
-                        ? review
-                        : utilityStatus === 'notDone'
-                        ? pending
-                        : null
+                    userProfile?.hasDoneVNINVerification === true
+                        ? status
+                        : pending
             },
             {
                 title: 'Verify your Address',
@@ -617,13 +619,11 @@ const AccountUpgrade = () => {
                 title: 'Virtual NIN',
                 textII: 'VirtualNIN',
                 icon: <IdCard />,
-                statusReport: idCardStatus,
+                statusReport: vninStatus,
                 status:
-                    utilityStatus === 'done'
-                        ? review
-                        : utilityStatus === 'notDone'
-                        ? pending
-                        : null
+                    userProfile?.hasDoneVNINVerification === true
+                        ? status
+                        : pending
             },
             {
                 title: 'Documents',
