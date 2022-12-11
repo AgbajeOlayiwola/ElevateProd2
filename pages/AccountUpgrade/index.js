@@ -118,6 +118,7 @@ const AccountUpgrade = () => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [questions, setQuestions] = useState();
     const [base64Code, setBase64Code] = useState('');
+    const [userProfileData, setUserProfileData] = useState([]);
     const [ellevateProfilingDone, setEllevateProfilingzDone] = useState();
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
@@ -152,6 +153,7 @@ const AccountUpgrade = () => {
     const { ellevateProfilingSeccess, ellevateProfillingError } = useSelector(
         (state) => state.postEllevateReducer
     );
+
     const { userProfile } = useSelector((state) => state.userProfileReducer);
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -167,7 +169,13 @@ const AccountUpgrade = () => {
         setLoading(true);
         dispatch(loadsetTransactionPin(data));
     };
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
 
+        //console.log('upgrade check', accountUpgrade);
+    }, [userProfile]);
     useEffect(() => {
         setMessage('');
         const {
@@ -446,6 +454,7 @@ const AccountUpgrade = () => {
     };
     const onLoad = (fileString) => {
         setBase64Code(fileString);
+        console.log(base64Code);
     };
     const IdentificationyUpload = () => {
         setLoading(true);
@@ -455,8 +464,8 @@ const AccountUpgrade = () => {
             idNumber: idNumber,
             identificationDocument: {
                 base64String: base64Code.split(',')[1],
-                fileName: identificationDocumentFileName,
-                fileExtension: data[data.length - 1]
+                fileName: identificationDocumentFileName.split('.')[0],
+                fileExtension: `.${data[data.length - 1]}`
             }
         };
         // const identificationThings = {
@@ -518,7 +527,33 @@ const AccountUpgrade = () => {
 
     const [document, setDocument] = useState(false);
     const AccountUpgradeData = {
+        existing: [
+            {
+                title: 'Ellevate Profiling',
+                textII: 'Profilling',
+                icon: <IdCard />,
+                statusReport: idCardStatus,
+                status:
+                    idCardStatus === 'done'
+                        ? review
+                        : idCardStatus === 'notDone'
+                        ? pending
+                        : null
+            }
+        ],
         individual: [
+            {
+                title: 'Virtual NIN',
+                textII: 'VirtualNIN',
+                icon: <IdCard />,
+                statusReport: idCardStatus,
+                status:
+                    utilityStatus === 'done'
+                        ? review
+                        : utilityStatus === 'notDone'
+                        ? pending
+                        : null
+            },
             {
                 title: 'Verify your Address',
                 textII: 'VerifyAddress',
@@ -578,6 +613,18 @@ const AccountUpgrade = () => {
             }
         ],
         corporate: [
+            {
+                title: 'Virtual NIN',
+                textII: 'VirtualNIN',
+                icon: <IdCard />,
+                statusReport: idCardStatus,
+                status:
+                    utilityStatus === 'done'
+                        ? review
+                        : utilityStatus === 'notDone'
+                        ? pending
+                        : null
+            },
             {
                 title: 'Documents',
                 textII: 'Documments',
@@ -789,7 +836,36 @@ const AccountUpgrade = () => {
                                 account upgrade.
                             </p>
                         </div>
-                        {text === 'INDIVIDUAL'
+
+                        {userProfileData.createdFromEcobankCred === true
+                            ? AccountUpgradeData.existing.map((item, index) => {
+                                  return (
+                                      <AccountUpgradeSingle
+                                          statusInfo={item.statusReport}
+                                          textII={item.textII}
+                                          content={shareDocuments?.map(
+                                              (items) => {
+                                                  if (
+                                                      items.documentType ===
+                                                      item.title
+                                                  ) {
+                                                      return items.comment;
+                                                  } else {
+                                                      return '';
+                                                  }
+                                              }
+                                          )}
+                                          icon={item.icon}
+                                          text={item.title}
+                                          key={index}
+                                          status={item.status}
+                                          action={() => {
+                                              setTitle(item.title);
+                                          }}
+                                      />
+                                  );
+                              })
+                            : text === 'INDIVIDUAL'
                             ? AccountUpgradeData.individual.map(
                                   (item, index) => {
                                       return (
@@ -1356,17 +1432,16 @@ const AccountUpgrade = () => {
                                             Select regulatory ID
                                         </option>
                                     )}
-
-                                    <option value="Voters Card">
+                                    <option value="VOTERS_CARD">
                                         Voters Card
                                     </option>
-                                    <option value="National ID card">
+                                    <option value="NATIONAL_ID">
                                         National ID card
                                     </option>
-                                    <option value="Drivers License">
+                                    <option value="DRIVERS_LICENSE">
                                         Drivers License
                                     </option>
-                                    <option value="International Passport">
+                                    <option value="PASSPORT">
                                         International Passport
                                     </option>
                                 </select>
@@ -1521,6 +1596,30 @@ const AccountUpgrade = () => {
                             />
                             <label>None of the above</label>
                         </div> */}
+                    </AccountUpgradeComponent>
+                );
+            case 'Virtual NIN':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Virtual NIN"
+                    >
+                        <form>
+                            <label>Virtual NIN</label>
+                            <input type="number" />
+                            {loading ? (
+                                <Loader />
+                            ) : (
+                                <button
+                                    className={styles.updateBtn}
+                                    type="submit"
+                                >
+                                    Virtual NIN
+                                </button>
+                            )}
+                        </form>
                     </AccountUpgradeComponent>
                 );
             case 'Document':
