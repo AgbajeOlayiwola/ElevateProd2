@@ -197,9 +197,7 @@ const Dashboard = () => {
     //console.log(newDate[0]);
     return (
         <DashLayout page="Dashboard">
-            {userProfileData.createdFromEcobankCred === false ? (
-                <Levelup account={userProfileData.customerCategory} />
-            ) : null}
+            <Levelup account={userProfileData.customerCategory} />\
             <div className={styles.cove}>
                 <section className={styles.sectionI}>
                     <div className={styles.Tpwh}>

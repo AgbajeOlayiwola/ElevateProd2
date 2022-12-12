@@ -76,7 +76,8 @@ import {
     shareDocuments,
     getCAC,
     postEllevateProfilling,
-    profilingQuestions
+    profilingQuestions,
+    vninType
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -2851,35 +2852,70 @@ export const postEllevateProfilingError = (ellevateProfillingError) => ({
     type: postEllevateProfilling.POST_ELLEVATE_PROFILLING_ERROR,
     payload: ellevateProfillingError
 });
-export const postEllevateProfilingDetails =
-    (profileSetupItems) => (dispatch) => {
-        let cookie;
+export const postEllevateProfilingDetails = (profileSetupItems) => (
+    dispatch
+) => {
+    let cookie;
 
-        if (getCookie('cookieToken') == undefined) {
-            cookie = getCookie('existingToken');
-        } else {
-            cookie = getCookie('cookieToken');
-        }
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
 
-        // dispatch(accountNumberLoadStart());
-        axios
-            .post(
-                `https://testvate.live${apiRoutes.postEllevateProfiling}`,
-                profileSetupItems,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://testvate.live${apiRoutes.postEllevateProfiling}`,
+            profileSetupItems,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
-            .then((response) => {
-                dispatch(postEllevateProfilingSuccess(response.data.message));
-            })
-            .catch((error) =>
-                dispatch(
-                    postEllevateProfilingError(error.response.data.message)
-                )
-            );
-    };
+            }
+        )
+        .then((response) => {
+            dispatch(postEllevateProfilingSuccess(response.data.message));
+        })
+        .catch((error) =>
+            dispatch(postEllevateProfilingError(error.response.data.message))
+        );
+};
 //Ellevate Profiling end
+
+////Vnin Profiling
+export const vninLoad = () => ({
+    type: vninType.VNIN_START
+});
+export const vninSuccess = (vninMSeccess) => ({
+    type: vninType.VNIN_SUCCESS,
+    payload: vninMSeccess
+});
+export const vninError = (vninMError) => ({
+    type: vninType.VNIN_ERROR,
+    payload: vninMError
+});
+export const postvnin = (vninItems) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(`https://testvate.live${apiRoutes.vnin}`, vninItems, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(vninSuccess(response.data.message));
+        })
+        .catch((error) => dispatch(vninError(error.response.data.message)));
+};
+//Vnin end

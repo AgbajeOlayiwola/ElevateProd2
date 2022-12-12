@@ -739,3 +739,11 @@ export const profilingQuestions = {
     PROFILING_QUESTIONS_ERROR: 'PROFILING_QUESTIONS_ERROR'
 };
 //Ellevate Profiling Types
+
+//vnin type
+export const vninType = {
+    VNIN_START: 'VNIN_START',
+    VNIN_SUCCESS: 'VNIN_SUCCESS',
+    VNIN_ERROR: 'VNIN_ERROR'
+};
+//vnin type

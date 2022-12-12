@@ -80,6 +80,7 @@ const shareDocuments = '/share-point-document';
 const fetchRM = '/bank-account/account-manager';
 const postEllevateProfiling = '/ellevate-profiling';
 const profilingQuestions = '/ellevate-profiling/questions';
+const vnin = '/account-upgrade/vNin-verification';
 export default {
     getBanks,
     getCountries,
@@ -161,5 +162,6 @@ export default {
     fetchRM,
     verifyCac,
     postEllevateProfiling,
-    profilingQuestions
+    profilingQuestions,
+    vnin
 };
