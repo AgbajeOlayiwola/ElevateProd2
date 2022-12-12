@@ -1214,12 +1214,12 @@ const AccountUpgrade = () => {
                             <select
                                 name=""
                                 id=""
-                                onChange={(event) => {
+                                onChange={(e) => {
                                     setUtilityTipe(e.target.value);
-                                    //console.logselstate);
                                 }}
                             >
-                                <option value="NEPA_BILLl">NEPA_BILL</option>
+                                <option value="">Select utility bill</option>
+                                <option value="NEPA_BILL">NEPA_BILL</option>
                                 <option value="LAWMA">LAWMA</option>
                             </select>
                             <div className={styles.signatureGroup}>
