@@ -1549,7 +1549,7 @@ const AccountUpgrade = () => {
                         title="Virtual NIN"
                     >
                         <p className={styles.disclaimer}>
-                            *Generate Virtual NIN using *346*3*Your NIN*715461#
+                            Generate Virtual NIN using *346*3*Your NIN*715461#
                         </p>
                         <div className={styles.profilingDiv}>
                             <label>Virtual NIN</label>
@@ -1565,7 +1565,7 @@ const AccountUpgrade = () => {
                                 className={styles.updateBtn}
                                 onClick={virtualNinRegistration}
                             >
-                                Virtual NI
+                                Virtual NIN
                             </button>
                         )}
                     </AccountUpgradeComponent>
