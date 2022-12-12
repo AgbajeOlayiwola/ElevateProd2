@@ -28,7 +28,9 @@ import {
     shareDocumentsData,
     pushDocumentsData,
     postEllevateProfilingDetails,
-    loadprofilingQuestions
+    loadprofilingQuestions,
+    vninLoad,
+    postvnin
 } from '../../redux/actions/actions';
 import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
@@ -49,13 +51,8 @@ const customStyles = {
     }
 };
 
-let profilingQuestions;
-let profilingQuestionsData = {};
-if (typeof window !== 'undefined') {
-    profilingQuestions = window.localStorage.getItem('profiling');
-    profilingQuestionsData = JSON.parse(profilingQuestions);
-}
-
+// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+// Modal.setAppElement('#yourAppElement');
 const AccountUpgrade = () => {
     const router = useRouter();
     const [text, setText] = useState('');
@@ -90,11 +87,9 @@ const AccountUpgrade = () => {
     const [statusbar, setStatusbar] = useState('');
     const [pending, setPending] = useState('pending');
     const [review, setReview] = useState('In Review');
-    const [rejected, setRejected] = useState('Rejected');
     const [status, setStatus] = useState('Done');
     const [verifyStatus, setVerifyStatus] = useState('notDone');
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
-    const [vninStatus, setVninStatus] = useState('notDone');
     const [utilityStatus, setUtilityStatus] = useState('notDone');
     const [idCardStatus, setidCardStatus] = useState('notDone');
     const [documentStatus, setDocumentStatus] = useState('notDone');
@@ -104,9 +99,9 @@ const AccountUpgrade = () => {
     const [mematStatus, setMematStatus] = useState('notDone');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
-    const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
+    const [virtualNin, setVirtualNin] = useState('');
     const [identificationDocumentFile, setIdentificationDocument] = useState(
         ''
     );
@@ -125,6 +120,7 @@ const AccountUpgrade = () => {
     const [base64Code, setBase64Code] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const [ellevateProfilingDone, setEllevateProfilingzDone] = useState();
+    const [utilitytype, setUtilityTipe] = useState();
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
     );
@@ -157,6 +153,9 @@ const AccountUpgrade = () => {
     );
     const { ellevateProfilingSeccess, ellevateProfillingError } = useSelector(
         (state) => state.postEllevateReducer
+    );
+    const { vninMSeccess, vninMError } = useSelector(
+        (state) => state.vninReducer
     );
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
@@ -234,9 +233,6 @@ const AccountUpgrade = () => {
             if (userProfile.hasSetTransactionPin === true) {
                 setTransactionPinStatus('done');
             }
-            if (userProfile.hasDoneVNINVerification === true) {
-                setVninStatus('done');
-            }
         }
         //console.log(userProfile);
     }, [userProfile]);
@@ -250,47 +246,17 @@ const AccountUpgrade = () => {
             //console.log(shareDocuments);
             shareDocuments?.map((document) => {
                 if (document.documentType === 'UTILITY') {
-                    const test = document.absoluteUrl.split('/');
-                    setUtilityFileName(test[test.length - 1]);
-                    if (document.comment !== null) {
-                        setUtilityStatus('comment');
-                    } else {
-                        setUtilityStatus('done');
-                    }
+                    setUtilityStatus('done');
                 } else if (document.documentType === 'CAC') {
-                    if (document.comment !== null) {
-                        setCacStatus('comment');
-                    } else {
-                        setCacStatus('done');
-                    }
+                    setCacStatus('done');
                 } else if (document.documentType === 'MEMART') {
-                    if (document.comment !== null) {
-                        setMematStatus('comment');
-                    } else {
-                        setMematStatus('done');
-                    }
+                    setMematStatus('done');
                 } else if (document.documentType === 'SCUML') {
-                    if (document.comment !== null) {
-                        setScumlStatus('comment');
-                    } else {
-                        setScumlStatus('done');
-                    }
-                } else if (document.documentType === 'REFERENCE_FORMFORM') {
-                    if (document.comment !== null) {
-                        setRefereeStatus('comment');
-                    } else {
-                        setRefereeStatus('done');
-                    }
+                    setScumlStatus('done');
+                } else if (document.documentType === 'REFERENCE_FORM') {
+                    setRefereeStatus('done');
                 } else if (document.documentType === 'IDENTIFICATION') {
-                    const test = document.absoluteUrl.split('/');
-                    setIdentificationDocumentName(test[test.length - 1]);
-                    setIDType(document.metaData.meansOfIdentification);
-                    setIdNumber(document.metaData.idNumber);
-                    if (document.comment !== null) {
-                        setidCardStatus('comment');
-                    } else {
-                        setidCardStatus('done');
-                    }
+                    setidCardStatus('done');
                 }
             });
         }
@@ -317,6 +283,28 @@ const AccountUpgrade = () => {
         };
         dispatch(cacData(cacDatas));
     };
+    const virtualNinRegistration = () => {
+        console.log('vninp');
+        const vninData = {
+            vNin: virtualNin,
+            dateOfBirth: userProfileData.dateOfBirth
+        };
+        dispatch(postvnin(vninData));
+    };
+    useEffect(() => {
+        if (vninMSeccess !== null) {
+            setMessage(vninMSeccess);
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setidCardStatus('done');
+        } else if (vninMError !== null) {
+            setMessage(vninMError);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [vninMSeccess, vninMError]);
     useEffect(() => {
         if (cac !== null) {
             setMessage('CAC Document uploaded Successfully');
@@ -420,6 +408,7 @@ const AccountUpgrade = () => {
     const utilityUploads = () => {
         setLoading(true);
         const utilityThingd = {
+            utilityType: utilitytype,
             streetName: streetName,
             lga: localGovernmane,
             state: selstate,
@@ -491,10 +480,6 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
-            window.localStorage.setItem(
-                'profiling',
-                JSON.stringify(elevateData)
-            );
         } else if (ellevateProfillingError !== null) {
             setMessage(ellevateProfillingError);
             setStatusbar('error');
@@ -558,11 +543,13 @@ const AccountUpgrade = () => {
                 title: 'Virtual NIN',
                 textII: 'VirtualNIN',
                 icon: <IdCard />,
-                statusReport: vninStatus,
+                statusReport: idCardStatus,
                 status:
-                    userProfile?.hasDoneVNINVerification === true
-                        ? status
-                        : pending
+                    utilityStatus === 'done'
+                        ? review
+                        : utilityStatus === 'notDone'
+                        ? pending
+                        : null
             },
             {
                 title: 'Verify your Address',
@@ -586,14 +573,11 @@ const AccountUpgrade = () => {
                 textII: 'UtilityBill',
                 icon: <BillSvg />,
                 statusReport: utilityStatus,
-                name: 'UTILITY',
                 status:
                     utilityStatus === 'done'
                         ? review
                         : utilityStatus === 'notDone'
                         ? pending
-                        : utilityStatus === 'comment'
-                        ? rejected
                         : null
             },
             {
@@ -601,14 +585,11 @@ const AccountUpgrade = () => {
                 textII: 'IdCard',
                 icon: <IdCard />,
                 statusReport: idCardStatus,
-                name: 'IDENTIFICATION',
                 status:
                     idCardStatus === 'done'
                         ? review
                         : idCardStatus === 'notDone'
                         ? pending
-                        : idCardStatus === 'comment'
-                        ? rejected
                         : null
             },
             {
@@ -617,9 +598,11 @@ const AccountUpgrade = () => {
                 icon: <IdCard />,
                 statusReport: idCardStatus,
                 status:
-                    userProfile?.hasDoneEllevateProfiling === true
-                        ? status
-                        : pending
+                    utilityStatus === 'done'
+                        ? review
+                        : utilityStatus === 'notDone'
+                        ? pending
+                        : null
             }
         ],
         corporate: [
@@ -627,11 +610,13 @@ const AccountUpgrade = () => {
                 title: 'Virtual NIN',
                 textII: 'VirtualNIN',
                 icon: <IdCard />,
-                statusReport: vninStatus,
+                statusReport: idCardStatus,
                 status:
-                    userProfile?.hasDoneVNINVerification === true
-                        ? status
-                        : pending
+                    utilityStatus === 'done'
+                        ? review
+                        : utilityStatus === 'notDone'
+                        ? pending
+                        : null
             },
             {
                 title: 'Documents',
@@ -662,14 +647,11 @@ const AccountUpgrade = () => {
                 textII: 'UtilityBill',
                 icon: <BillSvg />,
                 statusReport: utilityStatus,
-                name: 'UTILITY',
                 status:
                     utilityStatus === 'done'
                         ? review
                         : utilityStatus === 'notDone'
                         ? pending
-                        : utilityStatus === 'comment'
-                        ? rejected
                         : null
             },
             {
@@ -677,14 +659,11 @@ const AccountUpgrade = () => {
                 textII: 'UIdCard',
                 icon: <IdCard />,
                 statusReport: idCardStatus,
-                name: 'IDENTIFICATION',
                 status:
                     idCardStatus === 'done'
                         ? review
                         : idCardStatus === 'notDone'
                         ? pending
-                        : idCardStatus === 'comment'
-                        ? rejected
                         : null
             },
             // {
@@ -696,14 +675,11 @@ const AccountUpgrade = () => {
                 textII: 'Referee',
                 icon: <DirectorsSvg />,
                 statusReport: refereeStatus,
-                name: 'REFERENCE_FORMFORM',
                 status:
                     refereeStatus === 'done'
                         ? review
                         : refereeStatus === 'notDone'
                         ? pending
-                        : refereeStatus === 'comment'
-                        ? rejected
                         : null
             },
             {
@@ -712,9 +688,11 @@ const AccountUpgrade = () => {
                 icon: <IdCard />,
                 statusReport: idCardStatus,
                 status:
-                    userProfile?.hasDoneEllevateProfiling === true
-                        ? status
-                        : pending
+                    idCardStatus === 'done'
+                        ? review
+                        : idCardStatus === 'notDone'
+                        ? pending
+                        : null
             }
             // {
             //     title: 'Signature Rule',
@@ -726,42 +704,33 @@ const AccountUpgrade = () => {
                 title: 'CAC Registration',
                 textII: 'CACREG',
                 statusReport: cacStatus,
-                name: 'CAC',
                 status:
                     cacStatus === 'done'
                         ? review
                         : cacStatus === 'notDone'
                         ? pending
-                        : cacStatus === 'comment'
-                        ? rejected
                         : null
             },
             {
                 title: 'SCUML Certificate',
                 textII: 'SCMULREG',
                 statusReport: scumlStatus,
-                name: 'SCUML',
                 status:
                     scumlStatus === 'done'
                         ? review
                         : scumlStatus === 'notDone'
                         ? pending
-                        : scumlStatus === 'comment'
-                        ? rejected
                         : null
             },
             {
                 title: 'MEMAT',
-                textII: 'MEMAT',
+                textII: 'MEMRT',
                 statusReport: mematStatus,
-                name: 'MEMART',
                 status:
                     mematStatus === 'done'
                         ? review
                         : mematStatus === 'notDone'
                         ? pending
-                        : mematStatus === 'comment'
-                        ? rejected
                         : null
             }
         ]
@@ -884,7 +853,7 @@ const AccountUpgrade = () => {
                                                   (items) => {
                                                       if (
                                                           items.documentType ===
-                                                          item.name
+                                                          item.title
                                                       ) {
                                                           return items.comment;
                                                       } else {
@@ -962,18 +931,6 @@ const AccountUpgrade = () => {
                                           return (
                                               <AccountUpgradeSingle
                                                   textII={item.textII}
-                                                  content={shareDocuments?.map(
-                                                      (items) => {
-                                                          if (
-                                                              items.documentType ===
-                                                              item.name
-                                                          ) {
-                                                              return items.comment;
-                                                          } else {
-                                                              return '';
-                                                          }
-                                                      }
-                                                  )}
                                                   statusInfo={item.statusReport}
                                                   icon={item.icon}
                                                   text={item.title}
@@ -1253,17 +1210,18 @@ const AccountUpgrade = () => {
                         title="Utility"
                     >
                         <div className={styles.utilityBody}>
-                            {shareDocuments?.map((item, index) => {
-                                if (item.documentType === 'UTILITY') {
-                                    if (item.comment !== null) {
-                                        return (
-                                            <p key={index}>{item.comment}</p>
-                                        );
-                                    } else {
-                                        return null;
-                                    }
-                                }
-                            })}
+                            <label>Utility Document</label>
+                            <select
+                                name=""
+                                id=""
+                                onChange={(event) => {
+                                    setUtilityTipe(e.target.value);
+                                    //console.logselstate);
+                                }}
+                            >
+                                <option value="NEPA_BILLl">NEPA_BILL</option>
+                                <option value="LAWMA">LAWMA</option>
+                            </select>
                             <div className={styles.signatureGroup}>
                                 <p>Upload Photo</p>
                                 <div className={styles.signatureFormGroup}>
@@ -1416,34 +1374,18 @@ const AccountUpgrade = () => {
                         title="Means of Identification"
                     >
                         <div className={styles.meansIdentification}>
-                            {shareDocuments?.map((item, index) => {
-                                if (item.documentType === 'IDENTIFICATION') {
-                                    if (item.comment !== null) {
-                                        return (
-                                            <p key={index}>{item.comment}</p>
-                                        );
-                                    } else {
-                                        return null;
-                                    }
-                                }
-                            })}
                             <div className={styles.identificationGroup}>
                                 <label>Choose Means of Identification</label>
                                 <select
                                     name=""
                                     id=""
-                                    value={IDType}
                                     onChange={(e) => {
                                         setIDType(e.target.value);
                                     }}
                                 >
-                                    {IDType ? (
-                                        <option>{IDType}</option>
-                                    ) : (
-                                        <option value="">
-                                            Select regulatory ID
-                                        </option>
-                                    )}
+                                    <option value="">
+                                        Select regulatory ID
+                                    </option>
                                     <option value="VOTERS_CARD">
                                         Voters Card
                                     </option>
@@ -1462,7 +1404,6 @@ const AccountUpgrade = () => {
                                 <label>ID Number</label>
                                 <input
                                     type="text"
-                                    value={idNumber}
                                     onChange={(e) =>
                                         setIdNumber(e.target.value)
                                     }
@@ -1513,8 +1454,7 @@ const AccountUpgrade = () => {
                     >
                         <form
                             onSubmit={handleSubmit((data) => {
-                                setElevateData(data.details);
-
+                                console.log(data);
                                 setLoading(true);
                                 const profileSetupItems = {
                                     surveyReport: data.details.map(
@@ -1546,14 +1486,6 @@ const AccountUpgrade = () => {
                                                     styles.profilingInput
                                                 }
                                                 type="checkbox"
-                                                checked={
-                                                    profilingQuestionsData !==
-                                                    null
-                                                        ? profilingQuestionsData[
-                                                              index
-                                                          ].input
-                                                        : null
-                                                }
                                                 {...register(
                                                     `${fieldName}.input`
                                                 )}
@@ -1634,7 +1566,7 @@ const AccountUpgrade = () => {
                                 className={styles.updateBtn}
                                 onClick={virtualNinRegistration}
                             >
-                                Submit
+                                Done
                             </button>
                         )}
                     </AccountUpgradeComponent>
@@ -1801,17 +1733,6 @@ const AccountUpgrade = () => {
                         title="CAC Registration"
                     >
                         <div className={styles.documentBody}>
-                            {shareDocuments?.map((item, index) => {
-                                if (item.documentType === 'CAC') {
-                                    if (item.comment !== null) {
-                                        return (
-                                            <p key={index}>{item.comment}</p>
-                                        );
-                                    } else {
-                                        return null;
-                                    }
-                                }
-                            })}
                             <div className={styles.identificationGroup}>
                                 <label>CAC Registration Number</label>
                                 <input
@@ -1862,17 +1783,6 @@ const AccountUpgrade = () => {
                         title="SCUML Certificate"
                     >
                         <div className={styles.documentBody}>
-                            {shareDocuments?.map((item, index) => {
-                                if (item.documentType === 'SCUML') {
-                                    if (item.comment !== null) {
-                                        return (
-                                            <p key={index}>{item.comment}</p>
-                                        );
-                                    } else {
-                                        return null;
-                                    }
-                                }
-                            })}
                             <div className={styles.identificationGroup}>
                                 <label>SCUML Certificate Number</label>
                                 <input
@@ -1923,17 +1833,6 @@ const AccountUpgrade = () => {
                         title="MEMAT"
                     >
                         <div className={styles.documentBody}>
-                            {shareDocuments?.map((item, index) => {
-                                if (item.documentType === 'MEMART') {
-                                    if (item.comment !== null) {
-                                        return (
-                                            <p key={index}>{item.comment}</p>
-                                        );
-                                    } else {
-                                        return null;
-                                    }
-                                }
-                            })}
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
                                     <p>Upload CO2</p>
@@ -1994,19 +1893,6 @@ const AccountUpgrade = () => {
                         }}
                         title="Referee"
                     >
-                        <div>
-                            {shareDocuments?.map((item, index) => {
-                                if (item.documentType === 'REFERENCE_FORM') {
-                                    if (item.comment !== null) {
-                                        return (
-                                            <p key={index}>{item.comment}</p>
-                                        );
-                                    } else {
-                                        return null;
-                                    }
-                                }
-                            })}
-                        </div>
                         <div className={styles.directorsBody}>
                             <h2>Reference 1</h2>
                             <div className={styles.directorsGroup}>
