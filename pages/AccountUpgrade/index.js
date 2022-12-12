@@ -95,6 +95,7 @@ const AccountUpgrade = () => {
     const [verifyStatus, setVerifyStatus] = useState('notDone');
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
     const [vninStatus, setVninStatus] = useState('notDone');
+    const [elevateStatus, setElevateStatus] = useState('notDone');
     const [utilityStatus, setUtilityStatus] = useState('notDone');
     const [idCardStatus, setidCardStatus] = useState('notDone');
     const [documentStatus, setDocumentStatus] = useState('notDone');
@@ -233,6 +234,9 @@ const AccountUpgrade = () => {
             }
             if (userProfile.hasDoneVNINVerification === true) {
                 setVninStatus('done');
+            }
+            if (userProfile?.hasDoneEllevateProfiling === true) {
+                setElevateStatus('done');
             }
         }
         //console.log(userProfile);
@@ -541,11 +545,11 @@ const AccountUpgrade = () => {
                 title: 'Ellevate Profiling',
                 textII: 'Profilling',
                 icon: <IdCard />,
-                statusReport: idCardStatus,
+                statusReport: elevateStatus,
                 status:
-                    idCardStatus === 'done'
+                    elevateStatus === 'done'
                         ? review
-                        : idCardStatus === 'notDone'
+                        : elevateStatus === 'notDone'
                         ? pending
                         : null
             }
@@ -612,7 +616,7 @@ const AccountUpgrade = () => {
                 title: 'Ellevate Profiling',
                 textII: 'EllevateProfilling',
                 icon: <IdCard />,
-                statusReport: idCardStatus,
+                statusReport: elevateStatus,
                 status:
                     userProfile?.hasDoneEllevateProfiling === true
                         ? status
@@ -707,7 +711,7 @@ const AccountUpgrade = () => {
                 title: 'Ellevate Profiling',
                 textII: 'Profilling',
                 icon: <IdCard />,
-                statusReport: idCardStatus,
+                statusReport: elevateStatus,
                 status:
                     userProfile?.hasDoneEllevateProfiling === true
                         ? status
