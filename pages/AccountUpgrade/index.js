@@ -28,7 +28,9 @@ import {
     shareDocumentsData,
     pushDocumentsData,
     postEllevateProfilingDetails,
-    loadprofilingQuestions
+    loadprofilingQuestions,
+    vninLoad,
+    postvnin
 } from '../../redux/actions/actions';
 import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
@@ -99,6 +101,7 @@ const AccountUpgrade = () => {
     const [idNumber, setIdNumber] = useState('');
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
+    const [virtualNin, setVirtualNin] = useState('');
     const [identificationDocumentFile, setIdentificationDocument] = useState(
         ''
     );
@@ -117,6 +120,7 @@ const AccountUpgrade = () => {
     const [base64Code, setBase64Code] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const [ellevateProfilingDone, setEllevateProfilingzDone] = useState();
+    const [utilitytype, setUtilityTipe] = useState();
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
     );
@@ -149,6 +153,9 @@ const AccountUpgrade = () => {
     );
     const { ellevateProfilingSeccess, ellevateProfillingError } = useSelector(
         (state) => state.postEllevateReducer
+    );
+    const { vninMSeccess, vninMError } = useSelector(
+        (state) => state.vninReducer
     );
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
@@ -276,6 +283,28 @@ const AccountUpgrade = () => {
         };
         dispatch(cacData(cacDatas));
     };
+    const virtualNinRegistration = () => {
+        console.log('vninp');
+        const vninData = {
+            vNin: virtualNin,
+            dateOfBirth: userProfileData.dateOfBirth
+        };
+        dispatch(postvnin(vninData));
+    };
+    useEffect(() => {
+        if (vninMSeccess !== null) {
+            setMessage(vninMSeccess);
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setidCardStatus('done');
+        } else if (vninMError !== null) {
+            setMessage(vninMError);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [vninMSeccess, vninMError]);
     useEffect(() => {
         if (cac !== null) {
             setMessage('CAC Document uploaded Successfully');
@@ -379,6 +408,7 @@ const AccountUpgrade = () => {
     const utilityUploads = () => {
         setLoading(true);
         const utilityThingd = {
+            utilityType: utilitytype,
             streetName: streetName,
             lga: localGovernmane,
             state: selstate,
@@ -1180,6 +1210,18 @@ const AccountUpgrade = () => {
                         title="Utility"
                     >
                         <div className={styles.utilityBody}>
+                            <label>Utility Document</label>
+                            <select
+                                name=""
+                                id=""
+                                onChange={(event) => {
+                                    setUtilityTipe(e.target.value);
+                                    //console.logselstate);
+                                }}
+                            >
+                                <option value="NEPA_BILLl">NEPA_BILL</option>
+                                <option value="LAWMA">LAWMA</option>
+                            </select>
                             <div className={styles.signatureGroup}>
                                 <p>Upload Photo</p>
                                 <div className={styles.signatureFormGroup}>
@@ -1506,20 +1548,26 @@ const AccountUpgrade = () => {
                         }}
                         title="Virtual NIN"
                     >
-                        <form>
+                        <p className={styles.disclaimer}>
+                            *Generate Virtual NIN using *346*3*Your NIN*715461#
+                        </p>
+                        <div className={styles.profilingDiv}>
                             <label>Virtual NIN</label>
-                            <input type="number" />
-                            {loading ? (
-                                <Loader />
-                            ) : (
-                                <button
-                                    className={styles.updateBtn}
-                                    type="submit"
-                                >
-                                    Virtual NIN
-                                </button>
-                            )}
-                        </form>
+                            <input
+                                type="number"
+                                onChange={(e) => setVirtualNin(e.target.value)}
+                            />
+                        </div>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                className={styles.updateBtn}
+                                onClick={virtualNinRegistration}
+                            >
+                                Virtual NI
+                            </button>
+                        )}
                     </AccountUpgradeComponent>
                 );
             case 'Document':
