@@ -104,6 +104,7 @@ const AccountUpgrade = () => {
     const [mematStatus, setMematStatus] = useState('notDone');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
+    const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
     const [identificationDocumentFile, setIdentificationDocument] =
@@ -487,6 +488,10 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
+            window.localStorage.setItem(
+                'profiling',
+                JSON.stringify(elevateData)
+            );
         } else if (ellevateProfillingError !== null) {
             setMessage(ellevateProfillingError);
             setStatusbar('error');
@@ -1501,10 +1506,8 @@ const AccountUpgrade = () => {
                     >
                         <form
                             onSubmit={handleSubmit((data) => {
-                                window.localStorage.setItem(
-                                    'profiling',
-                                    JSON.stringify(data.details)
-                                );
+                                setElevateData(data.details);
+
                                 setLoading(true);
                                 const profileSetupItems = {
                                     surveyReport: data.details.map(
@@ -1542,7 +1545,7 @@ const AccountUpgrade = () => {
                                                         ? profilingQuestionsData[
                                                               index
                                                           ].input
-                                                        : false
+                                                        : null
                                                 }
                                                 {...register(
                                                     `${fieldName}.input`
