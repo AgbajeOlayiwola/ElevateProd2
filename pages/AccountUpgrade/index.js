@@ -1552,9 +1552,10 @@ const AccountUpgrade = () => {
                             Generate Virtual NIN using *346*3*Your NIN*715461#
                         </p>
                         <div className={styles.profilingDiv}>
-                            <label>Virtual NIN</label>
+                            {/* <label>Virtual NIN</label> */}
                             <input
-                                type="number"
+                                type="text"
+                                placeholder="input your virtual ninj"
                                 onChange={(e) => setVirtualNin(e.target.value)}
                             />
                         </div>
@@ -1565,7 +1566,7 @@ const AccountUpgrade = () => {
                                 className={styles.updateBtn}
                                 onClick={virtualNinRegistration}
                             >
-                                Virtual NIN
+                                Submit
                             </button>
                         )}
                     </AccountUpgradeComponent>
