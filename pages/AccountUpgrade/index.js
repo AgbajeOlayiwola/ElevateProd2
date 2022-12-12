@@ -1250,10 +1250,12 @@ const AccountUpgrade = () => {
                         title="Utility"
                     >
                         <div className={styles.utilityBody}>
-                            {shareDocuments?.map((item) => {
+                            {shareDocuments?.map((item, index) => {
                                 if (item.documentType === 'UTILITY') {
                                     if (item.comment !== null) {
-                                        return <p>{item.comment}</p>;
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
                                     } else {
                                         return null;
                                     }
@@ -1411,10 +1413,12 @@ const AccountUpgrade = () => {
                         title="Means of Identification"
                     >
                         <div className={styles.meansIdentification}>
-                            {shareDocuments?.map((item) => {
+                            {shareDocuments?.map((item, index) => {
                                 if (item.documentType === 'IDENTIFICATION') {
                                     if (item.comment !== null) {
-                                        return <p>{item.comment}</p>;
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
                                     } else {
                                         return null;
                                     }
@@ -1787,10 +1791,12 @@ const AccountUpgrade = () => {
                         title="CAC Registration"
                     >
                         <div className={styles.documentBody}>
-                            {shareDocuments?.map((item) => {
+                            {shareDocuments?.map((item, index) => {
                                 if (item.documentType === 'CAC') {
                                     if (item.comment !== null) {
-                                        return <p>{item.comment}</p>;
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
                                     } else {
                                         return null;
                                     }
@@ -1846,10 +1852,12 @@ const AccountUpgrade = () => {
                         title="SCUML Certificate"
                     >
                         <div className={styles.documentBody}>
-                            {shareDocuments?.map((item) => {
+                            {shareDocuments?.map((item, index) => {
                                 if (item.documentType === 'SCUML') {
                                     if (item.comment !== null) {
-                                        return <p>{item.comment}</p>;
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
                                     } else {
                                         return null;
                                     }
@@ -1905,10 +1913,12 @@ const AccountUpgrade = () => {
                         title="MEMAT"
                     >
                         <div className={styles.documentBody}>
-                            {shareDocuments?.map((item) => {
+                            {shareDocuments?.map((item, index) => {
                                 if (item.documentType === 'MEMART') {
                                     if (item.comment !== null) {
-                                        return <p>{item.comment}</p>;
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
                                     } else {
                                         return null;
                                     }
@@ -1975,10 +1985,12 @@ const AccountUpgrade = () => {
                         title="Referee"
                     >
                         <div>
-                            {shareDocuments?.map((item) => {
+                            {shareDocuments?.map((item, index) => {
                                 if (item.documentType === 'REFERENCE_FORM') {
                                     if (item.comment !== null) {
-                                        return <p>{item.comment}</p>;
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
                                     } else {
                                         return null;
                                     }
