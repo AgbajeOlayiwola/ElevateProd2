@@ -1555,7 +1555,7 @@ const AccountUpgrade = () => {
                             {/* <label>Virtual NIN</label> */}
                             <input
                                 type="text"
-                                placeholder="input your virtual ninj"
+                                placeholder="input your virtual nin"
                                 onChange={(e) => setVirtualNin(e.target.value)}
                             />
                         </div>
