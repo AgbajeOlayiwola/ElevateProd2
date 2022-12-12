@@ -166,7 +166,7 @@ const AccountLoading = () => {
 
     return (
         <>
-            <h2>{timer}</h2>
+            {/* <h2>{timer}</h2> */}
             <div className={styles.cover}>
                 <div className={styles.covInn}>
                     <div className={styles.load}>
