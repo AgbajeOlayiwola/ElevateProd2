@@ -92,6 +92,8 @@ const AccountUpgrade = () => {
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
     const [utilityStatus, setUtilityStatus] = useState('notDone');
     const [idCardStatus, setidCardStatus] = useState('notDone');
+    const [profillingStatus, setProfillingStatus] = useState('notdone');
+    const [vninStatus, setVninStatus] = useState('notdone');
     const [documentStatus, setDocumentStatus] = useState('notDone');
     const [refereeStatus, setRefereeStatus] = useState('notDone');
     const [cacStatus, setCacStatus] = useState('notDone');
@@ -545,9 +547,9 @@ const AccountUpgrade = () => {
                 icon: <IdCard />,
                 statusReport: idCardStatus,
                 status:
-                    utilityStatus === 'done'
+                    vninStatus === 'done'
                         ? review
-                        : utilityStatus === 'notDone'
+                        : vninStatus === 'notDone'
                         ? pending
                         : null
             },
@@ -612,9 +614,9 @@ const AccountUpgrade = () => {
                 icon: <IdCard />,
                 statusReport: idCardStatus,
                 status:
-                    utilityStatus === 'done'
+                    vninStatus === 'done'
                         ? review
-                        : utilityStatus === 'notDone'
+                        : vninStatus === 'notDone'
                         ? pending
                         : null
             },
@@ -688,9 +690,9 @@ const AccountUpgrade = () => {
                 icon: <IdCard />,
                 statusReport: idCardStatus,
                 status:
-                    idCardStatus === 'done'
+                    profillingStatus === 'done'
                         ? review
-                        : idCardStatus === 'notDone'
+                        : profillingStatus === 'notDone'
                         ? pending
                         : null
             }
