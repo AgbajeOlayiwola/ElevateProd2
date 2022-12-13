@@ -19,8 +19,11 @@ const withAuth = (WrappedComponent) => {
 
         useEffect(() => {
             dispatch(loadAccountPrimary());
-            if (localStorage.getItem('user')) {
+            if (accountPrimary !== null) {
                 setAccessGranted(true);
+                if (accountPrimary.accountNumber !== '') {
+                    setAccessGranted(true);
+                }
             } else {
                 dispatch(logoutAction());
                 if (!localStorage.getItem('user')) {
