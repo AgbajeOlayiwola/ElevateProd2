@@ -701,23 +701,23 @@ const AccountUpgrade = () => {
             //     title: 'Directors',
             //     icon: <DirectorsSvg />
             // },
-            {
-                title: 'Referee',
-                textII: 'Referee',
-                icon: <DirectorsSvg />,
-                statusReport: refereeStatus,
-                name: 'REFERENCE_FORMFORM',
-                status:
-                    userProfile?.hasSubmitedDocumentsForReview === true
-                        ? refereeStatus === 'done'
-                            ? review
-                            : refereeStatus === 'notDone'
-                            ? pending
-                            : refereeStatus === 'comment'
-                            ? rejected
-                            : null
-                        : pending
-            },
+            // {
+            //     title: 'Referee',
+            //     textII: 'Referee',
+            //     icon: <DirectorsSvg />,
+            //     statusReport: refereeStatus,
+            //     name: 'REFERENCE_FORMFORM',
+            //     status:
+            //         userProfile?.hasSubmitedDocumentsForReview === true
+            //             ? refereeStatus === 'done'
+            //                 ? review
+            //                 : refereeStatus === 'notDone'
+            //                 ? pending
+            //                 : refereeStatus === 'comment'
+            //                 ? rejected
+            //                 : null
+            //             : pending
+            // },
             {
                 title: 'Ellevate Profiling',
                 textII: 'Profilling',
@@ -784,6 +784,8 @@ const AccountUpgrade = () => {
             }
         ]
     };
+
+    useEffect(() => {}, [shareDocuments]);
 
     const types = (type) => {
         setOutType(type);
