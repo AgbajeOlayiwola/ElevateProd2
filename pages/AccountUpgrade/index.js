@@ -97,6 +97,7 @@ const AccountUpgrade = () => {
     // const [vninStatus, setVninStatus] = useState('notDone');
     const [elevateStatus, setElevateStatus] = useState('notDone');
     const [utilityStatus, setUtilityStatus] = useState('notDone');
+    const [utilitytype, setUtilityType] = useState('');
     const [idCardStatus, setidCardStatus] = useState('notDone');
     const [profillingStatus, setProfillingStatus] = useState('notdone');
     const [vninStatus, setVninStatus] = useState('notdone');
@@ -426,6 +427,7 @@ const AccountUpgrade = () => {
     const utilityUploads = () => {
         setLoading(true);
         const utilityThingd = {
+            utilityType: utilitytype,
             streetName: streetName,
             lga: localGovernmane,
             state: selstate,
@@ -1270,6 +1272,20 @@ const AccountUpgrade = () => {
                                     }
                                 }
                             })}
+                            <select
+                                name=""
+                                id=""
+                                onChange={(event) => {
+                                    setUtilityType(event.target.value);
+                                    //console.logselstate);
+                                }}
+                            >
+                                <option value="NEPA_BILL">
+                                    Select a utility
+                                </option>
+                                <option value="NEPA_BILL">NEPA BILL</option>
+                                <option value="LAWMA">LAWMA</option>
+                            </select>
                             <div className={styles.signatureGroup}>
                                 <p>Upload Photo</p>
                                 <div className={styles.signatureFormGroup}>
