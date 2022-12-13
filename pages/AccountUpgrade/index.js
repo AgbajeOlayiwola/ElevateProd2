@@ -99,8 +99,8 @@ const AccountUpgrade = () => {
     const [utilityStatus, setUtilityStatus] = useState('notDone');
     const [utilitytype, setUtilityType] = useState('');
     const [idCardStatus, setidCardStatus] = useState('notDone');
-    const [profillingStatus, setProfillingStatus] = useState('notdone');
-    const [vninStatus, setVninStatus] = useState('notdone');
+    const [profillingStatus, setProfillingStatus] = useState('notDone');
+    const [vninStatus, setVninStatus] = useState('notDone');
     const [documentStatus, setDocumentStatus] = useState('notDone');
     const [refereeStatus, setRefereeStatus] = useState('notDone');
     const [cacStatus, setCacStatus] = useState('notDone');
@@ -111,13 +111,10 @@ const AccountUpgrade = () => {
     const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState('');
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -217,7 +214,6 @@ const AccountUpgrade = () => {
             setLoading(false);
         }
     };
-
     useEffect(() => {
         transactionPin();
     }, [setTransactionPin, setTransactionPinError]);
@@ -596,13 +592,15 @@ const AccountUpgrade = () => {
                 statusReport: utilityStatus,
                 name: 'UTILITY',
                 status:
-                    utilityStatus === 'done'
-                        ? review
-                        : utilityStatus === 'notDone'
-                        ? pending
-                        : utilityStatus === 'comment'
-                        ? rejected
-                        : null
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? utilityStatus === 'done'
+                            ? review
+                            : utilityStatus === 'notDone'
+                            ? pending
+                            : utilityStatus === 'comment'
+                            ? rejected
+                            : null
+                        : pending
             },
             {
                 title: 'Upload ID Card',
@@ -611,13 +609,15 @@ const AccountUpgrade = () => {
                 statusReport: idCardStatus,
                 name: 'IDENTIFICATION',
                 status:
-                    idCardStatus === 'done'
-                        ? review
-                        : idCardStatus === 'notDone'
-                        ? pending
-                        : idCardStatus === 'comment'
-                        ? rejected
-                        : null
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? idCardStatus === 'done'
+                            ? review
+                            : idCardStatus === 'notDone'
+                            ? pending
+                            : idCardStatus === 'comment'
+                            ? rejected
+                            : null
+                        : pending
             },
             {
                 title: 'Ellevate Profiling',
@@ -672,13 +672,15 @@ const AccountUpgrade = () => {
                 statusReport: utilityStatus,
                 name: 'UTILITY',
                 status:
-                    utilityStatus === 'done'
-                        ? review
-                        : utilityStatus === 'notDone'
-                        ? pending
-                        : utilityStatus === 'comment'
-                        ? rejected
-                        : null
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? utilityStatus === 'done'
+                            ? review
+                            : utilityStatus === 'notDone'
+                            ? pending
+                            : utilityStatus === 'comment'
+                            ? rejected
+                            : null
+                        : pending
             },
             {
                 title: 'Upload ID Card',
@@ -687,13 +689,15 @@ const AccountUpgrade = () => {
                 statusReport: idCardStatus,
                 name: 'IDENTIFICATION',
                 status:
-                    idCardStatus === 'done'
-                        ? review
-                        : idCardStatus === 'notDone'
-                        ? pending
-                        : idCardStatus === 'comment'
-                        ? rejected
-                        : null
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? idCardStatus === 'done'
+                            ? review
+                            : idCardStatus === 'notDone'
+                            ? pending
+                            : idCardStatus === 'comment'
+                            ? rejected
+                            : null
+                        : pending
             },
             // {
             //     title: 'Directors',
@@ -706,13 +710,15 @@ const AccountUpgrade = () => {
                 statusReport: refereeStatus,
                 name: 'REFERENCE_FORMFORM',
                 status:
-                    refereeStatus === 'done'
-                        ? review
-                        : refereeStatus === 'notDone'
-                        ? pending
-                        : refereeStatus === 'comment'
-                        ? rejected
-                        : null
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? refereeStatus === 'done'
+                            ? review
+                            : refereeStatus === 'notDone'
+                            ? pending
+                            : refereeStatus === 'comment'
+                            ? rejected
+                            : null
+                        : pending
             },
             {
                 title: 'Ellevate Profiling',
@@ -736,13 +742,15 @@ const AccountUpgrade = () => {
                 statusReport: cacStatus,
                 name: 'CAC',
                 status:
-                    cacStatus === 'done'
-                        ? review
-                        : cacStatus === 'notDone'
-                        ? pending
-                        : cacStatus === 'comment'
-                        ? rejected
-                        : null
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? cacStatus === 'done'
+                            ? review
+                            : cacStatus === 'notDone'
+                            ? pending
+                            : cacStatus === 'comment'
+                            ? rejected
+                            : null
+                        : pending
             },
             {
                 title: 'SCUML Certificate',
@@ -750,13 +758,15 @@ const AccountUpgrade = () => {
                 statusReport: scumlStatus,
                 name: 'SCUML',
                 status:
-                    scumlStatus === 'done'
-                        ? review
-                        : scumlStatus === 'notDone'
-                        ? pending
-                        : scumlStatus === 'comment'
-                        ? rejected
-                        : null
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? scumlStatus === 'done'
+                            ? review
+                            : scumlStatus === 'notDone'
+                            ? pending
+                            : scumlStatus === 'comment'
+                            ? rejected
+                            : null
+                        : pending
             },
             {
                 title: 'MEMAT',
@@ -764,13 +774,15 @@ const AccountUpgrade = () => {
                 statusReport: mematStatus,
                 name: 'MEMART',
                 status:
-                    mematStatus === 'done'
-                        ? review
-                        : mematStatus === 'notDone'
-                        ? pending
-                        : mematStatus === 'comment'
-                        ? rejected
-                        : null
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? mematStatus === 'done'
+                            ? review
+                            : mematStatus === 'notDone'
+                            ? pending
+                            : mematStatus === 'comment'
+                            ? rejected
+                            : null
+                        : pending
             }
         ]
     };
