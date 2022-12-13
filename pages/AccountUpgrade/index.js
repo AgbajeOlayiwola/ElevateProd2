@@ -28,7 +28,8 @@ import {
     shareDocumentsData,
     pushDocumentsData,
     postEllevateProfilingDetails,
-    loadprofilingQuestions
+    loadprofilingQuestions,
+    postvnin
 } from '../../redux/actions/actions';
 import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
@@ -95,6 +96,7 @@ const AccountUpgrade = () => {
     const [verifyStatus, setVerifyStatus] = useState('notDone');
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
     // const [vninStatus, setVninStatus] = useState('notDone');
+    const [virtualNin, setVirtualNin] = useState('');
     const [elevateStatus, setElevateStatus] = useState('notDone');
     const [utilityStatus, setUtilityStatus] = useState('notDone');
     const [utilitytype, setUtilityType] = useState('');
@@ -111,10 +113,13 @@ const AccountUpgrade = () => {
     const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState('');
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        ''
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -158,6 +163,9 @@ const AccountUpgrade = () => {
     );
     const { ellevateProfilingSeccess, ellevateProfillingError } = useSelector(
         (state) => state.postEllevateReducer
+    );
+    const { vninMSeccess, vninMError } = useSelector(
+        (state) => state.vninReducer
     );
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
@@ -320,6 +328,7 @@ const AccountUpgrade = () => {
         };
         dispatch(cacData(cacDatas));
     };
+
     useEffect(() => {
         if (cac !== null) {
             setMessage('CAC Document uploaded Successfully');
@@ -390,6 +399,7 @@ const AccountUpgrade = () => {
         setCo7File(e.target.files[0]);
         setCo7FileName(e.target.files[0].name);
     };
+
     //console.logco2file);
     const memartUpload = () => {
         setLoading(true);
@@ -450,7 +460,30 @@ const AccountUpgrade = () => {
         //console.logutilityUplodaErrorMessages);
     }, [utilityUpload, utilityUplodaErrorMessages]);
     //Utility Upload End
-
+    const virtualNinSend = () => {
+        const virtualNinData = {
+            vNin: virtualNin,
+            dateOfBirth: userProfile.dateOfBirth
+        };
+        dispatch(postvnin(virtualNinData));
+    };
+    useEffect(() => {
+        if (vninMSeccess !== null) {
+            setMessage(vninMSeccess);
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setVninStatus('done');
+            // setVerifyStatus('completed');
+        } else if (vninMError !== null) {
+            setMessage(vninMError);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+        //console.logutilityUpload);
+        //console.logutilityUplodaErrorMessages);
+    }, [vninMSeccess, vninMError]);
     //Identification Upload
     const saveIdentificationFile = (e) => {
         setIdentificationDocument(e.target.files[0]);
@@ -1284,20 +1317,23 @@ const AccountUpgrade = () => {
                                     }
                                 }
                             })}
-                            <select
-                                name=""
-                                id=""
-                                onChange={(event) => {
-                                    setUtilityType(event.target.value);
-                                    //console.logselstate);
-                                }}
-                            >
-                                <option value="NEPA_BILL">
-                                    Select a utility
-                                </option>
-                                <option value="NEPA_BILL">NEPA BILL</option>
-                                <option value="LAWMA">LAWMA</option>
-                            </select>
+                            <div className={styles.signatureGroup}>
+                                <label>Select A utility type</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    onChange={(event) => {
+                                        setUtilityType(event.target.value);
+                                        //console.logselstate);
+                                    }}
+                                >
+                                    <option value="NEPA_BILL">
+                                        Select a utility
+                                    </option>
+                                    <option value="NEPA_BILL">NEPA BILL</option>
+                                    <option value="LAWMA">LAWMA</option>
+                                </select>
+                            </div>
                             <div className={styles.signatureGroup}>
                                 <p>Upload Photo</p>
                                 <div className={styles.signatureFormGroup}>
@@ -1650,20 +1686,26 @@ const AccountUpgrade = () => {
                         }}
                         title="Virtual NIN"
                     >
-                        <form>
-                            <label>Virtual NIN</label>
-                            <input type="number" />
-                            {loading ? (
-                                <Loader />
-                            ) : (
-                                <button
-                                    className={styles.updateBtn}
-                                    type="submit"
-                                >
-                                    Virtual NIN
-                                </button>
-                            )}
-                        </form>
+                        <p className={styles.disclaimer}>
+                            Get Your Virtual nin by dialing *346*3*your
+                            NIN*7154614#
+                        </p>
+                        <input
+                            type="number"
+                            placeholder="Type your virtual Nin"
+                            onChange={(e) => setVirtualNin(e.target.value)}
+                        />
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                className={styles.updateBtn}
+                                type="submit"
+                                onClick={virtualNinSend}
+                            >
+                                Virtual NIN
+                            </button>
+                        )}
                     </AccountUpgradeComponent>
                 );
             case 'Document':
