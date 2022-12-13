@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../redux/helper/apiClient';
 import apiRoutes from '../../redux/helper/apiRoutes';
 import { getCookie } from 'cookies-next';
-import { loadAccountPrimary } from '../../redux/actions/actions';
+import { loadAccountPrimary, logoutAction } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 const withAuth = (WrappedComponent) => {
     return (props) => {
@@ -22,11 +22,19 @@ const withAuth = (WrappedComponent) => {
             if (localStorage.getItem('user')) {
                 setAccessGranted(true);
             } else {
-                Router.replace('../Auth/Login');
+                dispatch(logoutAction());
+                if (!localStorage.getItem('user')) {
+                    Router.replace('../Auth/Login');
+                }
+
                 setAccessGranted(false);
             }
             if (accountPrimary === null) {
-                Router.replace('../Auth/Login');
+                dispatch(logoutAction());
+                if (!localStorage.getItem('user')) {
+                    Router.replace('../Auth/Login');
+                }
+
                 setAccessGranted(false);
             }
         }, []);
