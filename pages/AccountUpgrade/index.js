@@ -1360,7 +1360,7 @@ const AccountUpgrade = () => {
                                     <option value="NEPA_BILL">
                                         Select a utility
                                     </option>
-                                    <option value="NEPA_BILL">NEPA BILL</option>
+                                    <option value="NEPA_BILL">PHCN BILL</option>
                                     <option value="LAWMA">LAWMA</option>
                                 </select>
                             </div>

@@ -139,17 +139,17 @@ const ProfileSetups = () => {
                         }}
                     />
                 );
-            // case 2:
-            //     return (
-            //         <Liveness
-            //             action={() => {
-            //                 setPage(page + 1);
-            //             }}
-            //             loading={loading}
-            //             setLoading={setLoading}
-            //         />
-            //     );
             case 2:
+                return (
+                    <Liveness
+                        action={() => {
+                            setPage(page + 1);
+                        }}
+                        loading={loading}
+                        setLoading={setLoading}
+                    />
+                );
+            case 3:
                 return (
                     <StepThreeCompleteProfile1
                         type={formData.type}
