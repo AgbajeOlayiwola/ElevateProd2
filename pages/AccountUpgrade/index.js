@@ -1721,7 +1721,7 @@ const AccountUpgrade = () => {
                             NIN*7154614#
                         </p>
                         <input
-                            type="number"
+                            type="text"
                             placeholder="Type your virtual Nin"
                             onChange={(e) => setVirtualNin(e.target.value)}
                         />
