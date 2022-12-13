@@ -18,6 +18,8 @@ const AccountChecked = ({ statusInfo }) => {
                         ? '#6ccf00'
                         : statusInfo === 'comment'
                         ? '#6ccf00'
+                        : statusInfo === 'APPROVED'
+                        ? '#6ccf00'
                         : null
                 }
             />
