@@ -263,32 +263,42 @@ const AccountUpgrade = () => {
                 if (document.documentType === 'UTILITY') {
                     const test = document.absoluteUrl.split('/');
                     setUtilityFileName(test[test.length - 1]);
-                    if (document.comment !== null) {
+                    if (document.status === 'REJECTED') {
                         setUtilityStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setUtilityStatus(document.status);
                     } else {
                         setUtilityStatus('done');
                     }
                 } else if (document.documentType === 'CAC') {
-                    if (document.comment !== null) {
+                    if (document.status === 'REJECTED') {
                         setCacStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setCacStatus(document.status);
                     } else {
                         setCacStatus('done');
                     }
                 } else if (document.documentType === 'MEMART') {
-                    if (document.comment !== null) {
+                    if (document.status === 'REJECTED') {
                         setMematStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setMematStatus(document.status);
                     } else {
                         setMematStatus('done');
                     }
                 } else if (document.documentType === 'SCUML') {
-                    if (document.comment !== null) {
+                    if (document.status === 'REJECTED') {
                         setScumlStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setScumlStatus(document.status);
                     } else {
                         setScumlStatus('done');
                     }
                 } else if (document.documentType === 'REFERENCE_FORMFORM') {
-                    if (document.comment !== null) {
+                    if (document.status === 'REJECTED') {
                         setRefereeStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setRefereeStatus(document.status);
                     } else {
                         setRefereeStatus('done');
                     }
@@ -297,8 +307,10 @@ const AccountUpgrade = () => {
                     setIdentificationDocumentName(test[test.length - 1]);
                     setIDType(document.metaData.meansOfIdentification);
                     setIdNumber(document.metaData.idNumber);
-                    if (document.comment !== null) {
+                    if (document.status === 'REJECTED') {
                         setidCardStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setidCardStatus(document.status);
                     } else {
                         setidCardStatus('done');
                     }
@@ -632,6 +644,8 @@ const AccountUpgrade = () => {
                             ? pending
                             : utilityStatus === 'comment'
                             ? rejected
+                            : utilityStatus === 'APPROVED'
+                            ? 'Approved'
                             : null
                         : pending
             },
@@ -649,6 +663,8 @@ const AccountUpgrade = () => {
                             ? pending
                             : idCardStatus === 'comment'
                             ? rejected
+                            : idCardStatus === 'APPROVED'
+                            ? 'Approved'
                             : null
                         : pending
             },
@@ -712,6 +728,8 @@ const AccountUpgrade = () => {
                             ? pending
                             : utilityStatus === 'comment'
                             ? rejected
+                            : utilityStatus === 'APPROVED'
+                            ? 'Approved'
                             : null
                         : pending
             },
@@ -729,6 +747,8 @@ const AccountUpgrade = () => {
                             ? pending
                             : idCardStatus === 'comment'
                             ? rejected
+                            : idCardStatus === 'APPROVED'
+                            ? 'Approved'
                             : null
                         : pending
             },
@@ -782,6 +802,8 @@ const AccountUpgrade = () => {
                             ? pending
                             : cacStatus === 'comment'
                             ? rejected
+                            : cacStatus === 'APPROVED'
+                            ? 'Approved'
                             : null
                         : pending
             },
@@ -798,6 +820,8 @@ const AccountUpgrade = () => {
                             ? pending
                             : scumlStatus === 'comment'
                             ? rejected
+                            : scumlStatus === 'APPROVED'
+                            ? 'Approved'
                             : null
                         : pending
             },
@@ -814,6 +838,8 @@ const AccountUpgrade = () => {
                             ? pending
                             : mematStatus === 'comment'
                             ? rejected
+                            : mematStatus === 'APPROVED'
+                            ? 'Approved'
                             : null
                         : pending
             }
