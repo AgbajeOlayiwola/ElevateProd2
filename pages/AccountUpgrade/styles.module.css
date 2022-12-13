@@ -419,3 +419,20 @@
     color: #6ccf00;
 
  }
+ .selUtilDiv{
+    padding-top: 10px;
+    padding-bottom: 10px;
+ }
+ .selUtil{
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 8px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7a7978;
+ }
+ .selUtil select{
+    margin-bottom: 20px;
+ }

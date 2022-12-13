@@ -1319,8 +1319,10 @@ const AccountUpgrade = () => {
                                     }
                                 }
                             })}
-                            <div className={styles.signatureGroup}>
-                                <label>Select A utility type</label>
+                            <div className={styles.selUtilDiv}>
+                                <label className={styles.selUtil}>
+                                    Select A utility type
+                                </label>
                                 <select
                                     name=""
                                     id=""

@@ -72,7 +72,7 @@ const Login = () => {
                     user.data.user.profile.profileSetupStatus ===
                     'PROFILE_SETUP_COMPLETED'
                 ) {
-                    router.push('../../Dashboard');
+                    router.push('../../Verify/Account/loading');
                 } else if (
                     user.data.user.profile.profileSetupStatus ===
                     'AWAITING_ACCOUNT_NUMBER'
