@@ -747,3 +747,11 @@ export const vninType = {
     VNIN_ERROR: 'VNIN_ERROR'
 };
 //vnin type
+
+//verifyVnin type
+export const verifyVNinType = {
+    VERIFY_VNIN_START: 'VERIFY_VNIN_START',
+    VERIFY_VNIN_SUCCESS: 'VERIFY_VNIN_SUCCESS',
+    VERIFY_VNIN_ERROR: 'VERIFY_VNIN_ERROR'
+};
+//End VerifyVnin type

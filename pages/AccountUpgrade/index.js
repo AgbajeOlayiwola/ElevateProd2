@@ -480,15 +480,15 @@ const AccountUpgrade = () => {
         dispatch(postvnin(virtualNinData));
     };
     useEffect(() => {
-        if (vninMSeccess !== null) {
-            setMessage(vninMSeccess);
+        if (vninMSeccess.data.reason == null) {
+            setMessage(vninMSeccess.message);
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
             setVninStatus('done');
             // setVerifyStatus('completed');
-        } else if (vninMError !== null) {
-            setMessage(vninMError);
+        } else if (vninMSeccess.data.reason) {
+            setMessage(vninMSeccess.data.reason);
             setStatusbar('error');
             setOutcome(true);
             setLoading(false);

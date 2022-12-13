@@ -2852,37 +2852,36 @@ export const postEllevateProfilingError = (ellevateProfillingError) => ({
     type: postEllevateProfilling.POST_ELLEVATE_PROFILLING_ERROR,
     payload: ellevateProfillingError
 });
-export const postEllevateProfilingDetails =
-    (profileSetupItems) => (dispatch) => {
-        let cookie;
+export const postEllevateProfilingDetails = (profileSetupItems) => (
+    dispatch
+) => {
+    let cookie;
 
-        if (getCookie('cookieToken') == undefined) {
-            cookie = getCookie('existingToken');
-        } else {
-            cookie = getCookie('cookieToken');
-        }
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
 
-        // dispatch(accountNumberLoadStart());
-        axios
-            .post(
-                `https://testvate.live${apiRoutes.postEllevateProfiling}`,
-                profileSetupItems,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://testvate.live${apiRoutes.postEllevateProfiling}`,
+            profileSetupItems,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
-            .then((response) => {
-                dispatch(postEllevateProfilingSuccess(response.data.message));
-            })
-            .catch((error) =>
-                dispatch(
-                    postEllevateProfilingError(error.response.data.message)
-                )
-            );
-    };
+            }
+        )
+        .then((response) => {
+            dispatch(postEllevateProfilingSuccess(response.data.message));
+        })
+        .catch((error) =>
+            dispatch(postEllevateProfilingError(error.response.data.message))
+        );
+};
 //Ellevate Profiling end
 
 ////Vnin Profiling
@@ -2909,6 +2908,61 @@ export const postvnin = (vninItems) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(`https://testvate.live${apiRoutes.vnin}`, vninItems, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            setTimeout(() => {
+                if (response.data.message) {
+                    axios
+                        .get(
+                            `https://testvate.live${apiRoutes.verifyVNinAdd}`,
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${cookie}`
+                                }
+                            }
+                        )
+                        .then((response) => {
+                            dispatch(vninSuccess(response.data));
+                        })
+                        .catch((error) =>
+                            dispatch(vninError(error.response.data.message))
+                        );
+                }
+            }, 2000);
+        })
+        .catch((error) => dispatch(vninError(error.response.data.message)));
+};
+//Vnin end
+
+////Vnin Profiling
+export const verifyVninLoad = () => ({
+    type: verifyVninType.VNIN_START
+});
+export const verifyVninSuccess = (verifyVninMSeccess) => ({
+    type: vninType.VNIN_SUCCESS,
+    payload: vverifyVninMSeccess
+});
+export const verifyVninError = (verifyVninMError) => ({
+    type: vninType.VNIN_ERROR,
+    payload: verifyVninMError
+});
+export const postVerifyVnin = (verifyVninItems) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(`https://testvate.live${apiRoutes.verifyVNinAdd}`, vninItems, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
