@@ -2939,38 +2939,38 @@ export const postvnin = (vninItems) => (dispatch) => {
 };
 //Vnin end
 
-////Vnin Profiling
-export const verifyVninLoad = () => ({
-    type: verifyVninType.VNIN_START
-});
-export const verifyVninSuccess = (verifyVninMSeccess) => ({
-    type: vninType.VNIN_SUCCESS,
-    payload: vverifyVninMSeccess
-});
-export const verifyVninError = (verifyVninMError) => ({
-    type: vninType.VNIN_ERROR,
-    payload: verifyVninMError
-});
-export const postVerifyVnin = (verifyVninItems) => (dispatch) => {
-    let cookie;
+// //Vnin Profiling
+// export const verifyVninLoad = () => ({
+//     type: verifyVninType.VNIN_START
+// });
+// export const verifyVninSuccess = (verifyVninMSeccess) => ({
+//     type: vninType.VNIN_SUCCESS,
+//     payload: vverifyVninMSeccess
+// });
+// export const verifyVninError = (verifyVninMError) => ({
+//     type: vninType.VNIN_ERROR,
+//     payload: verifyVninMError
+// });
+// export const postVerifyVnin = (verifyVninItems) => (dispatch) => {
+//     let cookie;
 
-    if (getCookie('cookieToken') == undefined) {
-        cookie = getCookie('existingToken');
-    } else {
-        cookie = getCookie('cookieToken');
-    }
+//     if (getCookie('cookieToken') == undefined) {
+//         cookie = getCookie('existingToken');
+//     } else {
+//         cookie = getCookie('cookieToken');
+//     }
 
-    // dispatch(accountNumberLoadStart());
-    axios
-        .post(`https://testvate.live${apiRoutes.verifyVNinAdd}`, vninItems, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${cookie}`
-            }
-        })
-        .then((response) => {
-            dispatch(vninSuccess(response.data.message));
-        })
-        .catch((error) => dispatch(vninError(error.response.data.message)));
-};
-//Vnin end
+//     // dispatch(accountNumberLoadStart());
+//     axios
+//         .post(`https://testvate.live${apiRoutes.verifyVNinAdd}`, vninItems, {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 Authorization: `Bearer ${cookie}`
+//             }
+//         })
+//         .then((response) => {
+//             dispatch(vninSuccess(response.data.message));
+//         })
+//         .catch((error) => dispatch(vninError(error.response.data.message)));
+// };
+// //Vnin end

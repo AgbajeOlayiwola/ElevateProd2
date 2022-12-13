@@ -73,7 +73,7 @@ const Login = () => {
                         user.data.user.profile.profileSetupStatus ===
                         'PROFILE_SETUP_COMPLETED'
                     ) {
-                        router.push('../../Verify/CorportateAccount');
+                        router.push('../../Dashboard');
                     } else if (
                         user.data.user.profile.profileSetupStatus ===
                         'AWAITING_ACCOUNT_NUMBER'
@@ -92,7 +92,7 @@ const Login = () => {
                         user.data.user.profile.profileSetupStatus ===
                         'PROFILE_SETUP_COMPLETED'
                     ) {
-                        router.push('../../Verify/Account/loading');
+                        router.push('../../Dashboard');
                     } else if (
                         user.data.user.profile.profileSetupStatus ===
                         'AWAITING_ACCOUNT_NUMBER'
