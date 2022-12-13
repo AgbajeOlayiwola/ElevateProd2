@@ -32,7 +32,8 @@ const AccountLoading = () => {
 
     const { newAccount, newAccountErrorMessage } = useSelector(
         (state) => state.newUserAccountDets
-    ); // We need ref in this, because we are dealing
+    );
+    // We need ref in this, because we are dealing
     // with JS setInterval to keep track of it and
     // stop it when needed
     const Ref = useRef(null);
