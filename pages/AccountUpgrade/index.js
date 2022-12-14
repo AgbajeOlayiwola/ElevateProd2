@@ -50,14 +50,13 @@ const customStyles = {
     }
 };
 
-let profilingQuestions;
-let profilingQuestionsData = {};
-if (typeof window !== 'undefined') {
-    profilingQuestions = window.localStorage.getItem('profiling');
-    profilingQuestionsData = JSON.parse(profilingQuestions);
-}
-
 const AccountUpgrade = () => {
+    let profilingQuestion;
+    let profilingQuestionsData = null;
+    // if (typeof window !== 'undefined') {
+    //     profilingQuestion = window.localStorage.getItem('profiling');
+    //     profilingQuestionsData = JSON.parse(profilingQuestion);
+    // }
     const router = useRouter();
     const [text, setText] = useState('');
     const [message, setMessage] = useState('');
@@ -113,13 +112,10 @@ const AccountUpgrade = () => {
     const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState('');
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -548,10 +544,10 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
-            window.localStorage.setItem(
-                'profiling',
-                JSON.stringify(elevateData)
-            );
+            // window.localStorage.setItem(
+            //     'profiling',
+            //     JSON.stringify(elevateData)
+            // );
         } else if (ellevateProfillingError !== null) {
             setMessage(ellevateProfillingError);
             setStatusbar('error');
