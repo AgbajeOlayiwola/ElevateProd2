@@ -201,7 +201,7 @@
 }
 
 .signatureGroup label {
-    background: #e6e6e6;
+    background: #6ccf00;
     border-radius: 8px;
     width: 95px;
     display: block;
@@ -212,7 +212,7 @@
     font-weight: 700;
     font-size: 12px;
     line-height: 15px;
-    color: #bdbdbd;
+    color: #ffffff;
     cursor: pointer;
 }
 

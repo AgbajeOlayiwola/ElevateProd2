@@ -130,6 +130,7 @@ const AccountUpgrade = () => {
     const [questions, setQuestions] = useState();
     const [base64Code, setBase64Code] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
+    const [profileItemm, setProfileItemm] = useState('');
     const [ellevateProfilingDone, setEllevateProfilingzDone] = useState();
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
@@ -488,10 +489,17 @@ const AccountUpgrade = () => {
             setVninStatus('done');
             // setVerifyStatus('completed');
         } else if (vninMSeccess?.data.reason) {
-            setMessage(vninMSeccess?.data.reason);
-            setStatusbar('error');
-            setOutcome(true);
-            setLoading(false);
+            if (vninMError) {
+                setMessage(vninMSeccess?.data.reason);
+                setStatusbar('error');
+                setOutcome(true);
+                setLoading(false);
+            } else {
+                setMessage(vninMSeccess?.data.reason);
+                setStatusbar('error');
+                setOutcome(true);
+                setLoading(false);
+            }
         }
         //console.logutilityUpload);
         //console.logutilityUplodaErrorMessages);
@@ -1360,7 +1368,9 @@ const AccountUpgrade = () => {
                                     <option value="NEPA_BILL">
                                         Select a utility
                                     </option>
-                                    <option value="NEPA_BILL">PHCN BILL</option>
+                                    <option value="NEPA_BILL">
+                                        Electricity BILL
+                                    </option>
                                     <option value="LAWMA">LAWMA</option>
                                 </select>
                             </div>
@@ -1657,7 +1667,11 @@ const AccountUpgrade = () => {
                                                 {...register(
                                                     `${fieldName}.input`
                                                 )}
+                                                onClick={() =>
+                                                    setProfileItemm(item)
+                                                }
                                             />
+                                            {console.log(profileItemm)}
                                             <label>{item}</label>
                                         </div>
                                     );
