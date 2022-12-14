@@ -51,8 +51,8 @@ const customStyles = {
 };
 
 const AccountUpgrade = () => {
-    let profilingQuestion;
-    let profilingQuestionsData = null;
+    // let profilingQuestion;
+    // let profilingQuestionsData = null;
     // if (typeof window !== 'undefined') {
     //     profilingQuestion = window.localStorage.getItem('profiling');
     //     profilingQuestionsData = JSON.parse(profilingQuestion);
@@ -1652,14 +1652,14 @@ const AccountUpgrade = () => {
                                                     styles.profilingInput
                                                 }
                                                 type="checkbox"
-                                                checked={
-                                                    profilingQuestionsData !==
-                                                    null
-                                                        ? profilingQuestionsData[
-                                                              index
-                                                          ].input
-                                                        : null
-                                                }
+                                                // checked={
+                                                //     profilingQuestionsData !==
+                                                //     null
+                                                //         ? profilingQuestionsData[
+                                                //               index
+                                                //           ].input
+                                                //         : null
+                                                // }
                                                 {...register(
                                                     `${fieldName}.input`
                                                 )}
