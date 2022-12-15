@@ -386,18 +386,17 @@ const Payment = () => {
                 return a + b.Amount;
             }, 0)
         );
-        csvData?.slice(2)?.map((item) => {
-            if (item.Bank !== 'Ecobank') {
-                const payload = {
-                    accountId: senderDetails.accountId,
-                    destinationBankCode: item.Bank,
-                    transactionAmount: parseInt(data.amount, 10),
-                    transactionType: 'INTERBANK'
-                };
-                dispatch(getTransactionFees(payload));
-            }
-        });
-        console.log();
+        // csvData?.slice(2)?.map((item) => {
+        //     if (item.Bank !== 'Ecobank') {
+        //         const payload = {
+        //             accountId: senderDetails.accountId,
+        //             destinationBankCode: item.Bank,
+        //             transactionAmount: parseInt(data.amount, 10),
+        //             transactionType: 'INTERBANK'
+        //         };
+        //         dispatch(getTransactionFees(payload));
+        //     }
+        // });
     }, [csvData]);
     const renderForm = () => {
         switch (formType) {
