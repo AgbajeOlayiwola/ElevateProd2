@@ -47,5 +47,6 @@ const withAuth = (WrappedComponent) => {
         }
     };
 };
+//test
 
 export default withAuth;
