@@ -470,6 +470,7 @@ const AccountUpgrade = () => {
     }, [utilityUpload, utilityUplodaErrorMessages]);
     //Utility Upload End
     const virtualNinSend = () => {
+        setLoading(true);
         const virtualNinData = {
             vNin: virtualNin,
             dateOfBirth: userProfile.dateOfBirth
@@ -477,7 +478,7 @@ const AccountUpgrade = () => {
         dispatch(postvnin(virtualNinData));
     };
     useEffect(() => {
-        if (vninMSeccess?.data.reason == null) {
+        if (vninMSeccess?.isCredentialsValid === true) {
             setMessage(vninMSeccess?.message);
             setStatusbar('success');
             setOutcome(true);
@@ -540,7 +541,7 @@ const AccountUpgrade = () => {
     useEffect(() => {
         if (ellevateProfilingSeccess !== null) {
             setEllevateProfilingzDone('Done');
-            setMessage(ellevateProfilingSeccess);
+            setMessage('ellevateProfilingSeccess');
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
@@ -1652,6 +1653,15 @@ const AccountUpgrade = () => {
                                                     styles.profilingInput
                                                 }
                                                 type="checkbox"
+                                                // onChange={
+                                                //     (
+                                                //         Object.values(
+                                                //             questions.questions
+                                                //         ).length - 1
+                                                //     ).checked === true
+                                                //         ? alert('test')
+                                                //         : alert('Testing')
+                                                // }
                                                 // checked={
                                                 //     profilingQuestionsData !==
                                                 //     null
@@ -1663,11 +1673,11 @@ const AccountUpgrade = () => {
                                                 {...register(
                                                     `${fieldName}.input`
                                                 )}
-                                                onClick={() =>
-                                                    setProfileItemm(item)
-                                                }
+                                                // onClick={() =>
+                                                //     setProfileItemm(item)
+                                                // }
                                             />
-                                            {console.log(profileItemm)}
+                                            {/* {console.log(profileItemm)} */}
                                             <label>{item}</label>
                                         </div>
                                     );
