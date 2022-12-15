@@ -1539,7 +1539,7 @@ const AccountUpgrade = () => {
                                 <select
                                     name=""
                                     id=""
-                                    value={IDType}
+                                    // value={IDType}
                                     onChange={(e) => {
                                         setIDType(e.target.value);
                                     }}
