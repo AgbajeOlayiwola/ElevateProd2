@@ -847,9 +847,17 @@ const HomeMain = () => {
                             style={customStyles}
                             contentLabel="Example Modal"
                         >
-                            <h2 ref={(_subtitle) => (subtitle = _subtitle)}>
-                                Terms And Condition
-                            </h2>
+                            <div className={styles.headerDiv}>
+                                <h2 ref={(_subtitle) => (subtitle = _subtitle)}>
+                                    Terms And Condition
+                                </h2>
+                                <h1
+                                    className={styles.errorX}
+                                    onClick={closeModal}
+                                >
+                                    X
+                                </h1>
+                            </div>
                             <p>
                                 Lorem ipsum dolor sit amet, consectetur
                                 adipiscing elit. Aenean ac lacus posuere,

@@ -959,3 +959,11 @@
     color: #102572;
     cursor: pointer;
 }
+.headerDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.errorX{
+    cursor: pointer;
+}
