@@ -112,10 +112,13 @@ const AccountUpgrade = () => {
     const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState('');
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        ''
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -485,7 +488,10 @@ const AccountUpgrade = () => {
             setLoading(false);
             setVninStatus('done');
             // setVerifyStatus('completed');
-        } else if (vninMSeccess?.data.reason) {
+        } else if (
+            vninMSeccess?.data.reason ||
+            vninMSeccess?.data.isCredentialsValid !== 'false'
+        ) {
             if (vninMError) {
                 setMessage(vninMSeccess?.data.reason);
                 setStatusbar('error');
