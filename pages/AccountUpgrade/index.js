@@ -128,13 +128,10 @@ const AccountUpgrade = () => {
     const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState('');
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
     const [refoneno, setRefoneNo] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
@@ -497,12 +494,14 @@ const AccountUpgrade = () => {
         dispatch(postvnin(virtualNinData));
     };
     useEffect(() => {
-        if (vninMSeccess?.isCredentialsValid !== false) {
-            setMessage(vninMSeccess?.message);
-            setStatusbar('success');
-            setOutcome(true);
-            setLoading(false);
-            setVninStatus('done');
+        if (vninMSeccess !== null) {
+            if (vninMSeccess?.isCredentialsValid !== false) {
+                setMessage(vninMSeccess?.message);
+                setStatusbar('success');
+                setOutcome(true);
+                setLoading(false);
+                setVninStatus('done');
+            }
             // setVerifyStatus('completed');
         } else if (vninMSeccess?.data.reason) {
             if (vninMError) {

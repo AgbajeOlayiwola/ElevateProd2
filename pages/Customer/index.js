@@ -151,6 +151,7 @@ const Customer = () => {
                                 <img
                                     src="/Assets/Images/chequeBook.png"
                                     alt=""
+                                    className={styles.chequeImg}
                                 />
                                 <div className={styles.chequeButton}>
                                     <button
