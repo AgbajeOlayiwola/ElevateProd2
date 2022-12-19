@@ -45,12 +45,28 @@ const customStyles = {
         left: '50%',
         right: 'auto',
         bottom: 'auto',
+        height: '70vh',
+        width: '40vw',
+        color: '#3e3e3e',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)'
     }
 };
 
 const AccountUpgrade = () => {
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
     // let profilingQuestion;
     // let profilingQuestionsData = null;
     // if (typeof window !== 'undefined') {
@@ -488,30 +504,18 @@ const AccountUpgrade = () => {
             setLoading(false);
             setVninStatus('done');
             // setVerifyStatus('completed');
-        } else if (
-            vninMSeccess?.data.reason === null ||
-            vninMSeccess?.data.isCredentialsValid !== 'false'
-        ) {
-            setMessage(' Virtual NIN Verification Failed.');
-            setStatusbar('error');
-            setOutcome(true);
-            setLoading(false);
-            // if (vninMError) {
-            //     setMessage(vninMSeccess?.data.reason);
-            //     setStatusbar('error');
-            //     setOutcome(true);
-            //     setLoading(false);
-            // } else {
-            //     setMessage(vninMSeccess?.data.reason);
-            //     setStatusbar('error');
-            //     setOutcome(true);
-            //     setLoading(false);
-            // }
-        } else {
-            setMessage(vninMSeccess?.data.reason);
-            setStatusbar('error');
-            setOutcome(true);
-            setLoading(false);
+        } else if (vninMSeccess?.data.reason) {
+            if (vninMError) {
+                setMessage(vninMSeccess?.data.reason);
+                setStatusbar('error');
+                setOutcome(true);
+                setLoading(false);
+            } else {
+                setMessage(vninMSeccess?.data.reason);
+                setStatusbar('error');
+                setOutcome(true);
+                setLoading(false);
+            }
         }
         //console.logutilityUpload);
         //console.logutilityUplodaErrorMessages);
@@ -1281,11 +1285,26 @@ const AccountUpgrade = () => {
                             </Link> */}
                             <Modal
                                 isOpen={modalIsOpen}
-                                // onAfterOpen={afterOpenModal}
+                                onAfterOpen={afterOpenModal}
                                 onRequestClose={closeModal}
                                 style={customStyles}
                                 contentLabel="Example Modal"
                             >
+                                <div className={styles.headerDiv}>
+                                    <h2
+                                        ref={(_subtitle) =>
+                                            (subtitle = _subtitle)
+                                        }
+                                    >
+                                        Address Verification
+                                    </h2>
+                                    <h1
+                                        className={styles.errorX}
+                                        onClick={closeModal}
+                                    >
+                                        X
+                                    </h1>
+                                </div>
                                 {/* //When adding latituted add them the way i did with vartiable */}
                                 {/* `https://ecocomonoreact.azurewebsites.net/customer-details/
                                 ?workitemId=AO-095734358976187628-CO&
@@ -1296,7 +1315,7 @@ const AccountUpgrade = () => {
 
                                 <Iframe
                                     src={
-                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude=${latitude}&Longitude=${longitude}`
+                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=${latitude}&Longitude=${longitude}`
                                         // {
                                         // pathname:
                                         // 'https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test Customer&customerEmail=boluwatobi@gmail.com&branchCode=A02&segmentId=ADB&address=25 pilot crescent off bode thomas surulere&landmark&state=LA&lga=LA020&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333'

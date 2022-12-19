@@ -436,3 +436,11 @@
  .selUtil select{
     margin-bottom: 20px;
  }
+ .headerDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.errorX{
+    cursor: pointer;
+}

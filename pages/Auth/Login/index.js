@@ -68,44 +68,55 @@ const Login = () => {
         } else if (user !== null) {
             setNewUser(user);
             if (user.statusCode === 200) {
-                if (user.data.user.profile.customerCategory == 'COMMERCIAL') {
+                if (user.data.user.profile.createdFromEcobankCred === false) {
                     if (
-                        user.data.user.profile.profileSetupStatus ===
-                        'PROFILE_SETUP_COMPLETED'
+                        user.data.user.profile.customerCategory == 'COMMERCIAL'
                     ) {
-                        router.push('../../Dashboard');
-                    } else if (
-                        user.data.user.profile.profileSetupStatus ===
-                        'AWAITING_ACCOUNT_NUMBER'
-                    ) {
-                        router.push('../../Verify/CorportateAccount');
-                    } else if (
-                        user.data.user.profile.profileSetupStatus ===
-                        'ACCOUNT_NUMBER_RETRIEVED'
-                    ) {
-                        router.push('../../Dashboard');
+                        if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'PROFILE_SETUP_COMPLETED'
+                        ) {
+                            router.push('../../Verify/CorportateAccount');
+                        } else if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'AWAITING_ACCOUNT_NUMBER'
+                        ) {
+                            router.push('../../Verify/CorportateAccount');
+                        } else if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'ACCOUNT_NUMBER_RETRIEVED'
+                        ) {
+                            router.push('../../Dashboard');
+                        } else {
+                            router.push('../../Onboarding/ProfileSetup');
+                        }
                     } else {
-                        router.push('../../Onboarding/ProfileSetup');
+                        if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'PROFILE_SETUP_COMPLETED'
+                        ) {
+                            router.push('../../Verify/Account/loading');
+                        } else if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'AWAITING_ACCOUNT_NUMBER'
+                        ) {
+                            router.push('../../Verify/Account/loading');
+                        } else if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'ACCOUNT_NUMBER_RETRIEVED'
+                        ) {
+                            router.push('../../Dashboard');
+                        } else {
+                            router.push('../../Onboarding/ProfileSetup');
+                        }
                     }
-                } else {
-                    if (
-                        user.data.user.profile.profileSetupStatus ===
-                        'PROFILE_SETUP_COMPLETED'
-                    ) {
-                        router.push('../../Dashboard');
-                    } else if (
-                        user.data.user.profile.profileSetupStatus ===
-                        'AWAITING_ACCOUNT_NUMBER'
-                    ) {
-                        router.push('../../Verify/Account/loading');
-                    } else if (
-                        user.data.user.profile.profileSetupStatus ===
-                        'ACCOUNT_NUMBER_RETRIEVED'
-                    ) {
-                        router.push('../../Dashboard');
-                    } else {
-                        router.push('../../Onboarding/ProfileSetup');
-                    }
+                }
+            } else {
+                if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'PROFILE_SETUP_COMPLETED'
+                ) {
+                    router.push('../../Dashboard');
                 }
             }
         }
