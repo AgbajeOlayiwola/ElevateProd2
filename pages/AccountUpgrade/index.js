@@ -497,7 +497,7 @@ const AccountUpgrade = () => {
         dispatch(postvnin(virtualNinData));
     };
     useEffect(() => {
-        if (vninMSeccess?.isCredentialsValid === true) {
+        if (vninMSeccess.isCredentialsValid !== false) {
             setMessage(vninMSeccess?.message);
             setStatusbar('success');
             setOutcome(true);
