@@ -489,20 +489,29 @@ const AccountUpgrade = () => {
             setVninStatus('done');
             // setVerifyStatus('completed');
         } else if (
-            vninMSeccess?.data.reason ||
+            vninMSeccess?.data.reason === null ||
             vninMSeccess?.data.isCredentialsValid !== 'false'
         ) {
-            if (vninMError) {
-                setMessage(vninMSeccess?.data.reason);
-                setStatusbar('error');
-                setOutcome(true);
-                setLoading(false);
-            } else {
-                setMessage(vninMSeccess?.data.reason);
-                setStatusbar('error');
-                setOutcome(true);
-                setLoading(false);
-            }
+            setMessage(' Virtual NIN Verification Failed.');
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+            // if (vninMError) {
+            //     setMessage(vninMSeccess?.data.reason);
+            //     setStatusbar('error');
+            //     setOutcome(true);
+            //     setLoading(false);
+            // } else {
+            //     setMessage(vninMSeccess?.data.reason);
+            //     setStatusbar('error');
+            //     setOutcome(true);
+            //     setLoading(false);
+            // }
+        } else {
+            setMessage(vninMSeccess?.data.reason);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
         }
         //console.logutilityUpload);
         //console.logutilityUplodaErrorMessages);
