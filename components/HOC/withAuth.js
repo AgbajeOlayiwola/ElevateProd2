@@ -18,11 +18,8 @@ const withAuth = (WrappedComponent) => {
         );
 
         useEffect(() => {
-            logout();
-        }, []);
-
-        const logout = () => {
             dispatch(loadAccountPrimary());
+
             if (accountPrimary) {
                 setAccessGranted(true);
             } else {
@@ -41,7 +38,7 @@ const withAuth = (WrappedComponent) => {
 
                 setAccessGranted(false);
             }
-        };
+        }, []);
 
         if (accessGranted) {
             return <WrappedComponent {...props} />;
