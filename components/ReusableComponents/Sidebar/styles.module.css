@@ -110,6 +110,7 @@
     .sideNav {
         width: 100%;
         padding: 32px 10px;
+        transition: all 33s ease-in;
     }
 
     .closeIcon {

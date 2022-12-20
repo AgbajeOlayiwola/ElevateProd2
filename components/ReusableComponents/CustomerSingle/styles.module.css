@@ -30,4 +30,11 @@
     line-height: 15px;
     color: #303030;
     text-align: left;
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 1253px) {
+    .profileSingle {
+        padding: 16px 0px;
+    }
 }

@@ -115,7 +115,7 @@ const HomeMain = () => {
     const { ecobankOnline, ecoOnlineErrorMessage } = useSelector(
         (state) => state.ecobankOnlineReducer
     );
-    const { cardLogin, cardLoginerrorMessages } = useSelector(
+    const { cardLoginS, cardLoginerrorMessages } = useSelector(
         (state) => state.cardLoginReducer
     );
     //console.logomniliteData);
@@ -287,7 +287,7 @@ const HomeMain = () => {
                                 <div className={styles.shows}>
                                     <label>Expiry Date</label>
                                     <input
-                                        placeholder="MM/YY"
+                                        placeholder="YY/MM"
                                         className={styles.passwordInput}
                                         type="text"
                                         {...register('expiryDate', {
@@ -492,18 +492,22 @@ const HomeMain = () => {
     };
 
     const cardTest = () => {
-        if (cardLogin.message === 'success') {
-            console.log(cardLogin);
-            const data = {
-                email: omniliteData.data.user.email,
-                // accountNumber: omniliteData.data.user.profile.firstName,
-                fullName: omniliteData.data.user.profile.lastName,
-                phoneNumber: omniliteData.data.user.phoneNumber
-            };
-            window.localStorage.setItem('displayAccount', JSON.stringify(data));
+        // console.log(cardLogin);
+        if (cardLoginS.message === 'success') {
+            // console.log(cardLogin);
+            // const data = {
+            //     email: omniliteData.data.user.email,
+            //     // accountNumber: omniliteData.data.user.profile.firstName,
+            //     fullName: omniliteData.data.user.profile.lastName,
+            //     phoneNumber: omniliteData.data.user.phoneNumber
+            // };
+            window.localStorage.setItem(
+                'displayAccount',
+                JSON.stringify(cardLoginS.data)
+            );
             window.localStorage.setItem(
                 'account',
-                JSON.stringify(omniliteData.data.user)
+                JSON.stringify(cardLoginS.data.user)
             );
 
             router.push('/Onboarding/ExistingProfileSetup');
@@ -514,7 +518,8 @@ const HomeMain = () => {
     };
     useEffect(() => {
         cardTest();
-    }, [cardLogin, cardLoginerrorMessages]);
+        console.log(cardLoginS);
+    }, [cardLoginS, cardLoginerrorMessages]);
     useEffect(() => {
         //console.log(ecobankOnline, ecoOnlineErrorMessage);
         ecoOnlineTest();
