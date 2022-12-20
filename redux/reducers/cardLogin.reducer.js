@@ -3,7 +3,7 @@ import { cardLogin } from '../types/actionTypes';
 const initialState = {
     isLoading: false,
     cardLoginS: [],
-    cardLoginerrorMessage: ''
+    cardLoginerrorMessages: ''
 };
 
 const cardLoginReducer = (state = initialState, { type, payload }) => {

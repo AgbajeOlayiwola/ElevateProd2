@@ -111,11 +111,33 @@ const Login = () => {
                         }
                     }
                 }
-            } else {
+            }
+            if (user.data.user.profile.createdFromEcobankCred === true) {
                 if (
                     user.data.user.profile.profileSetupStatus ===
                     'PROFILE_SETUP_COMPLETED'
                 ) {
+                    window.localStorage.setItem(
+                        'displayAccount',
+                        JSON.stringify(user.data.user)
+                    );
+                    window.localStorage.setItem(
+                        'account',
+                        JSON.stringify(user.data.user.profile)
+                    );
+                    router.push('../../Dashboard');
+                } else if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'PROFILE_SETUP'
+                ) {
+                    window.localStorage.setItem(
+                        'displayAccount',
+                        JSON.stringify(user.data.user)
+                    );
+                    window.localStorage.setItem(
+                        'account',
+                        JSON.stringify(user.data.user.profile)
+                    );
                     router.push('../../Dashboard');
                 }
             }

@@ -1648,83 +1648,109 @@ const AccountUpgrade = () => {
                         }}
                         title="Ellevate Profiling"
                     >
-                        <form
-                            onSubmit={handleSubmit((data) => {
-                                setElevateData(data.details);
+                        <>
+                            <div className={styles.ellevateCopy}>
+                                <p>
+                                    Ellevate offers a range of solutions to
+                                    women-owned businesses to grow their
+                                    enterprise. It supports companies making
+                                    women focused products and businesses with
+                                    high percentage of female employees or board
+                                    members. Benefits include:
+                                </p>
+                                <ul>
+                                    <li>Zero maintenance fee</li>
+                                    <li>
+                                        Interest concession for loans and
+                                        deposits
+                                    </li>
+                                    <li>
+                                        Free Capacity building, Exhibitions and
+                                        access to E-commence solutions
+                                    </li>
+                                </ul>
+                            </div>
+                            <form
+                                onSubmit={handleSubmit((data) => {
+                                    setElevateData(data.details);
 
-                                setLoading(true);
-                                const profileSetupItems = {
-                                    surveyReport: data.details.map(
-                                        (item, index) => {
-                                            return {
-                                                index: index,
-                                                isAnswerYes: item.input
-                                            };
-                                        }
-                                    )
-                                };
-                                dispatch(
-                                    postEllevateProfilingDetails(
-                                        profileSetupItems
-                                    )
-                                );
-                            })}
-                        >
-                            {Object.values(questions.questions).map(
-                                (item, index) => {
-                                    const fieldName = `details[${index}]`;
-                                    return (
-                                        <div
-                                            className={styles.profilingDiv}
-                                            key={index}
-                                        >
-                                            <input
-                                                className={
-                                                    styles.profilingInput
-                                                }
-                                                type="checkbox"
-                                                // onChange={
-                                                //     (
-                                                //         Object.values(
-                                                //             questions.questions
-                                                //         ).length - 1
-                                                //     ).checked === true
-                                                //         ? alert('test')
-                                                //         : alert('Testing')
-                                                // }
-                                                // checked={
-                                                //     profilingQuestionsData !==
-                                                //     null
-                                                //         ? profilingQuestionsData[
-                                                //               index
-                                                //           ].input
-                                                //         : null
-                                                // }
-                                                {...register(
-                                                    `${fieldName}.input`
-                                                )}
-                                                // onClick={() =>
-                                                //     setProfileItemm(item)
-                                                // }
-                                            />
-                                            {/* {console.log(profileItemm)} */}
-                                            <label>{item}</label>
-                                        </div>
+                                    setLoading(true);
+                                    const profileSetupItems = {
+                                        surveyReport: data.details.map(
+                                            (item, index) => {
+                                                return {
+                                                    index: index,
+                                                    isAnswerYes: item.input
+                                                };
+                                            }
+                                        )
+                                    };
+                                    dispatch(
+                                        postEllevateProfilingDetails(
+                                            profileSetupItems
+                                        )
                                     );
-                                }
-                            )}
-                            {loading ? (
-                                <Loader />
-                            ) : (
-                                <button
-                                    // onClick={profillingSetup}
-                                    className={styles.updateBtn}
-                                    type="submit"
-                                >
-                                    Ellevate Profiling
-                                </button>
-                            )}
-                        </form>
+                                })}
+                            >
+                                {Object.values(questions.questions).map(
+                                    (item, index) => {
+                                        const fieldName = `details[${index}]`;
+                                        return (
+                                            <div
+                                                className={styles.profilingDiv}
+                                                key={index}
+                                            >
+                                                <input
+                                                    className={
+                                                        styles.profilingInput
+                                                    }
+                                                    type="checkbox"
+                                                    // onChange={
+                                                    //     (
+                                                    //         Object.values(
+                                                    //             questions.questions
+                                                    //         ).length - 1
+                                                    //     ).checked === true
+                                                    //         ? alert('test')
+                                                    //         : alert('Testing')
+                                                    // }
+                                                    // checked={
+                                                    //     profilingQuestionsData !==
+                                                    //     null
+                                                    //         ? profilingQuestionsData[
+                                                    //               index
+                                                    //           ].input
+                                                    //         : null
+                                                    // }
+                                                    {...register(
+                                                        `${fieldName}.input`
+                                                    )}
+                                                    // onClick={() =>
+                                                    //     setProfileItemm(item)
+                                                    // }
+                                                />
+                                                {/* {console.log(profileItemm)} */}
+                                                <label>{item}</label>
+                                            </div>
+                                        );
+                                    }
+                                )}
+                                <div className={styles.disclaimer}>
+                                    Kindly select applicable options
+                                </div>
+                                {loading ? (
+                                    <Loader />
+                                ) : (
+                                    <button
+                                        // onClick={profillingSetup}
+                                        className={styles.updateBtn}
+                                        type="submit"
+                                    >
+                                        Ellevate Profiling
+                                    </button>
+                                )}
+                            </form>
+                        </>
 
                         {/* <div className={styles.profilingDiv}>
                             <input
