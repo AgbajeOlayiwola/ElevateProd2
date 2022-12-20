@@ -1522,9 +1522,9 @@ export const cardLoginLoadStart = () => ({
     type: cardLogin.CARDLOGIN_LOAD_START
 });
 
-export const cardLoginLoadSuccess = (cardLogin) => ({
+export const cardLoginLoadSuccess = (cardLoginS) => ({
     type: cardLogin.CARDLOGIN_LOAD_SUCCESS,
-    payload: cardLogin
+    payload: cardLoginS
 });
 
 export const cardLoginLoadError = (cardLoginerrorMessages) => ({
@@ -1536,9 +1536,7 @@ export const cardLoginData = (data) => (dispatch) => {
     axiosInstance
         .post(`${apiRoutes.cardLogin}`, data)
         .then((response) => dispatch(cardLoginLoadSuccess(response.data)))
-        .catch((error) =>
-            dispatch(cardLoginLoadError(error.response.data.message))
-        );
+        .catch((error) => dispatch(cardLoginLoadError(error.response.message)));
 };
 
 //cardLogin action end

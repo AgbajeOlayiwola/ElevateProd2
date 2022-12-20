@@ -210,3 +210,28 @@
 .disputeCont button {
     margin-bottom: 50px;
 }
+
+@media screen and (max-width: 1418px) {
+    .chequeImg {
+        width: 100%;
+    }
+
+    .confirmCheque {
+        max-width: 100%;
+    }
+
+    .chequeButton,
+    .confirmChequeButton,
+    .profileBodyButton {
+        width: 70%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .chequeButton,
+    .confirmChequeButton,
+    .profileBodyButton {
+        width: 100%;
+    }
+}

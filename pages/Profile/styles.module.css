@@ -797,6 +797,12 @@
     .accountNumber div {
         width: 50%;
     }
+
+    .profileBodyButton,
+    .bvnButton {
+        width: 100%;
+        max-width: 100%;
+    }
 }
 
 @media screen and (max-width: 1161px) {
