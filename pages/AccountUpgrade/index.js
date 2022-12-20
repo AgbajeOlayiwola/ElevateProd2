@@ -497,19 +497,15 @@ const AccountUpgrade = () => {
         dispatch(postvnin(virtualNinData));
     };
     useEffect(() => {
-        if (vninMSeccess?.isCredentialsValid !== false) {
-            setMessage(vninMSeccess?.message);
-            setStatusbar('success');
-            setOutcome(true);
-            setLoading(false);
-            setVninStatus('done');
-            // setVerifyStatus('completed');
-        } else if (vninMSeccess?.data.reason) {
-            if (vninMError) {
-                setMessage(vninMSeccess?.data.reason);
-                setStatusbar('error');
+        if (vninMSeccess) {
+            console.log(vninMSeccess);
+            if (vninMSeccess.data.dataFromCac) {
+                setMessage(vninMSeccess?.message);
+                setStatusbar('success');
                 setOutcome(true);
                 setLoading(false);
+                setVninStatus('done');
+                // setVerifyStatus('completed');
             } else {
                 setMessage(vninMSeccess?.data.reason);
                 setStatusbar('error');
