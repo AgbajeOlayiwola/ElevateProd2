@@ -1574,13 +1574,10 @@ const AccountUpgrade = () => {
                                         setIDType(e.target.value);
                                     }}
                                 >
-                                    {IDType ? (
-                                        <option>{IDType}</option>
-                                    ) : (
-                                        <option value="">
-                                            Select regulatory ID
-                                        </option>
-                                    )}
+                                    <option value="">
+                                        Select regulatory ID
+                                    </option>
+
                                     <option value="VOTERS_CARD">
                                         Voters Card
                                     </option>
