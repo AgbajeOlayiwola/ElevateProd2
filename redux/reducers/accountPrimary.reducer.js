@@ -2,7 +2,7 @@ import { accountPrimary } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    accountPrimary: null,
+    accountPrimarys: null,
     accountPrimaryError: null
 };
 
@@ -12,14 +12,14 @@ const accountPrimaryReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: true,
-                accountPrimary: null,
+                accountPrimarys: null,
                 accountPrimaryError: null
             };
         case accountPrimary.ACCOUNTPRIMARY_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                accountPrimary: payload
+                accountPrimarys: payload
             };
         case accountPrimary.ACCOUNTPRIMARY_LOAD_ERROR:
             return {

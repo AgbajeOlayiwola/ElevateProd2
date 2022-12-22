@@ -81,7 +81,7 @@ const Dashboard = () => {
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
     );
-    const { accountPrimary, accountPrimaryError } = useSelector(
+    const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
     );
 
@@ -139,18 +139,18 @@ const Dashboard = () => {
     }, []);
 
     useEffect(() => {
-        if (accountPrimary !== null) {
-            setAcctNumber(accountPrimary);
+        if (accountPrimarys !== null) {
+            setAcctNumber(accountPrimarys);
             let balanceData;
             balanceData = {
-                accountId: accountPrimary.accountId
+                accountId: accountPrimarys.accountId
             };
 
             dispatch(getBalanceEnquiry(balanceData));
         } else {
             setAcctNumber('Pending');
         }
-    }, [accountPrimary]);
+    }, [accountPrimarys]);
     const [previousRoute, setPreviousRoute] = useState('');
     useEffect(() => storePathValues, [router.asPath]);
     function storePathValues() {

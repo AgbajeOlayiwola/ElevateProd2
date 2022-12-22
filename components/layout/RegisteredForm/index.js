@@ -116,20 +116,22 @@ const ExistingMultiStep = () => {
                     />
                 );
 
-            // case 2:
-            //     return (
-            //         <Liveness
-            //             action={() => {
-            //                 setLoads((prev) => !prev);
-            //                 setPage(page + 1);
-            //             }}
-            //             loading={loading}
-            //             setLoading={setLoading}
-            //             // action={handleSubmitt}
-            //         />
-            //     );
-
             case 2:
+                return (
+                    <div className={styles.livenes}>
+                        <Liveness
+                            action={() => {
+                                setLoads((prev) => !prev);
+                                setPage(page + 1);
+                            }}
+                            loading={loading}
+                            setLoading={setLoading}
+                            // action={handleSubmitt}
+                        />
+                    </div>
+                );
+
+            case 3:
                 return (
                     <StepThree
                         action={() => {
@@ -140,7 +142,7 @@ const ExistingMultiStep = () => {
                         countryNames={country}
                     />
                 );
-            case 3:
+            case 4:
                 return (
                     <StepFour
                         title={pageType}
@@ -175,11 +177,11 @@ const ExistingMultiStep = () => {
             ) {
                 let loginWith = localStorage.getItem('LoginWith');
                 if (loginWith !== null) {
-                    //console.log(loginWith);
+                    // console.log(loginWith);
                     setPage(page + 1);
                     setFormData({ ...formData, type: 'true' });
                 } else if (loginWith === null) {
-                    setPage(page + 1);
+                    setPage(page + 2);
                     setFormData({ ...formData, type: 'true' });
                 }
             }
