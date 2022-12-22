@@ -138,6 +138,33 @@ const Login = () => {
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
+                    router.push('/Onboarding/ExistingProfileSetup');
+                }
+                if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'AWAITING_ACCOUNT_NUMBER'
+                ) {
+                    window.localStorage.setItem(
+                        'displayAccount',
+                        JSON.stringify(user.data.user)
+                    );
+                    window.localStorage.setItem(
+                        'account',
+                        JSON.stringify(user.data.user.profile)
+                    );
+                    router.push('../../Verify/CorportateAccount');
+                } else if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'ACCOUNT_NUMBER_RETRIEVED'
+                ) {
+                    window.localStorage.setItem(
+                        'displayAccount',
+                        JSON.stringify(user.data.user)
+                    );
+                    window.localStorage.setItem(
+                        'account',
+                        JSON.stringify(user.data.user.profile)
+                    );
                     router.push('../../Dashboard');
                 }
             }

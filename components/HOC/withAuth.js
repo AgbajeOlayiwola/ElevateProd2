@@ -18,24 +18,10 @@ const withAuth = (WrappedComponent) => {
         );
 
         useEffect(() => {
-            dispatch(loadAccountPrimary());
-
-            if (accountPrimary) {
+            if (localStorage.getItem('token')) {
                 setAccessGranted(true);
             } else {
-                dispatch(logoutAction());
-                if (!localStorage.getItem('user')) {
-                    Router.replace('../Auth/Login');
-                }
-
-                setAccessGranted(false);
-            }
-            if (accountPrimary === null) {
-                dispatch(logoutAction());
-                if (!localStorage.getItem('user')) {
-                    Router.replace('../Auth/Login');
-                }
-
+                Router.replace('../Auth/Login');
                 setAccessGranted(false);
             }
         }, []);

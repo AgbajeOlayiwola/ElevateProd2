@@ -429,14 +429,14 @@ export const accountPrimaryLoadStart = () => ({
     type: accountPrimary.ACCOUNTPRIMARY_LOAD_START
 });
 
-export const accountPrimaryLoadSuccess = (countries) => ({
+export const accountPrimaryLoadSuccess = (accountPrimarys) => ({
     type: accountPrimary.ACCOUNTPRIMARY_LOAD_SUCCESS,
-    payload: countries
+    payload: accountPrimarys
 });
 
-export const accountPrimaryLoadError = (errorMessage) => ({
+export const accountPrimaryLoadError = (accountPrimaryError) => ({
     type: accountPrimary.ACCOUNTPRIMARY_LOAD_ERROR,
-    payload: errorMessage
+    payload: accountPrimaryError
 });
 
 export const loadAccountPrimary = () => (dispatch) => {
@@ -457,9 +457,7 @@ export const loadAccountPrimary = () => (dispatch) => {
             }
         })
         .then((response) => dispatch(accountPrimaryLoadSuccess(response.data)))
-        .catch((error) =>
-            dispatch(accountPrimaryLoadError(error.response.message))
-        );
+        .catch((error) => dispatch(accountPrimaryLoadError(error.response)));
 };
 //accountPrimary actions end
 

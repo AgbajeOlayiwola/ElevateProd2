@@ -48,7 +48,7 @@ const Payment = () => {
     const { airtime, errorMessageAirtime } = useSelector(
         (state) => state.airtimeReducer
     );
-    const { accountPrimary, accountPrimaryError } = useSelector(
+    const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
     );
     const { bills, errorMessageBills } = useSelector(
@@ -171,16 +171,16 @@ const Payment = () => {
         }
     }, [balanceEnquiry]);
     useEffect(() => {
-        if (accountPrimary !== null) {
-            setSenderDetails(accountPrimary);
+        if (accountPrimarys !== null) {
+            setSenderDetails(accountPrimarys);
             let balanceData;
             balanceData = {
-                accountId: accountPrimary.accountId
+                accountId: accountPrimarys.accountId
             };
 
             dispatch(getBalanceEnquiry(balanceData));
         }
-    }, [accountPrimary]);
+    }, [accountPrimarys]);
     const interBankCheck = () => {
         if (interBank !== null) {
             //console.loginterBank);
