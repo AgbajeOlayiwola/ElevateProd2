@@ -3,6 +3,8 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTransactionElevate } from '../../../redux/actions/actions';
+import { dateData } from '../Data';
+import { FaCommentsDollar } from 'react-icons/fa';
 const LineChart = () => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
@@ -27,22 +29,51 @@ const LineChart = () => {
     });
 
     const dispatch = useDispatch();
+    const [dateTocalc, setDateToCalc] = useState([]);
+    const [price, setPrice] = useState();
     useEffect(() => populateLineData(), []);
     useEffect(() => {
         dispatch(getTransactionElevate());
     }, []);
+
     useEffect(() => populateLineData, [transactionElevate]);
 
     const populateLineData = () => {
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const date = new Date().getDate();
+        //for 7 days
+        const calcDate = dateData.map((item) => {
+            // console.log(item);
+            // const mainTest = item.date.split;
+            const container = item.date;
+            // setDateToCalc(item.cash);
+
+            return container;
+        });
+        console.log(calcDate);
+
+        const calcData = dateData.map((item) => {
+            // console.log(item);
+            // const mainTest = item.date.split;
+            const container = item.cash;
+            setDateToCalc(item.cash);
+
+            return container;
+        });
+        console.log(calcData);
+        const days = calcDate;
         const transactionArray = [
             'BILL_PAYMENT',
             'AIRTIME_TOPUP',
             'SINGLE_TRANSFER'
         ];
+
         let dayIndex = new Date().getDay();
+
+        // // console.log(dateTocalc);
+        //for 6 days
+        // console.log(date);
         const labelsData = [];
-        const datasetsArray = [0, 0, 0, 0, 0, 0, 0];
+        const datasetsArray = calcData;
 
         if (transactionElevate !== null) {
             for (let i = 0; i <= 6; i++) {
@@ -89,6 +120,7 @@ const LineChart = () => {
             }
         }
     });
+
     return (
         <div>
             <Line options={lineOptions} data={lineData} />
