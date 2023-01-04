@@ -128,6 +128,8 @@ const AccountUpgrade = () => {
     const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
     const [link, setLink] = useState('');
+    const [checkedBtn, setCheckedBtn] = useState(false);
+    const [inputCheck, setInputCheck] = useState();
     const [identificationDocumentFile, setIdentificationDocument] = useState(
         ''
     );
@@ -1694,10 +1696,16 @@ const AccountUpgrade = () => {
                                         const fieldName = `details[${index}]`;
                                         return (
                                             <div
-                                                className={styles.profilingDiv}
+                                                className={
+                                                    checkedBtn
+                                                        ? styles.profilingGrey
+                                                        : styles.profilingDiv
+                                                }
                                                 key={index}
                                             >
                                                 <input
+                                                    disabled={checkedBtn}
+                                                    // checked={inputCheck}
                                                     className={
                                                         styles.profilingInput
                                                     }
@@ -1732,6 +1740,18 @@ const AccountUpgrade = () => {
                                         );
                                     }
                                 )}
+                                <div className={styles.profilingDiv}>
+                                    <input
+                                        className={styles.profilingInput}
+                                        type="checkbox"
+                                        checked={checkedBtn}
+                                        onChange={() => {
+                                            // setInputCheck(false);
+                                            setCheckedBtn((prev) => !prev);
+                                        }}
+                                    />
+                                    <label>None of the above</label>
+                                </div>
                                 <div className={styles.disclaimer}>
                                     Kindly select applicable options
                                 </div>
