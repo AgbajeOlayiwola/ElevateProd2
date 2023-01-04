@@ -38,42 +38,70 @@ const LineChart = () => {
 
     useEffect(() => populateLineData, [transactionElevate]);
 
+    // const populateLineData = () => {
+    //     const date = new Date().getDate();
+    //     //for 7 days
+    //     const calcDate = dateData.map((item) => {
+    //         // console.log(item);
+    //         // const mainTest = item.date.split;
+    //         const container = item.date.split(':');
+    //         // setDateToCalc(item.cash);
+
+    //         return container;
+    //     });
+    //     console.log(calcDate[0]);
+
+    //     const calcData = dateData.map((item) => {
+    //         // console.log(item);
+    //         // const mainTest = item.date.split;
+    //         const container = item.cash;
+    //         setDateToCalc(item.cash);
+
+    //         return container;
+    //     });
+    //     console.log(calcData);
+    //     const days = calcDate;
+    //     const transactionArray = [
+    //         'BILL_PAYMENT',
+    //         'AIRTIME_TOPUP',
+    //         'SINGLE_TRANSFER'
+    //     ];
+
+    //     let dayIndex = new Date().getDay();
+
+    //     // // console.log(dateTocalc);
+    //     //for 6 days
+    //     // console.log(date);
+    //     const labelsData = [];
+    //     const datasetsArray = calcData;
+
+    //     if (transactionElevate !== null) {
+    //         for (let i = 0; i <= 6; i++) {
+    //             const index =
+    //                 dayIndex + i > 6 ? (dayIndex + i) % 7 : dayIndex + i;
+    //             labelsData[i] = days[index];
+
+    //             transactionElevate.transactions.map((trans) => {
+    //                 if ((index = new Date(trans.transactionDate).getDay())) {
+    //                     if (transactionArray.indexOf(trans.transactionType)) {
+    //                         datasetsArray[index] =
+    //                             datasetsArray[index] +
+    //                             Number(trans.transactionAmount);
+    //                     }
+    //                 }
+    //             });
+    //         }
+    //     }
     const populateLineData = () => {
-        const date = new Date().getDate();
-        //for 7 days
-        const calcDate = dateData.map((item) => {
-            // console.log(item);
-            // const mainTest = item.date.split;
-            const container = item.date;
-            // setDateToCalc(item.cash);
-
-            return container;
-        });
-        console.log(calcDate);
-
-        const calcData = dateData.map((item) => {
-            // console.log(item);
-            // const mainTest = item.date.split;
-            const container = item.cash;
-            setDateToCalc(item.cash);
-
-            return container;
-        });
-        console.log(calcData);
-        const days = calcDate;
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const transactionArray = [
             'BILL_PAYMENT',
             'AIRTIME_TOPUP',
             'SINGLE_TRANSFER'
         ];
-
         let dayIndex = new Date().getDay();
-
-        // // console.log(dateTocalc);
-        //for 6 days
-        // console.log(date);
         const labelsData = [];
-        const datasetsArray = calcData;
+        const datasetsArray = [0, 0, 0, 0, 0, 0, 0];
 
         if (transactionElevate !== null) {
             for (let i = 0; i <= 6; i++) {
@@ -104,6 +132,18 @@ const LineChart = () => {
             ]
         });
     };
+
+    //  setLineData({
+    //         ...lineData,
+    //         labels: labelsData,
+    //         datasets: [
+    //             {
+    //                 ...lineData.datasets[0],
+    //                 data: datasetsArray
+    //             }
+    //         ]
+    //     });
+    // };
 
     // set options
     const [lineOptions, setLineOptions] = useState({

@@ -447,3 +447,17 @@
 .ellevateCopy{
     font-size: 12px;
 }
+.profilingGrey{
+    display: flex;
+    margin-bottom: 36px;
+    margin-top: 42px;
+
+    margin-right: 26px;
+    color: grey;
+    /* background-color: red;; */
+}
+.profilingGrey label{
+color: grey !important;
+border-color: grey;
+/* background-color: red; */
+}
