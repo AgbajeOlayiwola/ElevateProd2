@@ -236,13 +236,14 @@ const Profile = () => {
         setInterEnquiry('');
     }, []);
     useEffect(() => {
-        if (accountPrimary !== null) {
-            setAcctNumber(accountPrimary);
-            const test = { accountId: accountPrimary.accountId };
-            dispatch(loadfetchRM(test));
-        } else {
-            setAcctNumber('Pending');
-        }
+        // console.log(accountPrimary);
+        // if (accountPrimary !== null) {
+        //     setAcctNumber(accountPrimary);
+        //     const test = { accountId: accountPrimary.accountId };
+        //     dispatch(loadfetchRM(test));
+        // } else {
+        //     setAcctNumber('Pending');
+        // }
     }, [accountPrimary]);
     useEffect(() => {
         if (fetchRM !== null) {
