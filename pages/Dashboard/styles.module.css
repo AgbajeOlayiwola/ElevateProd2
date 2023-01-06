@@ -8,7 +8,16 @@
     display: flex;
     justify-content: space-between;
 }
-
+.accountNumbers{
+padding: 0px;
+background: no-repeat;
+border: navajowhite;
+color: white;
+}
+.assctDrop{
+    display: flex;
+    align-items: center;
+}
 .card {
     background: linear-gradient(124.52deg, #7fbb01 -34.31%, #2f2f2f 115.35%);
     position: relative;

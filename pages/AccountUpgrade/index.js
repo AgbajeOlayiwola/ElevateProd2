@@ -29,7 +29,8 @@ import {
     pushDocumentsData,
     postEllevateProfilingDetails,
     loadprofilingQuestions,
-    postvnin
+    postvnin,
+    getAddressStatusDetails
 } from '../../redux/actions/actions';
 import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
@@ -152,6 +153,9 @@ const AccountUpgrade = () => {
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
     );
+    const { addressVerificationSuc, addressVerificationsError } = useSelector(
+        (state) => state.addressVerificationReducer
+    );
     const { scmul, scmulErrorMessages } = useSelector(
         (state) => state.uploadScmulReducer
     );
@@ -244,6 +248,7 @@ const AccountUpgrade = () => {
         transactionPin();
     }, [setTransactionPin, setTransactionPinError]);
     useEffect(() => {
+        dispatch(getAddressStatusDetails());
         dispatch(loadUserProfile());
         dispatch(shareDocumentsData());
         dispatch(loadprofilingQuestions());
@@ -518,6 +523,7 @@ const AccountUpgrade = () => {
         //console.logutilityUpload);
         //console.logutilityUplodaErrorMessages);
     }, [vninMSeccess, vninMError]);
+
     //Identification Upload
     const saveIdentificationFile = (e) => {
         setIdentificationDocument(e.target.files[0]);
@@ -573,6 +579,27 @@ const AccountUpgrade = () => {
             setLoading(false);
         }
     }, [ellevateProfilingSeccess, ellevateProfillingError]);
+
+    // Verify your Address
+    useEffect(() => {
+        console.log(addressVerificationSuc?.data.data.verificationStatus);
+        if (addressVerificationSuc) {
+            if (addressVerificationSuc.data.data.verificationStatus !== null) {
+                setVerifyStatus('Done');
+                setMessage('Address Verification Successful');
+                setStatusbar('success');
+                // setOutcome(true);
+                setVerifyStatus('done');
+                setLoading(false);
+            } else if (addressVerificationsError !== null) {
+                setMessage('Error');
+                setStatusbar('error');
+                setOutcome(true);
+                setLoading(false);
+            }
+        }
+    }, [addressVerificationSuc, addressVerificationsError]);
+
     useEffect(() => {
         if (identification !== null) {
             setMessage(identification);
@@ -640,7 +667,11 @@ const AccountUpgrade = () => {
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
-                status: pending
+                status:
+                    addressVerificationSuc?.data.data.verificationStatus ===
+                    'PENDING'
+                        ? addressVerificationSuc?.data.data.verificationStatus
+                        : pending
             },
             {
                 title: 'Set Transaction Pin',
@@ -1276,11 +1307,11 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <Link
+                            <Link
                                 href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=A02&segmentId=ADB&address=${streetName}&state=${selstate}&lga=${localGovernmane}&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333`}
                             >
                                 Links
-                            </Link> */}
+                            </Link>
                             <Modal
                                 isOpen={modalIsOpen}
                                 onAfterOpen={afterOpenModal}
@@ -1313,7 +1344,7 @@ const AccountUpgrade = () => {
 
                                 <Iframe
                                     src={
-                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=${latitude}&Longitude=${longitude}`
+                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=6.4886218&Longitude=3.3567333`
                                         // {
                                         // pathname:
                                         // 'https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test Customer&customerEmail=boluwatobi@gmail.com&branchCode=A02&segmentId=ADB&address=25 pilot crescent off bode thomas surulere&landmark&state=LA&lga=LA020&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333'

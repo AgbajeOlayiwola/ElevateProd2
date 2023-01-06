@@ -78,6 +78,7 @@ import getRCReducer from './getRC.reducer';
 import postEllevateReducer from './ellevateProfiling.reducer';
 import profilingQuestionsReducer from './profilingQuestion.reducer';
 import vninReducer from './vnin.reducer';
+import addressVerificationReducer from './addressverification.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -162,7 +163,8 @@ const appReducer = combineReducers({
     existReducer: existReducer,
     postEllevateReducer: postEllevateReducer,
     profilingQuestionsReducer: profilingQuestionsReducer,
-    vninReducer: vninReducer
+    vninReducer: vninReducer,
+    addressVerificationReducer: addressVerificationReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

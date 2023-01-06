@@ -755,3 +755,12 @@ export const verifyVNinType = {
     VERIFY_VNIN_ERROR: 'VERIFY_VNIN_ERROR'
 };
 //End VerifyVnin type
+
+//Adress Verification Type
+
+export const addressVerificationType = {
+    ADDRESS_VERIFICATION_START: 'ADDRESS_VERIFICATION_START',
+    ADDRESS_VERIFICATION_SUCCESS: 'ADDRESS_VERIFICATION_SUCCESS',
+    ADDRESS_VERIFICATION_ERROR: 'ADDRESS_VERIFICATION_ERROR'
+};
+//End Address Verfication Type
