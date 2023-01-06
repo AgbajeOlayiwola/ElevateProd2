@@ -82,6 +82,7 @@ const postEllevateProfiling = '/ellevate-profiling';
 const profilingQuestions = '/ellevate-profiling/questions';
 const vnin = '/account-upgrade/vNin-verification';
 const verifyVNinAdd = '/document-verification/vNin/status';
+const addressVerification = '/address-verification/status';
 export default {
     getBanks,
     getCountries,
@@ -165,5 +166,6 @@ export default {
     postEllevateProfiling,
     profilingQuestions,
     vnin,
-    verifyVNinAdd
+    verifyVNinAdd,
+    addressVerification
 };
