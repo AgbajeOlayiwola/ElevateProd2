@@ -281,6 +281,12 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                     <p className={styles.error}>{error}</p>
                                 ) : null}
                                 <div className={styles.existingUserHead}>
+                                    <div className={styles.existingUserCont}>
+                                        <label>TIN </label>
+                                        <div className={styles.addressNumber}>
+                                            <input type="text" required />
+                                        </div>
+                                    </div>
                                     <div className={styles.existingUserSingle}>
                                         <div
                                             className={styles.existingUserCont}
@@ -707,6 +713,17 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                             <p className={styles.error}>
                                                 {errors.rcNumber?.message}
                                             </p>
+                                        </div>
+
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>TIN </label>
+                                            <div
+                                                className={styles.addressNumber}
+                                            >
+                                                <input type="text" required />
+                                            </div>
                                         </div>
                                         <div
                                             className={styles.existingUserCont}

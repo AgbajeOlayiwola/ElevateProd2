@@ -1266,3 +1266,29 @@ export const location = [
         ]
     }
 ];
+export const dateData = [
+    {
+        date: '28:12:2022',
+        cash: '1000'
+    },
+    {
+        date: '12:12:2022',
+        cash: '1500'
+    },
+    {
+        date: '13:12:2022',
+        cash: '200'
+    },
+    {
+        date: '21:12:2022',
+        cash: '21000'
+    },
+    {
+        date: '21:12:2022',
+        cash: '2000'
+    },
+    {
+        date: '21:12:2022',
+        cash: '2000'
+    }
+];

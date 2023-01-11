@@ -77,7 +77,8 @@ import {
     getCAC,
     postEllevateProfilling,
     profilingQuestions,
-    vninType
+    vninType,
+    addressVerificationType
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -429,14 +430,14 @@ export const accountPrimaryLoadStart = () => ({
     type: accountPrimary.ACCOUNTPRIMARY_LOAD_START
 });
 
-export const accountPrimaryLoadSuccess = (countries) => ({
+export const accountPrimaryLoadSuccess = (accountPrimarys) => ({
     type: accountPrimary.ACCOUNTPRIMARY_LOAD_SUCCESS,
-    payload: countries
+    payload: accountPrimarys
 });
 
-export const accountPrimaryLoadError = (errorMessage) => ({
+export const accountPrimaryLoadError = (accountPrimaryError) => ({
     type: accountPrimary.ACCOUNTPRIMARY_LOAD_ERROR,
-    payload: errorMessage
+    payload: accountPrimaryError
 });
 
 export const loadAccountPrimary = () => (dispatch) => {
@@ -457,9 +458,7 @@ export const loadAccountPrimary = () => (dispatch) => {
             }
         })
         .then((response) => dispatch(accountPrimaryLoadSuccess(response.data)))
-        .catch((error) =>
-            dispatch(accountPrimaryLoadError(error.response.message))
-        );
+        .catch((error) => dispatch(accountPrimaryLoadError(error.response)));
 };
 //accountPrimary actions end
 
@@ -2982,3 +2981,41 @@ export const postvnin = (vninItems) => (dispatch) => {
 //         .catch((error) => dispatch(vninError(error.response.data.message)));
 // };
 // //Vnin end
+
+//ADDRESS VERIFICATION LOAD
+
+export const getAddressStatusLoad = () => ({
+    type: addressVerificationType.ADDRESS_VERIFICATION_START
+});
+export const getAddressStatusSuccess = (addressVerificationSuc) => ({
+    type: addressVerificationType.ADDRESS_VERIFICATION_SUCCESS,
+    payload: addressVerificationSuc
+});
+export const getAddressStatusError = (addressVerificationsError) => ({
+    type: addressVerificationType.ADDRESS_VERIFICATION_ERROR,
+    payload: addressVerificationsError
+});
+export const getAddressStatusDetails = () => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+
+    axios
+        .get(`https://testvate.live${apiRoutes.addressVerification}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            //console.logresponse.data.data);
+            dispatch(getAddressStatusSuccess(response));
+        })
+        .catch((error) => dispatch(getAddressStatusError(error.response)));
+};
+
+//ADDRESS VERIFICATION END

@@ -21,7 +21,8 @@ import {
     getBalanceEnquiry,
     loadUserProfile,
     loadAccountPrimary,
-    getTransactionElevate
+    getTransactionElevate,
+    bankAccountsData
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
@@ -34,6 +35,7 @@ import Paylink2 from '../../components/ReusableComponents/PaylinkSvg/paylink';
 import AccountUpgrade from '../AccountUpgrade';
 import withAuth from '../../components/HOC/withAuth';
 import Popup from '../../components/layout/Popup';
+import DropdownSvg from '../../components/ReusableComponents/ReusableSvgComponents/DropdownSvg';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -81,8 +83,11 @@ const Dashboard = () => {
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
     );
-    const { accountPrimary, accountPrimaryError } = useSelector(
+    const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
+    );
+    const { bankAccounts, bankAccountErrorMessages } = useSelector(
+        (state) => state.bankAccountsReducer
     );
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
@@ -131,6 +136,7 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
+        dispatch(bankAccountsData());
         dispatch(loadAccountPrimary());
         dispatch(loadUserProfile());
         dispatch(getTransactionElevate());
@@ -139,18 +145,19 @@ const Dashboard = () => {
     }, []);
 
     useEffect(() => {
-        if (accountPrimary !== null) {
-            setAcctNumber(accountPrimary);
+        console.log(bankAccounts);
+        if (accountPrimarys !== null) {
+            setAcctNumber(accountPrimarys);
             let balanceData;
             balanceData = {
-                accountId: accountPrimary.accountId
+                accountId: accountPrimarys.accountId
             };
 
             dispatch(getBalanceEnquiry(balanceData));
         } else {
             setAcctNumber('Pending');
         }
-    }, [accountPrimary]);
+    }, [accountPrimarys]);
     const [previousRoute, setPreviousRoute] = useState('');
     useEffect(() => storePathValues, [router.asPath]);
     function storePathValues() {
@@ -400,9 +407,63 @@ const Dashboard = () => {
                                             >
                                                 Account Number
                                             </p>
-                                            <p className={styles.accountNumber}>
+                                            <div className={styles.assctDrop}>
+                                                <select
+                                                    className={
+                                                        styles.accountNumbers
+                                                    }
+                                                >
+                                                    {Object.keys(
+                                                        bankAccounts
+                                                    )?.map(
+                                                        (accountNo, index) => {
+                                                            return (
+                                                                <>
+                                                                    <option
+                                                                        value={
+                                                                            accountNo
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                    >
+                                                                        <p
+                                                                            className={
+                                                                                styles.accountNumber
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                bankAccounts[
+                                                                                    accountNo
+                                                                                ]
+                                                                                    .accountNumber
+                                                                            }
+                                                                        </p>
+                                                                    </option>
+                                                                </>
+                                                            );
+                                                        }
+                                                    )}
+                                                </select>{' '}
+                                                <svg
+                                                    width="10"
+                                                    height="7"
+                                                    viewBox="0 0 8 5"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M1 1L4 4L7 1"
+                                                        stroke="white"
+                                                        strokeWidth="1.66667"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </svg>
+                                            </div>
+                                            {/* <p className={styles.accountNumber}>
                                                 {acctNumber.accountNumber}
-                                            </p>
+                                            </p> */}
                                         </div>
                                     </div>
                                 </div>
