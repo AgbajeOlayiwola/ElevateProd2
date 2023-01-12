@@ -145,7 +145,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         }
     }, [profileCont]);
     useEffect(() => {
-        if (newAccount.message === 'success') {
+        if (newAccount?.message === 'success') {
             //console.log(errorMessages);
             router.push('/Verify/Account/loading');
         } else if (
