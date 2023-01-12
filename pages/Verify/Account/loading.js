@@ -118,7 +118,6 @@ const AccountLoading = () => {
             currency: 'NGN'
         };
         dispatch(createNewUserAccount(accountData));
-        dispatch(newAccountStatusData());
     };
     useEffect(() => {
         newUserAccountt();
@@ -126,6 +125,11 @@ const AccountLoading = () => {
     // useEffect(() => {
     //     setCount(count + 1);
     // }, [errorMessages]);
+    useEffect(() => {
+        if (newAccount !== null || newAccount !== '' || newAccount !== []) {
+            dispatch(newAccountStatusData());
+        }
+    }, [newAccount, newAccountErrorMessage]);
     useEffect(() => {
         if (
             errorMessages === 'Pending Creation, Try Again' ||
