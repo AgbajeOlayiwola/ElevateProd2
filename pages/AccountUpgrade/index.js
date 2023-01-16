@@ -122,6 +122,7 @@ const AccountUpgrade = () => {
     const [documentStatus, setDocumentStatus] = useState('notDone');
     const [refereeStatus, setRefereeStatus] = useState('notDone');
     const [cacStatus, setCacStatus] = useState('notDone');
+    const [cacNumber, setCacNumber] = useState('');
     const [scumlStatus, setScumlStatus] = useState('notDone');
     const [mematStatus, setMematStatus] = useState('notDone');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
@@ -359,7 +360,8 @@ const AccountUpgrade = () => {
     const cacRegistration = () => {
         setLoading(true);
         const cacDatas = {
-            cacCert: file
+            cacCert: file,
+            cacNumber: cacNumber
         };
         dispatch(cacData(cacDatas));
     };
@@ -2043,6 +2045,9 @@ const AccountUpgrade = () => {
                                 <label>CAC Registration Number</label>
                                 <input
                                     type="text"
+                                    onChange={(e) =>
+                                        setCacNumber(e.target.value)
+                                    }
                                     placeholder="Enter CAC Registration Number"
                                 />
                             </div>
