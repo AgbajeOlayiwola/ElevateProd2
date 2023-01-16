@@ -170,6 +170,7 @@ const Payment = () => {
             setBalance(formattedAmount);
         }
     }, [balanceEnquiry]);
+    //where i need to work on
     useEffect(() => {
         if (accountPrimarys !== null) {
             setSenderDetails(accountPrimarys);

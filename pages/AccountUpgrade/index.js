@@ -584,7 +584,10 @@ const AccountUpgrade = () => {
     useEffect(() => {
         console.log(addressVerificationSuc?.data.data.verificationStatus);
         if (addressVerificationSuc) {
-            if (addressVerificationSuc.data.data.verificationStatus !== null) {
+            if (
+                addressVerificationSuc.data.data.verificationStatus ===
+                'SUCCESS'
+            ) {
                 setVerifyStatus('Done');
                 setMessage('Address Verification Successful');
                 setStatusbar('success');
@@ -669,7 +672,7 @@ const AccountUpgrade = () => {
                 statusReport: verifyStatus,
                 status:
                     addressVerificationSuc?.data.data.verificationStatus ===
-                    'PENDING'
+                    'SUCCESS'
                         ? addressVerificationSuc?.data.data.verificationStatus
                         : pending
             },
@@ -898,6 +901,7 @@ const AccountUpgrade = () => {
             }
         ]
     };
+    console.log(pending);
 
     useEffect(() => {}, [shareDocuments]);
 
