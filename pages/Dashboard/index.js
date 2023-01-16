@@ -74,6 +74,7 @@ const Dashboard = () => {
     const [tableDetails, setTableDetails] = useState([]);
     const [userProfileData, setUserProfileData] = useState([]);
     const [dateState, setDateState] = useState(false);
+    const [acctNum, setAcctNumm] = useState('');
 
     const [acctNumber, setAcctNumber] = useState('');
 
@@ -143,21 +144,29 @@ const Dashboard = () => {
         getCurrentDate();
         getDateXDaysAgo(2);
     }, []);
+    console.log(acctNum);
 
     useEffect(() => {
+        console.log(accountPrimarys);
         console.log(bankAccounts);
-        if (accountPrimarys !== null) {
-            setAcctNumber(accountPrimarys);
-            let balanceData;
-            balanceData = {
-                accountId: accountPrimarys.accountId
-            };
-
-            dispatch(getBalanceEnquiry(balanceData));
-        } else {
-            setAcctNumber('Pending');
-        }
-    }, [accountPrimarys]);
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            // setAcctNumm(bankAccounts[accountNo]);
+            console.log(bankAccounts[accountNo]);
+        });
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            if (bankAccounts[accountNo].accountNumber === acctNum) {
+                setAcctNumber(accountPrimarys);
+                let balanceData;
+                balanceData = {
+                    accountId: bankAccounts[accountNo].accountId
+                };
+                console.log(bankAccounts[accountNo].accountId);
+                dispatch(getBalanceEnquiry(balanceData));
+            } else {
+                setAcctNumber('Pending');
+            }
+        });
+    }, [acctNum]);
     const [previousRoute, setPreviousRoute] = useState('');
     useEffect(() => storePathValues, [router.asPath]);
     function storePathValues() {
@@ -412,6 +421,12 @@ const Dashboard = () => {
                                                     className={
                                                         styles.accountNumbers
                                                     }
+                                                    value={acctNum}
+                                                    onChange={(e) => {
+                                                        setAcctNumm(
+                                                            e.target.value
+                                                        );
+                                                    }}
                                                 >
                                                     {Object.keys(
                                                         bankAccounts
@@ -421,24 +436,21 @@ const Dashboard = () => {
                                                                 <>
                                                                     <option
                                                                         value={
-                                                                            accountNo
+                                                                            bankAccounts[
+                                                                                accountNo
+                                                                            ]
+                                                                                .accountNumber
                                                                         }
                                                                         key={
                                                                             index
                                                                         }
                                                                     >
-                                                                        <p
-                                                                            className={
-                                                                                styles.accountNumber
-                                                                            }
-                                                                        >
-                                                                            {
-                                                                                bankAccounts[
-                                                                                    accountNo
-                                                                                ]
-                                                                                    .accountNumber
-                                                                            }
-                                                                        </p>
+                                                                        {
+                                                                            bankAccounts[
+                                                                                accountNo
+                                                                            ]
+                                                                                .accountNumber
+                                                                        }
                                                                     </option>
                                                                 </>
                                                             );
