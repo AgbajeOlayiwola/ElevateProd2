@@ -213,7 +213,7 @@ const Dashboard = () => {
     //console.log(newDate[0]);
     return (
         <DashLayout page="Dashboard">
-            <Levelup account={userProfileData.customerCategory} />
+            <Levelup account={userProfileData} />
             <div className={styles.cove}>
                 <section className={styles.sectionI}>
                     <div className={styles.Tpwh}>
@@ -428,6 +428,9 @@ const Dashboard = () => {
                                                         );
                                                     }}
                                                 >
+                                                    <option>
+                                                        Select Account Number
+                                                    </option>
                                                     {Object.keys(
                                                         bankAccounts
                                                     )?.map(

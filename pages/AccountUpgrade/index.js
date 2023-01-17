@@ -122,6 +122,7 @@ const AccountUpgrade = () => {
     const [documentStatus, setDocumentStatus] = useState('notDone');
     const [refereeStatus, setRefereeStatus] = useState('notDone');
     const [cacStatus, setCacStatus] = useState('notDone');
+    const [tinStatus, setTinStatus] = useState('notDone');
     const [cacNumber, setCacNumber] = useState('');
     const [scumlStatus, setScumlStatus] = useState('notDone');
     const [mematStatus, setMematStatus] = useState('notDone');
@@ -149,6 +150,7 @@ const AccountUpgrade = () => {
     const [questions, setQuestions] = useState();
     const [base64Code, setBase64Code] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
+    const [corporateAccount, setCorporateAccount] = useState();
     const [profileItemm, setProfileItemm] = useState('');
     const [ellevateProfilingDone, setEllevateProfilingzDone] = useState();
     const { cac, cacErrorMessages } = useSelector(
@@ -258,6 +260,7 @@ const AccountUpgrade = () => {
     useEffect(() => {
         if (userProfile !== null) {
             setText(userProfile.customerCategory);
+            setCorporateAccount(userProfile.hasRegisteredBusiness);
             setStreetName(userProfile.address);
             setCity(userProfile.city);
             setState(userProfile.state);
@@ -566,7 +569,7 @@ const AccountUpgrade = () => {
     useEffect(() => {
         if (ellevateProfilingSeccess !== null) {
             setEllevateProfilingzDone('Done');
-            setMessage('ellevateProfilingSeccess');
+            setMessage('Ellevate Profiling Success');
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
@@ -655,6 +658,115 @@ const AccountUpgrade = () => {
                         ? pending
                         : null
             }
+        ],
+        exitingCorporate: [
+            {
+                title: 'Virtual NIN',
+                textII: 'VirtualNIN',
+                icon: <IdCard />,
+                statusReport: vninStatus,
+                status:
+                    userProfile?.hasDoneVNINVerification === true
+                        ? status
+                        : pending
+            },
+            {
+                title: 'Documents',
+                textII: 'Documments',
+                icon: <AddressSvg />,
+                statusReport: documentStatus,
+                status: pending
+            },
+            {
+                title: 'Verify your Address',
+                textII: 'VerifyAddress',
+                icon: <AddressSvg />,
+                statusReport: verifyStatus,
+                status: pending
+            },
+            {
+                title: 'Set Transaction Pin',
+                textII: 'TransactionPin',
+                icon: <SignatureRuleSvg />,
+                statusReport: transactionPinStatus,
+                status:
+                    userProfile?.hasSetTransactionPin === true
+                        ? status
+                        : pending
+            },
+            {
+                title: 'Upload Utility BIll',
+                textII: 'UtilityBill',
+                icon: <BillSvg />,
+                statusReport: utilityStatus,
+                name: 'UTILITY',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? utilityStatus === 'done'
+                            ? review
+                            : utilityStatus === 'notDone'
+                            ? pending
+                            : utilityStatus === 'comment'
+                            ? rejected
+                            : utilityStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
+            },
+            {
+                title: 'Upload ID Card',
+                textII: 'UIdCard',
+                icon: <IdCard />,
+                statusReport: idCardStatus,
+                name: 'IDENTIFICATION',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? idCardStatus === 'done'
+                            ? review
+                            : idCardStatus === 'notDone'
+                            ? pending
+                            : idCardStatus === 'comment'
+                            ? rejected
+                            : idCardStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
+            },
+            // {
+            //     title: 'Directors',
+            //     icon: <DirectorsSvg />
+            // },
+            // {
+            //     title: 'Referee',
+            //     textII: 'Referee',
+            //     icon: <DirectorsSvg />,
+            //     statusReport: refereeStatus,
+            //     name: 'REFERENCE_FORMFORM',
+            //     status:
+            //         userProfile?.hasSubmitedDocumentsForReview === true
+            //             ? refereeStatus === 'done'
+            //                 ? review
+            //                 : refereeStatus === 'notDone'
+            //                 ? pending
+            //                 : refereeStatus === 'comment'
+            //                 ? rejected
+            //                 : null
+            //             : pending
+            // },
+            {
+                title: 'Ellevate Profiling',
+                textII: 'Profilling',
+                icon: <IdCard />,
+                statusReport: elevateStatus,
+                status:
+                    userProfile?.hasDoneEllevateProfiling === true
+                        ? status
+                        : pending
+            }
+            // {
+            //     title: 'Signature Rule',
+            //     icon: <SignatureRuleSvg />
+            // }
         ],
         individual: [
             {
@@ -866,6 +978,24 @@ const AccountUpgrade = () => {
                         : pending
             },
             {
+                title: 'TIN',
+                textII: 'TINREG',
+                statusReport: cacStatus,
+                name: 'TIN',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? tinStatus === 'done'
+                            ? review
+                            : tinStatus === 'notDone'
+                            ? pending
+                            : tinStatus === 'comment'
+                            ? rejected
+                            : tinStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
+            },
+            {
                 title: 'SCUML Certificate',
                 textII: 'SCMULREG',
                 statusReport: scumlStatus,
@@ -985,7 +1115,8 @@ const AccountUpgrade = () => {
                             </p>
                         </div>
 
-                        {userProfileData.createdFromEcobankCred === true
+                        {userProfileData.createdFromEcobankCred === true &&
+                        userProfileData.customerCategory === 'INDIVIDUAL'
                             ? AccountUpgradeData.existing.map((item, index) => {
                                   return (
                                       <AccountUpgradeSingle
@@ -1013,8 +1144,9 @@ const AccountUpgrade = () => {
                                       />
                                   );
                               })
-                            : text === 'INDIVIDUAL'
-                            ? AccountUpgradeData.individual.map(
+                            : userProfileData.createdFromEcobankCred === true &&
+                              userProfileData.customerCategory === 'COMMERCIAL'
+                            ? AccountUpgradeData.exitingCorporate.map(
                                   (item, index) => {
                                       return (
                                           <AccountUpgradeSingle
@@ -1024,7 +1156,7 @@ const AccountUpgrade = () => {
                                                   (items) => {
                                                       if (
                                                           items.documentType ===
-                                                          item.name
+                                                          item.title
                                                       ) {
                                                           return items.comment;
                                                       } else {
@@ -1040,6 +1172,70 @@ const AccountUpgrade = () => {
                                                   setTitle(item.title);
                                               }}
                                           />
+                                      );
+                                  }
+                              )
+                            : text === 'INDIVIDUAL'
+                            ? AccountUpgradeData.individual.map(
+                                  (item, index) => {
+                                      return (
+                                          <>
+                                              <AccountUpgradeSingle
+                                                  statusInfo={item.statusReport}
+                                                  textII={item.textII}
+                                                  content={shareDocuments?.map(
+                                                      (items) => {
+                                                          if (
+                                                              items.documentType ===
+                                                              item.name
+                                                          ) {
+                                                              return items.comment;
+                                                          } else {
+                                                              return '';
+                                                          }
+                                                      }
+                                                  )}
+                                                  icon={item.icon}
+                                                  text={item.title}
+                                                  key={index}
+                                                  status={item.status}
+                                                  action={() => {
+                                                      setTitle(item.title);
+                                                  }}
+                                              />
+                                              {document
+                                                  ? AccountUpgradeData.document.map(
+                                                        (item, index) => {
+                                                            return (
+                                                                <>
+                                                                    <AccountUpgradeSingle
+                                                                        text={
+                                                                            item.title
+                                                                        }
+                                                                        status={
+                                                                            item.status
+                                                                        }
+                                                                        textII={
+                                                                            item.textII
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        statusInfo={
+                                                                            item.statusReport
+                                                                        }
+                                                                        action={() => {
+                                                                            setTitle(
+                                                                                item.title
+                                                                            );
+                                                                        }}
+                                                                    />
+                                                                </>
+                                                            );
+                                                        }
+                                                    )
+                                                  : null}
+                                          </>
                                       );
                                   }
                               )
@@ -2082,6 +2278,35 @@ const AccountUpgrade = () => {
                                 </button>
                             )}
                         </div>
+                    </AccountUpgradeComponent>
+                );
+            case 'TIN':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                            setDocument(false);
+                        }}
+                        title="TIN Registration"
+                    >
+                        <div className={styles.identificationGroup}>
+                            <label>TIN (Tax Identification Number)</label>
+                            <input
+                                type="text"
+                                onChange={(e) => setCacNumber(e.target.value)}
+                                placeholder="Enter  Your Tin"
+                            />
+                        </div>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                className={styles.updateBtn}
+                                onClick={cacRegistration}
+                            >
+                                Update Profile
+                            </button>
+                        )}
                     </AccountUpgradeComponent>
                 );
             case 'SCUML Certificate':

@@ -86,6 +86,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
     const [regNo, setRegNo] = useState('');
+    const [refferee, setRefferee] = useState();
     //console.loglocalGoverment);
     const [phones, setPhones] = useState();
 
@@ -124,7 +125,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             state: localState,
             city: city,
             lga: localGoverment,
-            refereeCode: ''
+            refereeCode: refferalCode
             // signature: ''
         };
         dispatch(CompleteBusinessProfile(userData));
@@ -1082,6 +1083,9 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                     <input
                                         placeholder="Enter  Code"
                                         className={styles.textInput}
+                                        onChange={(e) =>
+                                            setRefferalCode(e.target.value)
+                                        }
                                     />{' '}
                                     {/* {loading ? <Loader /> : null} */}
                                     <ButtonComp

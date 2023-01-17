@@ -22,9 +22,10 @@ const Levelup = ({ account }) => {
             </div>
             <Link href="./AccountUpgrade">
                 <button>
-                    {account === 'INDIVIDUAL'
+                    {account.customerCategory === 'INDIVIDUAL'
                         ? 'Upgrade Account'
-                        : account === 'COMMERCIAL'
+                        : account.createdFromEcobankCred === true &&
+                          account.customerCategory === 'COMMERCIAL'
                         ? 'Update Documents'
                         : null}{' '}
                 </button>
