@@ -94,8 +94,12 @@ const Payment = () => {
     );
     const { banks } = useSelector((state) => state.banksReducer);
     const { userProfile } = useSelector((state) => state.userProfileReducer);
+    const { bankAccounts, bankAccountErrorMessages } = useSelector(
+        (state) => state.bankAccountsReducer
+    );
 
     const dispatch = useDispatch();
+    const [acctNum, setAcctNumm] = useState('');
     const [formType, setFormType] = useState('');
     const [ecobank, setEcobank] = useState('true');
     const [overlay, setOverlay] = useState(false);
@@ -172,16 +176,26 @@ const Payment = () => {
     }, [balanceEnquiry]);
     //where i need to work on
     useEffect(() => {
-        if (accountPrimarys !== null) {
-            setSenderDetails(accountPrimarys);
-            let balanceData;
-            balanceData = {
-                accountId: accountPrimarys.accountId
-            };
-
-            dispatch(getBalanceEnquiry(balanceData));
-        }
-    }, [accountPrimarys]);
+        console.log(accountPrimarys);
+        console.log(bankAccounts);
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            // setAcctNumm(bankAccounts[accountNo]);
+            console.log(bankAccounts[accountNo]);
+        });
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            if (bankAccounts[accountNo].accountNumber === acctNum) {
+                setAcctNumber(accountPrimarys);
+                let balanceData;
+                balanceData = {
+                    accountId: bankAccounts[accountNo].accountId
+                };
+                console.log(bankAccounts[accountNo].accountId);
+                dispatch(getBalanceEnquiry(balanceData));
+            } else {
+                setAcctNumber('Pending');
+            }
+        });
+    }, [acctNum]);
     const interBankCheck = () => {
         if (interBank !== null) {
             //console.loginterBank);
