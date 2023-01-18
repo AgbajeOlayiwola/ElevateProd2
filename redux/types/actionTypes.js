@@ -748,13 +748,13 @@ export const vninType = {
 };
 //vnin type
 
-//verifyVnin type
-export const verifyVNinType = {
-    VERIFY_VNIN_START: 'VERIFY_VNIN_START',
-    VERIFY_VNIN_SUCCESS: 'VERIFY_VNIN_SUCCESS',
-    VERIFY_VNIN_ERROR: 'VERIFY_VNIN_ERROR'
+//Reffernce type
+export const reffereeType = {
+    REFEREE_START: 'REFEREE_START',
+    REFEREE_SUCCESS: 'REFEREE_SUCCESS',
+    REFEREE_ERROR: 'REFEREE_ERROR'
 };
-//End VerifyVnin type
+//End Refferenve type
 
 //Adress Verification Type
 

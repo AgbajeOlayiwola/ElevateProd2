@@ -83,6 +83,7 @@ const profilingQuestions = '/ellevate-profiling/questions';
 const vnin = '/account-upgrade/vNin-verification';
 const verifyVNinAdd = '/document-verification/vNin/status';
 const addressVerification = '/address-verification/status';
+const reffernceFormShare = '/account-upgrade/reference-form/share';
 export default {
     getBanks,
     getCountries,
@@ -167,5 +168,6 @@ export default {
     profilingQuestions,
     vnin,
     verifyVNinAdd,
-    addressVerification
+    addressVerification,
+    reffernceFormShare
 };
