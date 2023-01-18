@@ -30,7 +30,8 @@ import {
     postEllevateProfilingDetails,
     loadprofilingQuestions,
     postvnin,
-    getAddressStatusDetails
+    getAddressStatusDetails,
+    getReffereeDetails
 } from '../../redux/actions/actions';
 import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
@@ -130,7 +131,9 @@ const AccountUpgrade = () => {
     const [idNumber, setIdNumber] = useState('');
     const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
+    const [reffereeEmail, setReffereeEmail] = useState('');
     const [link, setLink] = useState('');
+    const [reffereeStatus, setReffereeStatus] = useState('');
     const [checkedBtn, setCheckedBtn] = useState(false);
     const [inputCheck, setInputCheck] = useState();
     const [identificationDocumentFile, setIdentificationDocument] = useState(
@@ -191,6 +194,9 @@ const AccountUpgrade = () => {
     );
     const { vninMSeccess, vninMError } = useSelector(
         (state) => state.vninReducer
+    );
+    const { reffereeSuccess, reffereeError } = useSelector(
+        (state) => state.refferenceEmailReducer
     );
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
@@ -398,6 +404,31 @@ const AccountUpgrade = () => {
     }, [pushDocuments, pushDocumentsError]);
 
     //CAC Registration end
+
+    //Referee Upload Start
+    const refereeUpload = () => {
+        const refereeData = {
+            emailsToShare: [reffereeEmail]
+        };
+        dispatch(getReffereeDetails(refereeData));
+    };
+    useEffect(() => {
+        console.log(reffereeError, reffereeSuccess);
+        if (reffereeSuccess !== null) {
+            setMessage('Refference Emmail is sent');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setScumlStatus('done');
+        } else if (reffereeError !== null) {
+            //console.log(scmulErrorMessages);
+            setMessage(reffereeError.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [reffereeSuccess, reffereeError]);
+    //Refferee Upload End
 
     //SMUL Certyificate
     const saveScmulFile = (e) => {
@@ -865,6 +896,13 @@ const AccountUpgrade = () => {
                 textII: 'Documments',
                 icon: <AddressSvg />,
                 statusReport: documentStatus,
+                status: pending
+            },
+            {
+                title: 'Refferee',
+                textII: 'Refferee',
+                icon: <AddressSvg />,
+                statusReport: reffereeStatus,
                 status: pending
             },
             {
@@ -1868,6 +1906,42 @@ const AccountUpgrade = () => {
                                 className={styles.updateBtn}
                             >
                                 Update Profile
+                            </button>
+                        )}
+                    </AccountUpgradeComponent>
+                );
+            case 'Refferee':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Refferences"
+                    >
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Refferee</label>
+                                <input
+                                    type="text"
+                                    value={reffereeEmail}
+                                    onChange={(e) =>
+                                        setReffereeEmail(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        {/* <div className={styles.signature}>
+                            <label>Refferee</label>
+                            <input type="text" value={idNumber} />
+                        </div> */}
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                onClick={refereeUpload}
+                                className={styles.updateBtn}
+                            >
+                                Refferee
                             </button>
                         )}
                     </AccountUpgradeComponent>
