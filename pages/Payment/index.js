@@ -101,6 +101,7 @@ const Payment = () => {
     const dispatch = useDispatch();
     const [acctNum, setAcctNumm] = useState('');
     const [formType, setFormType] = useState('');
+    const [formData, setFormdata] = useState({ accountNum: '' });
     const [ecobank, setEcobank] = useState('true');
     const [overlay, setOverlay] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -178,13 +179,10 @@ const Payment = () => {
     useEffect(() => {
         // console.log(accountPrimarys);
         console.log(bankAccounts);
+        console.log(formData.accountNum);
         Object.keys(bankAccounts)?.map((accountNo) => {
-            // setAcctNumm(bankAccounts[accountNo]);
-            console.log(bankAccounts[accountNo]);
-        });
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber === acctNum) {
-                setAcctNumber(accountPrimarys);
+            if (bankAccounts[accountNo].accountNumber === formData.accountNum) {
+                // setAcctNumber(accountPrimarys);
                 let balanceData;
                 balanceData = {
                     accountId: bankAccounts[accountNo].accountId
@@ -196,7 +194,7 @@ const Payment = () => {
                 setAcctNumber('Pending');
             }
         });
-    }, [acctNum]);
+    }, [formData.accountNum]);
     const interBankCheck = () => {
         if (interBank !== null) {
             //console.loginterBank);
@@ -565,6 +563,8 @@ const Payment = () => {
                             <MakePaymentFirst
                                 overlay={overlay}
                                 payload={paymentDetails}
+                                formData={formData}
+                                setFormdata={setFormdata}
                                 firstTitle="Single Transfer Payment"
                                 isLoading={isLoading}
                                 closeAction={handleClose}
@@ -619,6 +619,8 @@ const Payment = () => {
                         return (
                             <MakePaymentSecond
                                 closeAction={handleClose}
+                                formData={formData}
+                                setFormData={setFormdata}
                                 isLoading={isLoading}
                                 title="Single Transfer"
                                 charges={transactionFee}

@@ -27,7 +27,9 @@ const MakePaymentFirst = ({
     type,
     secondAction,
     isLoading,
-    payload
+    payload,
+    formData,
+    setFormdata
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -62,6 +64,8 @@ const MakePaymentFirst = ({
                 <div className={styles.firstBody}>
                     {firstTitle === 'Single Transfer Payment' ? (
                         <SingleTransfer
+                            formData={formData}
+                            setFormdata={setFormdata}
                             selfaction={selfaction}
                             othersaction={othersaction}
                             firstTitle="Single Transfer Payment"

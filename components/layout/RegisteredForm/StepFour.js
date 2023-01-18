@@ -1087,7 +1087,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                         onChange={(e) =>
                                             setRefferalCode(e.target.value)
                                         }
-                                    />{' '}
+                                    />
                                     {/* {loading ? <Loader /> : null} */}
                                     <ButtonComp
                                         disabled={activeBtn}
