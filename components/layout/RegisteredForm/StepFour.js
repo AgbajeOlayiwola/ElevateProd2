@@ -165,7 +165,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             state: localState,
             city: city,
             lga: localGoverment,
-            refereeCode: ''
+            refereeCode: refferalCode
             // signature: ''
         };
         dispatch(ExCreateBusProfileSetup(userData));
@@ -1083,6 +1083,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                     <input
                                         placeholder="Enter  Code"
                                         className={styles.textInput}
+                                        value={refferalCode}
                                         onChange={(e) =>
                                             setRefferalCode(e.target.value)
                                         }

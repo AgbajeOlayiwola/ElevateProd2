@@ -176,7 +176,7 @@ const Payment = () => {
     }, [balanceEnquiry]);
     //where i need to work on
     useEffect(() => {
-        console.log(accountPrimarys);
+        // console.log(accountPrimarys);
         console.log(bankAccounts);
         Object.keys(bankAccounts)?.map((accountNo) => {
             // setAcctNumm(bankAccounts[accountNo]);
@@ -189,7 +189,8 @@ const Payment = () => {
                 balanceData = {
                     accountId: bankAccounts[accountNo].accountId
                 };
-                console.log(bankAccounts[accountNo].accountId);
+                setSenderDetails(bankAccounts[accountNo]);
+                console.log(senderDetails.accountId);
                 dispatch(getBalanceEnquiry(balanceData));
             } else {
                 setAcctNumber('Pending');
