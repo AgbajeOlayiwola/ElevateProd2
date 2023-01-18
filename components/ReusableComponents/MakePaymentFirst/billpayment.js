@@ -25,7 +25,9 @@ const BillPayment = ({
     scheduleLater,
     dataAction,
     isLoading,
-    bankAccounts
+    bankAccounts,
+    formData,
+    setFormdata
 }) => {
     const [network, setNetwork] = useState('MTN Nigeria');
     const [networkData, setNetworkData] = useState({});
@@ -237,11 +239,18 @@ const BillPayment = ({
                                     name=""
                                     id=""
                                     {...register('sourceAccount')}
+                                    onInput={(event) => {
+                                        setFormdata({
+                                            ...formData,
+                                            accountNum: event.target.value
+                                        });
+                                    }}
                                 >
+                                    <option>Select Account To Use</option>
                                     {bankAccounts?.map((accounts, index) => {
                                         return (
                                             <option
-                                                value={accounts.accountId}
+                                                value={accounts.accountNumber}
                                                 key={index}
                                             >
                                                 {accounts.accountNumber}
@@ -515,11 +524,21 @@ const BillPayment = ({
                                     name=""
                                     id=""
                                     {...register('sourceAccount')}
+                                    onInput={(event) => {
+                                        setFormdata({
+                                            ...formData,
+                                            accountNum: event.target.value
+                                        });
+                                    }}
+                                    // value={formData.accountNum}
                                 >
+                                    <option value="">
+                                        Select Account To Use
+                                    </option>
                                     {bankAccounts?.map((accounts, index) => {
                                         return (
                                             <option
-                                                value={accounts.accountId}
+                                                value={accounts.accountNumber}
                                                 key={index}
                                             >
                                                 {accounts.accountNumber}

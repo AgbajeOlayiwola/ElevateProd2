@@ -647,12 +647,20 @@ const SingleTransfer = ({
                                 name=""
                                 id=""
                                 {...register('sourceAccount')}
+                                onInput={(event) => {
+                                    setFormdata({
+                                        ...formData,
+                                        accountNum: event.target.value
+                                    });
+                                }}
+                                // value={formData.accountNum}
                             >
+                                <option value="">Select Account To Use</option>
                                 <option>Select Account To Use</option>
                                 {bankAccounts?.map((accounts, index) => {
                                     return (
                                         <option
-                                            value={accounts.accountId}
+                                            value={accounts.accountNumber}
                                             key={index}
                                         >
                                             {accounts.accountNumber}

@@ -78,6 +78,8 @@ const MakePaymentFirst = ({
                         />
                     ) : firstTitle === 'Foreign Transfer' ? (
                         <ForeignTransfer
+                            formData={formData}
+                            setFormdata={setFormdata}
                             action={action}
                             firstTitle={firstTitle}
                             buttonText={buttonText}
@@ -88,6 +90,8 @@ const MakePaymentFirst = ({
                         />
                     ) : firstTitle === 'Bulk Payments' ? (
                         <BulkTransfer
+                            formData={formData}
+                            setFormdata={setFormdata}
                             action={action}
                             firstTitle={firstTitle}
                             buttonText={buttonText}
@@ -96,6 +100,8 @@ const MakePaymentFirst = ({
                         />
                     ) : (
                         <BillPayment
+                            formData={formData}
+                            setFormdata={setFormdata}
                             action={action}
                             firstTitle={firstTitle}
                             buttonText={buttonText}
