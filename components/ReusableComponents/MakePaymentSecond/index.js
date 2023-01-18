@@ -60,7 +60,9 @@ const MakePaymentSecond = ({
     isLoading,
     closeAction,
     backAction,
-    charges
+    charges,
+    formData,
+    setFormdata
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [newAmount, setNewAmount] = useState('');

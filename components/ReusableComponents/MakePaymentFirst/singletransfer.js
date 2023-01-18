@@ -19,7 +19,9 @@ const SingleTransfer = ({
     isLoading,
     bankAccounts,
     beneficiaries,
-    payload
+    payload,
+    formData,
+    setFormdata
 }) => {
     const [activeBtn, setActiveBtn] = useState(
         Object.keys(payload).length !== 0 ? true : false
@@ -255,10 +257,9 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName =
-                                                      beneficiaries.beneficiaryName.split(
-                                                          ' '
-                                                      ))
+                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
+                                                      ' '
+                                                  ))
                                                 : null;
                                         }
                                         if (
@@ -322,11 +323,19 @@ const SingleTransfer = ({
                                 name=""
                                 id=""
                                 {...register('sourceAccount')}
+                                onInput={(event) => {
+                                    setFormdata({
+                                        ...formData,
+                                        accountNum: event.target.value
+                                    });
+                                }}
+                                // value={formData.accountNum}
                             >
+                                <option value="">Select Account To Use</option>
                                 {bankAccounts?.map((accounts, index) => {
                                     return (
                                         <option
-                                            value={accounts.accountId}
+                                            value={accounts.accountNumber}
                                             key={index}
                                         >
                                             {accounts.accountNumber}
@@ -572,10 +581,9 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName =
-                                                      beneficiaries.beneficiaryName.split(
-                                                          ' '
-                                                      ))
+                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
+                                                      ' '
+                                                  ))
                                                 : null;
                                         }
                                         if (
@@ -640,6 +648,7 @@ const SingleTransfer = ({
                                 id=""
                                 {...register('sourceAccount')}
                             >
+                                <option>Select Account To Use</option>
                                 {bankAccounts?.map((accounts, index) => {
                                     return (
                                         <option
