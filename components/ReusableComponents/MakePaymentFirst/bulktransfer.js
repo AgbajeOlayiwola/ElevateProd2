@@ -17,7 +17,9 @@ const BulkTransfer = ({
     firstTitle,
     buttonText,
     bankAccounts,
-    payload
+    payload,
+    formData,
+    setFormdata
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -155,13 +157,27 @@ const BulkTransfer = ({
             <form onSubmit={handleSubmit(action)}>
                 <div className={styles.narration}>
                     <label className={styles.bulkLabel}>Source Account</label>
-                    <select name="sourceAccount" {...register('sourceAccount')}>
+                    <select
+                        name="sourceAccount"
+                        {...register('sourceAccount')}
+                        onInput={(event) => {
+                            setFormdata({
+                                ...formData,
+                                accountNum: event.target.value
+                            });
+                        }}
+                        // value={formData.accountNum}
+                    >
+                        <option value="">Select Account To Use</option>
                         {/* <option defaultValue={bankAccounts[0]?.accountId}>
                                 {bankAccounts[0]?.accountNumber}
                             </option> */}
                         {bankAccounts?.map((accounts, index) => {
                             return (
-                                <option value={accounts.accountId} key={index}>
+                                <option
+                                    value={accounts.accountNumber}
+                                    key={index}
+                                >
                                     {accounts.accountNumber}
                                 </option>
                             );
@@ -467,10 +483,9 @@ const BulkTransfer = ({
                                                         workbook.Sheets[
                                                             sheetName
                                                         ];
-                                                    const json =
-                                                        XLSX.utils.sheet_to_json(
-                                                            worksheet
-                                                        );
+                                                    const json = XLSX.utils.sheet_to_json(
+                                                        worksheet
+                                                    );
                                                     localStorage.setItem(
                                                         'csvData',
                                                         JSON.stringify(json)

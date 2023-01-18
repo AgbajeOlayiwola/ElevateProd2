@@ -731,6 +731,8 @@ const Payment = () => {
                     case 0:
                         return (
                             <MakePaymentFirst
+                                formData={formData}
+                                setFormdata={setFormdata}
                                 overlay={overlay}
                                 firstTitle="Bulk Payments"
                                 closeAction={handleClose}
@@ -746,6 +748,8 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentSecond
+                                formData={formData}
+                                setFormdata={setFormdata}
                                 isLoading={isLoading}
                                 closeAction={handleClose}
                                 amount={
@@ -944,6 +948,8 @@ const Payment = () => {
                     case 0:
                         return (
                             <MakePaymentFirst
+                                formData={formData}
+                                setFormdata={setFormdata}
                                 overlay={overlay}
                                 firstTitle="Bill Payment"
                                 closeAction={handleClose}
@@ -961,6 +967,8 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentFirst
+                                formData={formData}
+                                setFormdata={setFormdata}
                                 overlay={overlay}
                                 firstTitle={bill}
                                 buttonText="Send Now"
@@ -997,6 +1005,8 @@ const Payment = () => {
                     case 2:
                         return (
                             <MakePaymentSecond
+                                formData={formData}
+                                setFormdata={setFormdata}
                                 isLoading={isLoading}
                                 closeAction={handleClose}
                                 recieverName={
@@ -1140,6 +1150,8 @@ const Payment = () => {
                     case 0:
                         return (
                             <MakePaymentFirst
+                                formData={formData}
+                                setFormdata={setFormdata}
                                 overlay={overlay}
                                 firstTitle="Foreign Transfer"
                                 closeAction={handleClose}
@@ -1156,6 +1168,8 @@ const Payment = () => {
                     case 1:
                         return (
                             <MakePaymentFirst
+                                formData={formData}
+                                setFormdata={setFormdata}
                                 overlay={overlay}
                                 type={'two'}
                                 firstTitle="Foreign Transfer"
@@ -1173,6 +1187,8 @@ const Payment = () => {
                     case 2:
                         return (
                             <MakePaymentSecond
+                                formData={formData}
+                                setFormdata={setFormdata}
                                 overlay={overlay}
                                 closeAction={handleClose}
                                 transferAction={(data) => {

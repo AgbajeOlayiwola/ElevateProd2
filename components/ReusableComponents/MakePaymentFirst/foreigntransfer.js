@@ -18,7 +18,9 @@ const ForeignTransfer = ({
     type,
     action,
     scheduleLater,
-    bankAccounts
+    bankAccounts,
+    formData,
+    setFormdata
 }) => {
     const [countrys, setCountry] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState('');
@@ -69,12 +71,24 @@ const ForeignTransfer = ({
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     <div className={styles.narration}>
                         <label>Source Account</label>
-                        <select name="" id="" {...register('sourceAccount')}>
+                        <select
+                            name=""
+                            id=""
+                            {...register('sourceAccount')}
+                            onInput={(event) => {
+                                setFormdata({
+                                    ...formData,
+                                    accountNum: event.target.value
+                                });
+                            }}
+                            // value={formData.accountNum}
+                        >
+                            <option value="">Select Account To Use</option>
                             {bankAccounts?.map((accounts, index) => {
                                 if (accounts.currency === 'NGN') {
                                     return (
                                         <option
-                                            value={accounts.accountId}
+                                            value={accounts.accountNumber}
                                             key={index}
                                         >
                                             {accounts.accountNumber}
