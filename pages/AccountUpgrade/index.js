@@ -1186,31 +1186,85 @@ const AccountUpgrade = () => {
                               userProfileData.customerCategory === 'COMMERCIAL'
                             ? AccountUpgradeData.exitingCorporate.map(
                                   (item, index) => {
-                                      return (
-                                          <AccountUpgradeSingle
-                                              statusInfo={item.statusReport}
-                                              textII={item.textII}
-                                              content={shareDocuments?.map(
-                                                  (items) => {
-                                                      if (
-                                                          items.documentType ===
-                                                          item.title
-                                                      ) {
-                                                          return items.comment;
-                                                      } else {
-                                                          return '';
+                                      if (item.title === 'Documents') {
+                                          return (
+                                              <>
+                                                  <AccountUpgradeSingle
+                                                      statusInfo={
+                                                          item.statusReport
                                                       }
-                                                  }
-                                              )}
-                                              icon={item.icon}
-                                              text={item.title}
-                                              key={index}
-                                              status={item.status}
-                                              action={() => {
-                                                  setTitle(item.title);
-                                              }}
-                                          />
-                                      );
+                                                      textII={item.textII}
+                                                      status={item.status}
+                                                      icon={item.icon}
+                                                      text={item.title}
+                                                      key={index}
+                                                      action={() => {
+                                                          setDocument(
+                                                              !document
+                                                          );
+                                                      }}
+                                                  />
+                                                  {document
+                                                      ? AccountUpgradeData.document.map(
+                                                            (item, index) => {
+                                                                return (
+                                                                    <>
+                                                                        <AccountUpgradeSingle
+                                                                            text={
+                                                                                item.title
+                                                                            }
+                                                                            status={
+                                                                                item.status
+                                                                            }
+                                                                            textII={
+                                                                                item.textII
+                                                                            }
+                                                                            key={
+                                                                                index
+                                                                            }
+                                                                            statusInfo={
+                                                                                item.statusReport
+                                                                            }
+                                                                            action={() => {
+                                                                                setTitle(
+                                                                                    item.title
+                                                                                );
+                                                                            }}
+                                                                        />
+                                                                    </>
+                                                                );
+                                                            }
+                                                        )
+                                                      : null}
+                                              </>
+                                          );
+                                      } else {
+                                          return (
+                                              <AccountUpgradeSingle
+                                                  textII={item.textII}
+                                                  content={shareDocuments?.map(
+                                                      (items) => {
+                                                          if (
+                                                              items.documentType ===
+                                                              item.name
+                                                          ) {
+                                                              return items.comment;
+                                                          } else {
+                                                              return '';
+                                                          }
+                                                      }
+                                                  )}
+                                                  statusInfo={item.statusReport}
+                                                  icon={item.icon}
+                                                  text={item.title}
+                                                  key={index}
+                                                  status={item.status}
+                                                  action={() => {
+                                                      setTitle(item.title);
+                                                  }}
+                                              />
+                                          );
+                                      }
                                   }
                               )
                             : text === 'INDIVIDUAL'
