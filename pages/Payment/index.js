@@ -126,6 +126,7 @@ const Payment = () => {
     const [bank, setBank] = useState({});
     const [successfulTrans, setSuccessfulTrans] = useState([]);
     const [failedTrans, setFailedTrans] = useState([]);
+    const [acctNummber, setAcctNumber] = useState('');
 
     let airtimeData;
     let airtimeNetData = {};
@@ -181,7 +182,7 @@ const Payment = () => {
         console.log(bankAccounts);
         console.log(formData.accountNum);
         Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber === formData.accountNum) {
+            if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
                 // setAcctNumber(accountPrimarys);
                 let balanceData;
                 balanceData = {
