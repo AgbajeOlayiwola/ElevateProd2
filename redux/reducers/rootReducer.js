@@ -80,6 +80,7 @@ import profilingQuestionsReducer from './profilingQuestion.reducer';
 import vninReducer from './vnin.reducer';
 import addressVerificationReducer from './addressverification.reducer';
 import refferenceEmailReducer from './refferenceEmail.reducer';
+import tinReducer from './tin.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -166,7 +167,8 @@ const appReducer = combineReducers({
     profilingQuestionsReducer: profilingQuestionsReducer,
     vninReducer: vninReducer,
     addressVerificationReducer: addressVerificationReducer,
-    refferenceEmailReducer: refferenceEmailReducer
+    refferenceEmailReducer: refferenceEmailReducer,
+    tinReducer: tinReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

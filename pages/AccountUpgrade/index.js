@@ -31,7 +31,8 @@ import {
     loadprofilingQuestions,
     postvnin,
     getAddressStatusDetails,
-    getReffereeDetails
+    getReffereeDetails,
+    getTinDetails
 } from '../../redux/actions/actions';
 import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
@@ -156,6 +157,7 @@ const AccountUpgrade = () => {
     const [corporateAccount, setCorporateAccount] = useState();
     const [profileItemm, setProfileItemm] = useState('');
     const [ellevateProfilingDone, setEllevateProfilingzDone] = useState();
+    const [tinNumber, setTinNumber] = useState('');
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
     );
@@ -198,6 +200,7 @@ const AccountUpgrade = () => {
     const { reffereeSuccess, reffereeError } = useSelector(
         (state) => state.refferenceEmailReducer
     );
+    const { tinSuccess, tinError } = useSelector((state) => state.tinReducer);
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
     let subtitle;
@@ -673,6 +676,31 @@ const AccountUpgrade = () => {
     };
 
     //Refference
+
+    //tin Upload Start
+    const tinRegistration = () => {
+        const tinData = {
+            tin: tinNumber
+        };
+        dispatch(getTinDetails(tinData));
+    };
+    useEffect(() => {
+        console.log(tinSuccess, tinError);
+        if (tinSuccess !== null) {
+            setMessage('Tin Sent Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setScumlStatus('done');
+        } else if (reffereeError !== null) {
+            //console.log(scmulErrorMessages);
+            setMessage(tinError.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [tinSuccess, tinError]);
+    //tin Upload End
 
     const [document, setDocument] = useState(false);
     const AccountUpgradeData = {
@@ -2421,7 +2449,7 @@ const AccountUpgrade = () => {
                             <label>TIN (Tax Identification Number)</label>
                             <input
                                 type="text"
-                                onChange={(e) => setCacNumber(e.target.value)}
+                                onChange={(e) => setTinNumber(e.target.value)}
                                 placeholder="Enter  Your Tin"
                             />
                         </div>
@@ -2430,7 +2458,7 @@ const AccountUpgrade = () => {
                         ) : (
                             <button
                                 className={styles.updateBtn}
-                                onClick={cacRegistration}
+                                onClick={tinRegistration}
                             >
                                 Update Profile
                             </button>
