@@ -79,7 +79,8 @@ import {
     profilingQuestions,
     vninType,
     addressVerificationType,
-    reffereeType
+    reffereeType,
+    tinType
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -3062,3 +3063,41 @@ export const getReffereeDetails = (refereeData) => (dispatch) => {
 };
 
 //REFEREE END
+
+//TIN LOAD
+
+export const getTinLoad = () => ({
+    type: tinType.TIN_START
+});
+export const getTinSuccess = (tinSuccess) => ({
+    type: tinType.TIN_SUCCESS,
+    payload: tinSuccess
+});
+export const getTinError = (tinError) => ({
+    type: tinType.TIN_ERROR,
+    payload: tinError
+});
+export const getTinDetails = (tinData) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+
+    axios
+        .post(`https://testvate.live${apiRoutes.uploadTin}`, tinData, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            //console.logresponse.data.data);
+            dispatch(getTinSuccess(response));
+        })
+        .catch((error) => dispatch(getTinError(error.response)));
+};
+
+//TIN END

@@ -764,3 +764,12 @@ export const addressVerificationType = {
     ADDRESS_VERIFICATION_ERROR: 'ADDRESS_VERIFICATION_ERROR'
 };
 //End Address Verfication Type
+
+//Tin Type
+
+export const tinType = {
+    TIN_START: 'TIN_START',
+    TIN_SUCCESS: 'TIN_SUCCESS',
+    TIN_ERROR: 'TIN_ERROR'
+};
+//End Tin Type
