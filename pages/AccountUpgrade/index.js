@@ -927,8 +927,8 @@ const AccountUpgrade = () => {
                 status: pending
             },
             {
-                title: 'Refferee',
-                textII: 'Refferee',
+                title: 'Referee',
+                textII: 'Referee',
                 icon: <AddressSvg />,
                 statusReport: reffereeStatus,
                 status: pending
@@ -1026,7 +1026,7 @@ const AccountUpgrade = () => {
         ],
         document: [
             {
-                title: 'CAC Registration',
+                title: 'CAC Certificate',
                 textII: 'CACREG',
                 statusReport: cacStatus,
                 name: 'CAC',
@@ -1080,8 +1080,8 @@ const AccountUpgrade = () => {
                         : pending
             },
             {
-                title: 'MEMAT',
-                textII: 'MEMAT',
+                title: 'CAC Documents',
+                textII: 'CAC Documents',
                 statusReport: mematStatus,
                 name: 'MEMART',
                 status:
@@ -1992,13 +1992,13 @@ const AccountUpgrade = () => {
                         )}
                     </AccountUpgradeComponent>
                 );
-            case 'Refferee':
+            case 'Referee':
                 return (
                     <AccountUpgradeComponent
                         action={() => {
                             setTitle('First');
                         }}
-                        title="Refferences"
+                        title="Referee"
                     >
                         <div className={styles.meansIdentification}>
                             <div className={styles.identificationGroup}>
@@ -2372,7 +2372,7 @@ const AccountUpgrade = () => {
                         <button>Send Invite</button>
                     </AccountUpgradeComponent>
                 );
-            case 'CAC Registration':
+            case 'CAC Certificate':
                 return (
                     <AccountUpgradeComponent
                         action={() => {
@@ -2526,7 +2526,7 @@ const AccountUpgrade = () => {
                         </div>
                     </AccountUpgradeComponent>
                 );
-            case 'MEMAT':
+            case 'CAC Documents':
                 return (
                     <AccountUpgradeComponent
                         action={() => {
