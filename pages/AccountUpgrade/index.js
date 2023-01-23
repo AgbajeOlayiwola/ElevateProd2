@@ -1044,6 +1044,24 @@ const AccountUpgrade = () => {
                         : pending
             },
             {
+                title: 'CAC Documents',
+                textII: 'CAC Documents',
+                statusReport: mematStatus,
+                name: 'MEMART',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? mematStatus === 'done'
+                            ? review
+                            : mematStatus === 'notDone'
+                            ? pending
+                            : mematStatus === 'comment'
+                            ? rejected
+                            : mematStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
+            },
+            {
                 title: 'TIN',
                 textII: 'TINREG',
                 statusReport: cacStatus,
@@ -1075,24 +1093,6 @@ const AccountUpgrade = () => {
                             : scumlStatus === 'comment'
                             ? rejected
                             : scumlStatus === 'APPROVED'
-                            ? 'Approved'
-                            : null
-                        : pending
-            },
-            {
-                title: 'CAC Documents',
-                textII: 'CAC Documents',
-                statusReport: mematStatus,
-                name: 'MEMART',
-                status:
-                    userProfile?.hasSubmitedDocumentsForReview === true
-                        ? mematStatus === 'done'
-                            ? review
-                            : mematStatus === 'notDone'
-                            ? pending
-                            : mematStatus === 'comment'
-                            ? rejected
-                            : mematStatus === 'APPROVED'
                             ? 'Approved'
                             : null
                         : pending
