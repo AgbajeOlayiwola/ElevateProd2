@@ -2002,7 +2002,7 @@ const AccountUpgrade = () => {
                     >
                         <div className={styles.meansIdentification}>
                             <div className={styles.identificationGroup}>
-                                <label>Refferee</label>
+                                <label>Input Referee Email</label>
                                 <input
                                     type="text"
                                     value={reffereeEmail}
@@ -2023,7 +2023,7 @@ const AccountUpgrade = () => {
                                 onClick={refereeUpload}
                                 className={styles.updateBtn}
                             >
-                                Refferee
+                                Submit
                             </button>
                         )}
                     </AccountUpgradeComponent>
