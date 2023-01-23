@@ -445,7 +445,8 @@
     cursor: pointer;
 }
 .ellevateCopy{
-    font-size: 12px;
+    font-size: 16px;
+    color: #3e3e3e;
 }
 .profilingGrey{
     display: flex;

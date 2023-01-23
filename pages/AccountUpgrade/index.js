@@ -1044,6 +1044,24 @@ const AccountUpgrade = () => {
                         : pending
             },
             {
+                title: 'CAC Documents',
+                textII: 'CAC Documents',
+                statusReport: mematStatus,
+                name: 'MEMART',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? mematStatus === 'done'
+                            ? review
+                            : mematStatus === 'notDone'
+                            ? pending
+                            : mematStatus === 'comment'
+                            ? rejected
+                            : mematStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
+            },
+            {
                 title: 'TIN',
                 textII: 'TINREG',
                 statusReport: cacStatus,
@@ -1075,24 +1093,6 @@ const AccountUpgrade = () => {
                             : scumlStatus === 'comment'
                             ? rejected
                             : scumlStatus === 'APPROVED'
-                            ? 'Approved'
-                            : null
-                        : pending
-            },
-            {
-                title: 'CAC Documents',
-                textII: 'CAC Documents',
-                statusReport: mematStatus,
-                name: 'MEMART',
-                status:
-                    userProfile?.hasSubmitedDocumentsForReview === true
-                        ? mematStatus === 'done'
-                            ? review
-                            : mematStatus === 'notDone'
-                            ? pending
-                            : mematStatus === 'comment'
-                            ? rejected
-                            : mematStatus === 'APPROVED'
                             ? 'Approved'
                             : null
                         : pending
@@ -1998,20 +1998,61 @@ const AccountUpgrade = () => {
                         action={() => {
                             setTitle('First');
                         }}
-                        title="Referee"
+                        title="Input Referee Details"
                     >
                         <div className={styles.meansIdentification}>
                             <div className={styles.identificationGroup}>
-                                <label>Refferee</label>
+                                <label>Referee 1</label>
                                 <input
                                     type="text"
                                     value={reffereeEmail}
+                                    placeholder="Input Referee Emai"
                                     onChange={(e) =>
                                         setReffereeEmail(e.target.value)
                                     }
                                 />
                             </div>
                         </div>
+                        <div className={styles.signatureGroup}>
+                            <p>Input Refferee Document</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>
+                                    {' '}
+                                    {fileName ? fileName : 'No file chosen...'}
+                                </p>
+                                <label>
+                                    <input type="file" onChange={saveFile} />{' '}
+                                    Upload
+                                </label>
+                            </div>
+                        </div>
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Referee 2</label>
+                                <input
+                                    type="text"
+                                    value={reffereeEmail}
+                                    placeholder="Input Referee Emai"
+                                    onChange={(e) =>
+                                        setReffereeEmail(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.signatureGroup}>
+                            <p>Input Refferee Document</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>
+                                    {' '}
+                                    {fileName ? fileName : 'No file chosen...'}
+                                </p>
+                                <label>
+                                    <input type="file" onChange={saveFile} />{' '}
+                                    Upload
+                                </label>
+                            </div>
+                        </div>
+
                         {/* <div className={styles.signature}>
                             <label>Refferee</label>
                             <input type="text" value={idNumber} />
@@ -2023,7 +2064,7 @@ const AccountUpgrade = () => {
                                 onClick={refereeUpload}
                                 className={styles.updateBtn}
                             >
-                                Refferee
+                                Submit
                             </button>
                         )}
                     </AccountUpgradeComponent>
