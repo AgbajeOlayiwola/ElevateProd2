@@ -1998,20 +1998,61 @@ const AccountUpgrade = () => {
                         action={() => {
                             setTitle('First');
                         }}
-                        title="Referee"
+                        title="Input Referee Details"
                     >
                         <div className={styles.meansIdentification}>
                             <div className={styles.identificationGroup}>
-                                <label>Input Referee Email</label>
+                                <label>Referee 1</label>
                                 <input
                                     type="text"
                                     value={reffereeEmail}
+                                    placeholder="Input Referee Emai"
                                     onChange={(e) =>
                                         setReffereeEmail(e.target.value)
                                     }
                                 />
                             </div>
                         </div>
+                        <div className={styles.signatureGroup}>
+                            <p>Input Refferee Document</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>
+                                    {' '}
+                                    {fileName ? fileName : 'No file chosen...'}
+                                </p>
+                                <label>
+                                    <input type="file" onChange={saveFile} />{' '}
+                                    Upload
+                                </label>
+                            </div>
+                        </div>
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Referee 2</label>
+                                <input
+                                    type="text"
+                                    value={reffereeEmail}
+                                    placeholder="Input Referee Emai"
+                                    onChange={(e) =>
+                                        setReffereeEmail(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.signatureGroup}>
+                            <p>Input Refferee Document</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>
+                                    {' '}
+                                    {fileName ? fileName : 'No file chosen...'}
+                                </p>
+                                <label>
+                                    <input type="file" onChange={saveFile} />{' '}
+                                    Upload
+                                </label>
+                            </div>
+                        </div>
+
                         {/* <div className={styles.signature}>
                             <label>Refferee</label>
                             <input type="text" value={idNumber} />
