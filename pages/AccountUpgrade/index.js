@@ -2379,7 +2379,7 @@ const AccountUpgrade = () => {
                             setTitle('First');
                             setDocument(false);
                         }}
-                        title="CAC Registration"
+                        title="CAC Certificate"
                     >
                         <div className={styles.documentBody}>
                             {shareDocuments?.map((item, index) => {
@@ -2533,7 +2533,7 @@ const AccountUpgrade = () => {
                             setTitle('First');
                             setDocument(false);
                         }}
-                        title="MEMAT"
+                        title="CAC Documents"
                     >
                         <div className={styles.documentBody}>
                             {shareDocuments?.map((item, index) => {
@@ -2586,6 +2586,66 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div className={styles.signature}>
+                                <div className={styles.signatureGroup}>
+                                    <p>Upload CAC 1.1</p>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {co7FileName
+                                                ? co7FileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={saveMemart7lFile}
+                                                type="file"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.signature}>
+                                <div className={styles.signatureGroup}>
+                                    <p>Upload CAC 2.1</p>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {co7FileName
+                                                ? co7FileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={saveMemart7lFile}
+                                                type="file"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.signature}>
+                                <div className={styles.signatureGroup}>
+                                    <p>
+                                        Memorandum and Articles of Association
+                                        (MEMART)
+                                    </p>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {co7FileName
+                                                ? co7FileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={saveMemart7lFile}
+                                                type="file"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                             {loading ? (
                                 <Loader />
                             ) : (
@@ -2593,7 +2653,7 @@ const AccountUpgrade = () => {
                                     onClick={memartUpload}
                                     className={styles.updateBtn}
                                 >
-                                    Update Profile
+                                    Update CO7
                                 </button>
                             )}
                         </div>
