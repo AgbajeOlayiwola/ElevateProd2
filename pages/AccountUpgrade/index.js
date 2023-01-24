@@ -832,6 +832,13 @@ const AccountUpgrade = () => {
                         : pending
             },
             {
+                title: 'Referee',
+                textII: 'Referee',
+                icon: <AddressSvg />,
+                statusReport: reffereeStatus,
+                status: pending
+            },
+            {
                 title: 'Upload Utility BIll',
                 textII: 'UtilityBill',
                 icon: <BillSvg />,
