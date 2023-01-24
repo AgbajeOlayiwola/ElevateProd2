@@ -755,6 +755,13 @@ export const reffereeType = {
     REFEREE_ERROR: 'REFEREE_ERROR'
 };
 //End Refferenve type
+//Opload DocReffernce type
+export const uploadreffereeType = {
+    UPLOAD_REFEREE_START: 'UPLOAD_REFEREE_START',
+    UPLOAD_REFEREE_SUCCESS: 'UPLOAD_REFEREE_SUCCESS',
+    UPLOAD_REFEREE_ERROR: 'UPLOAD_REFEREE_ERROR'
+};
+//End Upload Doc Refferenve type
 
 //Adress Verification Type
 

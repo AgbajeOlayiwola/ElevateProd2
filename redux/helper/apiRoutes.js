@@ -85,6 +85,7 @@ const verifyVNinAdd = '/document-verification/vNin/status';
 const addressVerification = '/address-verification/status';
 const reffernceFormShare = '/account-upgrade/reference-form/share';
 const uploadTin = '/account-upgrade/tin';
+const uploadrefferee = '/account-upgrade/reference-form/upload-json';
 export default {
     getBanks,
     getCountries,
@@ -171,5 +172,6 @@ export default {
     verifyVNinAdd,
     addressVerification,
     reffernceFormShare,
-    uploadTin
+    uploadTin,
+    uploadrefferee
 };

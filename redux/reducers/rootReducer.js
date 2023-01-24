@@ -81,6 +81,7 @@ import vninReducer from './vnin.reducer';
 import addressVerificationReducer from './addressverification.reducer';
 import refferenceEmailReducer from './refferenceEmail.reducer';
 import tinReducer from './tin.reducer';
+import uploadRefereeFileReducer from './uploadrefereefile.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -168,7 +169,8 @@ const appReducer = combineReducers({
     vninReducer: vninReducer,
     addressVerificationReducer: addressVerificationReducer,
     refferenceEmailReducer: refferenceEmailReducer,
-    tinReducer: tinReducer
+    tinReducer: tinReducer,
+    uploadRefereeFileReducer: uploadRefereeFileReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {
