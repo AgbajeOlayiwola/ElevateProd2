@@ -80,7 +80,8 @@ import {
     vninType,
     addressVerificationType,
     reffereeType,
-    tinType
+    tinType,
+    uploadreffereeType
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -3060,6 +3061,48 @@ export const getReffereeDetails = (refereeData) => (dispatch) => {
             dispatch(getReffereeSuccess(response));
         })
         .catch((error) => dispatch(getReffereeError(error.response)));
+};
+
+//REFEREE END
+
+//REFEREE LOAD
+
+export const getUploadRefereeLoad = () => ({
+    type: uploadreffereeType.UPLOAD_REFEREE_START
+});
+export const getUploadReffereeSuccess = (UploadreffereeSuccess) => ({
+    type: uploadreffereeType.UPLOAD_REFEREE_SUCCESS,
+    payload: UploadreffereeSuccess
+});
+export const getUploadReffereeError = (UploadreffereeError) => ({
+    type: uploadreffereeType.UPLOAD_REFEREE_ERROR,
+    payload: UploadreffereeError
+});
+export const getUploadReffereeDetails = (uploadrefereeData) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+
+    axios
+        .post(
+            `https://testvate.live${apiRoutes.uploadrefferee}`,
+            uploadrefereeData,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            //console.logresponse.data.data);
+            dispatch(getUploadReffereeSuccess(response));
+        })
+        .catch((error) => dispatch(getUploadReffereeError(error.response)));
 };
 
 //REFEREE END

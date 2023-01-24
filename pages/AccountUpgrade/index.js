@@ -113,6 +113,7 @@ const AccountUpgrade = () => {
     const [status, setStatus] = useState('Done');
     const [verifyStatus, setVerifyStatus] = useState('notDone');
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
+    const [reffereeEmailI, setReffereeEmailI] = useState('');
     // const [vninStatus, setVninStatus] = useState('notDone');
     const [virtualNin, setVirtualNin] = useState('');
     const [elevateStatus, setElevateStatus] = useState('notDone');
@@ -137,6 +138,10 @@ const AccountUpgrade = () => {
     const [reffereeStatus, setReffereeStatus] = useState('');
     const [checkedBtn, setCheckedBtn] = useState(false);
     const [inputCheck, setInputCheck] = useState();
+    const [fileI, setFileI] = useState();
+    const [fileNameI, setFileNameI] = useState();
+    const [fileII, setFileII] = useState();
+    const [fileNameII, setFileNameII] = useState();
     const [identificationDocumentFile, setIdentificationDocument] = useState(
         ''
     );
@@ -145,6 +150,8 @@ const AccountUpgrade = () => {
         setIdentificationDocumentName
     ] = useState('');
     const [refoneno, setRefoneNo] = useState('');
+    const [base64urlI, setBase64UrlI] = useState('');
+    const [base64urlII, setBase64UrlII] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
     const [reftwoemail, setRefTwoEmail] = useState('');
@@ -157,6 +164,13 @@ const AccountUpgrade = () => {
     const [corporateAccount, setCorporateAccount] = useState();
     const [profileItemm, setProfileItemm] = useState('');
     const [ellevateProfilingDone, setEllevateProfilingzDone] = useState();
+    const [cac1FileName, setCac1FileName] = useState();
+    const [cac1File, setCac1File] = useState();
+    const [cac2FileName, setCac2FileName] = useState();
+    const [cac2File, setCac2File] = useState();
+    const [memtFileName, setMemtFileName] = useState();
+    const [memtFile, setMemtFile] = useState();
+
     const [tinNumber, setTinNumber] = useState('');
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
@@ -169,6 +183,9 @@ const AccountUpgrade = () => {
     );
     const { memart, memartErrorMessages } = useSelector(
         (state) => state.uploadMemartReducer
+    );
+    const { UploadreffereeSuccess, UploadreffereeError } = useSelector(
+        (state) => state.uploadRefereeFileReducer
     );
     const { profilingQuestions } = useSelector(
         (state) => state.profilingQuestionsReducer
@@ -409,9 +426,56 @@ const AccountUpgrade = () => {
     //CAC Registration end
 
     //Referee Upload Start
+
+    const getBase64 = (file) => {
+        return new Promise((resolve) => {
+            let fileInfo;
+            let baseURL = '';
+            // Make new FileReader
+            let reader = new FileReader();
+
+            // Convert the file to base64 text
+            reader.readAsDataURL(file);
+
+            // on reader load somthing...
+            reader.onload = () => {
+                // Make a fileInfo Object
+                console.log('Called', reader);
+                baseURL = reader.result;
+                console.log(baseURL);
+                resolve(baseURL);
+            };
+            console.log(fileInfo);
+        });
+    };
+
+    const saveRefFile = (e) => {
+        setFileI(e.target.files[0]);
+        getBase64(file)
+            .then((result) => {
+                file['base64'] = result;
+                console.log('File Is', file);
+                setBase64UrlI(result);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        setFileI(e.target.files[0]);
+        //console.log(e.target.files[0]);
+        // setFileI(e.target.files[0]);
+        setFileNameI(e.target.files[0].name);
+        //console.log(file);
+    };
+    const saveRefFileI = (e) => {
+        //console.log(e.target.files[0]);
+        setFileII(e.target.files[0]);
+        setFileNameII(e.target.files[0].name);
+        //console.log(file);
+    };
     const refereeUpload = () => {
         const refereeData = {
-            emailsToShare: [reffereeEmail]
+            emailsToShare: [reffereeEmail, reffereeEmailI]
         };
         dispatch(getReffereeDetails(refereeData));
     };
@@ -474,6 +538,20 @@ const AccountUpgrade = () => {
         setCo7FileName(e.target.files[0].name);
     };
 
+    const saveMemartCAC1lFile = (e) => {
+        setCac1File(e.target.files[0]);
+        setCac1FileName(e.target.files[0].name);
+    };
+
+    const saveMemartCAC2lFile = (e) => {
+        setCac2File(e.target.files[0]);
+        setCac2FileName(e.target.files[0].name);
+    };
+
+    const saveMemartMemtlFile = (e) => {
+        setMemtFile(e.target.files[0]);
+        setMemtFileName(e.target.files[0].name);
+    };
     //console.logco2file);
     const memartUpload = () => {
         setLoading(true);
@@ -752,6 +830,13 @@ const AccountUpgrade = () => {
                     userProfile?.hasSetTransactionPin === true
                         ? status
                         : pending
+            },
+            {
+                title: 'Referee',
+                textII: 'Referee',
+                icon: <AddressSvg />,
+                statusReport: reffereeStatus,
+                status: pending
             },
             {
                 title: 'Upload Utility BIll',
@@ -2018,10 +2103,12 @@ const AccountUpgrade = () => {
                             <div className={styles.signatureFormGroup}>
                                 <p>
                                     {' '}
-                                    {fileName ? fileName : 'No file chosen...'}
+                                    {fileNameI
+                                        ? fileNameI
+                                        : 'No file chosen...'}
                                 </p>
                                 <label>
-                                    <input type="file" onChange={saveFile} />{' '}
+                                    <input type="file" onChange={saveRefFile} />{' '}
                                     Upload
                                 </label>
                             </div>
@@ -2031,10 +2118,10 @@ const AccountUpgrade = () => {
                                 <label>Referee 2</label>
                                 <input
                                     type="text"
-                                    value={reffereeEmail}
+                                    value={reffereeEmailI}
                                     placeholder="Input Referee Emai"
                                     onChange={(e) =>
-                                        setReffereeEmail(e.target.value)
+                                        setReffereeEmailI(e.target.value)
                                     }
                                 />
                             </div>
@@ -2044,10 +2131,15 @@ const AccountUpgrade = () => {
                             <div className={styles.signatureFormGroup}>
                                 <p>
                                     {' '}
-                                    {fileName ? fileName : 'No file chosen...'}
+                                    {fileNameII
+                                        ? fileNameII
+                                        : 'No file chosen...'}
                                 </p>
                                 <label>
-                                    <input type="file" onChange={saveFile} />{' '}
+                                    <input
+                                        type="file"
+                                        onChange={saveRefFileI}
+                                    />{' '}
                                     Upload
                                 </label>
                             </div>
@@ -2632,13 +2724,13 @@ const AccountUpgrade = () => {
                                     <p>Upload CAC 1.1</p>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
-                                            {co7FileName
-                                                ? co7FileName
+                                            {cac1FileName
+                                                ? cac1FileName
                                                 : 'No file chosen...'}
                                         </p>
                                         <label>
                                             <input
-                                                onChange={saveMemart7lFile}
+                                                onChange={saveMemartCAC1lFile}
                                                 type="file"
                                             />{' '}
                                             Upload
@@ -2651,13 +2743,13 @@ const AccountUpgrade = () => {
                                     <p>Upload CAC 2.1</p>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
-                                            {co7FileName
-                                                ? co7FileName
+                                            {cac2FileName
+                                                ? cac2FileName
                                                 : 'No file chosen...'}
                                         </p>
                                         <label>
                                             <input
-                                                onChange={saveMemart7lFile}
+                                                onChange={saveMemartCAC2lFile}
                                                 type="file"
                                             />{' '}
                                             Upload
@@ -2673,13 +2765,13 @@ const AccountUpgrade = () => {
                                     </p>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
-                                            {co7FileName
-                                                ? co7FileName
+                                            {memtFileName
+                                                ? memtFileName
                                                 : 'No file chosen...'}
                                         </p>
                                         <label>
                                             <input
-                                                onChange={saveMemart7lFile}
+                                                onChange={saveMemartMemtlFile}
                                                 type="file"
                                             />{' '}
                                             Upload
