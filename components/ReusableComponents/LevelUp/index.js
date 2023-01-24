@@ -27,7 +27,7 @@ const Levelup = ({ account }) => {
                         : account.createdFromEcobankCred === true &&
                           account.customerCategory === 'COMMERCIAL'
                         ? 'Update Documents'
-                        : null}{' '}
+                        : 'Update Documents'}{' '}
                 </button>
             </Link>
         </div>

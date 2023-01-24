@@ -482,7 +482,7 @@ const AccountUpgrade = () => {
     useEffect(() => {
         console.log(reffereeError, reffereeSuccess);
         if (reffereeSuccess !== null) {
-            setMessage('Refference Emmail is sent');
+            setMessage('Referee Email is sent');
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
@@ -563,7 +563,7 @@ const AccountUpgrade = () => {
     };
     useEffect(() => {
         if (memart !== null) {
-            setMessage('MEMAT uploaded Successfully');
+            setMessage('CAC Document Uploaded Successfully');
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
@@ -1243,14 +1243,15 @@ const AccountUpgrade = () => {
                         }}
                     >
                         <div className={styles.currentLevel}>
-                            <div className={styles.currentLevelDonut}>
+                            {/* <div className={styles.currentLevelDonut}>
                                 <DounutComp />
                                 <p className={styles.perc}>70%</p>
-                            </div>
+                            </div> */}
                             <div className={styles.currentLeveltext}>
                                 <h2>
-                                    Your account is currently 70 percent
-                                    upgraded
+                                    Upgrade Your Account
+                                    {/* Your account is currently 70 percent
+                                    upgraded */}
                                 </h2>
                                 {/* <div>
                                     <p>Account Limit: N1,000,000 </p>
@@ -2099,7 +2100,7 @@ const AccountUpgrade = () => {
                             </div>
                         </div>
                         <div className={styles.signatureGroup}>
-                            <p>Input Refferee Document</p>
+                            <p>Input Referee Document</p>
                             <div className={styles.signatureFormGroup}>
                                 <p>
                                     {' '}
@@ -2786,7 +2787,7 @@ const AccountUpgrade = () => {
                                     onClick={memartUpload}
                                     className={styles.updateBtn}
                                 >
-                                    Update CO7
+                                    Update
                                 </button>
                             )}
                         </div>
