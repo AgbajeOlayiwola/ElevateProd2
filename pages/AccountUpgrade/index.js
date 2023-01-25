@@ -32,7 +32,9 @@ import {
     postvnin,
     getAddressStatusDetails,
     getReffereeDetails,
-    getTinDetails
+    getTinDetails,
+    getUploadReffereeDetails,
+    getCacDocumentDetails
 } from '../../redux/actions/actions';
 import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
@@ -138,9 +140,9 @@ const AccountUpgrade = () => {
     const [reffereeStatus, setReffereeStatus] = useState('');
     const [checkedBtn, setCheckedBtn] = useState(false);
     const [inputCheck, setInputCheck] = useState();
-    const [fileI, setFileI] = useState();
+    const [fileI, setFileI] = useState(null);
     const [fileNameI, setFileNameI] = useState();
-    const [fileII, setFileII] = useState();
+    const [fileII, setFileII] = useState(null);
     const [fileNameII, setFileNameII] = useState();
     const [identificationDocumentFile, setIdentificationDocument] = useState(
         ''
@@ -217,9 +219,13 @@ const AccountUpgrade = () => {
     const { reffereeSuccess, reffereeError } = useSelector(
         (state) => state.refferenceEmailReducer
     );
+    const { CacDocumentSuccess, CacDocumentError } = useSelector(
+        (state) => state.cacDocUploadReducer
+    );
     const { tinSuccess, tinError } = useSelector((state) => state.tinReducer);
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
+
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
     const dispatch = useDispatch();
@@ -427,45 +433,10 @@ const AccountUpgrade = () => {
 
     //Referee Upload Start
 
-    const getBase64 = (file) => {
-        return new Promise((resolve) => {
-            let fileInfo;
-            let baseURL = '';
-            // Make new FileReader
-            let reader = new FileReader();
-
-            // Convert the file to base64 text
-            reader.readAsDataURL(file);
-
-            // on reader load somthing...
-            reader.onload = () => {
-                // Make a fileInfo Object
-                console.log('Called', reader);
-                baseURL = reader.result;
-                console.log(baseURL);
-                resolve(baseURL);
-            };
-            console.log(fileInfo);
-        });
-    };
-
     const saveRefFile = (e) => {
         setFileI(e.target.files[0]);
-        getBase64(file)
-            .then((result) => {
-                file['base64'] = result;
-                console.log('File Is', file);
-                setBase64UrlI(result);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-
-        setFileI(e.target.files[0]);
-        //console.log(e.target.files[0]);
-        // setFileI(e.target.files[0]);
         setFileNameI(e.target.files[0].name);
-        //console.log(file);
+        console.log(e.target.files[0]);
     };
     const saveRefFileI = (e) => {
         //console.log(e.target.files[0]);
@@ -481,20 +452,34 @@ const AccountUpgrade = () => {
     };
     useEffect(() => {
         console.log(reffereeError, reffereeSuccess);
-        if (reffereeSuccess !== null) {
-            setMessage('Referee Email is sent');
-            setStatusbar('success');
-            setOutcome(true);
-            setLoading(false);
-            setScumlStatus('done');
-        } else if (reffereeError !== null) {
-            //console.log(scmulErrorMessages);
-            setMessage(reffereeError.data.message);
-            setStatusbar('error');
-            setOutcome(true);
-            setLoading(false);
+
+        if (reffereeSuccess?.data.message === 'success') {
+            const uploadrefereeData = {
+                form1: fileI,
+                form2: fileII
+            };
+            dispatch(getUploadReffereeDetails(uploadrefereeData));
+            console.log();
+            if (reffereeSuccess == null) {
+                setMessage('Referee Email is sent');
+                setStatusbar('success');
+                setOutcome(true);
+                setLoading(false);
+                setScumlStatus('done');
+            } else if (reffereeError !== null) {
+                //console.log(scmulErrorMessages);
+                setMessage(reffereeError.data.message);
+                setStatusbar('error');
+                setOutcome(true);
+                setLoading(false);
+            }
         }
-    }, [reffereeSuccess, reffereeError]);
+    }, [
+        reffereeSuccess,
+        reffereeError
+        // UploadreffereeSuccess,
+        // UploadreffereeError
+    ]);
     //Refferee Upload End
 
     //SMUL Certyificate
@@ -553,28 +538,32 @@ const AccountUpgrade = () => {
         setMemtFileName(e.target.files[0].name);
     };
     //console.logco2file);
-    const memartUpload = () => {
-        setLoading(true);
-        const mmemmartDatas = {
+    const cacDocumentUpload = () => {
+        const cacDocData = {
             co2: co2file,
-            co7: co7file
+            co7: co7file,
+            cac1_1: cac1File,
+            cac2_1: cac2File,
+            memart: memtFile
         };
-        dispatch(memartData(mmemmartDatas));
+        dispatch(getCacDocumentDetails(cacDocData));
     };
     useEffect(() => {
-        if (memart !== null) {
-            setMessage('CAC Document Uploaded Successfully');
+        console.log(CacDocumentSuccess, CacDocumentError);
+        if (CacDocumentSuccess !== null) {
+            setMessage('Cac Ducument Updated Successfully');
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
-            setMematStatus('done');
-        } else if (memartErrorMessages !== null) {
-            setMessage(memartErrorMessages);
+            setScumlStatus('done');
+        } else if (CacDocumentError !== null) {
+            //console.log(scmulErrorMessages);
+            setMessage(tinError.data.message);
             setStatusbar('error');
             setOutcome(true);
             setLoading(false);
         }
-    }, [memart, memartErrorMessages]);
+    }, [CacDocumentSuccess, CacDocumentError]);
     //Memart Submit ENd
 
     //utility Upload
@@ -754,31 +743,6 @@ const AccountUpgrade = () => {
     };
 
     //Refference
-
-    //tin Upload Start
-    const tinRegistration = () => {
-        const tinData = {
-            tin: tinNumber
-        };
-        dispatch(getTinDetails(tinData));
-    };
-    useEffect(() => {
-        console.log(tinSuccess, tinError);
-        if (tinSuccess !== null) {
-            setMessage('Tin Sent Successfully');
-            setStatusbar('success');
-            setOutcome(true);
-            setLoading(false);
-            setScumlStatus('done');
-        } else if (reffereeError !== null) {
-            //console.log(scmulErrorMessages);
-            setMessage(tinError.data.message);
-            setStatusbar('error');
-            setOutcome(true);
-            setLoading(false);
-        }
-    }, [tinSuccess, tinError]);
-    //tin Upload End
 
     const [document, setDocument] = useState(false);
     const AccountUpgradeData = {
@@ -2784,7 +2748,7 @@ const AccountUpgrade = () => {
                                 <Loader />
                             ) : (
                                 <button
-                                    onClick={memartUpload}
+                                    onClick={cacDocumentUpload}
                                     className={styles.updateBtn}
                                 >
                                     Update

@@ -82,6 +82,7 @@ import addressVerificationReducer from './addressverification.reducer';
 import refferenceEmailReducer from './refferenceEmail.reducer';
 import tinReducer from './tin.reducer';
 import uploadRefereeFileReducer from './uploadrefereefile.reducer';
+import cacDocUploadReducer from './cacdocument.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -170,7 +171,8 @@ const appReducer = combineReducers({
     addressVerificationReducer: addressVerificationReducer,
     refferenceEmailReducer: refferenceEmailReducer,
     tinReducer: tinReducer,
-    uploadRefereeFileReducer: uploadRefereeFileReducer
+    uploadRefereeFileReducer: uploadRefereeFileReducer,
+    cacDocUploadReducer: cacDocUploadReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {
