@@ -138,6 +138,7 @@ const AccountUpgrade = () => {
     const [reffereeEmail, setReffereeEmail] = useState('');
     const [link, setLink] = useState('');
     const [reffereeStatus, setReffereeStatus] = useState('');
+    const [reffereeFormStatus, setReffereeFormStatus] = useState('');
     const [checkedBtn, setCheckedBtn] = useState(false);
     const [inputCheck, setInputCheck] = useState();
     const [fileI, setFileI] = useState(null);
@@ -444,6 +445,31 @@ const AccountUpgrade = () => {
         setFileNameII(e.target.files[0].name);
         //console.log(file);
     };
+
+    const refereeFileUpload = () => {
+        const uploadrefereeData = {
+            form1: fileI,
+            form2: fileII
+        };
+        dispatch(getUploadReffereeDetails(uploadrefereeData));
+    };
+    useEffect(() => {
+        console.log(UploadreffereeError);
+
+        if (UploadreffereeSuccess !== null) {
+            setMessage('Referee Form Uploaded');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setScumlStatus('done');
+        } else if (UploadreffereeError !== null) {
+            //console.log(scmulErrorMessages);
+            setMessage(UploadreffereeError.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [UploadreffereeSuccess, UploadreffereeError]);
     const refereeUpload = () => {
         const refereeData = {
             emailsToShare: [reffereeEmail, reffereeEmailI]
@@ -453,26 +479,18 @@ const AccountUpgrade = () => {
     useEffect(() => {
         console.log(reffereeError, reffereeSuccess);
 
-        if (reffereeSuccess?.data.message === 'success') {
-            const uploadrefereeData = {
-                form1: fileI,
-                form2: fileII
-            };
-            dispatch(getUploadReffereeDetails(uploadrefereeData));
-            console.log();
-            if (reffereeSuccess == null) {
-                setMessage('Referee Email is sent');
-                setStatusbar('success');
-                setOutcome(true);
-                setLoading(false);
-                setScumlStatus('done');
-            } else if (reffereeError !== null) {
-                //console.log(scmulErrorMessages);
-                setMessage(reffereeError.data.message);
-                setStatusbar('error');
-                setOutcome(true);
-                setLoading(false);
-            }
+        if (reffereeSuccess !== null) {
+            setMessage('Referee Email is sent');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setScumlStatus('done');
+        } else if (reffereeError !== null) {
+            //console.log(scmulErrorMessages);
+            setMessage(reffereeError.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
         }
     }, [
         reffereeSuccess,
@@ -480,6 +498,13 @@ const AccountUpgrade = () => {
         // UploadreffereeSuccess,
         // UploadreffereeError
     ]);
+    // if (reffereeSuccess?.data.message === 'success') {
+    //     const uploadrefereeData = {
+    //         form1: fileI,
+    //         form2: fileII
+    //     };
+    //     dispatch(getUploadReffereeDetails(uploadrefereeData));
+    //     console.log();
     //Refferee Upload End
 
     //SMUL Certyificate
@@ -803,6 +828,15 @@ const AccountUpgrade = () => {
                 status: pending
             },
             {
+                title: 'Referee Form',
+                textII: 'Referee Form',
+                icon: <AddressSvg />,
+                statusReport: reffereeFormStatus,
+                status: pending
+            },
+
+            // Referee Form
+            {
                 title: 'Upload Utility BIll',
                 textII: 'UtilityBill',
                 icon: <BillSvg />,
@@ -980,6 +1014,13 @@ const AccountUpgrade = () => {
                 textII: 'Referee',
                 icon: <AddressSvg />,
                 statusReport: reffereeStatus,
+                status: pending
+            },
+            {
+                title: 'Referee Form',
+                textII: 'Referee Form',
+                icon: <AddressSvg />,
+                statusReport: reffereeFormStatus,
                 status: pending
             },
             {
@@ -2063,6 +2104,46 @@ const AccountUpgrade = () => {
                                 />
                             </div>
                         </div>
+
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Referee 2</label>
+                                <input
+                                    type="text"
+                                    value={reffereeEmailI}
+                                    placeholder="Input Referee Emai"
+                                    onChange={(e) =>
+                                        setReffereeEmailI(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+
+                        {/* <div className={styles.signature}>
+                            <label>Refferee</label>
+                            <input type="text" value={idNumber} />
+                        </div> */}
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                onClick={refereeUpload}
+                                className={styles.updateBtn}
+                            >
+                                Submit
+                            </button>
+                        )}
+                    </AccountUpgradeComponent>
+                );
+            case 'Referee Form':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Input Referee Details"
+                    >
+                        <label>Referee Form 1</label>
                         <div className={styles.signatureGroup}>
                             <p>Input Referee Document</p>
                             <div className={styles.signatureFormGroup}>
@@ -2078,19 +2159,8 @@ const AccountUpgrade = () => {
                                 </label>
                             </div>
                         </div>
-                        <div className={styles.meansIdentification}>
-                            <div className={styles.identificationGroup}>
-                                <label>Referee 2</label>
-                                <input
-                                    type="text"
-                                    value={reffereeEmailI}
-                                    placeholder="Input Referee Emai"
-                                    onChange={(e) =>
-                                        setReffereeEmailI(e.target.value)
-                                    }
-                                />
-                            </div>
-                        </div>
+                        <label>Referee Form 2</label>
+
                         <div className={styles.signatureGroup}>
                             <p>Input Refferee Document</p>
                             <div className={styles.signatureFormGroup}>
@@ -2111,14 +2181,14 @@ const AccountUpgrade = () => {
                         </div>
 
                         {/* <div className={styles.signature}>
-                            <label>Refferee</label>
-                            <input type="text" value={idNumber} />
-                        </div> */}
+                                <label>Refferee</label>
+                                <input type="text" value={idNumber} />
+                            </div> */}
                         {loading ? (
                             <Loader />
                         ) : (
                             <button
-                                onClick={refereeUpload}
+                                onClick={refereeFileUpload}
                                 className={styles.updateBtn}
                             >
                                 Submit
