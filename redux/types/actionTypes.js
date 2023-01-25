@@ -780,3 +780,12 @@ export const tinType = {
     TIN_ERROR: 'TIN_ERROR'
 };
 //End Tin Type
+
+//Cac Document Type
+
+export const cacDocummentType = {
+    CAC_DOCUMENT_START: 'CAC_DOCUMENT_START',
+    CAC_DOCUMENT_SUCCESS: 'CAC_DOCUMENT_SUCCESS',
+    CAC_DOCUMENT_ERROR: 'CAC_DOCUMENT_ERROR'
+};
+//End Cac Document Type
