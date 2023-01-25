@@ -2143,7 +2143,6 @@ const AccountUpgrade = () => {
                         }}
                         title="Input Referee Details"
                     >
-                        <label>Referee Form 1</label>
                         <div className={styles.signatureGroup}>
                             <p>Input Referee Document</p>
                             <div className={styles.signatureFormGroup}>
@@ -2159,7 +2158,6 @@ const AccountUpgrade = () => {
                                 </label>
                             </div>
                         </div>
-                        <label>Referee Form 2</label>
 
                         <div className={styles.signatureGroup}>
                             <p>Input Refferee Document</p>
