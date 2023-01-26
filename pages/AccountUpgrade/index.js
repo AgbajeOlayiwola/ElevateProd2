@@ -2160,7 +2160,7 @@ const AccountUpgrade = () => {
                         </div>
 
                         <div className={styles.signatureGroup}>
-                            <p>Input Refferee Document</p>
+                            <p>Input Referee Document</p>
                             <div className={styles.signatureFormGroup}>
                                 <p>
                                     {' '}
