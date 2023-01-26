@@ -447,6 +447,7 @@ const AccountUpgrade = () => {
     };
 
     const refereeFileUpload = () => {
+        setLoading(true);
         const uploadrefereeData = {
             form1: fileI,
             form2: fileII
