@@ -9,7 +9,7 @@ const Levelup = ({ account }) => {
             <div className={styles.coveBody}>
                 <div className={styles.left}>
                     {/* <DounutComp /> */}
-                    <img src="../../Assets/Svgs/chart.svg" alt="" />
+                    {/* <img src="../../Assets/Svgs/chart.svg" alt="" /> */}
                 </div>
                 <div className={styles.level}>
                     <p className={styles.Levelup}>LEVEL UP CHAMP</p>
