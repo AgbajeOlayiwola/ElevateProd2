@@ -270,7 +270,7 @@ const NewUser = ({ selectCountry }) => {
             </div>
             <div className={styles.homeForm}>
                 <div className={styles.secondSectionMidCountry}>
-                    <label htmlFor="">Password</label>
+                    <label htmlFor="">Create Password</label>
                     <div className={styles.divs}>
                         <input
                             type={outType ? 'text' : 'password'}
