@@ -105,7 +105,7 @@ const Liveness = ({ action }) => {
                         </div>
                     </div>
                 </div>
-                {loading ? <p>Processing...</p> : null}
+                {loading ? <p>Hold on your face is been verified!!!!</p> : null}
                 <ButtonComp
                     onClick={
                         succes === 'facial verification successful'
