@@ -205,6 +205,34 @@
     cursor: pointer;
 }
 
+.referralCont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.referralCode {
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 100%;
+}
+
+.referralCode span {
+    color: #102572;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.referralCont h5 {
+    margin: 0px;
+    background: rgba(105, 148, 13, 0.1);
+    border-radius: 8px;
+    margin-left: 4px;
+    padding: 6px 8px;
+    cursor: pointer;
+}
+
 .title {
     font-family: 'Inter', sans-serif;
     font-style: normal;
