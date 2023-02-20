@@ -1256,7 +1256,7 @@ const Payment = () => {
                 <div className={styles.greencard}>
                     <div className={styles.greencardDetails}>
                         <div>
-                            <Image
+                            <img
                                 src="/Assets/Images/clock.png"
                                 width="47px"
                                 height="55px"

@@ -143,7 +143,7 @@ const Navbar = ({
                             <Link href="/Profile">
                                 <div>
                                     {userProfileData ? (
-                                        <Image
+                                        <img
                                             src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
                                             width="50"
                                             height="50"

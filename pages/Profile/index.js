@@ -438,7 +438,7 @@ const Profile = () => {
                         <div className={styles.profileBodyHead}>
                             <div className={styles.profileBodyHeadImg}>
                                 {!userProfileData ? null : (
-                                    <Image
+                                    <img
                                         src={`data:image/png;base64,${userProfileData.profileImg}`}
                                         width="100%"
                                         height="100%"
@@ -1541,7 +1541,7 @@ const Profile = () => {
                         <div className={styles.profileHeaderHead}>
                             <div className={styles.profileHeaderImg}>
                                 {!userProfileData ? null : (
-                                    <Image
+                                    <img
                                         src={`data:image/png;base64,${userProfileData.profileImg}`}
                                         width="100%"
                                         height="100%"

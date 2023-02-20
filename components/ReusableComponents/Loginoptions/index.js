@@ -10,7 +10,7 @@ const LoginOption = ({ children }) => {
                 onClick={() => setActive((prevState) => !prevState)}
             >
                 {children}
-                {/* <Image
+                {/* <img
                     src="/Assets/Images/omni.png"
                     width={30}
                     height={30}
