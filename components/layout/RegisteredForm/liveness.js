@@ -55,7 +55,7 @@ const Liveness = ({ action }) => {
 
         const cookie = getCookie('cookieToken');
         axios
-            .post(`https://testvate.liveauthentication/facematch`, formData, {
+            .post(`192.168.41.82/authentication/facematch`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${cookie}`

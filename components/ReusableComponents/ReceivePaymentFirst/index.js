@@ -52,11 +52,19 @@ const ReceivePaymentFirst = ({
                             (Accepts Card Payment without POS)
                         </p>
                         <form onSubmit={handleSubmit(action)}>
-                            <div className={styles.source}>
-                                <h2>
-                                    Source <span>- Marvelous N******</span>
-                                </h2>
-                                <SourceSvg />
+                            <div className={styles.formGroup}>
+                                <label>Account to Credit</label>
+                                <select>
+                                    <option>
+                                        {' '}
+                                        Source <span>- Marvelous N******</span>
+                                    </option>
+                                    <option>
+                                        {' '}
+                                        Source <span>- Troniclab</span>
+                                    </option>
+                                </select>
+                                {/* <SourceSvg /> */}
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Name of Payment</label>

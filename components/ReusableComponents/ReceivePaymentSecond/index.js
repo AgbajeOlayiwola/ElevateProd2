@@ -13,7 +13,8 @@ const ReceivePaymentSecond = ({
     closeAction,
     link,
     track,
-    amount
+    amount,
+    allLink
 }) => {
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
@@ -69,6 +70,12 @@ const ReceivePaymentSecond = ({
                             <p>Saturday 22 June, 2022 . 12:53 PM</p>
                         </div>
                     </div> */}
+                    <div className={styles.deadlines}>
+                        <p>Valid Till</p>
+                        <div className={styles.deadlineValues}>
+                            <p>Saturday 22 June, 2022 . 12:53 PM</p>
+                        </div>
+                    </div>
                     <div className={styles.deadlines}>
                         <p>Amount</p>
                         <div className={styles.deadlineValues}>
@@ -240,7 +247,8 @@ const ReceivePaymentSecond = ({
                     <button onClick={action}>{buttonText}</button>
                     {title === 'Confirm mPOS Payment Details' ? null : (
                         <p className={styles.allLinks}>
-                            Tap to view all your <span>{type}</span>
+                            Tap to view all your{' '}
+                            <span onClick={allLink}>{type}</span>
                         </p>
                     )}
                 </div>
