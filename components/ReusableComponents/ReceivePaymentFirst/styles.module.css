@@ -70,12 +70,12 @@
 }
 
 .source {
-    width: 50%;
-    max-width: 200px;
-    border: 1px solid #eeeeee;
+    width: 100%;
+    /* max-width: 200px; */
+    /* border: 1px solid #eeeeee; */
     border-radius: 4px;
     padding: 8px 12px;
-    display: flex;
+    /* display: flex; */
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;

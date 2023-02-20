@@ -168,7 +168,7 @@ const CorporateAccount = () => {
                             .catch((error) => {
                                 //console.logerror.response.data.message);
                             });
-                    }, 10000);
+                    }, 30000);
                 }
             });
     };

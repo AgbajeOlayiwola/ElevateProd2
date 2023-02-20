@@ -41,6 +41,7 @@ import { useRouter } from 'next/router';
 import { PaymentData } from '../../components/ReusableComponents/Data';
 import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
 import PaymentRepeat from '../../components/ReusableComponents/PaymentRepeat';
+import ReceivePaymentThird from '../../components/ReusableComponents/ReceivePaymentThird';
 
 const Payment = () => {
     const router = useRouter();
@@ -424,7 +425,7 @@ const Payment = () => {
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Create Payment Link"
-                                buttonText="Next"
+                                buttonText="Generate Payment Link"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     //console.logdata);
@@ -437,10 +438,29 @@ const Payment = () => {
                             <ReceivePaymentSecond
                                 overlay={overlay}
                                 title="Payment Link Generated"
+                                allLink={(data) => {
+                                    //console.logdata);
+                                    setCount(count + 1);
+                                }}
                                 action={buttonHandleClose}
                                 buttonText="Send Paylink"
                                 type="Paylinks"
                                 closeAction={buttonHandleClose}
+                            />
+                        );
+
+                    case 2:
+                        return (
+                            <ReceivePaymentThird
+                                overlay={overlay}
+                                title="View all Payment Links"
+                                action={buttonHandleClose}
+                                buttonText="Send Paylink"
+                                type="Paylinks"
+                                closeAction={(data) => {
+                                    //console.logdata);
+                                    setCount(count - 1);
+                                }}
                             />
                         );
                 }
@@ -491,7 +511,7 @@ const Payment = () => {
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Create Ecobank QR Code"
-                                buttonText="Next"
+                                buttonText="Share Ecobank QR Codes"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     //console.logdata);

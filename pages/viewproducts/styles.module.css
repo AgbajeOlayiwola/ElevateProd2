@@ -1,0 +1,219 @@
+.productView{
+    padding: 13px 10px;
+    background-color:#fff;
+    border-radius: 16px;
+
+}
+.allProducts{
+    display: flex;
+    justify-content: space-between;
+}
+.productViewRight{
+background-color: white;
+    width: 65%;
+    padding: 48px;
+    border-radius: 12px;
+}
+.shareLike{
+    display: flex;
+    justify-content: space-between;
+    width: 28%;
+
+}
+.productName{
+    font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height: 37px;
+/* or 154% */
+
+width: 25%;
+color: #005B82;
+
+}
+.productViewRightTop{
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+}
+.share{
+    font-style: normal;
+    height: fit-content;
+font-weight: 600;
+font-size: 12px;
+line-height: 15px;
+/* identical to box height */
+background: #F3FBEA;
+border-radius: 12px;
+padding: 14px 12px;
+color: #549E04;
+
+}
+.productViewBrand{
+    display: flex;
+}
+.brandNamme{
+    display: flex;
+}
+.brandNamme p:nth-child(2){
+    color: #005B82;
+}
+.inStock{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height, or 114% */
+    
+    
+    color: #A5A5A5;
+    
+}
+.size{
+    font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 23px;
+/* identical to box height, or 167% */
+
+
+color: #3E3E3E;
+
+}
+.sizeChart{
+    display: flex;
+    justify-content: space-between;
+    width: 71%;
+}
+.sizeChart div{
+    width: 62.93px;
+height: 65px;
+left: 48px;
+top: 243px;
+
+background: #FFFFFF;
+border: 2px solid #F3FBEA;
+border-radius: 6px;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 12px;
+gap: 10px;
+color: black;
+}
+.sizeChart :hover{
+    background: #549E04;
+    color:white;
+}
+.productPrioce{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.productCart{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 55%;
+}
+.productCartBuy{
+    background: #6CCF00;
+border-radius: 12px;
+padding: 15px 76px;
+color: white;
+}
+.productCarts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #F3FBEA;
+    padding: 21px;
+border-radius: 12px;
+}
+.productPrioce div p:nth-child(1){
+    font-style: normal;
+font-weight: 700;
+font-size: 32px;
+line-height: 16px;
+
+color: #3E3E3E;
+}
+.productPrioce div p:nth-child(2) span{
+
+color: #005B82;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+
+}
+.productCartBuyP{
+    font-style: normal !important;
+font-weight: 700 !important;
+font-size: 14px !important;
+line-height: 16px !important;
+/* identical to box height, or 114% */
+
+text-align: right !important;
+
+color: #FFFFFF !important;
+
+}
+.productPreView{
+    display: flex;
+    justify-content: space-between;
+
+}
+.productPreView div{
+    width: 44px;
+    height: 37px;
+    background: rgba(36, 45, 44, 0.05);
+border-radius: 8px;
+margin-top: 16.7px;
+}
+.description{
+    padding: 32px;
+    background-color: white;
+    margin-top: 20px;
+    border-radius: 16px;
+}
+.retailersSection{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+.retailersInfo{
+    padding: 32px;
+    background-color: white;
+    border-radius: 16px;
+    width: 40%;
+    
+}
+.retailersNamInfo{
+    background: rgba(95, 180, 2, 0.06);
+border-radius: 16px;
+padding: 18px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.socials{
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+}
+.number{
+    font-style: normal;
+font-weight: 700;
+font-size: 14px;
+line-height: 16px;
+/* identical to box height, or 114% */
+
+text-align: center;
+
+color: #6CCF00;
+border: 1px solid #6CCF00;
+border-radius: 8px;
+padding: 0px 18px;
+}
