@@ -718,7 +718,9 @@ const AccountUpgrade = () => {
         if (addressVerificationSuc) {
             if (
                 addressVerificationSuc.data.data.verificationStatus ===
-                'SUCCESS'
+                    'SUCCESS' ||
+                addressVerificationSuc.data.data.verificationStatus ===
+                    'PENDING'
             ) {
                 setVerifyStatus('Done');
                 setMessage('Address Verification Successful');
