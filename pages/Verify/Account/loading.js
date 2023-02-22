@@ -126,8 +126,10 @@ const AccountLoading = () => {
     //     setCount(count + 1);
     // }, [errorMessages]);
     useEffect(() => {
-        if (newAccount !== null || newAccount !== '' || newAccount !== []) {
+        if (newAccount !== null) {
             dispatch(newAccountStatusData());
+        } else if (newAccountErrorMessage !== null) {
+            setError(newAccountErrorMessage);
         }
     }, [newAccount, newAccountErrorMessage]);
     useEffect(() => {

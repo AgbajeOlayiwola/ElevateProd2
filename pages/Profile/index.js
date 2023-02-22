@@ -340,6 +340,11 @@ const Profile = () => {
                   icon: <ManageSignSvg />,
                   color: '#7A7978'
               },
+        {
+            text: 'Referral Code',
+            icon: <EditProfileSvg />,
+            color: '#7A7978'
+        },
 
         {
             text: 'Manage Beneficiaries',
@@ -437,8 +442,8 @@ const Profile = () => {
                         <h2 className={styles.title}>View Profile</h2>
                         <div className={styles.profileBodyHead}>
                             <div className={styles.profileBodyHeadImg}>
-                                {!userProfileData ? null : (
-                                    <img
+                                {!userProfileData.profileImg ? null : (
+                                    <Image
                                         src={`data:image/png;base64,${userProfileData.profileImg}`}
                                         width="100%"
                                         height="100%"
@@ -500,11 +505,12 @@ const Profile = () => {
                                             <input
                                                 type="number"
                                                 placeholder="812 345 6789"
-                                                value={
+                                                defaultValue={
                                                     !userProfileData
                                                         ? null
                                                         : userProfileData.phoneNumber
                                                 }
+                                                readOnly
                                             />
                                         </div>
                                     </div>
@@ -690,6 +696,33 @@ const Profile = () => {
                             </>
                         );
                 }
+            case 'Referral Code':
+                return (
+                    <div>
+                        <h2 className={styles.title}>Referral Code</h2>
+                        <div className={styles.referralCont}>
+                            <p className={styles.referralCode}>
+                                Your Referral Code is:
+                                <span> {userProfileData.referralCode}</span>
+                            </p>
+                            <h5
+                                onClick={() => {
+                                    {
+                                        navigator.clipboard
+                                            .writeText(
+                                                userProfileData.referralCode
+                                            )
+                                            .then(() => {
+                                                alert('Copied');
+                                            });
+                                    }
+                                }}
+                            >
+                                copy
+                            </h5>
+                        </div>
+                    </div>
+                );
 
             // case 'Manage Signatories':
             //     switch (count) {
@@ -1540,8 +1573,8 @@ const Profile = () => {
                     <>
                         <div className={styles.profileHeaderHead}>
                             <div className={styles.profileHeaderImg}>
-                                {!userProfileData ? null : (
-                                    <img
+                                {!userProfileData.profileImg ? null : (
+                                    <Image
                                         src={`data:image/png;base64,${userProfileData.profileImg}`}
                                         width="100%"
                                         height="100%"
@@ -1595,10 +1628,13 @@ const Profile = () => {
                                     <h5
                                         onClick={() => {
                                             {
-                                                navigator.clipboard.writeText(
-                                                    acctNumber.accountNumber
-                                                );
-                                                alert('Copied');
+                                                navigator.clipboard
+                                                    .writeText(
+                                                        acctNumber.accountNumber
+                                                    )
+                                                    .then(() => {
+                                                        alert('Copied');
+                                                    });
                                             }
                                         }}
                                     >
@@ -1618,6 +1654,7 @@ const Profile = () => {
                                             profileText={item?.text}
                                             icon={item?.icon}
                                             index={index}
+                                            activeText={text}
                                             action={() => {
                                                 if (
                                                     item.text ===

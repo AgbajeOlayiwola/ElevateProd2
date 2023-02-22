@@ -26,7 +26,7 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ action, loading, setLoading }) => {
+const Liveness = ({ action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const webcamRef = React.useRef(null);
     const [imgSrc, setImgSrc] = React.useState(null);
@@ -34,8 +34,10 @@ const Liveness = ({ action, loading, setLoading }) => {
     const [imageSrcI, setImageSrcI] = React.useState(null);
     const [error, setError] = React.useState('');
     const [loads, setLoads] = useState(false);
+    const [loading, setLoading] = useState(false);
     const capture = React.useCallback(() => {
         setLoads((prev) => !prev);
+        setLoading((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
@@ -65,9 +67,11 @@ const Liveness = ({ action, loading, setLoading }) => {
             })
             .then((response) => {
                 setSuccess(response.data.message);
+                setLoading(false);
             })
             .catch((error) => {
                 setError(error.response.data.message);
+                setLoading(false);
             });
     }, [webcamRef, setImgSrc, setImageSrcI]);
 
@@ -101,6 +105,7 @@ const Liveness = ({ action, loading, setLoading }) => {
                         </div>
                     </div>
                 </div>
+                {loading ? <p>Hold on your face is been verified!!!!</p> : null}
                 <ButtonComp
                     onClick={
                         succes === 'facial verification successful'

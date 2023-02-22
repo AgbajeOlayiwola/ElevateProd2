@@ -11,7 +11,7 @@ const RecievePaymentBtn = () => {
                 className={styles.rec}
                 onClick={() => setShowDrop(!showDrop)}
             >
-                Recieve Payment
+                Receive Payment
             </button>
             <OutsideClick
                 onClickOutside={() => {
