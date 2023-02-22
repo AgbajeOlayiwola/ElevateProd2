@@ -763,7 +763,7 @@ const HomeMain = () => {
                                                 setEcoonlinePassword('');
                                             }}
                                         >
-                                            <Image
+                                            <img
                                                 src="/Assets/Svgs/ecobankMobile.svg"
                                                 width={45}
                                                 height={45}

@@ -155,7 +155,7 @@ const ReceivePaymentFirst = ({
                     </div>
                 </div>
                 <div>
-                    {/* <Image
+                    {/* <img
                         src="/Assets/Images/Group 33664.png"
                         width="100%"
                         height="100%"

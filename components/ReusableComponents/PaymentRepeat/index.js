@@ -16,7 +16,7 @@ const PaymentRepeat = ({ overlay, closeAction, type }) => {
                     />
                 </div>
                 <div className={styles.repeatHeader}>
-                    <Image
+                    <img
                         src="/Assets/Images/repeatClock.png"
                         width="100%"
                         height="100%"

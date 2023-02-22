@@ -264,7 +264,7 @@ const Storefront = () => {
                             <>
                                 <div className={styles.profileHeaderHead}>
                                     <div className={styles.profileHeaderImg}>
-                                        <Image
+                                        <img
                                             src="/Assets/Images/storeOwner.png"
                                             width="100%"
                                             height="100%"

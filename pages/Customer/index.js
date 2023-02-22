@@ -66,7 +66,7 @@ const Customer = () => {
                                 <h2 className={styles.title}>Manage Cards</h2>
                                 {/* <div className={styles.profileBodyHead}>
                                     <div className={styles.profileBodyHeadImg}>
-                                        <Image
+                                        <img
                                             src="/Assets/Images/profileImg.png"
                                             width="100%"
                                             height="100%"

@@ -7,7 +7,7 @@ const Reference = () => {
         <div className={styles.referenceCont}>
             <div className={styles.referenceHead}>
                 <h2>REFERENCE FORM</h2>
-                <Image
+                <img
                     src="/./Assets/Images/ecobankLogo.png"
                     width="100%"
                     height="100%"
