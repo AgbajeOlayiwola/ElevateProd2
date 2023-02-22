@@ -1724,7 +1724,7 @@ const AccountUpgrade = () => {
                                 </div>
                             </div>
                             <Link
-                                href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=6.4886218&Longitude=3.3567333&phoneNumber=+234${userProfile?.phoneNumber}`}
+                                href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=+234${userProfile?.phoneNumber}`}
                             >
                                 Links
                             </Link>
@@ -1760,7 +1760,7 @@ const AccountUpgrade = () => {
 
                                 <Iframe
                                     src={
-                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=6.4886218&Longitude=3.3567333&phoneNumber=+234${userProfile?.phoneNumber}`
+                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=+234${userProfile?.phoneNumber}`
                                         // {
                                         // pathname:
                                         // 'https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test Customer&customerEmail=boluwatobi@gmail.com&branchCode=A02&segmentId=ADB&address=25 pilot crescent off bode thomas surulere&landmark&state=LA&lga=LA020&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333'
