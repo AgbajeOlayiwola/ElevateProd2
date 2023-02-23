@@ -811,7 +811,11 @@ const AccountUpgrade = () => {
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
-                status: pending
+                status:
+                    addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS'
+                        ? addressVerificationSuc.data.data.verificationStatus
+                        : pending
             },
             {
                 title: 'Set Transaction Pin',
