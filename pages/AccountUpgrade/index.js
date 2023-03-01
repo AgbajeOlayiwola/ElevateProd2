@@ -152,6 +152,16 @@ const AccountUpgrade = () => {
         identificationDocumentFileName,
         setIdentificationDocumentName
     ] = useState('');
+    const [
+        identificationBackDocument,
+        setIdentificationBackDocument
+    ] = useState('');
+    const [
+        identificationBackDocumentFileName,
+        setIdentificationBackDocumentFileName
+    ] = useState('');
+
+    identificationBackDocumentFileName;
     const [refoneno, setRefoneNo] = useState('');
     const [base64urlI, setBase64UrlI] = useState('');
     const [base64urlII, setBase64UrlII] = useState('');
@@ -163,6 +173,7 @@ const AccountUpgrade = () => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [questions, setQuestions] = useState();
     const [base64Code, setBase64Code] = useState('');
+    const [backBase64Code, setBackBase64Code] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const [corporateAccount, setCorporateAccount] = useState();
     const [profileItemm, setProfileItemm] = useState('');
@@ -662,6 +673,13 @@ const AccountUpgrade = () => {
         setIdentificationDocumentName(e.target.files[0].name);
         getbase64(e.target.files[0]);
     };
+
+    // setBackBase64Code
+    const saveBackIdentificationFile = (e) => {
+        setIdentificationBackDocument(e.target.files[0]);
+        setIdentificationBackDocumentFileName(e.target.files[0].name);
+        getbase64s(e.target.files[0]);
+    };
     const getbase64 = (file) => {
         let reader = new FileReader();
         reader.readAsDataURL(file);
@@ -669,6 +687,18 @@ const AccountUpgrade = () => {
             onLoad(reader.result);
         };
     };
+    const getbase64s = (file) => {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            onLoads(reader.result);
+        };
+    };
+    const onLoads = (fileStrings) => {
+        setBackBase64Code(fileStrings);
+        console.log('Back', backBase64Code);
+    };
+
     const onLoad = (fileString) => {
         setBase64Code(fileString);
         console.log(base64Code);
@@ -676,13 +706,19 @@ const AccountUpgrade = () => {
     const IdentificationyUpload = () => {
         setLoading(true);
         const data = identificationDocumentFileName.split('.');
+        const datas = identificationBackDocumentFileName.split('.');
         const identificationThings = {
             meansOfIdentification: IDType,
             idNumber: idNumber,
-            identificationDocument: {
+            identificationDocumentFront: {
                 base64String: base64Code.split(',')[1],
                 fileName: identificationDocumentFileName.split('.')[0],
                 fileExtension: `.${data[data.length - 1]}`
+            },
+            identificationDocumentBack: {
+                base64String: backBase64Code.split(',')[1],
+                fileName: identificationBackDocumentFileName.split('.')[0],
+                fileExtension: `.${datas[datas.length - 1]}`
             }
         };
         // const identificationThings = {
@@ -718,9 +754,7 @@ const AccountUpgrade = () => {
         if (addressVerificationSuc) {
             if (
                 addressVerificationSuc.data.data.verificationStatus ===
-                    'SUCCESS' ||
-                addressVerificationSuc.data.data.verificationStatus ===
-                    'PENDING'
+                'SUCCESS'
             ) {
                 setVerifyStatus('Done');
                 setMessage('Address Verification Successful');
@@ -728,7 +762,11 @@ const AccountUpgrade = () => {
                 // setOutcome(true);
                 setVerifyStatus('done');
                 setLoading(false);
-            } else if (addressVerificationsError !== null) {
+            } else if (
+                addressVerificationsError !== null ||
+                addressVerificationSuc.data.data.verificationStatus ===
+                    'PENDING'
+            ) {
                 setMessage('Error');
                 setStatusbar('error');
                 setOutcome(true);
@@ -815,7 +853,7 @@ const AccountUpgrade = () => {
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
                         ? addressVerificationSuc.data.data.verificationStatus
-                        : pending
+                        : addressVerificationSuc?.data.data.verificationStatus
             },
             {
                 title: 'Set Transaction Pin',
@@ -936,9 +974,10 @@ const AccountUpgrade = () => {
                 status:
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
-                        ? addressVerificationSuc?.data.data.verificationStatus
-                        : pending
+                        ? addressVerificationSuc.data.data.verificationStatus
+                        : addressVerificationSuc?.data.data.verificationStatus
             },
+
             {
                 title: 'Set Transaction Pin',
                 textII: 'SetTransactionPin',
@@ -2057,9 +2096,10 @@ const AccountUpgrade = () => {
                                 />
                             </div>
                         </div>
+
                         <div className={styles.signature}>
                             <div className={styles.signatureGroup}>
-                                <p>Upload ID</p>
+                                <p>Upload Front of ID</p>
                                 <div className={styles.signatureFormGroup}>
                                     <p>
                                         {' '}
@@ -2077,6 +2117,30 @@ const AccountUpgrade = () => {
                                     </label>
                                 </div>
                             </div>
+                            {IDType === 'VOTERS_CARD' ||
+                            IDType === 'DRIVERS_LICENSE' ? (
+                                <div className={styles.signatureGroup}>
+                                    <p>Upload Back of ID</p>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {' '}
+                                            {identificationBackDocumentFileName
+                                                ? identificationBackDocumentFileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={
+                                                    saveBackIdentificationFile
+                                                }
+                                                type="file"
+                                                accept="image/png, image/HEIC, image/jpeg, application/pdf"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            ) : null}
                         </div>
                         {loading ? (
                             <Loader />
