@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;700&display=swap'); */
 :root {
     --global-button-padding: 1.2rem 0rem 1.2rem 0rem;
     /* --global-button-padding: 1.2rem 12.568rem 1.2rem 12.568rem; */
@@ -22,6 +22,24 @@ body {
     padding: 0;
     background: #F5F6FA;
 }
+@font-face {
+    font-family: 'inter';
+    src: url('/Assets/Fonts/Inter/Inter-VariableFont_slnt,wght.ttf');
+    font-weight: 500;
+    font-style: normal;
+    }
+    /* @font-face {
+      font-family: 'Neue Power Trial';
+      src: url('/Assets/Font/NeuePowerTrial/NeuePowerTrial-Regular.ttf');
+      font-weight: 500;
+      font-style: normal;
+      }
+      @font-face {
+        font-family: 'olivier';
+        src: url('/Assets/Font/olivier_demo.ttf');
+        font-weight: 500;
+        font-style: normal;
+        } */
 html,
 * {
     /* padding: 0;
