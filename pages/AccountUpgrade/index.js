@@ -767,9 +767,9 @@ const AccountUpgrade = () => {
                 addressVerificationSuc.data.data.verificationStatus ===
                     'PENDING'
             ) {
-                setMessage('Error');
-                setStatusbar('error');
-                setOutcome(true);
+                // setMessage('Error');
+                // setStatusbar('error');
+                setOutcome(false);
                 setLoading(false);
             }
         }
@@ -1074,7 +1074,11 @@ const AccountUpgrade = () => {
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
-                status: pending
+                status:
+                    addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS'
+                        ? addressVerificationSuc.data.data.verificationStatus
+                        : addressVerificationSuc?.data.data.verificationStatus
             },
             {
                 title: 'Set Transaction Pin',
