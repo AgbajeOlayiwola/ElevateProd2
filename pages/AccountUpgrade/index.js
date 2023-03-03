@@ -909,7 +909,7 @@ const AccountUpgrade = () => {
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
                         ? idCardStatus === 'done'
-                            ? review
+                            ? 'Approved'
                             : idCardStatus === 'notDone'
                             ? pending
                             : idCardStatus === 'comment'
@@ -997,7 +997,7 @@ const AccountUpgrade = () => {
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
                         ? utilityStatus === 'done'
-                            ? review
+                            ? 'Approved'
                             : utilityStatus === 'notDone'
                             ? pending
                             : utilityStatus === 'comment'
@@ -1016,7 +1016,7 @@ const AccountUpgrade = () => {
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
                         ? idCardStatus === 'done'
-                            ? review
+                            ? 'Approved'
                             : idCardStatus === 'notDone'
                             ? pending
                             : idCardStatus === 'comment'
@@ -1118,7 +1118,7 @@ const AccountUpgrade = () => {
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
                         ? idCardStatus === 'done'
-                            ? review
+                            ? 'Approved'
                             : idCardStatus === 'notDone'
                             ? pending
                             : idCardStatus === 'comment'
