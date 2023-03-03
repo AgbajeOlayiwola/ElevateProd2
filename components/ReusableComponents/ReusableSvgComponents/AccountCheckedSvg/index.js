@@ -20,7 +20,7 @@ const AccountChecked = ({ statusInfo }) => {
                         ? 'red'
                         : statusInfo === 'APPROVED'
                         ? '#6ccf00'
-                        : null
+                        : '#DBDBDB'
                 }
             />
             <path
