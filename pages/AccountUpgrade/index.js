@@ -303,6 +303,10 @@ const AccountUpgrade = () => {
 
     useEffect(() => {
         if (userProfile !== null) {
+            if (userProfile?.idDocumentVerificationStatus === 'verified') {
+                setidCardStatus('done');
+            }
+
             setText(userProfile.customerCategory);
             setCorporateAccount(userProfile.hasRegisteredBusiness);
             setStreetName(userProfile.address);
@@ -378,12 +382,15 @@ const AccountUpgrade = () => {
                     setIdentificationDocumentName(test[test.length - 1]);
                     setIDType(document.metaData.meansOfIdentification);
                     setIdNumber(document.metaData.idNumber);
+                    {
+                        document.status;
+                    }
                     if (document.status === 'REJECTED') {
                         setidCardStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setidCardStatus(document.status);
-                    } else {
-                        setidCardStatus('done');
+                    } else if (document.status === 'PENDING') {
+                        setidCardStatus('notDone');
                     }
                 }
             });
@@ -907,7 +914,7 @@ const AccountUpgrade = () => {
                 statusReport: idCardStatus,
                 name: 'IDENTIFICATION',
                 status:
-                    userProfile?.hasSubmitedDocumentsForReview === true
+                    userProfile?.idDocumentVerificationStatus === 'verified'
                         ? idCardStatus === 'done'
                             ? 'Approved'
                             : idCardStatus === 'notDone'
@@ -1014,7 +1021,7 @@ const AccountUpgrade = () => {
                 statusReport: idCardStatus,
                 name: 'IDENTIFICATION',
                 status:
-                    userProfile?.hasSubmitedDocumentsForReview === true
+                    userProfile?.idDocumentVerificationStatus === 'verified'
                         ? idCardStatus === 'done'
                             ? 'Approved'
                             : idCardStatus === 'notDone'
@@ -1116,7 +1123,7 @@ const AccountUpgrade = () => {
                 statusReport: idCardStatus,
                 name: 'IDENTIFICATION',
                 status:
-                    userProfile?.hasSubmitedDocumentsForReview === true
+                    userProfile?.idDocumentVerificationStatus === 'verified'
                         ? idCardStatus === 'done'
                             ? 'Approved'
                             : idCardStatus === 'notDone'
