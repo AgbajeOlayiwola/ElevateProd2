@@ -728,6 +728,7 @@ const AccountUpgrade = () => {
                 fileExtension: `.${datas[datas.length - 1]}`
             }
         };
+
         // const identificationThings = {
         //     meansOfIdentification: IDType,
         //     idNumber: idNumber,
@@ -784,12 +785,20 @@ const AccountUpgrade = () => {
 
     useEffect(() => {
         if (identification !== null) {
+            setIdentificationBackDocument('');
+            setIdentificationBackDocumentFileName('');
+            setIdentificationDocument('');
+            setIdentificationDocumentName('');
             setMessage(identification);
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
             setidCardStatus('done');
         } else if (identificationErrorMessages !== null) {
+            setIdentificationBackDocument('');
+            setIdentificationBackDocumentFileName('');
+            setIdentificationDocument('');
+            setIdentificationDocumentName('');
             setMessage(identificationErrorMessages);
             setStatusbar('error');
             setOutcome(true);
