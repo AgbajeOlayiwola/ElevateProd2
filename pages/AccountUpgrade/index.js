@@ -942,13 +942,13 @@ const AccountUpgrade = () => {
                         ? idCardStatus === 'done'
                             ? 'Approved'
                             : idCardStatus === 'notDone'
-                            ? pending
+                            ? userProfile?.idDocumentVerificationStatus
                             : idCardStatus === 'comment'
                             ? rejected
                             : idCardStatus === 'APPROVED'
                             ? 'Approved'
                             : null
-                        : pending
+                        : userProfile?.idDocumentVerificationStatus
             },
             // {
             //     title: 'Directors',
@@ -1049,13 +1049,13 @@ const AccountUpgrade = () => {
                         ? idCardStatus === 'done'
                             ? 'Approved'
                             : idCardStatus === 'notDone'
-                            ? pending
+                            ? userProfile?.idDocumentVerificationStatus
                             : idCardStatus === 'comment'
                             ? rejected
                             : idCardStatus === 'APPROVED'
                             ? 'Approved'
                             : null
-                        : pending
+                        : userProfile?.idDocumentVerificationStatus
             },
             {
                 title: 'Ellevate Profiling',
@@ -1151,13 +1151,13 @@ const AccountUpgrade = () => {
                         ? idCardStatus === 'done'
                             ? 'Approved'
                             : idCardStatus === 'notDone'
-                            ? pending
+                            ? userProfile?.idDocumentVerificationStatus
                             : idCardStatus === 'comment'
                             ? rejected
                             : idCardStatus === 'APPROVED'
                             ? 'Approved'
                             : null
-                        : pending
+                        : userProfile?.idDocumentVerificationStatus
             },
             // {
             //     title: 'Directors',
