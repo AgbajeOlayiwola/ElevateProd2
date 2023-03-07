@@ -146,7 +146,7 @@ const AccountUpgrade = () => {
     const [fileII, setFileII] = useState(null);
     const [fileNameII, setFileNameII] = useState();
     const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
+        null
     );
     const [
         identificationDocumentFileName,
@@ -155,7 +155,7 @@ const AccountUpgrade = () => {
     const [
         identificationBackDocument,
         setIdentificationBackDocument
-    ] = useState('');
+    ] = useState(null);
     const [
         identificationBackDocumentFileName,
         setIdentificationBackDocumentFileName
@@ -712,28 +712,44 @@ const AccountUpgrade = () => {
     };
     const IdentificationyUpload = () => {
         setLoading(true);
-        const data = identificationDocumentFileName.split('.');
-        const datas = identificationBackDocumentFileName.split('.');
-        const identificationThings = {
-            meansOfIdentification: IDType,
-            idNumber: idNumber,
-            identificationDocumentFront: {
-                base64String: base64Code.split(',')[1],
-                fileName: identificationDocumentFileName.split('.')[0],
-                fileExtension: `.${data[data.length - 1]}`
-            },
-            identificationDocumentBack: {
-                base64String: backBase64Code.split(',')[1],
-                fileName: identificationBackDocumentFileName.split('.')[0],
-                fileExtension: `.${datas[datas.length - 1]}`
-            }
-        };
+        if (IDType === 'VOTERS_CARD' || IDType === 'DRIVERS_LICENSE') {
+            const data = identificationDocumentFileName.split('.');
+            const datas = identificationBackDocumentFileName.split('.');
+            const identificationThings = {
+                meansOfIdentification: IDType,
+                idNumber: idNumber,
+                identificationDocumentFront: {
+                    base64String: base64Code.split(',')[1],
+                    fileName: identificationDocumentFileName.split('.')[0],
+                    fileExtension: `.${data[data.length - 1]}`
+                },
+
+                identificationDocumentBack: {
+                    base64String: backBase64Code.split(',')[1],
+                    fileName: identificationBackDocumentFileName.split('.')[0],
+                    fileExtension: `.${datas[datas.length - 1]}`
+                }
+            };
+            dispatch(identificationDocData(identificationThings));
+        } else {
+            const data = identificationDocumentFileName.split('.');
+            // const datas = identificationBackDocumentFileName.split('.');
+            const identificationThings = {
+                meansOfIdentification: IDType,
+                idNumber: idNumber,
+                identificationDocumentFront: {
+                    base64String: base64Code.split(',')[1],
+                    fileName: identificationDocumentFileName.split('.')[0],
+                    fileExtension: `.${data[data.length - 1]}`
+                }
+            };
+            dispatch(identificationDocData(identificationThings));
+        }
         // const identificationThings = {
         //     meansOfIdentification: IDType,
         //     idNumber: idNumber,
         //     identificationDocument: identificationDocumentFile
         // };
-        dispatch(identificationDocData(identificationThings));
     };
 
     useEffect(() => {
@@ -784,12 +800,20 @@ const AccountUpgrade = () => {
 
     useEffect(() => {
         if (identification !== null) {
+            setIdentificationBackDocument(null);
+            setIdentificationBackDocumentFileName(null);
+            setIdentificationDocument(null);
+            setIdentificationDocumentName(null);
             setMessage(identification);
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
             setidCardStatus('done');
         } else if (identificationErrorMessages !== null) {
+            setIdentificationBackDocument(null);
+            setIdentificationBackDocumentFileName(null);
+            setIdentificationDocument(null);
+            setIdentificationDocumentName(null);
             setMessage(identificationErrorMessages);
             setStatusbar('error');
             setOutcome(true);
