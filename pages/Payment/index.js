@@ -79,10 +79,8 @@ const Payment = () => {
     const { transactionFees, errorMessageTransactionFees } = useSelector(
         (state) => state.transactionFeesReducer
     );
-    const {
-        internationalTransfer,
-        errorMessageinternationalTransfer
-    } = useSelector((state) => state.internationalTransferReducer);
+    const { internationalTransfer, errorMessageinternationalTransfer } =
+        useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
@@ -120,6 +118,7 @@ const Payment = () => {
     const [link, setLink] = useState('');
     const [track, setTrack] = useState('');
     const [csvData, setCsvData] = useState([]);
+    const [items, setItems] = useState([]);
     const [recieveLink, setRecieveLink] = useState('');
     const [bill, setBill] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
@@ -142,12 +141,18 @@ const Payment = () => {
         desiredPackageData = JSON.parse(desiredPackage);
     }
     useEffect(() => {
-        let csvUpload;
-        if (typeof window !== 'undefined') {
-            csvUpload = window.localStorage.getItem('csvData');
-            setCsvData(JSON.parse(csvUpload));
-        }
+        setItems(JSON.parse(localStorage.getItem('csvData')));
     }, []);
+    useEffect(() => {
+        if (items) {
+            setCsvData(items);
+        }
+        return () => {
+            setCsvData(items);
+        };
+        console.log(csvData);
+        console.log(items);
+    }, [items]);
 
     let number;
     let numberofBene = {};
@@ -399,6 +404,7 @@ const Payment = () => {
         }
     };
     useEffect(() => {
+        console.log(csvData);
         setSum(
             csvData?.slice(2).reduce((a, b) => {
                 return a + b.Amount;
@@ -871,10 +877,11 @@ const Payment = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount: parseInt(
-                                                              e.Amount,
-                                                              10
-                                                          ),
+                                                          transactionAmount:
+                                                              parseInt(
+                                                                  e.Amount,
+                                                                  10
+                                                              ),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -1099,7 +1106,8 @@ const Payment = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId:
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
