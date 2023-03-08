@@ -66,13 +66,16 @@ const MakePaymentSecond = ({
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [newAmount, setNewAmount] = useState('');
+
     useEffect(() => {
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'NGN',
             currencyDisplay: 'narrowSymbol'
         });
+
         const formattedAmount = formatter.format(amount);
+
         setNewAmount(formattedAmount);
     }, []);
     const { handleChange } = useSSNFields();
