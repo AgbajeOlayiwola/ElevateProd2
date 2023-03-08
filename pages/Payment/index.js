@@ -112,12 +112,13 @@ const Payment = () => {
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
     const [balance, setBalance] = useState('₦ 0.00');
-    const [sum, setSum] = useState('');
     const [error, setError] = useState('');
+    const [sum, setSum] = useState(0);
+    const [sums, setSums] = useState(0);
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');
     const [track, setTrack] = useState('');
-    const [csvData, setCsvData] = useState([]);
+    const [csvData, setCsvData] = useState();
     const [items, setItems] = useState([]);
     const [recieveLink, setRecieveLink] = useState('');
     const [bill, setBill] = useState('');
@@ -140,27 +141,23 @@ const Payment = () => {
         desiredPackage = window.localStorage.getItem('DesiredPackage');
         desiredPackageData = JSON.parse(desiredPackage);
     }
-    const csvItem = 'csvData';
-    let csvType = [];
     useEffect(() => {
-        csvType = JSON.parse(localStorage.getItem(csvItem));
+        let csvType = [];
+        csvType = JSON.parse(localStorage.getItem('csvData'));
         setItems(csvType);
     }, [count]);
     useEffect(() => {
         if (items) {
             setCsvData(items);
-            setSum(
-                items?.slice(2).reduce((a, b) => {
-                    return a + b.Amount;
-                }, 0)
-            );
+
+            console.log(items);
         } else {
             // alert('Hello');
         }
         return () => {
             setCsvData(items);
         };
-    }, [items]);
+    }, [items, count]);
 
     let number;
     let numberofBene = {};
@@ -353,7 +350,13 @@ const Payment = () => {
         } = router;
         setLink({ id }.id);
     });
-    useEffect(() => {}, [sum, count]);
+    // useEffect(() => {
+    //     let x = csvData?.slice(2).reduce((a, b) => {
+    //         return a + b.Amount;
+    //     }, 0);
+    //     setSum(x);
+    //     console.log(x);
+    // }, [csvData]);
 
     useEffect(() => {
         if (link !== undefined) {
@@ -412,8 +415,25 @@ const Payment = () => {
             setPaymentDetails({});
         }
     };
+    useEffect(() => {
+        setSums(0);
+        if (sum === 0) {
+            setSum(
+                csvData?.slice(2).reduce((a, b) => {
+                    return a + +b.Amount;
+                }, sums)
+            );
+        } else {
+            setSum(
+                csvData?.slice(2).reduce((a, b) => {
+                    return a + +b.Amount;
+                }, sums)
+            );
+        }
+    }, [csvData]);
     console.log(csvData);
-    console.log(sum);
+    console.log(sums);
+
     const renderForm = () => {
         switch (formType) {
             case 'paylink':
@@ -760,7 +780,12 @@ const Payment = () => {
                                 action={(data) => {
                                     setPaymentDetails(data);
                                     //console.log(data);
-                                    setCount(count + 1);
+                                    if (csvData) {
+                                        setCount(count + 1);
+                                        console.log('Hello');
+                                    } else {
+                                        alert('Hello');
+                                    }
                                 }}
                             />
                         );
@@ -773,7 +798,17 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 amount={
                                     csvData !== null
-                                        ? sum
+                                        ? sum === 0
+                                            ? setSum(
+                                                  csvData
+                                                      ?.slice(2)
+                                                      .reduce(
+                                                          (a, b) =>
+                                                              a + b.Amount,
+                                                          0
+                                                      )
+                                              )
+                                            : sum
                                         : paymentDetails.amount === ''
                                         ? paymentDetails.details.reduce(
                                               (a, b) => {
