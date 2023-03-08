@@ -140,18 +140,26 @@ const Payment = () => {
         desiredPackage = window.localStorage.getItem('DesiredPackage');
         desiredPackageData = JSON.parse(desiredPackage);
     }
+    const csvItem = 'csvData';
+    let csvType = [];
     useEffect(() => {
-        setItems(JSON.parse(localStorage.getItem('csvData')));
-    }, []);
+        csvType = JSON.parse(localStorage.getItem(csvItem));
+        setItems(csvType);
+    }, [count]);
     useEffect(() => {
         if (items) {
             setCsvData(items);
+            setSum(
+                items?.slice(2).reduce((a, b) => {
+                    return a + b.Amount;
+                }, 0)
+            );
+        } else {
+            // alert('Hello');
         }
         return () => {
             setCsvData(items);
         };
-        console.log(csvData);
-        console.log(items);
     }, [items]);
 
     let number;
@@ -345,6 +353,7 @@ const Payment = () => {
         } = router;
         setLink({ id }.id);
     });
+    useEffect(() => {}, [sum, count]);
 
     useEffect(() => {
         if (link !== undefined) {
@@ -403,25 +412,8 @@ const Payment = () => {
             setPaymentDetails({});
         }
     };
-    useEffect(() => {
-        console.log(csvData);
-        setSum(
-            csvData?.slice(2).reduce((a, b) => {
-                return a + b.Amount;
-            }, 0)
-        );
-        // csvData?.slice(2)?.map((item) => {
-        //     if (item.Bank !== 'Ecobank') {
-        //         const payload = {
-        //             accountId: senderDetails.accountId,
-        //             destinationBankCode: item.Bank,
-        //             transactionAmount: parseInt(data.amount, 10),
-        //             transactionType: 'INTERBANK'
-        //         };
-        //         dispatch(getTransactionFees(payload));
-        //     }
-        // });
-    }, [csvData]);
+    console.log(csvData);
+    console.log(sum);
     const renderForm = () => {
         switch (formType) {
             case 'paylink':
@@ -780,17 +772,17 @@ const Payment = () => {
                                 isLoading={isLoading}
                                 closeAction={handleClose}
                                 amount={
-                                    csvData === null
-                                        ? paymentDetails.amount === ''
-                                            ? paymentDetails.details.reduce(
-                                                  (a, b) => {
-                                                      return a + +b.amount;
-                                                  },
-                                                  0
-                                              )
-                                            : paymentDetails.amount *
-                                              numberofBene.length
-                                        : sum
+                                    csvData !== null
+                                        ? sum
+                                        : paymentDetails.amount === ''
+                                        ? paymentDetails.details.reduce(
+                                              (a, b) => {
+                                                  return a + +b.amount;
+                                              },
+                                              0
+                                          )
+                                        : paymentDetails.amount *
+                                          numberofBene.length
                                 }
                                 title="Bulk Payments"
                                 // charges={csvData === null?: csvData.slice(2).map((item)=>{
