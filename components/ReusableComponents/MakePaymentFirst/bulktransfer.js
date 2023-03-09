@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import PlusSvg from '../ReusableSvgComponents/PlusSvg';
 import Beneficiary from '../Beneficiary';
+import Loader from '../Loader';
 
 const BulkTransfer = ({
     action,
@@ -19,10 +20,10 @@ const BulkTransfer = ({
     bankAccounts,
     payload,
     formData,
-    setFormdata
+    setFormdata,
+    isLoading
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [diffAmount, setDiffAmount] = useState(false);
     const [csvUpload, setCsvUpload] = useState(false);
     const [csv, setCsv] = useState();
@@ -483,9 +484,10 @@ const BulkTransfer = ({
                                                         workbook.Sheets[
                                                             sheetName
                                                         ];
-                                                    const json = XLSX.utils.sheet_to_json(
-                                                        worksheet
-                                                    );
+                                                    const json =
+                                                        XLSX.utils.sheet_to_json(
+                                                            worksheet
+                                                        );
                                                     localStorage.setItem(
                                                         'csvData',
                                                         JSON.stringify(json)
@@ -518,13 +520,17 @@ const BulkTransfer = ({
                             </p>
                         </div>
                     </div>
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text={buttonText}
-                        type="submit"
-                        // err={errorMessageInterBankEnquiry}
-                    />
+                    {isLoading ? (
+                        <Loader />
+                    ) : (
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text={buttonText}
+                            type="submit"
+                            // err={errorMessageInterBankEnquiry}
+                        />
+                    )}
                     {/* <p className={styles.schedule}>
                         Not paying now?<span>Schedule for Later</span>
                     </p> */}

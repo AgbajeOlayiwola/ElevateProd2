@@ -80,10 +80,8 @@ const Payment = () => {
     const { transactionFees, errorMessageTransactionFees } = useSelector(
         (state) => state.transactionFeesReducer
     );
-    const {
-        internationalTransfer,
-        errorMessageinternationalTransfer
-    } = useSelector((state) => state.internationalTransferReducer);
+    const { internationalTransfer, errorMessageinternationalTransfer } =
+        useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
@@ -115,12 +113,13 @@ const Payment = () => {
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
     const [balance, setBalance] = useState('₦ 0.00');
-    const [sum, setSum] = useState('');
+    const [sum, setSum] = useState(0);
     const [error, setError] = useState('');
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');
     const [track, setTrack] = useState('');
     const [csvData, setCsvData] = useState([]);
+    const [items, setItems] = useState([]);
     const [recieveLink, setRecieveLink] = useState('');
     const [bill, setBill] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
@@ -142,13 +141,27 @@ const Payment = () => {
         desiredPackage = window.localStorage.getItem('DesiredPackage');
         desiredPackageData = JSON.parse(desiredPackage);
     }
+    let csvType = [];
     useEffect(() => {
-        let csvUpload;
-        if (typeof window !== 'undefined') {
-            csvUpload = window.localStorage.getItem('csvData');
-            setCsvData(JSON.parse(csvUpload));
-        }
-    }, []);
+        csvType = JSON.parse(localStorage.getItem('csvData'));
+        setCsvData(csvType);
+        let x = csvType?.slice(2).reduce((a, b) => {
+            return a + b.Amount;
+        }, 0);
+        setSum(x);
+    }, [count]);
+    // useEffect(() => {
+    //     if (items) {
+    //         setCsvData(items);
+
+    //         console.log(items);
+    //     } else {
+    //         // alert('Hello');
+    //     }
+    //     return () => {
+    //         setCsvData(items);
+    //     };
+    // }, [items, count]);
 
     let number;
     let numberofBene = {};
@@ -342,6 +355,13 @@ const Payment = () => {
         } = router;
         setLink({ id }.id);
     });
+    // useEffect(() => {
+    //     let x = csvData?.slice(2).reduce((a, b) => {
+    //         return a + b.Amount;
+    //     }, 0);
+    //     setSum(x);
+    //     console.log(x);
+    // }, [csvData]);
 
     useEffect(() => {
         if (link !== undefined) {
@@ -400,23 +420,15 @@ const Payment = () => {
             setPaymentDetails({});
         }
     };
+    console.log(csvData);
+    console.log(sum);
+
     useEffect(() => {
         setSum(
             csvData?.slice(2).reduce((a, b) => {
                 return a + b.Amount;
             }, 0)
         );
-        // csvData?.slice(2)?.map((item) => {
-        //     if (item.Bank !== 'Ecobank') {
-        //         const payload = {
-        //             accountId: senderDetails.accountId,
-        //             destinationBankCode: item.Bank,
-        //             transactionAmount: parseInt(data.amount, 10),
-        //             transactionType: 'INTERBANK'
-        //         };
-        //         dispatch(getTransactionFees(payload));
-        //     }
-        // });
     }, [csvData]);
     const renderForm = () => {
         switch (formType) {
@@ -787,17 +799,17 @@ const Payment = () => {
                                 isLoading={isLoading}
                                 closeAction={handleClose}
                                 amount={
-                                    csvData === null
-                                        ? paymentDetails.amount === ''
-                                            ? paymentDetails.details.reduce(
-                                                  (a, b) => {
-                                                      return a + +b.amount;
-                                                  },
-                                                  0
-                                              )
-                                            : paymentDetails.amount *
-                                              numberofBene.length
-                                        : sum
+                                    csvData !== null
+                                        ? 'sum'
+                                        : paymentDetails.amount === ''
+                                        ? paymentDetails.details.reduce(
+                                              (a, b) => {
+                                                  return a + +b.amount;
+                                              },
+                                              0
+                                          )
+                                        : paymentDetails.amount *
+                                          numberofBene.length
                                 }
                                 title="Bulk Payments"
                                 // charges={csvData === null?: csvData.slice(2).map((item)=>{
@@ -884,10 +896,11 @@ const Payment = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount: parseInt(
-                                                              e.Amount,
-                                                              10
-                                                          ),
+                                                          transactionAmount:
+                                                              parseInt(
+                                                                  e.Amount,
+                                                                  10
+                                                              ),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -1112,7 +1125,8 @@ const Payment = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId:
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
