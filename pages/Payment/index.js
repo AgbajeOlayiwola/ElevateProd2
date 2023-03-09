@@ -817,7 +817,7 @@ const Payment = () => {
                                 transferAction={(data) => {
                                     setIsLoading(true);
                                     const paymentData = {
-                                        accountId: senderDetails.accountId,
+                                        accountId: senderDetails?.accountId,
                                         transactionPin: Object.values(data)
                                             .toString()
                                             .replaceAll(',', ''),
