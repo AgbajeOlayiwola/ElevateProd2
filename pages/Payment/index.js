@@ -80,8 +80,10 @@ const Payment = () => {
     const { transactionFees, errorMessageTransactionFees } = useSelector(
         (state) => state.transactionFeesReducer
     );
-    const { internationalTransfer, errorMessageinternationalTransfer } =
-        useSelector((state) => state.internationalTransferReducer);
+    const {
+        internationalTransfer,
+        errorMessageinternationalTransfer
+    } = useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
@@ -197,6 +199,7 @@ const Payment = () => {
         console.log(bankAccounts);
         console.log(formData.accountNum);
         setSenderDetails(accountPrimarys);
+        console.log(senderDetails);
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
                 // setAcctNumber(accountPrimarys);
@@ -205,7 +208,7 @@ const Payment = () => {
                     accountId: bankAccounts[accountNo].accountId
                 };
                 setSenderDetails(accountPrimarys.accountId);
-                console.log(senderDetails.accountId);
+                // console.log(senderDetails.accountId);
                 dispatch(getBalanceEnquiry(balanceData));
             } else {
                 setAcctNumber('Pending');
@@ -712,7 +715,7 @@ const Payment = () => {
                                         transactionPin: Object.values(data)
                                             .toString()
                                             .replaceAll(',', ''),
-                                        accountId: senderDetails.accountId
+                                        accountId: accountPrimarys.accountId
                                     };
 
                                     dispatch(postInterBank(paymentData));
@@ -896,11 +899,10 @@ const Payment = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount:
-                                                              parseInt(
-                                                                  e.Amount,
-                                                                  10
-                                                              ),
+                                                          transactionAmount: parseInt(
+                                                              e.Amount,
+                                                              10
+                                                          ),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -1125,8 +1127,7 @@ const Payment = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId:
-                                                airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
