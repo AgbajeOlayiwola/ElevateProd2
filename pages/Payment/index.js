@@ -113,13 +113,13 @@ const Payment = () => {
     const [interEnquiry, setInterEnquiry] = useState({});
     const [balance, setBalance] = useState('₦ 0.00');
     const [error, setError] = useState('');
-    const [sum, setSum] = useState(120);
-    const [sums, setSums] = useState(0);
+    const [test, setTest] = useState(0);
+    const [sum, setSum] = useState(0);
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');
     const [track, setTrack] = useState('');
     const [csvData, setCsvData] = useState();
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState();
     const [recieveLink, setRecieveLink] = useState('');
     const [bill, setBill] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
@@ -141,16 +141,27 @@ const Payment = () => {
         desiredPackage = window.localStorage.getItem('DesiredPackage');
         desiredPackageData = JSON.parse(desiredPackage);
     }
+    let data;
+    if (typeof window !== 'undefined') {
+        data = localStorage.getItem('csvData');
+    }
     useEffect(() => {
-        let csvType = [];
-        csvType = JSON.parse(localStorage.getItem('csvData'));
-        setItems(csvType);
-    }, [count]);
-    useEffect(() => {
-        if (items) {
-            setCsvData(items);
+        if (data !== null) {
+            let csvType = [];
+            csvType = JSON.parse(data);
+            setItems(csvType);
+        }
+    }, [data]);
 
-            console.log(items);
+    useEffect(() => {
+        if (items !== undefined) {
+            setCsvData(items);
+            let newSum = items.slice(2).reduce((a, b) => {
+                return a + +b.Amount;
+            }, 0);
+            setSum(newSum);
+            console.log(sum);
+            console.log(newSum);
         } else {
             // alert('Hello');
         }
@@ -158,7 +169,8 @@ const Payment = () => {
             setCsvData(items);
         };
     }, [items, count]);
-
+    console.log(sum);
+    useEffect(() => {}, [sum, setSum]);
     let number;
     let numberofBene = {};
     if (typeof window !== 'undefined') {
@@ -415,42 +427,7 @@ const Payment = () => {
             setPaymentDetails({});
         }
     };
-    const getSums = () => {
-        let temp = 0;
-        csvData?.slice(2).map((item) => {
-            temp = temp + item.Amount;
-        });
-
-        console.log(temp);
-        if (temp !== 0) {
-            setSums(temp);
-        }
-    };
-    useEffect(() => {
-        // if (sum === 0) {
-        //     setSum(
-        //         csvData?.slice(2).reduce((a, b) => {
-        //             return a + +b.Amount;
-        //         }, sums)
-        //     );
-        // } else {
-        //     setSum(
-        //         csvData?.slice(2).reduce((a, b) => {
-        //             return a + +b.Amount;
-        //         }, sums)
-        //     );
-        // }
-        getSums();
-    }, [csvData, sums]);
-    useEffect(() => {
-        console.log(sums);
-        // if (sums !== 0) {
-        setSum(sums);
-        // } else {
-        //     getSums();
-        // }
-    }, [sum]);
-
+    console.log(csvData);
     const renderForm = () => {
         switch (formType) {
             case 'paylink':
@@ -798,12 +775,12 @@ const Payment = () => {
                                 action={(data) => {
                                     setPaymentDetails(data);
                                     //console.log(data);
-                                    // if (csvData !== null) {
-                                    //     setIsLoading(true);
-                                    // }
-                                    // else {
-                                    setCount(count + 1);
-                                    // }
+                                    if (csvData !== undefined) {
+                                        setIsLoading(true);
+                                        alert('Hi');
+                                    } else {
+                                        setCount(count + 1);
+                                    }
                                 }}
                             />
                         );
@@ -816,7 +793,7 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 amount={
                                     csvData !== null
-                                        ? sums
+                                        ? sum
                                         : paymentDetails.amount === ''
                                         ? paymentDetails.details.reduce(
                                               (a, b) => {
@@ -836,7 +813,7 @@ const Payment = () => {
                                 // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
                                 number={
-                                    csvData !== null
+                                    csvData !== undefined
                                         ? csvData.slice(2).length
                                         : numberofBene?.length
                                 }
