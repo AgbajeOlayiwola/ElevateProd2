@@ -87,6 +87,9 @@ const reffernceFormShare = '/account-upgrade/reference-form/share';
 const uploadTin = '/account-upgrade/tin';
 const uploadrefferee = '/account-upgrade/reference-form/upload';
 const cacDocumentUpload = '/account-upgrade/cac-document/upload';
+const paymentQr = '/payment/qr';
+const generateQr = '/payment/qr/generate';
+const qrInfo = '/payment/qr/generate';
 export default {
     getBanks,
     getCountries,
@@ -175,5 +178,8 @@ export default {
     reffernceFormShare,
     uploadTin,
     uploadrefferee,
-    cacDocumentUpload
+    cacDocumentUpload,
+    paymentQr,
+    generateQr,
+    qrInfo
 };

@@ -428,7 +428,8 @@ const AccountUpgrade = () => {
             setLoading(false);
             setCacStatus('done');
         } else if (cacErrorMessages !== null) {
-            setMessage(cacErrorMessages);
+            console.log(cacErrorMessages);
+            setMessage(cacErrorMessages.data.message);
             setStatusbar('error');
             setOutcome(true);
             setLoading(false);
@@ -595,7 +596,7 @@ const AccountUpgrade = () => {
     useEffect(() => {
         console.log(CacDocumentSuccess, CacDocumentError);
         if (CacDocumentSuccess !== null) {
-            setMessage('Cac Ducument Updated Successfully');
+            setMessage('Cac Document Updated Successfully');
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);

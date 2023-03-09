@@ -30,7 +30,8 @@ import {
     loadUserProfile,
     postBeneficiariesData,
     loadAccountPrimary,
-    loadsetTransactionPin
+    loadsetTransactionPin,
+    generateQrCodeDetails
 } from '../../redux/actions/actions';
 import ChartDiv from './chartDivStyled';
 import ChartContent from './chartContentStyled';
@@ -192,9 +193,11 @@ const Payment = () => {
     }, [balanceEnquiry]);
     //where i need to work on
     useEffect(() => {
-        // console.log(accountPrimarys);
+        console.log(accountPrimarys);
         console.log(bankAccounts);
         console.log(formData.accountNum);
+        setSenderDetails(accountPrimarys);
+        console.log(senderDetails);
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
                 // setAcctNumber(accountPrimarys);
@@ -202,8 +205,8 @@ const Payment = () => {
                 balanceData = {
                     accountId: bankAccounts[accountNo].accountId
                 };
-                setSenderDetails(bankAccounts[accountNo]);
-                console.log(senderDetails.accountId);
+                setSenderDetails(accountPrimarys.accountId);
+                // console.log(senderDetails.accountId);
                 dispatch(getBalanceEnquiry(balanceData));
             } else {
                 setAcctNumber('Pending');
@@ -492,10 +495,11 @@ const Payment = () => {
                                     setPaymentDetails(data);
                                     const ussdData = {
                                         amount: parseInt(data.amount, 10),
-                                        accountId: senderDetails.accountId,
+                                        accountId: accountPrimarys.accountId,
                                         nameOfPayment: data.accountName,
                                         paymentDescription: data.description
                                     };
+                                    console.log(senderDetails);
                                     setIsLoading(true);
                                     dispatch(loadussdGen(ussdData));
                                 }}
@@ -527,7 +531,17 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 action={(data) => {
                                     //console.logdata);
-                                    setCount(count + 1);
+                                    const generateQrCodeData = {
+                                        amount: data.amount,
+                                        productName: data.accountName,
+                                        productCode: accountPrimarys.accountId,
+                                        description: data.description
+                                    };
+                                    dispatch(
+                                        generateQrCodeDetails(
+                                            generateQrCodeData
+                                        )
+                                    );
                                 }}
                             />
                         );
@@ -614,7 +628,8 @@ const Payment = () => {
                                         setCount(count + 1);
                                     } else {
                                         const payload = {
-                                            accountId: senderDetails.accountId,
+                                            accountId:
+                                                accountPrimarys.accountId,
                                             destinationBankCode:
                                                 data.bankName === ''
                                                     ? data.bankNameBene
@@ -699,7 +714,7 @@ const Payment = () => {
                                         transactionPin: Object.values(data)
                                             .toString()
                                             .replaceAll(',', ''),
-                                        accountId: senderDetails.accountId
+                                        accountId: accountPrimarys.accountId
                                     };
 
                                     dispatch(postInterBank(paymentData));
@@ -1015,7 +1030,7 @@ const Payment = () => {
                                 airtimeAction={(data) => {
                                     setPaymentDetails(data);
                                     const payload = {
-                                        accountId: senderDetails.accountId,
+                                        accountId: accountPrimarys.accountId,
                                         billerCode:
                                             bill === 'AIRTIME'
                                                 ? airtimeNetData.code
@@ -1075,7 +1090,8 @@ const Payment = () => {
                                             transactionPin: Object.values(data)
                                                 .toString()
                                                 .replaceAll(',', ''),
-                                            accountId: senderDetails.accountId,
+                                            accountId:
+                                                accountPrimarys.accountId,
                                             billerCode: airtimeNetData.code,
                                             billerId: airtimeNetData.id,
                                             // productCode: airtimeNetData.name,
@@ -1103,7 +1119,8 @@ const Payment = () => {
                                         dispatch(postAirtime(billerdata));
                                     } else {
                                         const billerData = {
-                                            accountId: senderDetails.accountId,
+                                            accountId:
+                                                accountPrimarys.accountId,
                                             transactionPin: Object.values(data)
                                                 .toString()
                                                 .replaceAll(',', ''),

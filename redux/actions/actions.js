@@ -82,7 +82,9 @@ import {
     reffereeType,
     tinType,
     uploadreffereeType,
-    cacDocummentType
+    cacDocummentType,
+    generateQrType,
+    qrInfoType
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -3187,3 +3189,87 @@ export const getCacDocumentDetails = (cacDocumentData) => (dispatch) => {
 };
 
 //CAC DOCUMENT END
+
+//QR INFO LOAD
+
+export const getQrInfoLoad = () => ({
+    type: qrInfoType.QR_INFO_START
+});
+export const getQrInfoSuccess = (QrInfoSuccess) => ({
+    type: qrInfoType.QR_INFO_SUCCESS,
+    payload: QrInfoSuccess
+});
+export const getQrInfoError = (QrInfoError) => ({
+    type: qrInfoType.QR_INFO_ERROR,
+    payload: QrInfoError
+});
+export const getQrInfoDetails = (QrInfoData) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+
+    axios
+        .post(
+            `https://testvate.live${apiRoutes.cacDocumentUpload}`,
+            QrInfoData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            //console.logresponse.data.data);
+            dispatch(getQrInfoSuccess(response));
+        })
+        .catch((error) => dispatch(getQrInfoError(error.response)));
+};
+
+//QR INFO END
+
+//GENERATE QR CODE START
+
+export const generateQrCodeLoad = () => ({
+    type: generateQrType.GENERATE_QR_START
+});
+export const generateQrCodeSuccess = (generateQrCodeSuccess) => ({
+    type: generateQrType.GENERATE_QR_SUCCESS,
+    payload: generateQrCodeSuccess
+});
+export const generateQrCodeError = (generateQrCodeError) => ({
+    type: generateQrType.GENERATE_QR_ERROR,
+    payload: generateQrCodeError
+});
+export const generateQrCodeDetails = (generateQrCodeData) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+
+    axios
+        .post(
+            `https://testvate.live${apiRoutes.generateQr}`,
+            generateQrCodeData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            //console.logresponse.data.data);
+            dispatch(generateQrCodeSuccess(response));
+        })
+        .catch((error) => dispatch(generateQrCodeError(error.response)));
+};
+
+//GENERATE QR CODE END
