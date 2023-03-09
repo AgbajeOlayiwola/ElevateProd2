@@ -428,7 +428,8 @@ const AccountUpgrade = () => {
             setLoading(false);
             setCacStatus('done');
         } else if (cacErrorMessages !== null) {
-            setMessage(cacErrorMessages);
+            console.log(cacErrorMessages);
+            setMessage(cacErrorMessages.data.message);
             setStatusbar('error');
             setOutcome(true);
             setLoading(false);
