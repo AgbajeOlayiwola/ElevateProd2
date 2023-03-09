@@ -30,7 +30,8 @@ import {
     loadUserProfile,
     postBeneficiariesData,
     loadAccountPrimary,
-    loadsetTransactionPin
+    loadsetTransactionPin,
+    generateQrCodeDetails
 } from '../../redux/actions/actions';
 import ChartDiv from './chartDivStyled';
 import ChartContent from './chartContentStyled';
@@ -179,9 +180,10 @@ const Payment = () => {
     }, [balanceEnquiry]);
     //where i need to work on
     useEffect(() => {
-        // console.log(accountPrimarys);
+        console.log(accountPrimarys);
         console.log(bankAccounts);
         console.log(formData.accountNum);
+        setSenderDetails(accountPrimarys);
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
                 // setAcctNumber(accountPrimarys);
@@ -189,7 +191,7 @@ const Payment = () => {
                 balanceData = {
                     accountId: bankAccounts[accountNo].accountId
                 };
-                setSenderDetails(bankAccounts[accountNo]);
+                setSenderDetails(accountPrimarys.accountId);
                 console.log(senderDetails.accountId);
                 dispatch(getBalanceEnquiry(balanceData));
             } else {
@@ -484,6 +486,7 @@ const Payment = () => {
                                         nameOfPayment: data.accountName,
                                         paymentDescription: data.description
                                     };
+                                    console.log(senderDetails);
                                     setIsLoading(true);
                                     dispatch(loadussdGen(ussdData));
                                 }}
@@ -515,7 +518,17 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 action={(data) => {
                                     //console.logdata);
-                                    setCount(count + 1);
+                                    const generateQrCodeData = {
+                                        amount: data.amount,
+                                        productName: data.accountName,
+                                        productCode: senderDetails.accountId,
+                                        description: data.description
+                                    };
+                                    dispatch(
+                                        generateQrCodeDetails(
+                                            generateQrCodeData
+                                        )
+                                    );
                                 }}
                             />
                         );
