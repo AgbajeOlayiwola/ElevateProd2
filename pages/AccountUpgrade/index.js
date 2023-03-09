@@ -595,7 +595,7 @@ const AccountUpgrade = () => {
     useEffect(() => {
         console.log(CacDocumentSuccess, CacDocumentError);
         if (CacDocumentSuccess !== null) {
-            setMessage('Cac Ducument Updated Successfully');
+            setMessage('Cac Document Updated Successfully');
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);

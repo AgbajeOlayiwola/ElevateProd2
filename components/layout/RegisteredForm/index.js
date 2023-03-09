@@ -84,7 +84,7 @@ const ExistingMultiStep = () => {
                             ) {
                                 userEmail = newAccounts.email;
                             } else if (
-                                new (Accounts?.user?.email)() !== undefined &&
+                                newAccounts?.user?.email !== undefined &&
                                 newAccounts?.user?.email !== null
                             ) {
                                 userEmail = newAccounts.user.email;
