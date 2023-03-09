@@ -66,15 +66,19 @@ const MakePaymentSecond = ({
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [newAmount, setNewAmount] = useState('');
+
     useEffect(() => {
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'NGN',
             currencyDisplay: 'narrowSymbol'
         });
+
         const formattedAmount = formatter.format(amount);
+
         setNewAmount(formattedAmount);
     }, []);
+    console.log(amount);
     const { handleChange } = useSSNFields();
     const {
         register,
@@ -104,10 +108,12 @@ const MakePaymentSecond = ({
                             </div>
                         </div>
                         <h2>Confirm Transaction</h2>
-                        <div className={styles.transactionamount}>
-                            <p>Amount</p>
-                            <h3>{newAmount}</h3>
-                        </div>
+                        {amount === 'sum' ? null : (
+                            <div className={styles.transactionamount}>
+                                <p>Amount</p>
+                                <h3>{newAmount}</h3>
+                            </div>
+                        )}
                         {title === 'Bills Payment' ? (
                             <div className={styles.transactiondetails}>
                                 <div className={styles.transactionsingles}>

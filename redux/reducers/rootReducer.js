@@ -83,6 +83,8 @@ import refferenceEmailReducer from './refferenceEmail.reducer';
 import tinReducer from './tin.reducer';
 import uploadRefereeFileReducer from './uploadrefereefile.reducer';
 import cacDocUploadReducer from './cacdocument.reducer';
+import qrInfoReducer from './qrInfo.reducer';
+import paymentQrReducer from './paymentQr.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -172,7 +174,9 @@ const appReducer = combineReducers({
     refferenceEmailReducer: refferenceEmailReducer,
     tinReducer: tinReducer,
     uploadRefereeFileReducer: uploadRefereeFileReducer,
-    cacDocUploadReducer: cacDocUploadReducer
+    cacDocUploadReducer: cacDocUploadReducer,
+    qrInfoReducer: qrInfoReducer,
+    paymentQrReducer: paymentQrReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

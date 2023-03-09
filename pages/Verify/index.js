@@ -25,7 +25,7 @@ const Verify = () => {
         if (token) {
             axios
                 .get(
-                    `https://testvate.live/authentication/email-verification/${token}`
+                    `https://testvate.liveauthentication/email-verification/${token}`
                 )
                 .then((response) => {
                     //console.logresponse.data.message);

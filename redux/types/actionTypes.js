@@ -789,3 +789,30 @@ export const cacDocummentType = {
     CAC_DOCUMENT_ERROR: 'CAC_DOCUMENT_ERROR'
 };
 //End Cac Document Type
+
+//Qr info Type
+
+export const qrInfoType = {
+    QR_INFO_START: 'QR_INFO_START',
+    QR_INFO_SUCCESS: 'QR_INFO_SUCCESS',
+    QR_INFO_ERROR: 'QR_INFO_ERROR'
+};
+//Qr Info Type
+
+//payment qr Type
+
+export const paymentQrType = {
+    PAYMENT_QR_START: 'PAYMENT_QR_START',
+    PAYMENT_QR_SUCCESS: 'PAYMENT_QR_SUCCESS',
+    PAYMENT_QR_ERROR: 'PAYMENT_QR_ERROR'
+};
+//paymment qr Type
+
+//Generate QrType
+
+export const generateQrType = {
+    GENERATE_QR_START: 'GENERATE_QR_START',
+    GENERATE_QR_SUCCESS: 'GENERATE_QR_SUCCESS',
+    GENERATE_QR_ERROR: 'GENERATE_QR_ERROR'
+};
+//Generate Qr Type
