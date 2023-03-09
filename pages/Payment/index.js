@@ -112,14 +112,13 @@ const Payment = () => {
     const [paymentDetails, setPaymentDetails] = useState({});
     const [interEnquiry, setInterEnquiry] = useState({});
     const [balance, setBalance] = useState('₦ 0.00');
-    const [error, setError] = useState('');
-    const [test, setTest] = useState(0);
     const [sum, setSum] = useState(0);
+    const [error, setError] = useState('');
     const [status, setStatus] = useState('');
     const [link, setLink] = useState('');
     const [track, setTrack] = useState('');
-    const [csvData, setCsvData] = useState();
-    const [items, setItems] = useState();
+    const [csvData, setCsvData] = useState([]);
+    const [items, setItems] = useState([]);
     const [recieveLink, setRecieveLink] = useState('');
     const [bill, setBill] = useState('');
     const [senderDetails, setSenderDetails] = useState({});
@@ -141,36 +140,28 @@ const Payment = () => {
         desiredPackage = window.localStorage.getItem('DesiredPackage');
         desiredPackageData = JSON.parse(desiredPackage);
     }
-    let data;
-    if (typeof window !== 'undefined') {
-        data = localStorage.getItem('csvData');
-    }
+    let csvType = [];
     useEffect(() => {
-        if (data !== null) {
-            let csvType = [];
-            csvType = JSON.parse(data);
-            setItems(csvType);
-        }
-    }, [data]);
+        csvType = JSON.parse(localStorage.getItem('csvData'));
+        setCsvData(csvType);
+        let x = csvType?.slice(2).reduce((a, b) => {
+            return a + b.Amount;
+        }, 0);
+        setSum(x);
+    }, [count]);
+    // useEffect(() => {
+    //     if (items) {
+    //         setCsvData(items);
 
-    useEffect(() => {
-        if (items !== undefined) {
-            setCsvData(items);
-            let newSum = items.slice(2).reduce((a, b) => {
-                return a + +b.Amount;
-            }, 0);
-            setSum(newSum);
-            console.log(sum);
-            console.log(newSum);
-        } else {
-            // alert('Hello');
-        }
-        return () => {
-            setCsvData(items);
-        };
-    }, [items, count]);
-    console.log(sum);
-    useEffect(() => {}, [sum, setSum]);
+    //         console.log(items);
+    //     } else {
+    //         // alert('Hello');
+    //     }
+    //     return () => {
+    //         setCsvData(items);
+    //     };
+    // }, [items, count]);
+
     let number;
     let numberofBene = {};
     if (typeof window !== 'undefined') {
@@ -428,6 +419,15 @@ const Payment = () => {
         }
     };
     console.log(csvData);
+    console.log(sum);
+
+    useEffect(() => {
+        setSum(
+            csvData?.slice(2).reduce((a, b) => {
+                return a + b.Amount;
+            }, 0)
+        );
+    }, [csvData]);
     const renderForm = () => {
         switch (formType) {
             case 'paylink':
@@ -766,7 +766,6 @@ const Payment = () => {
                             <MakePaymentFirst
                                 formData={formData}
                                 setFormdata={setFormdata}
-                                isLoading={isLoading}
                                 overlay={overlay}
                                 firstTitle="Bulk Payments"
                                 closeAction={handleClose}
@@ -775,12 +774,7 @@ const Payment = () => {
                                 action={(data) => {
                                     setPaymentDetails(data);
                                     //console.log(data);
-                                    if (csvData !== undefined) {
-                                        setIsLoading(true);
-                                        alert('Hi');
-                                    } else {
-                                        setCount(count + 1);
-                                    }
+                                    setCount(count + 1);
                                 }}
                             />
                         );
@@ -793,7 +787,7 @@ const Payment = () => {
                                 closeAction={handleClose}
                                 amount={
                                     csvData !== null
-                                        ? sum
+                                        ? 'sum'
                                         : paymentDetails.amount === ''
                                         ? paymentDetails.details.reduce(
                                               (a, b) => {
@@ -813,7 +807,7 @@ const Payment = () => {
                                 // recieverBank={paymentDetails.bankName}
                                 overlay={overlay}
                                 number={
-                                    csvData !== undefined
+                                    csvData !== null
                                         ? csvData.slice(2).length
                                         : numberofBene?.length
                                 }

@@ -78,6 +78,7 @@ const MakePaymentSecond = ({
 
         setNewAmount(formattedAmount);
     }, []);
+    console.log(amount);
     const { handleChange } = useSSNFields();
     const {
         register,
@@ -107,10 +108,12 @@ const MakePaymentSecond = ({
                             </div>
                         </div>
                         <h2>Confirm Transaction</h2>
-                        <div className={styles.transactionamount}>
-                            <p>Amount</p>
-                            <h3>{newAmount}</h3>
-                        </div>
+                        {amount === 'sum' ? null : (
+                            <div className={styles.transactionamount}>
+                                <p>Amount</p>
+                                <h3>{newAmount}</h3>
+                            </div>
+                        )}
                         {title === 'Bills Payment' ? (
                             <div className={styles.transactiondetails}>
                                 <div className={styles.transactionsingles}>
