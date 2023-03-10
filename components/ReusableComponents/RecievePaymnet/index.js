@@ -25,7 +25,7 @@ const RecievePaymentBtn = () => {
                                 <p>{item.icon}</p>
                                 <Link
                                     href={{
-                                        pathname: './Payment',
+                                        pathname: '/Payment.html',
                                         query: { id: item.path }
                                     }}
                                 >

@@ -333,7 +333,8 @@ const AccountUpgrade = () => {
     }, [profilingQuestions]);
     useEffect(() => {
         if (shareDocuments !== null) {
-            //console.log(shareDocuments);
+            // console.log(shareDocuments);
+
             shareDocuments?.map((document) => {
                 if (document.documentType === 'UTILITY') {
                     const test = document.absoluteUrl.split('/');
@@ -369,11 +370,12 @@ const AccountUpgrade = () => {
                     } else {
                         setScumlStatus('done');
                     }
-                } else if (document.documentType === 'REFERENCE_FORMFORM') {
+                } else if (document.documentType === 'REFERENCE_FORM') {
                     if (document.status === 'REJECTED') {
                         setRefereeStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setRefereeStatus(document.status);
+                        setReffereeFormStatus('done');
                     } else {
                         setRefereeStatus('done');
                     }
@@ -388,7 +390,7 @@ const AccountUpgrade = () => {
                     if (document.status === 'REJECTED') {
                         setidCardStatus('comment');
                     } else if (document.status === 'APPROVED') {
-                        setidCardStatus(document.status);
+                        setidCardStatus('done');
                     } else if (document.status === 'PENDING') {
                         setidCardStatus('notDone');
                     }
@@ -428,7 +430,7 @@ const AccountUpgrade = () => {
             setLoading(false);
             setCacStatus('done');
         } else if (cacErrorMessages !== null) {
-            console.log(cacErrorMessages);
+            // console.log(cacErrorMessages);
             setMessage(cacErrorMessages.data.message);
             setStatusbar('error');
             setOutcome(true);
@@ -456,7 +458,7 @@ const AccountUpgrade = () => {
     const saveRefFile = (e) => {
         setFileI(e.target.files[0]);
         setFileNameI(e.target.files[0].name);
-        console.log(e.target.files[0]);
+        // console.log(e.target.files[0]);
     };
     const saveRefFileI = (e) => {
         //console.log(e.target.files[0]);
@@ -474,7 +476,7 @@ const AccountUpgrade = () => {
         dispatch(getUploadReffereeDetails(uploadrefereeData));
     };
     useEffect(() => {
-        console.log(UploadreffereeError);
+        // console.log(UploadreffereeError);
 
         if (UploadreffereeSuccess !== null) {
             setMessage('Referee Form Uploaded');
@@ -594,7 +596,7 @@ const AccountUpgrade = () => {
         dispatch(getCacDocumentDetails(cacDocData));
     };
     useEffect(() => {
-        console.log(CacDocumentSuccess, CacDocumentError);
+        // console.log(CacDocumentSuccess, CacDocumentError);
         if (CacDocumentSuccess !== null) {
             setMessage('Cac Document Updated Successfully');
             setStatusbar('success');
@@ -656,7 +658,7 @@ const AccountUpgrade = () => {
     };
     useEffect(() => {
         if (vninMSeccess) {
-            console.log(vninMSeccess);
+            // console.log(vninMSeccess);
             if (vninMSeccess.data.isCredentialsValid == true) {
                 setMessage(vninMSeccess?.message);
                 setStatusbar('success');
@@ -704,12 +706,12 @@ const AccountUpgrade = () => {
     };
     const onLoads = (fileStrings) => {
         setBackBase64Code(fileStrings);
-        console.log('Back', backBase64Code);
+        // console.log('Back', backBase64Code);
     };
 
     const onLoad = (fileString) => {
         setBase64Code(fileString);
-        console.log(base64Code);
+        // console.log(base64Code);
     };
     const IdentificationyUpload = () => {
         setLoading(true);
@@ -909,7 +911,14 @@ const AccountUpgrade = () => {
                 textII: 'Referee Form',
                 icon: <AddressSvg />,
                 statusReport: reffereeFormStatus,
-                status: pending
+                status:
+                    refereeStatus === 'APPROVED'
+                        ? 'Approved'
+                        : refereeStatus === 'notDone'
+                        ? pending
+                        : refereeStatus === 'comment'
+                        ? rejected
+                        : 'pending'
             },
 
             // Referee Form
@@ -1099,7 +1108,14 @@ const AccountUpgrade = () => {
                 textII: 'Referee Form',
                 icon: <AddressSvg />,
                 statusReport: reffereeFormStatus,
-                status: pending
+                status:
+                    refereeStatus === 'APPROVED'
+                        ? 'Approved'
+                        : refereeStatus === 'notDone'
+                        ? pending
+                        : refereeStatus === 'comment'
+                        ? rejected
+                        : 'pending'
             },
             {
                 title: 'Verify your Address',
@@ -1236,7 +1252,7 @@ const AccountUpgrade = () => {
             {
                 title: 'TIN',
                 textII: 'TINREG',
-                statusReport: cacStatus,
+                statusReport: tinStatus,
                 name: 'TIN',
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
@@ -1271,7 +1287,7 @@ const AccountUpgrade = () => {
             }
         ]
     };
-    console.log(pending);
+    // console.log(pending);
 
     useEffect(() => {}, [shareDocuments]);
 
@@ -1678,7 +1694,7 @@ const AccountUpgrade = () => {
                                             />
                                         </div>
                                     </div>
-                                    {console.log(landMark)}
+                                    {/* {console.log(landMark)} */}
                                     <div className={styles.midCont}>
                                         <div className={styles.addressGroup}>
                                             <label>State</label>
@@ -1802,11 +1818,11 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Link
+                            {/* <Link
                                 href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark=${landMark}&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=${userProfile?.phoneNumber}`}
                             >
                                 Links
-                            </Link>
+                            </Link> */}
                             <Modal
                                 isOpen={modalIsOpen}
                                 onAfterOpen={afterOpenModal}
@@ -2718,8 +2734,20 @@ const AccountUpgrade = () => {
                         }}
                         title="TIN Registration"
                     >
+                        {/* {shareDocuments?.map((items) => {
+                            if (items.documentType === 'IDENTIFICATION') {
+                                return (
+                                    <Tooltip anchorId="Tin" content="kjhgf" />
+                                );
+                            } else {
+                                return '';
+                            }
+                        })} */}
+
                         <div className={styles.identificationGroup}>
-                            <label>TIN (Tax Identification Number)</label>
+                            <label id="Tin">
+                                TIN (Tax Identification Number)
+                            </label>
                             <input
                                 type="text"
                                 onChange={(e) => setTinNumber(e.target.value)}
@@ -2822,7 +2850,20 @@ const AccountUpgrade = () => {
                             })}
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
-                                    <p>Upload CO2</p>
+                                    {shareDocuments?.map((items) => {
+                                        if (items.documentType === 'CO2') {
+                                            return (
+                                                <Tooltip
+                                                    anchorId="co2"
+                                                    content={items.comment}
+                                                />
+                                            );
+                                        } else {
+                                            return '';
+                                        }
+                                    })}
+
+                                    <p id="co2"> Upload CO2</p>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {' '}
@@ -2842,7 +2883,19 @@ const AccountUpgrade = () => {
                             </div>
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
-                                    <p>Upload CO7</p>
+                                    {shareDocuments?.map((items) => {
+                                        if (items.documentType === 'CO7') {
+                                            return (
+                                                <Tooltip
+                                                    anchorId="co7"
+                                                    content={items.comment}
+                                                />
+                                            );
+                                        } else {
+                                            return '';
+                                        }
+                                    })}
+                                    <p id="co7">Upload CO7</p>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {co7FileName
@@ -2861,7 +2914,19 @@ const AccountUpgrade = () => {
                             </div>
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
-                                    <p>Upload CAC 1.1</p>
+                                    {shareDocuments?.map((items) => {
+                                        if (items.documentType === 'CAC1.1') {
+                                            return (
+                                                <Tooltip
+                                                    anchorId="cac11"
+                                                    content={items.comment}
+                                                />
+                                            );
+                                        } else {
+                                            return '';
+                                        }
+                                    })}
+                                    <p id="cac11">Upload CAC 1.1</p>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {cac1FileName
@@ -2880,7 +2945,19 @@ const AccountUpgrade = () => {
                             </div>
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
-                                    <p>Upload CAC 2.1</p>
+                                    {shareDocuments?.map((items) => {
+                                        if (items.documentType === 'CAC2.1') {
+                                            return (
+                                                <Tooltip
+                                                    anchorId="cac21"
+                                                    content={items.comment}
+                                                />
+                                            );
+                                        } else {
+                                            return '';
+                                        }
+                                    })}
+                                    <p id="cac21">Upload CAC 2.1</p>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {cac2FileName
@@ -2899,7 +2976,19 @@ const AccountUpgrade = () => {
                             </div>
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
-                                    <p>
+                                    {shareDocuments?.map((items) => {
+                                        if (items.documentType === 'memat') {
+                                            return (
+                                                <Tooltip
+                                                    anchorId="memat"
+                                                    content={items.comment}
+                                                />
+                                            );
+                                        } else {
+                                            return '';
+                                        }
+                                    })}
+                                    <p id="memat">
                                         Memorandum and Articles of Association
                                         (MEMART)
                                     </p>
