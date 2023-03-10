@@ -33,8 +33,8 @@ import {
     loadsetTransactionPin,
     generateQrCodeDetails
 } from '../../redux/actions/actions';
-import ChartDiv from './chartDivStyled';
-import ChartContent from './chartContentStyled';
+// import ChartDiv from './chartDivStyled';
+// import ChartContent from './chartContentStyled';
 import PaymentSingleBody from '../../components/ReusableComponents/PaymentSingleBody';
 import PaymentCard from '../../components/ReusableComponents/PaymentCard';
 // import PaymentError from '../../components/ReusableComponents/PaymentError';
@@ -830,7 +830,7 @@ const Payment = () => {
                                     setCount(count - 1);
                                 }}
                                 transferAction={(data) => {
-                                    console.log(accountPrimarys);
+                                    console.log(accountPrimarys.accountId);
                                     setIsLoading(true);
                                     const paymentData = {
                                         accountId: senderDetails?.accountId,

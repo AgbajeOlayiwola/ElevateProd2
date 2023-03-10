@@ -25,6 +25,7 @@ const Login = () => {
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
     const router = useRouter();
+
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
     );
