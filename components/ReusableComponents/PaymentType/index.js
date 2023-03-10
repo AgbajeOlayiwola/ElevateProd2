@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './styles.module.css';
 import styled from 'styled-components';
-import PaymentSingle from '../PaymentSingle';
+import PaymentSingle from './PaymentSingle';
 
 const StyledHeader = styled.h2`
     color: ${(props) => props.color};
