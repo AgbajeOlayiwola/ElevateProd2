@@ -832,6 +832,7 @@ const Payment = () => {
                                     setCount(count - 1);
                                 }}
                                 transferAction={(data) => {
+                                    console.log(accountPrimarys);
                                     setIsLoading(true);
                                     const paymentData = {
                                         accountId: accountPrimarys.accountId,
