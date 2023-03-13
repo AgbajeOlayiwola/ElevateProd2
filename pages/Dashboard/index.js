@@ -317,7 +317,7 @@ const Dashboard = () => {
                     <div className={styles.divCover}>
                         <Link
                             href={{
-                                pathname: '/Payment.html',
+                                pathname: '/Payment',
                                 query: { id: 'Bills Payment' }
                             }}
                         >
@@ -330,7 +330,7 @@ const Dashboard = () => {
                         </Link>
                         <Link
                             href={{
-                                pathname: '/Payment.html',
+                                pathname: '/Payment',
                                 query: { id: 'Ecobank QR Only' }
                             }}
                         >
@@ -343,7 +343,7 @@ const Dashboard = () => {
                         </Link>
                         <Link
                             href={{
-                                pathname: '/Payment.html',
+                                pathname: '/Payment',
                                 query: { id: 'USSD only' }
                             }}
                         >
@@ -356,7 +356,7 @@ const Dashboard = () => {
                         </Link>
                         <Link
                             href={{
-                                pathname: '/Payment.html',
+                                pathname: '/Payment',
                                 query: { id: 'Single Transfer' }
                             }}
                         >
