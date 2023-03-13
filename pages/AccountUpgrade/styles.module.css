@@ -364,7 +364,10 @@
     color: #a5a5a5;
     margin-top: 16px;
 }
-
+.statuses{
+    display: flex;
+    justify-content: space-between;
+}
 @media screen and (max-width: 611px) {
     .currentLeveltext div {
         flex-direction: column;

@@ -18,8 +18,10 @@ const ExistingMultiStep = () => {
     const { forgotPassword, forgotPasswordErrorMessages } = useSelector(
         (state) => state.fogrotPasswordReducer
     );
-    const { forgotPasswordReset, forgotPasswordResetErrorMessages } =
-        useSelector((state) => state.forgotPasswordResetReducer);
+    const {
+        forgotPasswordReset,
+        forgotPasswordResetErrorMessages
+    } = useSelector((state) => state.forgotPasswordResetReducer);
     const dispatch = useDispatch();
     useEffect(() => {
         if (Object.keys(query).length !== 0) {
