@@ -2837,17 +2837,6 @@ const AccountUpgrade = () => {
                         title="CAC Documents"
                     >
                         <div className={styles.documentBody}>
-                            {shareDocuments?.map((item, index) => {
-                                if (item.documentType === 'MEMART') {
-                                    if (item.comment !== null) {
-                                        return (
-                                            <p key={index}>{item.comment}</p>
-                                        );
-                                    } else {
-                                        return null;
-                                    }
-                                }
-                            })}
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
                                     {shareDocuments?.map((items) => {
@@ -2862,8 +2851,21 @@ const AccountUpgrade = () => {
                                             return '';
                                         }
                                     })}
+                                    <div className={styles.statuses}>
+                                        <p>Upload CO2</p>
 
-                                    <p id="co2"> Upload CO2</p>
+                                        {shareDocuments?.map((items) => {
+                                            if (items.documentType === 'CO2') {
+                                                return (
+                                                    <p id="co2">
+                                                        {items.status}
+                                                    </p>
+                                                );
+                                            } else {
+                                                return '';
+                                            }
+                                        })}
+                                    </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {' '}
@@ -2895,7 +2897,21 @@ const AccountUpgrade = () => {
                                             return '';
                                         }
                                     })}
-                                    <p id="co7">Upload CO7</p>
+                                    <div className={styles.statuses}>
+                                        <p>Upload CO7</p>
+
+                                        {shareDocuments?.map((items) => {
+                                            if (items.documentType === 'CO7') {
+                                                return (
+                                                    <p id="co7">
+                                                        {items.status}
+                                                    </p>
+                                                );
+                                            } else {
+                                                return '';
+                                            }
+                                        })}
+                                    </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {co7FileName
@@ -2926,7 +2942,23 @@ const AccountUpgrade = () => {
                                             return '';
                                         }
                                     })}
-                                    <p id="cac11">Upload CAC 1.1</p>
+                                    <div className={styles.statuses}>
+                                        <p>Upload CAC 1.1</p>
+
+                                        {shareDocuments?.map((items) => {
+                                            if (
+                                                items.documentType === 'CAC1.1'
+                                            ) {
+                                                return (
+                                                    <p id="cac11">
+                                                        {items.status}
+                                                    </p>
+                                                );
+                                            } else {
+                                                return '';
+                                            }
+                                        })}
+                                    </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {cac1FileName
@@ -2957,7 +2989,23 @@ const AccountUpgrade = () => {
                                             return '';
                                         }
                                     })}
-                                    <p id="cac21">Upload CAC 2.1</p>
+                                    <div className={styles.statuses}>
+                                        <p>Upload CAC 2.1</p>
+
+                                        {shareDocuments?.map((items) => {
+                                            if (
+                                                items.documentType === 'CAC2.1'
+                                            ) {
+                                                return (
+                                                    <p id="cac21">
+                                                        {items.status}
+                                                    </p>
+                                                );
+                                            } else {
+                                                return '';
+                                            }
+                                        })}
+                                    </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {cac2FileName
@@ -2988,10 +3036,27 @@ const AccountUpgrade = () => {
                                             return '';
                                         }
                                     })}
-                                    <p id="memat">
-                                        Memorandum and Articles of Association
-                                        (MEMART)
-                                    </p>
+                                    <p></p>
+                                    <div className={styles.statuses}>
+                                        <p>
+                                            Memorandum and Articles of
+                                            Association (MEMART)
+                                        </p>
+
+                                        {shareDocuments?.map((items) => {
+                                            if (
+                                                items.documentType === 'CAC2.1'
+                                            ) {
+                                                return (
+                                                    <p id="memat">
+                                                        {items.status}
+                                                    </p>
+                                                );
+                                            } else {
+                                                return '';
+                                            }
+                                        })}
+                                    </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {memtFileName
