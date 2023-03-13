@@ -20,7 +20,7 @@ const LoginWith = ({
     bankdets,
     type
 }) => {
-    // console.log(displayInput);
+    //console.log(displayInput);
     const {
         register,
         handleSubmit,
@@ -101,7 +101,7 @@ const LoginWith = ({
                         className={omnilit ? styles.active : styles.notActive}
                         onClick={omnilite}
                     >
-                        <Image
+                        <img
                             src="/Assets/Images/omni.png"
                             width={45}
                             height={45}
@@ -119,7 +119,7 @@ const LoginWith = ({
                         onClick={ecobanks}
                     >
                         <div>
-                            <Image
+                            <img
                                 src="/Assets/Images/ecobank.png"
                                 width={45}
                                 height={45}
@@ -137,7 +137,7 @@ const LoginWith = ({
                         className={acct ? styles.active : styles.notActive}
                         onClick={acctnum}
                     >
-                        <Image
+                        <img
                             src="/Assets/Images/AccountNum.png"
                             width={45}
                             height={45}
@@ -153,7 +153,7 @@ const LoginWith = ({
                         className={card ? styles.active : styles.notActive}
                         onClick={bankCard}
                     >
-                        <Image
+                        <img
                             src="/Assets/Images/Details.png"
                             width={45}
                             height={45}

@@ -32,7 +32,7 @@ const Ecoacct = () => {
         dispatch(accountNumberData(postData));
     };
     const acctTest = () => {
-        console.log(errorMessages);
+        //console.logerrorMessages);
         if (errorMessages === 'Account already exists with the phone') {
             router.push('/Auth/Login');
         } else if (errorMessages) {
@@ -85,17 +85,15 @@ const Ecoacct = () => {
             </div>
             <div className={styles.btn}>
                 {/* <Link href="/Onboarding/ExistingProfileSetup"> */}
-                {loading ? (
-                    <Loader />
-                ) : (
-                    <ButtonComp
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text="Login"
-                        type="submit"
-                    />
-                )}
-                {/* </Link> */}
+
+                <ButtonComp
+                    disabled={activeBtn}
+                    active={activeBtn ? 'active' : 'inactive'}
+                    text="Login"
+                    type="submit"
+                    loads={loading}
+                    err={errorMessages}
+                />
             </div>
         </form>
     );

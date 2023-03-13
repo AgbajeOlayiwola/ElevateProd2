@@ -30,10 +30,11 @@
     max-width: 500px;
     background: #fefefe;
     border: 1px solid rgba(219, 219, 219, 0.6);
-    border-radius: 50px;
+    /* border-radius: 50px; */
     margin: 32px auto;
     /* display: flex; */
     position: absolute;
+    padding: 0px;
     top: 3%;
     left: 33%;
     z-index: 10;
@@ -155,4 +156,149 @@
     color: #102572;
     font-weight: 700;
     cursor: pointer;
+}
+
+.bulkTransfer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    margin: 0px auto;
+}
+
+.name {
+    width: 50%;
+}
+
+.amount {
+    width: 30%;
+}
+
+.status {
+    width: 20%;
+}
+
+.bulkTransfer p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 29px;
+    /* identical to box height */
+    color: #005b82;
+}
+
+.icons {
+    display: flex;
+    width: 50%;
+    margin: 20px auto;
+    justify-content: space-around;
+}
+
+.receiptHead {
+    width: 100%;
+    text-align: center;
+    padding: 0px;
+}
+
+.receiptHead h2 {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 17px;
+    text-align: center;
+    color: #102572;
+    margin: 24px 0px;
+    margin-bottom: 24px;
+}
+
+.receiptHead p {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 17px;
+    text-align: center;
+    /* color: #102572; */
+}
+
+.receiptBody {
+    width: 100%;
+    margin-top: 48px;
+}
+
+.receiptBody .beneName {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 17px;
+    margin: 0px;
+    color: #3e3e3e;
+}
+
+.receiptBody .currentDate {
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 17px;
+    margin: 0px;
+    margin-top: 12px;
+    color: #3e3e3e;
+    margin-bottom: 48px;
+}
+
+.logo {
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+}
+
+.receiptSingle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0px auto;
+    border-bottom: 2px solid #102572;
+    padding: 12px 0px;
+}
+
+.receiptSingle:first-child {
+    border-top: 2px solid #102572;
+}
+
+.receiptIcon {
+    width: 10%;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.receiptText {
+    width: 85%;
+}
+
+.receiptTitle {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 17px;
+    margin: 0px;
+    color: #3e3e3e;
+}
+
+.receiptValue {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 17px;
+    margin: 0px;
+    margin-top: 16px;
+    color: #3e3e3e;
 }

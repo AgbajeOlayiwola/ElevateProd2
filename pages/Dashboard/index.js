@@ -21,7 +21,8 @@ import {
     getBalanceEnquiry,
     loadUserProfile,
     loadAccountPrimary,
-    getTransactionElevate
+    getTransactionElevate,
+    bankAccountsData
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
@@ -32,6 +33,9 @@ import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import Link from 'next/link';
 import Paylink2 from '../../components/ReusableComponents/PaylinkSvg/paylink';
 import AccountUpgrade from '../AccountUpgrade';
+import withAuth from '../../components/HOC/withAuth';
+import Popup from '../../components/layout/Popup';
+import DropdownSvg from '../../components/ReusableComponents/ReusableSvgComponents/DropdownSvg';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -69,6 +73,8 @@ const Dashboard = () => {
     const [balance, setBalance] = useState('₦0.00');
     const [tableDetails, setTableDetails] = useState([]);
     const [userProfileData, setUserProfileData] = useState([]);
+    const [dateState, setDateState] = useState(false);
+    const [acctNum, setAcctNumm] = useState('');
 
     const [acctNumber, setAcctNumber] = useState('');
 
@@ -78,8 +84,11 @@ const Dashboard = () => {
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
     );
-    const { accountPrimary, accountPrimaryError } = useSelector(
+    const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
+    );
+    const { bankAccounts, bankAccountErrorMessages } = useSelector(
+        (state) => state.bankAccountsReducer
     );
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
@@ -107,7 +116,11 @@ const Dashboard = () => {
         let date = newDate.getDate();
         let month = newDate.getMonth() + 1;
         let year = newDate.getFullYear();
-        setTime(`${year}-${month < 10 ? `0${month}` : `${month}`}-${date}`);
+        setTime(
+            `${year}-${month < 10 ? `0${month}` : `${month}`}-${
+                date < 10 ? `0${date}` : `${date}`
+            }`
+        );
     };
     const getDateXDaysAgo = (numOfDays, date = new Date()) => {
         const daysAgo = new Date();
@@ -117,11 +130,14 @@ const Dashboard = () => {
         let month = daysAgo.getMonth() + 1;
         let year = daysAgo.getFullYear();
         setRangeDate(
-            `${year}-${month < 10 ? `0${month}` : `${month}`}-${dates}`
+            `${year}-${month < 10 ? `0${month}` : `${month}`}-${
+                dates < 10 ? `0${dates}` : `${dates}`
+            }`
         );
     };
 
     useEffect(() => {
+        dispatch(bankAccountsData());
         dispatch(loadAccountPrimary());
         dispatch(loadUserProfile());
         dispatch(getTransactionElevate());
@@ -130,45 +146,72 @@ const Dashboard = () => {
     }, []);
 
     useEffect(() => {
-        if (accountPrimary !== null) {
-            setAcctNumber(accountPrimary);
-            let balanceData;
-            balanceData = {
-                accountId: accountPrimary.accountId
-            };
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            if (bankAccounts[accountNo].accountNumber === acctNum) {
+                setAcctNumber(accountPrimarys);
+                let balanceData;
+                balanceData = {
+                    accountId: bankAccounts[accountNo].accountId
+                };
+                dispatch(getBalanceEnquiry(balanceData));
+            } else {
+                setAcctNumber('Pending');
+            }
+        });
+    }, [acctNum]);
+    const [previousRoute, setPreviousRoute] = useState('');
+    useEffect(() => storePathValues, [router.asPath]);
+    function storePathValues() {
+        const storage = globalThis?.sessionStorage;
+        if (!storage) return;
+        // Set the previous path as the value of the current path.
+        var prevPath = storage.getItem('currentPath');
+        storage.setItem('prevPath', prevPath);
+        // Set the current path value by looking at the browser's location object.
+        storage.setItem('currentPath', globalThis.location.pathname);
+        setPreviousRoute(prevPath);
+        //console.log(prevPath);
+    }
 
-            dispatch(getBalanceEnquiry(balanceData));
-        } else {
-            setAcctNumber('Pending');
-        }
-    }, [accountPrimary]);
     useEffect(() => {
         if (userProfile !== null) {
             setUserProfileData(userProfile);
-            if (userProfileData.isUpgradedAccount === false) {
-                router.push('/AccountUpgrade');
-            } else if (userProfileData.isUpgradedAccount === true) {
-                setAccountUpgrade(false);
-            }
         }
 
-        // console.log('upgrade check', accountUpgrade);
+        //console.log('upgrade check', accountUpgrade);
     }, [userProfile]);
+
+    const current = new Date();
+    const date = `${current.getFullYear()}-${
+        current.getMonth() + 1
+    }-0${current.getDate()}`;
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
-            console.log(transactionElevate.transactions);
+            tableDetails?.filter((item) => {
+                const newDate = item.transactionDate.split('T');
+                if (newDate[0] == time) {
+                    setDateState(true);
+                } else {
+                    setDateState(false);
+                }
+            });
+
+            // tableDetails.data?.map((item) => {
+            //     //console.log(item.transactionDate);
+            // });
         }
     }, [transactionElevate]);
+    //console.log(newDate[0]);
     return (
         <DashLayout page="Dashboard">
-            <Levelup />
+            <Levelup account={userProfileData} />
             <div className={styles.cove}>
                 <section className={styles.sectionI}>
                     <div className={styles.Tpwh}>
                         <h2 className={styles.transP}>Transactions Today</h2>
                         {/* <div className={styles.payEco}>
-                            <div className={styles.svgTxt}>
+                            <div className={styles.svgTxt}
                                 <div className={styles.svgCov}>
                                     <Paylink2 />
                                 </div>
@@ -187,7 +230,85 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div> */}
-                        <p>No transactions has been made today.</p>
+
+                        {dateState === false ? (
+                            <div className={styles.transactionBody}>
+                                <div>
+                                    <div className={styles.transactionSvg}>
+                                        <TransactionSvg />
+                                    </div>
+                                    <p>No transactions has been made today.</p>
+                                </div>
+                            </div>
+                        ) : (
+                            tableDetails
+                                ?.filter((item) => {
+                                    const newDate = item.transactionDate.split(
+                                        'T'
+                                    );
+                                    return (
+                                        newDate[0] >= rangeDate &&
+                                        newDate[0] <= time
+                                    );
+                                })
+                                ?.map((item, index) => {
+                                    const formatter = new Intl.NumberFormat(
+                                        'en-US',
+                                        {
+                                            style: 'currency',
+                                            currency: 'NGN',
+                                            currencyDisplay: 'narrowSymbol'
+                                        }
+                                    );
+                                    const formattedAmount = formatter.format(
+                                        item.transactionAmount
+                                    );
+                                    let newBeneficiary;
+                                    if (item.receiversName === null) {
+                                        newBeneficiary = '';
+                                    } else {
+                                        newBeneficiary = item?.receiversName?.split(
+                                            ' '
+                                        );
+                                    }
+                                    // {
+                                    //     //console.log(item);
+                                    // }
+                                    return (
+                                        <div key={index}>
+                                            <div className={styles.transaction}>
+                                                {/* <div className={styles.names}>
+                                                    <p>
+                                                        {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                    </p>
+                                                </div> */}
+                                                <div className={styles.type}>
+                                                    <p>
+                                                        {item.transactionType}
+                                                    </p>
+                                                </div>
+                                                <div className={styles.money}>
+                                                    <p>{formattedAmount}</p>
+                                                </div>
+                                                <div className={item.status}>
+                                                    <div
+                                                        className={
+                                                            styles.statusColor
+                                                        }
+                                                    >
+                                                        <p>
+                                                            {
+                                                                item.transactionStatus
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr className={styles.hr} />
+                                        </div>
+                                    );
+                                })
+                        )}
                     </div>
 
                     <div className={styles.otherTrans}>
@@ -196,7 +317,7 @@ const Dashboard = () => {
                     <div className={styles.divCover}>
                         <Link
                             href={{
-                                pathname: './Payment',
+                                pathname: '/Payment',
                                 query: { id: 'Bills Payment' }
                             }}
                         >
@@ -204,12 +325,12 @@ const Dashboard = () => {
                                 <div className={styles.svg}>
                                     <PhoneSvg />
                                 </div>
-                                <p className={styles.name}> Airtime & Data</p>
+                                s<p className={styles.name}> Airtime & Data</p>
                             </div>
                         </Link>
                         <Link
                             href={{
-                                pathname: './Payment',
+                                pathname: '/Payment',
                                 query: { id: 'Ecobank QR Only' }
                             }}
                         >
@@ -222,7 +343,7 @@ const Dashboard = () => {
                         </Link>
                         <Link
                             href={{
-                                pathname: './Payment',
+                                pathname: '/Payment',
                                 query: { id: 'USSD only' }
                             }}
                         >
@@ -235,7 +356,7 @@ const Dashboard = () => {
                         </Link>
                         <Link
                             href={{
-                                pathname: './Payment',
+                                pathname: '/Payment',
                                 query: { id: 'Single Transfer' }
                             }}
                         >
@@ -287,9 +408,69 @@ const Dashboard = () => {
                                             >
                                                 Account Number
                                             </p>
-                                            <p className={styles.accountNumber}>
+                                            <div className={styles.assctDrop}>
+                                                <select
+                                                    className={
+                                                        styles.accountNumbers
+                                                    }
+                                                    value={acctNum}
+                                                    onChange={(e) => {
+                                                        setAcctNumm(
+                                                            e.target.value
+                                                        );
+                                                    }}
+                                                >
+                                                    <option>
+                                                        Select Account Number
+                                                    </option>
+                                                    {Object.keys(
+                                                        bankAccounts
+                                                    )?.map(
+                                                        (accountNo, index) => {
+                                                            return (
+                                                                <>
+                                                                    <option
+                                                                        value={
+                                                                            bankAccounts[
+                                                                                accountNo
+                                                                            ]
+                                                                                .accountNumber
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            bankAccounts[
+                                                                                accountNo
+                                                                            ]
+                                                                                .accountNumber
+                                                                        }
+                                                                    </option>
+                                                                </>
+                                                            );
+                                                        }
+                                                    )}
+                                                </select>{' '}
+                                                <svg
+                                                    width="10"
+                                                    height="7"
+                                                    viewBox="0 0 8 5"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        d="M1 1L4 4L7 1"
+                                                        stroke="white"
+                                                        strokeWidth="1.66667"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </svg>
+                                            </div>
+                                            {/* <p className={styles.accountNumber}>
                                                 {acctNumber.accountNumber}
-                                            </p>
+                                            </p> */}
                                         </div>
                                     </div>
                                 </div>
@@ -313,7 +494,6 @@ const Dashboard = () => {
                         <div className={styles.btmII}>
                             <div className={styles.btmIIp}>
                                 <p>Recent Transactions</p>
-                                <p>View All</p>
                             </div>
                             {tableDetails.length === 0 ? (
                                 <div className={styles.transactionBody}>
@@ -351,10 +531,10 @@ const Dashboard = () => {
                                             item.transactionAmount
                                         );
                                         let newBeneficiary;
-                                        if (item.receiversName === null) {
+                                        if (item.receiver === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary = item?.receiversName?.split(
+                                            newBeneficiary = item?.receiver?.split(
                                                 ' '
                                             );
                                         }
@@ -369,7 +549,13 @@ const Dashboard = () => {
                                                         className={styles.names}
                                                     >
                                                         <p>
-                                                            {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                            {newBeneficiary ===
+                                                            ''
+                                                                ? ''
+                                                                : newBeneficiary[1] ===
+                                                                  undefined
+                                                                ? newBeneficiary[0]
+                                                                : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
                                                         </p>
                                                     </div>
                                                     <div
@@ -469,5 +655,5 @@ const Dashboard = () => {
     );
 };
 
-// export default withAuth(Dashboard);
-export default Dashboard;
+export default withAuth(Dashboard);
+// export default Dashboard;

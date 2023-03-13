@@ -4,13 +4,14 @@ const getCountries = '/affiliates-countries';
 const getLanguages = '/languages';
 const getBillerCategories = '/payment/billers/categories';
 const getBillerType = '/payment/billers';
-const getBillerPlan = 'billers/details/';
+const getBillerPlan = '/payment/billers/details';
 const airtime = '/payment/airtime-topup';
 const airtimeNetwork = '/payment/airtime-topup/networks';
-const bills = '/payments/bill-payment';
+const bills = '/payment/biller-payment';
 const internalBank = '/transfer/internal-transfer';
 const interBank = '/payment/single-transfer';
-const interBankEnquiry = '/bank-account/intra-bank/info';
+const intraBankEnquiry = '/bank-account/intra-bank/info';
+const interBankEnquiry = '/bank-account/inter-bank/info';
 const balanceEnquiry = '/bank-account/balance';
 const accountPrimary = '/bank-account/primary';
 const transactionHistory = '/account/transaction';
@@ -23,6 +24,8 @@ const verifyCurrency = '/payment/international-tranfer/allowed-currency';
 const internationalTransfer = '/transfer/international';
 const beneficiaries = '/beneficiaries';
 const deleteBeneficiaries = '/beneficiaries/delete/';
+const airtimeBeneficiaries = '/phone-number-beneficiaries';
+const deleteAirtimeBeneficiaries = '/phone-number-beneficiaries/delete/';
 const ussdGen = '/payment/ussd/generate';
 const ussdStatus = '/payment/ussd/status';
 const register = '/authentication/register';
@@ -51,10 +54,10 @@ const businessCategories = '/business-categories';
 const states = '/lga';
 const cardLogin = '/authentication/register/card';
 const banksAccounts = '/bank-account';
-const transactionFees = '/transactions/transaction-fees/inter-bank';
+const transactionFees = '/transactions/transaction-fees';
 const uploadUtilityDocument = '/account-upgrade/utility-document/upload';
 const uploadIdentificationDoc =
-    '/account-upgrade/identification-document/upload';
+    '/account-upgrade/identification-document/upload-json';
 const uploadMemart = '/account-upgrade/memart/upload';
 const uploadCacCert = '/account-upgrade/cac-cert/upload';
 const uploadScmul = '/account-upgrade/scuml/upload';
@@ -62,6 +65,7 @@ const shareRefForm = '/account-upgrade/reference-form/share';
 const uploadRefForm = '/account-upgrade/reference-form/share';
 const uploadBoardRes = '/account-upgrade/board-resolution/upload';
 const forgotPassword = '/authentication/forget-password';
+const forgotPasswordReset = '/authentication/reset-password';
 const resetOtp = '/authentication/otp/re-send';
 const viewBvn = '/users/bvn/view';
 const resetPassword = '/users/password';
@@ -71,6 +75,21 @@ const unfreezeTransactions = '/users/unfreeze-transactions';
 const businessNameCac = '/business/name';
 const verifyCac = '/document-verification/cac';
 const internationalCountries = '/international-countries';
+const pushDocuments = '/account-upgrade/push-document-for-review';
+const shareDocuments = '/share-point-document';
+const fetchRM = '/bank-account/account-manager';
+const postEllevateProfiling = '/ellevate-profiling';
+const profilingQuestions = '/ellevate-profiling/questions';
+const vnin = '/account-upgrade/vNin-verification';
+const verifyVNinAdd = '/document-verification/vNin/status';
+const addressVerification = '/address-verification/status';
+const reffernceFormShare = '/account-upgrade/reference-form/share';
+const uploadTin = '/account-upgrade/tin';
+const uploadrefferee = '/account-upgrade/reference-form/upload';
+const cacDocumentUpload = '/account-upgrade/cac-document/upload';
+const paymentQr = '/payment/qr';
+const generateQr = '/payment/qr/generate';
+const qrInfo = '/payment/qr/generate';
 export default {
     getBanks,
     getCountries,
@@ -86,6 +105,7 @@ export default {
     internalBank,
     interBank,
     interBankEnquiry,
+    intraBankEnquiry,
     balanceEnquiry,
     getLanguages,
     register,
@@ -103,6 +123,8 @@ export default {
     bulkTransfer,
     beneficiaries,
     deleteBeneficiaries,
+    airtimeBeneficiaries,
+    deleteAirtimeBeneficiaries,
     profileSetupBus,
     verifyOtp,
     verifyDob,
@@ -134,6 +156,7 @@ export default {
     ussdGen,
     ussdStatus,
     forgotPassword,
+    forgotPasswordReset,
     viewBvn,
     resetPassword,
     bankStatement,
@@ -143,5 +166,20 @@ export default {
     transactionFees,
     businessNameCac,
     internationalCountries,
-    verifyCac
+    pushDocuments,
+    shareDocuments,
+    fetchRM,
+    verifyCac,
+    postEllevateProfiling,
+    profilingQuestions,
+    vnin,
+    verifyVNinAdd,
+    addressVerification,
+    reffernceFormShare,
+    uploadTin,
+    uploadrefferee,
+    cacDocumentUpload,
+    paymentQr,
+    generateQr,
+    qrInfo
 };

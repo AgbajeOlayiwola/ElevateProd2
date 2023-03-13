@@ -32,7 +32,7 @@ const StepTwoBVNAuthenticator = ({
     const [otps, setOtp] = useState([]);
     const handleChange = (otps) => {
         setOtp();
-        console.log(otps);
+        //console.logotps);
     };
     const dispatch = useDispatch();
     const {
@@ -42,12 +42,12 @@ const StepTwoBVNAuthenticator = ({
         formState: { errors }
     } = useForm();
     const sendOTP = (data) => {
-        console.log(data);
+        //console.logdata);
     };
     const { resetOtp, resetOtpErrorMessages } = useSelector(
         (state) => state.resetOtpReducer
     );
-    console.log(formData.phoneNumber);
+    //console.logformData.phoneNumber);
 
     const [activeBtn, setActiveBtn] = useState(true);
 
@@ -56,14 +56,14 @@ const StepTwoBVNAuthenticator = ({
             phoneNumber: formData.phoneNumber
         };
         dispatch(resetOtpData(data));
-        console.log(resetOtp, resetOtpErrorMessages);
+        //console.logresetOtp, resetOtpErrorMessages);
     };
     useEffect(() => {
-        console.log(resetOtp);
-        console.log(resetOtpErrorMessages);
+        //console.logresetOtp);
+        //console.logresetOtpErrorMessages);
     }, [resetOtp, resetOtpErrorMessages]);
     return (
-        <form>
+        <form onSubmit={handleSubmit(action)}>
             <div className={styles.bvnBody}>
                 <div className={styles.cover}>
                     <div>
@@ -110,8 +110,8 @@ const StepTwoBVNAuthenticator = ({
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
-                        onClick={action}
-                        type="button"
+                        // onClick={action}
+                        type="submit"
                         margin="80px 0px 0px 0px"
                         text="Proceed"
                     />

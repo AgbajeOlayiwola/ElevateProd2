@@ -10,8 +10,6 @@ import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
 import { loadUserProfile } from '../../../../redux/actions/actions';
-// import { useDispatch, useSelector } from 'react-redux';
-
 const videoConstraints = {
     width: 390,
     height: 480,
@@ -28,54 +26,55 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ action, loading, setLoading }) => {
-    // const dispatch = useDispatch();
+const Liveness = ({ action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
-    // const [loading, setLoading] = useState(false);
     const webcamRef = React.useRef(null);
     const [imgSrc, setImgSrc] = React.useState(null);
     const [succes, setSuccess] = useState('');
     const [imageSrcI, setImageSrcI] = React.useState(null);
     const [error, setError] = React.useState('');
-
+    const [loads, setLoads] = useState(false);
+    const [loading, setLoading] = useState(false);
     const capture = React.useCallback(() => {
+        setLoads((prev) => !prev);
         setLoading((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
         let newImage = imageSrc.split(',');
         let base64String = newImage[1];
-
         var buf = _base64ToArrayBuffer(base64String);
-
-        console.log(buf);
         var mimeType = 'image/jpeg';
         var file = new File([buf], 'userface-1828438.jpg', { type: mimeType });
 
         var formData = new FormData();
 
-        formData.append('photo', file);
+        formData.append('userFace', file);
 
-        const cookie = getCookie('cookieToken');
+        let cookie;
+
+        if (getCookie('cookieToken') == undefined) {
+            cookie = getCookie('existingToken');
+        } else {
+            cookie = getCookie('cookieToken');
+        }
         axios
-            .post(
-                `https://ellevate-test.herokuapp.com/users/profile/image`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            //  .post(`192.168.41.82/authentication/facematch`, formData, {
+            .post(`https://testvate.live/authentication/facematch`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
+            })
             .then((response) => {
-                console.log(response.data.message);
                 setSuccess(response.data.message);
+                setLoading(false);
+                setLoads(false);
             })
             .catch((error) => {
-                console.log(error.response.data.message);
-                // setResErros(error.response.data.statusCode);
                 setError(error.response.data.message);
+                setLoading(false);
+                setLoads(false);
             });
     }, [webcamRef, setImgSrc, setImageSrcI]);
 
@@ -92,53 +91,42 @@ const Liveness = ({ action, loading, setLoading }) => {
                         {error ? <p>{error}</p> : null}
                         <div
                             className={
-                                // succes === 'facial verification successful'
-                                succes === 'success'
-                                    ? styles.imageOuter
+                                succes === 'facial verification successful'
+                                    ? // succes === 'success'
+                                      styles.imageOuter
                                     : error
                                     ? styles.errorInner
                                     : styles.imageInner
                             }
                         >
-                            {/* {imageSrcI ? (
-                                <img src={imageSrcI} />
-                            ) : ( */}
                             <Webcam
                                 audio={false}
                                 screenshotFormat="image/jpeg"
                                 videoConstraints={videoConstraints}
                                 ref={webcamRef}
                             />
-                            {/* )} */}
                         </div>
                     </div>
                 </div>
-                {/* {loading ? <Loader /> : null} */}
-
+                {loading ? <p>Hold on your face is been verified!!!!</p> : null}
                 <ButtonComp
-                    onClick={succes === 'success' ? action : capture}
+                    onClick={
+                        succes === 'facial verification successful'
+                            ? action
+                            : capture
+                    }
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
                     type="button"
                     text={
-                        // succes === 'facial verification successful'
-                        succes === 'success' ? 'Continue' : 'Snap'
+                        succes === 'facial verification successful'
+                            ? 'Continue'
+                            : 'Snap'
                     }
-                    // action={action}
+                    err={succes}
+                    loads={loads}
                 />
-
-                {/* {imageSrcI && <img src={imageSrcI} />} */}
-                {/* <div className={styles.matiButtonSetup}>
-                    <mati-button
-                        clientId="622f44566ac1c1001cd1daac" // from your Mati dashboard
-                        flowId="62fb9b12235dfd001ed92fec" // from your Mati dashboard
-                        color="#6ccf00" // any color
-                        className={styles.MatiButton}
-                        metadata='{"user_id":"1234778"}'
-                    />
-                </div> */}
             </div>
-            {/* {imgSrc && <img src={imgSrc} />} */}
         </div>
     );
 };

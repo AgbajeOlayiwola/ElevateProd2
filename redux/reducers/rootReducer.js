@@ -11,6 +11,7 @@ import airtimeNetworkReducer from './airtimeNetwork.reducer';
 import billsReducer from './bills.reducer';
 import internalBankReducer from './internalBank.reducer';
 import interBankEnquiryReducer from './interBankEnquiry.reducer';
+import intraBankEnquiryReducer from './intraBankEnquiry.reducer';
 import balanceEnquiryReducer from './balanceEnquiry.reducer';
 import interBankReducer from './interBank.reducer';
 import transactionHistoryReducer from './transactionHistory.reducer';
@@ -22,6 +23,9 @@ import verifyCurrencyReducer from './verifyCurrency.reducer';
 import postBeneficiariesReducer from './postBeneficiary.reducer';
 import getBeneficiariesReducer from './getBeneficiaries.reducer';
 import deleteBeneficiariesReducer from './deleteBeneficiary.reducer';
+import postAirtimeBeneficiariesReducer from './postAirtimeBeneficiary.reducer';
+import getAirtimeBeneficiariesReducer from './getAirtimeBeneficiaries.reducer';
+import deleteAirtimeBeneficiariesReducer from './deleteAirtimeBeneficiary.reducer';
 import authReducer from './auth.reducer';
 import registerReducer from './register.reducer';
 import profileReducer from './completeprofile.reducer';
@@ -53,6 +57,7 @@ import cacUploadReducer from './cac.reducer';
 import accountPrimaryReducer from './accountPrimary.reducer';
 import setTransactionPinReducer from './setTransactionPin.reducer';
 import fogrotPasswordReducer from './forgotpassword.reducer';
+import forgotPasswordResetReducer from './forgotpasswordReset.reducer';
 import resetOtpReducer from './resetotp.reducer';
 import ussdGenReducer from './ussdGen.reducer';
 import ussdStatusReducer from './ussdStatus.reducer';
@@ -65,6 +70,21 @@ import unfreezeTransactionsReducer from './unfreezeTransactions.reducer';
 import ExistingProfileSetupReducer from './exixtingUserProfile.reducer';
 import transactionFeesReducer from './transactionFees.reducer';
 import logoutReducer from './logout.reducer';
+import pushDocumentsReducer from './pushDocuments.reducer';
+import shareDocumentsReducer from './shareDocuments.reducer';
+import existReducer from './exist.reducer';
+import fetchRMReducer from './fetchRM.reducer';
+import getRCReducer from './getRC.reducer';
+import postEllevateReducer from './ellevateProfiling.reducer';
+import profilingQuestionsReducer from './profilingQuestion.reducer';
+import vninReducer from './vnin.reducer';
+import addressVerificationReducer from './addressverification.reducer';
+import refferenceEmailReducer from './refferenceEmail.reducer';
+import tinReducer from './tin.reducer';
+import uploadRefereeFileReducer from './uploadrefereefile.reducer';
+import cacDocUploadReducer from './cacdocument.reducer';
+import qrInfoReducer from './qrInfo.reducer';
+import paymentQrReducer from './paymentQr.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -83,6 +103,7 @@ const appReducer = combineReducers({
     transactionFeesReducer: transactionFeesReducer,
     transactionElevateReducer: transactionElevateReducer,
     interBankEnquiryReducer: interBankEnquiryReducer,
+    intraBankEnquiryReducer: intraBankEnquiryReducer,
     balanceEnquiryReducer: balanceEnquiryReducer,
     billerTypeReducer: billerTypeReducer,
     bulkTransferReducer: bulkTransferReducer,
@@ -92,6 +113,9 @@ const appReducer = combineReducers({
     getBeneficiariesReducer: getBeneficiariesReducer,
     deleteBeneficiariesReducer: deleteBeneficiariesReducer,
     postBeneficiariesReducer: postBeneficiariesReducer,
+    getAirtimeBeneficiariesReducer: getAirtimeBeneficiariesReducer,
+    deleteAirtimeBeneficiariesReducer: deleteAirtimeBeneficiariesReducer,
+    postAirtimeBeneficiariesReducer: postAirtimeBeneficiariesReducer,
     auth: authReducer,
     logoutReducer: logoutReducer,
     registered: registerReducer,
@@ -99,6 +123,7 @@ const appReducer = combineReducers({
     otp: otpReducer,
     profileSetup: profileSetupReducer,
     omniliteReducer: omniliteReducer,
+    getRCReducer: getRCReducer,
     accountNumberReducer: accountNumberReducer,
     existingUserProfileReducer: existingUserProfileReducer,
     ecobankOnlineReducer: ecobankOnlineReducer,
@@ -127,6 +152,7 @@ const appReducer = combineReducers({
     setTransactionPinReducer: setTransactionPinReducer,
     userProfileReducer: userProfileReducer,
     fogrotPasswordReducer: fogrotPasswordReducer,
+    forgotPasswordResetReducer: forgotPasswordResetReducer,
     viewBvnReducer: viewBvnReducer,
     resetPasswordReducer: resetPasswordReducer,
     bankStatementReducer: bankStatementReducer,
@@ -136,7 +162,21 @@ const appReducer = combineReducers({
     unfreezeTransactionsReducer,
     freezeTransactionsReducer,
     changeTransactionPinReducer,
-    completeBusinessprofileReducer
+    pushDocumentsReducer,
+    shareDocumentsReducer,
+    fetchRMReducer,
+    completeBusinessprofileReducer,
+    existReducer: existReducer,
+    postEllevateReducer: postEllevateReducer,
+    profilingQuestionsReducer: profilingQuestionsReducer,
+    vninReducer: vninReducer,
+    addressVerificationReducer: addressVerificationReducer,
+    refferenceEmailReducer: refferenceEmailReducer,
+    tinReducer: tinReducer,
+    uploadRefereeFileReducer: uploadRefereeFileReducer,
+    cacDocUploadReducer: cacDocUploadReducer,
+    qrInfoReducer: qrInfoReducer,
+    paymentQrReducer: paymentQrReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

@@ -27,7 +27,9 @@ const MakePaymentFirst = ({
     type,
     secondAction,
     isLoading,
-    payload
+    payload,
+    formData,
+    setFormdata
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -62,6 +64,8 @@ const MakePaymentFirst = ({
                 <div className={styles.firstBody}>
                     {firstTitle === 'Single Transfer Payment' ? (
                         <SingleTransfer
+                            formData={formData}
+                            setFormdata={setFormdata}
                             selfaction={selfaction}
                             othersaction={othersaction}
                             firstTitle="Single Transfer Payment"
@@ -74,6 +78,8 @@ const MakePaymentFirst = ({
                         />
                     ) : firstTitle === 'Foreign Transfer' ? (
                         <ForeignTransfer
+                            formData={formData}
+                            setFormdata={setFormdata}
                             action={action}
                             firstTitle={firstTitle}
                             buttonText={buttonText}
@@ -84,13 +90,19 @@ const MakePaymentFirst = ({
                         />
                     ) : firstTitle === 'Bulk Payments' ? (
                         <BulkTransfer
+                            formData={formData}
+                            setFormdata={setFormdata}
                             action={action}
                             firstTitle={firstTitle}
                             buttonText={buttonText}
                             bankAccounts={bankAccount}
+                            payload={payload}
+                            isLoading={isLoading}
                         />
                     ) : (
                         <BillPayment
+                            formData={formData}
+                            setFormdata={setFormdata}
                             action={action}
                             firstTitle={firstTitle}
                             buttonText={buttonText}
@@ -99,6 +111,7 @@ const MakePaymentFirst = ({
                             dataAction={dataAction}
                             airtimeAction={airtimeAction}
                             bankAccounts={bankAccount}
+                            isLoading={isLoading}
                         />
                     )}
                 </div>

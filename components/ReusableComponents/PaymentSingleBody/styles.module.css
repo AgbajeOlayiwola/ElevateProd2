@@ -10,6 +10,18 @@
     align-items: center;
     cursor: pointer;
 }
+.paymentSingleBodyGrey {
+    background: #ededed;
+    box-shadow: 0px 0px 26px #ededed;
+    border-radius: 16px;
+    min-width: 100px;
+    width: 20%;
+    height: 105px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
 
 .makePara {
     font-size: 14px;
@@ -46,4 +58,12 @@
 .paymentSingleText {
     width: 80%;
     margin: auto;
+}
+
+@media screen and (max-width: 851px) {
+    .paymentSingleBody,
+    .paymentSingleBodyGrey {
+        width: 100%;
+        margin-top: 10px;
+    }
 }

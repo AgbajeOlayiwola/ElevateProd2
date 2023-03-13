@@ -205,6 +205,34 @@
     cursor: pointer;
 }
 
+.referralCont {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.referralCode {
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 100%;
+}
+
+.referralCode span {
+    color: #102572;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.referralCont h5 {
+    margin: 0px;
+    background: rgba(105, 148, 13, 0.1);
+    border-radius: 8px;
+    margin-left: 4px;
+    padding: 6px 8px;
+    cursor: pointer;
+}
+
 .title {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -763,4 +791,61 @@
 
 .signRights .profileBodyButton {
     margin-top: 64px;
+}
+.contactEmail {
+    color: #235b7f;
+    font-size: 14px;
+    margin: 30px 0px 20px 0px;
+}
+.contactWeb {
+    color: #235b7f;
+    font-size: 14px;
+    margin: 30px 0px 20px 0px;
+}
+.contactUs {
+    margin: 30px 0px 20px 0px;
+}
+.Hello {
+    text-align: center;
+}
+
+@media screen and (max-width: 1254px) {
+    .subProfileHead {
+        flex-direction: column;
+    }
+
+    .freezeAccount,
+    .accountNumber {
+        width: 100%;
+    }
+    .accountNumber {
+        margin-top: 10px;
+    }
+
+    .accountNumber div {
+        width: 50%;
+    }
+
+    .profileBodyButton,
+    .bvnButton {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 1161px) {
+    .profileHeaderHead {
+        flex-direction: column;
+        padding-left: 0px;
+    }
+
+    .profileHeaderImg {
+        margin: 0px auto;
+    }
+
+    .profileBodyHeaderCont {
+        margin-left: 0px;
+        margin-top: 15px;
+        text-align: center;
+    }
 }

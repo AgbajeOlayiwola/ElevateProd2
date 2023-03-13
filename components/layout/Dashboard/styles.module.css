@@ -1,6 +1,7 @@
 .dash {
     width: 100%;
     display: flex;
+    position: relative;
 }
 /* 
 .mainOverlay {
@@ -39,6 +40,7 @@
     .sidebar {
         display: block;
         width: 100%;
+        transition: all 3s ease-in;
     }
 
     .sidebarActive {

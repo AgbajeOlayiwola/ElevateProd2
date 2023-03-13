@@ -36,7 +36,7 @@ const PaymentSingle = ({
                         <StyledP
                             textColor={textColor}
                             onClick={(e) => {
-                                console.log(e.target);
+                                //console.loge.target);
                             }}
                         >
                             {text1}

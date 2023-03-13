@@ -12,7 +12,7 @@ const LoaderStyled = styled.div`
 const Loader = () => {
     return (
         <LoaderStyled>
-            <ThreeDots color="#6ccf00" height="100" width="100" />
+            <ThreeDots color="#8ead6c" height="20" width="50" />
         </LoaderStyled>
     );
 };

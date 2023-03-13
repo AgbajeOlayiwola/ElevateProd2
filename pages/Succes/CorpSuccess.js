@@ -13,21 +13,18 @@ const CorporateSuccess = () => {
     useEffect(() => {
         const cookie = getCookie('cookieToken');
         axiosInstance
-            .get(
-                `https://ellevate-test.herokuapp.com${apiRoutes.corpAccountStatus}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            .get(`https://testvate.live${apiRoutes.accountStatus}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
+            })
             .then((response) => {
-                console.log('Accoutn Status', response);
+                //console.log('Accoutn Status', response);
                 setAccountDone(response.data.data);
             })
             .catch((error) => {
-                console.log(error.response.data.message);
+                //console.log(error.response.data.message);
             });
     }, []);
     return (
@@ -38,7 +35,7 @@ const CorporateSuccess = () => {
                 </div>
                 <div className={styles.successBody}>
                     <h2 className={styles.h2}>
-                        Your Business account is ready!
+                        Your business account is ready!.
                     </h2>
                     <h3>
                         Your Account Number is{' '}
@@ -54,8 +51,8 @@ const CorporateSuccess = () => {
                         />
                     </Link>
                     <p>
-                        With your Ellevate Account, you have Deposit/Inflow
-                        Limit: N1,000,000
+                        Your Corporate Account has been Created, Kindly update
+                        your documents to activate account.
                     </p>
                 </div>
             </>

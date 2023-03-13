@@ -31,7 +31,7 @@ const ReceivePaymentFirst = ({
         //     );
         //     const countriesData = await countriesApi.json();
         //     setAmount(countriesData);
-        //     console.log(countriesData);
+        //     //console.log(countriesData);
         //     fetchCountryApi();
         // };
     }, []);
@@ -40,7 +40,7 @@ const ReceivePaymentFirst = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
-    // console.log(amount);
+    //console.log(amount);
 
     return (
         <Overlay overlay={overlay}>
@@ -52,11 +52,19 @@ const ReceivePaymentFirst = ({
                             (Accepts Card Payment without POS)
                         </p>
                         <form onSubmit={handleSubmit(action)}>
-                            <div className={styles.source}>
-                                <h2>
-                                    Source <span>- Marvelous N******</span>
-                                </h2>
-                                <SourceSvg />
+                            <div className={styles.formGroup}>
+                                <label>Account to Credit</label>
+                                <select>
+                                    <option>
+                                        {' '}
+                                        Source <span>- Marvelous N******</span>
+                                    </option>
+                                    <option>
+                                        {' '}
+                                        Source <span>- Troniclab</span>
+                                    </option>
+                                </select>
+                                {/* <SourceSvg /> */}
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Name of Payment</label>
@@ -147,7 +155,7 @@ const ReceivePaymentFirst = ({
                     </div>
                 </div>
                 <div>
-                    {/* <Image
+                    {/* <img
                         src="/Assets/Images/Group 33664.png"
                         width="100%"
                         height="100%"

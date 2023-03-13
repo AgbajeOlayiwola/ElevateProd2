@@ -47,39 +47,47 @@ export const SidebarData = [
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
     },
+    // {
+    //     title: 'Tools',
+    //     path: '/Tools',
+    //     icon: <ToolSvg />,
+    //     iconActive: <ToolsActiveSvg />,
+    //     iconClosed: <RiIcons.RiArrowDownSLine />,
+    //     iconOpened: <RiIcons.RiArrowUpSLine />,
+    //     subNav: [
+    //         {
+    //             title: 'Analysis',
+    //             path: '/Analysis',
+    //             icon: <BiIcons.BiTransfer />
+    //         },
+    //         {
+    //             title: 'Inventory',
+    //             path: '/Inventory',
+    //             icon: <BulkTransfer />
+    //         },
+    //         {
+    //             title: 'e invoice',
+    //             path: '/invoice',
+    //             icon: <NairaSvg />
+    //         },
+    //         {
+    //             title: 'Others',
+    //             path: '/others',
+    //             icon: <FaIcons.FaHandHoldingUsd />
+    //         }
+    //     ]
+    // },
+    // {
+    //     title: 'Storefront',
+    //     path: '/Storefront',
+    //     icon: <StorefrontSvg />,
+    //     iconActive: <StorefrontActiveSvg />,
+    //     iconClosed: <RiIcons.RiArrowDownSLine />,
+    //     iconOpened: <RiIcons.RiArrowUpSLine />
+    // },
     {
-        title: 'Tools',
-        path: '/Tools',
-        icon: <ToolSvg />,
-        iconActive: <ToolsActiveSvg />,
-        iconClosed: <RiIcons.RiArrowDownSLine />,
-        iconOpened: <RiIcons.RiArrowUpSLine />,
-        subNav: [
-            {
-                title: 'Analysis',
-                path: '/Analysis',
-                icon: <BiIcons.BiTransfer />
-            },
-            {
-                title: 'Inventory',
-                path: '/Inventory',
-                icon: <BulkTransfer />
-            },
-            {
-                title: 'e invoice',
-                path: '/invoice',
-                icon: <NairaSvg />
-            },
-            {
-                title: 'Others',
-                path: '/others',
-                icon: <FaIcons.FaHandHoldingUsd />
-            }
-        ]
-    },
-    {
-        title: 'Storefront',
-        path: '/Storefront',
+        title: 'Dispute ',
+        path: '/Dispute',
         icon: <StorefrontSvg />,
         iconActive: <StorefrontActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
@@ -201,13 +209,13 @@ export const MakePayment = [
         title: 'Bulk Transfer',
         path: 'Bulk Transfer',
         icon: <BulkTransfer />
-    },
-
-    {
-        title: 'FX Transfer',
-        path: 'FX Transfer ',
-        icon: <FaIcons.FaHandHoldingUsd />
     }
+
+    // {
+    //     title: 'FX Transfer',
+    //     path: 'FX Transfer ',
+    //     icon: <FaIcons.FaHandHoldingUsd />
+    // }
 ];
 export const OtherAccounts = [
     {
@@ -237,7 +245,7 @@ export const PaymentData = {
 
         {
             icon: <FxTrans />,
-            text: 'FX Transfer '
+            text: 'FX Transfer'
         }
     ],
     receive: [
@@ -1256,5 +1264,31 @@ export const location = [
             { lgaName: 'Kwali', lgaCode: 'FC005' },
             { lgaName: 'Abuja Municipal Area Council', lgaCode: 'FC006' }
         ]
+    }
+];
+export const dateData = [
+    {
+        date: '28:12:2022',
+        cash: '1000'
+    },
+    {
+        date: '12:12:2022',
+        cash: '1500'
+    },
+    {
+        date: '13:12:2022',
+        cash: '200'
+    },
+    {
+        date: '21:12:2022',
+        cash: '21000'
+    },
+    {
+        date: '21:12:2022',
+        cash: '2000'
+    },
+    {
+        date: '21:12:2022',
+        cash: '2000'
     }
 ];

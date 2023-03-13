@@ -22,6 +22,21 @@ export const banks = {
 //banks action types end
 
 //banks action types
+export const pushDocuments = {
+    PUSHDOCUMENTS_LOAD_START: 'PUSHDOCUMENTS_LOAD_START',
+    PUSHDOCUMENTS_LOAD_SUCCESS: 'PUSHDOCUMENTS_LOAD_SUCCESS',
+    PUSHDOCUMENTS_LOAD_ERROR: 'PUSHDOCUMENTS_LOAD_ERROR'
+};
+//banks action types end
+//banks action types
+export const shareDocuments = {
+    SHAREDOCUMENTS_LOAD_START: 'SHAREDOCUMENTS_LOAD_START',
+    SHAREDOCUMENTS_LOAD_SUCCESS: 'SHAREDOCUMENTS_LOAD_SUCCESS',
+    SHAREDOCUMENTS_LOAD_ERROR: 'SHAREDOCUMENTS_LOAD_ERROR'
+};
+//banks action types end
+
+//banks action types
 export const logout = {
     LOGOUT_START: 'LOGOUT_START'
 };
@@ -158,6 +173,16 @@ export const interBankEnquiry = {
 
 //Inter action type ends
 
+//Inter action types
+
+export const intraBankEnquiry = {
+    INTRABANKENQUIRY_LOAD_START: 'INTRABANKENQUIRY_LOAD_START',
+    INTRABANKENQUIRY_LOAD_SUCCESS: 'INTRABANKENQUIRY_LOAD_SUCCESS',
+    INTRABANKENQUIRY_LOAD_ERROR: 'INTRABANKENQUIRY_LOAD_ERROR'
+};
+
+//Inter action type ends
+
 //balanceEnquiry action types
 
 export const balanceEnquiry = {
@@ -208,6 +233,51 @@ export const deleteBeneficiaries = {
 
 //deleteBeneficiaries action type ends
 
+//postBeneficiaries action types
+
+export const postBeneficiaries = {
+    POSTBENEFICIARIES_LOAD_START: 'POSTBENEFICIARIES_LOAD_START',
+    POSTBENEFICIARIES_LOAD_SUCCESS: 'POSTBENEFICIARIES_LOAD_SUCCESS',
+    POSTBENEFICIARIES_LOAD_ERROR: 'POSTBENEFICIARIES_LOAD_ERROR'
+};
+
+//postBeneficiaries action type ends
+
+//getAirtimeBeneficiaries action types
+
+export const getAirtimeBeneficiaries = {
+    GETAIRTIMEBENEFICIARIES_LOAD_START: 'GETAIRTIMEBENEFICIARIES_LOAD_START',
+    GETAIRTIMEBENEFICIARIES_LOAD_SUCCESS:
+        'GETAIRTIMEBENEFICIARIES_LOAD_SUCCESS',
+    GETAIRTIMEBENEFICIARIES_LOAD_ERROR: 'GETAIRTIMEBENEFICIARIES_LOAD_ERROR'
+};
+
+//getAirtimeBeneficiaries action type ends
+
+//deleteAirtimeBeneficiaries action types
+
+export const deleteAirtimeBeneficiaries = {
+    DELETEAIRTIMEBENEFICIARIES_LOAD_START:
+        'DELETEAIRTIMEBENEFICIARIES_LOAD_START',
+    DELETEAIRTIMEBENEFICIARIES_LOAD_SUCCESS:
+        'DELETEAIRTIMEBENEFICIARIES_LOAD_SUCCESS',
+    DELETEAIRTIMEBENEFICIARIES_LOAD_ERROR:
+        'DELETEAIRTIMEBENEFICIARIES_LOAD_ERROR'
+};
+
+//deleteAirtimeBeneficiaries  type ends
+
+//postAirtimeBeneficiaries action types
+
+export const postAirtimeBeneficiaries = {
+    POSTAIRTIMEBENEFICIARIES_LOAD_START: 'POSTAIRTIMEBENEFICIARIES_LOAD_START',
+    POSTAIRTIMEBENEFICIARIES_LOAD_SUCCESS:
+        'POSTAIRTIMEBENEFICIARIES_LOAD_SUCCESS',
+    POSTAIRTIMEBENEFICIARIES_LOAD_ERROR: 'POSTAIRTIMEBENEFICIARIES_LOAD_ERROR'
+};
+
+//postAirtimeBeneficiaries action type ends
+
 //viewBvn action types
 
 export const viewBvn = {
@@ -257,16 +327,6 @@ export const ussdStatus = {
 };
 
 //ussdStatus action type ends
-
-//postBeneficiaries action types
-
-export const postBeneficiaries = {
-    POSTBENEFICIARIES_LOAD_START: 'POSTBENEFICIARIES_LOAD_START',
-    POSTBENEFICIARIES_LOAD_SUCCESS: 'POSTBENEFICIARIES_LOAD_SUCCESS',
-    POSTBENEFICIARIES_LOAD_ERROR: 'POSTBENEFICIARIES_LOAD_ERROR'
-};
-
-//postBeneficiaries action type ends
 
 //transactionHistory action types
 
@@ -607,6 +667,22 @@ export const forgotPasswordtype = {
 };
 // Forgot Password ENDS
 
+//Forgot Password Reset TYPE STARTE
+export const forgotPasswordReset = {
+    FORGOT_PASSWORD_RESET_START: 'FORGOT_PASSWORD_RESET_START',
+    FORGOT_PASSWORD_RESET_SUCCESS: 'FORGOT_PASSWORD_RESET_SUCCESS',
+    FORGOT_PASSWORD_RESET_ERROR: 'FORGOT_PASSWORD_RESET_ERROR'
+};
+// Forgot Password ENDS
+
+//Forgot Password Reset TYPE STARTE
+export const fetchRM = {
+    FETCHRM_START: 'FETCHRM_START',
+    FETCHRM_SUCCESS: 'FETCHRM_SUCCESS',
+    FETCHRM_ERROR: 'FETCHRM_ERROR'
+};
+// Forgot Password ENDS
+
 //Reset otp TYPE STARTE
 export const resetOtpType = {
     RESET_OTP_START: 'RESET_OTP_START',
@@ -637,3 +713,106 @@ export const existingBusnessSetup = {
     EXISTING_BUSINESS_ERROR: 'EXISTING_BUSINESS_ERROR'
 };
 // existing business setup End
+//GET CAC END
+//existing business setup TYPE STARTE
+export const getRC = {
+    GETRC_START: 'GETRC_START',
+    GETRC_SUCCESS: 'GETRC_SUCCESS',
+    GETRC_ERROR: 'GETRC_ERROR'
+};
+// existing business setup End
+
+//Ellevate Profiling Types
+
+export const postEllevateProfilling = {
+    POST_ELLEVATE_PROFILLING_START: 'POST_ELLEVATE_PROFILLING_START',
+    POST_ELLEVATE_PROFILLING_SUCCESS: 'POST_ELLEVATE_PROFILLING_SUCCESS',
+    POST_ELLEVATE_PROFILLING_ERROR: 'POST_ELLEVATE_PROFILLING_ERROR'
+};
+//Ellevate Profiling Types
+
+//Ellevate Profiling Types
+
+export const profilingQuestions = {
+    PROFILING_QUESTIONS_START: 'PROFILING_QUESTIONS_START',
+    PROFILING_QUESTIONS_SUCCESS: 'PROFILING_QUESTIONS_SUCCESS',
+    PROFILING_QUESTIONS_ERROR: 'PROFILING_QUESTIONS_ERROR'
+};
+//Ellevate Profiling Types
+
+//vnin type
+export const vninType = {
+    VNIN_START: 'VNIN_START',
+    VNIN_SUCCESS: 'VNIN_SUCCESS',
+    VNIN_ERROR: 'VNIN_ERROR'
+};
+//vnin type
+
+//Reffernce type
+export const reffereeType = {
+    REFEREE_START: 'REFEREE_START',
+    REFEREE_SUCCESS: 'REFEREE_SUCCESS',
+    REFEREE_ERROR: 'REFEREE_ERROR'
+};
+//End Refferenve type
+//Opload DocReffernce type
+export const uploadreffereeType = {
+    UPLOAD_REFEREE_START: 'UPLOAD_REFEREE_START',
+    UPLOAD_REFEREE_SUCCESS: 'UPLOAD_REFEREE_SUCCESS',
+    UPLOAD_REFEREE_ERROR: 'UPLOAD_REFEREE_ERROR'
+};
+//End Upload Doc Refferenve type
+
+//Adress Verification Type
+
+export const addressVerificationType = {
+    ADDRESS_VERIFICATION_START: 'ADDRESS_VERIFICATION_START',
+    ADDRESS_VERIFICATION_SUCCESS: 'ADDRESS_VERIFICATION_SUCCESS',
+    ADDRESS_VERIFICATION_ERROR: 'ADDRESS_VERIFICATION_ERROR'
+};
+//End Address Verfication Type
+
+//Tin Type
+
+export const tinType = {
+    TIN_START: 'TIN_START',
+    TIN_SUCCESS: 'TIN_SUCCESS',
+    TIN_ERROR: 'TIN_ERROR'
+};
+//End Tin Type
+
+//Cac Document Type
+
+export const cacDocummentType = {
+    CAC_DOCUMENT_START: 'CAC_DOCUMENT_START',
+    CAC_DOCUMENT_SUCCESS: 'CAC_DOCUMENT_SUCCESS',
+    CAC_DOCUMENT_ERROR: 'CAC_DOCUMENT_ERROR'
+};
+//End Cac Document Type
+
+//Qr info Type
+
+export const qrInfoType = {
+    QR_INFO_START: 'QR_INFO_START',
+    QR_INFO_SUCCESS: 'QR_INFO_SUCCESS',
+    QR_INFO_ERROR: 'QR_INFO_ERROR'
+};
+//Qr Info Type
+
+//payment qr Type
+
+export const paymentQrType = {
+    PAYMENT_QR_START: 'PAYMENT_QR_START',
+    PAYMENT_QR_SUCCESS: 'PAYMENT_QR_SUCCESS',
+    PAYMENT_QR_ERROR: 'PAYMENT_QR_ERROR'
+};
+//paymment qr Type
+
+//Generate QrType
+
+export const generateQrType = {
+    GENERATE_QR_START: 'GENERATE_QR_START',
+    GENERATE_QR_SUCCESS: 'GENERATE_QR_SUCCESS',
+    GENERATE_QR_ERROR: 'GENERATE_QR_ERROR'
+};
+//Generate Qr Type

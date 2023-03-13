@@ -15,7 +15,6 @@ import Innersubnav from './innersubnav';
 import { FaTimes } from 'react-icons/fa';
 import { logoutAction } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCookie, deleteCookie } from 'cookies-next';
 
 const Sidebar = ({ showSubnav }) => {
     const dispatch = useDispatch();
@@ -26,16 +25,9 @@ const Sidebar = ({ showSubnav }) => {
     const [subNavTitle, setSubNavTitle] = useState('');
 
     const handleLogOut = () => {
+        dispatch(logoutAction());
         if (!localStorage.getItem('user')) {
             router.replace('../Auth/Login');
-        }
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-
-        if (getCookie('cookieToken') == undefined) {
-            deleteCookie('existingToken');
-        } else {
-            deleteCookie('cookieToken');
         }
     };
 

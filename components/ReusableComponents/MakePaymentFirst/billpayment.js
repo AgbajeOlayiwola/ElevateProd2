@@ -6,11 +6,15 @@ import {
     loadbillerCategory,
     loadbillerType,
     loadbillerPlan,
-    postAirtimeNetwork
+    postAirtimeNetwork,
+    getAirtimeBeneficiariesData
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowRightSvg from '../ReusableSvgComponents/ArrowRightSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
+import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
+import Loader from '../Loader';
+import ArrowBackSvg from '../ArrowBackSvg';
 
 const BillPayment = ({
     action,
@@ -20,16 +24,21 @@ const BillPayment = ({
     airtimeAction,
     scheduleLater,
     dataAction,
-    bankAccounts
+    isLoading,
+    bankAccounts,
+    formData,
+    setFormdata
 }) => {
     const [network, setNetwork] = useState('MTN Nigeria');
     const [networkData, setNetworkData] = useState({});
-    const [activeBtn, setActiveBtn] = useState(false);
+    const [beneActive, setBeneActive] = useState();
+    // const [activeBtn, setActiveBtn] = useState(false);
     const [billerCategories, setBillerCategories] = useState([]);
     const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const [billerTypes, setBillerTypes] = useState([]);
-    const [billerPlans, setBillerPlans] = useState([]);
+    const [billerPlans, setBillerPlans] = useState();
     const [billerId, setBillerId] = useState('');
+    const [airtimebeneficiaries, setAirtimeBeneficiaries] = useState([]);
 
     const dispatch = useDispatch();
     const { billerCategory } = useSelector(
@@ -40,9 +49,26 @@ const BillPayment = ({
     );
     const { billerType } = useSelector((state) => state.billerTypeReducer);
     const { billerPlan } = useSelector((state) => state.billerPlanReducer);
+    const { getAirtimeBeneficiaries } = useSelector(
+        (state) => state.getAirtimeBeneficiariesReducer
+    );
     useEffect(() => {
         dispatch(loadbillerCategory('ENG'));
+        dispatch(getAirtimeBeneficiariesData());
     }, []);
+    useEffect(() => {
+        airtimeNetworkData.networks?.map((networks) => {
+            if (networks.name === 'MTN Nigeria') {
+                localStorage.setItem('Airtime', JSON.stringify(networks));
+            }
+        });
+        //console.log(airtimeNetworkData);
+    }, [airtimeNetworkData]);
+    useEffect(() => {
+        if (getAirtimeBeneficiaries !== null) {
+            setAirtimeBeneficiaries(getAirtimeBeneficiaries);
+        }
+    }, [getAirtimeBeneficiaries]);
     useEffect(() => {
         if (billerCategory !== null) {
             setBillerCategories(billerCategory);
@@ -54,19 +80,18 @@ const BillPayment = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
+    //console.log(billerCategories);
     const loadbillerTypeData = () => {
         if (firstTitle !== 'Bill Payment') {
-            if (firstTitle === 'Cable Tv') {
-                dispatch(loadbillerType('CABLETV'));
-            } else {
-                dispatch(loadbillerType(firstTitle));
-            }
+            dispatch(loadbillerType(firstTitle));
         }
         // setBillerId(e.target.value);
         setBillerTypes([]);
-        setBillerPlans([]);
+        setBillerPlans();
         if (firstTitle === 'AIRTIME') {
             dispatch(postAirtimeNetwork());
+        } else {
+            loadbillerType(firstTitle);
         }
     };
     useEffect(() => {
@@ -77,43 +102,35 @@ const BillPayment = ({
             setBillerTypes(billerType);
         }
     }, [billerType]);
+    //console.log(billerTypes);
     useEffect(() => {
         if (airtimeNetwork !== null) {
             setAirtimeNetworkData(airtimeNetwork);
-
-            console.log(networkData);
         }
     }, [airtimeNetwork]);
-    const loadPlans = (e) => {
-        dispatch(loadbillerPlan(e.target.value));
-    };
-    useEffect(() => {}, [billerId]);
     useEffect(() => {
         if (billerPlan !== null) {
-            setBillerPlans(billerPlan.billerProductInfo);
+            localStorage.setItem('Airtime', JSON.stringify(billerPlan));
+            setBillerPlans(billerPlan);
         }
     }, [billerPlan]);
-    const bills = [
-        'AIRTIME',
-        'Data',
-        'Cable TV',
-        'UTILITY',
-        'Airtime and Data'
-    ];
     return (
         <div>
             {firstTitle === 'Bill Payment' ? (
                 <>
+                    {/* <div className={styles.backIcon}>
+                        <ArrowBackSvg color="#102572" action={backAction} />
+                    </div> */}
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
 
-                    <div className={styles.beneficiary}>
+                    {/* <div className={styles.beneficiary}>
                         <div className={styles.beneficiaryHeader}>
                             <h2>Recent</h2>
                             <p>View all</p>
                         </div>
                         <div className={styles.beneficiaryBody}>
                             <h2>No Recent Transactions</h2>
-                            {/* <div className={styles.beneficiarySingle}>
+                            <div className={styles.beneficiarySingle}>
                                 <div>
                                     <img
                                         src="../../Assets/Svgs/IkejaLogo.svg"
@@ -130,10 +147,6 @@ const BillPayment = ({
                                     />
                                 </div>
                                 <p className={styles.name}>GOtv Subscriti...</p>
-                            </div> */}
-                            {/* <div className={styles.beneficiarySingle}>
-                                <BeneficiaryAvatarSvg />
-                                <p className={styles.name}>Ikeja Electric</p>
                             </div>
                             <div className={styles.beneficiarySingle}>
                                 <BeneficiaryAvatarSvg />
@@ -142,22 +155,28 @@ const BillPayment = ({
                             <div className={styles.beneficiarySingle}>
                                 <BeneficiaryAvatarSvg />
                                 <p className={styles.name}>Ikeja Electric</p>
-                            </div> */}
+                            </div>
+                            <div className={styles.beneficiarySingle}>
+                                <BeneficiaryAvatarSvg />
+                                <p className={styles.name}>Ikeja Electric</p>
+                            </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className={styles.billBody}>
-                        {bills.map((bill, index) => {
-                            return (
-                                <div
-                                    className={styles.billSingle}
-                                    onClick={arrowAction}
-                                    key={index}
-                                >
-                                    <p>{bill}</p>
-                                    <ArrowRightSvg />
-                                </div>
-                            );
-                        })}
+                        {billerCategories.billerCategoryInfoList?.map(
+                            (bill, index) => {
+                                return (
+                                    <div
+                                        className={styles.billSingle}
+                                        onClick={arrowAction}
+                                        key={index}
+                                    >
+                                        <p>{bill.categoryCode}</p>
+                                        <ArrowRightSvg />
+                                    </div>
+                                );
+                            }
+                        )}
                     </div>
                 </>
             ) : firstTitle === 'AIRTIME' ? (
@@ -165,17 +184,73 @@ const BillPayment = ({
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     <div className={styles.body}>
                         <form onSubmit={handleSubmit(airtimeAction)}>
+                            {airtimebeneficiaries.phoneNumberBeneficiaries?.map(
+                                (account, index) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            className={styles.beneficiarySingle}
+                                            onClick={() => {
+                                                setBeneActive(account);
+                                                setNetwork(
+                                                    account.mobileNetwork
+                                                );
+                                                {
+                                                    airtimeNetworkData.networks?.filter(
+                                                        (e) => {
+                                                            if (
+                                                                e.name ===
+                                                                account.mobileNetwork
+                                                            ) {
+                                                                localStorage.setItem(
+                                                                    'Airtime',
+                                                                    JSON.stringify(
+                                                                        e
+                                                                    )
+                                                                );
+                                                            }
+                                                        }
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            <div
+                                                className={
+                                                    styles.beneficiaryIcon
+                                                }
+                                            >
+                                                <BeneficiaryAvatarSvg />
+                                            </div>
+                                            <div>
+                                                <p className={styles.name}>
+                                                    {account.phoneNumber}
+                                                </p>
+                                                <p className={styles.benebank}>
+                                                    {account.mobileNetwork}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                }
+                            )}
                             <div className={styles.narration}>
                                 <label>Source Account</label>
                                 <select
                                     name=""
                                     id=""
                                     {...register('sourceAccount')}
+                                    onInput={(event) => {
+                                        setFormdata({
+                                            ...formData,
+                                            accountNum: event.target.value
+                                        });
+                                    }}
                                 >
+                                    <option>Select Account To Use</option>
                                     {bankAccounts?.map((accounts, index) => {
                                         return (
                                             <option
-                                                value={accounts.accountId}
+                                                value={accounts.accountNumber}
                                                 key={index}
                                             >
                                                 {accounts.accountNumber}
@@ -215,7 +290,16 @@ const BillPayment = ({
                                                         }}
                                                         key={index}
                                                     >
-                                                        <div>
+                                                        <div
+                                                            className={
+                                                                styles.greye
+                                                            }
+                                                        ></div>
+                                                        <div
+                                                            className={
+                                                                styles.networkContent
+                                                            }
+                                                        >
                                                             {networks.name ===
                                                             'MTN Nigeria' ? (
                                                                 <img
@@ -251,30 +335,39 @@ const BillPayment = ({
                             </div>
                             <div className={styles.networkForm}>
                                 <div className={styles.formGroup}>
-                                    <label>Phone Number</label>
-                                    <input
-                                        type="text"
-                                        placeholder="0801 234 5678"
-                                        name="phoneNumber"
-                                        {...register('phoneNumber', {
-                                            required:
-                                                'Phone Number is required',
-                                            minLength: {
-                                                value: 11,
-                                                message: 'Min length is 11'
-                                            },
-                                            maxLength: {
-                                                value: 11,
-                                                message: 'Max length is 11'
-                                            },
-                                            pattern: {
-                                                value: /^[0-9]/i,
-                                                message:
-                                                    'Phone Number can only be number '
-                                            }
-                                        })}
-                                    />
+                                    <label>Phone Number</label>{' '}
+                                    {beneActive ? (
+                                        <input
+                                            {...register('phoneNumberBene')}
+                                            type="number"
+                                            value={beneActive.phoneNumber}
+                                        />
+                                    ) : !beneActive ? (
+                                        <input
+                                            type="text"
+                                            placeholder="0801 234 5678"
+                                            name="phoneNumber"
+                                            {...register('phoneNumber', {
+                                                required:
+                                                    'Phone Number is required',
+                                                minLength: {
+                                                    value: 11,
+                                                    message: 'Min length is 11'
+                                                },
+                                                maxLength: {
+                                                    value: 11,
+                                                    message: 'Max length is 11'
+                                                },
+                                                pattern: {
+                                                    value: /^[0-9]/i,
+                                                    message:
+                                                        'Phone Number can only be number '
+                                                }
+                                            })}
+                                        />
+                                    ) : null}
                                 </div>
+
                                 <div className={styles.formGroup}>
                                     <label>Amount</label>
                                     <input
@@ -292,14 +385,18 @@ const BillPayment = ({
                                         })}
                                     />
                                 </div>
-                                <button type="submit">Get Airtime</button>
+                                {isLoading ? (
+                                    <Loader />
+                                ) : (
+                                    <button type="submit">Get Airtime</button>
+                                )}
                             </div>
-                            <p className={styles.schedule}>
+                            {/* <p className={styles.schedule}>
                                 Not paying now?{' '}
                                 <span onClick={scheduleLater}>
                                     Schedule for Later
                                 </span>
-                            </p>
+                            </p> */}
                         </form>
                     </div>
                 </>
@@ -407,12 +504,247 @@ const BillPayment = ({
                                 </div>
                                 <button>Get Data</button>{' '}
                             </div>
-                            <p className={styles.schedule}>
+                            {/* <p className={styles.schedule}>
                                 Not paying now?{' '}
                                 <span onClick={scheduleLater}>
                                     Schedule for Later
                                 </span>
-                            </p>
+                            </p> */}
+                        </form>
+                    </div>
+                </>
+            ) : firstTitle !== 'Bill Payment' ? (
+                <>
+                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                    <div className={styles.body}>
+                        <form onSubmit={handleSubmit(airtimeAction)}>
+                            <div className={styles.narration}>
+                                <label>Source Account</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    {...register('sourceAccount')}
+                                    onInput={(event) => {
+                                        setFormdata({
+                                            ...formData,
+                                            accountNum: event.target.value
+                                        });
+                                    }}
+                                    // value={formData.accountNum}
+                                >
+                                    <option value="">
+                                        Select Account To Use
+                                    </option>
+                                    {bankAccounts?.map((accounts, index) => {
+                                        return (
+                                            <option
+                                                value={accounts.accountNumber}
+                                                key={index}
+                                            >
+                                                {accounts.accountNumber}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            <div className={styles.narration}>
+                                <label>Biller Type</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    {...register('billerTypes', {
+                                        required: 'Biller Type  is required'
+                                    })}
+                                    onChange={(e) => {
+                                        dispatch(
+                                            loadbillerPlan(e.target.value)
+                                        );
+                                        setBillerPlans();
+                                    }}
+                                >
+                                    <option value="">Select biller Type</option>
+                                    {billerTypes.billerInfoList?.map(
+                                        (accounts, index) => {
+                                            return (
+                                                <option
+                                                    value={accounts.billerCode}
+                                                    key={index}
+                                                >
+                                                    {accounts.billerName}
+                                                </option>
+                                            );
+                                        }
+                                    )}
+                                </select>
+                            </div>
+                            {billerPlans ? (
+                                <>
+                                    <div className={styles.narration}>
+                                        <label>
+                                            {
+                                                billerPlans.billFormData[0]
+                                                    .fieldTitle
+                                            }
+                                        </label>
+                                        <input
+                                            type="text"
+                                            placeholder={
+                                                billerPlans.billFormData[0]
+                                                    .fieldTitle
+                                            }
+                                            name="paymentDescription"
+                                            {...register('paymentDescription', {
+                                                required:
+                                                    'Payment Description is required'
+                                            })}
+                                        />
+                                    </div>
+                                    <div className={styles.narration}>
+                                        <label>Select Package</label>
+                                        <select
+                                            name="desiredPackage"
+                                            id=""
+                                            {...register('desiredPackage', {
+                                                required:
+                                                    'Desired Package is required'
+                                            })}
+                                            onChange={(e) => {
+                                                billerPlans.billerProductInfo?.map(
+                                                    (item) => {
+                                                        if (
+                                                            item.productName ===
+                                                            e.target.value
+                                                        ) {
+                                                            localStorage.setItem(
+                                                                'DesiredPackage',
+                                                                JSON.stringify(
+                                                                    item
+                                                                )
+                                                            );
+                                                        }
+                                                    }
+                                                );
+                                            }}
+                                        >
+                                            <option value="">
+                                                Select Desired Pacakge
+                                            </option>
+                                            {billerPlans.billerProductInfo?.map(
+                                                (item, index) => {
+                                                    return (
+                                                        <option
+                                                            value={
+                                                                item.productName
+                                                            }
+                                                            key={index}
+                                                        >
+                                                            {item.productName}
+                                                        </option>
+                                                    );
+                                                }
+                                            )}
+                                        </select>
+                                    </div>
+                                </>
+                            ) : null}
+
+                            {/* <div className={styles.networkCarrier}>
+                                <h2>Network</h2>
+                                <div className={styles.networkBody}>
+                                    {airtimeNetworkData.networks?.map(
+                                        (networks, index) => {
+                                            if (
+                                                networks.name === 'SOCHIENGMTN'
+                                            ) {
+                                                return null;
+                                            } else {
+                                                return (
+                                                    <div
+                                                        className={
+                                                            network ===
+                                                            networks.name
+                                                                ? styles.networkActive
+                                                                : styles.networkSingle
+                                                        }
+                                                        onClick={() => {
+                                                            setNetwork(
+                                                                networks.name
+                                                            );
+                                                            localStorage.setItem(
+                                                                'Airtime',
+                                                                JSON.stringify(
+                                                                    networks
+                                                                )
+                                                            );
+                                                        }}
+                                                        key={index}
+                                                    >
+                                                        <div>
+                                                            {networks.name ===
+                                                            'MTN Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/mtn.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : networks.name ===
+                                                              'Airtel Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/airtel.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : networks.name ===
+                                                              'GLO Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/glo.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : networks.name ===
+                                                              'Etisalat Nigeria' ? (
+                                                                <img
+                                                                    src="../../Assets/Svgs/9mobile.svg"
+                                                                    alt=""
+                                                                />
+                                                            ) : null}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            }
+                                        }
+                                    )}
+                                </div>
+                            </div> */}
+
+                            <div className={styles.networkForm}>
+                                <div className={styles.formGroup}>
+                                    <label>Amount</label>
+                                    <input
+                                        type="text"
+                                        placeholder="0.00"
+                                        name="amount"
+                                        {...register('amount', {
+                                            required: 'Amount  is required',
+
+                                            pattern: {
+                                                value: /^[0-9]/i,
+                                                message:
+                                                    'Amount can only be number '
+                                            }
+                                        })}
+                                    />
+                                </div>
+
+                                {isLoading ? (
+                                    <Loader />
+                                ) : (
+                                    <button type="submit">Get Utility</button>
+                                )}
+                            </div>
+                            {/* <p className={styles.schedule}>
+                                Not paying now?{' '}
+                                <span onClick={scheduleLater}>
+                                    Schedule for Later
+                                </span>
+                            </p> */}
                         </form>
                     </div>
                 </>

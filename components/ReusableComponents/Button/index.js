@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './styles.module.css';
+import Loader from '../Loader';
 
 const ButtonComp = ({
     width,
@@ -13,10 +14,22 @@ const ButtonComp = ({
     color,
     margin,
     active,
-    disabled
+    disabled,
+    err,
+    loads
 }) => {
-    // console.log(disabled);
+    //console.log(disabled);
+    const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        setLoading(loads);
+    }, [loads]);
+
+    useEffect(() => {
+        if (err) {
+            setLoading(false);
+        }
+    }, [err]);
     return (
         <>
             {disabled ? (
@@ -35,7 +48,7 @@ const ButtonComp = ({
                     type={type}
                     onClick={onClick}
                 >
-                    {text}
+                    {loading ? <Loader /> : text}
                 </button>
             ) : (
                 <button

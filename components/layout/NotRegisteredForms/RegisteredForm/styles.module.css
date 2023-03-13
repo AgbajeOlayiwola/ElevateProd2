@@ -30,9 +30,9 @@
     overflow: scroll;
 }
 
-.formWrapper::-webkit-scrollbar {
+/* .formWrapper::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .formWrapper button {
     margin-top: 48px;

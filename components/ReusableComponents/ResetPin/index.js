@@ -39,7 +39,7 @@ const ResetPin = ({ overlay, title, label1, label2, action, formAction }) => {
     };
 
     // const onSubmit = async (data) => {
-    //     console.log(data);
+    //     //console.log(data);
     // };
     const myref = useRef();
     useEffect(() => {

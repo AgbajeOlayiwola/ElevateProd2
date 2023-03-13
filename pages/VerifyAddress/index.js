@@ -24,13 +24,13 @@ const VerifyAddress = () => {
             setLongitude(position.coords.longitude);
         });
     }, []);
-    console.log(address);
+    //console.logaddress);
     const { profile } = useSelector((state) => state.profile);
     useEffect(() => {
         dispatch(CompProfile());
     }, []);
     const newAccountTest1 = () => {
-        console.log(details);
+        //console.logdetails);
         if (profile !== null) {
             setDetails(profile.data);
         }

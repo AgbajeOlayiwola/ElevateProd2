@@ -23,10 +23,6 @@ const SuccessN = () => {
                         text="Proceed To Dashboard"
                     />
                 </Link>
-                <p>
-                    With your Ellevate Account, you have Deposit/Inflow Limit:
-                    N1,000,000
-                </p>
             </div>
         </div>
     );

@@ -33,8 +33,10 @@ const Liveness = ({ action }) => {
     const [succes, setSuccess] = useState('');
     const [imageSrcI, setImageSrcI] = React.useState(null);
     const [error, setError] = React.useState('');
+    const { loading, setLoading } = React.useState(false);
 
     const capture = React.useCallback(() => {
+        setLoading((prev) => !prev);
         const ImageSrcII = webcamRef.current.getScreenshot();
         setImageSrcI(ImageSrcII);
         const imageSrc = webcamRef.current.getScreenshot();
@@ -43,7 +45,7 @@ const Liveness = ({ action }) => {
 
         var buf = _base64ToArrayBuffer(base64String);
 
-        console.log(buf);
+        //console.logbuf);
         var mimeType = 'image/jpeg';
         var file = new File([buf], 'userface-1828438.jpg', { type: mimeType });
 
@@ -53,22 +55,18 @@ const Liveness = ({ action }) => {
 
         const cookie = getCookie('cookieToken');
         axios
-            .post(
-                `https://ellevate-test.herokuapp.com/authentication/facematch`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            .post(`https://testvate.live/authentication/facematch`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
+            })
             .then((response) => {
-                console.log(response.data.message);
+                //console.logresponse.data.message);
                 setSuccess(response.data.message);
             })
             .catch((error) => {
-                console.log(error.response.data.message);
+                //console.logerror.response.data.message);
                 // setResErros(error.response.data.statusCode);
                 setError(error.response.data.message);
             });
@@ -118,6 +116,8 @@ const Liveness = ({ action }) => {
                             ? 'Success'
                             : 'Snap'
                     }
+                    loads={loading}
+                    err={succes}
                     // action={action}
                 />
 

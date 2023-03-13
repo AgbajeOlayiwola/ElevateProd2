@@ -9,7 +9,7 @@
 //         setHeight(document.documentElement.scrollHeight);
 //     }, []);
 
-//     console.log(height);
+//     //console.log(height);
 //
 
 //     const mainOverlay = {
@@ -43,8 +43,9 @@ import { useState } from 'react';
 import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
 import Idle from 'react-idle';
-import { deleteCookie, getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
+import { logoutAction } from '../../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 const DashLayout = ({
     children,
     page,
@@ -57,17 +58,11 @@ const DashLayout = ({
     const [sideActive, setSideActive] = useState(false);
     const [cornifyLoaded, setCornifyLoaded] = useState('');
     const router = useRouter();
+    const dispatch = useDispatch();
     const preloadCornify = () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
+        dispatch(logoutAction());
         if (!localStorage.getItem('user')) {
             router.replace('../Auth/Login');
-        }
-
-        if (getCookie('cookieToken') == undefined) {
-            deleteCookie('existingToken');
-        } else {
-            deleteCookie('cookieToken');
         }
     };
     return (

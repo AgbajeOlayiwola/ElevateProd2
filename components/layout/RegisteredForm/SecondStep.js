@@ -21,7 +21,9 @@ const RegisteredForm = ({
     formData,
     setFormData,
     loading,
-    setLoading
+    setLoading,
+    loads,
+    err
     // errorMessage
 }) => {
     const dispatch = useDispatch();
@@ -33,7 +35,7 @@ const RegisteredForm = ({
 
     const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
-    console.log(accountDetails);
+    //console.log(accountDetails);
     const sendAccount = localStorage.getItem('account');
     const sendAccounts = JSON.parse(sendAccount);
     const [activeBtn, setActiveBtn] = useState(true);
@@ -47,7 +49,7 @@ const RegisteredForm = ({
     const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
-    // console.log(existingUserProfilee);
+    //console.log(existingUserProfilee);
     const handlePaswword = (e) => {
         setCount(e.target.value.length);
         setConfPassword(e.target.value);
@@ -98,11 +100,11 @@ const RegisteredForm = ({
         // meta = { ...meta, password: e.target.value };
         // window.localStorage.setItem('meta', JSON.stringify(meta));
     };
-    // console.log(profileInfo);
+    //console.log(profileInfo);
     let accounts = window.localStorage.getItem('account');
     var newAccounts = JSON.parse(accounts);
-    console.log(newAccounts);
-    // console.log('payload',emailData, password, confPassword);
+    //console.log(newAccounts);
+    //console.log('payload', emailData, password, confPassword);
 
     useEffect(() => {
         if (newAccounts.userId) {
@@ -111,7 +113,7 @@ const RegisteredForm = ({
             setFormData({ ...formData, userId: newAccounts.user.userId });
         }
 
-        console.log(formData.userId);
+        //console.log(formData.userId);
     }, []);
     const types = (types) => {
         setOutTypes(types);
@@ -127,7 +129,7 @@ const RegisteredForm = ({
     const [outType, setOutType] = useState();
     const [outTypes, setOutTypes] = useState();
 
-    console.log(existingUserProfilee);
+    //console.log(existingUserProfilee);
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
@@ -140,7 +142,7 @@ const RegisteredForm = ({
                         <div>
                             {errorMessage ? (
                                 <p className={styles.error}>
-                                    {errorMessage.response.data.message}
+                                    {errorMessage?.response?.data?.message}
                                 </p>
                             ) : null}
                             <h3 className={styles.LeftHeading}>
@@ -228,6 +230,8 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text="Next"
+                            loads={loads}
+                            err={err}
                         />
                         {/* )} */}
                     </form>

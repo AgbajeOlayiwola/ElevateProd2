@@ -124,13 +124,13 @@ const Security = () => {
 
     const resetPinCheck = () => {
         if (changeTransactionPin !== null) {
-            console.log(changeTransactionPin);
+            //console.logchangeTransactionPin);
             setLoading(false);
             setMessage('Pin Changed Successfully');
             setStatusbar('success');
             setOutcome(true);
         } else if (changeTransactionPinError !== null) {
-            console.log(changeTransactionPinError);
+            //console.logchangeTransactionPinError);
             setLoading(false);
             setMessage(changeTransactionPinError);
             setOutcome(true);
@@ -160,13 +160,13 @@ const Security = () => {
 
     const resetPasswordCheck = () => {
         if (resetPassword !== null) {
-            console.log(resetPassword);
+            //console.logresetPassword);
             setLoading(false);
             setMessage('Password Changed Successfully');
             setStatusbar('success');
             setOutcome(true);
         } else if (errorMessageresetPassword !== null) {
-            console.log(errorMessageresetPassword);
+            //console.logerrorMessageresetPassword);
             setLoading(false);
             setMessage(errorMessageresetPassword);
             setOutcome(true);

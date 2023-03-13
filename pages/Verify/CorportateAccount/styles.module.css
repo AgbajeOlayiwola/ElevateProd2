@@ -29,8 +29,8 @@ color: #A5A5A5;
 
 }
 .load{
-    display: flex;
-    justify-content: center;
+    display: block;
+    text-align: center;
 }
 .svg circle:nth-child(1){
     animation: loading 0.8s infinite ease-in-out forwards;

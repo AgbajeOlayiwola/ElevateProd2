@@ -8,6 +8,17 @@
     align-items: center;
 }
 
+.profileSingleActive {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 21px 24px 21px 32px;
+    cursor: pointer;
+    border-bottom: 2px solid #f6f6f6;
+    align-items: center;
+    background: #f5f8ee;
+}
+
 .profileSingle:last-child {
     border-bottom: 0px;
 }
@@ -30,8 +41,15 @@
     line-height: 15px;
     color: #303030;
     text-align: left;
+    margin-left: 10px;
 }
 
-.profileSingle:last-child .profileText p {
-    color: #ff0000;
+@media screen and (max-width: 1253px) {
+    .profileSingle {
+        padding: 16px 0px;
+    }
+
+    .profileSingleActive {
+        padding: 16px;
+    }
 }

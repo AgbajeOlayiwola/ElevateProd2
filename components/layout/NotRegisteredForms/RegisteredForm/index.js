@@ -15,19 +15,19 @@ const RegisteredForm = ({
     formData,
     setFormData,
     action,
-    // errorM,
+    errorM,
     errorI,
     bvnError,
     actionI,
     loading,
-    setLoading
+    setLoading,
+    loads
 }) => {
     // const [progress, setProgress] = useState('25%');
     // const [loading, setLoading] = useState(false);
     const [switchs, setSwitch] = useState(true);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
-    const [errorM, setErrorM] = useState('');
     // const dispatch = useDispatch();
     // const { countries } = useSelector((state) => state.countryReducer);
 
@@ -47,16 +47,14 @@ const RegisteredForm = ({
         setShowFirstStep(false);
     };
     const handleRegistrationStatus = () => {
-        console.log('true');
-        setBgcolor((prevState) => !prevState);
-        setFormData({ ...formData, type: 'true' });
+        //console.log('true');
+        setFormData({ ...formData, type: true });
     };
     const switchRegistrationStatus = () => {
-        console.log('false');
-        setBgcolor((prevState) => !prevState);
-        setFormData({ ...formData, type: 'false' });
+        //console.log('false');
+        setFormData({ ...formData, type: false });
     };
-    // console.log(
+    //console.log(
     //     formData.type,
     //     formData.rcnumber,
     //     formData.tinNumber,
@@ -64,7 +62,7 @@ const RegisteredForm = ({
     //     formData.phoneNumber,
     //     formData.dateOfBirth
     // );
-    // console.log(formData.flag);
+    //console.log(formData.flag);
     const {
         register,
         handleSubmit,
@@ -72,28 +70,28 @@ const RegisteredForm = ({
     } = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data);
+        //console.log(data);
     };
     const { isLoading, profile, errorMessages, bvnErrorI } = useSelector(
         (state) => state.profileSetup
     );
     const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
 
-    // console.log('error essage', otpErrorMessage);
+    //console.log('error essage', otpErrorMessage);
     // useEffect(() => {
     //     setLoading((prev) => !prev);
     // }, [isLoading, profile, errorMessages]);
 
     // useEffect(() => {
-    //     // console.log('bvnError', bvnErrorI);
-    //     console.log(errorMessages);
+    //     //console.log('bvnError', bvnErrorI);
+    //     //console.log(errorMessages);
     //     setErrorM(errorMessages);
 
     //     //change to no error messages boss
     //     if (!errorMessages) {
-    //         console.log(errorMessages);
+    //         //console.log(errorMessages);
     //     } else {
-    //         console.log('moved');
+    //         //console.log('moved');
     //     }
     // }, [errorMessages]);
 
@@ -101,11 +99,20 @@ const RegisteredForm = ({
         <div className={styles.bodyWrapper}>
             <div className={styles.cardHeading}>
                 <h3 className={styles.LeftHeading}>Profile Setup</h3>
-                <p>We recommend you use a phone number linked to NIN</p>
+                {/* <p>We recommend you use a phone number linked to BVN</p> */}
             </div>
             <div className={styles.formWrapper}>
                 <InputWrapper>
-                    <p className={styles.error}>{errorI}</p> <br />
+                    {errorI !== null ? (
+                        <p className={styles.error}>{errorI}</p>
+                    ) : null}
+                    {errorM !== null ? (
+                        <p className={styles.error}>{errorM}</p>
+                    ) : null}
+                    {bvnError !== null ? (
+                        <p className={styles.error}> {bvnError}</p>
+                    ) : null}
+
                     <Label>Is your Business Registered?</Label>
                     <select
                         name=""
@@ -122,10 +129,8 @@ const RegisteredForm = ({
                         <option value="Yes">Yes</option>
                     </select>
                 </InputWrapper>
-                {formData.type == 'true' ? (
+                {formData.type == true ? (
                     <form onSubmit={handleSubmit(actionI)}>
-                        <p className={styles.error}>{errorM}</p>
-                        <p className={styles.error}> {bvnError}</p>
                         <InputWrapper>
                             <Label>
                                 Enter your RC Number/Business Registration
@@ -155,18 +160,24 @@ const RegisteredForm = ({
                                 //setRcnumber(event?.target.value); //saving input to state
                             }}
                         />
-                        <div className={styles.errors}>
+                        <div className={styles.error}>
                             {errors.rc_number?.message}
                         </div>
                         <InputWrapper>
-                            <Label>
-                                Enter your TIN <i>(optional)</i>{' '}
-                            </Label>
+                            <Label>Enter your TIN</Label>
                             <FormInput
                                 name="tin"
-                                type="number"
+                                type="text"
                                 placeholder="Your Tax Identification number"
-                                {...register('tin')}
+                                // {...register('tin', {
+                                //     required: 'TIN is required',
+
+                                //     pattern: {
+                                //         value: /^[A-Za-z0-9 ]+$/i,
+                                //         message:
+                                //             'Only Alphabelts/Number allowed'
+                                //     }
+                                // })}
                                 value={formData.tinNumber}
                                 onInput={(event) => {
                                     setFormData({
@@ -178,7 +189,7 @@ const RegisteredForm = ({
                                     //setTinumber(event?.target.value); //saving input to state
                                 }}
                             />
-                            <div className={styles.errors}>
+                            <div className={styles.error}>
                                 {errors.tin?.message}
                             </div>
                         </InputWrapper>
@@ -211,12 +222,42 @@ const RegisteredForm = ({
                                     // setNumber(event?.target.value); //saving input to state
                                 }}
                             />
-                            <p className={styles.error}>{errorM}</p>
-                            <div className={styles.errors}>
+                            {/* <p className={styles.error}>{errorM}</p> */}
+                            <div className={styles.error}>
                                 {errors.bvn?.message}
                             </div>
                         </InputWrapper>
-
+                        {/* <InputWrapper> */}
+                        {/* <Label>Enter your NIN</Label> */}
+                        {/* <div className={styles.errors}>
+                                Dial *321# yo get your nin
+                            </div> */}
+                        {/* <FormInput
+                                type="number"
+                                placeholder="Enter Your NIN"
+                                name="nin"
+                                {...register('ninFalse', {
+                                    required: 'NIN is required',
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Min length is 10'
+                                    }
+                                })}
+                                value={formData.bvNumber}
+                                onInput={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        Number: event.target.value
+                                    });
+                                    //if (event.target.value.length == 12)
+                                    //  return false; //limits to 10 digit entry
+                                    //setNumber(event?.target.value); //saving input to state
+                                }}
+                            />
+                            <div className={styles.errors}>
+                                {errors.bvnFalse?.message}
+                            </div>
+                        </InputWrapper> */}
                         <InputWrapper>
                             <Label>Phone Number</Label>
                             <div className={styles.phone}>
@@ -273,7 +314,7 @@ const RegisteredForm = ({
                                     />
                                 </div>
                             </div>
-                            <div className={styles.errors}>
+                            <div className={styles.error}>
                                 {errors.phone_number?.message}
                             </div>
                         </InputWrapper>
@@ -298,7 +339,7 @@ const RegisteredForm = ({
                                     });
                                 }}
                             />
-                            <div className={styles.errors}>
+                            <div className={styles.error}>
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
@@ -307,13 +348,15 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text={'Next'}
+                            err={errorM}
+                            loads={loads}
                             // onClick={actionI}
                         />
                     </form>
                 ) : (
                     ''
                 )}
-                {formData.type == 'false' ? (
+                {formData.type === false ? (
                     <form onSubmit={handleSubmit(action)}>
                         <InputWrapper>
                             <Label>Enter your BVN</Label>
@@ -339,12 +382,41 @@ const RegisteredForm = ({
                                     //setNumber(event?.target.value); //saving input to state
                                 }}
                             />
-                            <p className={styles.error}>{errorM}</p>
-                            <p className={styles.error}> {bvnError}</p>
-                            <div className={styles.errors}>
+                            <div className={styles.error}>
                                 {errors.bvnFalse?.message}
                             </div>
                         </InputWrapper>
+                        {/* <InputWrapper> */}
+                        {/* <Label>Enter your NIN</Label> */}
+                        {/* <div className={styles.errors}>
+                                Dial *321# yo get your nin
+                            </div> */}
+                        {/* <FormInput
+                                type="number"
+                                placeholder="Enter Your NIN"
+                                name="nin"
+                                {...register('ninFalse', {
+                                    required: 'NIN is required',
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Min length is 10'
+                                    }
+                                })}
+                                value={formData.bvNumber}
+                                onInput={(event) => {
+                                    setFormData({
+                                        ...formData,
+                                        ninNumber: event.target.value
+                                    });
+                                    //if (event.target.value.length == 12)
+                                    //  return false; //limits to 10 digit entry
+                                    //setNumber(event?.target.value); //saving input to state
+                                }}
+                            />
+                            <div className={styles.error}>
+                                {errors.bvnFalse?.message}
+                            </div> */}
+                        {/* </InputWrapper> */}
                         <InputWrapper>
                             <Label>Phone Number</Label>
                             <div className={styles.phone}>
@@ -401,7 +473,7 @@ const RegisteredForm = ({
                                     />
                                 </div>
                             </div>
-                            <div className={styles.errors}>
+                            <div className={styles.error}>
                                 {errors.countryCode_number?.message}
                             </div>
                         </InputWrapper>
@@ -426,7 +498,7 @@ const RegisteredForm = ({
                                     });
                                 }}
                             />
-                            <div className={styles.errors}>
+                            <div className={styles.error}>
                                 {errors.date_of_birth?.message}
                             </div>
                         </InputWrapper>
@@ -436,6 +508,8 @@ const RegisteredForm = ({
                             active={activeBtn ? 'active' : 'inactive'}
                             type="submit"
                             text={'Next'}
+                            err={errorM}
+                            loads={loads}
                             // onClick={action}
                         />
                     </form>

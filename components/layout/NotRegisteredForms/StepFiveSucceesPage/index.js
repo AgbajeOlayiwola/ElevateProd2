@@ -14,23 +14,21 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     useEffect(() => {
         const cookie = getCookie('cookieToken');
         axiosInstance
-            .get(
-                `https://ellevate-test.herokuapp.com${apiRoutes.accountStatus}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            .get(`https://testvate.live${apiRoutes.accountStatus}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
+            })
             .then((response) => {
-                console.log('Accoutn Status', response);
+                // console.log('Accoutn Status', response);
                 setAccountDone(response.data.data);
             })
             .catch((error) => {
-                console.log(error.response.data.message);
+                //console.log(error.response.data.message);
             });
     }, []);
+    // console.log(accountDone);
     return (
         <div className={styles.cover}>
             <>
@@ -55,8 +53,8 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                         />
                     </Link>
                     <p>
-                        With your Ellevate Account, you have Deposit/Inflow
-                        Limit: N1,000,000
+                        With your Account,you have a Deposit/Inflow Limit:
+                        #1,000,000
                     </p>
                 </div>
             </>

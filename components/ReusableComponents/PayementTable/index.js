@@ -26,7 +26,7 @@ const PaymentTable = ({ title, test }) => {
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
-            console.log(transactionElevate.transactions);
+            //console.logtransactionElevate.transactions);
         }
     }, [transactionElevate]);
     useEffect(() => {
@@ -103,13 +103,18 @@ const PaymentTable = ({ title, test }) => {
                 <p className={styles.beneficiary}>Beneficiary </p>
                 <p className={styles.type}>Type</p>
                 <p className={styles.amount}>Amount</p>
-                <p className={styles.bank}>Bank</p>
+                <p className={styles.bank}>Bank/Network</p>
                 <p className={styles.date}>Date</p>
                 <p className={styles.status}>Status</p>
             </div>
             {!tableDetails.length
                 ? 'No Recent transaction'
                 : tableDetails
+                      ?.sort((x, y) => {
+                          let a = new Date(x.transactionDate),
+                              b = new Date(y.transactionDate);
+                          return b - a;
+                      })
                       ?.filter((item) => {
                           if (searchValue === '') {
                               return item;
@@ -122,13 +127,14 @@ const PaymentTable = ({ title, test }) => {
                           return (
                               <TableDetail
                                   key={index}
-                                  Beneficiary={items.receiversName}
+                                  Beneficiary={items.receiver}
                                   Type={items.transactionType}
                                   Amount={items.transactionAmount}
                                   Bank={items.destinationBank}
                                   Dates={items.transactionDate}
                                   Status={items.transactionStatus}
                                   accountNumber={items.destinationAccountNumber}
+                                  network={items.billerCode}
                                   //   phoneNumber={}
                               />
                           );

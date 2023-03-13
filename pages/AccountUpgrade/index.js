@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 import DirectorsSvg from '../../components/ReusableComponents/ReusableSvgComponents/DirectorsSvg';
 import SignatureRuleSvg from '../../components/ReusableComponents/ReusableSvgComponents/SignatureRuleSvg';
 import { useEffect } from 'react';
+import Iframe from 'react-iframe';
+import Modal from 'react-modal';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -22,15 +24,60 @@ import {
     statesData,
     loadsetTransactionPin,
     loadUserProfile,
-    uploadRefFormData
+    uploadRefFormData,
+    shareDocumentsData,
+    pushDocumentsData,
+    postEllevateProfilingDetails,
+    loadprofilingQuestions,
+    postvnin,
+    getAddressStatusDetails,
+    getReffereeDetails,
+    getTinDetails,
+    getUploadReffereeDetails,
+    getCacDocumentDetails
 } from '../../redux/actions/actions';
-
+import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
+import { ButtonComp } from '../../components';
+import { Tooltip } from 'react-tooltip';
+
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        height: '70vh',
+        width: '40vw',
+        color: '#3e3e3e',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+    }
+};
 
 const AccountUpgrade = () => {
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    // let profilingQuestion;
+    // let profilingQuestionsData = null;
+    // if (typeof window !== 'undefined') {
+    //     profilingQuestion = window.localStorage.getItem('profiling');
+    //     profilingQuestionsData = JSON.parse(profilingQuestion);
+    // }
     const router = useRouter();
     const [text, setText] = useState('');
     const [message, setMessage] = useState('');
@@ -59,32 +106,103 @@ const AccountUpgrade = () => {
     const [city, setCity] = useState('');
     const [streetName, setStreetName] = useState('');
     const [localGovernmane, setLocalGovernmane] = useState('');
+    const [lgaCode, setLgaCode] = useState('');
+    const [stateCode, setStateCode] = useState('');
     const [statusbar, setStatusbar] = useState('');
-    const [verifyStatus, setVerifyStatus] = useState('pending');
+    const [pending, setPending] = useState('pending');
+    const [review, setReview] = useState('In Review');
+    const [rejected, setRejected] = useState('Rejected');
+    const [status, setStatus] = useState('Done');
+    const [verifyStatus, setVerifyStatus] = useState('notDone');
+    const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
+    const [reffereeEmailI, setReffereeEmailI] = useState('');
+    // const [vninStatus, setVninStatus] = useState('notDone');
+    const [virtualNin, setVirtualNin] = useState('');
+    const [elevateStatus, setElevateStatus] = useState('notDone');
+    const [utilityStatus, setUtilityStatus] = useState('notDone');
+    const [utilitytype, setUtilityType] = useState('');
+    const [idCardStatus, setidCardStatus] = useState('notDone');
+    const [profillingStatus, setProfillingStatus] = useState('notDone');
+    const [vninStatus, setVninStatus] = useState('notDone');
+    const [documentStatus, setDocumentStatus] = useState('notDone');
+    const [refereeStatus, setRefereeStatus] = useState('notDone');
+    const [cacStatus, setCacStatus] = useState('notDone');
+    const [tinStatus, setTinStatus] = useState('notDone');
+    const [cacNumber, setCacNumber] = useState('');
+    const [scumlStatus, setScumlStatus] = useState('notDone');
+    const [mematStatus, setMematStatus] = useState('notDone');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
+    const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
+    const [reffereeEmail, setReffereeEmail] = useState('');
+    const [link, setLink] = useState('');
+    const [reffereeStatus, setReffereeStatus] = useState('');
+    const [reffereeFormStatus, setReffereeFormStatus] = useState('');
+    const [checkedBtn, setCheckedBtn] = useState(false);
+    const [inputCheck, setInputCheck] = useState();
+    const [fileI, setFileI] = useState(null);
+    const [fileNameI, setFileNameI] = useState();
+    const [fileII, setFileII] = useState(null);
+    const [fileNameII, setFileNameII] = useState();
     const [identificationDocumentFile, setIdentificationDocument] = useState(
-        ''
+        null
     );
     const [
         identificationDocumentFileName,
         setIdentificationDocumentName
     ] = useState('');
+    const [
+        identificationBackDocument,
+        setIdentificationBackDocument
+    ] = useState(null);
+    const [
+        identificationBackDocumentFileName,
+        setIdentificationBackDocumentFileName
+    ] = useState('');
+
+    identificationBackDocumentFileName;
     const [refoneno, setRefoneNo] = useState('');
+    const [base64urlI, setBase64UrlI] = useState('');
+    const [base64urlII, setBase64UrlII] = useState('');
     const [refoneemail, setRefoneEmail] = useState('');
     const [reftwono, setReftTwoNo] = useState('');
     const [reftwoemail, setRefTwoEmail] = useState('');
     const [outType, setOutType] = useState();
     const [outTyped, setOutTyped] = useState();
+    const [activeBtn, setActiveBtn] = useState(false);
+    const [questions, setQuestions] = useState();
+    const [base64Code, setBase64Code] = useState('');
+    const [backBase64Code, setBackBase64Code] = useState('');
+    const [userProfileData, setUserProfileData] = useState([]);
+    const [corporateAccount, setCorporateAccount] = useState();
+    const [profileItemm, setProfileItemm] = useState('');
+    const [ellevateProfilingDone, setEllevateProfilingzDone] = useState();
+    const [cac1FileName, setCac1FileName] = useState();
+    const [cac1File, setCac1File] = useState();
+    const [cac2FileName, setCac2FileName] = useState();
+    const [cac2File, setCac2File] = useState();
+    const [memtFileName, setMemtFileName] = useState();
+    const [memtFile, setMemtFile] = useState();
+
+    const [tinNumber, setTinNumber] = useState('');
     const { cac, cacErrorMessages } = useSelector(
         (state) => state.cacUploadReducer
+    );
+    const { addressVerificationSuc, addressVerificationsError } = useSelector(
+        (state) => state.addressVerificationReducer
     );
     const { scmul, scmulErrorMessages } = useSelector(
         (state) => state.uploadScmulReducer
     );
     const { memart, memartErrorMessages } = useSelector(
         (state) => state.uploadMemartReducer
+    );
+    const { UploadreffereeSuccess, UploadreffereeError } = useSelector(
+        (state) => state.uploadRefereeFileReducer
+    );
+    const { profilingQuestions } = useSelector(
+        (state) => state.profilingQuestionsReducer
     );
     const { uploadRefForm, uploadRefFormErrorMessages } = useSelector(
         (state) => state.uploadMemartReducer
@@ -95,11 +213,33 @@ const AccountUpgrade = () => {
     const { setTransactionPin, setTransactionPinError } = useSelector(
         (state) => state.setTransactionPinReducer
     );
+    const { pushDocuments, pushDocumentsError } = useSelector(
+        (state) => state.pushDocumentsReducer
+    );
+    const { shareDocuments, shareDocumentsError } = useSelector(
+        (state) => state.shareDocumentsReducer
+    );
     const { identification, identificationErrorMessages } = useSelector(
         (state) => state.documentIdentificationReducer
     );
+    const { ellevateProfilingSeccess, ellevateProfillingError } = useSelector(
+        (state) => state.postEllevateReducer
+    );
+    const { vninMSeccess, vninMError } = useSelector(
+        (state) => state.vninReducer
+    );
+    const { reffereeSuccess, reffereeError } = useSelector(
+        (state) => state.refferenceEmailReducer
+    );
+    const { CacDocumentSuccess, CacDocumentError } = useSelector(
+        (state) => state.cacDocUploadReducer
+    );
+    const { tinSuccess, tinError } = useSelector((state) => state.tinReducer);
+
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
+    let subtitle;
+    const [modalIsOpen, setIsOpen] = React.useState(false);
     const dispatch = useDispatch();
     const {
         register,
@@ -108,14 +248,33 @@ const AccountUpgrade = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        //console.logdata);
         setLoading(true);
         dispatch(loadsetTransactionPin(data));
     };
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
 
+        //console.log('upgrade check', accountUpgrade);
+    }, [userProfile]);
     useEffect(() => {
         setMessage('');
+        const {
+            query: { id }
+        } = router;
+        setLink({ id }.id);
     }, []);
+
+    useEffect(() => {
+        if (link !== undefined) {
+            setTitle('Set Transaction Pin');
+        } else {
+            setTitle('First');
+        }
+    }, [link]);
+    //console.log(link);
 
     const transactionPin = () => {
         if (setTransactionPin !== null) {
@@ -123,6 +282,7 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
+            setTransactionPinStatus('done');
             // setOutcome('First');
         } else if (setTransactionPinError !== null) {
             setMessage(setTransactionPinError);
@@ -131,24 +291,114 @@ const AccountUpgrade = () => {
             setLoading(false);
         }
     };
-
     useEffect(() => {
         transactionPin();
     }, [setTransactionPin, setTransactionPinError]);
     useEffect(() => {
+        dispatch(getAddressStatusDetails());
         dispatch(loadUserProfile());
+        dispatch(shareDocumentsData());
+        dispatch(loadprofilingQuestions());
     }, []);
 
     useEffect(() => {
         if (userProfile !== null) {
+            if (userProfile?.idDocumentVerificationStatus === 'verified') {
+                setidCardStatus('done');
+            }
+
             setText(userProfile.customerCategory);
+            setCorporateAccount(userProfile.hasRegisteredBusiness);
             setStreetName(userProfile.address);
             setCity(userProfile.city);
             setState(userProfile.state);
             setLocalGovernmane(userProfile.lga);
+
+            if (userProfile.hasSetTransactionPin === true) {
+                setTransactionPinStatus('done');
+            }
+            if (userProfile.hasDoneVNINVerification === true) {
+                setVninStatus('done');
+            }
+            if (userProfile?.hasDoneEllevateProfiling === true) {
+                setElevateStatus('done');
+            }
         }
+        //console.log(userProfile);
     }, [userProfile]);
-    console.log(userProfile);
+    useEffect(() => {
+        if (profilingQuestions !== null) {
+            setQuestions(profilingQuestions);
+        }
+    }, [profilingQuestions]);
+    useEffect(() => {
+        if (shareDocuments !== null) {
+            // console.log(shareDocuments);
+
+            shareDocuments?.map((document) => {
+                if (document.documentType === 'UTILITY') {
+                    const test = document.absoluteUrl.split('/');
+                    setUtilityFileName(test[test.length - 1]);
+                    if (document.status === 'REJECTED') {
+                        setUtilityStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setUtilityStatus(document.status);
+                    } else {
+                        setUtilityStatus('done');
+                    }
+                } else if (document.documentType === 'CAC') {
+                    if (document.status === 'REJECTED') {
+                        setCacStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setCacStatus(document.status);
+                    } else {
+                        setCacStatus('done');
+                    }
+                } else if (document.documentType === 'MEMART') {
+                    if (document.status === 'REJECTED') {
+                        setMematStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setMematStatus(document.status);
+                    } else {
+                        setMematStatus('done');
+                    }
+                } else if (document.documentType === 'SCUML') {
+                    if (document.status === 'REJECTED') {
+                        setScumlStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setScumlStatus(document.status);
+                    } else {
+                        setScumlStatus('done');
+                    }
+                } else if (document.documentType === 'REFERENCE_FORM') {
+                    if (document.status === 'REJECTED') {
+                        setRefereeStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setRefereeStatus(document.status);
+                        setReffereeFormStatus('done');
+                    } else {
+                        setRefereeStatus('done');
+                    }
+                } else if (document.documentType === 'IDENTIFICATION') {
+                    const test = document.absoluteUrl.split('/');
+                    setIdentificationDocumentName(test[test.length - 1]);
+                    setIDType(document.metaData.meansOfIdentification);
+                    setIdNumber(document.metaData.idNumber);
+                    {
+                        document.status;
+                    }
+                    if (document.status === 'REJECTED') {
+                        setidCardStatus('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setidCardStatus('done');
+                    } else if (document.status === 'PENDING') {
+                        setidCardStatus('notDone');
+                    }
+                }
+            });
+        }
+    }, [shareDocuments]);
+    //console.loguserProfile);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -161,21 +411,123 @@ const AccountUpgrade = () => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        // console.log(file);
+        //console.logfile);
     };
     const cacRegistration = () => {
-        // console.log('test');
+        setLoading(true);
         const cacDatas = {
-            cacCert: file
+            cacCert: file,
+            cacNumber: cacNumber
         };
         dispatch(cacData(cacDatas));
     };
+
     useEffect(() => {
-        console.log(cac);
-        console.log(cacErrorMessages);
+        if (cac !== null) {
+            setMessage('CAC Document uploaded Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setCacStatus('done');
+        } else if (cacErrorMessages !== null) {
+            // console.log(cacErrorMessages);
+            setMessage(cacErrorMessages.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
     }, [cac, cacErrorMessages]);
+    useEffect(() => {
+        if (pushDocuments !== null) {
+            setMessage(' Uploaded Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+        } else if (pushDocumentsError !== null) {
+            setMessage(pushDocumentsError);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [pushDocuments, pushDocumentsError]);
 
     //CAC Registration end
+
+    //Referee Upload Start
+
+    const saveRefFile = (e) => {
+        setFileI(e.target.files[0]);
+        setFileNameI(e.target.files[0].name);
+        // console.log(e.target.files[0]);
+    };
+    const saveRefFileI = (e) => {
+        //console.log(e.target.files[0]);
+        setFileII(e.target.files[0]);
+        setFileNameII(e.target.files[0].name);
+        //console.log(file);
+    };
+
+    const refereeFileUpload = () => {
+        setLoading(true);
+        const uploadrefereeData = {
+            form1: fileI,
+            form2: fileII
+        };
+        dispatch(getUploadReffereeDetails(uploadrefereeData));
+    };
+    useEffect(() => {
+        // console.log(UploadreffereeError);
+
+        if (UploadreffereeSuccess !== null) {
+            setMessage('Referee Form Uploaded');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setScumlStatus('done');
+        } else if (UploadreffereeError !== null) {
+            //console.log(scmulErrorMessages);
+            setMessage(UploadreffereeError.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [UploadreffereeSuccess, UploadreffereeError]);
+    const refereeUpload = () => {
+        const refereeData = {
+            emailsToShare: [reffereeEmail, reffereeEmailI]
+        };
+        dispatch(getReffereeDetails(refereeData));
+    };
+    useEffect(() => {
+        console.log(reffereeError, reffereeSuccess);
+
+        if (reffereeSuccess !== null) {
+            setMessage('Referee Email is sent');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setScumlStatus('done');
+        } else if (reffereeError !== null) {
+            //console.log(scmulErrorMessages);
+            setMessage(reffereeError.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [
+        reffereeSuccess,
+        reffereeError
+        // UploadreffereeSuccess,
+        // UploadreffereeError
+    ]);
+    // if (reffereeSuccess?.data.message === 'success') {
+    //     const uploadrefereeData = {
+    //         form1: fileI,
+    //         form2: fileII
+    //     };
+    //     dispatch(getUploadReffereeDetails(uploadrefereeData));
+    //     console.log();
+    //Refferee Upload End
 
     //SMUL Certyificate
     const saveScmulFile = (e) => {
@@ -183,15 +535,27 @@ const AccountUpgrade = () => {
         setScmulFileName(e.target.files[0].name);
     };
     const uploadScmul = () => {
-        console.log('test');
+        setLoading(true);
         const scmulDatas = {
             scumlCert: scmulfile
         };
         dispatch(scmulData(scmulDatas));
     };
     useEffect(() => {
-        console.log(scmul);
-        console.log(scmulErrorMessages);
+        if (scmul !== null) {
+            setMessage('SCUML uploaded Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            ('IdentificationDocument');
+            setScumlStatus('done');
+        } else if (scmulErrorMessages !== null) {
+            //console.log(scmulErrorMessages);
+            setMessage(scmulErrorMessages);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
     }, [scmul, scmulErrorMessages]);
 
     //SCMUL Certificate end
@@ -205,18 +569,48 @@ const AccountUpgrade = () => {
         setCo7File(e.target.files[0]);
         setCo7FileName(e.target.files[0].name);
     };
-    // console.log(co2file);
-    const memartUpload = () => {
-        const mmemmartDatas = {
+
+    const saveMemartCAC1lFile = (e) => {
+        setCac1File(e.target.files[0]);
+        setCac1FileName(e.target.files[0].name);
+    };
+
+    const saveMemartCAC2lFile = (e) => {
+        setCac2File(e.target.files[0]);
+        setCac2FileName(e.target.files[0].name);
+    };
+
+    const saveMemartMemtlFile = (e) => {
+        setMemtFile(e.target.files[0]);
+        setMemtFileName(e.target.files[0].name);
+    };
+    //console.logco2file);
+    const cacDocumentUpload = () => {
+        const cacDocData = {
             co2: co2file,
-            co7: co7file
+            co7: co7file,
+            cac1_1: cac1File,
+            cac2_1: cac2File,
+            memart: memtFile
         };
-        dispatch(memartData(mmemmartDatas));
+        dispatch(getCacDocumentDetails(cacDocData));
     };
     useEffect(() => {
-        console.log(memart);
-        console.log(memartErrorMessages);
-    }, [memart, memartErrorMessages]);
+        // console.log(CacDocumentSuccess, CacDocumentError);
+        if (CacDocumentSuccess !== null) {
+            setMessage('Cac Document Updated Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setScumlStatus('done');
+        } else if (CacDocumentError !== null) {
+            //console.log(scmulErrorMessages);
+            setMessage(tinError.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [CacDocumentSuccess, CacDocumentError]);
     //Memart Submit ENd
 
     //utility Upload
@@ -227,13 +621,14 @@ const AccountUpgrade = () => {
     const utilityUploads = () => {
         setLoading(true);
         const utilityThingd = {
+            utilityType: utilitytype,
             streetName: streetName,
             lga: localGovernmane,
             state: selstate,
             utilityDocument: utilityFile
         };
         dispatch(uploadUtilityData(utilityThingd));
-        // console.log('state', localState, localGovernment, utilityFile);
+        //console.log'state', localState, localGovernment, utilityFile);
     };
     useEffect(() => {
         if (utilityUpload !== null) {
@@ -241,47 +636,194 @@ const AccountUpgrade = () => {
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
-            setVerifyStatus('completed');
+            setUtilityStatus('done');
+            // setVerifyStatus('completed');
         } else if (utilityUplodaErrorMessages !== null) {
             setMessage(utilityUplodaErrorMessages);
             setStatusbar('error');
             setOutcome(true);
             setLoading(false);
         }
-        console.log(utilityUpload);
-        console.log(utilityUplodaErrorMessages);
+        //console.logutilityUpload);
+        //console.logutilityUplodaErrorMessages);
     }, [utilityUpload, utilityUplodaErrorMessages]);
     //Utility Upload End
+    const virtualNinSend = () => {
+        setLoading(true);
+        const virtualNinData = {
+            vNin: virtualNin,
+            dateOfBirth: userProfile.dateOfBirth
+        };
+        dispatch(postvnin(virtualNinData));
+    };
+    useEffect(() => {
+        if (vninMSeccess) {
+            // console.log(vninMSeccess);
+            if (vninMSeccess.data.isCredentialsValid == true) {
+                setMessage(vninMSeccess?.message);
+                setStatusbar('success');
+                setOutcome(true);
+                setLoading(false);
+                setVninStatus('done');
+                // setVerifyStatus('completed');
+            } else {
+                setMessage(vninMSeccess?.data.reason);
+                setStatusbar('error');
+                setOutcome(true);
+                setLoading(false);
+            }
+        }
+        //console.logutilityUpload);
+        //console.logutilityUplodaErrorMessages);
+    }, [vninMSeccess, vninMError]);
 
     //Identification Upload
     const saveIdentificationFile = (e) => {
         setIdentificationDocument(e.target.files[0]);
         setIdentificationDocumentName(e.target.files[0].name);
+        getbase64(e.target.files[0]);
+    };
+
+    // setBackBase64Code
+    const saveBackIdentificationFile = (e) => {
+        setIdentificationBackDocument(e.target.files[0]);
+        setIdentificationBackDocumentFileName(e.target.files[0].name);
+        getbase64s(e.target.files[0]);
+    };
+    const getbase64 = (file) => {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            onLoad(reader.result);
+        };
+    };
+    const getbase64s = (file) => {
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            onLoads(reader.result);
+        };
+    };
+    const onLoads = (fileStrings) => {
+        setBackBase64Code(fileStrings);
+        // console.log('Back', backBase64Code);
+    };
+
+    const onLoad = (fileString) => {
+        setBase64Code(fileString);
+        // console.log(base64Code);
     };
     const IdentificationyUpload = () => {
         setLoading(true);
-        const identificationThings = {
-            meansOfIdentification: IDType,
-            idNumber: idNumber,
-            identificationDocument: identificationDocumentFile
-        };
-        dispatch(identificationDocData(identificationThings));
+        if (IDType === 'VOTERS_CARD' || IDType === 'DRIVERS_LICENSE') {
+            const data = identificationDocumentFileName.split('.');
+            const datas = identificationBackDocumentFileName.split('.');
+            const identificationThings = {
+                meansOfIdentification: IDType,
+                idNumber: idNumber,
+                identificationDocumentFront: {
+                    base64String: base64Code.split(',')[1],
+                    fileName: identificationDocumentFileName.split('.')[0],
+                    fileExtension: `.${data[data.length - 1]}`
+                },
+
+                identificationDocumentBack: {
+                    base64String: backBase64Code.split(',')[1],
+                    fileName: identificationBackDocumentFileName.split('.')[0],
+                    fileExtension: `.${datas[datas.length - 1]}`
+                }
+            };
+            dispatch(identificationDocData(identificationThings));
+        } else {
+            const data = identificationDocumentFileName.split('.');
+            // const datas = identificationBackDocumentFileName.split('.');
+            const identificationThings = {
+                meansOfIdentification: IDType,
+                idNumber: idNumber,
+                identificationDocumentFront: {
+                    base64String: base64Code.split(',')[1],
+                    fileName: identificationDocumentFileName.split('.')[0],
+                    fileExtension: `.${data[data.length - 1]}`
+                }
+            };
+            dispatch(identificationDocData(identificationThings));
+        }
+        // const identificationThings = {
+        //     meansOfIdentification: IDType,
+        //     idNumber: idNumber,
+        //     identificationDocument: identificationDocumentFile
+        // };
     };
 
     useEffect(() => {
+        if (ellevateProfilingSeccess !== null) {
+            setEllevateProfilingzDone('Done');
+            setMessage('Ellevate Profiling Success');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            // window.localStorage.setItem(
+            //     'profiling',
+            //     JSON.stringify(elevateData)
+            // );
+        } else if (ellevateProfillingError !== null) {
+            setMessage(ellevateProfillingError);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [ellevateProfilingSeccess, ellevateProfillingError]);
+
+    // Verify your Address
+    useEffect(() => {
+        console.log(addressVerificationSuc?.data.data.verificationStatus);
+        if (addressVerificationSuc) {
+            if (
+                addressVerificationSuc.data.data.verificationStatus ===
+                'SUCCESS'
+            ) {
+                setVerifyStatus('Done');
+                setMessage('Address Verification Successful');
+                setStatusbar('success');
+                // setOutcome(true);
+                setVerifyStatus('done');
+                setLoading(false);
+            } else if (
+                addressVerificationsError !== null ||
+                addressVerificationSuc.data.data.verificationStatus ===
+                    'PENDING'
+            ) {
+                // setMessage('Error');
+                // setStatusbar('error');
+                setOutcome(false);
+                setLoading(false);
+            }
+        }
+    }, [addressVerificationSuc, addressVerificationsError]);
+
+    useEffect(() => {
         if (identification !== null) {
+            setIdentificationBackDocument(null);
+            setIdentificationBackDocumentFileName(null);
+            setIdentificationDocument(null);
+            setIdentificationDocumentName(null);
             setMessage(identification);
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
+            setidCardStatus('done');
         } else if (identificationErrorMessages !== null) {
+            setIdentificationBackDocument(null);
+            setIdentificationBackDocumentFileName(null);
+            setIdentificationDocument(null);
+            setIdentificationDocumentName(null);
             setMessage(identificationErrorMessages);
             setStatusbar('error');
             setOutcome(true);
             setLoading(false);
         }
     }, [identification, identificationErrorMessages]);
-    console.log(identificationErrorMessages);
+    //console.logidentificationErrorMessages);
 
     //Identification Upload End
 
@@ -296,7 +838,7 @@ const AccountUpgrade = () => {
         const emailToshareData = {
             emailsToShare: [refoneemail, refoneno]
         };
-        console.log(emailToshareData);
+        //console.logemailToshareData);
         dispatch(uploadRefFormData(emailToshareData));
     };
 
@@ -304,70 +846,451 @@ const AccountUpgrade = () => {
 
     const [document, setDocument] = useState(false);
     const AccountUpgradeData = {
-        individual: [
+        existing: [
+            {
+                title: 'Ellevate Profiling',
+                textII: 'Profilling',
+                icon: <IdCard />,
+                statusReport: elevateStatus,
+                status:
+                    elevateStatus === 'done'
+                        ? review
+                        : elevateStatus === 'notDone'
+                        ? pending
+                        : null
+            }
+        ],
+        exitingCorporate: [
+            {
+                title: 'Virtual NIN',
+                textII: 'VirtualNIN',
+                icon: <IdCard />,
+                statusReport: vninStatus,
+                status:
+                    userProfile?.hasDoneVNINVerification === true
+                        ? status
+                        : pending
+            },
+            {
+                title: 'Documents',
+                textII: 'Documments',
+                icon: <AddressSvg />,
+                statusReport: documentStatus,
+                status: pending
+            },
             {
                 title: 'Verify your Address',
+                textII: 'VerifyAddress',
                 icon: <AddressSvg />,
-                statusReport: verifyStatus
+                statusReport: verifyStatus,
+                status:
+                    addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS'
+                        ? addressVerificationSuc.data.data.verificationStatus
+                        : addressVerificationSuc?.data.data.verificationStatus
             },
             {
                 title: 'Set Transaction Pin',
+                textII: 'TransactionPin',
                 icon: <SignatureRuleSvg />,
-                statusReport: 'pending'
+                statusReport: transactionPinStatus,
+                status:
+                    userProfile?.hasSetTransactionPin === true
+                        ? status
+                        : pending
             },
             {
+                title: 'Referee',
+                textII: 'Referee',
+                icon: <AddressSvg />,
+                statusReport: reffereeStatus,
+                status: pending
+            },
+            {
+                title: 'Referee Form',
+                textII: 'Referee Form',
+                icon: <AddressSvg />,
+                statusReport: reffereeFormStatus,
+                status:
+                    refereeStatus === 'APPROVED'
+                        ? 'Approved'
+                        : refereeStatus === 'notDone'
+                        ? pending
+                        : refereeStatus === 'comment'
+                        ? rejected
+                        : 'pending'
+            },
+
+            // Referee Form
+            {
                 title: 'Upload Utility BIll',
+                textII: 'UtilityBill',
                 icon: <BillSvg />,
-                statusReport: 'pending'
+                statusReport: utilityStatus,
+                name: 'UTILITY',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? utilityStatus === 'done'
+                            ? review
+                            : utilityStatus === 'notDone'
+                            ? pending
+                            : utilityStatus === 'comment'
+                            ? rejected
+                            : utilityStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
             },
             {
                 title: 'Upload ID Card',
+                textII: 'UIdCard',
                 icon: <IdCard />,
-                statusReport: 'pending'
+                statusReport: idCardStatus,
+                name: 'IDENTIFICATION',
+                status:
+                    userProfile?.idDocumentVerificationStatus === 'verified'
+                        ? idCardStatus === 'done'
+                            ? 'Approved'
+                            : idCardStatus === 'notDone'
+                            ? userProfile?.idDocumentVerificationStatus
+                            : idCardStatus === 'comment'
+                            ? rejected
+                            : idCardStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : userProfile?.idDocumentVerificationStatus
+            },
+            // {
+            //     title: 'Directors',
+            //     icon: <DirectorsSvg />
+            // },
+            // {
+            //     title: 'Referee',
+            //     textII: 'Referee',
+            //     icon: <DirectorsSvg />,
+            //     statusReport: refereeStatus,
+            //     name: 'REFERENCE_FORMFORM',
+            //     status:
+            //         userProfile?.hasSubmitedDocumentsForReview === true
+            //             ? refereeStatus === 'done'
+            //                 ? review
+            //                 : refereeStatus === 'notDone'
+            //                 ? pending
+            //                 : refereeStatus === 'comment'
+            //                 ? rejected
+            //                 : null
+            //             : pending
+            // },
+            {
+                title: 'Ellevate Profiling',
+                textII: 'Profilling',
+                icon: <IdCard />,
+                statusReport: elevateStatus,
+                status:
+                    userProfile?.hasDoneEllevateProfiling === true
+                        ? status
+                        : pending
+            }
+            // {
+            //     title: 'Signature Rule',
+            //     icon: <SignatureRuleSvg />
+            // }
+        ],
+        individual: [
+            {
+                title: 'Virtual NIN',
+                textII: 'VirtualNIN',
+                icon: <IdCard />,
+                statusReport: vninStatus,
+                status:
+                    userProfile?.hasDoneVNINVerification === true
+                        ? status
+                        : pending
+            },
+            {
+                title: 'Verify your Address',
+                textII: 'VerifyAddress',
+                icon: <AddressSvg />,
+                statusReport: verifyStatus,
+                status:
+                    addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS'
+                        ? addressVerificationSuc.data.data.verificationStatus
+                        : addressVerificationSuc?.data.data.verificationStatus
+            },
+
+            {
+                title: 'Set Transaction Pin',
+                textII: 'SetTransactionPin',
+                icon: <SignatureRuleSvg />,
+                statusReport: transactionPinStatus,
+                status:
+                    userProfile?.hasSetTransactionPin === true
+                        ? status
+                        : pending
+            },
+            {
+                title: 'Upload Utility BIll',
+                textII: 'UtilityBill',
+                icon: <BillSvg />,
+                statusReport: utilityStatus,
+                name: 'UTILITY',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? utilityStatus === 'done'
+                            ? 'Approved'
+                            : utilityStatus === 'notDone'
+                            ? pending
+                            : utilityStatus === 'comment'
+                            ? rejected
+                            : utilityStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
+            },
+            {
+                title: 'Upload ID Card',
+                textII: 'IdCard',
+                icon: <IdCard />,
+                statusReport: idCardStatus,
+                name: 'IDENTIFICATION',
+                status:
+                    userProfile?.idDocumentVerificationStatus === 'verified'
+                        ? idCardStatus === 'done'
+                            ? 'Approved'
+                            : idCardStatus === 'notDone'
+                            ? userProfile?.idDocumentVerificationStatus
+                            : idCardStatus === 'comment'
+                            ? rejected
+                            : idCardStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : userProfile?.idDocumentVerificationStatus
+            },
+            {
+                title: 'Ellevate Profiling',
+                textII: 'EllevateProfilling',
+                icon: <IdCard />,
+                statusReport: elevateStatus,
+                status:
+                    userProfile?.hasDoneEllevateProfiling === true
+                        ? status
+                        : pending
             }
         ],
         corporate: [
             {
+                title: 'Virtual NIN',
+                textII: 'VirtualNIN',
+                icon: <IdCard />,
+                statusReport: vninStatus,
+                status:
+                    userProfile?.hasDoneVNINVerification === true
+                        ? status
+                        : pending
+            },
+            {
                 title: 'Documents',
-                icon: <AddressSvg />
-            },
-            {
-                title: 'Set Transaction Pin',
-                icon: <SignatureRuleSvg />
-            },
-            {
-                title: 'Upload Utility BIll',
-                icon: <BillSvg />
-            },
-            {
-                title: 'Upload ID Card',
-                icon: <IdCard />
-            },
-            {
-                title: 'Directors',
-                icon: <DirectorsSvg />
+                textII: 'Documments',
+                icon: <AddressSvg />,
+                statusReport: documentStatus,
+                status: pending
             },
             {
                 title: 'Referee',
-                icon: <DirectorsSvg />
+                textII: 'Referee',
+                icon: <AddressSvg />,
+                statusReport: reffereeStatus,
+                status: pending
             },
             {
-                title: 'Signature Rule',
-                icon: <SignatureRuleSvg />
+                title: 'Referee Form',
+                textII: 'Referee Form',
+                icon: <AddressSvg />,
+                statusReport: reffereeFormStatus,
+                status:
+                    refereeStatus === 'APPROVED'
+                        ? 'Approved'
+                        : refereeStatus === 'notDone'
+                        ? pending
+                        : refereeStatus === 'comment'
+                        ? rejected
+                        : 'pending'
+            },
+            {
+                title: 'Verify your Address',
+                textII: 'VerifyAddress',
+                icon: <AddressSvg />,
+                statusReport: verifyStatus,
+                status:
+                    addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS'
+                        ? addressVerificationSuc.data.data.verificationStatus
+                        : addressVerificationSuc?.data.data.verificationStatus
+            },
+            {
+                title: 'Set Transaction Pin',
+                textII: 'TransactionPin',
+                icon: <SignatureRuleSvg />,
+                statusReport: transactionPinStatus,
+                status:
+                    userProfile?.hasSetTransactionPin === true
+                        ? status
+                        : pending
+            },
+            {
+                title: 'Upload Utility BIll',
+                textII: 'UtilityBill',
+                icon: <BillSvg />,
+                statusReport: utilityStatus,
+                name: 'UTILITY',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? utilityStatus === 'done'
+                            ? review
+                            : utilityStatus === 'notDone'
+                            ? pending
+                            : utilityStatus === 'comment'
+                            ? rejected
+                            : utilityStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
+            },
+            {
+                title: 'Upload ID Card',
+                textII: 'UIdCard',
+                icon: <IdCard />,
+                statusReport: idCardStatus,
+                name: 'IDENTIFICATION',
+                status:
+                    userProfile?.idDocumentVerificationStatus === 'verified'
+                        ? idCardStatus === 'done'
+                            ? 'Approved'
+                            : idCardStatus === 'notDone'
+                            ? userProfile?.idDocumentVerificationStatus
+                            : idCardStatus === 'comment'
+                            ? rejected
+                            : idCardStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : userProfile?.idDocumentVerificationStatus
+            },
+            // {
+            //     title: 'Directors',
+            //     icon: <DirectorsSvg />
+            // },
+            // {
+            //     title: 'Referee',
+            //     textII: 'Referee',
+            //     icon: <DirectorsSvg />,
+            //     statusReport: refereeStatus,
+            //     name: 'REFERENCE_FORMFORM',
+            //     status:
+            //         userProfile?.hasSubmitedDocumentsForReview === true
+            //             ? refereeStatus === 'done'
+            //                 ? review
+            //                 : refereeStatus === 'notDone'
+            //                 ? pending
+            //                 : refereeStatus === 'comment'
+            //                 ? rejected
+            //                 : null
+            //             : pending
+            // },
+            {
+                title: 'Ellevate Profiling',
+                textII: 'Profilling',
+                icon: <IdCard />,
+                statusReport: elevateStatus,
+                status:
+                    userProfile?.hasDoneEllevateProfiling === true
+                        ? status
+                        : pending
             }
+            // {
+            //     title: 'Signature Rule',
+            //     icon: <SignatureRuleSvg />
+            // }
         ],
         document: [
             {
-                title: 'CAC Registration'
+                title: 'CAC Certificate',
+                textII: 'CACREG',
+                statusReport: cacStatus,
+                name: 'CAC',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? cacStatus === 'done'
+                            ? review
+                            : cacStatus === 'notDone'
+                            ? pending
+                            : cacStatus === 'comment'
+                            ? rejected
+                            : cacStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
             },
             {
-                title: 'SCUML Certificate'
+                title: 'CAC Documents',
+                textII: 'CAC Documents',
+                statusReport: mematStatus,
+                name: 'MEMART',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? mematStatus === 'done'
+                            ? review
+                            : mematStatus === 'notDone'
+                            ? pending
+                            : mematStatus === 'comment'
+                            ? rejected
+                            : mematStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
             },
             {
-                title: 'MEMAT'
+                title: 'TIN',
+                textII: 'TINREG',
+                statusReport: tinStatus,
+                name: 'TIN',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? tinStatus === 'done'
+                            ? review
+                            : tinStatus === 'notDone'
+                            ? pending
+                            : tinStatus === 'comment'
+                            ? rejected
+                            : tinStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
+            },
+            {
+                title: 'SCUML Certificate',
+                textII: 'SCMULREG',
+                statusReport: scumlStatus,
+                name: 'SCUML',
+                status:
+                    userProfile?.hasSubmitedDocumentsForReview === true
+                        ? scumlStatus === 'done'
+                            ? review
+                            : scumlStatus === 'notDone'
+                            ? pending
+                            : scumlStatus === 'comment'
+                            ? rejected
+                            : scumlStatus === 'APPROVED'
+                            ? 'Approved'
+                            : null
+                        : pending
             }
         ]
     };
+    // console.log(pending);
+
+    useEffect(() => {}, [shareDocuments]);
+
     const types = (type) => {
         setOutType(type);
     };
@@ -393,6 +1316,19 @@ const AccountUpgrade = () => {
             }
         });
     }, [selstate]);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    // function afterOpenModal() {
+    //     // references are now sync'd and can be accessed.
+    //     subtitle.style.color = '#f00';
+    // }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
     const multiStep = () => {
         switch (title) {
             case 'First':
@@ -401,7 +1337,7 @@ const AccountUpgrade = () => {
                         title={
                             text === 'INDIVIDUAL'
                                 ? 'Individual Account Upgrade'
-                                : text === 'CORPORATE'
+                                : text === 'COMMERCIAL'
                                 ? 'Corporate Account Upgrade'
                                 : null
                         }
@@ -410,16 +1346,20 @@ const AccountUpgrade = () => {
                         }}
                     >
                         <div className={styles.currentLevel}>
-                            <div className={styles.currentLevelDonut}>
+                            {/* <div className={styles.currentLevelDonut}>
                                 <DounutComp />
                                 <p className={styles.perc}>70%</p>
-                            </div>
+                            </div> */}
                             <div className={styles.currentLeveltext}>
-                                <h2>You’re currently at Level xxx</h2>
-                                <div>
+                                <h2>
+                                    Upgrade Your Account
+                                    {/* Your account is currently 70 percent
+                                    upgraded */}
+                                </h2>
+                                {/* <div>
                                     <p>Account Limit: N1,000,000 </p>
                                     <p>Loan Limit: xxxxxx</p>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div className={styles.verifyText}>
@@ -429,30 +1369,49 @@ const AccountUpgrade = () => {
                                 account upgrade.
                             </p>
                         </div>
-                        {text === 'INDIVIDUAL'
-                            ? AccountUpgradeData.individual.map(
-                                  (item, index) => {
-                                      return (
-                                          <AccountUpgradeSingle
-                                              statusInfo={item.statusReport}
-                                              icon={item.icon}
-                                              text={item.title}
-                                              key={index}
-                                              action={() => {
-                                                  setTitle(item.title);
-                                              }}
-                                          />
-                                      );
-                                  }
-                              )
-                            : text === 'Corporate'
-                            ? AccountUpgradeData.corporate.map(
+
+                        {userProfileData.createdFromEcobankCred === true &&
+                        userProfileData.customerCategory === 'INDIVIDUAL'
+                            ? AccountUpgradeData.existing.map((item, index) => {
+                                  return (
+                                      <AccountUpgradeSingle
+                                          statusInfo={item.statusReport}
+                                          textII={item.textII}
+                                          content={shareDocuments?.map(
+                                              (items) => {
+                                                  if (
+                                                      items.documentType ===
+                                                      item.title
+                                                  ) {
+                                                      return items.comment;
+                                                  } else {
+                                                      return '';
+                                                  }
+                                              }
+                                          )}
+                                          icon={item.icon}
+                                          text={item.title}
+                                          key={index}
+                                          status={item.status}
+                                          action={() => {
+                                              setTitle(item.title);
+                                          }}
+                                      />
+                                  );
+                              })
+                            : userProfileData.createdFromEcobankCred === true &&
+                              userProfileData.customerCategory === 'COMMERCIAL'
+                            ? AccountUpgradeData.exitingCorporate.map(
                                   (item, index) => {
                                       if (item.title === 'Documents') {
                                           return (
                                               <>
                                                   <AccountUpgradeSingle
-                                                      statusInfo="Pending"
+                                                      statusInfo={
+                                                          item.statusReport
+                                                      }
+                                                      textII={item.textII}
+                                                      status={item.status}
                                                       icon={item.icon}
                                                       text={item.title}
                                                       key={index}
@@ -466,20 +1425,30 @@ const AccountUpgrade = () => {
                                                       ? AccountUpgradeData.document.map(
                                                             (item, index) => {
                                                                 return (
-                                                                    <AccountUpgradeSingle
-                                                                        text={
-                                                                            item.title
-                                                                        }
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        statusInfo="Pending"
-                                                                        action={() => {
-                                                                            setTitle(
+                                                                    <>
+                                                                        <AccountUpgradeSingle
+                                                                            text={
                                                                                 item.title
-                                                                            );
-                                                                        }}
-                                                                    />
+                                                                            }
+                                                                            status={
+                                                                                item.status
+                                                                            }
+                                                                            textII={
+                                                                                item.textII
+                                                                            }
+                                                                            key={
+                                                                                index
+                                                                            }
+                                                                            statusInfo={
+                                                                                item.statusReport
+                                                                            }
+                                                                            action={() => {
+                                                                                setTitle(
+                                                                                    item.title
+                                                                                );
+                                                                            }}
+                                                                        />
+                                                                    </>
                                                                 );
                                                             }
                                                         )
@@ -489,10 +1458,172 @@ const AccountUpgrade = () => {
                                       } else {
                                           return (
                                               <AccountUpgradeSingle
-                                                  statusInfo="Pending"
+                                                  textII={item.textII}
+                                                  content={shareDocuments?.map(
+                                                      (items) => {
+                                                          if (
+                                                              items.documentType ===
+                                                              item.name
+                                                          ) {
+                                                              return items.comment;
+                                                          } else {
+                                                              return '';
+                                                          }
+                                                      }
+                                                  )}
+                                                  statusInfo={item.statusReport}
                                                   icon={item.icon}
                                                   text={item.title}
                                                   key={index}
+                                                  status={item.status}
+                                                  action={() => {
+                                                      setTitle(item.title);
+                                                  }}
+                                              />
+                                          );
+                                      }
+                                  }
+                              )
+                            : text === 'INDIVIDUAL'
+                            ? AccountUpgradeData.individual.map(
+                                  (item, index) => {
+                                      return (
+                                          <>
+                                              <AccountUpgradeSingle
+                                                  statusInfo={item.statusReport}
+                                                  textII={item.textII}
+                                                  content={shareDocuments?.map(
+                                                      (items) => {
+                                                          if (
+                                                              items.documentType ===
+                                                              item.name
+                                                          ) {
+                                                              return items.comment;
+                                                          } else {
+                                                              return '';
+                                                          }
+                                                      }
+                                                  )}
+                                                  icon={item.icon}
+                                                  text={item.title}
+                                                  key={index}
+                                                  status={item.status}
+                                                  action={() => {
+                                                      setTitle(item.title);
+                                                  }}
+                                              />
+                                              {document
+                                                  ? AccountUpgradeData.document.map(
+                                                        (item, index) => {
+                                                            return (
+                                                                <>
+                                                                    <AccountUpgradeSingle
+                                                                        text={
+                                                                            item.title
+                                                                        }
+                                                                        status={
+                                                                            item.status
+                                                                        }
+                                                                        textII={
+                                                                            item.textII
+                                                                        }
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        statusInfo={
+                                                                            item.statusReport
+                                                                        }
+                                                                        action={() => {
+                                                                            setTitle(
+                                                                                item.title
+                                                                            );
+                                                                        }}
+                                                                    />
+                                                                </>
+                                                            );
+                                                        }
+                                                    )
+                                                  : null}
+                                          </>
+                                      );
+                                  }
+                              )
+                            : text === 'COMMERCIAL'
+                            ? AccountUpgradeData.corporate.map(
+                                  (item, index) => {
+                                      if (item.title === 'Documents') {
+                                          return (
+                                              <>
+                                                  <AccountUpgradeSingle
+                                                      statusInfo={
+                                                          item.statusReport
+                                                      }
+                                                      textII={item.textII}
+                                                      status={item.status}
+                                                      icon={item.icon}
+                                                      text={item.title}
+                                                      key={index}
+                                                      action={() => {
+                                                          setDocument(
+                                                              !document
+                                                          );
+                                                      }}
+                                                  />
+                                                  {document
+                                                      ? AccountUpgradeData.document.map(
+                                                            (item, index) => {
+                                                                return (
+                                                                    <>
+                                                                        <AccountUpgradeSingle
+                                                                            text={
+                                                                                item.title
+                                                                            }
+                                                                            status={
+                                                                                item.status
+                                                                            }
+                                                                            textII={
+                                                                                item.textII
+                                                                            }
+                                                                            key={
+                                                                                index
+                                                                            }
+                                                                            statusInfo={
+                                                                                item.statusReport
+                                                                            }
+                                                                            action={() => {
+                                                                                setTitle(
+                                                                                    item.title
+                                                                                );
+                                                                            }}
+                                                                        />
+                                                                    </>
+                                                                );
+                                                            }
+                                                        )
+                                                      : null}
+                                              </>
+                                          );
+                                      } else {
+                                          return (
+                                              <AccountUpgradeSingle
+                                                  textII={item.textII}
+                                                  content={shareDocuments?.map(
+                                                      (items) => {
+                                                          if (
+                                                              items.documentType ===
+                                                              item.name
+                                                          ) {
+                                                              return items.comment;
+                                                          } else {
+                                                              return '';
+                                                          }
+                                                      }
+                                                  )}
+                                                  statusInfo={item.statusReport}
+                                                  icon={item.icon}
+                                                  text={item.title}
+                                                  key={index}
+                                                  status={item.status}
                                                   action={() => {
                                                       setTitle(item.title);
                                                   }}
@@ -502,7 +1633,26 @@ const AccountUpgrade = () => {
                                   }
                               )
                             : null}
-                        <button className={styles.buttonDone}>Done</button>
+
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            // <ButtonComp
+                            //     text={'Done'}
+                            //     disabled={activeBtn}
+                            //     active={activeBtn ? 'active' : 'inactive'}
+                            //     type="submit"
+                            // />
+                            <button
+                                className={styles.buttonDone}
+                                onClick={() => {
+                                    setLoading(true);
+                                    dispatch(pushDocumentsData());
+                                }}
+                            >
+                                Done
+                            </button>
+                        )}
                     </AccountUpgradeComponent>
                 );
             case 'Verify your Address':
@@ -544,7 +1694,7 @@ const AccountUpgrade = () => {
                                             />
                                         </div>
                                     </div>
-
+                                    {/* {console.log(landMark)} */}
                                     <div className={styles.midCont}>
                                         <div className={styles.addressGroup}>
                                             <label>State</label>
@@ -555,12 +1705,26 @@ const AccountUpgrade = () => {
                                                     setState(
                                                         event.target.value
                                                     );
-                                                    // console.log(selstate);
+                                                    //console.log(selstate);
                                                 }}
                                             >
-                                                <option value={selstate}>
-                                                    {selstate}
+                                                <option value="">
+                                                    Select State
                                                 </option>
+                                                {/* <option
+                                                    value={location.filter(
+                                                        (item) => {
+                                                            if (
+                                                                item.state ===
+                                                                selstate
+                                                            ) {
+                                                                return item.code;
+                                                            }
+                                                        }
+                                                    )}
+                                                >
+                                                    {selstate}
+                                                </option> */}
                                                 {location?.map(
                                                     (state, index) => {
                                                         return (
@@ -607,12 +1771,31 @@ const AccountUpgrade = () => {
                                                     );
                                                 }}
                                             >
-                                                <option value={localGovernmane}>
+                                                {/* <option
+                                                    value={localGovernment?.filter(
+                                                        (item) => {
+                                                            if (
+                                                                item.lgaName ===
+                                                                localGovernmane
+                                                            ) {
+                                                                return item.lgaCode;
+                                                            }
+                                                        }
+                                                    )}
+                                                >
                                                     {localGovernmane}
+                                                </option> */}
+                                                <option value="">
+                                                    Select LGA
                                                 </option>
                                                 {localGovernment
                                                     ? localGovernment?.map(
                                                           (item, index) => {
+                                                              //   {
+                                                              //       //console.log(
+                                                              //           item
+                                                              //       );
+                                                              //   }
                                                               return (
                                                                   <option
                                                                       value={
@@ -635,33 +1818,89 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Link
-                                href={{
-                                    pathname:
-                                        'https://ecocomonoreact.azurewebsites.net/customer-details/',
-                                    query: {
-                                        workitemId: 'AO-095734358976187628-CO',
-                                        customerName:
-                                            userProfile?.preferredName,
-                                        customerEmail: userProfile?.email,
-                                        branchCode: 'A02',
-                                        segmentId: 'ADB',
-                                        // houseNumber: '25',
-                                        address: streetName,
-                                        // streetName: 'Igbobi College Road',
-                                        // areaName: 'Yaba',
-                                        landmark: landMark,
-                                        state: selstate,
-                                        lga: localGovernmane,
-                                        createdBy: 'RealMg',
-                                        customerImage: '',
-                                        Latitude: latitude,
-                                        Longitude: longitude
-                                    }
-                                }}
+                            {/* <Link
+                                href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark=${landMark}&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=${userProfile?.phoneNumber}`}
                             >
-                                <button>Confirm Address</button>
-                            </Link>
+                                Links
+                            </Link> */}
+                            <Modal
+                                isOpen={modalIsOpen}
+                                onAfterOpen={afterOpenModal}
+                                onRequestClose={closeModal}
+                                style={customStyles}
+                                contentLabel="Example Modal"
+                            >
+                                <div className={styles.headerDiv}>
+                                    <h2
+                                        ref={(_subtitle) =>
+                                            (subtitle = _subtitle)
+                                        }
+                                    >
+                                        Address Verification
+                                    </h2>
+                                    <h1
+                                        className={styles.errorX}
+                                        onClick={closeModal}
+                                    >
+                                        X
+                                    </h1>
+                                </div>
+                                {/* //When adding latituted add them the way i did with vartiable */}
+                                {/* `https://ecocomonoreact.azurewebsites.net/customer-details/
+                                ?workitemId=AO-095734358976187628-CO&
+                                customerName=MUSA&customerEmail=musa%40gmail.comm
+                                &branchCode=A02
+                                &segmentId=ADB&address=ZUBIARU%20HOUSE%20ZANGO&landmark&state=Lagos
+                                &lga=Badagry&createdBy=RealMg&customerImage&Latitude&Longitude` */}
+
+                                <Iframe
+                                    src={
+                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark=${landMark}&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=+234${userProfile?.phoneNumber}`
+                                        // {
+                                        // pathname:
+                                        // 'https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test Customer&customerEmail=boluwatobi@gmail.com&branchCode=A02&segmentId=ADB&address=25 pilot crescent off bode thomas surulere&landmark&state=LA&lga=LA020&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333'
+                                        //  https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=MUSA&customerEmail=musa%40gmail.comm&branchCode=A02&segmentId=ADB&address=ZUBIARU%20HOUSE%20ZANGO&landmark=Yabatech&state=Lagos&lga=Badagry&createdBy=RealMg&customerImage&Latitude&Longitude
+                                        // query: {
+                                        //     workitemId:
+                                        //         'AO-095734358976187628-CO',
+                                        //     customerName:
+                                        //         userProfile?.preferredName,
+                                        //     customerEmail: userProfile?.email,
+                                        //     branchCode: 'A02',
+                                        //     segmentId: 'ADB',
+                                        //     // houseNumber: '25',
+                                        //     address: streetName,
+                                        //     // streetName: 'Igbobi College Road',
+                                        //     // areaName: 'Yaba',
+                                        //     landmark: landMark,
+                                        //     state: selstate,
+                                        //     lga: localGovernmane,
+                                        //     createdBy: 'RealMg',
+                                        //     customerImage: '',
+                                        //     Latitude: latitude,
+                                        //     Longitude: longitude
+                                        // }
+                                        // }
+                                    }
+                                    width="640px"
+                                    height="620px"
+                                    id=""
+                                    className=""
+                                    display="block"
+                                    position="relative"
+                                />
+                            </Modal>
+                            <button type="submit" onClick={openModal}>
+                                Confirm Address
+                            </button>
+                            {/* <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                type="submit"
+                                text=" Confirm Address"
+                                onClick={openModal}
+                            ></ButtonComp> */}
+                            {/* </Iframe> */}
                         </div>
                     </AccountUpgradeComponent>
                 );
@@ -674,6 +1913,38 @@ const AccountUpgrade = () => {
                         title="Utility"
                     >
                         <div className={styles.utilityBody}>
+                            {shareDocuments?.map((item, index) => {
+                                if (item.documentType === 'UTILITY') {
+                                    if (item.comment !== null) {
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
+                                    } else {
+                                        return null;
+                                    }
+                                }
+                            })}
+                            <div className={styles.selUtilDiv}>
+                                <label className={styles.selUtil}>
+                                    Select A utility type
+                                </label>
+                                <select
+                                    name=""
+                                    id=""
+                                    onChange={(event) => {
+                                        setUtilityType(event.target.value);
+                                        //console.logselstate);
+                                    }}
+                                >
+                                    <option value="NEPA_BILL">
+                                        Select a utility
+                                    </option>
+                                    <option value="NEPA_BILL">
+                                        Electricity BILL
+                                    </option>
+                                    <option value="LAWMA">LAWMA</option>
+                                </select>
+                            </div>
                             <div className={styles.signatureGroup}>
                                 <p>Upload Photo</p>
                                 <div className={styles.signatureFormGroup}>
@@ -729,7 +2000,7 @@ const AccountUpgrade = () => {
                                                     setState(
                                                         event.target.value
                                                     );
-                                                    // console.log(selstate);
+                                                    //console.logselstate);
                                                 }}
                                             >
                                                 <option value={selstate}>
@@ -826,11 +2097,23 @@ const AccountUpgrade = () => {
                         title="Means of Identification"
                     >
                         <div className={styles.meansIdentification}>
+                            {shareDocuments?.map((item, index) => {
+                                if (item.documentType === 'IDENTIFICATION') {
+                                    if (item.comment !== null) {
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
+                                    } else {
+                                        return null;
+                                    }
+                                }
+                            })}
                             <div className={styles.identificationGroup}>
                                 <label>Choose Means of Identification</label>
                                 <select
                                     name=""
                                     id=""
+                                    // value={IDType}
                                     onChange={(e) => {
                                         setIDType(e.target.value);
                                     }}
@@ -838,16 +2121,17 @@ const AccountUpgrade = () => {
                                     <option value="">
                                         Select regulatory ID
                                     </option>
-                                    <option value="Voters Card">
+
+                                    <option value="VOTERS_CARD">
                                         Voters Card
                                     </option>
-                                    <option value="National ID card">
+                                    <option value="NATIONAL_ID">
                                         National ID card
                                     </option>
-                                    <option value="Drivers License">
+                                    <option value="DRIVERS_LICENSE">
                                         Drivers License
                                     </option>
-                                    <option value="International Passport">
+                                    <option value="PASSPORT">
                                         International Passport
                                     </option>
                                 </select>
@@ -856,6 +2140,7 @@ const AccountUpgrade = () => {
                                 <label>ID Number</label>
                                 <input
                                     type="text"
+                                    value={idNumber}
                                     onChange={(e) =>
                                         setIdNumber(e.target.value)
                                     }
@@ -863,9 +2148,10 @@ const AccountUpgrade = () => {
                                 />
                             </div>
                         </div>
+
                         <div className={styles.signature}>
                             <div className={styles.signatureGroup}>
-                                <p>Upload ID</p>
+                                <p>Upload Front of ID</p>
                                 <div className={styles.signatureFormGroup}>
                                     <p>
                                         {' '}
@@ -883,6 +2169,30 @@ const AccountUpgrade = () => {
                                     </label>
                                 </div>
                             </div>
+                            {IDType === 'VOTERS_CARD' ||
+                            IDType === 'DRIVERS_LICENSE' ? (
+                                <div className={styles.signatureGroup}>
+                                    <p>Upload Back of ID</p>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {' '}
+                                            {identificationBackDocumentFileName
+                                                ? identificationBackDocumentFileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={
+                                                    saveBackIdentificationFile
+                                                }
+                                                type="file"
+                                                accept="image/png, image/HEIC, image/jpeg, application/pdf"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            ) : null}
                         </div>
                         {loading ? (
                             <Loader />
@@ -892,6 +2202,309 @@ const AccountUpgrade = () => {
                                 className={styles.updateBtn}
                             >
                                 Update Profile
+                            </button>
+                        )}
+                    </AccountUpgradeComponent>
+                );
+            case 'Referee':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Input Referee Details"
+                    >
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Referee 1</label>
+                                <input
+                                    type="text"
+                                    value={reffereeEmail}
+                                    placeholder="Input Referee Emai"
+                                    onChange={(e) =>
+                                        setReffereeEmail(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Referee 2</label>
+                                <input
+                                    type="text"
+                                    value={reffereeEmailI}
+                                    placeholder="Input Referee Emai"
+                                    onChange={(e) =>
+                                        setReffereeEmailI(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+
+                        {/* <div className={styles.signature}>
+                            <label>Refferee</label>
+                            <input type="text" value={idNumber} />
+                        </div> */}
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                onClick={refereeUpload}
+                                className={styles.updateBtn}
+                            >
+                                Submit
+                            </button>
+                        )}
+                    </AccountUpgradeComponent>
+                );
+            case 'Referee Form':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Input Referee Details"
+                    >
+                        <div className={styles.signatureGroup}>
+                            <p>Input Referee Document</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>
+                                    {' '}
+                                    {fileNameI
+                                        ? fileNameI
+                                        : 'No file chosen...'}
+                                </p>
+                                <label>
+                                    <input type="file" onChange={saveRefFile} />{' '}
+                                    Upload
+                                </label>
+                            </div>
+                        </div>
+
+                        <div className={styles.signatureGroup}>
+                            <p>Input Referee Document</p>
+                            <div className={styles.signatureFormGroup}>
+                                <p>
+                                    {' '}
+                                    {fileNameII
+                                        ? fileNameII
+                                        : 'No file chosen...'}
+                                </p>
+                                <label>
+                                    <input
+                                        type="file"
+                                        onChange={saveRefFileI}
+                                    />{' '}
+                                    Upload
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* <div className={styles.signature}>
+                                <label>Refferee</label>
+                                <input type="text" value={idNumber} />
+                            </div> */}
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                onClick={refereeFileUpload}
+                                className={styles.updateBtn}
+                            >
+                                Submit
+                            </button>
+                        )}
+                    </AccountUpgradeComponent>
+                );
+            case 'Ellevate Profiling':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Ellevate Profiling"
+                    >
+                        <>
+                            <div className={styles.ellevateCopy}>
+                                <p>
+                                    Ellevate offers a range of solutions to
+                                    women-owned businesses to grow their
+                                    enterprise. It supports companies making
+                                    women focused products and businesses with
+                                    high percentage of female employees or board
+                                    members. Benefits include:
+                                </p>
+                                <ul>
+                                    <li>Zero maintenance fee</li>
+                                    <li>
+                                        Interest concession for loans and
+                                        deposits
+                                    </li>
+                                    <li>
+                                        Free Capacity building, Exhibitions and
+                                        access to E-commence solutions
+                                    </li>
+                                </ul>
+                            </div>
+                            <form
+                                onSubmit={handleSubmit((data) => {
+                                    setElevateData(data.details);
+
+                                    setLoading(true);
+                                    const profileSetupItems = {
+                                        surveyReport: data.details.map(
+                                            (item, index) => {
+                                                return {
+                                                    index: index,
+                                                    isAnswerYes: item.input
+                                                };
+                                            }
+                                        )
+                                    };
+                                    dispatch(
+                                        postEllevateProfilingDetails(
+                                            profileSetupItems
+                                        )
+                                    );
+                                })}
+                            >
+                                {Object.values(questions.questions).map(
+                                    (item, index) => {
+                                        const fieldName = `details[${index}]`;
+                                        return (
+                                            <div
+                                                className={
+                                                    checkedBtn
+                                                        ? styles.profilingGrey
+                                                        : styles.profilingDiv
+                                                }
+                                                key={index}
+                                            >
+                                                <input
+                                                    disabled={checkedBtn}
+                                                    // checked={inputCheck}
+                                                    className={
+                                                        styles.profilingInput
+                                                    }
+                                                    type="checkbox"
+                                                    // onChange={
+                                                    //     (
+                                                    //         Object.values(
+                                                    //             questions.questions
+                                                    //         ).length - 1
+                                                    //     ).checked === true
+                                                    //         ? alert('test')
+                                                    //         : alert('Testing')
+                                                    // }
+                                                    // checked={
+                                                    //     profilingQuestionsData !==
+                                                    //     null
+                                                    //         ? profilingQuestionsData[
+                                                    //               index
+                                                    //           ].input
+                                                    //         : null
+                                                    // }
+                                                    {...register(
+                                                        `${fieldName}.input`
+                                                    )}
+                                                    // onClick={() =>
+                                                    //     setProfileItemm(item)
+                                                    // }
+                                                />
+                                                {/* {console.log(profileItemm)} */}
+                                                <label>{item}</label>
+                                            </div>
+                                        );
+                                    }
+                                )}
+                                <div className={styles.profilingDiv}>
+                                    <input
+                                        className={styles.profilingInput}
+                                        type="checkbox"
+                                        checked={checkedBtn}
+                                        onChange={() => {
+                                            // setInputCheck(false);
+                                            setCheckedBtn((prev) => !prev);
+                                        }}
+                                    />
+                                    <label>None of the above</label>
+                                </div>
+                                <div className={styles.disclaimer}>
+                                    Kindly select applicable options
+                                </div>
+                                {loading ? (
+                                    <Loader />
+                                ) : (
+                                    <button
+                                        // onClick={profillingSetup}
+                                        className={styles.updateBtn}
+                                        type="submit"
+                                    >
+                                        Ellevate Profiling
+                                    </button>
+                                )}
+                            </form>
+                        </>
+
+                        {/* <div className={styles.profilingDiv}>
+                            <input
+                                className={styles.profilingInput}
+                                type="checkbox"
+                                onChange={(e) => setCheckedI(!checkedI)}
+                            />
+                            <label>
+                                Do you have up to 20% of women in senior
+                                management in your organization?
+                            </label>
+                        </div>
+                        <div className={styles.profilingDiv}>
+                            <input
+                                className={styles.profilingInput}
+                                type="checkbox"
+                                onChange={(e) => setChecked(!checkedII)}
+                            />
+                            <label>
+                                Do female staff make up 30% of your
+                                organization?
+                            </label>
+                        </div>
+                        <div className={styles.profilingDiv}>
+                            <input
+                                className={styles.profilingInput}
+                                type="checkbox"
+                                onChange={(e) => setChecked(!checkedIII)}
+                            />
+                            <label>None of the above</label>
+                        </div> */}
+                    </AccountUpgradeComponent>
+                );
+            case 'Virtual NIN':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                        }}
+                        title="Virtual NIN"
+                    >
+                        <p className={styles.disclaimer}>
+                            Get Your Virtual nin by dialing *346*3*your
+                            NIN*7154614#
+                        </p>
+                        <input
+                            type="text"
+                            placeholder="Type your virtual Nin"
+                            onChange={(e) => setVirtualNin(e.target.value)}
+                        />
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                className={styles.updateBtn}
+                                type="submit"
+                                onClick={virtualNinSend}
+                            >
+                                Virtual NIN
                             </button>
                         )}
                     </AccountUpgradeComponent>
@@ -1048,20 +2661,34 @@ const AccountUpgrade = () => {
                         <button>Send Invite</button>
                     </AccountUpgradeComponent>
                 );
-            case 'CAC Registration':
+            case 'CAC Certificate':
                 return (
                     <AccountUpgradeComponent
                         action={() => {
                             setTitle('First');
                             setDocument(false);
                         }}
-                        title="CAC Registration"
+                        title="CAC Certificate"
                     >
                         <div className={styles.documentBody}>
+                            {shareDocuments?.map((item, index) => {
+                                if (item.documentType === 'CAC') {
+                                    if (item.comment !== null) {
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
+                                    } else {
+                                        return null;
+                                    }
+                                }
+                            })}
                             <div className={styles.identificationGroup}>
                                 <label>CAC Registration Number</label>
                                 <input
                                     type="text"
+                                    onChange={(e) =>
+                                        setCacNumber(e.target.value)
+                                    }
                                     placeholder="Enter CAC Registration Number"
                                 />
                             </div>
@@ -1085,10 +2712,8 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            {cac === 'success' ? (
-                                <>
-                                    <p>Document Upload SUccessful</p>
-                                </>
+                            {loading ? (
+                                <Loader />
                             ) : (
                                 <button
                                     className={styles.updateBtn}
@@ -1098,6 +2723,47 @@ const AccountUpgrade = () => {
                                 </button>
                             )}
                         </div>
+                    </AccountUpgradeComponent>
+                );
+            case 'TIN':
+                return (
+                    <AccountUpgradeComponent
+                        action={() => {
+                            setTitle('First');
+                            setDocument(false);
+                        }}
+                        title="TIN Registration"
+                    >
+                        {/* {shareDocuments?.map((items) => {
+                            if (items.documentType === 'IDENTIFICATION') {
+                                return (
+                                    <Tooltip anchorId="Tin" content="kjhgf" />
+                                );
+                            } else {
+                                return '';
+                            }
+                        })} */}
+
+                        <div className={styles.identificationGroup}>
+                            <label id="Tin">
+                                TIN (Tax Identification Number)
+                            </label>
+                            <input
+                                type="text"
+                                onChange={(e) => setTinNumber(e.target.value)}
+                                placeholder="Enter  Your Tin"
+                            />
+                        </div>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button
+                                className={styles.updateBtn}
+                                onClick={tinRegistration}
+                            >
+                                Update Profile
+                            </button>
+                        )}
                     </AccountUpgradeComponent>
                 );
             case 'SCUML Certificate':
@@ -1110,6 +2776,17 @@ const AccountUpgrade = () => {
                         title="SCUML Certificate"
                     >
                         <div className={styles.documentBody}>
+                            {shareDocuments?.map((item, index) => {
+                                if (item.documentType === 'SCUML') {
+                                    if (item.comment !== null) {
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
+                                    } else {
+                                        return null;
+                                    }
+                                }
+                            })}
                             <div className={styles.identificationGroup}>
                                 <label>SCUML Certificate Number</label>
                                 <input
@@ -1137,8 +2814,8 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            {scmul ? (
-                                scmul.data.message
+                            {loading ? (
+                                <Loader />
                             ) : (
                                 <button
                                     className={styles.updateBtn}
@@ -1150,19 +2827,45 @@ const AccountUpgrade = () => {
                         </div>
                     </AccountUpgradeComponent>
                 );
-            case 'MEMAT':
+            case 'CAC Documents':
                 return (
                     <AccountUpgradeComponent
                         action={() => {
                             setTitle('First');
                             setDocument(false);
                         }}
-                        title="MEMAT"
+                        title="CAC Documents"
                     >
                         <div className={styles.documentBody}>
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
-                                    <p>Upload CO2</p>
+                                    {shareDocuments?.map((items) => {
+                                        if (items.documentType === 'CO2') {
+                                            return (
+                                                <Tooltip
+                                                    anchorId="co2"
+                                                    content={items.comment}
+                                                />
+                                            );
+                                        } else {
+                                            return '';
+                                        }
+                                    })}
+                                    <div className={styles.statuses}>
+                                        <p>Upload CO2</p>
+
+                                        {shareDocuments?.map((items) => {
+                                            if (items.documentType === 'CO2') {
+                                                return (
+                                                    <p id="co2">
+                                                        {items.status}
+                                                    </p>
+                                                );
+                                            } else {
+                                                return '';
+                                            }
+                                        })}
+                                    </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {' '}
@@ -1182,7 +2885,33 @@ const AccountUpgrade = () => {
                             </div>
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
-                                    <p>Upload CO7</p>
+                                    {shareDocuments?.map((items) => {
+                                        if (items.documentType === 'CO7') {
+                                            return (
+                                                <Tooltip
+                                                    anchorId="co7"
+                                                    content={items.comment}
+                                                />
+                                            );
+                                        } else {
+                                            return '';
+                                        }
+                                    })}
+                                    <div className={styles.statuses}>
+                                        <p>Upload CO7</p>
+
+                                        {shareDocuments?.map((items) => {
+                                            if (items.documentType === 'CO7') {
+                                                return (
+                                                    <p id="co7">
+                                                        {items.status}
+                                                    </p>
+                                                );
+                                            } else {
+                                                return '';
+                                            }
+                                        })}
+                                    </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
                                             {co7FileName
@@ -1199,14 +2928,159 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            {memart ? (
-                                memart.data.message
+                            <div className={styles.signature}>
+                                <div className={styles.signatureGroup}>
+                                    {shareDocuments?.map((items) => {
+                                        if (items.documentType === 'CAC1.1') {
+                                            return (
+                                                <Tooltip
+                                                    anchorId="cac11"
+                                                    content={items.comment}
+                                                />
+                                            );
+                                        } else {
+                                            return '';
+                                        }
+                                    })}
+                                    <div className={styles.statuses}>
+                                        <p>Upload CAC 1.1</p>
+
+                                        {shareDocuments?.map((items) => {
+                                            if (
+                                                items.documentType === 'CAC1.1'
+                                            ) {
+                                                return (
+                                                    <p id="cac11">
+                                                        {items.status}
+                                                    </p>
+                                                );
+                                            } else {
+                                                return '';
+                                            }
+                                        })}
+                                    </div>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {cac1FileName
+                                                ? cac1FileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={saveMemartCAC1lFile}
+                                                type="file"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.signature}>
+                                <div className={styles.signatureGroup}>
+                                    {shareDocuments?.map((items) => {
+                                        if (items.documentType === 'CAC2.1') {
+                                            return (
+                                                <Tooltip
+                                                    anchorId="cac21"
+                                                    content={items.comment}
+                                                />
+                                            );
+                                        } else {
+                                            return '';
+                                        }
+                                    })}
+                                    <div className={styles.statuses}>
+                                        <p>Upload CAC 2.1</p>
+
+                                        {shareDocuments?.map((items) => {
+                                            if (
+                                                items.documentType === 'CAC2.1'
+                                            ) {
+                                                return (
+                                                    <p id="cac21">
+                                                        {items.status}
+                                                    </p>
+                                                );
+                                            } else {
+                                                return '';
+                                            }
+                                        })}
+                                    </div>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {cac2FileName
+                                                ? cac2FileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={saveMemartCAC2lFile}
+                                                type="file"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.signature}>
+                                <div className={styles.signatureGroup}>
+                                    {shareDocuments?.map((items) => {
+                                        if (items.documentType === 'memat') {
+                                            return (
+                                                <Tooltip
+                                                    anchorId="memat"
+                                                    content={items.comment}
+                                                />
+                                            );
+                                        } else {
+                                            return '';
+                                        }
+                                    })}
+                                    <p></p>
+                                    <div className={styles.statuses}>
+                                        <p>
+                                            Memorandum and Articles of
+                                            Association (MEMART)
+                                        </p>
+
+                                        {shareDocuments?.map((items) => {
+                                            if (
+                                                items.documentType === 'CAC2.1'
+                                            ) {
+                                                return (
+                                                    <p id="memat">
+                                                        {items.status}
+                                                    </p>
+                                                );
+                                            } else {
+                                                return '';
+                                            }
+                                        })}
+                                    </div>
+                                    <div className={styles.signatureFormGroup}>
+                                        <p>
+                                            {memtFileName
+                                                ? memtFileName
+                                                : 'No file chosen...'}
+                                        </p>
+                                        <label>
+                                            <input
+                                                onChange={saveMemartMemtlFile}
+                                                type="file"
+                                            />{' '}
+                                            Upload
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            {loading ? (
+                                <Loader />
                             ) : (
                                 <button
-                                    onClick={memartUpload}
+                                    onClick={cacDocumentUpload}
                                     className={styles.updateBtn}
                                 >
-                                    Update Profile
+                                    Update
                                 </button>
                             )}
                         </div>
@@ -1220,6 +3094,19 @@ const AccountUpgrade = () => {
                         }}
                         title="Referee"
                     >
+                        <div>
+                            {shareDocuments?.map((item, index) => {
+                                if (item.documentType === 'REFERENCE_FORM') {
+                                    if (item.comment !== null) {
+                                        return (
+                                            <p key={index}>{item.comment}</p>
+                                        );
+                                    } else {
+                                        return null;
+                                    }
+                                }
+                            })}
+                        </div>
                         <div className={styles.directorsBody}>
                             <h2>Reference 1</h2>
                             <div className={styles.directorsGroup}>

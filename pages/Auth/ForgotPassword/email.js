@@ -8,8 +8,9 @@ import { useRouter } from 'next/router';
 import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPasswordData } from '../../../redux/actions/actions';
-const ForgotPassword = () => {
+const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages, loading }) => {
     const [activeBtn, setActiveBtn] = useState(true);
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -20,38 +21,9 @@ const ForgotPassword = () => {
         setEmail(e.target.value);
     };
     const [email, setEmail] = useState('');
-    const { forgotPassword, forgotPasswordErrorMessages } = useSelector(
-        (state) => state.fogrotPasswordReducer
-    );
-    const dispatch = useDispatch();
-    const router = useRouter();
-    const onSubmit = (data) => {
-        const forgotPassworEmail = {
-            email
-        };
-
-        dispatch(forgotPasswordData(forgotPassworEmail));
-
-        console.log(forgotPassword, forgotPasswordErrorMessages);
-        // fogrotPasswordReducer
-    };
-    useEffect(() => {
-        console.log(forgotPassword);
-        console.log(forgotPasswordErrorMessages);
-    }, [forgotPassword, forgotPasswordErrorMessages]);
-    // if (forgotPassword) {
-    //     if (forgotPassword.data.message === 'password reset email sent') {
-    //         router.push('./ForgotPassword/emailsent');
-    //     } else {
-    //         router.push('../../Onboarding/ProfileSetup');
-    //     }
-    // } else {
-    //     console.log('hg');
-    // }
 
     return (
         <>
-            {forgotPassword ? <p>{forgotPassword.data.message}</p> : null}
             <div className={styles.back}>
                 <ArrowBackSvg
                     action={() => {
@@ -64,7 +36,7 @@ const ForgotPassword = () => {
             <div className={styles.emailP}>
                 {forgotPasswordErrorMessages ? (
                     <p className={styles.errors}>
-                        {forgotPasswordErrorMessages.response.data.message}
+                        {forgotPasswordErrorMessages}
                     </p>
                 ) : null}
                 <p>
@@ -98,6 +70,7 @@ const ForgotPassword = () => {
                     onClick={handleSubmit}
                     type="submit"
                     text="Reset Password"
+                    loads={loading}
                 />
             </form>
         </>

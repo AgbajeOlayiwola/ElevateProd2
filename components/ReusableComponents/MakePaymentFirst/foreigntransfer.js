@@ -18,7 +18,9 @@ const ForeignTransfer = ({
     type,
     action,
     scheduleLater,
-    bankAccounts
+    bankAccounts,
+    formData,
+    setFormdata
 }) => {
     const [countrys, setCountry] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState('');
@@ -52,7 +54,7 @@ const ForeignTransfer = ({
     }, [banks]);
     useEffect(() => {
         if (verifyCurrency !== null) {
-            console.log(verifyCurrency.currencies);
+            //console.logverifyCurrency.currencies);
             setCurrency(verifyCurrency.currencies.currencies);
         }
     }, [verifyCurrency]);
@@ -69,12 +71,24 @@ const ForeignTransfer = ({
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     <div className={styles.narration}>
                         <label>Source Account</label>
-                        <select name="" id="" {...register('sourceAccount')}>
+                        <select
+                            name=""
+                            id=""
+                            {...register('sourceAccount')}
+                            onInput={(event) => {
+                                setFormdata({
+                                    ...formData,
+                                    accountNum: event.target.value
+                                });
+                            }}
+                            // value={formData.accountNum}
+                        >
+                            <option value="">Select Account To Use</option>
                             {bankAccounts?.map((accounts, index) => {
                                 if (accounts.currency === 'NGN') {
                                     return (
                                         <option
-                                            value={accounts.accountId}
+                                            value={accounts.accountNumber}
                                             key={index}
                                         >
                                             {accounts.accountNumber}
@@ -127,12 +141,12 @@ const ForeignTransfer = ({
                             />
                         </div>
                         <button>Next</button>
-                        <p className={styles.schedule}>
+                        {/* <p className={styles.schedule}>
                             Not paying now?
                             <span onClick={scheduleLater}>
                                 Schedule for Later
                             </span>
-                        </p>
+                        </p> */}
                     </div>
                 </form>
             ) : (

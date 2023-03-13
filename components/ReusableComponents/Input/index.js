@@ -27,8 +27,9 @@ const InputTag = ({
                 //         message: pattern.message
                 //     }
                 // })}
-                value={value}
-                onInput={action}
+                defaultValue={value}
+                readOnly
+                onChange={action}
             />
         </div>
     );

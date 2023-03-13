@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const createAccountReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case createAccount.CREATEACCOUNT_LOAD_START:
             return {

@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const getNewUserAccountReducer = (state = initialState, { type, payload }) => {
-    // console.log(payload);÷ss
+    //console.log(payload);÷ss
     switch (type) {
         case getNewUserAccount.GET_NEW_ACCOUNT_LOAD_START:
             return {

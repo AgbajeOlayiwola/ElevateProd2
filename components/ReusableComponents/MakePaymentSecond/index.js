@@ -59,19 +59,26 @@ const MakePaymentSecond = ({
     number,
     isLoading,
     closeAction,
-    backAction
+    backAction,
+    charges,
+    formData,
+    setFormdata
 }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [newAmount, setNewAmount] = useState('');
+
     useEffect(() => {
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'NGN',
             currencyDisplay: 'narrowSymbol'
         });
+
         const formattedAmount = formatter.format(amount);
+
         setNewAmount(formattedAmount);
     }, []);
+    console.log(amount);
     const { handleChange } = useSSNFields();
     const {
         register,
@@ -101,97 +108,13 @@ const MakePaymentSecond = ({
                             </div>
                         </div>
                         <h2>Confirm Transaction</h2>
-                        <div className={styles.transactionamount}>
-                            <p>Amount</p>
-                            <h3>{newAmount}</h3>
-                        </div>
+                        {amount === 'sum' ? null : (
+                            <div className={styles.transactionamount}>
+                                <p>Amount</p>
+                                <h3>{newAmount}</h3>
+                            </div>
+                        )}
                         {title === 'Bills Payment' ? (
-                            // <div className={styles.PaymentSecond}>
-                            //     <div className={styles.PaymentSecondCont}>
-                            //         <h2>Confirm Transaction</h2>
-                            //         <p>Enter your transaction pin to continue.</p>
-                            //         <div className={styles.transactionamount}>
-                            //             <p>Amount</p>
-                            //             <h3>N{amount}</h3>
-                            //         </div>
-                            //         <div className={styles.transactiondetails}>
-                            //             <div className={styles.transactionsingles}>
-                            //                 <p className={styles.transactionTitle}>
-                            //                     Category
-                            //                 </p>
-                            //                 <h3>{recieverName}</h3>
-                            //             </div>
-                            //             <div className={styles.transactionsingle}>
-                            //                 <p className={styles.transactionTitle}>
-                            //                     Platform
-                            //                 </p>
-                            //                 <h3>
-                            //                     <span></span> {recieverBank}
-                            //                 </h3>
-                            //             </div>
-                            //             {recieverName === 'Utilities' ? (
-                            //                 <>
-                            //                     <div className={styles.transactionsingle}>
-                            //                         <p className={styles.transactionTitle}>
-                            //                             Meter Type
-                            //                         </p>
-                            //                         <h3>{sender}</h3>
-                            //                     </div>
-                            //                     <div className={styles.transactionsingle}>
-                            //                         <p className={styles.transactionTitle}>
-                            //                             Reference Number
-                            //                         </p>
-                            //                         <h3>{refNuber}</h3>
-                            //                     </div>
-                            //                 </>
-                            //             ) : null}
-
-                            //             <div className={styles.transactionsingle}>
-                            //                 <p className={styles.transactionTitle}>
-                            //                     Charges
-                            //                 </p>
-                            //                 <h3>N50.50</h3>
-                            //             </div>
-                            //             <div className={styles.transactionsingle}>
-                            //                 <p className={styles.transactionTitle}>
-                            //                     Number
-                            //                 </p>
-                            //                 <h3>{number}</h3>
-                            //             </div>
-                            //         </div>
-                            //         <h4>Enter Transaction Pin</h4>
-                            //         <OtpInput />
-                            //         <div className={styles.resendFlex}>
-                            //             <p
-                            //                 style={{
-                            //                     color: '#005B82',
-                            //                     cursor: 'pointer'
-                            //                 }}
-                            //             >
-                            //                 Resend OTP
-                            //             </p>
-                            //             <button
-                            //                 style={{ cursor: 'pointer' }}
-                            //                 className={styles.clr}
-                            //                 type="reset"
-                            //             >
-                            //                 Clear
-                            //             </button>
-                            //         </div>
-                            //         {isLoading ? (
-                            //             <Loader />
-                            //         ) : (
-                            //             <ButtonComp
-                            //                 disabled={activeBtn}
-                            //                 active={activeBtn ? 'active' : 'inactive'}
-                            //                 text="Make Transfer"
-                            //                 type="submit"
-                            //                 onClick={transferAction}
-                            //             />
-                            //         )}
-                            //     </div>
-                            // </div>
-
                             <div className={styles.transactiondetails}>
                                 <div className={styles.transactionsingles}>
                                     <p className={styles.transactionTitle}>
@@ -206,6 +129,12 @@ const MakePaymentSecond = ({
                                     <h3>
                                         <span></span> {recieverBank}
                                     </h3>
+                                </div>
+                                <div className={styles.transactionsingle}>
+                                    <p className={styles.transactionTitle}>
+                                        Charges
+                                    </p>
+                                    <h3>{charges}</h3>
                                 </div>
                                 <div className={styles.transactionsingle}>
                                     <p className={styles.transactionTitle}>
@@ -237,14 +166,23 @@ const MakePaymentSecond = ({
                                             : recieverBank}
                                     </h3>
                                 </div>
-                                {/* {recieverBank === 'Ecobank' ? null : (
-                                    <div className={styles.transactionsingle}>
-                                        <p className={styles.transactionTitle}>
-                                            Charges
-                                        </p>
-                                        <h3>N50.50</h3>
-                                    </div>
-                                )} */}
+
+                                {title === 'Single Transfer' ? (
+                                    recieverBank === 'ECOBANK' ? null : (
+                                        <div
+                                            className={styles.transactionsingle}
+                                        >
+                                            <p
+                                                className={
+                                                    styles.transactionTitle
+                                                }
+                                            >
+                                                Charges
+                                            </p>
+                                            <h3>{charges}</h3>
+                                        </div>
+                                    )
+                                ) : null}
 
                                 <div className={styles.transactionsingle}>
                                     <p className={styles.transactionTitle}>
@@ -255,6 +193,7 @@ const MakePaymentSecond = ({
                             </div>
                         )}
                         <h4>Enter Transaction Pin</h4>
+
                         <form onSubmit={handleSubmit(transferAction)}>
                             <div className={styles.otpInps}>
                                 <input
@@ -300,16 +239,15 @@ const MakePaymentSecond = ({
                                     onChange={handleChange}
                                 />
                             </div>
-                            {isLoading ? (
-                                <Loader />
-                            ) : (
-                                <ButtonComp
-                                    disabled={activeBtn}
-                                    active={activeBtn ? 'active' : 'inactive'}
-                                    text="Make Transfer"
-                                    type="submit"
-                                />
-                            )}
+
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Confirm"
+                                type="submit"
+                                loads={isLoading}
+                                // err={isLoading}
+                            />
                         </form>
                     </div>
                 </div>

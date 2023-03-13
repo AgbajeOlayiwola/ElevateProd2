@@ -2,8 +2,8 @@ import { cardLogin } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    cardLogin: [],
-    cardLoginerrorMessage: ''
+    cardLoginS: [],
+    cardLoginerrorMessages: ''
 };
 
 const cardLoginReducer = (state = initialState, { type, payload }) => {
@@ -12,14 +12,14 @@ const cardLoginReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: true,
-                cardLogin: [],
+                cardLoginS: [],
                 cardLoginerrorMessages: ''
             };
         case cardLogin.CARDLOGIN_LOAD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                cardLogin: payload
+                cardLoginS: payload
             };
         case cardLogin.CARDLOGIN_LOAD_ERROR:
             return {

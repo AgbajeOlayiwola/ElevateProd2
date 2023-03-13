@@ -21,7 +21,7 @@ import { getCookie } from 'cookies-next';
 import Head from 'next/head';
 import HomeSvg from '../../ReusableComponents/HomeSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
-
+import { Scrollbars } from 'react-custom-scrollbars';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
@@ -31,14 +31,15 @@ const ProfileSetups = () => {
     // router.replace(router.asPath);
 
     const cookie = getCookie('cookieToken');
-    // console.log('register page', cookie);
+    //console.log('register page', cookie);
 
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
-        type: 'false',
+        type: false,
         rcnumber: '',
         tinNumber: '',
         bvNumber: '',
+        ninNumber: '',
         phoneNumber: '',
         countryCode: '',
         flag: '',
@@ -57,24 +58,13 @@ const ProfileSetups = () => {
         referralCode: '',
         signatory: 1
     });
-    // console.log(formData.type);
-    // let countryName = '';
-    // let countryNames;
-
-    // if (typeof window !== 'undefined') {
-    //     countryName = window.localStorage.getItem('country');
-    //     if (countryName === null) {
-    //         countryNames = window.localStorage.getItem('country');
-    //     } else {
-    //         countryNames = JSON.parse(countryName);
-    //     }
-    // }
+    const [loads, setLoads] = useState(false);
     useEffect(() => {
         dispatch(loadCountry());
     }, []);
     useEffect(() => {
         if (countries !== null) {
-            console.log(countries);
+            //console.log(countries);
             countries.filter((item) => {
                 if (item.name === 'Nigeria') {
                     setFormData({
@@ -123,6 +113,7 @@ const ProfileSetups = () => {
                         actionI={regsiteredBus}
                         loading={loading}
                         setLoading={setLoading}
+                        loads={loads}
                     />
                 );
             case 1:
@@ -133,18 +124,18 @@ const ProfileSetups = () => {
                         // setPage={page+1}
                         page={page}
                         action={() => {
-                            const otpData = {
-                                phoneNumber:
-                                    formData.countryCode + formData.phoneNumber,
-                                otp: '123456'
-                            };
-                            dispatch(verifyOtp(otpData));
-                            // dispatch(CompProfile());
-                            if (otpErrorMessage) {
-                                console.log('otpError');
-                            } else if (!otpErrorMessage) {
-                                setPage(page + 1);
-                            }
+                            // const otpData = {
+                            //     phoneNumber:
+                            //         formData.countryCode + formData.phoneNumber,
+                            //     otp: '123456'
+                            // };
+                            // dispatch(verifyOtp(otpData));
+                            // // dispatch(CompProfile());
+                            // if (otpErrorMessage) {
+                            //     //console.log('otpError');
+                            // } else if (!otpErrorMessage) {
+                            setPage(page + 1);
+                            // }
                         }}
                     />
                 );
@@ -181,12 +172,12 @@ const ProfileSetups = () => {
         }
     };
     // useEffect(() => {
-    //     console.log(errorMessages, otpErrorMessages);
+    //     //console.log(errorMessages, otpErrorMessages);
     // }, []);
 
     function regsiteredBus() {
-        console.log('firstAPi');
-
+        console.log(formData.tinNumber);
+        setLoads((prev) => !prev);
         const businessProfileData = {
             bvnNumber: formData.bvNumber,
             phoneNumber: formData.phoneNumber,
@@ -201,8 +192,9 @@ const ProfileSetups = () => {
     }
 
     function handleSubmit() {
-        // console.log('firstAPi');
+        //console.log('firstAPi');
 
+        setLoads((prev) => !prev);
         const profileData = {
             bvnNumber: formData.bvNumber,
             phoneNumber: formData.phoneNumber,
@@ -213,18 +205,18 @@ const ProfileSetups = () => {
         setErrorM('');
         setErrorI('');
         dispatch(createProfileSetup(profileData));
-        // console.log('lol');
+        //console.log('lol');
     }
 
     useEffect(() => {
-        // console.log('new bvn:', bvnNin.message);
+        //console.log('new bvn:', bvnNin.message);
         if (
             bvnNin === 'verification successful' ||
             errorMessages === 'you have already setup your profile'
         ) {
             setPage(page + 1);
         } else {
-            console.log('move');
+            //console.log('move');
             setErrorM(errorMessages);
             setErrorI(bvnError);
             setLoading(false);
@@ -234,7 +226,7 @@ const ProfileSetups = () => {
     // const handleSubmitt = () => {
     //     setPage(page + 1);
     // };
-    // console.log(errorM, errorI);
+    //console.log(errorM, errorI);
 
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {

@@ -8,16 +8,23 @@ import StepFour from './StepFour';
 import Link from 'next/link';
 import styles from './styles.module.css';
 import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticator';
-import { existingUserProfileData } from '../../../redux/actions/actions';
+import {
+    existingUserProfileData,
+    loadCountry
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Liveness from '../NotRegisteredForms/Liveness';
 
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
     const [pageType, setPageType] = useState('');
+    const [country, setCountry] = useState();
+    const [loads, setLoads] = useState(false);
     const dispatch = useDispatch();
     const { existingUserProfilee, errorMessage } = useSelector(
         (state) => state.existingUserProfileReducer
     );
+    const { countries } = useSelector((state) => state.countryReducer);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         type: 'false',
@@ -26,6 +33,18 @@ const ExistingMultiStep = () => {
         password: '',
         confPassword: ''
     });
+    useEffect(() => {
+        dispatch(loadCountry());
+    }, []);
+    useEffect(() => {
+        if (countries !== null) {
+            countries.filter((item) => {
+                if (item.name === 'Nigeria') {
+                    setCountry(item);
+                }
+            });
+        }
+    }, [countries]);
     const [setType, typeset] = useState('false');
     // useEffect(() => {
     //     if (!errorMessage) {
@@ -40,10 +59,12 @@ const ExistingMultiStep = () => {
     if (typeof window !== 'undefined') {
         let accounts = window.localStorage.getItem('account');
         var newAccounts = JSON.parse(accounts);
-        // console.log(newAccounts.user.email);
+        let loginWith = localStorage.getItem('LoginWith');
+        //console.log(loginWith);
+        //console.log(newAccounts.user.email);
     }
-    // console.log(formData.emailData, newAccounts.user?.email);
-    // console.log(formData.emailData, newAccounts.email);
+    //console.log(formData.emailData, newAccounts.user?.email);
+    //console.log(formData.emailData, newAccounts.email);
 
     const conditionalComponent = () => {
         switch (page) {
@@ -53,8 +74,9 @@ const ExistingMultiStep = () => {
                 return (
                     <SecondStep
                         errorMessage={errorMessage}
+                        loads={loads}
                         move={() => {
-                            console.log(formData.emailData);
+                            //console.log(formData.emailData);
                             let userEmail;
                             if (
                                 newAccounts?.email !== null &&
@@ -69,19 +91,19 @@ const ExistingMultiStep = () => {
                             } else {
                                 userEmail = formData.emailData;
                             }
-                            console.log(newAccounts.email);
-                            console.log(newAccounts.user);
-                            console.log(formData.emailData);
+                            //console.log(newAccounts.email);
+                            //console.log(newAccounts.user);
+                            //console.log(formData.emailData);
                             const userData = {
                                 userId: formData.userId,
                                 email: userEmail,
                                 password: formData.password,
                                 confirmPassword: formData.confPassword
                             };
-                            console.log(userData);
+                            //console.log(userData);
                             dispatch(existingUserProfileData(userData));
-                            setLoading((prev) => !prev);
-                            // console.log(existingUserProfilee.data.message);
+                            // setLoading((prev) => !prev);
+                            setLoads((prev) => !prev);
                         }}
                         formData={formData}
                         setFormData={setFormData}
@@ -90,18 +112,26 @@ const ExistingMultiStep = () => {
                         }}
                         loading={loading}
                         setLoading={setLoading}
+                        err={errorMessage}
                     />
                 );
-            // case 2:
-            //     return (
-            //     <Liveness
-            //     action={() => {
-            //         setPage(page + 1);
-            //     }}
-            //     // action={handleSubmitt}
-            // />
-            //     );
+
             case 2:
+                return (
+                    <div className={styles.livenes}>
+                        <Liveness
+                            action={() => {
+                                setLoads((prev) => !prev);
+                                setPage(page + 1);
+                            }}
+                            loading={loading}
+                            setLoading={setLoading}
+                            // action={handleSubmitt}
+                        />
+                    </div>
+                );
+
+            case 3:
                 return (
                     <StepThree
                         action={() => {
@@ -109,9 +139,10 @@ const ExistingMultiStep = () => {
                         }}
                         handleSubmit={handleSubmit}
                         handleSubmitNew={handleSubmitNew}
+                        countryNames={country}
                     />
                 );
-            case 3:
+            case 4:
                 return (
                     <StepFour
                         title={pageType}
@@ -121,6 +152,7 @@ const ExistingMultiStep = () => {
                         }}
                         formData={formData}
                         setFormData={setFormData}
+                        countryNames={country}
                     />
                 );
             default:
@@ -128,6 +160,7 @@ const ExistingMultiStep = () => {
         }
     };
     function handleSubmit() {
+        // setLoads((prev) => !prev);
         setPage(page + 1);
         setFormData({ ...formData, type: 'true' });
     }
@@ -136,13 +169,21 @@ const ExistingMultiStep = () => {
         setPageType('New');
     }
     useEffect(() => {
-        // console.log('new bvn:', bvnNin.message);
+        //console.log('new bvn:', bvnNin.message);
         if (existingUserProfilee.data) {
             if (
                 existingUserProfilee.data.message ==
                 'Profile setup Intialization completed'
             ) {
-                setPage(page + 1);
+                let loginWith = localStorage.getItem('LoginWith');
+                if (loginWith !== null) {
+                    // console.log(loginWith);
+                    setPage(page + 1);
+                    setFormData({ ...formData, type: 'true' });
+                } else if (loginWith === null) {
+                    setPage(page + 2);
+                    setFormData({ ...formData, type: 'true' });
+                }
             }
         }
     }, [existingUserProfilee]);

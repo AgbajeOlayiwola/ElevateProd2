@@ -16,6 +16,16 @@
     line-height: 19px;
     color: #3e3e3e;
 }
+
+.email {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: #3e3e3e;
+}
+
 .busAdd {
     background: #f8f8f8;
     border: 1px solid #dbdbdb;
@@ -701,7 +711,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    color: #a5a5a5;
+    color:  #1d1c1c;
 }
 
 .businessGroup {
@@ -724,7 +734,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    color: #a5a5a5;
+    color:  #1d1c1c;
 }
 
 @media screen and (max-width: 1250px) {
@@ -788,4 +798,10 @@
         width: 80%;
         max-width: 100%;
     }
+}
+.livenes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }

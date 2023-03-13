@@ -1,0 +1,28 @@
+.products{
+    border-radius: 12px;
+    background-color: #fff;
+    padding-bottom: 34px;
+}
+.prodNamePrice{
+    padding-left: 15.99px;
+    
+}
+.prodNamePrice p:nth-child(2){
+    font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 16px;
+/* identical to box height, or 133% */
+color: #7A7978;
+}
+
+.prodNamePrice p:nth-child(1){
+font-style: normal;
+font-weight: 700;
+font-size: 12px;
+line-height: 16px;
+/* identical to box height, or 133% */
+
+
+color: #263238;
+}

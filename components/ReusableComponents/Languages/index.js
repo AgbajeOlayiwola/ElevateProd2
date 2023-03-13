@@ -24,7 +24,7 @@ const Langauges = () => {
             setLanguages(language);
         }
     }, [language]);
-    console.log(language);
+    //console.log(language);
     const {
         register,
         handleSubmit,

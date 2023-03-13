@@ -17,6 +17,7 @@ import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponent
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [newUser, setNewUser] = useState();
     const [circle, setCircle] = useState(false);
     const [error, setError] = useState('');
     const [identifier, setEmail] = useState('');
@@ -24,11 +25,9 @@ const Login = () => {
     const [outType, setOutType] = useState();
     const dispatch = useDispatch();
     const router = useRouter();
+
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
-    );
-    const { userProfile, errorMessage } = useSelector(
-        (state) => state.userProfileReducer
     );
     const {
         register,
@@ -56,7 +55,7 @@ const Login = () => {
         dispatch(loginUserAction(loginData));
         // dispatch(createNewUserAccount());
     };
-    console.log(user);
+    //console.log(user);
     const sentLogin = () => {
         if (errorMessages !== null) {
             setError(errorMessages);
@@ -68,14 +67,106 @@ const Login = () => {
             // ) {
             // router.push('/Dashboard');,
         } else if (user !== null) {
+            setNewUser(user);
             if (user.statusCode === 200) {
+                if (user.data.user.profile.createdFromEcobankCred === false) {
+                    if (
+                        user.data.user.profile.customerCategory == 'COMMERCIAL'
+                    ) {
+                        if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'PROFILE_SETUP_COMPLETED'
+                        ) {
+                            router.push('../../Verify/CorportateAccount');
+                        } else if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'AWAITING_ACCOUNT_NUMBER'
+                        ) {
+                            router.push('../../Verify/CorportateAccount');
+                        } else if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'ACCOUNT_NUMBER_RETRIEVED'
+                        ) {
+                            router.push('../../Dashboard');
+                        } else {
+                            router.push('../../Onboarding/ProfileSetup');
+                        }
+                    } else {
+                        if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'PROFILE_SETUP_COMPLETED'
+                        ) {
+                            router.push('../../Verify/Account/loading');
+                        } else if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'AWAITING_ACCOUNT_NUMBER'
+                        ) {
+                            router.push('../../Verify/Account/loading');
+                        } else if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'ACCOUNT_NUMBER_RETRIEVED'
+                        ) {
+                            router.push('../../Dashboard');
+                        } else {
+                            router.push('../../Onboarding/ProfileSetup');
+                        }
+                    }
+                }
+            }
+            if (user.data.user.profile.createdFromEcobankCred === true) {
                 if (
                     user.data.user.profile.profileSetupStatus ===
                     'PROFILE_SETUP_COMPLETED'
                 ) {
+                    window.localStorage.setItem(
+                        'displayAccount',
+                        JSON.stringify(user.data.user)
+                    );
+                    window.localStorage.setItem(
+                        'account',
+                        JSON.stringify(user.data.user.profile)
+                    );
                     router.push('../../Dashboard');
-                } else {
-                    router.push('../../Onboarding/ProfileSetup');
+                } else if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'PROFILE_SETUP'
+                ) {
+                    window.localStorage.setItem(
+                        'displayAccount',
+                        JSON.stringify(user.data.user)
+                    );
+                    window.localStorage.setItem(
+                        'account',
+                        JSON.stringify(user.data.user.profile)
+                    );
+                    router.push('/Onboarding/ExistingProfileSetup');
+                }
+                if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'AWAITING_ACCOUNT_NUMBER'
+                ) {
+                    window.localStorage.setItem(
+                        'displayAccount',
+                        JSON.stringify(user.data.user)
+                    );
+                    window.localStorage.setItem(
+                        'account',
+                        JSON.stringify(user.data.user.profile)
+                    );
+                    router.push('../../Verify/CorportateAccount');
+                } else if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'ACCOUNT_NUMBER_RETRIEVED'
+                ) {
+                    window.localStorage.setItem(
+                        'displayAccount',
+                        JSON.stringify(user.data.user)
+                    );
+                    window.localStorage.setItem(
+                        'account',
+                        JSON.stringify(user.data.user.profile)
+                    );
+                    router.push('../../Dashboard');
                 }
             }
         }
@@ -87,8 +178,8 @@ const Login = () => {
     const types = (type) => {
         setOutType(type);
     };
-    // console.log(user);
-    // console.log(data); // watch input value by passing the name of it
+    //console.log(user);
+    //console.log(data); // watch input value by passing the name of it
 
     return (
         <div className={styles.sectionCove}>

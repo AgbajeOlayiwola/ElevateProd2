@@ -9,27 +9,32 @@ const TableDetail = ({
     Dates,
     Status,
     keys,
-    accountNumber
+    accountNumber,
+    network
 }) => {
     let newBeneficiary;
     if (Beneficiary === null) {
         newBeneficiary = '';
+    } else if (Beneficiary === undefined) {
+        newBeneficiary = '';
     } else {
-        newBeneficiary = Beneficiary.split(' ');
+        newBeneficiary = Beneficiary?.split(' ');
     }
-    const newDate = Dates.split('T');
+    const newDate = Dates?.split('T');
     return (
         <>
             <div className={styles.TableDetailBody} key={keys}>
                 <p className={styles.bene}>
                     {newBeneficiary === ''
                         ? ''
+                        : newBeneficiary[1] === undefined
+                        ? newBeneficiary[0]
                         : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
                 </p>
                 <p className={styles.transfer}>{Type}</p>
                 <p className={styles.amount}>{Amount}</p>
                 <p className={styles.bank}>
-                    {Bank === null ? 'Null' : `${Bank} - ${accountNumber}`}
+                    {Bank === null ? network : `${Bank} - ${accountNumber}`}
                 </p>
                 <p className={styles.date}>{newDate[0]}</p>
                 <p className={styles.status}>{Status}</p>

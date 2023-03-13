@@ -11,7 +11,7 @@ const RecievePaymentBtn = () => {
                 className={styles.rec}
                 onClick={() => setShowDrop(!showDrop)}
             >
-                Recieve Payment
+                Receive Payment
             </button>
             <OutsideClick
                 onClickOutside={() => {
@@ -25,7 +25,7 @@ const RecievePaymentBtn = () => {
                                 <p>{item.icon}</p>
                                 <Link
                                     href={{
-                                        pathname: './Payment',
+                                        pathname: '/Payment',
                                         query: { id: item.path }
                                     }}
                                 >
