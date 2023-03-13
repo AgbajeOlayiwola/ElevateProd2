@@ -116,7 +116,7 @@ if (loginToken === null) {
 //     };
 // };
 const axiosInstance = axios.create({
-    baseURL: 'https://testvate.live',
+    baseURL: 'https://testvate.live/',
     headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${Token}`
@@ -487,7 +487,7 @@ export const loadUserProfile = () => (dispatch) => {
     dispatch(userProfileLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`https://testvate.live${apiRoutes.userProfile}`, {
+        .get(`https://testvate.live/${apiRoutes.userProfile}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -550,7 +550,7 @@ export const pushDocumentsData = () => (dispatch) => {
     dispatch(pushDocumentsLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`https://testvate.live${apiRoutes.pushDocuments}`, {
+        .get(`https://testvate.live/${apiRoutes.pushDocuments}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -584,7 +584,7 @@ export const shareDocumentsData = () => (dispatch) => {
     dispatch(shareDocumentsLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`https://testvate.live${apiRoutes.shareDocuments}`, {
+        .get(`https://testvate.live/${apiRoutes.shareDocuments}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -766,7 +766,7 @@ export const loadsetTransactionPin = (code) => (dispatch) => {
     dispatch(setTransactionPinLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .post(`https://testvate.live${apiRoutes.setTransactionPin}`, code, {
+        .post(`https://testvate.live/${apiRoutes.setTransactionPin}`, code, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -1646,7 +1646,7 @@ export const newAccountStatusData = () => (dispatch) => {
     const cookie = getCookie('cookieToken');
     // dispatch(accountStatusLoadStart());
     axiosInstance
-        .get(`https://testvate.live${apiRoutes.accountStatus}`, {
+        .get(`https://testvate.live/${apiRoutes.accountStatus}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -1786,7 +1786,7 @@ export const createProfileSetup = (profileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://testvate.live${apiRoutes.profileSetup}`,
+                `https://testvate.live/${apiRoutes.profileSetup}`,
                 profileData,
                 {
                     headers: {
@@ -1809,7 +1809,7 @@ export const createProfileSetup = (profileData) => {
                     setTimeout(() => {
                         axios
                             .post(
-                                `https://testvate.live${apiRoutes.verifyStatus}`,
+                                `https://testvate.live/${apiRoutes.verifyStatus}`,
                                 [],
                                 {
                                     headers: {
@@ -1886,7 +1886,7 @@ export const createBusProfileSetup = (businessProfileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://testvate.live${apiRoutes.profileSetupBus}`,
+                `https://testvate.live/${apiRoutes.profileSetupBus}`,
                 businessProfileData,
                 {
                     headers: {
@@ -1904,7 +1904,7 @@ export const createBusProfileSetup = (businessProfileData) => {
                     setTimeout(() => {
                         axiosInstance
                             .post(
-                                `https://testvate.live${apiRoutes.verifyStatusBus}`,
+                                `https://testvate.live/${apiRoutes.verifyStatusBus}`,
                                 [],
                                 {
                                     headers: {
@@ -1955,7 +1955,7 @@ export const verifyOtp = (otpData) => {
     const cookie = getCookie('cookieToken');
     return async (dispatch) => {
         await axiosInstance
-            .post(`https://testvate.live${apiRoutes.verifyOtp}`, otpData, {
+            .post(`https://testvate.live/${apiRoutes.verifyOtp}`, otpData, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${cookie}`
@@ -1997,7 +1997,7 @@ export const CompProfile = () => {
     return (dispatch) => {
         dispatch(profileLoadStart());
         axiosInstance
-            .get(`https://testvate.live${apiRoutes.authProfile}`, {
+            .get(`https://testvate.live/${apiRoutes.authProfile}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${cookie}`
@@ -2039,7 +2039,7 @@ export const CompleteBusinessProfile = (completeProfileData) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
             .post(
-                `https://testvate.live${apiRoutes.completesBusinessProfile}`,
+                `https://testvate.live/${apiRoutes.completesBusinessProfile}`,
                 completeProfileData,
                 {
                     headers: {
@@ -2080,7 +2080,7 @@ export const createNewUserAccount = (accountData) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
             .post(
-                `https://testvate.live${apiRoutes.newCreateAccount}`,
+                `https://testvate.live/${apiRoutes.newCreateAccount}`,
                 accountData,
                 {
                     headers: {
@@ -2203,7 +2203,7 @@ export const bankAccountsData = () => (dispatch) => {
     }
     dispatch(accountNumberLoadStart());
     axiosInstance
-        .get(`https://testvate.live${apiRoutes.banksAccounts}`, {
+        .get(`https://testvate.live/${apiRoutes.banksAccounts}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${cookie}`
@@ -2243,7 +2243,7 @@ export const uploadUtilityData = (utilitydata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://testvate.live${apiRoutes.uploadUtilityDocument}`,
+            `https://testvate.live/${apiRoutes.uploadUtilityDocument}`,
             utilitydata,
             {
                 headers: {
@@ -2287,7 +2287,7 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://testvate.live${apiRoutes.uploadIdentificationDoc}`,
+            `https://testvate.live/${apiRoutes.uploadIdentificationDoc}`,
             identificationdata,
             {
                 headers: {
@@ -2331,7 +2331,7 @@ export const memartData = (memartdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live${apiRoutes.uploadMemart}`, memartdata, {
+        .post(`https://testvate.live/${apiRoutes.uploadMemart}`, memartdata, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${cookie}`
@@ -2369,7 +2369,7 @@ export const cacData = (cacdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live${apiRoutes.uploadCacCert}`, cacdata, {
+        .post(`https://testvate.live/${apiRoutes.uploadCacCert}`, cacdata, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${cookie}`
@@ -2409,7 +2409,7 @@ export const scmulData = (scmuldata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live${apiRoutes.uploadScmul}`, scmuldata, {
+        .post(`https://testvate.live/${apiRoutes.uploadScmul}`, scmuldata, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 Authorization: `Bearer ${cookie}`
@@ -2448,7 +2448,7 @@ export const shareRefFormData = (sharerefformdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://testvate.live${apiRoutes.shareRefForm}`,
+            `https://testvate.live/${apiRoutes.shareRefForm}`,
             sharerefformdata,
             {
                 headers: {
@@ -2492,7 +2492,7 @@ export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://testvate.live${apiRoutes.uploadRefForm}`,
+            `https://testvate.live/${apiRoutes.uploadRefForm}`,
             uploadrefformdata,
             {
                 headers: {
@@ -2534,7 +2534,7 @@ export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://testvate.live${apiRoutes.uploadBoardRes}`,
+            `https://testvate.live/${apiRoutes.uploadBoardRes}`,
             uploadboardresdata,
             {
                 headers: {
@@ -2578,7 +2578,7 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://testvate.live${apiRoutes.forgotPassword}`,
+            `https://testvate.live/${apiRoutes.forgotPassword}`,
             forgotPassworddata,
             {
                 headers: {
@@ -2621,7 +2621,7 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live${apiRoutes.forgotPasswordReset}`, data, {
+        .post(`https://testvate.live/${apiRoutes.forgotPasswordReset}`, data, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -2661,7 +2661,7 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live${apiRoutes.resetOtp}`, resetOtpdata, {
+        .post(`https://testvate.live/${apiRoutes.resetOtp}`, resetOtpdata, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -2722,7 +2722,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://testvate.live${apiRoutes.businessNameCac}`,
+                `https://testvate.live/${apiRoutes.businessNameCac}`,
                 {
                     registerationNumber: businessProfileData.registerationNumber
                 },
@@ -2747,7 +2747,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                     }
                     // dispatch(accountNumberLoadStart());
                     axios
-                        .get(`https://testvate.live${apiRoutes.verifyCac}`, {
+                        .get(`https://testvate.live/${apiRoutes.verifyCac}`, {
                             headers: {
                                 'Content-Type': 'application/json',
                                 Authorization: `Bearer ${cookie}`
@@ -2770,7 +2770,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                                 }
                                 axios
                                     .post(
-                                        `https://testvate.live${apiRoutes.completesBusinessProfile}`,
+                                        `https://testvate.live/${apiRoutes.completesBusinessProfile}`,
                                         businessProfileData,
                                         {
                                             headers: {
@@ -2821,7 +2821,7 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://testvate.live${apiRoutes.businessNameCac}`,
+            `https://testvate.live/${apiRoutes.businessNameCac}`,
             resetOtpdata,
             {
                 headers: {
@@ -2833,7 +2833,7 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
         .then((response) => {
             if (response.data) {
                 axios
-                    .get(`https://testvate.live${apiRoutes.verifyCac}`, {
+                    .get(`https://testvate.live/${apiRoutes.verifyCac}`, {
                         headers: {
                             'Content-Type': 'application/json',
                             Authorization: `Bearer ${cookie}`
@@ -2879,7 +2879,7 @@ export const postEllevateProfilingDetails = (profileSetupItems) => (
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://testvate.live${apiRoutes.postEllevateProfiling}`,
+            `https://testvate.live/${apiRoutes.postEllevateProfiling}`,
             profileSetupItems,
             {
                 headers: {
@@ -2920,7 +2920,7 @@ export const postvnin = (vninItems) => (dispatch) => {
 
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live${apiRoutes.vnin}`, vninItems, {
+        .post(`https://testvate.live/${apiRoutes.vnin}`, vninItems, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -2931,7 +2931,7 @@ export const postvnin = (vninItems) => (dispatch) => {
                 if (response.data.message) {
                     axios
                         .get(
-                            `https://testvate.live${apiRoutes.verifyVNinAdd}`,
+                            `https://testvate.live/${apiRoutes.verifyVNinAdd}`,
                             {
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -2975,7 +2975,7 @@ export const postvnin = (vninItems) => (dispatch) => {
 
 //     // dispatch(accountNumberLoadStart());
 //     axios
-//         .post(`https://testvate.live${apiRoutes.verifyVNinAdd}`, vninItems, {
+//         .post(`https://testvate.live/${apiRoutes.verifyVNinAdd}`, vninItems, {
 //             headers: {
 //                 'Content-Type': 'application/json',
 //                 Authorization: `Bearer ${cookie}`
@@ -3011,7 +3011,7 @@ export const getAddressStatusDetails = () => (dispatch) => {
     }
 
     axios
-        .get(`https://testvate.live${apiRoutes.addressVerification}`, {
+        .get(`https://testvate.live/${apiRoutes.addressVerification}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -3050,7 +3050,7 @@ export const getReffereeDetails = (refereeData) => (dispatch) => {
 
     axios
         .post(
-            `https://testvate.live${apiRoutes.reffernceFormShare}`,
+            `https://testvate.live/${apiRoutes.reffernceFormShare}`,
             refereeData,
             {
                 headers: {
@@ -3092,7 +3092,7 @@ export const getUploadReffereeDetails = (uploadrefereeData) => (dispatch) => {
 
     axios
         .post(
-            `https://testvate.live${apiRoutes.uploadrefferee}`,
+            `https://testvate.live/${apiRoutes.uploadrefferee}`,
             uploadrefereeData,
             {
                 headers: {
@@ -3133,7 +3133,7 @@ export const getTinDetails = (tinData) => (dispatch) => {
     }
 
     axios
-        .post(`https://testvate.live${apiRoutes.uploadTin}`, tinData, {
+        .post(`https://testvate.live/${apiRoutes.uploadTin}`, tinData, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${cookie}`
@@ -3172,7 +3172,7 @@ export const getCacDocumentDetails = (cacDocumentData) => (dispatch) => {
 
     axios
         .post(
-            `https://testvate.live${apiRoutes.cacDocumentUpload}`,
+            `https://testvate.live/${apiRoutes.cacDocumentUpload}`,
             cacDocumentData,
             {
                 headers: {
@@ -3214,7 +3214,7 @@ export const getQrInfoDetails = (QrInfoData) => (dispatch) => {
 
     axios
         .post(
-            `https://testvate.live${apiRoutes.cacDocumentUpload}`,
+            `https://testvate.live/${apiRoutes.cacDocumentUpload}`,
             QrInfoData,
             {
                 headers: {
@@ -3256,7 +3256,7 @@ export const generateQrCodeDetails = (generateQrCodeData) => (dispatch) => {
 
     axios
         .post(
-            `https://testvate.live${apiRoutes.generateQr}`,
+            `https://testvate.live/${apiRoutes.generateQr}`,
             generateQrCodeData,
             {
                 headers: {

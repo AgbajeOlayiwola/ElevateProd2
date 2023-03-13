@@ -40,7 +40,7 @@ export const SidebarData = [
 
     {
         title: 'Payment',
-        path: '/Payment',
+        path: '/Payment.html',
         modal: 'show',
         icon: <PaymentSvg />,
         iconActive: <PaymentActiveSvg />,

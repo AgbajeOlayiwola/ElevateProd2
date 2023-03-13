@@ -12,9 +12,9 @@ if (loginToken === null) {
 }
 
 const axiosInstance = axios.create({
-    baseURL: 'https://testvate.live'
-    // baseURL: 'https://testvate.live/'
-    //Local Link https://testvate.live/
+    baseURL: 'https://testvate.live/'
+    // baseURL: 'https://testvate.live//'
+    //Local Link https://testvate.live//
 });
 
 export default axiosInstance;
