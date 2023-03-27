@@ -43,6 +43,7 @@ import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import { ButtonComp } from '../../components';
 import { Tooltip } from 'react-tooltip';
+import withAuth from '../../components/HOC/withAuth';
 
 const customStyles = {
     content: {
@@ -3288,4 +3289,4 @@ const AccountUpgrade = () => {
     );
 };
 
-export default AccountUpgrade;
+export default withAuth(AccountUpgrade);

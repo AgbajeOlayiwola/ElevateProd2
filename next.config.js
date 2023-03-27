@@ -4,7 +4,19 @@ const nextConfig = {
 };
 
 module.exports = {
-    distDir: 'build'
+    distDir: 'build',
+    headers: () => [
+        {
+            source: '/:path*',
+            headers: [
+                {
+                    key: 'Cache-Control',
+                    value: 'no-store'
+                }
+            ]
+        }
+    ],
+    poweredByHeader: false
 };
 
 module.exports = nextConfig;

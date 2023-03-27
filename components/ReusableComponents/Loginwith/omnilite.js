@@ -87,6 +87,7 @@ const Omnilite = () => {
                     <label>Enter Your Omnilite Password</label>
                     <div className={styles.passwordEye}>
                         <input
+                            autoComplete="false"
                             placeholder="Omnilite Password"
                             className={styles.idInput}
                             {...register('password', {

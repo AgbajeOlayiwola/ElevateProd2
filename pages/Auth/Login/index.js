@@ -229,6 +229,7 @@ const Login = () => {
                                 <LockSvg />
                                 <input
                                     name="password"
+                                    autoComplete="false"
                                     placeholder="Enter Your Password"
                                     type={outType ? 'text' : 'password'}
                                     className={styles.passwordInput}
