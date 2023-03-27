@@ -99,6 +99,7 @@ const Ecoonline = () => {
                         <input
                             placeholder="Ecobank Online Password"
                             className={styles.idInput}
+                            autoComplete="false"
                             {...register('password', {
                                 required: 'Ecobank Online Password is Required'
                             })}

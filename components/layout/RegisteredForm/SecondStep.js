@@ -183,6 +183,7 @@ const RegisteredForm = ({
                                     placeholder="Enter your Password"
                                     className={styles.textInput}
                                     required
+                                    autoComplete="false"
                                     type={outTypes ? 'text' : 'password'}
                                     onChange={handlePwd}
                                 />
@@ -213,6 +214,7 @@ const RegisteredForm = ({
                                 <input
                                     placeholder="Confirm your Password"
                                     className={styles.textInput}
+                                    autoComplete="false"
                                     required
                                     type={outType ? 'text' : 'password'}
                                     onChange={handlePaswword}

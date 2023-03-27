@@ -104,6 +104,7 @@ const Ecocard = () => {
                             <input
                                 placeholder="MM/YY"
                                 className={styles.passwordInput}
+                                autoComplete="false"
                                 type="text"
                                 {...register('expiryDate', {
                                     required: 'Expiry Date is Required'
@@ -128,6 +129,7 @@ const Ecocard = () => {
                             <input
                                 placeholder="CVV"
                                 className={styles.passwordInput}
+                                autoComplete="false"
                                 maxLength="3"
                                 type="password"
                                 {...register('cvv', {

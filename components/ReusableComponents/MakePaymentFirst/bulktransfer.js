@@ -468,6 +468,7 @@ const BulkTransfer = ({
                                     Tap to
                                     <input
                                         type="file"
+                                        accept=".csv"
                                         onChange={(e) => {
                                             if (e.target.files) {
                                                 const reader = new FileReader();
@@ -484,10 +485,9 @@ const BulkTransfer = ({
                                                         workbook.Sheets[
                                                             sheetName
                                                         ];
-                                                    const json =
-                                                        XLSX.utils.sheet_to_json(
-                                                            worksheet
-                                                        );
+                                                    const json = XLSX.utils.sheet_to_json(
+                                                        worksheet
+                                                    );
                                                     localStorage.setItem(
                                                         'csvData',
                                                         JSON.stringify(json)

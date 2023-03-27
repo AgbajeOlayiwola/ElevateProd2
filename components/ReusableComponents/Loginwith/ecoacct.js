@@ -48,6 +48,7 @@ const Ecoacct = () => {
             };
 
             window.localStorage.setItem('displayAccount', JSON.stringify(data));
+            // window.localStorage.removeItem('userId');
             if (accountNumber.data.email === null) {
                 accountNumber.data = {
                     ...accountNumber.data,

@@ -1569,7 +1569,9 @@ export const existingUserProfileData = (data) => (dispatch) => {
         .then((response) => {
             dispatch(existingUserProfileLoadSuccess(response));
             //console.logresponse.data.data.token);
-            setCookie('cookieToken', response.data.data.token);
+            setCookie('cookieToken', response.data.data.token, {
+                httpOnly: 'true'
+            });
         })
         .catch((error) => dispatch(existingUserProfileLoadError(error)));
 };
@@ -1704,17 +1706,21 @@ export const loginUserAction = (loginData) => {
             .then((response) => {
                 //console.logresponse.data);
                 localStorage.setItem('user', JSON.stringify(response.data));
-                localStorage.setItem(
-                    'token',
-                    JSON.stringify(response.data.data.token)
-                );
+                // localStorage.setItem(
+                //     'token',
+                //     JSON.stringify(response.data.data.token)
+                // );
                 //console.logresponse.data);
                 localStorage.setItem(
                     'user',
                     JSON.stringify(response.data.data.user)
                 );
 
-                setCookie('cookieToken', response.data.data.token);
+                setCookie('cookieToken', response.data.data.token, {
+                    maxAge: 60 * 1,
+                    // httpOnly: 'true',
+                    secure: 'true'
+                });
                 dispatch(userLoadStart(response.data));
             })
             .catch((error) => {

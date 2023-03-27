@@ -255,6 +255,7 @@ const Signup = ({ type }) => {
                                             <input
                                                 placeholder="Password"
                                                 className={styles.textInput}
+                                                autoComplete="false"
                                                 name="password"
                                                 type={
                                                     outType
@@ -296,6 +297,7 @@ const Signup = ({ type }) => {
                                             <input
                                                 placeholder="Confirm Password"
                                                 className={styles.textInput}
+                                                autoComplete="false"
                                                 required
                                                 type={
                                                     outType
