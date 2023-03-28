@@ -816,3 +816,11 @@ export const generateQrType = {
     GENERATE_QR_ERROR: 'GENERATE_QR_ERROR'
 };
 //Generate Qr Type
+
+//Export auth2FA
+export const auth2Fa_Type = {
+    AUTH_2FA_START: 'AUTH_2FA_START',
+    AUTH_2FA_SUCCESS: 'AUTH_2FA_SUCCESS',
+    AUTH_2FA_ERROR: 'AUTH_2FA_ERROR'
+};
+//End Export Auth 2Fa

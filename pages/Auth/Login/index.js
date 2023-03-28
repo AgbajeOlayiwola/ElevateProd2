@@ -6,14 +6,32 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUserAction } from '../../../redux/actions/actions';
+import {
+    auth2FaCodeDetails,
+    loginUserAction
+} from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
 import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
 import LoginCircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LoginCircleSvg';
 import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
 import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
+import Modal from 'react-modal';
+import OtpInput from '../../../components/ReusableComponents/Otpinput';
 
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        height: '70vh',
+        width: '60vw',
+        color: '#3e3e3e',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
+    }
+};
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -28,6 +46,9 @@ const Login = () => {
 
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
+    );
+    const { auth2FaCodeSuccess, auth2FaCodeError } = useSelector(
+        (state) => state.auth2FaReducer
     );
     const {
         register,
@@ -49,10 +70,10 @@ const Login = () => {
         setError('');
         setLoading((prev) => !prev);
         const loginData = {
-            identifier,
-            password
+            MFAToken: user.data._2FAToken,
+            otp: '123456'
         };
-        dispatch(loginUserAction(loginData));
+        dispatch(auth2FaCodeDetails(loginData));
         // dispatch(createNewUserAccount());
     };
     //console.log(user);
@@ -67,24 +88,32 @@ const Login = () => {
             // ) {
             // router.push('/Dashboard');,
         } else if (user !== null) {
-            setNewUser(user);
-            if (user.statusCode === 200) {
-                if (user.data.user.profile.createdFromEcobankCred === false) {
+            setNewUser(auth2FaCodeSuccess);
+            console.log(auth2FaCodeSuccess);
+            if (auth2FaCodeSuccess.statusCode === 200) {
+                if (
+                    auth2FaCodeSuccess.data.data.user.profile
+                        .createdFromEcobankCred === false
+                ) {
                     if (
-                        user.data.user.profile.customerCategory == 'COMMERCIAL'
+                        auth2FaCodeSuccess.data.data.user.profile
+                            .customerCategory == 'COMMERCIAL'
                     ) {
                         if (
-                            user.data.user.profile.profileSetupStatus ===
+                            auth2FaCodeSuccess.data.data.user.profile
+                                .profileSetupStatus ===
                             'PROFILE_SETUP_COMPLETED'
                         ) {
                             router.push('../../Verify/CorportateAccount');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            auth2FaCodeSuccess.data.data.user.profile
+                                .profileSetupStatus ===
                             'AWAITING_ACCOUNT_NUMBER'
                         ) {
                             router.push('../../Verify/CorportateAccount');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            auth2FaCodeSuccess.data.data.user.profile
+                                .profileSetupStatus ===
                             'ACCOUNT_NUMBER_RETRIEVED'
                         ) {
                             router.push('../../Dashboard');
@@ -93,17 +122,20 @@ const Login = () => {
                         }
                     } else {
                         if (
-                            user.data.user.profile.profileSetupStatus ===
+                            auth2FaCodeSuccess.data.data.user.profile
+                                .profileSetupStatus ===
                             'PROFILE_SETUP_COMPLETED'
                         ) {
                             router.push('../../Verify/Account/loading');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            auth2FaCodeSuccess.data.data.user.profile
+                                .profileSetupStatus ===
                             'AWAITING_ACCOUNT_NUMBER'
                         ) {
                             router.push('../../Verify/Account/loading');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            auth2FaCodeSuccess.data.data.user.profile
+                                .profileSetupStatus ===
                             'ACCOUNT_NUMBER_RETRIEVED'
                         ) {
                             router.push('../../Dashboard');
@@ -113,58 +145,69 @@ const Login = () => {
                     }
                 }
             }
-            if (user.data.user.profile.createdFromEcobankCred === true) {
+            if (
+                auth2FaCodeSuccess.data.data.user.profile
+                    .createdFromEcobankCred === true
+            ) {
                 if (
-                    user.data.user.profile.profileSetupStatus ===
-                    'PROFILE_SETUP_COMPLETED'
+                    auth2FaCodeSuccess.data.data.user.profile
+                        .profileSetupStatus === 'PROFILE_SETUP_COMPLETED'
                 ) {
                     window.localStorage.setItem(
                         'displayAccount',
-                        JSON.stringify(user.data.user)
+                        JSON.stringify(auth2FaCodeSuccess.data.data.user)
                     );
                     window.localStorage.setItem(
                         'account',
-                        JSON.stringify(user.data.user.profile)
+                        JSON.stringify(
+                            auth2FaCodeSuccess.data.data.user.profile
+                        )
                     );
                     router.push('../../Dashboard');
                 } else if (
-                    user.data.user.profile.profileSetupStatus ===
-                    'PROFILE_SETUP'
+                    auth2FaCodeSuccess.data.data.user.profile
+                        .profileSetupStatus === 'PROFILE_SETUP'
                 ) {
                     window.localStorage.setItem(
                         'displayAccount',
-                        JSON.stringify(user.data.user)
+                        JSON.stringify(auth2FaCodeSuccess.data.data.user)
                     );
                     window.localStorage.setItem(
                         'account',
-                        JSON.stringify(user.data.user.profile)
+                        JSON.stringify(
+                            auth2FaCodeSuccess.data.data.user.profile
+                        )
                     );
                     router.push('/Onboarding/ExistingProfileSetup');
                 }
                 if (
-                    user.data.user.profile.profileSetupStatus ===
-                    'AWAITING_ACCOUNT_NUMBER'
+                    auth2FaCodeSuccess.data.data.user.profile
+                        .profileSetupStatus === 'AWAITING_ACCOUNT_NUMBER'
                 ) {
                     window.localStorage.setItem(
                         'displayAccount',
-                        JSON.stringify(user.data.user)
+                        JSON.stringify(auth2FaCodeSuccess.data.data.user)
                     );
                     window.localStorage.setItem(
                         'account',
-                        JSON.stringify(user.data.user.profile)
+                        JSON.stringify(
+                            auth2FaCodeSuccess.data.data.user.profile
+                        )
                     );
                     router.push('../../Verify/CorportateAccount');
                 } else if (
-                    user.data.user.profile.profileSetupStatus ===
-                    'ACCOUNT_NUMBER_RETRIEVED'
+                    auth2FaCodeSuccess.data.data.user.profile
+                        .profileSetupStatus === 'ACCOUNT_NUMBER_RETRIEVED'
                 ) {
                     window.localStorage.setItem(
                         'displayAccount',
-                        JSON.stringify(user.data.user)
+                        JSON.stringify(auth2FaCodeSuccess.data.data.user)
                     );
                     window.localStorage.setItem(
                         'account',
-                        JSON.stringify(user.data.user.profile)
+                        JSON.stringify(
+                            auth2FaCodeSuccess.data.data.user.profile
+                        )
                     );
                     router.push('../../Dashboard');
                 }
@@ -172,12 +215,38 @@ const Login = () => {
         }
     };
     useEffect(() => {
+        if (user) {
+            console.log(user.data._2FAToken);
+            setIsOpen(true);
+        }
+    }, [user]);
+
+    useEffect(() => {
         sentLogin();
-    }, [errorMessages, user]);
+    }, [auth2FaCodeSuccess, auth2FaCodeError]);
 
     const types = (type) => {
         setOutType(type);
     };
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+    function openModal() {
+        setError('');
+        setLoading((prev) => !prev);
+        const loginData = {
+            identifier,
+            password
+        };
+        dispatch(loginUserAction(loginData));
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        // subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
     //console.log(user);
     //console.log(data); // watch input value by passing the name of it
 
@@ -261,9 +330,39 @@ const Login = () => {
                                 active={activeBtn ? 'active' : 'inactive'}
                                 margin="0px 0 0 0"
                                 text="Login"
-                                type="submit"
+                                type="button"
+                                onClick={openModal}
                             />
                         )}
+                        <Modal
+                            isOpen={modalIsOpen}
+                            onAfterOpen={afterOpenModal}
+                            onRequestClose={closeModal}
+                            style={customStyles}
+                            contentLabel="Example Modal"
+                        >
+                            <h1 className={styles.errorX} onClick={closeModal}>
+                                X
+                            </h1>
+                            <h1 className={styles.errorX} onClick={closeModal}>
+                                Enter Otp Below
+                            </h1>
+                            <div className={styles.otp}>
+                                <div className={styles.otpInn}>
+                                    <OtpInput />
+                                </div>
+                            </div>
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Submit & Login"
+                                type="submit"
+                                // onClick={openModal}
+                                onClick={onSubmit}
+                                loads={loading}
+                                err={errorMessages}
+                            />
+                        </Modal>
                     </form>
                     <div>
                         <p className={styles.accout}>

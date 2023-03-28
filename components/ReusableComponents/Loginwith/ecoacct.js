@@ -7,6 +7,7 @@ import { accountNumberData } from '../../../redux/actions/actions';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Loader from '../Loader';
+import Modal from 'react-modal';
 
 const Ecoacct = () => {
     const dispatch = useDispatch();
@@ -65,6 +66,21 @@ const Ecoacct = () => {
     useEffect(() => {
         acctTest();
     }, [accountNumber, errorMessages]);
+
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
     return (
         <form onSubmit={handleSubmit(eccoacctSubmit)}>
             {error ? <p className={styles.error}>{error}</p> : null}

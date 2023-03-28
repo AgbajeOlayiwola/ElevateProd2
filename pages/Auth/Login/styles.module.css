@@ -161,6 +161,20 @@
     margin: 0px;
     /* margin-top: -1rem; */
 }
+.otp{
+ 
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+    margin-bottom: 20%;
+}
+.otpInn{
+    width: 70%;
+}
+.otp div input{
+background-color: #e7e6e6;
+width: 10% !important;
+}
 
 @media screen and (max-width: 1070px) {
     .loginCont {
