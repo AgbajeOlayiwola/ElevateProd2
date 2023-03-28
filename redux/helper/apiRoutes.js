@@ -90,6 +90,7 @@ const cacDocumentUpload = '/account-upgrade/cac-document/upload';
 const paymentQr = '/payment/qr';
 const generateQr = '/payment/qr/generate';
 const qrInfo = '/payment/qr/generate';
+const auth2Fa = '/authentication/login/2FA';
 export default {
     getBanks,
     getCountries,
@@ -181,5 +182,6 @@ export default {
     cacDocumentUpload,
     paymentQr,
     generateQr,
-    qrInfo
+    qrInfo,
+    auth2Fa
 };

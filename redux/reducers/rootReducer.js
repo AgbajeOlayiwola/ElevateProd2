@@ -85,6 +85,7 @@ import uploadRefereeFileReducer from './uploadrefereefile.reducer';
 import cacDocUploadReducer from './cacdocument.reducer';
 import qrInfoReducer from './qrInfo.reducer';
 import paymentQrReducer from './paymentQr.reducer';
+import auth2FaReducer from './auth2Fa.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -176,7 +177,8 @@ const appReducer = combineReducers({
     uploadRefereeFileReducer: uploadRefereeFileReducer,
     cacDocUploadReducer: cacDocUploadReducer,
     qrInfoReducer: qrInfoReducer,
-    paymentQrReducer: paymentQrReducer
+    paymentQrReducer: paymentQrReducer,
+    auth2FaReducer: auth2FaReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

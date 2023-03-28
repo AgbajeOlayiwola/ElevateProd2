@@ -30,6 +30,7 @@ const useSSNFields = () => {
                     // If found, focus the next field
                     if (nextSibling !== null) {
                         nextSibling.focus();
+                    } else {
                     }
                 }
             }
@@ -38,6 +39,8 @@ const useSSNFields = () => {
                 ...value,
                 [`ssn${fieldIndex}`]: value
             });
+            ssnValues.toString();
+            console.log(ssnValues);
         }
     };
 };

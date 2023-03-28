@@ -84,7 +84,8 @@ import {
     uploadreffereeType,
     cacDocummentType,
     generateQrType,
-    qrInfoType
+    qrInfoType,
+    auth2Fa_Type
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -939,7 +940,13 @@ export const interBankLoadError = (interBankerror) => ({
     payload: interBankerror
 });
 export const postInterBank = (data) => (dispatch) => {
-    const cookie = getCookie('cookieToken');
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     dispatch(interBankLoadStart());
     axiosInstance
         .post(`${apiRoutes.interBank}`, data, {
@@ -971,6 +978,13 @@ export const interBankEnquiryLoadError = (interBankEnquiryerror) => ({
     payload: interBankEnquiryerror
 });
 export const postInterBankEnquiry = (data) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     dispatch(interBankEnquiryLoadStart());
     axiosInstance
         .post(`${apiRoutes.interBankEnquiry}`, data)
@@ -1705,7 +1719,7 @@ export const loginUserAction = (loginData) => {
             .post(`${apiRoutes.login}`, loginData)
             .then((response) => {
                 //console.logresponse.data);
-                localStorage.setItem('user', JSON.stringify(response.data));
+
                 // localStorage.setItem(
                 //     'token',
                 //     JSON.stringify(response.data.data.token)
@@ -1716,11 +1730,6 @@ export const loginUserAction = (loginData) => {
                     JSON.stringify(response.data.data.user)
                 );
 
-                setCookie('cookieToken', response.data.data.token, {
-                    maxAge: 60 * 1,
-                    // httpOnly: 'true',
-                    secure: 'true'
-                });
                 dispatch(userLoadStart(response.data));
             })
             .catch((error) => {
@@ -3279,3 +3288,51 @@ export const generateQrCodeDetails = (generateQrCodeData) => (dispatch) => {
 };
 
 //GENERATE QR CODE END
+
+//AUTH 2FA CODE START
+
+export const auth2FaCodeLoad = () => ({
+    type: auth2Fa_Type.AUTH_2FA_START
+});
+export const auth2FaCodeSuccess = (auth2FaCodeSuccess) => ({
+    type: auth2Fa_Type.AUTH_2FA_SUCCESS,
+    payload: auth2FaCodeSuccess
+});
+export const auth2FaCodeError = (auth2FaCodeError) => ({
+    type: auth2Fa_Type.AUTH_2FA_ERROR,
+    payload: auth2FaCodeError
+});
+export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+
+    axios
+        .post(`https://testvate.live${apiRoutes.auth2Fa}`, auth2FaCodeData, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            localStorage.setItem(
+                'user',
+                JSON.stringify(response.data.data.user)
+            );
+            setCookie('cookieToken', response.data.data.token, {
+                maxAge: 60 * 1,
+                // httpOnly: 'true',
+                secure: 'true'
+            });
+            console.log(response.data.data.user);
+            //console.logresponse.data.data);
+            dispatch(auth2FaCodeSuccess(response));
+        })
+        .catch((error) => dispatch(auth2FaCodeError(error.response)));
+};
+
+//GAUTH 2FA CODE END
