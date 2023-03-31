@@ -32,6 +32,9 @@ const customStyles = {
         transform: 'translate(-50%, -50%)'
     }
 };
+
+// Number of input fields that make up SSN
+
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -69,9 +72,12 @@ const Login = () => {
     const onSubmit = (data) => {
         setError('');
         setLoading((prev) => !prev);
+        const stringValues = ssnValues.join('');
+
+        console.log(stringValues);
         const loginData = {
             MFAToken: user.data._2FAToken,
-            otp: '123456'
+            otp: stringValues
         };
         dispatch(auth2FaCodeDetails(loginData));
         // dispatch(createNewUserAccount());
@@ -250,6 +256,40 @@ const Login = () => {
     //console.log(user);
     //console.log(data); // watch input value by passing the name of it
 
+    const numOfFields = 6;
+
+    const [ssnValues, setValue] = useState(['']);
+
+    // const useSSNFields = () => {
+
+    const handleChange = (e) => {
+        const { maxLength, value, name } = e.target;
+        const [fieldName, fieldIndex] = name.split('-');
+
+        // Check if they hit the max character length
+        if (value.length >= maxLength) {
+            // Check if it's not the last input field
+            if (parseInt(fieldIndex, 10) <= 6) {
+                // Get the next input field
+                const nextSibling = document.querySelector(
+                    `input[name=ssn-${parseInt(fieldIndex, 10) + 1}]`
+                );
+                setValue((prevValue) => [...prevValue, value]);
+
+                console.log(ssnValues);
+
+                // If found, focus the next field
+                if (nextSibling !== null) {
+                    nextSibling.focus();
+                } else {
+                }
+            }
+        }
+    };
+
+    // };
+    // const { handleChange } = useSSNFields();
+
     return (
         <div className={styles.sectionCove}>
             <section className={styles.sectionI}>
@@ -349,7 +389,44 @@ const Login = () => {
                             </h1>
                             <div className={styles.otp}>
                                 <div className={styles.otpInn}>
-                                    <OtpInput />
+                                    <div className={styles.otpInps}>
+                                        <input
+                                            type="password"
+                                            name="ssn-1"
+                                            maxLength={1}
+                                            onChange={handleChange}
+                                        />
+                                        <input
+                                            type="password"
+                                            name="ssn-2"
+                                            maxLength={1}
+                                            onChange={handleChange}
+                                        />
+                                        <input
+                                            type="password"
+                                            name="ssn-3"
+                                            maxLength={1}
+                                            onChange={handleChange}
+                                        />
+                                        <input
+                                            type="password"
+                                            name="ssn-4"
+                                            maxLength={1}
+                                            onChange={handleChange}
+                                        />
+                                        <input
+                                            type="password"
+                                            name="ssn-5"
+                                            maxLength={1}
+                                            onChange={handleChange}
+                                        />
+                                        <input
+                                            type="password"
+                                            name="ssn-6"
+                                            maxLength={1}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <ButtonComp
