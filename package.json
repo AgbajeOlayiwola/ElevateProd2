@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "export":"next build && next export",
+    "export": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
@@ -17,6 +17,7 @@
     "chart.js": "^3.8.0",
     "cookies-next": "^2.1.1",
     "crypto-js": "^4.1.1",
+    "disable-devtool": "^0.3.4",
     "framer-motion": "^6.3.11",
     "html2canvas": "^1.4.1",
     "jest": "^28.1.1",

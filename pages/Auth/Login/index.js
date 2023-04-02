@@ -45,6 +45,7 @@ const Login = () => {
     const [identifier, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [outType, setOutType] = useState();
+    const [mloading, setMloading] = useState(false);
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -72,7 +73,7 @@ const Login = () => {
 
     const onSubmit = (data) => {
         setError('');
-        setLoading((prev) => !prev);
+        setMloading((prev) => !prev);
         const stringValues = ssnValues.join('');
 
         console.log(stringValues);
@@ -89,7 +90,8 @@ const Login = () => {
             setError(auth2FaCodeError.data.message);
             // console.log(auth2FaCodeError);
             // setLoading(false);
-            setLoading((prev) => !prev);
+
+            setMloading((prev) => !prev);
             // } else if (
             //     newAccountErrorMessage ===
             //     'You already have an account with us. Please contact us for more information'
@@ -230,8 +232,11 @@ const Login = () => {
         if (user) {
             console.log(user.data._2FAToken);
             setIsOpen(true);
-        } else {
+            setLoading((prev) => !prev);
+        } else if (errorMessages) {
             setmainError(errorMessages);
+            // setMloading((prev) => !prev);
+            setLoading((prev) => !prev);
         }
     }, [user, errorMessages]);
 
@@ -442,16 +447,20 @@ const Login = () => {
                                     </div>
                                 </div>
                             </div>
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Submit & Login"
-                                type="submit"
-                                // onClick={openModal}
-                                onClick={onSubmit}
-                                loads={loading}
-                                err={errorMessages}
-                            />
+                            {mloading ? (
+                                <Loader />
+                            ) : (
+                                <ButtonComp
+                                    disabled={activeBtn}
+                                    active={activeBtn ? 'active' : 'inactive'}
+                                    text="Submit & Login"
+                                    type="submit"
+                                    // onClick={openModal}
+                                    onClick={onSubmit}
+                                    loads={mloading}
+                                    err={errorMessages}
+                                />
+                            )}
                         </Modal>
                     </form>
                     <div>

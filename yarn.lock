@@ -1575,6 +1575,11 @@
   dependencies:
     "path-type" "^4.0.0"
 
+"disable-devtool@^0.3.4":
+  "integrity" "sha512-yz453sOPJ6/DBTyEjQ2TnHDljaVmLV07bC6R5OIuUZuE7X8QgdHQf+PYZObxqv47xBbumiiaHnJq8gQkbux1fA=="
+  "resolved" "https://registry.npmjs.org/disable-devtool/-/disable-devtool-0.3.4.tgz"
+  "version" "0.3.4"
+
 "doctrine@^2.1.0":
   "integrity" "sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw=="
   "resolved" "https://registry.npmjs.org/doctrine/-/doctrine-2.1.0.tgz"

@@ -113,10 +113,12 @@ const CorporateAccount = () => {
         axiosInstance
             .post(
                 `https://testvate.live${apiRoutes.corpNewUser}`,
+
                 accountData,
                 {
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-Client-Type': 'web',
                         Authorization: `Bearer ${cookie}`
                     }
                 }
@@ -126,9 +128,10 @@ const CorporateAccount = () => {
                 if (response.data.message === 'success') {
                     setInterval(() => {
                         axiosInstance
-                            .get(`https://testvate.livebank-account/status`, {
+                            .get(`https://testvate.live/bank-account/status`, {
                                 headers: {
                                     'Content-Type': 'application/json',
+                                    'X-Client-Type': 'web',
                                     Authorization: `Bearer ${cookie}`
                                 }
                             })
@@ -155,9 +158,10 @@ const CorporateAccount = () => {
                 ) {
                     setInterval(() => {
                         axiosInstance
-                            .get(`https://testvate.livebank-account/status`, {
+                            .get(`https://testvate.live/bank-account/status`, {
                                 headers: {
                                     'Content-Type': 'application/json',
+                                    'X-Client-Type': 'web',
                                     Authorization: `Bearer ${cookie}`
                                 }
                             })

@@ -63,6 +63,7 @@ const Liveness = ({ action }) => {
             .post(`https://testvate.live/authentication/facematch`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             })
