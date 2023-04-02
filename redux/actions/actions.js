@@ -120,6 +120,7 @@ const axiosInstance = axios.create({
     baseURL: 'https://testvate.live',
     headers: {
         'Content-Type': 'application/json',
+        'X-Client-Type': 'web',
         Authorization: `Bearer ${Token}`
     }
 });
@@ -239,6 +240,7 @@ export const loadfetchRM = (code) => (dispatch) => {
         .post(`${apiRoutes.fetchRM}`, code, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -461,6 +463,7 @@ export const loadAccountPrimary = () => (dispatch) => {
         .get(`${apiRoutes.accountPrimary}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -491,6 +494,7 @@ export const loadUserProfile = () => (dispatch) => {
         .get(`https://testvate.live${apiRoutes.userProfile}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -554,6 +558,7 @@ export const pushDocumentsData = () => (dispatch) => {
         .get(`https://testvate.live${apiRoutes.pushDocuments}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -588,6 +593,7 @@ export const shareDocumentsData = () => (dispatch) => {
         .get(`https://testvate.live${apiRoutes.shareDocuments}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -770,6 +776,7 @@ export const loadsetTransactionPin = (code) => (dispatch) => {
         .post(`https://testvate.live${apiRoutes.setTransactionPin}`, code, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -828,6 +835,7 @@ export const postAirtime = (data) => (dispatch) => {
         .post(`${apiRoutes.airtime}`, data, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -888,6 +896,7 @@ export const postBills = (data) => (dispatch) => {
         .post(`${apiRoutes.bills}`, data, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -952,6 +961,7 @@ export const postInterBank = (data) => (dispatch) => {
         .post(`${apiRoutes.interBank}`, data, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1047,6 +1057,7 @@ export const getBalanceEnquiry = (data) => (dispatch) => {
         .post(`${apiRoutes.balanceEnquiry}`, data, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1131,6 +1142,7 @@ export const getTransactionElevate = () => (dispatch) => {
         .get(`${apiRoutes.transactionElevate}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1163,6 +1175,7 @@ export const getBulkTransfer = (data) => (dispatch) => {
         .post(`${apiRoutes.bulkTransfer}`, data, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1275,6 +1288,7 @@ export const getBeneficiariesData = () => (dispatch) => {
         .get(`${apiRoutes.beneficiaries}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1307,6 +1321,7 @@ export const getAirtimeBeneficiariesData = () => (dispatch) => {
         .get(`${apiRoutes.airtimeBeneficiaries}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1341,6 +1356,7 @@ export const deleteBeneficiariesData = (data) => (dispatch) => {
         .delete(`${apiRoutes.deleteBeneficiaries}${data}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1377,6 +1393,7 @@ export const deleteAirtimeBeneficiariesData = (data) => (dispatch) => {
         .delete(`${apiRoutes.deleteAirtimeBeneficiaries}${data}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1411,6 +1428,7 @@ export const postBeneficiariesData = (data) => (dispatch) => {
         .post(`${apiRoutes.beneficiaries}`, data, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1445,6 +1463,7 @@ export const postAirtimeBeneficiariesData = (data) => (dispatch) => {
         .post(`${apiRoutes.airtimeBeneficiaries}`, data, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1665,6 +1684,7 @@ export const newAccountStatusData = () => (dispatch) => {
         .get(`https://testvate.live${apiRoutes.accountStatus}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -1806,6 +1826,7 @@ export const createProfileSetup = (profileData) => {
                 {
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-Client-Type': 'web',
                         Authorization: `Bearer ${cookie}`
                     }
                 }
@@ -1829,6 +1850,7 @@ export const createProfileSetup = (profileData) => {
                                 {
                                     headers: {
                                         'Content-Type': 'application/json',
+                                        'X-Client-Type': 'web',
                                         Authorization: `Bearer ${cookie}`
                                     }
                                 }
@@ -1906,6 +1928,7 @@ export const createBusProfileSetup = (businessProfileData) => {
                 {
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-Client-Type': 'web',
                         Authorization: `Bearer ${cookie}`
                     }
                 }
@@ -1924,6 +1947,7 @@ export const createBusProfileSetup = (businessProfileData) => {
                                 {
                                     headers: {
                                         'Content-Type': 'application/json',
+                                        'X-Client-Type': 'web',
                                         Authorization: `Bearer ${cookie}`
                                     }
                                 }
@@ -1973,6 +1997,7 @@ export const verifyOtp = (otpData) => {
             .post(`https://testvate.live${apiRoutes.verifyOtp}`, otpData, {
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             })
@@ -2015,6 +2040,7 @@ export const CompProfile = () => {
             .get(`https://testvate.live${apiRoutes.authProfile}`, {
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             })
@@ -2059,6 +2085,7 @@ export const CompleteBusinessProfile = (completeProfileData) => {
                 {
                     headers: {
                         'Content-Type': 'multipart/form-data',
+                        'X-Client-Type': 'web',
                         Authorization: `Bearer ${cookie}`
                     }
                 }
@@ -2100,6 +2127,7 @@ export const createNewUserAccount = (accountData) => {
                 {
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-Client-Type': 'web',
                         Authorization: `Bearer ${cookie}`
                     }
                 }
@@ -2143,6 +2171,7 @@ export const createNewCorpUserAccount = (accountData) => {
                 {
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-Client-Type': 'web',
                         Authorization: `Bearer ${cookie}`
                     }
                 }
@@ -2221,6 +2250,7 @@ export const bankAccountsData = () => (dispatch) => {
         .get(`https://testvate.live${apiRoutes.banksAccounts}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -2263,6 +2293,7 @@ export const uploadUtilityData = (utilitydata) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -2306,8 +2337,9 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
             identificationdata,
             {
                 headers: {
-                    // 'Content-Type': 'multipart/form-data',
+                    // 'Content-Type': 'multipart/form-data',  'X-Client-Type': 'web',
                     'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -2349,6 +2381,7 @@ export const memartData = (memartdata) => (dispatch) => {
         .post(`https://testvate.live${apiRoutes.uploadMemart}`, memartdata, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -2387,6 +2420,7 @@ export const cacData = (cacdata) => (dispatch) => {
         .post(`https://testvate.live${apiRoutes.uploadCacCert}`, cacdata, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -2427,6 +2461,7 @@ export const scmulData = (scmuldata) => (dispatch) => {
         .post(`https://testvate.live${apiRoutes.uploadScmul}`, scmuldata, {
             headers: {
                 'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -2468,6 +2503,7 @@ export const shareRefFormData = (sharerefformdata) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -2512,6 +2548,7 @@ export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -2554,6 +2591,7 @@ export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -2598,6 +2636,7 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -2639,6 +2678,7 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
         .post(`https://testvate.live${apiRoutes.forgotPasswordReset}`, data, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -2679,6 +2719,7 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
         .post(`https://testvate.live${apiRoutes.resetOtp}`, resetOtpdata, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -2744,6 +2785,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                 {
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-Client-Type': 'web',
                         Authorization: `Bearer ${cookie}`
                     }
                 }
@@ -2765,6 +2807,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                         .get(`https://testvate.live${apiRoutes.verifyCac}`, {
                             headers: {
                                 'Content-Type': 'application/json',
+                                'X-Client-Type': 'web',
                                 Authorization: `Bearer ${cookie}`
                             }
                         })
@@ -2841,6 +2884,7 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -2851,6 +2895,7 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
                     .get(`https://testvate.live${apiRoutes.verifyCac}`, {
                         headers: {
                             'Content-Type': 'application/json',
+                            'X-Client-Type': 'web',
                             Authorization: `Bearer ${cookie}`
                         }
                     })
@@ -2899,6 +2944,7 @@ export const postEllevateProfilingDetails = (profileSetupItems) => (
             {
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -2938,6 +2984,7 @@ export const postvnin = (vninItems) => (dispatch) => {
         .post(`https://testvate.live${apiRoutes.vnin}`, vninItems, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -2950,6 +2997,7 @@ export const postvnin = (vninItems) => (dispatch) => {
                             {
                                 headers: {
                                     'Content-Type': 'application/json',
+                                    'X-Client-Type': 'web',
                                     Authorization: `Bearer ${cookie}`
                                 }
                             }
@@ -2992,8 +3040,7 @@ export const postvnin = (vninItems) => (dispatch) => {
 //     axios
 //         .post(`https://testvate.live${apiRoutes.verifyVNinAdd}`, vninItems, {
 //             headers: {
-//                 'Content-Type': 'application/json',
-//                 Authorization: `Bearer ${cookie}`
+//                'Content-Type': 'application/json',  'X-Client-Type': 'web',//                 Authorization: `Bearer ${cookie}`
 //             }
 //         })
 //         .then((response) => {
@@ -3029,6 +3076,7 @@ export const getAddressStatusDetails = () => (dispatch) => {
         .get(`https://testvate.live${apiRoutes.addressVerification}`, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -3070,6 +3118,7 @@ export const getReffereeDetails = (refereeData) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -3112,6 +3161,7 @@ export const getUploadReffereeDetails = (uploadrefereeData) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -3151,6 +3201,7 @@ export const getTinDetails = (tinData) => (dispatch) => {
         .post(`https://testvate.live${apiRoutes.uploadTin}`, tinData, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -3192,6 +3243,7 @@ export const getCacDocumentDetails = (cacDocumentData) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -3234,6 +3286,7 @@ export const getQrInfoDetails = (QrInfoData) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -3276,6 +3329,7 @@ export const generateQrCodeDetails = (generateQrCodeData) => (dispatch) => {
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
             }
@@ -3315,6 +3369,7 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
         .post(`https://testvate.live${apiRoutes.auth2Fa}`, auth2FaCodeData, {
             headers: {
                 'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
                 Authorization: `Bearer ${cookie}`
             }
         })
