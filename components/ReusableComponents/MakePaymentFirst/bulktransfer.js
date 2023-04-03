@@ -25,6 +25,7 @@ const BulkTransfer = ({
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [diffAmount, setDiffAmount] = useState(false);
+    const [fileError, setFileError] = useState('');
     const [csvUpload, setCsvUpload] = useState(false);
     const [csv, setCsv] = useState();
     const [interEnquiry, setInterEnquiry] = useState([]);
@@ -468,9 +469,15 @@ const BulkTransfer = ({
                                     Tap to
                                     <input
                                         type="file"
-                                        accept=".csv"
+                                        accept=".csv, .xlsm"
                                         onChange={(e) => {
-                                            if (e.target.files) {
+                                            if (
+                                                e.target.files[0].type ===
+                                                'application/vnd.ms-excel.sheet.macroenabled.12'
+                                            ) {
+                                                console.log(
+                                                    e.target.files.File.type
+                                                );
                                                 const reader = new FileReader();
                                                 reader.onload = (e) => {
                                                     const data =
@@ -502,12 +509,17 @@ const BulkTransfer = ({
                                                 );
                                                 setCsvUpload(true);
                                                 setActiveBtn(true);
+                                            } else {
+                                                setFileError(
+                                                    'File Uploaded is Not CsV'
+                                                );
                                             }
                                         }}
                                     />
                                     <span> Upload CSV File</span>
                                 </label>
                             </p>
+                            <p>{fileError}</p>
                             <p>
                                 <a
                                     href="../../../Assets/CSV.xlsm"
