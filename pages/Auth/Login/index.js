@@ -463,6 +463,51 @@ const Login = () => {
                             )}
                         </Modal>
                     </form>
+                    {/* <p>
+                        <label>
+                            Tap to
+                            <input
+                                type="file"
+                                accept=".csv, .xlsm"
+                                onChange={(e) => {
+                                    if (
+                                        e.target.files[0].type ===
+                                        'application/vnd.ms-excel.sheet.macroenabled.12'
+                                    ) {
+                                        console.log(e.target.files[0].type);
+                                        const reader = new FileReader();
+                                        reader.onload = (e) => {
+                                            const data = e.target.result;
+                                            const workbook = XLSX.read(data, {
+                                                type: 'array'
+                                            });
+                                            const sheetName =
+                                                workbook.SheetNames[0];
+                                            const worksheet =
+                                                workbook.Sheets[sheetName];
+                                            const json = XLSX.utils.sheet_to_json(
+                                                worksheet
+                                            );
+                                            localStorage.setItem(
+                                                'csvData',
+                                                JSON.stringify(json)
+                                            );
+                                        };
+                                        reader.readAsArrayBuffer(
+                                            e.target.files[0]
+                                        );
+
+                                        localStorage.removeItem('number');
+                                        setCsvUpload(true);
+                                        setActiveBtn(true);
+                                    } else {
+                                        console.log('invalid file');
+                                    }
+                                }}
+                            />
+                            <span> Upload CSV File</span>
+                        </label> */}
+                    {/* </p> */}
                     <div>
                         <p className={styles.accout}>
                             Don&apos;t have an account?
