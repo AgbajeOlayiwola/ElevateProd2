@@ -476,7 +476,7 @@ const BulkTransfer = ({
                                                 'application/vnd.ms-excel.sheet.macroenabled.12'
                                             ) {
                                                 console.log(
-                                                    e.target.files.File.type
+                                                    e.target.files[0].type
                                                 );
                                                 const reader = new FileReader();
                                                 reader.onload = (e) => {
