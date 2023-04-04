@@ -1738,7 +1738,12 @@ export const userLoadError = (errorMessages) => ({
 export const loginUserAction = (loginData) => {
     return (dispatch) => {
         axiosInstance
-            .post(`${apiRoutes.login}`, loginData)
+            .post(`${apiRoutes.login}`, loginData, {
+                headers: {
+                    credentials: true,
+                    'Access-Control-Allow-Credentials': true
+                }
+            })
             .then((response) => {
                 //console.logresponse.data);
 
