@@ -156,7 +156,9 @@ export const logoutLoadStart = () => ({
 export const logoutAction = () => (dispatch) => {
     dispatch(logoutLoadStart());
     localStorage.removeItem('user');
+
     localStorage.removeItem('token');
+    localStorage.clear();
 
     if (getCookie('cookieToken') == undefined) {
         deleteCookie('existingToken');
