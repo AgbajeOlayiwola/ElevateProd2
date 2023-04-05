@@ -3387,7 +3387,7 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
             );
             setCookie('cookieToken', response.data.data.token, {
                 maxAge: 60 * 1,
-                // httpOnly: 'true',
+                httpsOnly: true,
                 secure: 'true'
             });
             console.log(response.data.data.user);
