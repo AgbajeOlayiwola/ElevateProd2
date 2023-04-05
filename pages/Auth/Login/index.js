@@ -19,6 +19,7 @@ import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponent
 import Modal from 'react-modal';
 import OtpInput from '../../../components/ReusableComponents/Otpinput';
 import { setCookies } from 'cookies-next';
+import Cookies from 'js-cookie';
 
 const customStyles = {
     content: {
@@ -73,9 +74,13 @@ const Login = () => {
     };
     useEffect(() => {
         setCookies('cookieToken', 'response.data.data.token', {
+            httpOnly: true,
             maxAge: 60 * 1,
-            secure: 'true',
-            httpOnly
+            secure: true
+        });
+        Cookies.set('cookieTokens', 'response.data.data.token', {
+            httpOnly: true,
+            secure: true
         });
     }, []);
 

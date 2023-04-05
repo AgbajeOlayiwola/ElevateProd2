@@ -3377,6 +3377,7 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
+                // withCredentials: true,
                 Authorization: `Bearer ${cookie}`
             }
         })
@@ -3386,10 +3387,11 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
                 JSON.stringify(response.data.data.user)
             );
             setCookie('cookieToken', response.data.data.token, {
-                httpOnly: 'true',
+                // httpOnly: 'true',
                 maxAge: 60 * 1,
                 secure: 'true'
             });
+
             console.log(response.data.data.user);
             //console.logresponse.data.data);
             dispatch(auth2FaCodeSuccess(response));
