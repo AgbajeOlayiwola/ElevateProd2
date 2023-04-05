@@ -18,6 +18,7 @@ import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponent
 import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
 import Modal from 'react-modal';
 import OtpInput from '../../../components/ReusableComponents/Otpinput';
+import { setCookies } from 'cookies-next';
 
 const customStyles = {
     content: {
@@ -70,6 +71,13 @@ const Login = () => {
     const checkDataContent = (e) => {
         setEmail(e.target.value);
     };
+    useEffect(() => {
+        setCookies('cookieToken', 'response.data.data.token', {
+            maxAge: 60 * 1,
+            secure: 'true',
+            httpOnly
+        });
+    }, []);
 
     const onSubmit = (data) => {
         setError('');
@@ -506,8 +514,8 @@ const Login = () => {
                                 }}
                             />
                             <span> Upload CSV File</span>
-                        </label> */}
-                    {/* </p> */}
+                        </label>
+                    </p> */}
                     <div>
                         <p className={styles.accout}>
                             Don&apos;t have an account?
