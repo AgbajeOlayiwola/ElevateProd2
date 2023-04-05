@@ -3363,9 +3363,7 @@ export const auth2FaCodeError = (auth2FaCodeError) => ({
     type: auth2Fa_Type.AUTH_2FA_ERROR,
     payload: auth2FaCodeError
 });
-export const auth2FaCodeDetails = ({ req, res, auth2FaCodeData }) => (
-    dispatch
-) => {
+export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
     let cookie;
 
     if (getCookie('cookieToken') == undefined) {
@@ -3389,7 +3387,7 @@ export const auth2FaCodeDetails = ({ req, res, auth2FaCodeData }) => (
                 JSON.stringify(response.data.data.user)
             );
             setCookie('cookieToken', response.data.data.token, {
-                httpOnly: 'true',
+                // httpOnly: 'true',
                 maxAge: 60 * 1,
                 secure: 'true'
             });
