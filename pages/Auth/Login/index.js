@@ -72,17 +72,6 @@ const Login = () => {
     const checkDataContent = (e) => {
         setEmail(e.target.value);
     };
-    useEffect(() => {
-        setCookies('cookieToken', 'response.data.data.token', {
-            httpOnly: true,
-            maxAge: 60 * 1,
-            secure: true
-        });
-        Cookies.set('cookieTokens', 'response.data.data.token', {
-            httpOnly: true,
-            secure: true
-        });
-    }, []);
 
     const onSubmit = (data) => {
         setError('');
