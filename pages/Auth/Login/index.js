@@ -64,6 +64,13 @@ const Login = () => {
         formState: { errors }
     } = useForm();
 
+    // function isExcel(file) {
+    //     const fileType = file.type;
+    //     const fileName = file.name;
+    //     return (
+    //       fileType === "application/vnd.ms-excel" || // Microsoft Excel 97-2003    fileType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || // Microsoft Excel 2007 and later    fileType === "application/vnd.ms-excel.sheet.macroEnabled.12" || // Microsoft Excel 2007 and later with macros    fileType === "application/vnd.ms-excel.sheet.binary.macroEnabled.12" || // Microsoft Excel 97-2003 with macros    fileName.endsWith(".xls") || // Microsoft Excel 97-2003    fileName.endsWith(".xlsx") || // Microsoft Excel 2007 and later    fileName.endsWith(".xlsm") || // Microsoft Excel 2007 and later with macros    fileName.endsWith(".xlsb") // Microsoft Excel 97-2003 with macros  );
+    //   }
+
     //set password value
     const handlePwd = (e) => {
         setPassword(e.target.value);
@@ -86,6 +93,7 @@ const Login = () => {
         dispatch(auth2FaCodeDetails(loginData));
         // dispatch(createNewUserAccount());
     };
+
     //console.log(user);
     const sentLogin = () => {
         if (auth2FaCodeError !== null) {

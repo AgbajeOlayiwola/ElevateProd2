@@ -471,10 +471,11 @@ const BulkTransfer = ({
                                         type="file"
                                         accept=".csv, .xlsm"
                                         onChange={(e) => {
-                                            console.log(e.target.files[0].type);
+                                            console.log(e.target.files[0]);
                                             if (
-                                                e.target.files[0].type ===
-                                                'application/vnd.ms-excel.sheet.macroenabled.12'
+                                                e.target.files[0].name.split(
+                                                    '.'
+                                                )[1] === 'xlsm'
                                             ) {
                                                 const reader = new FileReader();
                                                 reader.onload = (e) => {
