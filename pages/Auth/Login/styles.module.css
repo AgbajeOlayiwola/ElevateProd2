@@ -166,12 +166,23 @@
     justify-content: space-between;
     width: 100%;
 }
+
+.errorX {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    text-align: center;
+    color: #005b82;
+    margin: 0px;
+}
+
 .otpInps input {
-    width: 15%;
+    width: 17%;
     font-size: 52px;
     text-align: center;
     /* padding: 29px 23px; */
-    height: 70px;
+    /* height: 70px; */
     border: 1px solid #e6ebee;
     transition: all 0.2s ease-in-out;
     background-color: #ffffff;
@@ -184,19 +195,19 @@
     transition: all 0.2s ease-in-out;
 }
 
-.otp{
- 
+.otp {
     display: flex;
     justify-content: center;
     margin-top: 10%;
     margin-bottom: 20%;
+    width: 100%;
 }
-.otpInn{
-    width: 70%;
+.otpInn {
+    width: 100%;
 }
-.otp div input{
-background-color: #e7e6e6;
-width: 10% !important;
+.otp div input {
+    background-color: #e7e6e6;
+    width: 15% !important;
 }
 
 @media screen and (max-width: 1070px) {

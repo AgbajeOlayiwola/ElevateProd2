@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Overlay from '../Overlay';
 import styles from './styles.module.css';
 
-const StorePopup = ({ children }) => {
-    const [overlay, setOverlay] = useState(true);
+const StorePopup = ({ children, overlay }) => {
     return (
         <Overlay overlay={overlay}>
             <div className={styles.storefrontPopup}>

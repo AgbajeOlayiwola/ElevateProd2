@@ -20,26 +20,15 @@ import Modal from 'react-modal';
 import OtpInput from '../../../components/ReusableComponents/Otpinput';
 import { setCookies } from 'cookies-next';
 import Cookies from 'js-cookie';
-
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        height: '70vh',
-        width: '60vw',
-        color: '#3e3e3e',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)'
-    }
-};
+import StorePopup from '../../../components/ReusableComponents/StorePopup';
+import OutsideClick from '../../../components/ReusableComponents/OutsideClick';
 
 // Number of input fields that make up SSN
 
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [overlay, setOverlay] = useState(false);
     const [newUser, setNewUser] = useState();
     const [circle, setCircle] = useState(false);
     const [error, setError] = useState('');
@@ -241,7 +230,7 @@ const Login = () => {
     useEffect(() => {
         if (user) {
             console.log(user.data._2FAToken);
-            setIsOpen(true);
+            setOverlay(true);
             setLoading((prev) => !prev);
         } else if (errorMessages) {
             setmainError(errorMessages);
@@ -257,7 +246,6 @@ const Login = () => {
     const types = (type) => {
         setOutType(type);
     };
-    const [modalIsOpen, setIsOpen] = React.useState(false);
     function openModal() {
         setError('');
         setLoading((prev) => !prev);
@@ -268,13 +256,8 @@ const Login = () => {
         dispatch(loginUserAction(loginData));
     }
 
-    function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        // subtitle.style.color = '#f00';
-    }
-
     function closeModal() {
-        setIsOpen(false);
+        setOverlay(false);
     }
     //console.log(user);
     //console.log(data); // watch input value by passing the name of it
@@ -399,7 +382,7 @@ const Login = () => {
                                 onClick={openModal}
                             />
                         )}
-                        <Modal
+                        {/* <Modal
                             isOpen={modalIsOpen}
                             onAfterOpen={afterOpenModal}
                             onRequestClose={closeModal}
@@ -471,7 +454,78 @@ const Login = () => {
                                     err={errorMessages}
                                 />
                             )}
-                        </Modal>
+                        </Modal> */}
+                        <OutsideClick onClickOutside={closeModal}>
+                            <StorePopup overlay={overlay}>
+                                <h1
+                                    className={styles.errorX}
+                                    onClick={closeModal}
+                                >
+                                    Enter OTP Below
+                                </h1>
+                                {error ? (
+                                    <h2 className={styles.error}>{error}</h2>
+                                ) : null}
+                                <div className={styles.otp}>
+                                    <div className={styles.otpInn}>
+                                        <div className={styles.otpInps}>
+                                            <input
+                                                type="password"
+                                                name="ssn-1"
+                                                maxLength={1}
+                                                onChange={handleChange}
+                                            />
+                                            <input
+                                                type="password"
+                                                name="ssn-2"
+                                                maxLength={1}
+                                                onChange={handleChange}
+                                            />
+                                            <input
+                                                type="password"
+                                                name="ssn-3"
+                                                maxLength={1}
+                                                onChange={handleChange}
+                                            />
+                                            <input
+                                                type="password"
+                                                name="ssn-4"
+                                                maxLength={1}
+                                                onChange={handleChange}
+                                            />
+                                            <input
+                                                type="password"
+                                                name="ssn-5"
+                                                maxLength={1}
+                                                onChange={handleChange}
+                                            />
+                                            <input
+                                                type="password"
+                                                name="ssn-6"
+                                                maxLength={1}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                {mloading ? (
+                                    <Loader />
+                                ) : (
+                                    <ButtonComp
+                                        disabled={activeBtn}
+                                        active={
+                                            activeBtn ? 'active' : 'inactive'
+                                        }
+                                        text="Submit & Login"
+                                        type="submit"
+                                        // onClick={openModal}
+                                        onClick={onSubmit}
+                                        loads={mloading}
+                                        err={errorMessages}
+                                    />
+                                )}
+                            </StorePopup>
+                        </OutsideClick>
                     </form>
                     {/* <p>
                         <label>

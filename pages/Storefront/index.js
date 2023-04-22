@@ -108,7 +108,7 @@ const Storefront = () => {
         switch (page) {
             case 0:
                 return (
-                    <StorePopup>
+                    <StorePopup overlay={true}>
                         <img
                             src="./Assets/Images/store.png"
                             alt=""
@@ -132,7 +132,7 @@ const Storefront = () => {
                 );
             case 1:
                 return (
-                    <StorePopup>
+                    <StorePopup overlay={true}>
                         <h2 className={styles.title}>
                             <span>
                                 <ArrowBackSvg
@@ -176,7 +176,7 @@ const Storefront = () => {
                 );
             case 2:
                 return (
-                    <StorePopup>
+                    <StorePopup overlay={true}>
                         <div className={styles.storeSuccess}>
                             <SuccessCheckSvg />
                         </div>
@@ -891,7 +891,7 @@ const Storefront = () => {
                 );
             case 5:
                 return (
-                    <StorePopup>
+                    <StorePopup overlay={true}>
                         <h2 className={styles.title}>
                             <span>
                                 <ArrowBackSvg
