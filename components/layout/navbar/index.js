@@ -25,11 +25,11 @@ const Navbar = ({
             setUserProfile(window.localStorage.getItem('user'));
         }
     }, []);
-    useEffect(() => {
-        if (userProfile !== undefined) {
-            setUserProfileData(JSON.parse(userProfile));
-        }
-    }, [userProfile]);
+    // useEffect(() => {
+    //     if (userProfile !== undefined) {
+    //         setUserProfileData(JSON.parse(userProfile));
+    //     }
+    // }, [userProfile]);
     return (
         <nav className={styles.navigation}>
             {preview === true ? (

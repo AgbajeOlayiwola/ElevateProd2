@@ -46,7 +46,7 @@ import Idle from 'react-idle';
 import { useRouter } from 'next/router';
 import { logoutAction } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import withAuth from '../../HOC/withAuth';
+// import withAuth from '../../HOC/withAuth';
 const DashLayout = ({
     children,
     page,
@@ -75,14 +75,14 @@ const DashLayout = ({
                     }}
                 />
             </div>
-            <Idle
+            {/* <Idle
                 timeout={300000}
                 onChange={({ idle }) => {
                     if (idle) {
                         preloadCornify();
                     }
                 }}
-            />
+            /> */}
 
             {!sideActive ? (
                 <div className={styles.dashCont}>
