@@ -105,4 +105,4 @@ const DashLayout = ({
 };
 
 // export default withAuth(DashLayout);
-export default withAuth(DashLayout);
+export default DashLayout;
