@@ -1,6 +1,17 @@
+.generatedOver{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 .generated{
     display: flex;
     justify-content: center;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    width: 40%;
+    flex-direction: row-reverse;
 }
 .generated h1{
     font-family: 'Inter';
@@ -54,7 +65,7 @@ color: #529B03 !important;
 .cancel{
     display: flex;
     justify-content: flex-end;
-   
+   flex-direction: row-reverse;
 }
 .cancelBtn{
     font-size: 26px;
@@ -69,4 +80,15 @@ color: #529B03 !important;
     padding-left: 50px;
     padding-right: 65px;
 
+}
+.create span{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+    
+    text-align: right;
+    
+    color: #529B03 !important;
 }

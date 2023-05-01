@@ -43,6 +43,8 @@ import { PaymentData } from '../../components/ReusableComponents/Data';
 import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
 import PaymentRepeat from '../../components/ReusableComponents/PaymentRepeat';
 import ReceivePaymentThird from '../../components/ReusableComponents/ReceivePaymentThird';
+import RecievePaymentShare from '../../components/ReusableComponents/ReceivePaymentShare';
+import PaylinkStepOne from '../../components/layout/Paylink/StepOne';
 
 const Payment = () => {
     const router = useRouter();
@@ -439,6 +441,27 @@ const Payment = () => {
                 switch (count) {
                     case 0:
                         return (
+                            <PaylinkStepOne
+                                overlay={overlay}
+                                firstTitle="Create Payment Link"
+                                buttonText="Generate Payment Link"
+                                closeAction={handleClose}
+                                action={(data) => {
+                                    //console.logdata);
+                                    setCount(count + 1);
+                                }}
+                                createLink={() => setCount(count + 2)}
+                            />
+                        );
+                    case 1:
+                        return (
+                            <RecievePaymentShare
+                                overlay={overlay}
+                                closeAction={handleClose}
+                            />
+                        );
+                    case 2:
+                        return (
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 firstTitle="Create Payment Link"
@@ -450,7 +473,7 @@ const Payment = () => {
                                 }}
                             />
                         );
-                    case 1:
+                    case 3:
                         return (
                             <ReceivePaymentSecond
                                 overlay={overlay}
@@ -466,7 +489,7 @@ const Payment = () => {
                             />
                         );
 
-                    case 2:
+                    case 4:
                         return (
                             <ReceivePaymentThird
                                 overlay={overlay}
