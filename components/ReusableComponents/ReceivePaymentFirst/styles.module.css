@@ -148,3 +148,17 @@
     cursor: pointer;
     color: #102572;
 }
+
+.share {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 32px;
+}
+
+.share span {
+    font-weight: 600;
+    color: #5f8903;
+    cursor: pointer;
+}

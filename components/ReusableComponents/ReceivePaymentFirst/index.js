@@ -15,7 +15,9 @@ const ReceivePaymentFirst = ({
     closeAction,
     action,
     isLoading,
-    overlay
+    overlay,
+    type,
+    typeAction
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [description, setDescription] = useState('');
@@ -41,7 +43,108 @@ const ReceivePaymentFirst = ({
         formState: { errors }
     } = useForm();
     //console.log(amount);
-
+    const banks = [
+        {
+            bankName: 'GTBank',
+            bankCode: '*737*',
+            bankID: '000'
+        },
+        {
+            bankName: 'First Bank',
+            bankCode: '*894*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Zenith Bank',
+            bankCode: '*966*',
+            bankID: '000'
+        },
+        {
+            bankName: 'UBA',
+            bankCode: '*919*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Stanbic Bank',
+            bankCode: '*909*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Sterling Bank',
+            bankCode: '*822*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Unity Bank',
+            bankCode: '*7799*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Keystone Bank',
+            bankCode: '*7111*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Fidelity Bank',
+            bankCode: '*770*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Ecobank',
+            bankCode: '*326*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Wema Bank',
+            bankCode: '*945*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Access Bank',
+            bankCode: '*901*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Access (Diamond )',
+            bankCode: '*426*',
+            bankID: '000'
+        },
+        {
+            bankName: 'FCMB',
+            bankCode: '*329*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Heritage Bank',
+            bankCode: '*745*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Union Bank',
+            bankCode: '*826*',
+            bankID: '000'
+        },
+        {
+            bankName: 'VFD MFB',
+            bankCode: '*5037*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Rubies (Highstreet) MFB',
+            bankCode: '*7797*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Globus bank',
+            bankCode: '*989*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Kuda Bank',
+            bankCode: '*5593*',
+            bankID: '000'
+        }
+    ];
     return (
         <Overlay overlay={overlay}>
             <div className={styles.firstDiv} ref={myref}>
@@ -65,23 +168,6 @@ const ReceivePaymentFirst = ({
                                     </option>
                                 </select>
                                 {/* <SourceSvg /> */}
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label>Name of Payment</label>
-                                <input
-                                    {...register('accountName', {
-                                        required: 'Please enter Paayment Name',
-                                        pattern: {
-                                            value: /^[A-Za-z ]+$/i,
-                                            message: 'Only Alphabelts allowed'
-                                        }
-                                    })}
-                                    type="text"
-                                    placeholder="Enter Payment Name"
-                                />
-                                <p className={styles.error}>
-                                    {errors?.accountName?.message}
-                                </p>
                             </div>
                             <div className={styles.formGroup}>
                                 <label>Enter Amount</label>
@@ -111,6 +197,39 @@ const ReceivePaymentFirst = ({
                                     {errors?.amount?.message}
                                 </p>
                             </div>
+                            {firstTitle === 'Create USSD Payment Code' ? (
+                                <div className={styles.formGroup}>
+                                    <label>Bank</label>
+                                    <select>
+                                        <option>Select Bank</option>
+                                        {banks?.map((item, index) => {
+                                            return (
+                                                <option key={index}>
+                                                    {item.bankName}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+                            ) : null}
+                            <div className={styles.formGroup}>
+                                <label>Name of Payment</label>
+                                <input
+                                    {...register('accountName', {
+                                        required: 'Please enter Paayment Name',
+                                        pattern: {
+                                            value: /^[A-Za-z ]+$/i,
+                                            message: 'Only Alphabelts allowed'
+                                        }
+                                    })}
+                                    type="text"
+                                    placeholder="Enter Payment Name"
+                                />
+                                <p className={styles.error}>
+                                    {errors?.accountName?.message}
+                                </p>
+                            </div>
+
                             <div className={styles.formGroup}>
                                 <label>Description</label>
                                 <textarea
@@ -151,6 +270,10 @@ const ReceivePaymentFirst = ({
                         </form>
                         <p className={styles.later}>
                             Not paying now? <span>Schedule for Later</span>
+                        </p>
+                        <p className={styles.share}>
+                            Tap to share your general{' '}
+                            <span onClick={typeAction}>{type}</span>
                         </p>
                     </div>
                 </div>

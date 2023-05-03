@@ -45,6 +45,7 @@ import PaymentRepeat from '../../components/ReusableComponents/PaymentRepeat';
 import ReceivePaymentThird from '../../components/ReusableComponents/ReceivePaymentThird';
 import RecievePaymentShare from '../../components/ReusableComponents/ReceivePaymentShare';
 import PaylinkStepOne from '../../components/layout/Paylink/StepOne';
+import UssdFirst from '../../components/ReusableComponents/UssdFirst';
 
 const Payment = () => {
     const router = useRouter();
@@ -82,10 +83,8 @@ const Payment = () => {
     const { transactionFees, errorMessageTransactionFees } = useSelector(
         (state) => state.transactionFeesReducer
     );
-    const {
-        internationalTransfer,
-        errorMessageinternationalTransfer
-    } = useSelector((state) => state.internationalTransferReducer);
+    const { internationalTransfer, errorMessageinternationalTransfer } =
+        useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
@@ -471,6 +470,7 @@ const Payment = () => {
                                     //console.logdata);
                                     setCount(count + 1);
                                 }}
+                                type="Payment Link"
                             />
                         );
                     case 3:
@@ -509,11 +509,21 @@ const Payment = () => {
                 switch (count) {
                     case 0:
                         return (
+                            <UssdFirst
+                                overlay={overlay}
+                                action={() => {
+                                    setCount(count + 1);
+                                }}
+                                closeAction={handleClose}
+                            />
+                        );
+                    case 1:
+                        return (
                             <ReceivePaymentFirst
                                 overlay={overlay}
                                 isLoading={isLoading}
                                 firstTitle="Create USSD Payment Code"
-                                buttonText="Next"
+                                buttonText="Share USSD Codes"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     //console.logdata);
@@ -528,9 +538,13 @@ const Payment = () => {
                                     setIsLoading(true);
                                     dispatch(loadussdGen(ussdData));
                                 }}
+                                type="USSD String"
+                                typeAction={() => {
+                                    setCount(count - 1);
+                                }}
                             />
                         );
-                    case 1:
+                    case 2:
                         return (
                             <ReceivePaymentSecond
                                 overlay={overlay}
@@ -924,10 +938,11 @@ const Payment = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount: parseInt(
-                                                              e.Amount,
-                                                              10
-                                                          ),
+                                                          transactionAmount:
+                                                              parseInt(
+                                                                  e.Amount,
+                                                                  10
+                                                              ),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -1154,7 +1169,8 @@ const Payment = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId:
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
