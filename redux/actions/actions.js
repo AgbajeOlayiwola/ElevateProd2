@@ -117,7 +117,7 @@ if (loginToken === null) {
 //     };
 // };
 const axiosInstance = axios.create({
-    baseURL: 'https://mysmeapp.ecobank.com:8443',
+    baseURL: 'https://testvate.live/',
     headers: {
         'Content-Type': 'application/json',
         'X-Client-Type': 'web',
@@ -1742,7 +1742,7 @@ export const userLoadError = (errorMessages) => ({
 export const loginUserAction = (loginData) => {
     return (dispatch) => {
         axiosInstance
-            .post(`${apiRoutes.login}`, loginData, {
+            .post(`https://testvate.live${apiRoutes.login}`, loginData, {
                 headers: {
                     credentials: true,
                     'Access-Control-Allow-Credentials': true
@@ -2966,37 +2966,38 @@ export const postEllevateProfilingError = (ellevateProfillingError) => ({
     type: postEllevateProfilling.POST_ELLEVATE_PROFILLING_ERROR,
     payload: ellevateProfillingError
 });
-export const postEllevateProfilingDetails = (profileSetupItems) => (
-    dispatch
-) => {
-    let cookie;
+export const postEllevateProfilingDetails =
+    (profileSetupItems) => (dispatch) => {
+        let cookie;
 
-    if (getCookie('cookieToken') == undefined) {
-        cookie = getCookie('existingToken');
-    } else {
-        cookie = getCookie('cookieToken');
-    }
+        if (getCookie('cookieToken') == undefined) {
+            cookie = getCookie('existingToken');
+        } else {
+            cookie = getCookie('cookieToken');
+        }
 
-    // dispatch(accountNumberLoadStart());
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.postEllevateProfiling}`,
-            profileSetupItems,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
+        // dispatch(accountNumberLoadStart());
+        axios
+            .post(
+                `https://mysmeapp.ecobank.com:8443${apiRoutes.postEllevateProfiling}`,
+                profileSetupItems,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Client-Type': 'web',
+                        Authorization: `Bearer ${cookie}`
+                    }
                 }
-            }
-        )
-        .then((response) => {
-            dispatch(postEllevateProfilingSuccess(response.data.message));
-        })
-        .catch((error) =>
-            dispatch(postEllevateProfilingError(error.response.data.message))
-        );
-};
+            )
+            .then((response) => {
+                dispatch(postEllevateProfilingSuccess(response.data.message));
+            })
+            .catch((error) =>
+                dispatch(
+                    postEllevateProfilingError(error.response.data.message)
+                )
+            );
+    };
 //Ellevate Profiling end
 
 ////Vnin Profiling
