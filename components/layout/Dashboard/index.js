@@ -46,7 +46,7 @@ import Idle from 'react-idle';
 import { useRouter } from 'next/router';
 import { logoutAction } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-// import withAuth from '../../HOC/withAuth';
+import withAuth from '../../HOC/withAuth';
 const DashLayout = ({
     children,
     page,
@@ -104,5 +104,5 @@ const DashLayout = ({
     );
 };
 
-// export default withAuth(DashLayout);
-export default DashLayout;
+export default withAuth(DashLayout);
+// export default DashLayout;
