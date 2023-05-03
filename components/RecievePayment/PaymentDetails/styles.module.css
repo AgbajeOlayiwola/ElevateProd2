@@ -1,0 +1,88 @@
+.logoLeft{
+    width: 100%;
+    align-items: center;
+}
+.logoDiv{
+    width: 35%;
+    color: #005B82;
+    font-size: 20px;
+}
+.recievePaymentBox{
+    padding: 64px 92px;
+    background: #FEFEFE;
+border: 1px solid rgba(219, 219, 219, 0.6);
+border-radius: 12px;
+min-width:600px;
+max-width:600px;
+height: 790px;
+min-height: 790px;
+max-height: 790px;
+overflow: scroll;
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none; 
+}
+.recievePaymentBox::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+
+.payDets{
+    text-align: center;
+}
+.logoLeft{
+    
+    display: flex;
+}
+.recievePaymentBox h1{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 22px;
+line-height: 29px;
+/* identical to box height */
+margin: 0px;
+margin-top: 24px;
+color: #005B82;
+}
+.recievePaymentBox p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0px;
+    margin-top: 4px;
+    color: #B5B5B5;
+}
+.recievePaymentBox label{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #3E3E3E;
+    
+}
+.inputs{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 48px;
+}
+.inputs input{
+    background: #FFFFFF;
+    border: 1px solid #DBDBDB;
+    border-radius: 12px;
+}
+.inputs div{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 12px;
+}
+.buttonTop{
+    margin-top: 32px;
+}
