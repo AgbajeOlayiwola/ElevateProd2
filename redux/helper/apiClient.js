@@ -12,8 +12,8 @@ if (loginToken === null) {
 }
 
 const axiosInstance = axios.create({
-    baseURL: 'https://mysmeapp.ecobank.com:8443'
-    // baseURL: '//https://testvate.live/'
+    // baseURL: 'https://mysmeapp.ecobank.com:8443'
+    baseURL: '//https://testvate.live/'
     //Local Link https://mysmeapp.ecobank.com:8443/
 });
 
