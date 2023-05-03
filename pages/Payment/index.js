@@ -389,23 +389,23 @@ const Payment = () => {
         }
     }, [link]);
     const handleFormChange = (formTitle) => {
-        // if (userProfileData.hasSetTransactionPin === false) {
-        //     console.log(userProfileData.createdFromEcobankCred);
-        //     if (userProfileData.createdFromEcobankCred === false) {
-        //         router.push({
-        //             pathname: '/AccountUpgrade',
-        //             query: { id: 'Transaction Pin' }
-        //         });
-        //     } else if (userProfileData.createdFromEcobankCred === true) {
-        //         router.push({
-        //             pathname: '/Profile',
-        //             query: { id: 'Transaction Pin' }
-        //         });
-        //     }
-        // } else if (userProfileData.hasSetTransactionPin === true) {
-        setFormType(formTitle);
-        setOverlay(true);
-        // }
+        if (userProfileData.hasSetTransactionPin === false) {
+            console.log(userProfileData.createdFromEcobankCred);
+            if (userProfileData.createdFromEcobankCred === false) {
+                router.push({
+                    pathname: '/AccountUpgrade',
+                    query: { id: 'Transaction Pin' }
+                });
+            } else if (userProfileData.createdFromEcobankCred === true) {
+                router.push({
+                    pathname: '/Profile',
+                    query: { id: 'Transaction Pin' }
+                });
+            }
+        } else if (userProfileData.hasSetTransactionPin === true) {
+            setFormType(formTitle);
+            setOverlay(true);
+        }
     };
     const handleClose = () => {
         setOverlay(false);

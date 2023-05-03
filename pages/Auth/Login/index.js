@@ -89,7 +89,7 @@ const Login = () => {
             setError(auth2FaCodeError.data.message);
             // console.log(auth2FaCodeError);
             // setLoading(false);
-
+            console.log('here');
             setMloading((prev) => !prev);
             // } else if (
             //     newAccountErrorMessage ===
@@ -98,17 +98,21 @@ const Login = () => {
             // router.push('/Dashboard');,
         } else if (user !== null) {
             setNewUser(auth2FaCodeSuccess);
+
             console.log(auth2FaCodeSuccess);
+
             if (auth2FaCodeSuccess) {
-                if (auth2FaCodeSuccess.statusCode === 200) {
+                if (auth2FaCodeSuccess.data.statusCode === 200) {
+                    console.log('here Fals');
                     if (
                         auth2FaCodeSuccess.data.data.user.profile
                             .createdFromEcobankCred === false
                     ) {
                         if (
                             auth2FaCodeSuccess.data.data.user.profile
-                                .customerCategory == 'COMMERCIAL'
+                                .customerCategory === 'COMMERCIAL'
                         ) {
+                            console.log('here Commercial');
                             if (
                                 auth2FaCodeSuccess.data.data.user.profile
                                     .profileSetupStatus ===
@@ -126,6 +130,7 @@ const Login = () => {
                                     .profileSetupStatus ===
                                 'ACCOUNT_NUMBER_RETRIEVED'
                             ) {
+                                console.log('here');
                                 router.push('../../Dashboard');
                             } else {
                                 router.push('../../Onboarding/ProfileSetup');
@@ -155,6 +160,7 @@ const Login = () => {
                         }
                     }
                 }
+                console.log('here Fals');
             }
             if (auth2FaCodeSuccess) {
                 if (
