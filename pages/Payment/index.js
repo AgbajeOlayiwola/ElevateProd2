@@ -83,8 +83,10 @@ const Payment = () => {
     const { transactionFees, errorMessageTransactionFees } = useSelector(
         (state) => state.transactionFeesReducer
     );
-    const { internationalTransfer, errorMessageinternationalTransfer } =
-        useSelector((state) => state.internationalTransferReducer);
+    const {
+        internationalTransfer,
+        errorMessageinternationalTransfer
+    } = useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
@@ -369,22 +371,22 @@ const Payment = () => {
 
     useEffect(() => {
         if (link !== undefined) {
-            if (userProfileData.hasSetTransactionPin === false) {
-                if (userProfileData.createdFromEcobankCred === false) {
-                    router.push({
-                        pathname: '/AccountUpgrade',
-                        query: { id: 'Transaction Pin' }
-                    });
-                } else if (userProfileData.createdFromEcobankCred === true) {
-                    router.push({
-                        pathname: '/Profile',
-                        query: { id: 'Transaction Pin' }
-                    });
-                }
-            } else if (userProfileData.hasSetTransactionPin === true) {
-                setFormType(link.toLowerCase());
-                setOverlay(true);
-            }
+            // if (userProfileData.hasSetTransactionPin === false) {
+            //     if (userProfileData.createdFromEcobankCred === false) {
+            //         router.push({
+            //             pathname: '/AccountUpgrade',
+            //             query: { id: 'Transaction Pin' }
+            //         });
+            //     } else if (userProfileData.createdFromEcobankCred === true) {
+            //         router.push({
+            //             pathname: '/Profile',
+            //             query: { id: 'Transaction Pin' }
+            //         });
+            //     }
+            // } else if (userProfileData.hasSetTransactionPin === true) {
+            setFormType(link.toLowerCase());
+            setOverlay(true);
+            // }
         }
     }, [link]);
     const handleFormChange = (formTitle) => {
@@ -938,11 +940,10 @@ const Payment = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount:
-                                                              parseInt(
-                                                                  e.Amount,
-                                                                  10
-                                                              ),
+                                                          transactionAmount: parseInt(
+                                                              e.Amount,
+                                                              10
+                                                          ),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -1169,8 +1170,7 @@ const Payment = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId:
-                                                airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
