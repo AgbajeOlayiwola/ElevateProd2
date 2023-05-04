@@ -7,8 +7,8 @@ import {
 
 const initialState = {
     isLoading: false,
-    generateQrCodeSuccess: [],
-    generateQrCodeError: ''
+    generateQrCodeSuccess: null,
+    generateQrCodeError: null
 };
 
 const generateQrReducer = (state = initialState, { type, payload }) => {
@@ -18,8 +18,8 @@ const generateQrReducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: true,
-                generateQrCodeSuccess: [],
-                generateQrCodeError: ''
+                generateQrCodeSuccess: null,
+                generateQrCodeError: null
             };
         case generateQrType.GENERATE_QR_SUCCESS:
             return {

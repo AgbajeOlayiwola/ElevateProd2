@@ -83,6 +83,9 @@ const Payment = () => {
     const { transactionFees, errorMessageTransactionFees } = useSelector(
         (state) => state.transactionFeesReducer
     );
+    const { generateQrCodeSuccess, generateQrCodeError } = useSelector(
+        (state) => state.generateQrInfo
+    );
     const {
         internationalTransfer,
         errorMessageinternationalTransfer
@@ -253,6 +256,22 @@ const Payment = () => {
             // setStatus('error');
         }
     };
+    const qrCheck = () => {
+        if (generateQrCodeSuccess !== null) {
+            console.log(generateQrCodeSuccess);
+            setCount((count) => count + 1);
+            setIsLoading(false);
+            setStatus('success');
+        } else if (generateQrCodeError !== null) {
+            // setCount((count) => count + 1);
+            setIsLoading(false);
+            setError(generateQrCodeError);
+            setStatus('error');
+        }
+    };
+    useEffect(() => {
+        qrCheck();
+    }, [generateQrCodeSuccess, generateQrCodeError]);
     useEffect(() => {
         ussdGenCheck();
     }, [ussdGen, errorMessageussdGen]);
@@ -436,6 +455,19 @@ const Payment = () => {
             }, 0)
         );
     }, [csvData]);
+    const [randomString, setRandomString] = useState('');
+    function generateRandomString() {
+        const characters =
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < 10; i++) {
+            result += characters.charAt(
+                Math.floor(Math.random() * characters.length)
+            );
+        }
+        return result;
+    }
+
     const renderForm = () => {
         switch (formType) {
             case 'paylink':
@@ -573,10 +605,10 @@ const Payment = () => {
                                 action={(data) => {
                                     //console.logdata);
                                     const generateQrCodeData = {
-                                        amount: data.amount,
-                                        productName: data.accountName,
-                                        productCode: accountPrimarys.accountId,
-                                        description: data.description
+                                        amount: `${data.amount}`,
+                                        productName: `${data.accountName}`,
+                                        productCode: `${generateRandomString()}`,
+                                        description: `${data.description}`
                                     };
                                     dispatch(
                                         generateQrCodeDetails(
@@ -593,6 +625,7 @@ const Payment = () => {
                                 title="Ecobank QR Code"
                                 action={buttonHandleClose}
                                 buttonText="Next"
+                                data={generateQrCodeSuccess}
                                 type=" Ecobank QR Code"
                                 closeAction={buttonHandleClose}
                             />

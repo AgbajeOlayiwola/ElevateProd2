@@ -549,8 +549,17 @@ const HomeMain = () => {
                     <div className={styles.grey}>
                         <div className={styles.contentWrapper}>
                             <Slider {...settings}>
-                                <img src="./Assets/Images/tailor.png" alt="" />
-                                <img src="Assets/Images/tailor2.png" />
+                                <Image
+                                    width={400}
+                                    height={800}
+                                    src="/Assets/Images/tailor.png"
+                                    alt=""
+                                />
+                                <Image
+                                    width={400}
+                                    height={800}
+                                    src="/Assets/Images/tailor2.png"
+                                />
                             </Slider>
 
                             <div className={styles.content}>

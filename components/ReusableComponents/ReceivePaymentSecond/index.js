@@ -14,7 +14,8 @@ const ReceivePaymentSecond = ({
     link,
     track,
     amount,
-    allLink
+    allLink,
+    data
 }) => {
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
@@ -50,11 +51,10 @@ const ReceivePaymentSecond = ({
                         <div className={styles.secondCopyCode}>
                             <div>
                                 <img
-                                    src="../../Assets/Images/qrcode.png"
+                                    src={`data:image/png;base64,${data.data.data.dynamicQRBase64}`}
                                     alt=""
                                 />
                             </div>
-                            <button>Copy</button>
                         </div>
                     ) : (
                         <div className={styles.secondCopy}>
@@ -79,22 +79,25 @@ const ReceivePaymentSecond = ({
                     <div className={styles.deadlines}>
                         <p>Amount</p>
                         <div className={styles.deadlineValues}>
-                            <p>{newAmount}</p>
+                            <p>{data.data.data.transactionAmount}</p>
                         </div>
                     </div>
                     <div className={styles.deadline}>
                         <p>Add. Info</p>
                         <div className={styles.deadlineValues}>
-                            <p>Vel faucibus nunc vel neque blandit.....</p>
+                            <p>{data.data.data.transactionDescription}</p>
                         </div>
                     </div>
                     <div className={styles.deadline}>
-                        <p>Tracking ID</p>
+                        <p>Ref ID</p>
 
-                        <p>{track}</p>
+                        <p>{data.data.data.ref}</p>
                         <p className={styles.copy}>
                             <span>
-                                <img src="../../Assets/Svgs/copy.svg" alt="" />
+                                <img
+                                    src={data.data.data.dynamicQRBase64}
+                                    alt=""
+                                />
                             </span>
                             Copy
                         </p>

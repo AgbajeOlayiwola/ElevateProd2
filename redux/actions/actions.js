@@ -3334,7 +3334,7 @@ export const generateQrCodeDetails = (generateQrCodeData) => (dispatch) => {
             generateQrCodeData,
             {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'application/json',
                     'X-Client-Type': 'web',
                     Authorization: `Bearer ${cookie}`
                 }
