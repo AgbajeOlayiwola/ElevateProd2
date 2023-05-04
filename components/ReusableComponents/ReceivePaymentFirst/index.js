@@ -155,7 +155,7 @@ const ReceivePaymentFirst = ({
                             (Accepts Card Payment without POS)
                         </p>
                         <form onSubmit={handleSubmit(action)}>
-                            <div className={styles.formGroup}>
+                            {/* <div className={styles.formGroup}>
                                 <label>Account to Credit</label>
                                 <select>
                                     <option>
@@ -167,8 +167,7 @@ const ReceivePaymentFirst = ({
                                         Source <span>- Troniclab</span>
                                     </option>
                                 </select>
-                                {/* <SourceSvg /> */}
-                            </div>
+                            </div> */}
                             <div className={styles.formGroup}>
                                 <label>Enter Amount</label>
                                 <input
@@ -200,7 +199,7 @@ const ReceivePaymentFirst = ({
                             {firstTitle === 'Create USSD Payment Code' ? (
                                 <div className={styles.formGroup}>
                                     <label>Bank</label>
-                                    <select>
+                                    <select {...register('bank')}>
                                         <option>Select Bank</option>
                                         {banks?.map((item, index) => {
                                             return (

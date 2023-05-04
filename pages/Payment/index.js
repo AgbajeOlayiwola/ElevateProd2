@@ -46,6 +46,7 @@ import ReceivePaymentThird from '../../components/ReusableComponents/ReceivePaym
 import RecievePaymentShare from '../../components/ReusableComponents/ReceivePaymentShare';
 import PaylinkStepOne from '../../components/layout/Paylink/StepOne';
 import UssdFirst from '../../components/ReusableComponents/UssdFirst';
+import Share from '../../components/ReusableComponents/Share';
 
 const Payment = () => {
     const router = useRouter();
@@ -83,10 +84,8 @@ const Payment = () => {
     const { transactionFees, errorMessageTransactionFees } = useSelector(
         (state) => state.transactionFeesReducer
     );
-    const {
-        internationalTransfer,
-        errorMessageinternationalTransfer
-    } = useSelector((state) => state.internationalTransferReducer);
+    const { internationalTransfer, errorMessageinternationalTransfer } =
+        useSelector((state) => state.internationalTransferReducer);
     const { verifyBank, errorMessageverifyBank } = useSelector(
         (state) => state.verifyBankReducer
     );
@@ -133,6 +132,7 @@ const Payment = () => {
     const [successfulTrans, setSuccessfulTrans] = useState([]);
     const [failedTrans, setFailedTrans] = useState([]);
     const [acctNummber, setAcctNumber] = useState('');
+    const [codes, setCodes] = useState('');
 
     let airtimeData;
     let airtimeNetData = {};
@@ -371,22 +371,22 @@ const Payment = () => {
 
     useEffect(() => {
         if (link !== undefined) {
-            // if (userProfileData.hasSetTransactionPin === false) {
-            //     if (userProfileData.createdFromEcobankCred === false) {
-            //         router.push({
-            //             pathname: '/AccountUpgrade',
-            //             query: { id: 'Transaction Pin' }
-            //         });
-            //     } else if (userProfileData.createdFromEcobankCred === true) {
-            //         router.push({
-            //             pathname: '/Profile',
-            //             query: { id: 'Transaction Pin' }
-            //         });
-            //     }
-            // } else if (userProfileData.hasSetTransactionPin === true) {
-            setFormType(link.toLowerCase());
-            setOverlay(true);
-            // }
+            if (userProfileData.hasSetTransactionPin === false) {
+                if (userProfileData.createdFromEcobankCred === false) {
+                    router.push({
+                        pathname: '/AccountUpgrade',
+                        query: { id: 'Transaction Pin' }
+                    });
+                } else if (userProfileData.createdFromEcobankCred === true) {
+                    router.push({
+                        pathname: '/Profile',
+                        query: { id: 'Transaction Pin' }
+                    });
+                }
+            } else if (userProfileData.hasSetTransactionPin === true) {
+                setFormType(link.toLowerCase());
+                setOverlay(true);
+            }
         }
     }, [link]);
     const handleFormChange = (formTitle) => {
@@ -436,6 +436,120 @@ const Payment = () => {
             }, 0)
         );
     }, [csvData]);
+    const bankCode = [
+        {
+            bankName: 'GTBank',
+            bankCode: '*737*',
+            bankID: '000'
+        },
+        {
+            bankName: 'First Bank',
+            bankCode: '*894*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Zenith Bank',
+            bankCode: '*966*',
+            bankID: '000'
+        },
+        {
+            bankName: 'UBA',
+            bankCode: '*919*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Stanbic Bank',
+            bankCode: '*909*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Sterling Bank',
+            bankCode: '*822*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Unity Bank',
+            bankCode: '*7799*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Keystone Bank',
+            bankCode: '*7111*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Fidelity Bank',
+            bankCode: '*770*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Ecobank',
+            bankCode: '*326*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Wema Bank',
+            bankCode: '*945*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Access Bank',
+            bankCode: '*901*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Access (Diamond )',
+            bankCode: '*426*',
+            bankID: '000'
+        },
+        {
+            bankName: 'FCMB',
+            bankCode: '*329*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Heritage Bank',
+            bankCode: '*745*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Union Bank',
+            bankCode: '*826*',
+            bankID: '000'
+        },
+        {
+            bankName: 'VFD MFB',
+            bankCode: '*5037*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Rubies (Highstreet) MFB',
+            bankCode: '*7797*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Globus bank',
+            bankCode: '*989*',
+            bankID: '000'
+        },
+        {
+            bankName: 'Kuda Bank',
+            bankCode: '*5593*',
+            bankID: '000'
+        }
+    ];
+    useEffect(() => {
+        if (formType === 'ussd only') {
+            bankCode?.filter((item) => {
+                if (item.bankName === paymentDetails.bank) {
+                    setCodes(
+                        item?.bankCode + item?.bankID + '*' + recieveLink + '#'
+                    );
+                }
+            });
+        }
+        console.log(formType);
+    }, [count]);
     const renderForm = () => {
         switch (formType) {
             case 'paylink':
@@ -531,12 +645,11 @@ const Payment = () => {
                                     //console.logdata);
                                     setPaymentDetails(data);
                                     const ussdData = {
-                                        amount: parseInt(data.amount, 10),
-                                        accountId: accountPrimarys.accountId,
-                                        nameOfPayment: data.accountName,
-                                        paymentDescription: data.description
+                                        amount: parseInt(data?.amount, 10),
+                                        accountId: accountPrimarys?.accountId,
+                                        nameOfPayment: data?.accountName,
+                                        paymentDescription: data?.description
                                     };
-                                    console.log(senderDetails);
                                     setIsLoading(true);
                                     dispatch(loadussdGen(ussdData));
                                 }}
@@ -551,13 +664,24 @@ const Payment = () => {
                             <ReceivePaymentSecond
                                 overlay={overlay}
                                 amount={paymentDetails.amount}
-                                link={recieveLink}
+                                link={codes}
                                 track={track}
                                 title=" USSD "
-                                action={buttonHandleClose}
+                                action={() => {
+                                    setCount(count + 1);
+                                }}
                                 buttonText="Share USSD Code"
                                 type="USSD Code"
                                 closeAction={buttonHandleClose}
+                                info={paymentDetails.description}
+                            />
+                        );
+                    case 3:
+                        return (
+                            <Share
+                                overlay={overlay}
+                                link={codes}
+                                action={handleClose}
                             />
                         );
                 }
@@ -940,10 +1064,11 @@ const Payment = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount: parseInt(
-                                                              e.Amount,
-                                                              10
-                                                          ),
+                                                          transactionAmount:
+                                                              parseInt(
+                                                                  e.Amount,
+                                                                  10
+                                                              ),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -1170,7 +1295,8 @@ const Payment = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId:
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
@@ -1376,7 +1502,6 @@ const Payment = () => {
                     </div>
                 </div>
             </div>
-
             <div className={styles.cov}>
                 <PaymentCard title="Receive Payments" type="receive">
                     {PaymentData.receive.map((payType, index) => (

@@ -2942,11 +2942,10 @@ export const postEllevateProfilingDetails =
             cookie = getCookie('cookieToken');
         }
 
-<<<<<<< HEAD
         // dispatch(accountNumberLoadStart());
         axios
             .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.postEllevateProfiling}`,
+                `https://testvate.live${apiRoutes.postEllevateProfiling}`,
                 profileSetupItems,
                 {
                     headers: {
@@ -2954,18 +2953,6 @@ export const postEllevateProfilingDetails =
                         'X-Client-Type': 'web',
                         Authorization: `Bearer ${cookie}`
                     }
-=======
-    // dispatch(accountNumberLoadStart());
-    axios
-        .post(
-            `https://testvate.live${apiRoutes.postEllevateProfiling}`,
-            profileSetupItems,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
->>>>>>> aa74ac539eaf2a16f15f2dc65d8637de6003288f
                 }
             )
             .then((response) => {
