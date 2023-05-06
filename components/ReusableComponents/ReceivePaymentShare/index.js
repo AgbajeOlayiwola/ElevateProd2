@@ -5,6 +5,18 @@ import styles from './styles.module.css';
 import { MdCancel } from 'react-icons/md';
 import { BiLinkAlt } from 'react-icons/bi';
 import {
+    FacebookShareButton,
+    FacebookIcon,
+    TwitterShareButton,
+    TwitterIcon,
+    LinkedinShareButton,
+    TelegramShareButton,
+    TelegramIcon,
+    WhatsappShareButton,
+    WhatsappIcon,
+    InstapaperShareButton
+} from 'react-share';
+import {
     BsFacebook,
     BsTelegram,
     BsWhatsapp,
@@ -44,36 +56,74 @@ const RecievePaymentShare = ({
                         </div>
                         <div className={styles.socials}>
                             <div className={styles.facebook}>
-                                <BsFacebook />
+                                <FacebookShareButton
+                                    url={'https://www.facebook.com'}
+                                    quote={'Dummy text!'}
+                                    hashtag="#muo"
+                                >
+                                    <FacebookIcon size={52} round />
+                                </FacebookShareButton>
                             </div>
                             <div className={styles.twitter}>
-                                <AiFillTwitterCircle />
+                                <TwitterShareButton
+                                    url={'https://www.example.com'}
+                                    quote={'Dummy text!'}
+                                    hashtag="#muo"
+                                >
+                                      
+                                    <TwitterIcon size={52} round />
+                                </TwitterShareButton>
                             </div>
-                            <div className={styles.googlePlus}>
+                            {/* <div className={styles.googlePlus}>
                                 <AiFillGooglePlusCircle />
-                            </div>
+                            </div> */}
                             <div className={styles.telegram}>
-                                <BsTelegram />
+                                <TelegramShareButton
+                                    url={'https://www.example.com'}
+                                    quote={'Dummy text!'}
+                                    hashtag="#muo"
+                                >
+                                    <TelegramIcon size={52} round />
+                                </TelegramShareButton>
                             </div>
                             <div className={styles.whatsapp}>
-                                <BsWhatsapp />
+                                <WhatsappShareButton
+                                    url={'https://www.example.com'}
+                                    quote={'Dummy text!'}
+                                    hashtag="#muo"
+                                >
+                                    <WhatsappIcon size={52} round />
+                                </WhatsappShareButton>
                             </div>
-                            <div className={styles.youtube}>
+                            {/* <div className={styles.youtube}>
                                 <AiFillYoutube />
-                            </div>
-                            <div className={styles.instagram}>
+                            </div> */}
+                            {/* <div className={styles.instagram}>
                                 <BsInstagram />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className={styles.copy}>
-                        <BiLinkAlt className={styles.copyBs} />
+                        <LinkSvg className={styles.copyBs} />
                         <input
                             type="text"
                             value="ellevate.com/qyweywbdbsdfsds/ei..."
                             className={styles.copyInput}
                         />
-                        <p className={styles.copyText}>Copy</p>
+                        <p
+                            className={styles.copyText}
+                            onClick={() => {
+                                {
+                                    navigator.clipboard
+                                        .writeText(link)
+                                        .then(() => {
+                                            alert('Copied');
+                                        });
+                                }
+                            }}
+                        >
+                            Copy
+                        </p>
                     </div>
                 </div>
             </div>

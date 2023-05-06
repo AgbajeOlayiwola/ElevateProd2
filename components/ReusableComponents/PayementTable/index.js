@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTransactionElevate } from '../../../redux/actions/actions';
+import {
+    getTransactionElevate,
+    getTransactionHistory
+} from '../../../redux/actions/actions';
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
 import ReactPaginate from 'react-paginate';
@@ -9,6 +12,11 @@ const PaymentTable = ({ title, test }) => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
+    const { transactionHistory, errorMessageTransactionHistory } = useSelector(
+        (state) => state.transactionHistoryReducer
+    );
+    const [pageSrchIndex, setPageSrchIndex] = useState(0);
+    const [numOfRecords, setNumOfRecords] = useState(10);
     const [tableDetails, setTableDetails] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [displayType, setDisplayType] = useState('');
@@ -20,15 +28,15 @@ const PaymentTable = ({ title, test }) => {
     const pageCount = Math.ceil(tableDetails.length / usersPerPage);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getTransactionElevate());
+        dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
     }, [test === 0]);
 
     useEffect(() => {
-        if (transactionElevate !== null) {
-            setTableDetails(transactionElevate.transactions);
+        if (transactionHistory !== null) {
+            setTableDetails(transactionHistory.transactions);
             //console.logtransactionElevate.transactions);
         }
-    }, [transactionElevate]);
+    }, [transactionHistory]);
     useEffect(() => {
         if (searchType === 'transactionType') {
             setDisplayType('Type');

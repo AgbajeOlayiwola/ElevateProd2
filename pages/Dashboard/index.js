@@ -22,7 +22,8 @@ import {
     loadUserProfile,
     loadAccountPrimary,
     getTransactionElevate,
-    bankAccountsData
+    bankAccountsData,
+    getTransactionHistory
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
@@ -81,6 +82,9 @@ const Dashboard = () => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
+    const { transactionHistory, errorMessageTransactionHistory } = useSelector(
+        (state) => state.transactionHistoryReducer
+    );
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
     );
@@ -96,7 +100,8 @@ const Dashboard = () => {
     const types = (type) => {
         setOutType(type);
     };
-
+    const [pageSrchIndex, setPageSrchIndex] = useState(0);
+    const [numOfRecords, setNumOfRecords] = useState(10);
     useEffect(() => {
         if (balanceEnquiry !== null) {
             const formatter = new Intl.NumberFormat('en-US', {
@@ -140,7 +145,8 @@ const Dashboard = () => {
         dispatch(bankAccountsData());
         dispatch(loadAccountPrimary());
         dispatch(loadUserProfile());
-        dispatch(getTransactionElevate());
+
+        dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
         getCurrentDate();
         getDateXDaysAgo(2);
     }, []);
@@ -186,8 +192,8 @@ const Dashboard = () => {
         current.getMonth() + 1
     }-0${current.getDate()}`;
     useEffect(() => {
-        if (transactionElevate !== null) {
-            setTableDetails(transactionElevate.transactions);
+        if (transactionHistory !== null) {
+            setTableDetails(transactionHistory.transactions);
             tableDetails?.filter((item) => {
                 const newDate = item.transactionDate.split('T');
                 if (newDate[0] == time) {
@@ -201,7 +207,7 @@ const Dashboard = () => {
             //     //console.log(item.transactionDate);
             // });
         }
-    }, [transactionElevate]);
+    }, [transactionHistory]);
     //console.log(newDate[0]);
     return (
         <DashLayout page="Dashboard">

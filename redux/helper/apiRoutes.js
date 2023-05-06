@@ -14,10 +14,11 @@ const intraBankEnquiry = '/bank-account/intra-bank/info';
 const interBankEnquiry = '/bank-account/inter-bank/info';
 const balanceEnquiry = '/bank-account/balance';
 const accountPrimary = '/bank-account/primary';
-const transactionHistory = '/account/transaction';
+const transactionHistory = '/transactions/filter';
+// const allTransactions = 'accountPrimarys?.accountNumber'
 const setTransactionPin = '/account-upgrade/transaction-pin/set';
 const changeTransactionPin = '/users/transaction-pin';
-const transactionElevate = '/transactions';
+const transactionElevate = '/transactions/filter';
 const bulkTransfer = '/payment/bulk-transfer';
 const verifyBank = '/payment/international-transfer/validate-bank';
 const verifyCurrency = '/payment/international-tranfer/allowed-currency';
@@ -91,6 +92,7 @@ const paymentQr = '/payment/qr';
 const generateQr = '/payment/qr/generate';
 const qrInfo = '/payment/qr/generate';
 const auth2Fa = '/authentication/login/2FA';
+const paymentLink = '/payment/payment-link/create';
 export default {
     getBanks,
     getCountries,
@@ -183,5 +185,6 @@ export default {
     paymentQr,
     generateQr,
     qrInfo,
-    auth2Fa
+    auth2Fa,
+    paymentLink
 };

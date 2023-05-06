@@ -1,0 +1,37 @@
+.shareContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.secondCopy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: #f8f8f8;
+    padding: 16px 24px;
+    margin-top: 28px;
+    border-radius: 12px;
+}
+
+.secondCopy p {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 17px;
+    color: #3e3e3e;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+}
+
+.secondCopy button {
+    width: 31px;
+    background-color: transparent;
+    color: #529b03;
+    margin-top: 0px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    padding: 0px;
+}

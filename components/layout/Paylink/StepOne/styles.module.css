@@ -10,8 +10,12 @@
     background-color: white;
     border-radius: 12px;
     padding: 20px;
-    width: 40%;
+    width: 42%;
+    position: relative;
     flex-direction: row-reverse;
+}
+.generatedData{
+    width: 85%;
 }
 .generated h1{
     font-family: 'Inter';
@@ -70,6 +74,7 @@ color: #529B03 !important;
 .cancelBtn{
     font-size: 26px;
     color:#CCCCCC;
+    position: absolute;
 }
 .copyBs{
     margin-right: -22px;

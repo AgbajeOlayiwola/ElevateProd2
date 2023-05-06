@@ -85,7 +85,8 @@ import {
     cacDocummentType,
     generateQrType,
     qrInfoType,
-    auth2Fa_Type
+    auth2Fa_Type,
+    Paylink_Type
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -141,10 +142,23 @@ export const ussdGenLoadError = (errorMessage) => ({
 });
 export const loadussdGen = (code) => (dispatch) => {
     dispatch(ussdGenLoadStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     axiosInstance
-        .post(`${apiRoutes.ussdGen}`, code)
+        .post(`${apiRoutes.ussdGen}`, code, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) => dispatch(ussdGenLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(ussdGenLoadError(error.message)));
+        .catch((error) => dispatch(ussdGenLoadError(error)));
 };
 //uusdGen actions end
 
@@ -293,9 +307,23 @@ export const ussdStatusLoadError = (errorMessage) => ({
     payload: errorMessage
 });
 export const loadussdStatus = (code) => (dispatch) => {
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+
     dispatch(ussdStatusLoadStart());
     axiosInstance
-        .post(`${apiRoutes.ussdStatus}`, code)
+        .post(`${apiRoutes.ussdStatus}`, code, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) => dispatch(ussdStatusLoadSuccess(response.data.data)))
         .catch((error) => dispatch(ussdStatusLoadError(error.message)));
 };
@@ -1085,10 +1113,27 @@ export const transactionHistoryLoadError = (transactionHistoryerror) => ({
     type: transactionHistory.TRANSACTIONHISTORY_LOAD_ERROR,
     payload: transactionHistoryerror
 });
-export const getTransactionHistory = () => (dispatch) => {
+export const getTransactionHistory = (pageSrchIndex, numOfRecords) => (
+    dispatch
+) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     dispatch(transactionHistoryLoadStart());
     axiosInstance
-        .get(`${apiRoutes.transactionHistory}`)
+        .get(
+            `${apiRoutes.transactionHistory}?pageSearchIndex=${pageSrchIndex}&numberOfRecords=${numOfRecords}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
         .then((response) =>
             dispatch(transactionHistoryLoadSuccess(response.data.data))
         )
@@ -1137,17 +1182,29 @@ export const transactionElevateLoadError = (transactionElevateerror) => ({
     type: transactionElevate.TRANSACTIONELEVATE_LOAD_ERROR,
     payload: transactionElevateerror
 });
-export const getTransactionElevate = () => (dispatch) => {
+export const getTransactionElevate = (
+    pageSrchIndex,
+    numOfRecords,
+    transactionType
+) => (dispatch) => {
     dispatch(transactionElevateLoadStart());
-    const cookie = getCookie('cookieToken');
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     axiosInstance
-        .get(`${apiRoutes.transactionElevate}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Client-Type': 'web',
-                Authorization: `Bearer ${cookie}`
+        .get(
+            `${apiRoutes.transactionElevate}?pageSearchIndex=${pageSrchIndex}&numberOfRecords=${numOfRecords}&transactionType=${transactionType}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
             }
-        })
+        )
         .then((response) =>
             dispatch(transactionElevateLoadSuccess(response.data.data))
         )
@@ -1738,7 +1795,7 @@ export const userLoadError = (errorMessages) => ({
 export const loginUserAction = (loginData) => {
     return (dispatch) => {
         axiosInstance
-            .post(`${apiRoutes.login}`, loginData, {
+            .post(`https://testvate.live${apiRoutes.login}`, loginData, {
                 headers: {
                     credentials: true,
                     'Access-Control-Allow-Credentials': true
@@ -3344,7 +3401,7 @@ export const generateQrCodeDetails = (generateQrCodeData) => (dispatch) => {
             //console.logresponse.data.data);
             dispatch(generateQrCodeSuccess(response));
         })
-        .catch((error) => dispatch(generateQrCodeError(error.response)));
+        .catch((error) => dispatch(generateQrCodeError(error)));
 };
 
 //GENERATE QR CODE END
@@ -3387,7 +3444,7 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
             );
             setCookie('cookieToken', response.data.data.token, {
                 // httpOnly: 'true',
-                maxAge: 60 * 1,
+                // maxAge: 60 * 1,
                 secure: 'true'
             });
 
@@ -3399,3 +3456,40 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
 };
 
 //GAUTH 2FA CODE END
+//PAYLiNK actions
+export const paylinkGenLoadStart = () => ({
+    type: Paylink_Type.PAYLINK_START
+});
+
+export const paylinkGenLoadSuccess = (paylikSuccess) => ({
+    type: Paylink_Type.PAYLINK_SUCCESS,
+    payload: paylikSuccess
+});
+
+export const paylinkGenLoadError = (payLinkerrorMessage) => ({
+    type: Paylink_Type.PAYLINK_ERROR,
+    payload: payLinkerrorMessage
+});
+export const loadpaylinkGen = (code) => (dispatch) => {
+    dispatch(paylinkGenLoadStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .post(`${apiRoutes.paymentLink}`, code, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(paylinkGenLoadSuccess(response.data.data));
+        })
+        .catch((error) => dispatch(paylinkGenLoadError(error)));
+};
+//PAYLiNK actions end

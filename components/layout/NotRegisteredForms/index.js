@@ -124,18 +124,18 @@ const ProfileSetups = () => {
                         // setPage={page+1}
                         page={page}
                         action={() => {
-                            // const otpData = {
-                            //     phoneNumber:
-                            //         formData.countryCode + formData.phoneNumber,
-                            //     otp: '123456'
-                            // };
-                            // dispatch(verifyOtp(otpData));
-                            // // dispatch(CompProfile());
-                            // if (otpErrorMessage) {
-                            //     //console.log('otpError');
-                            // } else if (!otpErrorMessage) {
-                            setPage(page + 1);
-                            // }
+                            const otpData = {
+                                phoneNumber:
+                                    formData.countryCode + formData.phoneNumber,
+                                otp: '123456'
+                            };
+                            dispatch(verifyOtp(otpData));
+                            // dispatch(CompProfile());
+                            if (otpErrorMessage) {
+                                //console.log('otpError');
+                            } else if (!otpErrorMessage) {
+                                setPage(page + 1);
+                            }
                         }}
                     />
                 );

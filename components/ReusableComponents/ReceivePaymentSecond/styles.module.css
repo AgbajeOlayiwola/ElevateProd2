@@ -5,11 +5,25 @@
     border-radius: 20px;
     margin: 32px auto;
     position: absolute;
+    height: 80vh;
+    overflow: scroll;
     top: 5%;
     left: 33%;
     z-index: 10;
+    -ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+    
 }
 
+
+.secondBody::-webkit-scrollbar {
+display: none;
+}
+
+.download{
+    color: #529b03;
+    cursor: pointer;
+}
 .secondCont {
     width: 67%;
     margin: 4px auto 64px;
@@ -44,18 +58,56 @@
     font-family: 'Inter', sans-serif;
     margin-bottom: 32px;
 }
+.copyBtn{
+    position: absolute;
 
+    right: 30px;
+
+}
+.inputBordr{
+    border: none !important;
+}
 .secondCopy {
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     background-color: #f8f8f8;
-    padding: 16px 24px;
+    padding: 5px 24px;
+    padding-right: 57px;
     margin-bottom: 60px;
     border-radius: 12px;
+    overflow: scroll;
+    position: relative;
+    -ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+    
 }
 
+
+.secondBody::-webkit-scrollbar {
+display: none;
+}
+.secondCopyII{
+        
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+    background-color: #f8f8f8;
+    padding: 16px 24px;
+    padding-right: 57px;
+    margin-bottom: 60px;
+    border-radius: 12px;
+    overflow: scroll;
+    position: relative;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}    
+.secondCopyII::-webkit-scrollbar {
+    display: none;
+  }
 .secondCopyCode {
     display: flex;
     justify-content: space-between;
@@ -85,7 +137,14 @@
     font-weight: 500;
     line-height: 15px;
 }
-
+.secondCopyII p{
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 17px;
+    color: #3e3e3e;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+}
 .secondCopy p {
     font-weight: 700;
     font-size: 12px;
@@ -93,6 +152,16 @@
     color: #3e3e3e;
     font-family: 'Inter', sans-serif;
     margin: 0px;
+}
+.secondCopyII button{
+    width: 31px;
+    background-color: transparent;
+    color: #529b03;
+    margin-top: 0px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    padding: 0px;
 }
 
 .secondCopy button {

@@ -45,7 +45,19 @@ export const SidebarData = [
         icon: <PaymentSvg />,
         iconActive: <PaymentActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
-        iconOpened: <RiIcons.RiArrowUpSLine />
+        iconOpened: <RiIcons.RiArrowUpSLine />,
+        subNav: [
+            {
+                title: 'Payment',
+                path: '/Payment',
+                icon: <BiIcons.BiTransfer />
+            },
+            {
+                title: 'Reports',
+                path: '/Reports',
+                icon: <BiIcons.BiTransfer />
+            }
+        ]
     },
     // {
     //     title: 'Tools',

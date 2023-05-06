@@ -147,3 +147,6 @@ button:hover {
     text-align: center;
     color: #ffffff;
 }
+table{
+    border-collapse: collapse;
+}

@@ -1,9 +1,4 @@
-import {
-    accountNumber,
-    generateQrType,
-    paymentQrType,
-    qrInfoType
-} from '../types/actionTypes';
+import { generateQrType } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,

@@ -7,6 +7,8 @@ import Overlay from '../Overlay';
 import CloseButton from '../CloseButtonSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import Loader from '../Loader';
+import { loadAccountPrimary } from '../../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 // import axios from 'axios';
 
 const ReceivePaymentFirst = ({
@@ -17,14 +19,20 @@ const ReceivePaymentFirst = ({
     isLoading,
     overlay,
     type,
-    typeAction
+    typeAction,
+    error
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [description, setDescription] = useState('');
+    const { accountPrimarys, accountPrimaryError } = useSelector(
+        (state) => state.accountPrimaryReducer
+    );
     // const [amount, setAmount] = useState('');
-
+    const dispatch = useDispatch();
     const myref = useRef();
     useEffect(() => {
+        console.log(error);
+        dispatch(loadAccountPrimary());
         myref.current.scrollTo(0, 0);
         window.scrollTo(0, 0);
         // const fetchCountryApi =  () => {
@@ -37,6 +45,9 @@ const ReceivePaymentFirst = ({
         //     fetchCountryApi();
         // };
     }, []);
+    useEffect(() => {
+        console.log(accountPrimarys);
+    }, [accountPrimarys]);
     const {
         register,
         handleSubmit,
@@ -155,7 +166,7 @@ const ReceivePaymentFirst = ({
                             (Accepts Card Payment without POS)
                         </p>
                         <form onSubmit={handleSubmit(action)}>
-                            <div className={styles.formGroup}>
+                            {/* <div className={styles.formGroup}>
                                 <label>Account to Credit</label>
                                 <select>
                                     <option>
@@ -167,9 +178,18 @@ const ReceivePaymentFirst = ({
                                         Source <span>- Troniclab</span>
                                     </option>
                                 </select>
-                                {/* <SourceSvg /> */}
-                            </div>
+                            </div> */}
                             <div className={styles.formGroup}>
+                                <label>Account Number</label>
+                                <input
+                                    type="number"
+                                    name="amount"
+                                    value={accountPrimarys?.accountNumber}
+                                />
+                                <p className={styles.error}>
+                                    {errors?.amount?.message}
+                                </p>
+
                                 <label>Enter Amount</label>
                                 <input
                                     {...register('amount', {
@@ -180,18 +200,9 @@ const ReceivePaymentFirst = ({
                                                 'Amount can only be number '
                                         }
                                     })}
-                                    // value={amount}
-                                    type="number("
+                                    type="number"
                                     name="amount"
                                     placeholder="0.00"
-                                    // onChange={(e) => {
-                                    //     setAmount(
-                                    //         Intl.NumberFormat('en', {
-                                    //             style: 'currency',
-                                    //             currency: 'NGN'
-                                    //         }).format(e.target.value)
-                                    //     );
-                                    // }}
                                 />
                                 <p className={styles.error}>
                                     {errors?.amount?.message}
@@ -200,7 +211,7 @@ const ReceivePaymentFirst = ({
                             {firstTitle === 'Create USSD Payment Code' ? (
                                 <div className={styles.formGroup}>
                                     <label>Bank</label>
-                                    <select>
+                                    <select {...register('bank')}>
                                         <option>Select Bank</option>
                                         {banks?.map((item, index) => {
                                             return (
@@ -213,7 +224,7 @@ const ReceivePaymentFirst = ({
                                 </div>
                             ) : null}
                             <div className={styles.formGroup}>
-                                <label>Name of Payment</label>
+                                <label>Payment title</label>
                                 <input
                                     {...register('accountName', {
                                         required: 'Please enter Paayment Name',
@@ -257,6 +268,9 @@ const ReceivePaymentFirst = ({
                                     {errors?.description?.message}
                                 </p>
                             </div>
+                            {error ? (
+                                <p className={styles.error}>{error}</p>
+                            ) : null}
                             {isLoading ? (
                                 <Loader />
                             ) : (

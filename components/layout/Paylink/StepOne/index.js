@@ -19,7 +19,7 @@ const PaylinkStepOne = ({ overlay, createLink, action, closeAction }) => {
                             onClick={closeAction}
                         />
                     </div>
-                    <div>
+                    <div className={styles.generatedData}>
                         <h1>Payment Link Generated</h1>
                         <p>Share payment link to receive payment.</p>
                         <div className={styles.copy}>

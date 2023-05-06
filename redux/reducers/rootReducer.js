@@ -87,6 +87,7 @@ import qrInfoReducer from './qrInfo.reducer';
 import paymentQrReducer from './paymentQr.reducer';
 import auth2FaReducer from './auth2Fa.reducer';
 import generateQrInfo from './generateQr.reducer';
+import payLinkGenReducer from './paylinkGen.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -180,7 +181,8 @@ const appReducer = combineReducers({
     qrInfoReducer: qrInfoReducer,
     paymentQrReducer: paymentQrReducer,
     auth2FaReducer: auth2FaReducer,
-    generateQrInfo: generateQrInfo
+    generateQrInfo: generateQrInfo,
+    payLinkGenReducer: payLinkGenReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

@@ -82,3 +82,17 @@
     color: #5f8903;
     cursor: pointer;
 }
+
+.btnCopy{
+    background-color: #6ccf00;
+    padding: 1.2rem 0rem 1.2rem 0rem;
+    border-radius: 12px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #ffffff;
+}

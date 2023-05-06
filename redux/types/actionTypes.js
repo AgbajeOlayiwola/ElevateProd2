@@ -824,3 +824,11 @@ export const auth2Fa_Type = {
     AUTH_2FA_ERROR: 'AUTH_2FA_ERROR'
 };
 //End Export Auth 2Fa
+
+//Export Paylink
+export const Paylink_Type = {
+    PAYLINK_START: 'PAYLINK_START',
+    PAYLINK_SUCCESS: 'PAYLINK_SUCCESS',
+    PAYLINK_ERROR: 'PAYLINK_ERROR'
+};
+//End Export Paylink

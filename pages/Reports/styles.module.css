@@ -1,0 +1,307 @@
+.collectionChart{
+    background: #FFFFFF;
+border-radius: 16px;
+padding: 22px 65px;
+}
+.collectionCHartDiv {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 9px;
+}
+.collectionChartTop{
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+.chartH1{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 900;
+font-size: 24px;
+line-height: 29px;
+/* identical to box height */
+
+
+color: #69940D;
+
+}
+.collectionChart div div p{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+/* identical to box height, or 115% */
+
+
+color: #3E3E3E;
+
+}
+.charts{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.green{
+    background: #3A5207;
+    width: 100%;
+    height: 14px;
+}
+.greenI{
+    background: #69940D;
+    width: 100%;
+    height: 14px;
+
+}
+.greenII{
+    background: #6CCF00;
+    width: 100%;
+    height: 14px;
+
+}
+.greenIII{
+    background: #C4D344;
+    width: 100%;
+    height: 14px;
+}
+.greenIdiv h1 span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */
+    
+    
+    color: #3A5207;
+    
+}
+.greenIdiv h1{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */    
+}
+.greenIIdiv h1{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */    
+}
+.greenIIdiv h1 span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */   
+    color: #69940D; 
+}
+.greenIIIdiv h1{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */    
+}
+.greenIIIdiv h1 span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */   
+    color: #6CCF00; 
+}
+.greenIVdiv h1 span{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */  
+    color: #C4D344;  
+}
+.greenIVdiv h1{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */    
+}
+.greenIdiv{
+    width: 20%;
+}
+.greenIIdiv{
+    width: 30%;
+}
+.greenIIIdiv{
+    width: 50%;
+}
+.greenIVdiv{
+    width: 15%;
+}
+.allTrans{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 19px;
+
+color: #102572;
+}
+.filter{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.filterFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #F8F8F8;
+border: 1px solid #DBDBDB;
+border-radius: 12px;
+}
+.filterFlex div{
+    padding: 16px 32px;
+}
+.filterFlex div p{
+    margin: 0px;
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 19px;
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #A5A5A5;
+
+}
+.collectionsTable{
+    background: #fff;
+    padding: 48px 32px;
+    margin-top: 23.99px;
+}
+.active{
+    background: #6CCF00;
+border-radius: 12px;
+}
+.active p{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 19px;
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #FFFFFF !important;
+}
+.generate{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 16px;
+}
+.down{
+    background: #7FBB01;
+border-radius: 12px;
+padding: 16px;
+color: #fff;
+}
+.down p{
+    margin: 0px;
+}
+.gene p{
+    margin: 0px;
+    color: #7FBB01;
+}
+.gene{
+    background: #FFFFFF;
+border: 1px solid #7FBB01;
+border-radius: 12px;
+padding: 16px;
+}
+.srch{
+    padding: 11px 38px;
+    border: 1px solid #DAE1FF;
+border-radius: 16px;
+}
+.searches{
+    display: flex;
+    margin-top: 29px;
+    gap: 16px;
+}
+.filterDiv{
+    background: #06374B;
+border-radius: 16px;
+padding: 12px 22px;
+color: #fff;
+display: flex;
+gap: 15px;
+align-items: center;
+}
+.filterDiv p{
+margin: 0px;
+}
+.searchInp{
+    display: flex;
+    align-items: center;
+}
+.sarchIcon{
+    margin-right: -29px;
+    /* height: 30px; */
+    font-size: 20px;
+    z-index: 2;
+}
+.table{
+    width: 100%;
+    margin-top: 25px;
+    
+}
+.table thead{
+    background: #F5F6FA;
+border-radius: 16px;
+margin-bottom: 24px;
+}
+.table tr th div p{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 17px;
+/* identical to box height */
+text-align: start;
+
+color: #3E3E3E;
+}
+.theadTop{
+    border-bottom-left-radius: 16px;
+    border-top-left-radius: 16px;
+    padding-left: 14px;
+}
+.theadBtm{
+    border-bottom-right-radius: 16px;
+    border-top-right-radius: 16px;
+}
+.collctionh1 h1{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 24px;
+color: #102572;
+}
+.collctionh1{
+    margin-bottom: 50px;
+}

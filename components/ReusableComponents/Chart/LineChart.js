@@ -29,11 +29,13 @@ const LineChart = () => {
     });
 
     const dispatch = useDispatch();
+    const [pageSrchIndex, setPageSrchIndex] = useState(0);
+    const [numOfRecords, setNumOfRecords] = useState(10);
     const [dateTocalc, setDateToCalc] = useState([]);
     const [price, setPrice] = useState();
     useEffect(() => populateLineData(), []);
     useEffect(() => {
-        dispatch(getTransactionElevate());
+        dispatch(getTransactionElevate(pageSrchIndex, numOfRecords));
     }, []);
 
     useEffect(() => populateLineData, [transactionElevate]);

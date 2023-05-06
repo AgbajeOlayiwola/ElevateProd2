@@ -40,8 +40,12 @@ color: white;
     padding: 24px;
     overflow: scroll;
     height: 40vh;
-}
-
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}    
+.Tpwh::-webkit-scrollbar {
+    display: none;
+  }
 .Tpwh p {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -331,7 +335,10 @@ color: white;
     border-radius: 8px;
     padding: 0.2rem 0.5rem;
     overflow: scroll;
-}
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}    
+
 .btmI::-webkit-scrollbar {
     display: none;
 }
@@ -353,7 +360,10 @@ color: white;
     border-radius: 16px;
     padding: 1.5rem 1.25rem 1.5rem 1.25rem;
     overflow: scroll;
-}
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}    
+
 .btmII::-webkit-scrollbar {
     display: none;
 }
@@ -367,7 +377,10 @@ color: white;
     border-radius: 16px;
     padding: 1.5rem 1.25rem 1.5rem 1.25rem;
     overflow: scroll;
-}
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}    
+
 .btmIII::-webkit-scrollbar {
     display: none;
 }

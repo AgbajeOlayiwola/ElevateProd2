@@ -19,8 +19,12 @@
     max-width: 682px;
     width: 53%;
     overflow: scroll;
-}
-
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}    
+.sectionII::-webkit-scrollbar {
+    display: none;
+  }
 .loginCont {
     width: 60%;
     max-width: 400px;

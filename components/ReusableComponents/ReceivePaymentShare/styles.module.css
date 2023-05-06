@@ -72,20 +72,25 @@ font-size: 35px;
     font-size: 35px; 
 }
 .whatsapp{
-    background-color: green;
     color: white;
     padding: 10px;
     border-radius: 50%
 }
 .youtube{
-    background-color: red;
     color: white;
     padding: 10px;
     border-radius: 50%
 }
 .instagram{
-    background-color: grey;
     color: white;
     padding: 10px;
     border-radius: 50%
+}
+.copyBs{
+    margin-right: -30px;
+    z-index: 2;
+    color:#6CCF00;
+}
+.copyInput{
+    padding-left: 40px;
 }

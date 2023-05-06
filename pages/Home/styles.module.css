@@ -481,11 +481,16 @@
     /* width: 50%; */
     flex: 1;
     /* height: 100vh; */
-    /* overflow: scroll; */
+    overflow: scroll;
     align-items: center;
     display: flex;
     justify-content: center;
-}
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}    
+.sectionII::-webkit-scrollbar {
+    display: none;
+  }
 .bottom {
     margin-top: 3rem;
     width: fit-content;
