@@ -10,17 +10,15 @@
     top: 5%;
     left: 33%;
     z-index: 10;
-    -ms-overflow-style: none;  /* IE and Edge */
-scrollbar-width: none;  /* Firefox */
-    
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
-
 
 .secondBody::-webkit-scrollbar {
-display: none;
+    display: none;
 }
 
-.download{
+.download {
     color: #529b03;
     cursor: pointer;
 }
@@ -58,17 +56,15 @@ display: none;
     font-family: 'Inter', sans-serif;
     margin-bottom: 32px;
 }
-.copyBtn{
+.copyBtn {
     position: absolute;
 
     right: 30px;
-
 }
-.inputBordr{
+.inputBordr {
     border: none !important;
 }
 .secondCopy {
-    
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -80,17 +76,14 @@ display: none;
     border-radius: 12px;
     overflow: scroll;
     position: relative;
-    -ms-overflow-style: none;  /* IE and Edge */
-scrollbar-width: none;  /* Firefox */
-    
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
-
 
 .secondBody::-webkit-scrollbar {
-display: none;
+    display: none;
 }
-.secondCopyII{
-        
+.secondCopyII {
     display: flex;
     align-items: center;
     width: 100%;
@@ -102,12 +95,12 @@ display: none;
     border-radius: 12px;
     overflow: scroll;
     position: relative;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}    
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
 .secondCopyII::-webkit-scrollbar {
     display: none;
-  }
+}
 .secondCopyCode {
     display: flex;
     justify-content: space-between;
@@ -137,7 +130,7 @@ display: none;
     font-weight: 500;
     line-height: 15px;
 }
-.secondCopyII p{
+.secondCopyII p {
     font-weight: 700;
     font-size: 12px;
     line-height: 17px;
@@ -153,7 +146,7 @@ display: none;
     font-family: 'Inter', sans-serif;
     margin: 0px;
 }
-.secondCopyII button{
+.secondCopyII button {
     width: 31px;
     background-color: transparent;
     color: #529b03;
@@ -322,10 +315,6 @@ display: none;
     color: #5f8903;
     font-weight: 600;
     cursor: pointer;
-}
-
-.secondCont button {
-    margin-top: 0px;
 }
 
 .NFC {
