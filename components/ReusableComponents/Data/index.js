@@ -48,6 +48,11 @@ export const SidebarData = [
         iconOpened: <RiIcons.RiArrowUpSLine />,
         subNav: [
             {
+                title: 'Collections',
+                path: '/Collections',
+                icon: <BiIcons.BiTransfer />
+            },
+            {
                 title: 'Payment',
                 path: '/Payment',
                 icon: <BiIcons.BiTransfer />
