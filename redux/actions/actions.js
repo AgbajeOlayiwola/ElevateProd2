@@ -86,7 +86,8 @@ import {
     generateQrType,
     qrInfoType,
     auth2Fa_Type,
-    Paylink_Type
+    Paylink_Type,
+    otpType
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -1803,12 +1804,12 @@ export const loginUserAction = (loginData) => {
             })
             .then((response) => {
                 //console.logresponse.data);
+                setCookie('cookieToken', response.data.data.token, {
+                    // httpOnly: 'true',
+                    // maxAge: 60 * 1,
+                    secure: 'true'
+                });
 
-                // localStorage.setItem(
-                //     'token',
-                //     JSON.stringify(response.data.data.token)
-                // );
-                //console.logresponse.data);
                 localStorage.setItem(
                     'user',
                     JSON.stringify(response.data.data.user)
@@ -2042,20 +2043,25 @@ export const createBusProfileSetup = (businessProfileData) => {
 // business profile setuo action end
 //BVN Otp
 export const otpLoadStart = (errorMessages) => ({
-    type: otp.OTP_LOAD_START,
+    type: otpType.OTP_LOAD_START,
     payload: errorMessages
 });
 export const otpLoadSuccess = (otpActData) => ({
-    type: otp.OTP_LOAD_SUCCESS,
+    type: otpType.OTP_LOAD_SUCCESS,
     payload: otpActData
 });
 export const otpLoadError = (otpErrorMessage) => ({
-    type: otp.OTP_LOAD_ERROR,
+    type: otpType.OTP_LOAD_ERROR,
     payload: otpErrorMessage
 });
 
-export const verifyOtp = (otpData) => {
-    const cookie = getCookie('cookieToken');
+export const runVerifyOtp = (otpData) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     return async (dispatch) => {
         await axiosInstance
             .post(`https://testvate.live${apiRoutes.verifyOtp}`, otpData, {
@@ -2072,10 +2078,7 @@ export const verifyOtp = (otpData) => {
             })
             .catch((error) => {
                 //console.log'profile otp dispatch', error);
-                dispatch(bvnNinError(error.response.message));
-            })
-            .catch((error) => {
-                //console.log'profile Bvn dispatch', error.response);
+                dispatch(otpLoadError(error));
             });
     };
 };
@@ -3448,7 +3451,7 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
                 secure: 'true'
             });
 
-            console.log(response.data.data.user);
+            console.log(response);
             //console.logresponse.data.data);
             dispatch(auth2FaCodeSuccess(response));
         })

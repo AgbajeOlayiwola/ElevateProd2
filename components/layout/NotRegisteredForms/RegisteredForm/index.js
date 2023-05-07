@@ -75,7 +75,6 @@ const RegisteredForm = ({
     const { isLoading, profile, errorMessages, bvnErrorI } = useSelector(
         (state) => state.profileSetup
     );
-    const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
 
     //console.log('error essage', otpErrorMessage);
     // useEffect(() => {

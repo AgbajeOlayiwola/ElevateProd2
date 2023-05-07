@@ -51,17 +51,53 @@ const StepTwoBVNAuthenticator = ({
 
     const [activeBtn, setActiveBtn] = useState(true);
 
+    const numOfFields = 6;
+
+    const [ssnValues, setValue] = useState(['']);
+    const handleOtpChange = (e) => {
+        const { maxLength, value, name } = e.target;
+        const [fieldName, fieldIndex] = name.split('-');
+
+        // Check if they hit the max character length
+        if (value.length >= maxLength) {
+            // Check if it's not the last input field
+            if (parseInt(fieldIndex, 10) <= 6) {
+                // Get the next input field
+                const nextSibling = document.querySelector(
+                    `input[name=ssn-${parseInt(fieldIndex, 10) + 1}]`
+                );
+                setValue((prevValue) => [...prevValue, value]);
+
+                console.log(ssnValues);
+
+                // If found, focus the next field
+                if (nextSibling !== null) {
+                    nextSibling.focus();
+                } else {
+                }
+            }
+        }
+    };
+    useEffect(() => {
+        setFormData({ ...formData, otp: ssnValues.join('') });
+    }, [ssnValues]);
+
+    const clear = () => {
+        setValue((ssnValues) => ['']);
+    };
     const ResetOtp = () => {
+        setValue((ssnValues) => ['']);
         const data = {
             phoneNumber: formData.phoneNumber
         };
         dispatch(resetOtpData(data));
         //console.logresetOtp, resetOtpErrorMessages);
     };
+
     useEffect(() => {
-        //console.logresetOtp);
-        //console.logresetOtpErrorMessages);
+        setValue((ssnValues) => ['']);
     }, [resetOtp, resetOtpErrorMessages]);
+
     return (
         <form onSubmit={handleSubmit(action)}>
             <div className={styles.bvnBody}>
@@ -91,21 +127,56 @@ const StepTwoBVNAuthenticator = ({
                             </p>
                         ) : null}
                         <p className={styles.inp}>Input OTP</p>
-                        <OtpInput
-                            formData={formData}
-                            setFormData={setFormData}
-                        />
-                        <ResetOTP>
-                            <p onClick={ResetOtp}>Resend OTP</p>
+                        <div className={styles.otpInps}>
+                            <input
+                                type="password"
+                                name="ssn-1"
+                                maxLength={1}
+                                onChange={handleOtpChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-2"
+                                maxLength={1}
+                                onChange={handleOtpChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-3"
+                                maxLength={1}
+                                onChange={handleOtpChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-4"
+                                maxLength={1}
+                                onChange={handleOtpChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-5"
+                                maxLength={1}
+                                onChange={handleOtpChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-6"
+                                maxLength={1}
+                                onChange={handleOtpChange}
+                            />
+                        </div>
 
-                            <button
-                                style={{ cursor: 'pointer' }}
-                                className={styles.clr}
-                                type="reset"
-                            >
-                                Clear
-                            </button>
-                        </ResetOTP>
+                        <p onClick={ResetOtp}>Resend OTP</p>
+
+                        <button
+                            style={{ cursor: 'pointer' }}
+                            className={styles.clr}
+                            type="reset"
+                            onClick={clear}
+                        >
+                            Clear
+                        </button>
+                        {/* </ResetOTP> */}
                     </div>
                     <ButtonComp
                         disabled={activeBtn}

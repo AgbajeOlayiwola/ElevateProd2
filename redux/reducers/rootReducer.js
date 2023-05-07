@@ -123,7 +123,7 @@ const appReducer = combineReducers({
     logoutReducer: logoutReducer,
     registered: registerReducer,
     profile: profileReducer,
-    otp: otpReducer,
+    otpReducer: otpReducer,
     profileSetup: profileSetupReducer,
     omniliteReducer: omniliteReducer,
     getRCReducer: getRCReducer,

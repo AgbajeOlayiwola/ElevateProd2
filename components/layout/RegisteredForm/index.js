@@ -10,7 +10,9 @@ import styles from './styles.module.css';
 import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticator';
 import {
     existingUserProfileData,
-    loadCountry
+    loadCountry,
+    runVerifyOtp,
+    verifyOtp
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Liveness from '../NotRegisteredForms/Liveness';
@@ -27,6 +29,7 @@ const ExistingMultiStep = () => {
     const { countries } = useSelector((state) => state.countryReducer);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
+        otp: [''],
         type: 'false',
         userId: '',
         emailData: '',
@@ -63,13 +66,38 @@ const ExistingMultiStep = () => {
         //console.log(loginWith);
         //console.log(newAccounts.user.email);
     }
+    const { otpActData, otpErrorMessage } = useSelector(
+        (state) => state.otpReducer
+    );
     //console.log(formData.emailData, newAccounts.user?.email);
     //console.log(formData.emailData, newAccounts.email);
+
+    const handleOtp = () => {
+        const otpData = {
+            phoneNumber: formData.countryCode + formData.phoneNumber,
+            otp: formData.otp.join('')
+        };
+        dispatch(runVerifyOtp(otpData));
+    };
+    useEffect(() => {
+        if (otpErrorMessage) {
+            console.log('otpError');
+        } else if (otpActData) {
+            // console.log('otpErrorI');
+            setPage(page + 1);
+        }
+    }, [otpErrorMessage, otpActData]);
 
     const conditionalComponent = () => {
         switch (page) {
             case 0:
-                return <FirstStep action={handleSubmit} />;
+                return (
+                    <FirstStep
+                        formData={formData}
+                        setFormData={setFormData}
+                        action={handleOtp}
+                    />
+                );
             case 1:
                 return (
                     <SecondStep

@@ -12,7 +12,8 @@ import {
     verifyOtp,
     loadCountry,
     createBusProfileSetup,
-    CompProfile
+    CompProfile,
+    runVerifyOtp
 } from '../../../redux/actions/actions';
 import { Router, useRouter } from 'next/router';
 import Loader from '../../ReusableComponents/Loader';
@@ -33,10 +34,11 @@ const ProfileSetups = () => {
     const cookie = getCookie('cookieToken');
     //console.log('register page', cookie);
 
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const [formData, setFormData] = useState({
         type: false,
         rcnumber: '',
+        otp: '',
         tinNumber: '',
         bvNumber: '',
         ninNumber: '',
@@ -96,9 +98,28 @@ const ProfileSetups = () => {
     const [errorII, setErrorII] = useState('');
     const [errorIII, setErrorIII] = useState('');
     const [loading, setLoading] = useState(false);
-    const { Loading, otp, otpErrorMessage } = useSelector((state) => state.otp);
     const [error, setError] = useState([]);
+    const { otpActData, otpErrorMessage } = useSelector(
+        (state) => state.otpReducer
+    );
+    //console.log(formData.emailData, newAccounts.user?.email);
+    //console.log(formData.emailData, newAccounts.email);
 
+    const handleOtp = () => {
+        const otpData = {
+            phoneNumber: formData.countryCode + formData.phoneNumber,
+            otp: formData.otp
+        };
+        dispatch(runVerifyOtp(otpData));
+    };
+    useEffect(() => {
+        if (otpErrorMessage) {
+            console.log('otpError');
+        } else if (otpActData) {
+            // console.log('otpErrorI');
+            setPage(page + 1);
+        }
+    }, [otpErrorMessage, otpActData]);
     const conditionalComponent = () => {
         switch (page) {
             case 0:
@@ -123,20 +144,7 @@ const ProfileSetups = () => {
                         setFormData={setFormData}
                         // setPage={page+1}
                         page={page}
-                        action={() => {
-                            const otpData = {
-                                phoneNumber:
-                                    formData.countryCode + formData.phoneNumber,
-                                otp: '123456'
-                            };
-                            dispatch(verifyOtp(otpData));
-                            // dispatch(CompProfile());
-                            if (otpErrorMessage) {
-                                //console.log('otpError');
-                            } else if (!otpErrorMessage) {
-                                setPage(page + 1);
-                            }
-                        }}
+                        action={handleOtp}
                     />
                 );
             case 2:

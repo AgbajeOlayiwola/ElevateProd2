@@ -534,7 +534,7 @@ export const accountPrimary = {
 
 //ot action type start
 
-export const otp = {
+export const otpType = {
     OTP_LOAD_START: 'OTP_LOAD_START',
     OTP_LOAD_SUCCESS: 'OTP_LOAD_SUCCESS',
     OTP_LOAD_ERROR: 'OTP_LOAD_ERROR'
