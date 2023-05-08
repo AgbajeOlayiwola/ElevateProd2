@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdMoreVert, MdOutlineMoreVert } from 'react-icons/md';
 import styles from './styles.module.css';
-const ReportsData = () => {
+const ReportsData = ({ transactionStatus, ammount, type, date, bank }) => {
     return (
         <tbody className={styles.tbody}>
             <tr>
@@ -9,91 +9,27 @@ const ReportsData = () => {
                     <p>James Ewang</p>
                 </td>
                 <td>
-                    <p>Payment Link</p>
+                    <p>{type}</p>
                 </td>
                 <td className={styles.num}>
-                    <p>+ N40,000.00</p>
+                    <p>{ammount}</p>
                 </td>
                 <td>
                     <p>dance@gma...</p>
                 </td>
                 <td>
-                    <p>Wema Bank</p>
+                    <p>{bank == true ? 'Ecobank' : null}</p>
                 </td>
 
                 <td>
-                    <p>2 Jul 2022</p>
+                    <p>{date[0]}</p>
                 </td>
                 <td>
-                    <p>Card: MasterCard</p>
-                </td>
-                <td>
-                    <div className={styles.staus}>
-                        <p>Successful</p>
-                    </div>
-                </td>
-                <td>
-                    <MdMoreVert />
-                </td>
-            </tr>
-            <tr>
-                <td className={styles.name}>
-                    <p>James Ewang</p>
-                </td>
-                <td>
-                    <p>Payment Link</p>
-                </td>
-                <td className={styles.num}>
-                    <p>+ N40,000.00</p>
-                </td>
-                <td>
-                    <p>dance@gma...</p>
-                </td>
-                <td>
-                    <p>Wema Bank</p>
-                </td>
-
-                <td>
-                    <p>2 Jul 2022</p>
-                </td>
-                <td>
-                    <p>Card: MasterCard</p>
+                    <p>{type}</p>
                 </td>
                 <td>
                     <div className={styles.staus}>
-                        <p>Successful</p>
-                    </div>
-                </td>
-                <td>
-                    <MdMoreVert />
-                </td>
-            </tr>
-            <tr>
-                <td className={styles.name}>
-                    <p>James Ewang</p>
-                </td>
-                <td>
-                    <p>Payment Link</p>
-                </td>
-                <td className={styles.num}>
-                    <p>+ N40,000.00</p>
-                </td>
-                <td>
-                    <p>dance@gma...</p>
-                </td>
-                <td>
-                    <p>Wema Bank</p>
-                </td>
-
-                <td>
-                    <p>2 Jul 2022</p>
-                </td>
-                <td>
-                    <p>Card: MasterCard</p>
-                </td>
-                <td>
-                    <div className={styles.staus}>
-                        <p>Successful</p>
+                        <p>{transactionStatus}</p>
                     </div>
                 </td>
                 <td>

@@ -93,9 +93,10 @@ const ExistingMultiStep = () => {
         };
         dispatch(runVerifyOtp(otpData));
     };
+    const [otpError, setOtpError] = useState('');
     useEffect(() => {
         if (otpErrorMessage) {
-            console.log('otpError');
+            setOtpError(otpErrorMessage.response.data.message);
         } else if (otpActData) {
             // console.log('otpErrorI');
             setPage(page + 1);
@@ -110,6 +111,7 @@ const ExistingMultiStep = () => {
                         formData={formData}
                         setFormData={setFormData}
                         action={handleOtp}
+                        otpError={otpError}
                     />
                 );
             case 1:

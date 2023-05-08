@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout } from '../../components';
 import DashLayout from '../../components/layout/Dashboard';
 import styles from './styles.module.css';
@@ -6,8 +6,92 @@ import { BsChevronDown } from 'react-icons/bs';
 import { AiOutlineSearch } from 'react-icons/ai';
 import ReportsData from '../../components/ReusableComponents/ReportsData';
 import { BiFilter } from 'react-icons/bi';
+import {
+    getTransactionElevate,
+    getTransactionHistory
+} from '../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Report = () => {
+    const dispatch = useDispatch();
+    const [filterPara, setFilterPara] = useState('');
+    const [filterType, setFilterType] = useState('All');
+    const [dateState, setDateState] = useState(false);
+    const [time, setTime] = useState();
+    const [tableDetails, setTableDetails] = useState([]);
+    const { transactionElevate, errorMessageTransactionElevate } = useSelector(
+        (state) => state.transactionElevateReducer
+    );
+    const { transactionHistory, errorMessageTransactionHistory } = useSelector(
+        (state) => state.transactionHistoryReducer
+    );
+    const [pageSrchIndex, setPageSrchIndex] = useState(0);
+    const [numOfRecords, setNumOfRecords] = useState(10);
+    const [transactionType, setTransactionType] = useState('');
+    useEffect(() => {
+        if (filterType === 'All') {
+            dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
+        } else {
+            dispatch(
+                getTransactionElevate(
+                    pageSrchIndex,
+                    numOfRecords,
+                    transactionType
+                )
+            );
+        }
+        getCurrentDate();
+    }, [filterType]);
+    useEffect(() => {
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'NGN',
+            currencyDisplay: 'narrowSymbol'
+        });
+    }, []);
+    const getCurrentDate = () => {
+        let newDate = new Date();
+        let date = newDate.getDate();
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+        setTime(
+            `${year}-${month < 10 ? `0${month}` : `${month}`}-${
+                date < 10 ? `0${date}` : `${date}`
+            }`
+        );
+    };
+    useEffect(() => {
+        if (transactionElevate !== null) {
+            setTableDetails(transactionElevate.transactions);
+            console.log(transactionElevate.transactions);
+            tableDetails?.filter((item) => {
+                const newDate = item.transactionDate.split('T');
+                console.log(newDate[0], time);
+                if (newDate[0] !== time) {
+                    setDateState(true);
+                } else {
+                    setDateState(false);
+                }
+            });
+
+            // tableDetails.data?.map((item) => {
+            //     //console.log(item.transactionDate);
+            // });
+        } else if (transactionHistory !== null) {
+            setTableDetails(transactionHistory.transactions);
+            console.log(transactionHistory.transactions);
+            tableDetails?.filter((item) => {
+                const newDate = item.transactionDate.split('T');
+                console.log(newDate[0], time);
+                if (newDate[0] !== time) {
+                    setDateState(true);
+                } else {
+                    setDateState(false);
+                }
+            });
+        }
+        // console.log(transactionElevate);
+    }, [transactionElevate, transactionHistory]);
     return (
         <DashLayout>
             <div className={styles.collctionh1}>
@@ -60,23 +144,112 @@ const Report = () => {
             <div className={styles.collectionsTable}>
                 <h2 className={styles.allTrans}>All Transactions</h2>
                 <div className={styles.filter}>
-                    <div className={styles.filterFlex}>
-                        <div className={styles.active}>
-                            <p>All</p>
+                    {filterPara === 'Outflow' ? (
+                        <div className={styles.filterFlex}>
+                            <div
+                                className={
+                                    filterType === 'All' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('All');
+                                }}
+                            >
+                                <p>All</p>
+                            </div>
+                            <div
+                                className={
+                                    filterType === 'Pay' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('Pay');
+                                    setTransactionType('PAYMENT_LINK');
+                                }}
+                            >
+                                <p>Pay Link</p>
+                            </div>
+                            <div
+                                className={
+                                    filterType === 'Cards' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('Cards');
+                                    setTransactionType('USSD');
+                                }}
+                            >
+                                <p>Cards</p>
+                            </div>
+                            {/* <div
+                                className={
+                                    filterType === 'All' ? styles.active : ''
+                                }
+                                
+                            >
+                                <p>Cards</p>
+                            </div> */}
+                            <div
+                                className={
+                                    filterType === 'QR' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('QR');
+                                    setTransactionType('QR_PAYMENT');
+                                }}
+                            >
+                                <p>EcoBank QR</p>
+                            </div>
                         </div>
-                        <div>
-                            <p>Pay Link</p>
+                    ) : filterPara === 'Inflow' ? (
+                        <div className={styles.filterFlex}>
+                            <div
+                                className={
+                                    filterType === 'All' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('All');
+                                }}
+                            >
+                                <p>All</p>
+                            </div>
+                            <div
+                                className={
+                                    filterType === 'Pay' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('Pay');
+                                }}
+                            >
+                                <p>Pay Link</p>
+                            </div>
+                            <div
+                                className={
+                                    filterType === 'Cards' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('Cards');
+                                }}
+                            >
+                                <p>Cards</p>
+                            </div>
+                            {/* <div
+                                className={
+                                    filterType === 'All' ? styles.active : ''
+                                }
+                            >
+                                <p>Cards</p>
+                            </div> */}
+                            <div
+                                className={
+                                    filterType === 'QR' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('QR');
+                                }}
+                            >
+                                <p>EcoBank QR</p>
+                            </div>
                         </div>
-                        <div>
-                            <p>Cards</p>
-                        </div>
-                        <div>
-                            <p>Cards</p>
-                        </div>
-                        <div>
-                            <p>EcoBank QR</p>
-                        </div>
-                    </div>
+                    ) : null}
+
                     <div className={styles.generate}>
                         <div className={styles.down}>
                             <p>Download</p>
@@ -95,10 +268,22 @@ const Report = () => {
                             placeholder="Search"
                         />
                     </div>
-                    <div className={styles.filterDiv}>
+
+                    <select
+                        name=""
+                        id=""
+                        onChange={(e) => {
+                            setFilterPara(e.target.value);
+                        }}
+                    >
+                        <option value="">Filter</option>
+                        <option value="Inflow">Inflow</option>
+                        <option value="Outflow">Outflow</option>
+                    </select>
+                    {/* <div className={styles.filterDiv}>
                         <p>Filter</p>
                         <BsChevronDown />
-                    </div>
+                    </div> */}
                 </div>
                 <table className={styles.table}>
                     <thead>
@@ -150,7 +335,46 @@ const Report = () => {
                             </th>
                         </tr>
                     </thead>
-                    <ReportsData />
+                    {tableDetails.length === 0 ? (
+                        <div className={styles.transactionBody}>
+                            <div>
+                                <p>No Transactions Have Benn Generated yet</p>
+                            </div>
+                        </div>
+                    ) : (
+                        tableDetails
+                            ?.filter((item) => {
+                                console.log(item);
+                                const newDate = item.transactionDate.split('T');
+                                return item;
+                            })
+                            ?.map((item, index) => {
+                                const formatter = new Intl.NumberFormat(
+                                    'en-US',
+                                    {
+                                        style: 'currency',
+                                        currency: 'NGN',
+                                        currencyDisplay: 'narrowSymbol'
+                                    }
+                                );
+                                const formattedAmount = formatter.format(
+                                    item.transactionAmount
+                                );
+                                return (
+                                    <ReportsData
+                                        bank={
+                                            item.isEcobankToEcobankTransaction
+                                        }
+                                        date={item.transactionDate.split('T')}
+                                        type={transactionType}
+                                        ammount={item.transactionAmount}
+                                        transactionStatus={
+                                            item.transactionStatus
+                                        }
+                                    />
+                                );
+                            })
+                    )}
                 </table>
             </div>
         </DashLayout>

@@ -194,14 +194,14 @@ const Dashboard = () => {
     useEffect(() => {
         if (transactionHistory !== null) {
             setTableDetails(transactionHistory.transactions);
-            tableDetails?.filter((item) => {
-                const newDate = item.transactionDate.split('T');
-                if (newDate[0] == time) {
-                    setDateState(true);
-                } else {
-                    setDateState(false);
-                }
-            });
+            const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
+                'T'
+            );
+            if (newDate[0] == time) {
+                setDateState(true);
+            } else {
+                setDateState(false);
+            }
 
             // tableDetails.data?.map((item) => {
             //     //console.log(item.transactionDate);
@@ -519,11 +519,7 @@ const Dashboard = () => {
                                         const newDate = item.transactionDate.split(
                                             'T'
                                         );
-                                        // console.log(item);
-                                        return (
-                                            newDate[0] >= rangeDate &&
-                                            newDate[0] <= time
-                                        );
+                                        return item;
                                     })
                                     ?.map((item, index) => {
                                         console.log(item);

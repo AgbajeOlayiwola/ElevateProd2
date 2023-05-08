@@ -52,15 +52,24 @@ const Liveness = ({ action }) => {
         var formData = new FormData();
 
         formData.append('userFace', file);
+        let cookie;
 
-        const cookie = getCookie('cookieToken');
+        if (getCookie('cookieToken') == undefined) {
+            cookie = getCookie('existingToken');
+        } else {
+            cookie = getCookie('cookieToken');
+        }
         axios
-            .post(`https://testvate.live/authentication/facematch`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${cookie}`
+            .post(
+                `https://mysmeapp.ecobank.com:8443/authentication/facematch`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${cookie}`
+                    }
                 }
-            })
+            )
             .then((response) => {
                 //console.logresponse.data.message);
                 setSuccess(response.data.message);

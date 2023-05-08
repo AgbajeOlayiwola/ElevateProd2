@@ -2,9 +2,39 @@ import React, { useState } from 'react';
 import styles from './styles.module.css';
 import { TbCreditCard } from 'react-icons/tb';
 import ButtonComp from '../../ReusableComponents/Button';
+import PaylinkSuccess from '../Sucess';
+import SuccessCallBack from '../SuccessCallBack';
+import FailedPayment from '../FailedPayment';
 
-const BillingAddress = ({ action }) => {
+const BillingAddress = ({ action, newPage }) => {
     const [activeBtn, setActiveBtn] = useState(true);
+    const [page, setPage] = useState(newPage);
+    const PaylinkComponenet = () => {
+        switch (page) {
+            case 1:
+                return (
+                    <PaylinkSuccess
+                        action={() => setPage((prev) => prev + 1)}
+                    />
+                );
+            case 2:
+                return (
+                    <PaylinkSuccess
+                        action={() => setPage((prev) => prev + 1)}
+                    />
+                );
+            case 3:
+                return (
+                    <SuccessCallBack
+                        action={() => setPage((prev) => prev + 1)}
+                    />
+                );
+            case 4:
+                return (
+                    <FailedPayment action={() => setPage((prev) => prev + 1)} />
+                );
+        }
+    };
     return (
         <div className={styles.recievePaymentBox}>
             <div className={styles.cardDets}>
@@ -15,63 +45,17 @@ const BillingAddress = ({ action }) => {
                         <TbCreditCard />
                         <p>Card</p>
                     </div>
+                    <div className={styles.marvel}>
+                        <TbCreditCard />
+                        <p>Paylink</p>
+                    </div>
+                    <div className={styles.marvel}>
+                        <TbCreditCard />
+                        <p>USSD</p>
+                    </div>
                 </div>
                 <div className={styles.cardDtsInputs}>
-                    <div>
-                        <div className={styles.logos}>
-                            <img
-                                src="/Assets/Images/eraImage.png"
-                                width={104}
-                                height={34}
-                            />
-                            <div>
-                                <p>Marvelous Solutions</p>
-
-                                <p>marvelousc</p>
-                            </div>
-                        </div>
-                    </div>
-                    <h1 className={styles.enter}>
-                        Enter your billing address to complete payment
-                    </h1>
-                    <div className={styles.allCardDets}>
-                        <div className={styles.cardNum}>
-                            <label>Street Address</label>
-                            <input
-                                type="text"
-                                placeholder="0000 0000 0000 0000"
-                            />
-                        </div>
-                        <div className={styles.cardNum}>
-                            <label>Zip Code</label>
-                            <input
-                                type="text"
-                                placeholder="0000 0000 0000 0000"
-                            />
-                        </div>
-                        <div className={styles.moreCardDets}>
-                            <div>
-                                <label>State</label>
-                                <select>
-                                    <option></option>
-                                </select>
-                            </div>
-                            <div>
-                                <label>City</label>
-                                <select>
-                                    <option></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div onClick={action} className={styles.buttonTop}>
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Pay N54,000"
-                                type="submit"
-                            />
-                        </div>
-                    </div>
+                    <div>{PaylinkComponenet()}</div>
                 </div>
             </div>
         </div>

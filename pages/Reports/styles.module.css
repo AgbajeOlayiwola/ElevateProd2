@@ -1,7 +1,7 @@
-.collectionChart{
-    background: #FFFFFF;
-border-radius: 16px;
-padding: 22px 65px;
+.collectionChart {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px 65px;
 }
 .collectionCHartDiv {
     display: flex;
@@ -9,299 +9,319 @@ padding: 22px 65px;
     flex-direction: column;
     gap: 9px;
 }
-.collectionChartTop{
+.collectionChartTop {
     display: flex;
     align-items: flex-end;
     gap: 12px;
 }
-.chartH1{
+.chartH1 {
     font-family: 'Inter';
-font-style: normal;
-font-weight: 900;
-font-size: 24px;
-line-height: 29px;
-/* identical to box height */
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
 
-
-color: #69940D;
-
+    color: #69940d;
 }
-.collectionChart div div p{
+.collectionChart div div p {
     font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 16px;
-/* identical to box height, or 115% */
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height, or 115% */
 
-
-color: #3E3E3E;
-
+    color: #3e3e3e;
 }
-.charts{
+.charts {
     display: flex;
     align-items: center;
     flex-direction: row;
 }
-.green{
-    background: #3A5207;
+.green {
+    background: #3a5207;
     width: 100%;
     height: 14px;
 }
-.greenI{
-    background: #69940D;
-    width: 100%;
-    height: 14px;
-
-}
-.greenII{
-    background: #6CCF00;
-    width: 100%;
-    height: 14px;
-
-}
-.greenIII{
-    background: #C4D344;
+.greenI {
+    background: #69940d;
     width: 100%;
     height: 14px;
 }
-.greenIdiv h1 span{
+.greenII {
+    background: #6ccf00;
+    width: 100%;
+    height: 14px;
+}
+.greenIII {
+    background: #c4d344;
+    width: 100%;
+    height: 14px;
+}
+.greenIdiv h1 span {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
     /* or 115% */
-    
-    
-    color: #3A5207;
-    
+
+    color: #3a5207;
 }
-.greenIdiv h1{
+.greenIdiv h1 {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
-    /* or 115% */    
+    /* or 115% */
 }
-.greenIIdiv h1{
+.greenIIdiv h1 {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
-    /* or 115% */    
+    /* or 115% */
 }
-.greenIIdiv h1 span{
+.greenIIdiv h1 span {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
-    /* or 115% */   
-    color: #69940D; 
+    /* or 115% */
+    color: #69940d;
 }
-.greenIIIdiv h1{
+.greenIIIdiv h1 {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
-    /* or 115% */    
+    /* or 115% */
 }
-.greenIIIdiv h1 span{
+.greenIIIdiv h1 span {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
-    /* or 115% */   
-    color: #6CCF00; 
+    /* or 115% */
+    color: #6ccf00;
 }
-.greenIVdiv h1 span{
+.greenIVdiv h1 span {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
-    /* or 115% */  
-    color: #C4D344;  
+    /* or 115% */
+    color: #c4d344;
 }
-.greenIVdiv h1{
+.greenIVdiv h1 {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
-    /* or 115% */    
+    /* or 115% */
 }
-.greenIdiv{
+.greenIdiv {
     width: 20%;
 }
-.greenIIdiv{
+.greenIIdiv {
     width: 30%;
 }
-.greenIIIdiv{
+.greenIIIdiv {
     width: 50%;
 }
-.greenIVdiv{
+.greenIVdiv {
     width: 15%;
 }
-.allTrans{
+.allTrans {
     font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 16px;
-line-height: 19px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
 
-color: #102572;
+    color: #102572;
 }
-.filter{
+.filter {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.filterFlex{
+.filterFlex {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #F8F8F8;
-border: 1px solid #DBDBDB;
-border-radius: 12px;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
 }
-.filterFlex div{
+.filterFlex div {
     padding: 16px 32px;
+    cursor: pointer;
 }
-.filterFlex div p{
+
+.filterFlex div:hover {
+    background: #6ccf00;
+    border-radius: 12px;
+}
+
+.filterFlex div p {
     margin: 0px;
     font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 19px;
-display: flex;
-align-items: center;
-text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    text-align: center;
 
-color: #A5A5A5;
-
+    color: #a5a5a5;
 }
-.collectionsTable{
+
+.filterFlex div:hover p {
+    color: white;
+}
+.collectionsTable {
     background: #fff;
     padding: 48px 32px;
     margin-top: 23.99px;
 }
-.active{
-    background: #6CCF00;
-border-radius: 12px;
+.active {
+    background: #6ccf00;
+    border-radius: 12px;
 }
-.active p{
+.active p {
     font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 19px;
-display: flex;
-align-items: center;
-text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    text-align: center;
 
-color: #FFFFFF !important;
+    color: #ffffff !important;
 }
-.generate{
+.generate {
     display: flex;
     flex-direction: row-reverse;
     gap: 16px;
 }
-.down{
-    background: #7FBB01;
-border-radius: 12px;
-padding: 16px;
-color: #fff;
+.down {
+    background: #7fbb01;
+    border-radius: 12px;
+    padding: 16px;
+    color: #fff;
 }
-.down p{
+.down p {
     margin: 0px;
 }
-.gene p{
+.gene p {
     margin: 0px;
-    color: #7FBB01;
+    color: #7fbb01;
 }
-.gene{
-    background: #FFFFFF;
-border: 1px solid #7FBB01;
-border-radius: 12px;
-padding: 16px;
+.gene {
+    background: #ffffff;
+    border: 1px solid #7fbb01;
+    border-radius: 12px;
+    padding: 16px;
 }
-.srch{
+.srch {
     padding: 11px 38px;
-    border: 1px solid #DAE1FF;
-border-radius: 16px;
+    border: 1px solid #dae1ff;
+    border-radius: 16px;
 }
-.searches{
+.searches {
     display: flex;
     margin-top: 29px;
     gap: 16px;
 }
-.filterDiv{
-    background: #06374B;
-border-radius: 16px;
-padding: 12px 22px;
-color: #fff;
-display: flex;
-gap: 15px;
-align-items: center;
+
+.searches select {
+    width: 123px;
+    margin: 0px;
+    background-color: #005b82;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    padding: 8px 16px;
+    margin-left: 16px;
+    color: white;
+    border: none;
+    background-image: url(../../public/Assets/Svgs/Vector\ 26.svg);
+    background-position-x: 74%;
+    background-position-y: 55%;
+    background-repeat: no-repeat;
 }
-.filterDiv p{
-margin: 0px;
+
+.filterDiv {
+    background: #06374b;
+    border-radius: 16px;
+    padding: 12px 22px;
+    color: #fff;
+    display: flex;
+    gap: 15px;
+    align-items: center;
 }
-.searchInp{
+.filterDiv p {
+    margin: 0px;
+}
+.searchInp {
     display: flex;
     align-items: center;
 }
-.sarchIcon{
+.sarchIcon {
     margin-right: -29px;
     /* height: 30px; */
     font-size: 20px;
     z-index: 2;
 }
-.table{
+.table {
     width: 100%;
     margin-top: 25px;
-    
 }
-.table thead{
-    background: #F5F6FA;
-border-radius: 16px;
-margin-bottom: 24px;
+.table thead {
+    background: #f5f6fa;
+    border-radius: 16px;
+    margin-bottom: 24px;
 }
-.table tr th div p{
+.table tr th div p {
     font-family: 'Inter';
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 17px;
-/* identical to box height */
-text-align: start;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    text-align: start;
 
-color: #3E3E3E;
+    color: #3e3e3e;
 }
-.theadTop{
+.theadTop {
     border-bottom-left-radius: 16px;
     border-top-left-radius: 16px;
     padding-left: 14px;
 }
-.theadBtm{
+.theadBtm {
     border-bottom-right-radius: 16px;
     border-top-right-radius: 16px;
 }
-.collctionh1 h1{
+.collctionh1 h1 {
     font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 20px;
-line-height: 24px;
-color: #102572;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #102572;
 }
-.collctionh1{
+.collctionh1 {
     margin-bottom: 50px;
 }

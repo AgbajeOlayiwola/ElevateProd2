@@ -25,18 +25,11 @@ const RecievePaylink = () => {
                 return <CardDetails action={() => setPage('BillingAddress')} />;
             case 'BillingAddress':
                 return (
-                    <BillingAddress action={() => setPage('PaylinkSuccess')} />
+                    <BillingAddress
+                        newPage={1}
+                        action={() => setPage('PaylinkSuccess')}
+                    />
                 );
-            case 'PaylinkSuccess':
-                return (
-                    <PaylinkSuccess action={() => setPage('SuccessCallBack')} />
-                );
-            case 'SuccessCallBack':
-                return (
-                    <SuccessCallBack action={() => setPage('FailedPayment')} />
-                );
-            case 'FailedPayment':
-                return <FailedPayment action={() => setPage('CardDetails')} />;
         }
     };
     return (
