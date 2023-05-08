@@ -35,7 +35,7 @@ const LineChart = () => {
     const [price, setPrice] = useState();
     useEffect(() => populateLineData(), []);
     useEffect(() => {
-        dispatch(getTransactionElevate(pageSrchIndex, numOfRecords));
+        // dispatch(getTransactionElevate(pageSrchIndex, numOfRecords));
     }, []);
 
     useEffect(() => populateLineData, [transactionElevate]);

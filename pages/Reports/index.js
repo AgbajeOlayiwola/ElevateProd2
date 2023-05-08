@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout } from '../../components';
 import DashLayout from '../../components/layout/Dashboard';
 import styles from './styles.module.css';
@@ -8,6 +8,8 @@ import ReportsData from '../../components/ReusableComponents/ReportsData';
 import { BiFilter } from 'react-icons/bi';
 
 const Report = () => {
+    const [filterPara, setFilterPara] = useState('');
+    const [filterType, setFilterType] = useState('All');
     return (
         <DashLayout>
             <div className={styles.collctionh1}>
@@ -60,23 +62,109 @@ const Report = () => {
             <div className={styles.collectionsTable}>
                 <h2 className={styles.allTrans}>All Transactions</h2>
                 <div className={styles.filter}>
-                    <div className={styles.filterFlex}>
-                        <div className={styles.active}>
-                            <p>All</p>
+                    {filterPara === 'Outflow' ? (
+                        <div className={styles.filterFlex}>
+                            <div
+                                className={
+                                    filterType === 'All' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('All');
+                                }}
+                            >
+                                <p>All</p>
+                            </div>
+                            <div
+                                className={
+                                    filterType === 'Pay' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('Pay');
+                                }}
+                            >
+                                <p>Pay Link</p>
+                            </div>
+                            <div
+                                className={
+                                    filterType === 'Cards' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('Cards');
+                                }}
+                            >
+                                <p>Cards</p>
+                            </div>
+                            {/* <div
+                                className={
+                                    filterType === 'All' ? styles.active : ''
+                                }
+                                
+                            >
+                                <p>Cards</p>
+                            </div> */}
+                            <div
+                                className={
+                                    filterType === 'QR' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('QR');
+                                }}
+                            >
+                                <p>EcoBank QR</p>
+                            </div>
                         </div>
-                        <div>
-                            <p>Pay Link</p>
+                    ) : filterPara === 'Inflow' ? (
+                        <div className={styles.filterFlex}>
+                            <div
+                                className={
+                                    filterType === 'All' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('All');
+                                }}
+                            >
+                                <p>All</p>
+                            </div>
+                            <div
+                                className={
+                                    filterType === 'Pay' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('Pay');
+                                }}
+                            >
+                                <p>Pay Link</p>
+                            </div>
+                            <div
+                                className={
+                                    filterType === 'Cards' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('Cards');
+                                }}
+                            >
+                                <p>Cards</p>
+                            </div>
+                            {/* <div
+                                className={
+                                    filterType === 'All' ? styles.active : ''
+                                }
+                            >
+                                <p>Cards</p>
+                            </div> */}
+                            <div
+                                className={
+                                    filterType === 'QR' ? styles.active : ''
+                                }
+                                onClick={() => {
+                                    setFilterType('QR');
+                                }}
+                            >
+                                <p>EcoBank QR</p>
+                            </div>
                         </div>
-                        <div>
-                            <p>Cards</p>
-                        </div>
-                        <div>
-                            <p>Cards</p>
-                        </div>
-                        <div>
-                            <p>EcoBank QR</p>
-                        </div>
-                    </div>
+                    ) : null}
+
                     <div className={styles.generate}>
                         <div className={styles.down}>
                             <p>Download</p>
@@ -95,10 +183,22 @@ const Report = () => {
                             placeholder="Search"
                         />
                     </div>
-                    <div className={styles.filterDiv}>
+
+                    <select
+                        name=""
+                        id=""
+                        onChange={(e) => {
+                            setFilterPara(e.target.value);
+                        }}
+                    >
+                        <option value="">Filter</option>
+                        <option value="Inflow">Inflow</option>
+                        <option value="Outflow">Outflow</option>
+                    </select>
+                    {/* <div className={styles.filterDiv}>
                         <p>Filter</p>
                         <BsChevronDown />
-                    </div>
+                    </div> */}
                 </div>
                 <table className={styles.table}>
                     <thead>
