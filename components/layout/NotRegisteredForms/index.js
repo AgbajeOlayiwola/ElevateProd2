@@ -34,7 +34,7 @@ const ProfileSetups = () => {
     const cookie = getCookie('cookieToken');
     //console.log('register page', cookie);
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
         type: false,
         rcnumber: '',

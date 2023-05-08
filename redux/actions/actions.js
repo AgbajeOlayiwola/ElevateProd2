@@ -87,7 +87,9 @@ import {
     qrInfoType,
     auth2Fa_Type,
     Paylink_Type,
-    otpType
+    otpType,
+    getMiniStatement_Type,
+    getFullStatement_Type
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -3496,3 +3498,79 @@ export const loadpaylinkGen = (code) => (dispatch) => {
         .catch((error) => dispatch(paylinkGenLoadError(error)));
 };
 //PAYLiNK actions end
+
+//GET Mini Statement actions
+export const getMiniStatementStart = () => ({
+    type: getMiniStatement_Type.GET_MINI_STATEMENT_START
+});
+
+export const getMiniStatementSuccess = (getMiniStatementSuccess) => ({
+    type: getMiniStatement_Type.GET_MINI_STATEMENT_SUCCESS,
+    payload: getMiniStatementSuccess
+});
+
+export const getMiniStatementError = (getMiniStatementerrorMessage) => ({
+    type: getMiniStatement_Type.GET_MINI_STATEMENT_ERROR,
+    payload: getMiniStatementerrorMessage
+});
+export const getMiniStatementGen = () => (dispatch) => {
+    dispatch(getMiniStatementStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .get(`${apiRoutes.paymentLink}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(getMiniStatementSuccess(response.data.data));
+        })
+        .catch((error) => dispatch(getMiniStatementError(error)));
+};
+//Get Mini Statement actions end
+
+//GET Full Statement actions
+export const getFullStatementStart = () => ({
+    type: getFullStatement_Type.GET_FULL_STATEMENT_START
+});
+
+export const getFullStatementSuccess = (getFullStatementSuccess) => ({
+    type: getFullStatement_Type.GET_FULL_STATEMENT_SUCCESS,
+    payload: getFullStatementSuccess
+});
+
+export const getFullStatementError = (getFullStatementerrorMessage) => ({
+    type: getFullStatement_Type.GET_FULL_STATEMENT_ERROR,
+    payload: getFullStatementerrorMessage
+});
+export const getFullStatementGen = () => (dispatch) => {
+    dispatch(getFullStatementStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .get(`${apiRoutes.paymentLink}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(getFullStatementSuccess(response.data.data));
+        })
+        .catch((error) => dispatch(getFullStatementError(error)));
+};
+//Get Full Statement actions end

@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Line } from 'react-chartjs-2';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTransactionElevate } from '../../../redux/actions/actions';
+import {
+    getTransactionElevate,
+    getTransactionHistory
+} from '../../../redux/actions/actions';
 import { dateData } from '../Data';
 import { FaCommentsDollar } from 'react-icons/fa';
 const LineChart = () => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
+    );
+    const { transactionHistory, errorMessageTransactionHistory } = useSelector(
+        (state) => state.transactionHistoryReducer
     );
     const [tableDetails, setTableDetails] = useState([]);
     const [amount, setAmount] = useState([]);
@@ -35,10 +41,10 @@ const LineChart = () => {
     const [price, setPrice] = useState();
     useEffect(() => populateLineData(), []);
     useEffect(() => {
-        dispatch(getTransactionElevate(pageSrchIndex, numOfRecords));
+        dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
     }, []);
 
-    useEffect(() => populateLineData, [transactionElevate]);
+    useEffect(() => populateLineData, [transactionHistory]);
 
     // const populateLineData = () => {
     //     const date = new Date().getDate();
@@ -105,13 +111,13 @@ const LineChart = () => {
         const labelsData = [];
         const datasetsArray = [0, 0, 0, 0, 0, 0, 0];
 
-        if (transactionElevate !== null) {
+        if (transactionHistory !== null) {
             for (let i = 0; i <= 6; i++) {
                 const index =
                     dayIndex + i > 6 ? (dayIndex + i) % 7 : dayIndex + i;
                 labelsData[i] = days[index];
 
-                transactionElevate.transactions.map((trans) => {
+                transactionHistory.transactions.map((trans) => {
                     if ((index = new Date(trans.transactionDate).getDay())) {
                         if (transactionArray.indexOf(trans.transactionType)) {
                             datasetsArray[index] =

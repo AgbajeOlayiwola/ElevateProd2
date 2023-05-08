@@ -88,6 +88,8 @@ import paymentQrReducer from './paymentQr.reducer';
 import auth2FaReducer from './auth2Fa.reducer';
 import generateQrInfo from './generateQr.reducer';
 import payLinkGenReducer from './paylinkGen.reducer';
+import getMiniStatementReducer from './getMinistatement.reducer';
+import getFullStatementReducer from './getFullstatement.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -182,7 +184,9 @@ const appReducer = combineReducers({
     paymentQrReducer: paymentQrReducer,
     auth2FaReducer: auth2FaReducer,
     generateQrInfo: generateQrInfo,
-    payLinkGenReducer: payLinkGenReducer
+    payLinkGenReducer: payLinkGenReducer,
+    getMiniStatementReducer: getMiniStatementReducer,
+    getFullStatementReducer: getFullStatementReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

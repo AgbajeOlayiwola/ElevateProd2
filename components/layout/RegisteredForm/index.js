@@ -36,6 +36,9 @@ const ExistingMultiStep = () => {
         password: '',
         confPassword: ''
     });
+    const { otpActData, otpErrorMessage } = useSelector(
+        (state) => state.otpReducer
+    );
     useEffect(() => {
         dispatch(loadCountry());
     }, []);
@@ -46,6 +49,13 @@ const ExistingMultiStep = () => {
                     setCountry(item);
                 }
             });
+        }
+        if (typeof window !== 'undefined') {
+            let accounts = window.localStorage.getItem('account');
+            var newAccounts = JSON.parse(accounts);
+            let loginWith = localStorage.getItem('LoginWith');
+            //console.log(loginWith);
+            console.log(newAccounts);
         }
     }, [countries]);
     const [setType, typeset] = useState('false');
@@ -66,16 +76,20 @@ const ExistingMultiStep = () => {
         //console.log(loginWith);
         //console.log(newAccounts.user.email);
     }
-    const { otpActData, otpErrorMessage } = useSelector(
-        (state) => state.otpReducer
-    );
+
     //console.log(formData.emailData, newAccounts.user?.email);
     //console.log(formData.emailData, newAccounts.email);
-
+    const phonenumber = () => {
+        if (newAccounts.phoneNumber != undefined) {
+            return newAccounts.phoneNumber;
+        } else {
+            return newAccounts.user.phoneNumber;
+        }
+    };
     const handleOtp = () => {
         const otpData = {
-            phoneNumber: formData.countryCode + formData.phoneNumber,
-            otp: formData.otp.join('')
+            phoneNumber: phonenumber(),
+            otp: formData.otp
         };
         dispatch(runVerifyOtp(otpData));
     };

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../ReusableComponents/Button';
 import OtpInput from '../../ReusableComponents/Otpinput';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { ResetOTP } from '../NotRegisteredForms/StepTwoBVNAuthenticator/styles.module';
 import styles from './styles.module.css';
 import { resetOtpData } from '../../../redux/actions/actions';
-
+import { useDispatch, useSelector } from 'react-redux';
 const FirstStep = ({ handleSubmit, action, loads, setFormData, formData }) => {
     const [activeBtn, setActiveBtn] = useState(true);
 

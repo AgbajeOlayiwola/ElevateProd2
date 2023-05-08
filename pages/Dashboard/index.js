@@ -501,7 +501,7 @@ const Dashboard = () => {
                             <div className={styles.btmIIp}>
                                 <p>Recent Transactions</p>
                             </div>
-                            {tableDetails.length === 0 ? (
+                            {tableDetails.length == 0 ? (
                                 <div className={styles.transactionBody}>
                                     <div>
                                         <div className={styles.transactionSvg}>
@@ -519,12 +519,14 @@ const Dashboard = () => {
                                         const newDate = item.transactionDate.split(
                                             'T'
                                         );
+                                        // console.log(item);
                                         return (
                                             newDate[0] >= rangeDate &&
                                             newDate[0] <= time
                                         );
                                     })
                                     ?.map((item, index) => {
+                                        console.log(item);
                                         const formatter = new Intl.NumberFormat(
                                             'en-US',
                                             {
