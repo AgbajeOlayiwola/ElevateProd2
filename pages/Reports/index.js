@@ -362,6 +362,7 @@ const Report = () => {
                                 );
                                 return (
                                     <ReportsData
+                                        key={index}
                                         bank={
                                             item.isEcobankToEcobankTransaction
                                         }

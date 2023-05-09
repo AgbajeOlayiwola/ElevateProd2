@@ -8,35 +8,23 @@ import styles from './styles.module.css';
 const FailedPayment = ({ action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     return (
-        <div className={styles.recievePaymentBox}>
-            <div className={styles.cardDets}>
-                <div className={styles.cardDetsCard}>
-                    <p>Choose Channel</p>
-                    <div className={styles.marvel}>
-                        <TbCreditCard />
-                        <p>Card</p>
-                    </div>
+        <div className={styles.cardDtsInputs}>
+            <div className={styles.allCardDets}>
+                <ErrorSvg />
+                <div className={styles.payMent}>
+                    <h1>Your Transaction Was Not Completed</h1>
+                    <p className={styles.payMentP}>
+                        There was an error in completing your transaction
+                    </p>
+                    <p>Retry with same Card</p>
                 </div>
-                <div className={styles.cardDtsInputs}>
-                    <div className={styles.allCardDets}>
-                        <ErrorSvg />
-                        <div className={styles.payMent}>
-                            <h1>Your Transaction Was Not Completed</h1>
-                            <p className={styles.payMentP}>
-                                There was an error in completing your
-                                transaction
-                            </p>
-                            <p>Retry with same Card</p>
-                        </div>
-                        <div onClick={action} className={styles.button}>
-                            <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
-                                text="Try Another Card"
-                                type="submit"
-                            />
-                        </div>
-                    </div>
+                <div onClick={action} className={styles.button}>
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        text="Try Another Card"
+                        type="submit"
+                    />
                 </div>
             </div>
         </div>
