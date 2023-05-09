@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout } from '../../components';
 import DashLayout from '../../components/layout/Dashboard';
 import styles from './styles.module.css';
@@ -6,10 +6,92 @@ import { BsChevronDown } from 'react-icons/bs';
 import { AiOutlineSearch } from 'react-icons/ai';
 import ReportsData from '../../components/ReusableComponents/ReportsData';
 import { BiFilter } from 'react-icons/bi';
+import {
+    getTransactionElevate,
+    getTransactionHistory
+} from '../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Report = () => {
+    const dispatch = useDispatch();
     const [filterPara, setFilterPara] = useState('');
     const [filterType, setFilterType] = useState('All');
+    const [dateState, setDateState] = useState(false);
+    const [time, setTime] = useState();
+    const [tableDetails, setTableDetails] = useState([]);
+    const { transactionElevate, errorMessageTransactionElevate } = useSelector(
+        (state) => state.transactionElevateReducer
+    );
+    const { transactionHistory, errorMessageTransactionHistory } = useSelector(
+        (state) => state.transactionHistoryReducer
+    );
+    const [pageSrchIndex, setPageSrchIndex] = useState(0);
+    const [numOfRecords, setNumOfRecords] = useState(10);
+    const [transactionType, setTransactionType] = useState('');
+    useEffect(() => {
+        if (filterType === 'All') {
+            dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
+        } else {
+            dispatch(
+                getTransactionElevate(
+                    pageSrchIndex,
+                    numOfRecords,
+                    transactionType
+                )
+            );
+        }
+        getCurrentDate();
+    }, [filterType]);
+    useEffect(() => {
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'NGN',
+            currencyDisplay: 'narrowSymbol'
+        });
+    }, []);
+    const getCurrentDate = () => {
+        let newDate = new Date();
+        let date = newDate.getDate();
+        let month = newDate.getMonth() + 1;
+        let year = newDate.getFullYear();
+        setTime(
+            `${year}-${month < 10 ? `0${month}` : `${month}`}-${
+                date < 10 ? `0${date}` : `${date}`
+            }`
+        );
+    };
+    useEffect(() => {
+        if (transactionElevate !== null) {
+            setTableDetails(transactionElevate.transactions);
+            console.log(transactionElevate.transactions);
+            tableDetails?.filter((item) => {
+                const newDate = item.transactionDate.split('T');
+                console.log(newDate[0], time);
+                if (newDate[0] !== time) {
+                    setDateState(true);
+                } else {
+                    setDateState(false);
+                }
+            });
+
+            // tableDetails.data?.map((item) => {
+            //     //console.log(item.transactionDate);
+            // });
+        } else if (transactionHistory !== null) {
+            setTableDetails(transactionHistory.transactions);
+            console.log(transactionHistory.transactions);
+            tableDetails?.filter((item) => {
+                const newDate = item.transactionDate.split('T');
+                console.log(newDate[0], time);
+                if (newDate[0] !== time) {
+                    setDateState(true);
+                } else {
+                    setDateState(false);
+                }
+            });
+        }
+        // console.log(transactionElevate);
+    }, [transactionElevate, transactionHistory]);
     return (
         <DashLayout>
             <div className={styles.collctionh1}>
@@ -80,6 +162,7 @@ const Report = () => {
                                 }
                                 onClick={() => {
                                     setFilterType('Pay');
+                                    setTransactionType('PAYMENT_LINK');
                                 }}
                             >
                                 <p>Pay Link</p>
@@ -90,6 +173,7 @@ const Report = () => {
                                 }
                                 onClick={() => {
                                     setFilterType('Cards');
+                                    setTransactionType('USSD');
                                 }}
                             >
                                 <p>Cards</p>
@@ -108,6 +192,7 @@ const Report = () => {
                                 }
                                 onClick={() => {
                                     setFilterType('QR');
+                                    setTransactionType('QR_PAYMENT');
                                 }}
                             >
                                 <p>EcoBank QR</p>
@@ -250,7 +335,47 @@ const Report = () => {
                             </th>
                         </tr>
                     </thead>
-                    <ReportsData />
+                    {tableDetails.length === 0 ? (
+                        <div className={styles.transactionBody}>
+                            <div>
+                                <p>No Transactions Have Benn Generated yet</p>
+                            </div>
+                        </div>
+                    ) : (
+                        tableDetails
+                            ?.filter((item) => {
+                                console.log(item);
+                                const newDate = item.transactionDate.split('T');
+                                return item;
+                            })
+                            ?.map((item, index) => {
+                                const formatter = new Intl.NumberFormat(
+                                    'en-US',
+                                    {
+                                        style: 'currency',
+                                        currency: 'NGN',
+                                        currencyDisplay: 'narrowSymbol'
+                                    }
+                                );
+                                const formattedAmount = formatter.format(
+                                    item.transactionAmount
+                                );
+                                return (
+                                    <ReportsData
+                                        key={index}
+                                        bank={
+                                            item.isEcobankToEcobankTransaction
+                                        }
+                                        date={item.transactionDate.split('T')}
+                                        type={transactionType}
+                                        ammount={item.transactionAmount}
+                                        transactionStatus={
+                                            item.transactionStatus
+                                        }
+                                    />
+                                );
+                            })
+                    )}
                 </table>
             </div>
         </DashLayout>

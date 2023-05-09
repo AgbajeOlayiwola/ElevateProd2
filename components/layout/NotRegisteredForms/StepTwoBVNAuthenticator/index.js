@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import styles from './styles.module.css';
@@ -26,28 +26,23 @@ const StepTwoBVNAuthenticator = ({
     handleShowThirdStep,
     setFormData,
     formData,
-    action
+    action,
+    otpError
 }) => {
     // const [progress, setProgress] = useState('50%');
     const [otps, setOtp] = useState([]);
-    const handleChange = (otps) => {
-        setOtp();
-        //console.logotps);
-    };
+    if (typeof window !== 'undefined') {
+        let accounts = window.localStorage.getItem('user');
+        var newAccounts = JSON.parse(accounts);
+
+        //console.log(newAccounts.user.email);
+    }
+
     const dispatch = useDispatch();
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors }
-    } = useForm();
-    const sendOTP = (data) => {
-        //console.logdata);
-    };
+
     const { resetOtp, resetOtpErrorMessages } = useSelector(
         (state) => state.resetOtpReducer
     );
-    //console.logformData.phoneNumber);
 
     const [activeBtn, setActiveBtn] = useState(true);
 
@@ -82,113 +77,126 @@ const StepTwoBVNAuthenticator = ({
         setFormData({ ...formData, otp: ssnValues.join('') });
     }, [ssnValues]);
 
-    const clear = () => {
+    const clear = (e) => {
+        e.preventDefault();
         setValue((ssnValues) => ['']);
     };
-    const ResetOtp = () => {
+    const ResetOtp = (e) => {
+        e.preventDefault();
         setValue((ssnValues) => ['']);
         const data = {
-            phoneNumber: formData.phoneNumber
+            userId: newAccounts.userId
         };
         dispatch(resetOtpData(data));
         //console.logresetOtp, resetOtpErrorMessages);
     };
 
     useEffect(() => {
+        console.log(resetOtp);
         setValue((ssnValues) => ['']);
     }, [resetOtp, resetOtpErrorMessages]);
 
     return (
-        <form onSubmit={handleSubmit(action)}>
-            <div className={styles.bvnBody}>
-                <div className={styles.cover}>
-                    <div>
-                        {/* <ProfileCard width="50%" height="0"> */}
-                        <CardHeadingBVN>
-                            <LeftHeading>OTP Verification</LeftHeading>
-                            {/* <Progressbar
+        <div className={styles.bvnBody}>
+            <div className={styles.cover}>
+                <div>
+                    {/* <ProfileCard width="50%" height="0"> */}
+                    <CardHeadingBVN>
+                        <LeftHeading>OTP Verification</LeftHeading>
+                        {/* <Progressbar
                             bgcolor="#6CCF00"
                             progressCount={progress}
                             height={14}
                             progWidth="100%"
                         /> */}
-                            {/* <Imag 
+                        {/* <Imag 
                     src="/width" 
                     alt="lineImage" /> */}
-                        </CardHeadingBVN>
-                        <SmallInstructionText>
-                            A one time Password has been sent to your registered
-                            phone number please enter digits below.
-                        </SmallInstructionText>
-                        {resetOtpErrorMessages ? (
-                            <p>
-                                {' '}
-                                {resetOtpErrorMessages.response.data.message}
-                            </p>
-                        ) : null}
-                        <p className={styles.inp}>Input OTP</p>
+                    </CardHeadingBVN>
+                    <SmallInstructionText>
+                        A one time Password has been sent to your registered
+                        phone number please enter digits below.
+                    </SmallInstructionText>
+                    {otpError ? (
+                        <p className={styles.error}>{otpError}</p>
+                    ) : null}
+                    {resetOtpErrorMessages ? (
+                        <p> {resetOtpErrorMessages.response.data.message}</p>
+                    ) : (
+                        <p>{resetOtp?.data.message}</p>
+                    )}
+                    <p className={styles.inp}>Input OTP</p>
+                    <form>
                         <div className={styles.otpInps}>
                             <input
                                 type="password"
                                 name="ssn-1"
                                 maxLength={1}
-                                onChange={handleOtpChange}
+                                onInput={handleOtpChange}
                             />
                             <input
                                 type="password"
                                 name="ssn-2"
                                 maxLength={1}
-                                onChange={handleOtpChange}
+                                onInput={handleOtpChange}
                             />
                             <input
                                 type="password"
                                 name="ssn-3"
                                 maxLength={1}
-                                onChange={handleOtpChange}
+                                onInput={handleOtpChange}
                             />
                             <input
                                 type="password"
                                 name="ssn-4"
                                 maxLength={1}
-                                onChange={handleOtpChange}
+                                onInput={handleOtpChange}
                             />
                             <input
                                 type="password"
                                 name="ssn-5"
                                 maxLength={1}
-                                onChange={handleOtpChange}
+                                onInput={handleOtpChange}
                             />
                             <input
                                 type="password"
                                 name="ssn-6"
                                 maxLength={1}
-                                onChange={handleOtpChange}
+                                onInput={handleOtpChange}
                             />
                         </div>
-
-                        <p onClick={ResetOtp}>Resend OTP</p>
-
-                        <button
-                            style={{ cursor: 'pointer' }}
-                            className={styles.clr}
-                            type="reset"
-                            onClick={clear}
-                        >
-                            Clear
-                        </button>
-                        {/* </ResetOTP> */}
-                    </div>
+                        <div className={styles.resendFlex}>
+                            <button
+                                className={styles.resetOtp}
+                                style={{ cursor: 'pointer' }}
+                                onClick={ResetOtp}
+                                // type="reset"
+                            >
+                                Resend OTP
+                            </button>{' '}
+                            <br />
+                            <button
+                                onClick={clear}
+                                style={{ cursor: 'pointer' }}
+                                className={styles.clr}
+                                type="reset"
+                            >
+                                Clear
+                            </button>
+                        </div>
+                    </form>
                     <ButtonComp
+                        onClick={action}
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
                         // onClick={action}
-                        type="submit"
+                        type="button"
                         margin="80px 0px 0px 0px"
                         text="Proceed"
                     />
                 </div>
             </div>
-        </form>
+        </div>
     );
 };
 

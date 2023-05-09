@@ -202,3 +202,35 @@ color: #3E3E3E !important;
     margin-top:56px;
     margin-bottom: 31px;
 }
+@media screen and (max-width: 990px) {
+.cardDets{
+    display: flex;
+    /* gap: 122px; */
+    height: 100%;
+    flex-direction: column;
+}
+.recievePaymentBox {
+    background: #FEFEFE;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    border-radius: 12px;
+  width: 97%;
+      min-width: 10px;
+     max-width: none;
+    height: 790px;
+    min-height: 790px;
+    max-height: 790px;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.cardDetsCard {
+    padding: 131px 36px;
+    width: 100%;
+    background: #F1F9E8;
+    height: 100%;
+    border-radius: 20px 0px 0px 20px;
+    overflow: scroll;
+    display: flex;
+    gap: 40px;
+}
+}

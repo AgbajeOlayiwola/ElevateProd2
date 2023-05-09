@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ButtonComp from '../../ReusableComponents/Button';
 import OtpInput from '../../ReusableComponents/Otpinput';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { ResetOTP } from '../NotRegisteredForms/StepTwoBVNAuthenticator/styles.module';
 import styles from './styles.module.css';
 import { resetOtpData } from '../../../redux/actions/actions';
-
-const FirstStep = ({ handleSubmit, action, loads, setFormData, formData }) => {
+import { useDispatch, useSelector } from 'react-redux';
+const FirstStep = ({
+    handleSubmit,
+    action,
+    loads,
+    setFormData,
+    formData,
+    otpError
+}) => {
     const [activeBtn, setActiveBtn] = useState(true);
 
     const numOfFields = 6;
@@ -38,13 +45,29 @@ const FirstStep = ({ handleSubmit, action, loads, setFormData, formData }) => {
             }
         }
     };
+    const dispatch = useDispatch();
+    if (typeof window !== 'undefined') {
+        let accounts = window.localStorage.getItem('account');
+        var newAccounts = JSON.parse(accounts);
+        let loginWith = localStorage.getItem('LoginWith');
+        //console.log(loginWith);
+        //console.log(newAccounts.user.email);
+    }
+    const userId = () => {
+        if (newAccounts.userId != undefined) {
+            return newAccounts.userId;
+        } else {
+            return newAccounts.user.userId;
+        }
+    };
     useEffect(() => {
         setFormData({ ...formData, otp: ssnValues.join('') });
     }, [ssnValues]);
-    const ResetOtp = () => {
+    const ResetOtp = (e) => {
         setValue((ssnValues) => ['']);
+        // document.querySelector();
         const data = {
-            phoneNumber: formData.phoneNumber
+            userId: userId()
         };
         dispatch(resetOtpData(data));
         //console.logresetOtp, resetOtpErrorMessages);
@@ -65,6 +88,18 @@ const FirstStep = ({ handleSubmit, action, loads, setFormData, formData }) => {
                 <div className={styles.existingBody}>
                     <div className={styles.stepFour}>
                         <h1 className={styles.header}>OTP Verification</h1>
+                        {otpError ? (
+                            <p className={styles.error}>{otpError}</p>
+                        ) : null}
+                        {resetOtpErrorMessages ? (
+                            <p>
+                                {' '}
+                                {resetOtpErrorMessages.response.data.message}
+                            </p>
+                        ) : (
+                            <p>{resetOtp?.data.message}</p>
+                        )}
+
                         <p className={styles.p}>
                             A one time Password has been sent to your registered
                             phone number please enter digits below.
@@ -75,37 +110,37 @@ const FirstStep = ({ handleSubmit, action, loads, setFormData, formData }) => {
                                     type="password"
                                     name="ssn-1"
                                     maxLength={1}
-                                    onChange={handleOtpChange}
+                                    onInput={handleOtpChange}
                                 />
                                 <input
                                     type="password"
                                     name="ssn-2"
                                     maxLength={1}
-                                    onChange={handleOtpChange}
+                                    onInput={handleOtpChange}
                                 />
                                 <input
                                     type="password"
                                     name="ssn-3"
                                     maxLength={1}
-                                    onChange={handleOtpChange}
+                                    onInput={handleOtpChange}
                                 />
                                 <input
                                     type="password"
                                     name="ssn-4"
                                     maxLength={1}
-                                    onChange={handleOtpChange}
+                                    onInput={handleOtpChange}
                                 />
                                 <input
                                     type="password"
                                     name="ssn-5"
                                     maxLength={1}
-                                    onChange={handleOtpChange}
+                                    onInput={handleOtpChange}
                                 />
                                 <input
                                     type="password"
                                     name="ssn-6"
                                     maxLength={1}
-                                    onChange={handleOtpChange}
+                                    onInput={handleOtpChange}
                                 />
                             </div>
 

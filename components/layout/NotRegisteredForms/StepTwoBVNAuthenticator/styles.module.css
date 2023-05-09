@@ -18,6 +18,16 @@
     justify-content: space-between;
     width: 100%;
 }
+.resetOtp{
+    background:none;
+    color: #102572;
+    width: fit-content;
+}
+.resetOtp:hover{
+    background:none;
+    color: #102572;
+    width: fit-content;
+}
 .otpInps {
     display: flex;
     justify-content: space-between;

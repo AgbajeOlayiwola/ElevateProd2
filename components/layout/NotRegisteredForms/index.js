@@ -112,9 +112,10 @@ const ProfileSetups = () => {
         };
         dispatch(runVerifyOtp(otpData));
     };
+    const [otpError, setOtpError] = useState('');
     useEffect(() => {
         if (otpErrorMessage) {
-            console.log('otpError');
+            setOtpError(otpErrorMessage.response.data.message);
         } else if (otpActData) {
             // console.log('otpErrorI');
             setPage(page + 1);
@@ -145,6 +146,7 @@ const ProfileSetups = () => {
                         // setPage={page+1}
                         page={page}
                         action={handleOtp}
+                        otpError={otpError}
                     />
                 );
             case 2:

@@ -7,6 +7,7 @@ import BillingAddress from '../../components/RecievePayment/BillingAddress';
 import PaylinkSuccess from '../../components/RecievePayment/Sucess';
 import SuccessCallBack from '../../components/RecievePayment/SuccessCallBack';
 import FailedPayment from '../../components/RecievePayment/FailedPayment';
+import ReacievePaymntComponent from '../../components/RecievePayment';
 
 const RecievePaylink = () => {
     const [page, setPage] = useState('PaymentItem');
@@ -22,21 +23,12 @@ const RecievePaylink = () => {
                     />
                 );
             case 'CardDetails':
-                return <CardDetails action={() => setPage('BillingAddress')} />;
-            case 'BillingAddress':
                 return (
-                    <BillingAddress action={() => setPage('PaylinkSuccess')} />
+                    <ReacievePaymntComponent
+                        newPage={1}
+                        action={() => setPage('BillingAddress')}
+                    />
                 );
-            case 'PaylinkSuccess':
-                return (
-                    <PaylinkSuccess action={() => setPage('SuccessCallBack')} />
-                );
-            case 'SuccessCallBack':
-                return (
-                    <SuccessCallBack action={() => setPage('FailedPayment')} />
-                );
-            case 'FailedPayment':
-                return <FailedPayment action={() => setPage('CardDetails')} />;
         }
     };
     return (

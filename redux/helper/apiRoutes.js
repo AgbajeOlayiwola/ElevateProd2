@@ -93,6 +93,11 @@ const generateQr = '/payment/qr/generate';
 const qrInfo = '/payment/qr/generate';
 const auth2Fa = '/authentication/login/2FA';
 const paymentLink = '/payment/payment-link/create';
+const complaintType = '/dispute-management/get-complaint-types';
+const complaintCategory = '/dispute-management/get-complaint-categories';
+const subcomplaint = '/dispute-management/get-complaint-sub-categories';
+const getMiniStatemnt = '/bank-account/statement/mini';
+const getFullStatement = '/bank-account/statement/full';
 export default {
     getBanks,
     getCountries,
@@ -186,5 +191,10 @@ export default {
     generateQr,
     qrInfo,
     auth2Fa,
-    paymentLink
+    paymentLink,
+    complaintType,
+    complaintCategory,
+    subcomplaint,
+    getMiniStatemnt,
+    getFullStatement
 };

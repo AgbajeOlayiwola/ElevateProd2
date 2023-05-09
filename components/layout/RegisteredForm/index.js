@@ -36,6 +36,10 @@ const ExistingMultiStep = () => {
         password: '',
         confPassword: ''
     });
+    const { otpActData, otpErrorMessage } = useSelector(
+        (state) => state.otpReducer
+    );
+    const [cookie, setCookies] = useState('');
     useEffect(() => {
         dispatch(loadCountry());
     }, []);
@@ -46,6 +50,13 @@ const ExistingMultiStep = () => {
                     setCountry(item);
                 }
             });
+        }
+        if (typeof window !== 'undefined') {
+            let accounts = window.localStorage.getItem('account');
+            var newAccounts = JSON.parse(accounts);
+            let loginWith = localStorage.getItem('LoginWith');
+            //console.log(loginWith);
+            console.log(newAccounts);
         }
     }, [countries]);
     const [setType, typeset] = useState('false');
@@ -66,22 +77,27 @@ const ExistingMultiStep = () => {
         //console.log(loginWith);
         //console.log(newAccounts.user.email);
     }
-    const { otpActData, otpErrorMessage } = useSelector(
-        (state) => state.otpReducer
-    );
+
     //console.log(formData.emailData, newAccounts.user?.email);
     //console.log(formData.emailData, newAccounts.email);
-
+    const phonenumber = () => {
+        if (newAccounts.phoneNumber != undefined) {
+            return newAccounts.phoneNumber;
+        } else {
+            return newAccounts.user.phoneNumber;
+        }
+    };
     const handleOtp = () => {
         const otpData = {
-            phoneNumber: formData.countryCode + formData.phoneNumber,
-            otp: formData.otp.join('')
+            phoneNumber: phonenumber(),
+            otp: formData.otp
         };
         dispatch(runVerifyOtp(otpData));
     };
+    const [otpError, setOtpError] = useState('');
     useEffect(() => {
         if (otpErrorMessage) {
-            console.log('otpError');
+            setOtpError(otpErrorMessage.response.data.message);
         } else if (otpActData) {
             // console.log('otpErrorI');
             setPage(page + 1);
@@ -96,6 +112,7 @@ const ExistingMultiStep = () => {
                         formData={formData}
                         setFormData={setFormData}
                         action={handleOtp}
+                        otpError={otpError}
                     />
                 );
             case 1:
@@ -152,6 +169,7 @@ const ExistingMultiStep = () => {
                                 setLoads((prev) => !prev);
                                 setPage(page + 1);
                             }}
+                            cookie={cookie}
                             loading={loading}
                             setLoading={setLoading}
                             // action={handleSubmitt}
@@ -196,9 +214,11 @@ const ExistingMultiStep = () => {
         setPage(page + 1);
         setPageType('New');
     }
+
     useEffect(() => {
         //console.log('new bvn:', bvnNin.message);
         if (existingUserProfilee.data) {
+            setCookies(existingUserProfilee.data.data.token);
             if (
                 existingUserProfilee.data.message ==
                 'Profile setup Intialization completed'

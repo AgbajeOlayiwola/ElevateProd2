@@ -832,3 +832,43 @@ export const Paylink_Type = {
     PAYLINK_ERROR: 'PAYLINK_ERROR'
 };
 //End Export Paylink
+
+//Export complaintType
+export const complaintType_Type = {
+    COMPLAINT_TYPE_START: 'COMPLAINT_TYPE_START',
+    COMPLAINT_TYPE_SUCCESS: 'COMPLAINT_TYPE_SUCCESS',
+    COMPLAINT_TYPE_ERROR: 'COMPLAINT_TYPE_ERROR'
+};
+//End Export commplaintType
+
+//Export complaintCategory
+export const complaintCategory_Type = {
+    COMPLAINT_CATEGORY_START: 'COMPLAINT_CATEGORY_START',
+    COMPLAINT_CATEGORY_SUCCESS: 'COMPLAINT_CATEGORY_SUCCESS',
+    COMPLAINT_CATEGORY_ERROR: 'COMPLAINT_CATEGORY_ERROR'
+};
+//End Export commplaintCategory
+
+//Export subComplaint
+export const subComplaint_Type = {
+    SUB_COMPLAINT_START: 'SUB_COMPLAINT_START',
+    SUB_COMPLAINT_SUCCESS: 'SUB_COMPLAINT_SUCCESS',
+    SUB_COMPLAINT_ERROR: 'SUB_COMPLAINT_ERROR'
+};
+//End Export subComplaint
+
+//Export getMiniStatement
+export const getMiniStatement_Type = {
+    GET_MINI_STATEMENT_START: 'GET_MINI_STATEMENT_START',
+    GET_MINI_STATEMENT_SUCCESS: 'GET_MINI_STATEMENT_SUCCESS',
+    GET_MINI_STATEMENT_ERROR: 'GET_MINI_STATEMENT_ERROR'
+};
+//End Export getMiniStatement
+
+//Export getFullSatement
+export const getFullStatement_Type = {
+    GET_FULL_STATEMENT_START: 'GET_FULL_STATEMENT_START',
+    GET_FULL_STATEMENT_SUCCESS: 'GET_FULL_STATEMENT_SUCCESS',
+    GET_FULL_STATEMENT_ERROR: 'GET_FULL_STATEMENT_ERROR'
+};
+//End Export getFullStatement

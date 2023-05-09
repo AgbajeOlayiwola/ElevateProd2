@@ -2,9 +2,9 @@
     /* width: 43%;
     margin: 100px auto 0px;
     max-width: 644px; */
-    background: #fefefe;
+    /* background: #fefefe;
     border: 1px solid rgba(219, 219, 219, 0.6);
-    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08); */
     border-radius: 50px;
 }
 
@@ -510,9 +510,15 @@
 }
 
 .sectionII {
+    height: fit-content;margin-top: 80px;
+    
     padding: 70px 0px;
     max-width: 682px;
     width: 53%;
+    background: #fefefe;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 50px;
 }
 
 .formWrapper {
