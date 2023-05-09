@@ -79,6 +79,17 @@ color: #2F2F2F;
 .cardDtsInputs{
     padding: 40px 32px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cardDtsInputs h1{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #005B82;
 }
 .logos{
     display: flex;
@@ -232,5 +243,9 @@ color: #3E3E3E !important;
     overflow: scroll;
     display: flex;
     gap: 40px;
+}
+.cardDtsInputs{
+    /* padding: 40px 32px; */
+    width: fit-content;
 }
 }

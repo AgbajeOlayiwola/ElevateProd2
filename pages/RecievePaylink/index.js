@@ -14,15 +14,6 @@ const RecievePaylink = () => {
     const recievePaylinkComponenet = () => {
         switch (page) {
             case 'PaymentItem':
-                return <PaymentItem action={() => setPage('PaymentDetails')} />;
-            case 'PaymentDetails':
-                return (
-                    <PaymentDetails
-                        action={() => setPage('CardDetails')}
-                        back={() => setPage('PaymentItem')}
-                    />
-                );
-            case 'CardDetails':
                 return (
                     <ReacievePaymntComponent
                         newPage={1}

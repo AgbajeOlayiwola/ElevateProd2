@@ -6,6 +6,10 @@ import BillingAddress from './BillingAddress';
 import { TbCreditCard } from 'react-icons/tb';
 import styles from './styles.module.css';
 import CardDetails from './CardDtails';
+import Paylink from './PaylinkInput';
+import USSDInput from './Ussd';
+import QrInput from './Qr';
+import Transfer from './Transfer';
 
 const ReacievePaymntComponent = ({ action, newPage }) => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -16,122 +20,22 @@ const ReacievePaymntComponent = ({ action, newPage }) => {
             case 'card':
                 switch (page) {
                     case 1:
-                        return (
-                            <CardDetails
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 2:
-                        return (
-                            <BillingAddress
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 3:
-                        return (
-                            <PaylinkSuccess
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-
-                    case 4:
-                        return (
-                            <SuccessCallBack
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 5:
-                        return <FailedPayment action={() => setPage(1)} />;
+                        return <CardDetails />;
                 }
             case 'transfer':
                 switch (page) {
                     case 1:
-                        return (
-                            <CardDetails
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 2:
-                        return (
-                            <BillingAddress
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 3:
-                        return (
-                            <PaylinkSuccess
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-
-                    case 4:
-                        return (
-                            <SuccessCallBack
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 5:
-                        return <FailedPayment action={() => setPage(1)} />;
+                        return <Transfer />;
                 }
             case 'Ussd':
                 switch (page) {
                     case 1:
-                        return (
-                            <CardDetails
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 2:
-                        return (
-                            <BillingAddress
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 3:
-                        return (
-                            <PaylinkSuccess
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-
-                    case 4:
-                        return (
-                            <SuccessCallBack
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 5:
-                        return <FailedPayment action={() => setPage(1)} />;
+                        return <USSDInput />;
                 }
             case 'qr':
                 switch (page) {
                     case 1:
-                        return (
-                            <CardDetails
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 2:
-                        return (
-                            <BillingAddress
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 3:
-                        return (
-                            <PaylinkSuccess
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-
-                    case 4:
-                        return (
-                            <SuccessCallBack
-                                action={() => setPage((prev) => prev + 1)}
-                            />
-                        );
-                    case 5:
-                        return <FailedPayment action={() => setPage(1)} />;
+                        return <QrInput />;
                 }
         }
     };
