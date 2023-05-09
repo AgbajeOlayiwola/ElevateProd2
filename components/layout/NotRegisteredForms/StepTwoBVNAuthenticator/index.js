@@ -26,7 +26,8 @@ const StepTwoBVNAuthenticator = ({
     handleShowThirdStep,
     setFormData,
     formData,
-    action
+    action,
+    otpError
 }) => {
     // const [progress, setProgress] = useState('50%');
     const [otps, setOtp] = useState([]);
@@ -76,10 +77,12 @@ const StepTwoBVNAuthenticator = ({
         setFormData({ ...formData, otp: ssnValues.join('') });
     }, [ssnValues]);
 
-    const clear = () => {
+    const clear = (e) => {
+        e.preventDefault();
         setValue((ssnValues) => ['']);
     };
-    const ResetOtp = () => {
+    const ResetOtp = (e) => {
+        e.preventDefault();
         setValue((ssnValues) => ['']);
         const data = {
             userId: newAccounts.userId

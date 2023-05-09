@@ -1613,7 +1613,13 @@ export const accountNumberData = (data) => (dispatch) => {
     dispatch(accountNumberLoadStart());
     axiosInstance
         .post(`${apiRoutes.accountNumber}`, data)
-        .then((response) => dispatch(accountNumberLoadSuccess(response.data)))
+        .then((response) => {
+            dispatch(accountNumberLoadSuccess(response.data));
+            setCookie('cookieToken', response.data.token, {
+                httpOnly: 'true'
+            });
+            console.log(response);
+        })
         .catch((error) =>
             dispatch(accountNumberLoadError(error.response.data.message))
         );
@@ -2427,7 +2433,6 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
         )
         .then((response) => {
             dispatch(identificationDocSuccess(response.data.message));
-            //console.logresponse);
         })
         .catch((error) =>
             dispatch(identificationDocError(error.response.data.message))
@@ -2810,6 +2815,7 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
         cookie = getCookie('existingToken');
     } else {
         cookie = getCookie('cookieToken');
+        console.log(cookie);
     }
     // dispatch(accountNumberLoadStart());
     axios
