@@ -60,7 +60,7 @@ const Liveness = ({ action }) => {
             cookie = getCookie('cookieToken');
         }
         axios
-            .post(`https://testvate.live /authentication/facematch`, formData, {
+            .post(`https://testvate.live/authentication/facematch`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${cookie}`

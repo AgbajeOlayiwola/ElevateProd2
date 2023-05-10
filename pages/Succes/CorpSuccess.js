@@ -13,7 +13,7 @@ const CorporateSuccess = () => {
     useEffect(() => {
         const cookie = getCookie('cookieToken');
         axiosInstance
-            .get(`https://testvate.live ${apiRoutes.accountStatus}`, {
+            .get(`https://testvate.live${apiRoutes.accountStatus}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${cookie}`

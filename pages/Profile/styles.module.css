@@ -532,6 +532,21 @@
     margin-top: 64px;
 }
 
+.deleteButton {
+    max-width: 232px;
+    width: 35%;
+    margin-top: 64px;
+}
+
+.deleteButton button {
+    background-color: red;
+}
+
+.deleteButton .disabled {
+    background-color: #e6ebee !important;
+    color: #cccccc !important;
+}
+
 .beneficiaryHead {
     display: flex;
     justify-content: space-between;
