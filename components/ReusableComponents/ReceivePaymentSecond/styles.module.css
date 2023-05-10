@@ -13,11 +13,23 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
-
+.createdQr{
+    width: 60%;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
 .secondBody::-webkit-scrollbar {
     display: none;
 }
-
+.qrData{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.qrData div p{
+    cursor: pointer;
+}
 .download {
     color: #529b03;
     cursor: pointer;

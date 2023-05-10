@@ -16,7 +16,7 @@ const PaymentTable = ({ title, test }) => {
         (state) => state.transactionHistoryReducer
     );
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
-    const [numOfRecords, setNumOfRecords] = useState(10);
+    const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [displayType, setDisplayType] = useState('');

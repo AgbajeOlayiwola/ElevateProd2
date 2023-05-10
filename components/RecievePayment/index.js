@@ -11,7 +11,7 @@ import USSDInput from './Ussd';
 import QrInput from './Qr';
 import Transfer from './Transfer';
 
-const ReacievePaymntComponent = ({ action, newPage }) => {
+const ReacievePaymntComponent = ({ action, newPage, data, type }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [page, setPage] = useState(newPage);
     const [selcted, setSelected] = useState('card');
@@ -35,7 +35,7 @@ const ReacievePaymntComponent = ({ action, newPage }) => {
             case 'qr':
                 switch (page) {
                     case 1:
-                        return <QrInput />;
+                        return <QrInput type={type} data={data} />;
                 }
         }
     };

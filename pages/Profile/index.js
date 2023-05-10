@@ -5,6 +5,7 @@ import ProfileLayout from '../../components/layout/ProfileLayout';
 import ArrowBackSvg from '../../components/ReusableComponents/ArrowBackSvg';
 import BeneSvg from '../../components/ReusableComponents/BeneSvg';
 import BvnSvg from '../../components/ReusableComponents/BvnSvg';
+import Iframe from 'react-iframe';
 import CheckedSvg from '../../components/ReusableComponents/CheckedSvg';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import InputTag from '../../components/ReusableComponents/Input';
@@ -52,6 +53,7 @@ import Link from 'next/link';
 import { ButtonComp } from '../../components';
 import { useRouter } from 'next/router';
 import { FaTrash } from 'react-icons/fa';
+import OutsideClick from '../../components/ReusableComponents/OutsideClick';
 const Profile = () => {
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
@@ -81,6 +83,7 @@ const Profile = () => {
     const [bank, setBank] = useState([]);
     const [interEnquiry, setInterEnquiry] = useState('');
     const [showinterEnquiry, setshowInterEnquiry] = useState(false);
+    const [rafiki, setRafiki] = useState(false);
     const [active, setActive] = useState(false);
     const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const dispatch = useDispatch();
@@ -1100,11 +1103,6 @@ const Profile = () => {
                     case 0:
                         return (
                             <div>
-                                <Lottie
-                                    options={defaultOptions}
-                                    height={400}
-                                    width={400}
-                                />
                                 <div className={styles.name}>
                                     <div className={styles.Hello}>
                                         <h2>
@@ -1113,6 +1111,18 @@ const Profile = () => {
                                         <p>How can we help you</p>
                                     </div>
                                 </div>
+                                <img
+                                    src="Assets/Images/rafiki.jpeg"
+                                    alt="Rafiki"
+                                    className={styles.rafiki}
+                                />
+                                <button
+                                    onClick={() => {
+                                        setRafiki(true);
+                                    }}
+                                >
+                                    Chat With us
+                                </button>
                                 <div>
                                     <div className={styles.contactEmail}>
                                         <div className={styles.contactUs}>
@@ -1767,6 +1777,25 @@ const Profile = () => {
                     </>
                 }
             >
+                {rafiki ? (
+                    <OutsideClick
+                        onClickOutside={() => {
+                            setRafiki(false);
+                        }}
+                    >
+                        <div className={styles.chatWithUs}>
+                            <Iframe
+                                url="https://ice.ecobank.com/chatbotui"
+                                width="540px"
+                                height="520px"
+                                id=""
+                                className=""
+                                display="block"
+                                position="relative"
+                            />
+                        </div>
+                    </OutsideClick>
+                ) : null}
                 {renderForm()}
             </ProfileLayout>
             {outcome ? (

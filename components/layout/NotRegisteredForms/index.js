@@ -23,6 +23,7 @@ import Head from 'next/head';
 import HomeSvg from '../../ReusableComponents/HomeSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { Scrollbars } from 'react-custom-scrollbars';
+import withAuth from '../../HOC/withAuth';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
@@ -282,4 +283,4 @@ const ProfileSetups = () => {
     );
 };
 
-export default ProfileSetups;
+export default withAuth(ProfileSetups);

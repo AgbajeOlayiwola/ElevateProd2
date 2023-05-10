@@ -41,28 +41,82 @@ export const SidebarData = [
     {
         title: 'Payment',
         path: '/Payment',
-        modal: 'show',
+        // modal: 'show',
         icon: <PaymentSvg />,
         iconActive: <PaymentActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
-        iconOpened: <RiIcons.RiArrowUpSLine />,
-        subNav: [
-            {
-                title: 'Collections',
-                path: '/Collections',
-                icon: <BiIcons.BiTransfer />
-            },
-            {
-                title: 'Payment',
-                path: '/Payment',
-                icon: <BiIcons.BiTransfer />
-            },
-            {
-                title: 'Reports',
-                path: '/Reports',
-                icon: <BiIcons.BiTransfer />
-            }
-        ]
+        iconOpened: <RiIcons.RiArrowUpSLine />
+        // subNav: [
+        //     {
+        //         title: 'Collections',
+        //         path: '/Collections',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Payment',
+        //         path: '/Payment',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Reports',
+        //         path: '/Reports',
+        //         icon: <BiIcons.BiTransfer />
+        //     }
+        // ]
+    },
+
+    {
+        title: 'Collections',
+        path: '/Collections',
+        // modal: 'show',
+        icon: <PaymentSvg />,
+        iconActive: <PaymentActiveSvg />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+        // subNav: [
+        //     {
+        //         title: 'Collections',
+        //         path: '/Collections',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Payment',
+        //         path: '/Payment',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Reports',
+        //         path: '/Reports',
+        //         icon: <BiIcons.BiTransfer />
+        //     }
+        // ]
+    },
+
+    {
+        title: 'Reports',
+        path: '/Reports',
+        // modal: 'show',
+        icon: <PaymentSvg />,
+        iconActive: <PaymentActiveSvg />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+        // subNav: [
+        //     {
+        //         title: 'Collections',
+        //         path: '/Collections',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Payment',
+        //         path: '/Payment',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Reports',
+        //         path: '/Reports',
+        //         icon: <BiIcons.BiTransfer />
+        //     }
+        // ]
     },
     // {
     //     title: 'Tools',
@@ -102,14 +156,14 @@ export const SidebarData = [
     //     iconClosed: <RiIcons.RiArrowDownSLine />,
     //     iconOpened: <RiIcons.RiArrowUpSLine />
     // },
-    {
-        title: 'Dispute ',
-        path: '/Dispute',
-        icon: <StorefrontSvg />,
-        iconActive: <StorefrontActiveSvg />,
-        iconClosed: <RiIcons.RiArrowDownSLine />,
-        iconOpened: <RiIcons.RiArrowUpSLine />
-    },
+    // {
+    //     title: 'Dispute ',
+    //     path: '/Dispute',
+    //     icon: <StorefrontSvg />,
+    //     iconActive: <StorefrontActiveSvg />,
+    //     iconClosed: <RiIcons.RiArrowDownSLine />,
+    //     iconOpened: <RiIcons.RiArrowUpSLine />
+    // },
 
     {
         title: 'Settings',

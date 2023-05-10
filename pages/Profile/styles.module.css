@@ -553,6 +553,18 @@
     align-items: center;
 }
 
+.rafiki {
+    display: block;
+    margin: 0px auto;
+}
+
+.chatWithUs {
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+    z-index: 20;
+}
+
 .beneficiaryHead h2 {
     font-family: 'Inter', sans-serif;
     font-style: normal;
