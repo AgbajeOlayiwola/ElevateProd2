@@ -24,9 +24,9 @@ const ReportsData = ({
                 {/* <td>
                     <p>dance@gma...</p>
                 </td> */}
-                <td>
+                {/* <td>
                     <p>{bank == true ? 'Ecobank' : null}</p>
-                </td>
+                </td> */}
 
                 <td>
                     <p>{date[0]}</p>

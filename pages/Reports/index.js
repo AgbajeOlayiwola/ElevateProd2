@@ -10,14 +10,25 @@ import {
     // getTransactionElevate,
     // getTransactionHistory,
     getMiniStatementGen,
+    getFullStatementGen,
     loadAccountPrimary
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import StorePopup from '../../components/ReusableComponents/StorePopup';
+import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
+import Loader from '../../components/ReusableComponents/Loader';
+import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess';
 
 const Report = () => {
     const dispatch = useDispatch();
-    const [filterPara, setFilterPara] = useState('');
-    const [filterType, setFilterType] = useState('All');
+    // const [filterPara, setFilterPara] = useState('');
+    // const [filterType, setFilterType] = useState('All');
+    const [overlay, setOverlay] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     // const [dateState, setDateState] = useState(false);
     // const [time, setTime] = useState();
     const [tableDetails, setTableDetails] = useState([]);
@@ -29,6 +40,9 @@ const Report = () => {
     // );
     const { getMiniStatementSuccess, getMiniStatementerrorMessage } =
         useSelector((state) => state.getMiniStatementReducer);
+
+    const { getFullStatementSuccess, getFullStatementerrorMessage } =
+        useSelector((state) => state.getFullStatementReducer);
 
     const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
@@ -114,6 +128,17 @@ const Report = () => {
             setTableDetails(getMiniStatementSuccess.transactionList);
         }
     }, [getMiniStatementSuccess]);
+    useEffect(() => {
+        if (getFullStatementSuccess !== null) {
+            setLoading(false);
+            setSuccess(true);
+            setError('success');
+        } else if (getFullStatementerrorMessage !== null) {
+            setLoading(false);
+            setSuccess(true);
+            setError('error');
+        }
+    }, [getFullStatementSuccess]);
     return (
         <DashLayout>
             <div className={styles.collctionh1}>
@@ -164,9 +189,77 @@ const Report = () => {
             </div>
 
             <div className={styles.collectionsTable}>
-                <h2 className={styles.allTrans}>All Transactions</h2>
+                {success ? (
+                    <PaymentSuccess
+                        overlay={overlay}
+                        type="profile"
+                        statusbar={error}
+                        heading="Statement Generated Successfully"
+                        body="Statement generated has been sent to your email"
+                        action={() => {
+                            setOverlay(false);
+                            setEndDate('');
+                            setStartDate('');
+                            setSuccess(false);
+                        }}
+                    />
+                ) : (
+                    <StorePopup overlay={overlay}>
+                        <div className={styles.generateHead}>
+                            <CloseButton
+                                color="red"
+                                action={() => {
+                                    setOverlay(false);
+                                }}
+                            />
+                        </div>
+                        <div className={styles.generateForm}>
+                            <div className={styles.formGroup}>
+                                <label>Start Date</label>
+                                <input
+                                    type="date"
+                                    onChange={(e) => {
+                                        setStartDate(e.target.value);
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Stop Date </label>
+                                <input
+                                    type="date"
+                                    onChange={(e) => {
+                                        setEndDate(e.target.value);
+                                    }}
+                                />
+                            </div>
+                            {loading ? (
+                                <Loader />
+                            ) : (
+                                <button
+                                    onClick={() => {
+                                        setLoading(true);
+                                        const data = {
+                                            startRange: new Date(
+                                                startDate
+                                            ).toISOString(),
+                                            endRange: new Date(
+                                                endDate
+                                            ).toISOString(),
+                                            accountId: accountPrimarys.accountId
+                                        };
+                                        dispatch(getFullStatementGen(data));
+                                    }}
+                                >
+                                    Generate
+                                </button>
+                            )}
+                        </div>
+                    </StorePopup>
+                )}
+
                 <div className={styles.filter}>
-                    {filterPara === 'Outflow' ? (
+                    <h2 className={styles.allTrans}>All Transactions</h2>
+                    {/* {filterPara === 'Outflow' ? (
                         <div className={styles.filterFlex}>
                             <div
                                 className={
@@ -200,14 +293,6 @@ const Report = () => {
                             >
                                 <p>Cards</p>
                             </div>
-                            {/* <div
-                                className={
-                                    filterType === 'All' ? styles.active : ''
-                                }
-                                
-                            >
-                                <p>Cards</p>
-                            </div> */}
                             <div
                                 className={
                                     filterType === 'QR' ? styles.active : ''
@@ -252,13 +337,6 @@ const Report = () => {
                             >
                                 <p>Cards</p>
                             </div>
-                            {/* <div
-                                className={
-                                    filterType === 'All' ? styles.active : ''
-                                }
-                            >
-                                <p>Cards</p>
-                            </div> */}
                             <div
                                 className={
                                     filterType === 'QR' ? styles.active : ''
@@ -270,18 +348,23 @@ const Report = () => {
                                 <p>EcoBank QR</p>
                             </div>
                         </div>
-                    ) : null}
+                    ) : null} */}
 
                     <div className={styles.generate}>
                         <div className={styles.down}>
                             <p>Download</p>
                         </div>
-                        <div className={styles.gene}>
+                        <div
+                            className={styles.gene}
+                            onClick={() => {
+                                setOverlay(true);
+                            }}
+                        >
                             <p>Generate Full Statement</p>
                         </div>
                     </div>
                 </div>
-                <div className={styles.searches}>
+                {/* <div className={styles.searches}>
                     <div className={styles.searchInp}>
                         <AiOutlineSearch className={styles.sarchIcon} />
                         <input
@@ -302,11 +385,11 @@ const Report = () => {
                         <option value="Inflow">Inflow</option>
                         <option value="Outflow">Outflow</option>
                     </select>
-                    {/* <div className={styles.filterDiv}>
+                    <div className={styles.filterDiv}>
                         <p>Filter</p>
                         <BsChevronDown />
-                    </div> */}
-                </div>
+                    </div>
+                </div> */}
                 <table className={styles.table}>
                     <thead>
                         <tr>
@@ -335,7 +418,7 @@ const Report = () => {
                                     <p>Bank</p>
                                 </div>
                             </th> */}
-                            <th>
+                            <th className={styles.theadBtm}>
                                 <div>
                                     <p>Date</p>
                                 </div>
@@ -360,7 +443,7 @@ const Report = () => {
                     {tableDetails.length === 0 ? (
                         <div className={styles.transactionBody}>
                             <div>
-                                <p>No Transactions Have Benn Generated yet</p>
+                                <p>No Transactions Have Been Generated yet</p>
                             </div>
                         </div>
                     ) : (
