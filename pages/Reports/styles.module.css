@@ -146,13 +146,14 @@
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-
+    margin: 0px;
     color: #102572;
 }
 .filter {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 .filterFlex {
     display: flex;
@@ -215,6 +216,40 @@
     flex-direction: row-reverse;
     gap: 16px;
 }
+
+.generateHead {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    cursor: pointer;
+}
+
+.formGroup {
+    margin-top: 24px;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
+}
+
+.formGroup input {
+    background: #f4f4f4;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+}
 .down {
     background: #7fbb01;
     border-radius: 12px;
@@ -233,6 +268,7 @@
     border: 1px solid #7fbb01;
     border-radius: 12px;
     padding: 16px;
+    cursor: pointer;
 }
 .srch {
     padding: 11px 38px;
@@ -309,6 +345,7 @@
     border-bottom-left-radius: 16px;
     border-top-left-radius: 16px;
     padding-left: 14px;
+    width: 40%;
 }
 .theadBtm {
     border-bottom-right-radius: 16px;

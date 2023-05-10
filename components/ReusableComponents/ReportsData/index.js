@@ -1,30 +1,37 @@
 import React from 'react';
 import { MdMoreVert, MdOutlineMoreVert } from 'react-icons/md';
 import styles from './styles.module.css';
-const ReportsData = ({ transactionStatus, ammount, type, date, bank }) => {
+const ReportsData = ({
+    transactionStatus,
+    ammount,
+    type,
+    date,
+    bank,
+    bene
+}) => {
     return (
         <tbody className={styles.tbody}>
             <tr>
                 <td className={styles.name}>
-                    <p>James Ewang</p>
+                    <p>{bene}</p>
                 </td>
                 <td>
-                    <p>{type}</p>
+                    <p>{type === 'C' ? 'Credit' : 'Debit'}</p>
                 </td>
                 <td className={styles.num}>
                     <p>{ammount}</p>
                 </td>
-                <td>
+                {/* <td>
                     <p>dance@gma...</p>
-                </td>
-                <td>
+                </td> */}
+                {/* <td>
                     <p>{bank == true ? 'Ecobank' : null}</p>
-                </td>
+                </td> */}
 
                 <td>
                     <p>{date[0]}</p>
                 </td>
-                <td>
+                {/* <td>
                     <p>{type}</p>
                 </td>
                 <td>
@@ -34,7 +41,7 @@ const ReportsData = ({ transactionStatus, ammount, type, date, bank }) => {
                 </td>
                 <td>
                     <MdMoreVert />
-                </td>
+                </td> */}
             </tr>
         </tbody>
     );

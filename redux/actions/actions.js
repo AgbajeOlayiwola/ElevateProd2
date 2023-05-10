@@ -3517,7 +3517,7 @@ export const getMiniStatementError = (getMiniStatementerrorMessage) => ({
     type: getMiniStatement_Type.GET_MINI_STATEMENT_ERROR,
     payload: getMiniStatementerrorMessage
 });
-export const getMiniStatementGen = () => (dispatch) => {
+export const getMiniStatementGen = (code) => (dispatch) => {
     dispatch(getMiniStatementStart());
     let cookie;
 
@@ -3527,7 +3527,7 @@ export const getMiniStatementGen = () => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     axiosInstance
-        .get(`${apiRoutes.paymentLink}`, {
+        .post(`${apiRoutes.getMiniStatemnt}`, code, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -3555,7 +3555,7 @@ export const getFullStatementError = (getFullStatementerrorMessage) => ({
     type: getFullStatement_Type.GET_FULL_STATEMENT_ERROR,
     payload: getFullStatementerrorMessage
 });
-export const getFullStatementGen = () => (dispatch) => {
+export const getFullStatementGen = (data) => (dispatch) => {
     dispatch(getFullStatementStart());
     let cookie;
 
@@ -3565,7 +3565,7 @@ export const getFullStatementGen = () => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     axiosInstance
-        .get(`${apiRoutes.paymentLink}`, {
+        .post(`${apiRoutes.getFullStatement}`, data, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
