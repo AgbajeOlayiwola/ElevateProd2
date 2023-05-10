@@ -872,3 +872,27 @@ export const getFullStatement_Type = {
     GET_FULL_STATEMENT_ERROR: 'GET_FULL_STATEMENT_ERROR'
 };
 //End Export getFullStatement
+
+//Export TrackComplaint
+export const TrackComplaint_Type = {
+    GET_TRACK_COMPLAINT_START: 'GET_TRACK_COMPLAINT_START',
+    GET_TRACK_COMPLAINT_SUCCESS: 'GET_TRACK_COMPLAINT_SUCCESS',
+    GET_TRACK_COMPLAINT_ERROR: 'GET_TRACK_COMPLAINT_ERROR'
+};
+//End Export gTrackComplaint
+
+//Export LodgeComplaint
+export const lodgeComplaint_Type = {
+    GET_LODGE_COMPLAINT_START: 'GET_LODGE_COMPLAINT_START',
+    GET_LODGE_COMPLAINT_SUCCESS: 'GET_LODGE_COMPLAINT_SUCCESS',
+    GET_LODGE_COMPLAINT_ERROR: 'GET_LODGE_COMPLAINT_ERROR'
+};
+//End Export Lodgeomplaint
+
+//Export complaintTypes
+export const complaintTypes_Type = {
+    GET_COMPLAINT_TYPES_START: 'GET_COMPLAINT_TYPES_START',
+    GET_COMPLAINT_TYPES_SUCCESS: 'GET_COMPLAINT_TYPES_SUCCESS',
+    GET_COMPLAINT_TYPES_ERROR: 'GET_COMPLAINT_TYPES_ERROR'
+};
+//End Export complaintType
