@@ -806,13 +806,17 @@ export const loadsetTransactionPin = (code) => (dispatch) => {
     dispatch(setTransactionPinLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .post(`https://testvate.live ${apiRoutes.setTransactionPin}`, code, {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Client-Type': 'web',
-                Authorization: `Bearer ${cookie}`
+        .post(
+            `https://mysmeapp.ecobank.com:8443${apiRoutes.setTransactionPin}`,
+            code,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
             }
-        })
+        )
         .then((response) =>
             dispatch(setTransactionPinLoadSuccess(response.data))
         )
@@ -1802,12 +1806,16 @@ export const userLoadError = (errorMessages) => ({
 export const loginUserAction = (loginData) => {
     return (dispatch) => {
         axiosInstance
-            .post(`https://testvate.live${apiRoutes.login}`, loginData, {
-                headers: {
-                    credentials: true,
-                    'Access-Control-Allow-Credentials': true
+            .post(
+                `https://mysmeapp.ecobank.com:8443${apiRoutes.login}`,
+                loginData,
+                {
+                    headers: {
+                        credentials: true,
+                        'Access-Control-Allow-Credentials': true
+                    }
                 }
-            })
+            )
             .then((response) => {
                 //console.logresponse.data);
                 setCookie('cookieToken', response.data.data.token, {
@@ -2070,13 +2078,17 @@ export const runVerifyOtp = (otpData) => {
     }
     return async (dispatch) => {
         await axiosInstance
-            .post(`https://testvate.live ${apiRoutes.verifyOtp}`, otpData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
+            .post(
+                `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyOtp}`,
+                otpData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Client-Type': 'web',
+                        Authorization: `Bearer ${cookie}`
+                    }
                 }
-            })
+            )
             .then((response) => {
                 dispatch(otpLoadSuccess(response.data));
                 //console.log'otp', otpData);
@@ -2450,13 +2462,17 @@ export const memartData = (memartdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live ${apiRoutes.uploadMemart}`, memartdata, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'X-Client-Type': 'web',
-                Authorization: `Bearer ${cookie}`
+        .post(
+            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadMemart}`,
+            memartdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
             }
-        })
+        )
         .then((response) => {
             dispatch(memartSuccess(response));
             //console.logresponse);
@@ -2489,13 +2505,17 @@ export const cacData = (cacdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live ${apiRoutes.uploadCacCert}`, cacdata, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'X-Client-Type': 'web',
-                Authorization: `Bearer ${cookie}`
+        .post(
+            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadCacCert}`,
+            cacdata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
             }
-        })
+        )
         .then((response) => {
             dispatch(cacSuccess(response.data.message));
             //console.logresponse);
@@ -2530,13 +2550,17 @@ export const scmulData = (scmuldata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live ${apiRoutes.uploadScmul}`, scmuldata, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'X-Client-Type': 'web',
-                Authorization: `Bearer ${cookie}`
+        .post(
+            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadScmul}`,
+            scmuldata,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
             }
-        })
+        )
         .then((response) => {
             dispatch(scmulSuccess(response));
             //console.logresponse);
@@ -2747,13 +2771,17 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live ${apiRoutes.forgotPasswordReset}`, data, {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Client-Type': 'web',
-                Authorization: `Bearer ${cookie}`
+        .post(
+            `https://mysmeapp.ecobank.com:8443${apiRoutes.forgotPasswordReset}`,
+            data,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
             }
-        })
+        )
         .then((response) => {
             dispatch(forgotPasswordResetSuccess(response.data.message));
             //console.log(response);
@@ -2789,13 +2817,17 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://testvate.live ${apiRoutes.resetOtp}`, resetOtpdata, {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Client-Type': 'web',
-                Authorization: `Bearer ${cookie}`
+        .post(
+            `https://mysmeapp.ecobank.com:8443${apiRoutes.resetOtp}`,
+            resetOtpdata,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
             }
-        })
+        )
         .then((response) => {
             dispatch(resetOtpSuccess(response));
             //console.logresponse);
@@ -2877,13 +2909,16 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                     }
                     // dispatch(accountNumberLoadStart());
                     axios
-                        .get(`https://testvate.live ${apiRoutes.verifyCac}`, {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-Client-Type': 'web',
-                                Authorization: `Bearer ${cookie}`
+                        .get(
+                            `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyCac}`,
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-Client-Type': 'web',
+                                    Authorization: `Bearer ${cookie}`
+                                }
                             }
-                        })
+                        )
                         .then((response) => {
                             //console.logresponse.data.data);
                             dispatch(exGetBusCacSuccess(response));
@@ -2965,13 +3000,16 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
         .then((response) => {
             if (response.data) {
                 axios
-                    .get(`https://testvate.live ${apiRoutes.verifyCac}`, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Client-Type': 'web',
-                            Authorization: `Bearer ${cookie}`
+                    .get(
+                        `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyCac}`,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Client-Type': 'web',
+                                Authorization: `Bearer ${cookie}`
+                            }
                         }
-                    })
+                    )
                     .then((response) => {
                         //console.logresponse.data.data);
                         dispatch(getRCSuccess(response.data.data.dataFromCac));
@@ -3011,7 +3049,7 @@ export const postEllevateProfilingDetails =
         // dispatch(accountNumberLoadStart());
         axios
             .post(
-                `https://testvate.live ${apiRoutes.postEllevateProfiling}`,
+                `https://mysmeapp.ecobank.com:8443${apiRoutes.postEllevateProfiling}`,
                 profileSetupItems,
                 {
                     headers: {
@@ -3147,13 +3185,16 @@ export const getAddressStatusDetails = () => (dispatch) => {
     }
 
     axios
-        .get(`https://testvate.live ${apiRoutes.addressVerification}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Client-Type': 'web',
-                Authorization: `Bearer ${cookie}`
+        .get(
+            `https://mysmeapp.ecobank.com:8443${apiRoutes.addressVerification}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
             }
-        })
+        )
         .then((response) => {
             //console.logresponse.data.data);
             dispatch(getAddressStatusSuccess(response));
@@ -3272,13 +3313,17 @@ export const getTinDetails = (tinData) => (dispatch) => {
     }
 
     axios
-        .post(`https://testvate.live ${apiRoutes.uploadTin}`, tinData, {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Client-Type': 'web',
-                Authorization: `Bearer ${cookie}`
+        .post(
+            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadTin}`,
+            tinData,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
             }
-        })
+        )
         .then((response) => {
             //console.logresponse.data.data);
             dispatch(getTinSuccess(response));
@@ -3439,14 +3484,18 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
     }
 
     axios
-        .post(`https://testvate.live ${apiRoutes.auth2Fa}`, auth2FaCodeData, {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Client-Type': 'web',
-                // withCredentials: true,
-                Authorization: `Bearer ${cookie}`
+        .post(
+            `https://mysmeapp.ecobank.com:8443${apiRoutes.auth2Fa}`,
+            auth2FaCodeData,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    // withCredentials: true,
+                    Authorization: `Bearer ${cookie}`
+                }
             }
-        })
+        )
         .then((response) => {
             localStorage.setItem(
                 'user',

@@ -98,7 +98,18 @@ const complaintCategory = '/dispute-management/get-complaint-categories';
 const subcomplaint = '/dispute-management/get-complaint-sub-categories';
 const getMiniStatemnt = '/bank-account/statement/mini';
 const getFullStatement = '/bank-account/statement/full';
+const trackComplaint = '/dispute-management/track-complaint';
+const lodgeComplaint = '/dispute-management/lodge-complaint';
+const complaintTypes = '/dispute-management/get-complaint-types';
+const complaintCategories = '/dispute-management/get-complaint-categories';
+const subComplaintCategories =
+    '/dispute-management/get-complaint-sub-categories';
 export default {
+    trackComplaint,
+    lodgeComplaint,
+    complaintCategories,
+    subComplaintCategories,
+    complaintTypes,
     getBanks,
     getCountries,
     getBillerCategories,

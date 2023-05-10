@@ -12,8 +12,8 @@ if (loginToken === null) {
 }
 
 const axiosInstance = axios.create({
-    baseURL: 'https://testvate.live '
-    // baseURL: '//https://testvate.live /'
+    baseURL: 'https://mysmeapp.ecobank.com:8443'
+    // baseURL: '//https://mysmeapp.ecobank.com:8443> /'
 });
 
 export default axiosInstance;
