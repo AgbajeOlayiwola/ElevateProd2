@@ -93,6 +93,25 @@ const ReceivePaymentSecond = ({
                 console.log(err);
             });
     };
+    const [qrUrlData, setQrUrlData] = useState(
+        `https://recievepayment.netlify.app/qr?data=${encodeURIComponent(
+            data?.data.data.dynamicQRBase64
+        )}?ref=${data?.data.data.ref}`
+    );
+
+    const copyQr = () => {
+        copyTextToClipboard(qrUrlData)
+            .then(() => {
+                // If successful, update the isCopied state value
+                setIsCopied(true);
+                setTimeout(() => {
+                    setIsCopied(false);
+                }, 1500);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
     return (
         <Overlay overlay={overlay}>
             <div className={styles.secondBody}>
@@ -109,25 +128,35 @@ const ReceivePaymentSecond = ({
                         Payment for Eraclitus purchase on Instagram
                     </p>
                     {title === 'Ecobank QR Code' ? (
-                        <div ref={exportRef}>
-                            <ElevateLogo />
-                            <div className={styles.secondCopyCode}>
-                                <div>
-                                    <img
-                                        src={`data:image/png;base64,${data.data.data.dynamicQRBase64}`}
-                                        alt=""
-                                    />
+                        <>
+                            <div ref={exportRef}>
+                                <ElevateLogo />
+                                <div className={styles.secondCopyCode}>
+                                    <div>
+                                        <img
+                                            src={`data:image/png;base64,${data.data.data.dynamicQRBase64}`}
+                                            alt=""
+                                        />
+                                    </div>
+                                </div>
+                                <p
+                                    className={styles.download}
+                                    onClick={() =>
+                                        exportAsImage(exportRef.current, 'test')
+                                    }
+                                >
+                                    Download
+                                </p>
+                            </div>
+                            <div className={styles.qrData}>
+                                <div onClick={copyQr}>
+                                    <p> {isCopied ? 'Copied!' : 'Copy'}</p>
+                                </div>
+                                <div className={styles.createdQr}>
+                                    <input type="text" value={qrUrlData} />
                                 </div>
                             </div>
-                            <p
-                                className={styles.download}
-                                onClick={() =>
-                                    exportAsImage(exportRef.current, 'test')
-                                }
-                            >
-                                Download
-                            </p>
-                        </div>
+                        </>
                     ) : title === 'Payment Link Generated' ? (
                         <div className={styles.secondCopy}>
                             <LinkSvg />
