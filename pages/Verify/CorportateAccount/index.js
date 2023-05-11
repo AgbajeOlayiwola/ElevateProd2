@@ -159,7 +159,7 @@ const CorporateAccount = () => {
                     //     'You already have an account with us. Please contact us for more information' ||
                     error
                 ) {
-                    setInterval(() => {
+                    setTimeout(() => {
                         axiosInstance
                             .get(
                                 `https://mysmeapp.ecobank.com:8443/bank-account/status`,
@@ -198,9 +198,9 @@ const CorporateAccount = () => {
             errorMes === 'Try Again' ||
             errorMes === 'Bank Account has not been created for this user'
         ) {
-            setTimeout(() => {
+            const interval = setInterval(() => {
                 dispatch(newAccountStatusData());
-            }, 10000);
+            }, 30000);
         }
 
         if (accountDone.message === 'success') {

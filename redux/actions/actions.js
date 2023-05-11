@@ -3677,7 +3677,7 @@ export const getDisputCategOryTypeStart = () => ({
 
 export const getDisputCategOryTypeSuccess = (getDisputCategOryTypeSuccess) => ({
     type: disputeType.DISPUTETYPE_LOAD_SUCCESS,
-    payload: getQrMerchnatInfoSuccess
+    payload: getDisputCategOryTypeSuccess
 });
 
 export const getDisputCategOryTypeError = (
@@ -3724,7 +3724,7 @@ export const getDisputCategoryError = (getDisputCategoryErrorMessage) => ({
     type: disputCategoryType.DISPUTCATEGORY_LOAD_ERROR,
     payload: getDisputCategoryErrorMessage
 });
-export const getDisputCategoryGen = () => (dispatch) => {
+export const getDisputCategoryGen = () => (data) => {
     dispatch(getDisputCategoryStart());
     let cookie;
 
@@ -3734,7 +3734,7 @@ export const getDisputCategoryGen = () => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     axiosInstance
-        .get(`${apiRoutes.complaintCategories}`, {
+        .post(`${apiRoutes.complaintCategories}`, data, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -3762,7 +3762,7 @@ export const getDisputCategorySubError = (
     getDisputCategoryErrorSubMessage
 ) => ({
     type: disputSubCategoryType.DISPUTCATEGORYSUB_LOAD_ERROR,
-    payload: getDisputCategorySubErrorMessage
+    payload: getDisputCategoryErrorSubMessage
 });
 export const getDisputCategorySubGen = () => (dispatch) => {
     dispatch(getDisputCategorySubStart());

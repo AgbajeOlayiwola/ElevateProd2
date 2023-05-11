@@ -3,6 +3,8 @@ import styles from './styles.module.css';
 import EditSvg from '../editSvg';
 import { MdCancel } from 'react-icons/md';
 import exportAsImage from '../../../utils/exportAsImage';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDisputCategoryGen } from '../../../redux/actions/actions';
 const TransactionDets = ({
     paymentDirection,
     transactionAmmount,
@@ -11,13 +13,26 @@ const TransactionDets = ({
     type,
     sender,
     destinationBank,
-    narration
+    narration,
+    disputes
 }) => {
-    const [dispute, setDispute] = useState(false);
+    const [dispute, setDispute] = useState('');
+    const [disputeCate, setDisputeCat] = useState('');
+    const dispatch = useDispatch();
     const [showReciept, setShowReciept] = useState(false);
     const [showDispute, setShowDispute] = useState(false);
     const [reciept, setReciept] = useState(false);
+    const [disputeType, setDisputeType] = useState();
     const exportRef = useRef();
+    const {
+        getDisputCategorySuccess,
+        getDisputCategoryErrorMessage
+    } = useSelector((state) => state.getDisputeCategoryReducer);
+    const setDisputes = () => {
+        setDisputeType(e.target.value);
+        dispatch(getDisputCategoryGen(disputeType));
+    };
+    console.log(disputeType);
     return (
         <div>
             <div className={styles.deadlines}>
@@ -91,7 +106,23 @@ const TransactionDets = ({
                                 <div className={styles.maindispute}>
                                     <label>Disput type</label>
                                     <select>
-                                        <option>Select Dispute Type</option>
+                                        <option
+                                            onChange={(e) =>
+                                                setDisputeType(e.target.value)
+                                            }
+                                        >
+                                            Select Dispute Type
+                                        </option>
+                                        {disputes.map((item, index) => {
+                                            return (
+                                                <option
+                                                    value={item}
+                                                    key={index}
+                                                >
+                                                    {item}
+                                                </option>
+                                            );
+                                        })}
                                     </select>
                                 </div>
                                 <div className={styles.maindispute}>

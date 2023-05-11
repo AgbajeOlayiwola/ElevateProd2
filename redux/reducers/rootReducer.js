@@ -91,7 +91,9 @@ import payLinkGenReducer from './paylinkGen.reducer';
 import getMiniStatementReducer from './getMinistatement.reducer';
 import getFullStatementReducer from './getFullstatement.reducer';
 import getQrMerchantInfoReducermport from './getQrMerchantInfo.reducer';
-
+import getDisputeTypeReducer from './getDisputeType.reducer';
+import getDisputeCategoryReducer from './getDisputeCategory.reducer';
+import getDisputeSubCategoryReducer from './getDisputSubCategory.reducer';
 const appReducer = combineReducers({
     countryReducer: countryReducer,
     internationalCountryReducer: internationalCountryReducer,
@@ -188,7 +190,10 @@ const appReducer = combineReducers({
     payLinkGenReducer: payLinkGenReducer,
     getMiniStatementReducer: getMiniStatementReducer,
     getFullStatementReducer: getFullStatementReducer,
-    getQrMerchantInfoReducermport: getQrMerchantInfoReducermport
+    getQrMerchantInfoReducermport: getQrMerchantInfoReducermport,
+    getDisputeTypeReducer: getDisputeTypeReducer,
+    getDisputeCategoryReducer: getDisputeCategoryReducer,
+    getDisputeSubCategoryReducer: getDisputeSubCategoryReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

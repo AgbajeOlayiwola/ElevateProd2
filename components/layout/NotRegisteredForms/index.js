@@ -121,6 +121,7 @@ const ProfileSetups = () => {
             setPage(page + 1);
         }
     }, [otpErrorMessage, otpActData]);
+
     let cookie;
     if (getCookie('cookieToken') == undefined) {
         cookie = getCookie('existingToken');

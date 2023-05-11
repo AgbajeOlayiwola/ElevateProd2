@@ -5,7 +5,10 @@ import LinkSvg from '../ReusableSvgComponents/LinkSvg';
 import styles from './styles.module.css';
 import MoreSvg from '../MoreSvg';
 import EditSvg from '../editSvg';
-import { getTransactionElevate } from '../../../redux/actions/actions';
+import {
+    getDisputCategOryTypeGen,
+    getTransactionElevate
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../ReusableSvgComponents/TransactionSvg';
 import { RiDivideFill } from 'react-icons/ri';
@@ -37,7 +40,15 @@ const ReceivePaymentThird = ({
     const [numOfRecords, setNumOfRecords] = useState(10);
 
     const [transactionType, setTransactionType] = useState();
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
+
     useEffect(() => {
+        dispatch(getDisputCategOryTypeGen());
+        console.log(getDisputCategOryTypeSuccess);
+
         if (title === 'View all Qr Links') {
             setTransactionType('QR_PAYMENT');
             dispatch(
@@ -71,6 +82,12 @@ const ReceivePaymentThird = ({
 
         getCurrentDate();
     }, [transactionType]);
+    const [dispute, setDispute] = useState();
+    useEffect(() => {
+        setDispute(getDisputCategOryTypeSuccess);
+        console.log(dispute);
+    }, [getDisputCategOryTypeSuccess]);
+
     useEffect(() => {
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -166,6 +183,7 @@ const ReceivePaymentThird = ({
                                         return (
                                             <TransactionDets
                                                 key={index}
+                                                disputes={dispute}
                                                 type={item.transactionType}
                                                 narration={item.narration}
                                                 sender={item.sender}
