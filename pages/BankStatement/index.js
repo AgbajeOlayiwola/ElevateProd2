@@ -7,6 +7,7 @@ import ReactPaginate from 'react-paginate';
 import {
     bankAccountsData,
     getBalanceEnquiry,
+    loadAccountPrimary,
     loadbankStatement
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,6 +34,8 @@ const BankStatments = () => {
     const [searchType, setSearchType] = useState('transactionType');
     const format = formatter.format(0);
     const [balance, setBalance] = useState(format);
+    const [inflow, setInflow] = useState(format);
+    const [outflow, setOutflow] = useState(format);
 
     const usersPerPage = 10;
     const pagesVisited = pageNumber * usersPerPage;
@@ -50,9 +53,35 @@ const BankStatments = () => {
         (state) => state.balanceEnquiryReducer
     );
 
+    const { accountPrimarys, accountPrimaryError } = useSelector(
+        (state) => state.accountPrimaryReducer
+    );
+
     useEffect(() => {
         dispatch(bankAccountsData());
+        dispatch(loadAccountPrimary());
+        const todaysDate = new Date().toISOString();
+        const getDateXDaysAgo = (numOfDays, date = new Date()) => {
+            const daysAgo = new Date();
+            return new Date(
+                daysAgo.setDate(date.getDate() - numOfDays)
+            ).toISOString();
+        };
+        const data = {
+            startDate: getDateXDaysAgo(365),
+            endDate: todaysDate
+        };
+        dispatch(loadbankStatement(data));
     }, []);
+
+    useEffect(() => {
+        if (accountPrimarys !== null) {
+            const data = {
+                accountId: accountPrimarys.accountId
+            };
+            dispatch(getBalanceEnquiry(data));
+        }
+    }, [accountPrimarys]);
 
     useEffect(() => {
         if (bankAccount !== null) {
@@ -86,10 +115,32 @@ const BankStatments = () => {
             setLoading(false);
             setTableDetails(bankStatement);
             setOverlay(false);
+            bankStatement
+                .filter((item) => {
+                    if (item.tranType === 'Inflow') {
+                        return item;
+                    }
+                })
+                .reduce((a, b) => {
+                    setInflow(formatter.format(a));
+                    return a + +b.amount;
+                }, 0);
+            bankStatement
+                .filter((item) => {
+                    if (item.tranType === 'Outflow') {
+                        return item;
+                    }
+                })
+                .reduce((a, b) => {
+                    setOutflow(formatter.format(a));
+                    return a + +b.amount;
+                }, 0);
         } else if (errorMessagebankStatement !== null) {
             setLoading(false);
         }
     }, [bankStatement, errorMessagebankStatement]);
+    useEffect(() => {}, [inflow, outflow, tableDetails]);
+    // console.log(inflow);
 
     // const filterCondition = (item, searchType) => {
     //     switch (searchType) {
@@ -124,7 +175,7 @@ const BankStatments = () => {
                         setOverlay(true);
                     }}
                 >
-                    <p>Choose Period</p>
+                    <p>Request Statement</p>
                 </div>
             </div>
             {date ? (
@@ -206,11 +257,11 @@ const BankStatments = () => {
                 </div>
                 <div>
                     <p>Total Inflow</p>
-                    <h2>N12,000.00</h2>
+                    <h2>{inflow}</h2>
                 </div>
                 <div>
                     <p>Total Outflow</p>
-                    <h2>N4,000.00</h2>
+                    <h2>{outflow}</h2>
                 </div>
             </div>
             <div className={styles.table}>
@@ -330,7 +381,8 @@ const BankStatments = () => {
                           //   })
                           ?.slice(pagesVisited, pagesVisited + usersPerPage)
                           ?.map((items, index) => {
-                              const newDate = items?.transactionTime.split(' ');
+                              const newDate =
+                                  items?.transactionTime?.split(' ');
                               return (
                                   <div
                                       className={styles.TableDetailBody}
