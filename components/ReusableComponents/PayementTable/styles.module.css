@@ -99,27 +99,25 @@
 }
 
 .beneficiary {
-    width: 25%;
+    width: 30%;
 }
 
 .type {
-    width: 15%;
+    width: 20%;
 }
 
 .amount {
-    width: 18%;
-}
-
-.status {
-    width: 10%;
-}
-
-.bank {
     width: 22%;
 }
 
+.status {
+    width: 14%;
+}
+
+
+
 .date {
-    width: 10%;
+    width: 14%;
 }
 
 .paginationBtns {
