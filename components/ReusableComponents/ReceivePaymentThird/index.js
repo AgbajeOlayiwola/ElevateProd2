@@ -224,6 +224,13 @@ const ReceivePaymentThird = ({
                                                                 }
                                                             </p>
                                                         </div>
+                                                        <p>
+                                                            {item.transactionStatus ==
+                                                                'PENDING' ||
+                                                            'UNSUCCESSFUL'
+                                                                ? 'Unpaid'
+                                                                : 'Paid'}
+                                                        </p>
                                                         <EditSvg />
                                                     </div>
                                                 </div>

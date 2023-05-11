@@ -282,13 +282,6 @@ const ReceivePaymentFirst = ({
                                 />
                             )}
                         </form>
-                        <p className={styles.later}>
-                            Not paying now? <span>Schedule for Later</span>
-                        </p>
-                        <p className={styles.share}>
-                            Tap to share your general{' '}
-                            <span onClick={typeAction}>{type}</span>
-                        </p>
                     </div>
                 </div>
                 <div>
@@ -298,7 +291,7 @@ const ReceivePaymentFirst = ({
                         height="100%"
                     /> */}
                     <img
-                        src="../../Assets/Images/greenmoney.png"
+                        src="/Assets/Images/greenmoney.png"
                         alt=""
                         className={styles.greenImg}
                     />

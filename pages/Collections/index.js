@@ -35,6 +35,7 @@ import RecievePaymentShare from '../../components/ReusableComponents/ReceivePaym
 import PaylinkStepOne from '../../components/layout/Paylink/StepOne';
 import UssdFirst from '../../components/ReusableComponents/UssdFirst';
 import Share from '../../components/ReusableComponents/Share';
+import QrFirst from '../../components/layout/QrData';
 
 const Collections = () => {
     const router = useRouter();
@@ -207,7 +208,7 @@ const Collections = () => {
         } else if (generateQrCodeError !== null) {
             // setCount((count) => count + 1);
             setIsLoading(false);
-            setErrorQr(generateQrCodeError.response.data.message[0]);
+            setErrorQr(generateQrCodeError.response.data.message);
             setStatus('error');
         }
     };
@@ -623,6 +624,16 @@ const Collections = () => {
                 switch (count) {
                     case 0:
                         return (
+                            <QrFirst
+                                overlay={overlay}
+                                moveToNext={(data) => {
+                                    //console.logdata);
+                                    setCount(count + 1);
+                                }}
+                            />
+                        );
+                    case 1:
+                        return (
                             <ReceivePaymentFirst
                                 isLoading={isLoading}
                                 overlay={overlay}
@@ -647,7 +658,7 @@ const Collections = () => {
                                 error={errorQr}
                             />
                         );
-                    case 1:
+                    case 2:
                         return (
                             <ReceivePaymentSecond
                                 overlay={overlay}
@@ -663,7 +674,7 @@ const Collections = () => {
                                 closeAction={buttonHandleClose}
                             />
                         );
-                    case 2:
+                    case 3:
                         return (
                             <ReceivePaymentThird
                                 overlay={overlay}

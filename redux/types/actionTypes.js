@@ -896,3 +896,11 @@ export const complaintTypes_Type = {
     GET_COMPLAINT_TYPES_ERROR: 'GET_COMPLAINT_TYPES_ERROR'
 };
 //End Export complaintType
+
+//Qr Merchant Info
+export const qrMerchantInfo_Type = {
+    GET_QR_MRCHANTINFO_TYPES_START: 'GET_QR_MRCHANTINFO_TYPES_START',
+    GET_QR_MRCHANTINFO_TYPES_SUCCESS: 'GET_QR_MRCHANTINFO_TYPES_SUCCESS',
+    GET_QR_MRCHANTINFO_TYPES_ERROR: 'GET_QR_MRCHANTINFO_TYPES_ERROR'
+};
+//End Export complaintType

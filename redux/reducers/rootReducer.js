@@ -90,6 +90,7 @@ import generateQrInfo from './generateQr.reducer';
 import payLinkGenReducer from './paylinkGen.reducer';
 import getMiniStatementReducer from './getMinistatement.reducer';
 import getFullStatementReducer from './getFullstatement.reducer';
+import getQrMerchantInfoReducermport from './getQrMerchantInfo.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -186,7 +187,8 @@ const appReducer = combineReducers({
     generateQrInfo: generateQrInfo,
     payLinkGenReducer: payLinkGenReducer,
     getMiniStatementReducer: getMiniStatementReducer,
-    getFullStatementReducer: getFullStatementReducer
+    getFullStatementReducer: getFullStatementReducer,
+    getQrMerchantInfoReducermport: getQrMerchantInfoReducermport
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

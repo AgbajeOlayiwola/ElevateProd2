@@ -104,6 +104,7 @@ const complaintTypes = '/dispute-management/get-complaint-types';
 const complaintCategories = '/dispute-management/get-complaint-categories';
 const subComplaintCategories =
     '/dispute-management/get-complaint-sub-categories';
+const qrMerchantInfo = '/payment/qr/merchant-info';
 export default {
     trackComplaint,
     lodgeComplaint,
@@ -207,5 +208,6 @@ export default {
     complaintCategory,
     subcomplaint,
     getMiniStatemnt,
-    getFullStatement
+    getFullStatement,
+    qrMerchantInfo
 };

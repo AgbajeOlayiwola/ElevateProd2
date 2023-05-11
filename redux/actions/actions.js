@@ -89,7 +89,8 @@ import {
     Paylink_Type,
     otpType,
     getMiniStatement_Type,
-    getFullStatement_Type
+    getFullStatement_Type,
+    qrMerchantInfo_Type
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -3578,3 +3579,41 @@ export const getFullStatementGen = (data) => (dispatch) => {
         .catch((error) => dispatch(getFullStatementError(error)));
 };
 //Get Full Statement actions end
+
+//GET Qr Merchnat Info actions
+export const getQrMerchnatInfoStart = () => ({
+    type: qrMerchantInfo_Type.GET_QR_MRCHANTINFO_TYPES_START
+});
+
+export const getQrMerchnatInfoSuccess = (getQrMerchnatInfoSuccess) => ({
+    type: qrMerchantInfo_Type.GET_QR_MRCHANTINFO_TYPES_SUCCESS,
+    payload: getQrMerchnatInfoSuccess
+});
+
+export const getQrMerchnatInfoError = (getQrMerchnatInfoErrorMessage) => ({
+    type: qrMerchantInfo_Type.GET_QR_MRCHANTINFO_TYPES_ERROR,
+    payload: getQrMerchnatInfoErrorMessage
+});
+export const getQrMerchantInfoGen = () => (dispatch) => {
+    dispatch(getQrMerchnatInfoStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .get(`${apiRoutes.qrMerchantInfo}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(getQrMerchnatInfoSuccess(response.data.data));
+        })
+        .catch((error) => dispatch(getQrMerchnatInfoError(error)));
+};
+//Get Qr Merchnat Info actions end
