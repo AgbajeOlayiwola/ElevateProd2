@@ -10,8 +10,8 @@ import {
     // getTransactionElevate,
     // getTransactionHistory,
     getMiniStatementGen,
-    getFullStatementGen,
-    loadAccountPrimary
+    loadAccountPrimary,
+    loadbankStatement
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import StorePopup from '../../components/ReusableComponents/StorePopup';
@@ -41,8 +41,9 @@ const Report = () => {
     const { getMiniStatementSuccess, getMiniStatementerrorMessage } =
         useSelector((state) => state.getMiniStatementReducer);
 
-    const { getFullStatementSuccess, getFullStatementerrorMessage } =
-        useSelector((state) => state.getFullStatementReducer);
+    const { bankStatement, errorMessagebankStatement } = useSelector(
+        (state) => state.bankStatementReducer
+    );
 
     const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
@@ -129,16 +130,15 @@ const Report = () => {
         }
     }, [getMiniStatementSuccess]);
     useEffect(() => {
-        if (getFullStatementSuccess !== null) {
+        if (bankStatement !== null) {
             setLoading(false);
-            setSuccess(true);
-            setError('success');
-        } else if (getFullStatementerrorMessage !== null) {
+            console.log(bankStatement);
+        } else if (errorMessagebankStatement !== null) {
             setLoading(false);
             setSuccess(true);
             setError('error');
         }
-    }, [getFullStatementSuccess]);
+    }, [bankStatement, errorMessagebankStatement]);
     return (
         <DashLayout>
             <div className={styles.collctionh1}>
@@ -239,15 +239,15 @@ const Report = () => {
                                     onClick={() => {
                                         setLoading(true);
                                         const data = {
-                                            startRange: new Date(
+                                            startDate: new Date(
                                                 startDate
                                             ).toISOString(),
-                                            endRange: new Date(
+                                            endDate: new Date(
                                                 endDate
                                             ).toISOString(),
                                             accountId: accountPrimarys.accountId
                                         };
-                                        dispatch(getFullStatementGen(data));
+                                        dispatch(loadbankStatement(data));
                                     }}
                                 >
                                     Generate

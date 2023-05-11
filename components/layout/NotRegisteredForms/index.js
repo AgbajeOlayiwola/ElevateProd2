@@ -32,7 +32,6 @@ const ProfileSetups = () => {
     // Router.reload();
     // router.replace(router.asPath);
 
-    const cookie = getCookie('cookieToken');
     //console.log('register page', cookie);
 
     const [page, setPage] = useState(0);
@@ -122,6 +121,12 @@ const ProfileSetups = () => {
             setPage(page + 1);
         }
     }, [otpErrorMessage, otpActData]);
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     const conditionalComponent = () => {
         switch (page) {
             case 0:
@@ -156,6 +161,7 @@ const ProfileSetups = () => {
                         action={() => {
                             setPage(page + 1);
                         }}
+                        cookie={cookie}
                         loading={loading}
                         setLoading={setLoading}
                     />
@@ -203,8 +209,6 @@ const ProfileSetups = () => {
     }
 
     function handleSubmit() {
-        //console.log('firstAPi');
-
         setLoads((prev) => !prev);
         const profileData = {
             bvnNumber: formData.bvNumber,
