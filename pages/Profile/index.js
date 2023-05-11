@@ -5,6 +5,7 @@ import ProfileLayout from '../../components/layout/ProfileLayout';
 import ArrowBackSvg from '../../components/ReusableComponents/ArrowBackSvg';
 import BeneSvg from '../../components/ReusableComponents/BeneSvg';
 import BvnSvg from '../../components/ReusableComponents/BvnSvg';
+import Iframe from 'react-iframe';
 import CheckedSvg from '../../components/ReusableComponents/CheckedSvg';
 import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import InputTag from '../../components/ReusableComponents/Input';
@@ -51,7 +52,8 @@ import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import Link from 'next/link';
 import { ButtonComp } from '../../components';
 import { useRouter } from 'next/router';
-
+import { FaTrash } from 'react-icons/fa';
+import OutsideClick from '../../components/ReusableComponents/OutsideClick';
 const Profile = () => {
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
@@ -81,6 +83,8 @@ const Profile = () => {
     const [bank, setBank] = useState([]);
     const [interEnquiry, setInterEnquiry] = useState('');
     const [showinterEnquiry, setshowInterEnquiry] = useState(false);
+    const [rafiki, setRafiki] = useState(false);
+    const [active, setActive] = useState(false);
     const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const dispatch = useDispatch();
     const { getBeneficiaries } = useSelector(
@@ -379,6 +383,11 @@ const Profile = () => {
             text: 'Share App/Refer a Friend',
             icon: <ShareSvg color="#102572" />,
             color: '#7A7978'
+        },
+        {
+            text: 'Delete Account',
+            icon: <FaTrash />,
+            color: 'red'
         }
     ];
     const [countryNames, setCountryNames] = useState();
@@ -418,6 +427,9 @@ const Profile = () => {
         } = router;
         setLink({ id }.id);
     }, []);
+    const deleteAction = () => {
+        console.log('test');
+    };
 
     useEffect(() => {
         if (link !== undefined) {
@@ -722,6 +734,70 @@ const Profile = () => {
                     </div>
                 );
 
+            case 'Delete Account':
+                return (
+                    <form onSubmit={handleSubmit(deleteAction)}>
+                        <h2 className={styles.title}>Delete Account</h2>
+                        <div className={styles.bvn}>
+                            <p>
+                                You wont be able to recover account once deleted
+                            </p>
+                        </div>
+                        {error ? <p className={styles.error}>{error}</p> : null}
+                        <div className={styles.formGroup}>
+                            <input
+                                type="text"
+                                placeholder="Enter Delete Account"
+                                {...register('delete', {
+                                    required: 'Input is Required'
+                                })}
+                            />
+                            <p className={styles.error}>
+                                {errors?.delete?.message}
+                            </p>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <div className={styles.divs}>
+                                <input
+                                    placeholder="Enter your Password"
+                                    {...register('deletePassword', {
+                                        required: 'Password is Required'
+                                    })}
+                                    onInput={(e) => {
+                                        if (e?.target.value.length === 0) {
+                                            setActive(false);
+                                        } else if (e?.target.value.length > 0) {
+                                            setActive(true);
+                                        }
+                                    }}
+                                    name="deletePassword"
+                                    type={outType ? 'text' : 'password'}
+                                />
+                                <Visbility typeSet={types} />
+                            </div>
+                            <p className={styles.error}>
+                                {errors?.deletePassword?.message}
+                            </p>
+                        </div>
+
+                        <div className={styles.deleteButton}>
+                            {console.log(active)}
+                            {loading ? (
+                                <Loader />
+                            ) : active ? (
+                                <button type="submit">Delete</button>
+                            ) : (
+                                <button
+                                    type="submit"
+                                    className={styles.disabled}
+                                    disabled
+                                >
+                                    Delete
+                                </button>
+                            )}
+                        </div>
+                    </form>
+                );
             // case 'Manage Signatories':
             //     switch (count) {
             //         case 0:
@@ -1027,11 +1103,6 @@ const Profile = () => {
                     case 0:
                         return (
                             <div>
-                                <Lottie
-                                    options={defaultOptions}
-                                    height={400}
-                                    width={400}
-                                />
                                 <div className={styles.name}>
                                     <div className={styles.Hello}>
                                         <h2>
@@ -1040,6 +1111,18 @@ const Profile = () => {
                                         <p>How can we help you</p>
                                     </div>
                                 </div>
+                                <img
+                                    src="Assets/Images/rafiki.jpeg"
+                                    alt="Rafiki"
+                                    className={styles.rafiki}
+                                />
+                                <button
+                                    onClick={() => {
+                                        setRafiki(true);
+                                    }}
+                                >
+                                    Chat With us
+                                </button>
                                 <div>
                                     <div className={styles.contactEmail}>
                                         <div className={styles.contactUs}>
@@ -1694,6 +1777,25 @@ const Profile = () => {
                     </>
                 }
             >
+                {rafiki ? (
+                    <OutsideClick
+                        onClickOutside={() => {
+                            setRafiki(false);
+                        }}
+                    >
+                        <div className={styles.chatWithUs}>
+                            <Iframe
+                                url="https://ice.ecobank.com/chatbotui"
+                                width="540px"
+                                height="520px"
+                                id=""
+                                className=""
+                                display="block"
+                                position="relative"
+                            />
+                        </div>
+                    </OutsideClick>
+                ) : null}
                 {renderForm()}
             </ProfileLayout>
             {outcome ? (

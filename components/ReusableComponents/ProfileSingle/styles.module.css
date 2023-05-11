@@ -19,6 +19,20 @@
     background: #f5f8ee;
 }
 
+.profileSingleDelete {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 21px 24px 21px 32px;
+    cursor: pointer;
+    border-bottom: 2px solid #f6f6f6;
+    align-items: center;
+}
+
+.profileSingleDelete p {
+    color: red !important;
+}
+
 .profileSingle:last-child {
     border-bottom: 0px;
 }
@@ -26,6 +40,7 @@
 .profileIcon {
     width: 6%;
     max-width: 38px;
+    color: red;
 }
 
 .profileText {

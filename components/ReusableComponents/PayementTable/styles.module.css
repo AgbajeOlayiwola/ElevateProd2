@@ -129,15 +129,24 @@
     list-style-type: none;
 }
 
-.paginationBtns a {
+.paginationBtns li {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #102572;
-    color: #102572;
+    border: 1px solid #6ccf00;
+    color: #6ccf00;
+    /* cursor: pointer; */
+    font-size: 15px;
+}
+
+.paginationBtns a {
     cursor: pointer;
 }
 
 .paginationActive {
-    background-color: #102572;
+    background-color: #6ccf00;
+    color: white;
+}
+
+.paginationActive a {
     color: white;
 }
