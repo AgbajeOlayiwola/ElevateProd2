@@ -78,7 +78,6 @@ const StepTwoBVNAuthenticator = ({
     }, [ssnValues]);
 
     const clear = (e) => {
-        e.preventDefault();
         setValue((ssnValues) => ['']);
     };
     const ResetOtp = (e) => {
@@ -170,7 +169,7 @@ const StepTwoBVNAuthenticator = ({
                                 className={styles.resetOtp}
                                 style={{ cursor: 'pointer' }}
                                 onClick={ResetOtp}
-                                // type="reset"
+                                type="reset"
                             >
                                 Resend OTP
                             </button>{' '}

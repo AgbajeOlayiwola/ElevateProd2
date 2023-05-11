@@ -177,7 +177,7 @@ const Collections = () => {
         } else if (errorMessageussdGen !== null) {
             // setCount((count) => count + 1);
             setIsLoading(false);
-            setError(errorMessageussdGen.response.data.message[0]);
+            setError(errorMessageussdGen.response.data.message);
             console.log(error);
             // setStatus('error');
         }
@@ -645,6 +645,7 @@ const Collections = () => {
                                     const generateQrCodeData = {
                                         amount: `${data.amount}`,
                                         productName: `${data.accountName}`,
+                                        nameOfPayment: `${data.accountName}`,
                                         productCode: `${generateRandomString()}`,
                                         description: `${data.description}`
                                     };

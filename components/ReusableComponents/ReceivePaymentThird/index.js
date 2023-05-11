@@ -5,11 +5,15 @@ import LinkSvg from '../ReusableSvgComponents/LinkSvg';
 import styles from './styles.module.css';
 import MoreSvg from '../MoreSvg';
 import EditSvg from '../editSvg';
-import { getTransactionElevate } from '../../../redux/actions/actions';
+import {
+    getDisputCategOryTypeGen,
+    getTransactionElevate
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../ReusableSvgComponents/TransactionSvg';
 import { RiDivideFill } from 'react-icons/ri';
 import { MdDiversity1 } from 'react-icons/md';
+import TransactionDets from './transactionDets';
 const ReceivePaymentThird = ({
     title,
     action,
@@ -36,7 +40,15 @@ const ReceivePaymentThird = ({
     const [numOfRecords, setNumOfRecords] = useState(10);
 
     const [transactionType, setTransactionType] = useState();
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
+
     useEffect(() => {
+        dispatch(getDisputCategOryTypeGen());
+        console.log(getDisputCategOryTypeSuccess);
+
         if (title === 'View all Qr Links') {
             setTransactionType('QR_PAYMENT');
             dispatch(
@@ -70,6 +82,12 @@ const ReceivePaymentThird = ({
 
         getCurrentDate();
     }, [transactionType]);
+    const [dispute, setDispute] = useState();
+    useEffect(() => {
+        setDispute(getDisputCategOryTypeSuccess);
+        console.log(dispute);
+    }, [getDisputCategOryTypeSuccess]);
+
     useEffect(() => {
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -136,7 +154,7 @@ const ReceivePaymentThird = ({
                     </div> */}
                         <section className={styles.sectionI}></section>
                         <div className={styles.Tpwh}>
-                            {dateState === true ? (
+                            {tableDetails.length === 0 ? (
                                 <div className={styles.transactionBody}>
                                     <div>
                                         <p>No {type} Has Been Generated yet</p>
@@ -163,79 +181,28 @@ const ReceivePaymentThird = ({
                                             item.transactionAmount
                                         );
                                         return (
-                                            <div key={index}>
-                                                <div
-                                                    className={styles.deadlines}
-                                                >
-                                                    <div
-                                                        className={
-                                                            styles.nameDate
-                                                        }
-                                                    >
-                                                        <p>
-                                                            {
-                                                                item.paymentDirection
-                                                            }
-                                                        </p>
-                                                        <p>
-                                                            {
-                                                                item.transactionAmount
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                    {/* <div
-                                                        className={
-                                                            styles.acceptedOrCancelled
-                                                        }
-                                                    > */}
-
-                                                    <div
-                                                        className={styles.paid}
-                                                    >
-                                                        <div
-                                                            className={
-                                                                styles.mainStatus
-                                                            }
-                                                        >
-                                                            <div
-                                                                className={
-                                                                    item.transactionStatus ===
-                                                                    'FAILED'
-                                                                        ? styles.red
-                                                                        : item.transactionStatus ===
-                                                                          'PENDING'
-                                                                        ? styles.blue
-                                                                        : styles.green
-                                                                }
-                                                            ></div>
-                                                            <p
-                                                                className={
-                                                                    item.transactionStatus ===
-                                                                    'FAILED'
-                                                                        ? styles.cancel
-                                                                        : item.transactionStatus ===
-                                                                          'PENDING'
-                                                                        ? styles.pending
-                                                                        : styles.accepted
-                                                                }
-                                                            >
-                                                                {
-                                                                    item.transactionStatus
-                                                                }
-                                                            </p>
-                                                        </div>
-                                                        <p>
-                                                            {item.transactionStatus ==
-                                                                'PENDING' ||
-                                                            'UNSUCCESSFUL'
-                                                                ? 'Unpaid'
-                                                                : 'Paid'}
-                                                        </p>
-                                                        <EditSvg />
-                                                    </div>
-                                                </div>
-                                                {/* </div> */}
-                                            </div>
+                                            <TransactionDets
+                                                key={index}
+                                                disputes={dispute}
+                                                type={item.transactionType}
+                                                narration={item.narration}
+                                                sender={item.sender}
+                                                destinationBank={
+                                                    item.destinationBank
+                                                }
+                                                paymentDirection={
+                                                    item.paymentDirection
+                                                }
+                                                transactionAmmount={
+                                                    item.transactionAmount
+                                                }
+                                                transactionStatus={
+                                                    item.transactionStatus
+                                                }
+                                                transactionTitle={
+                                                    item.transactionTitle
+                                                }
+                                            />
                                         );
                                     })
                             )}

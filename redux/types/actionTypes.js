@@ -904,3 +904,33 @@ export const qrMerchantInfo_Type = {
     GET_QR_MRCHANTINFO_TYPES_ERROR: 'GET_QR_MRCHANTINFO_TYPES_ERROR'
 };
 //End Export complaintType
+
+//disput Type action type start
+
+export const disputeType = {
+    DISPUTETYPE_LOAD_START: 'DISPUTETYPE_LOAD_START',
+    DISPUTETYPE_LOAD_SUCCESS: 'DISPUTETYPE_LOAD_SUCCESS',
+    DISPUTETYPE_LOAD_ERROR: 'DISPUTETYPE_LOAD_ERROR'
+};
+
+//dispute Type action type end
+
+//disput Type action type start
+
+export const disputCategoryType = {
+    DISPUTCATEGORY_LOAD_START: 'DISPUTCATEGORY_LOAD_START',
+    DISPUTCATEGORY_LOAD_SUCCESS: 'DISPUTCATEGORY_LOAD_SUCCESS',
+    DISPUTCATEGORY_LOAD_ERROR: 'DISPUTCATEGORY_LOAD_ERROR'
+};
+
+//dispute Type action type end
+
+//disput Type action type start
+
+export const disputSubCategoryType = {
+    DISPUTCATEGORYSUB_LOAD_START: 'DISPUTCATEGORYSUB_LOAD_START',
+    DISPUTCATEGORYSUB_LOAD_SUCCESS: 'DISPUTCATEGORYSUB_LOAD_SUCCESS',
+    DISPUTCATEGORYSUB_LOAD_ERROR: 'DISPUTCATEGORYSUB_LOAD_ERROR'
+};
+
+//dispute Type action type end

@@ -112,7 +112,7 @@ const CorporateAccount = () => {
         }
         axiosInstance
             .post(
-                `https://testvate.live${apiRoutes.corpNewUser}`,
+                `https://mysmeapp.ecobank.com:8443${apiRoutes.corpNewUser}`,
 
                 accountData,
                 {
@@ -128,13 +128,16 @@ const CorporateAccount = () => {
                 if (response.data.message === 'success') {
                     setInterval(() => {
                         axiosInstance
-                            .get(`https://testvate.live/bank-account/status`, {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-Client-Type': 'web',
-                                    Authorization: `Bearer ${cookie}`
+                            .get(
+                                `https://mysmeapp.ecobank.com:8443/bank-account/status`,
+                                {
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-Client-Type': 'web',
+                                        Authorization: `Bearer ${cookie}`
+                                    }
                                 }
-                            })
+                            )
                             .then((response) => {
                                 //console.log'Accoutn Status', response);
                                 setAccountDone(response.data.message);
@@ -156,15 +159,18 @@ const CorporateAccount = () => {
                     //     'You already have an account with us. Please contact us for more information' ||
                     error
                 ) {
-                    setInterval(() => {
+                    setTimeout(() => {
                         axiosInstance
-                            .get(`https://testvate.live/bank-account/status`, {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-Client-Type': 'web',
-                                    Authorization: `Bearer ${cookie}`
+                            .get(
+                                `https://mysmeapp.ecobank.com:8443/bank-account/status`,
+                                {
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-Client-Type': 'web',
+                                        Authorization: `Bearer ${cookie}`
+                                    }
                                 }
-                            })
+                            )
                             .then((response) => {
                                 //console.log'Accoutn Status', response);
                                 setAccountDone(response.data.message);
@@ -192,9 +198,9 @@ const CorporateAccount = () => {
             errorMes === 'Try Again' ||
             errorMes === 'Bank Account has not been created for this user'
         ) {
-            setTimeout(() => {
+            const interval = setInterval(() => {
                 dispatch(newAccountStatusData());
-            }, 10000);
+            }, 30000);
         }
 
         if (accountDone.message === 'success') {

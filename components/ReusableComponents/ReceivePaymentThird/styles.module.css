@@ -6,8 +6,11 @@
     margin: 32px auto;
     position: absolute;
     top: 5%;
-    left: 33%;
     z-index: 10;
+    position: relative;
+    height: 80vh;
+    overflow: scroll;
+
 }
 .mainStatus{
     display: flex;
@@ -152,6 +155,7 @@ color: #102572;
 box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
 border-radius: 12px;
 margin-top: 20px;
+position: relative;
 }
 
 .deadlines p {
@@ -314,7 +318,21 @@ margin-top: 20px;
     /* identical to box height */
     
     
-    color: #102572;
+    color: #FFDE00;
+}
+.edit{
+    cursor: pointer;
+}
+.paidUnpaid{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+    
+    color: #102572 !important;
+
 }
 .nameDate{
     display: flex;
@@ -372,20 +390,176 @@ color: #6CCF00;
 }
 .red{
     width: 9px;
-    background: red;
+    background-color: red;
     height: 9px;
     border-radius: 50%;
 
 }
 .blue{
-    background: #005B82;
+    background-color: #FFDE00;
     width: 9px;
     height: 9px;
     border-radius: 50%;
 }
+.pendingReciept{
+    background-color: #FFDE00;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top-right-radius: 20px;
+border-top-left-radius: 20px;
+}.pendingReciept h1{
+    text-align: center;
+    color: white;
+    font-weight: 600;
+ }
+ .success{
+    background-color: #6CCF00;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top-right-radius: 20px;
+border-top-left-radius: 20px;
+}.success h1{
+    text-align: center;
+    color: white;
+    font-weight: 600;
+ }
+ .senderInfo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+ .senderInfo p{
+    color: #3e3e3e;
+ }
 .green{
-    background: #6CCF00;
+    background-color: #5DBE3F;
     width: 9px;
     height: 9px;
     border-radius: 50%; 
+}
+.accepted{
+    color: #5DBE3F !important;
+}
+.disput{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    right: -37px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 52%;
+    border-radius: 20px;
+    flex-direction: column;
+    position: absolute;
+    background: white;
+    z-index: 9999;
+    box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
+}
+.dispute:hover{
+    background: #6CCF00;
+    color: white;
+}
+.showDispute{
+    box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
+    background: white;
+    padding: 50px 70px;
+    position: absolute;
+    left: -48px;
+    z-index: 19999;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    gap: 20px;
+}
+
+.recieptPad{
+    padding: 50px 70px;
+}
+.recieptPad h1{
+    text-align: center;
+    font-size: 20px;
+}
+.dounloadReciept{
+    margin-top: 30px !important;
+    margin-bottom: 20px !important;
+  
+}
+.diclaimer{
+    display: flex;
+    justify-content: center;
+}
+.recieptDiv{
+    padding-bottom: 30px;
+}
+.diclaimer p{
+    width: 80%;
+    color: #3e3e3e;
+}
+.btnDiv{
+   padding-left: 30px;
+   padding-right: 30px;
+}
+.showReciept{
+    padding: 0px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
+    position: relative;
+    background: white;
+    position: absolute;
+    top: -76px;
+    left: -48px;
+    z-index: 19999;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    gap: 20px;
+}
+.cancel{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 50px;
+}
+.cancelReciept{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 30px;
+    position: absolute;
+    top: -52px;
+    box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
+    color: red;
+}
+
+.dispute{
+  
+    color: black;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+.maindispute{
+    color: black;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    border-radius: 5px; 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.reciept:hover{
+    background: #6CCF00;
+    color: white;
+}
+.reciept{
+    padding: 10px 30px;
+    color: black;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;  
+    border-radius: 5px;
 }
