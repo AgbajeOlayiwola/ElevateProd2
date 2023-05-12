@@ -4,7 +4,11 @@ import EditSvg from '../editSvg';
 import { MdCancel } from 'react-icons/md';
 import exportAsImage from '../../../utils/exportAsImage';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDisputCategoryGen } from '../../../redux/actions/actions';
+import {
+    getDisputCategoryGen,
+    getDisputCategorySubGen,
+    lodgeDisputeSubGen
+} from '../../../redux/actions/actions';
 const TransactionDets = ({
     paymentDirection,
     transactionAmmount,
@@ -14,7 +18,10 @@ const TransactionDets = ({
     sender,
     destinationBank,
     narration,
-    disputes
+    disputes,
+    accountId,
+    transactionId,
+    transactionRef
 }) => {
     const [dispute, setDispute] = useState('');
     const [disputeCate, setDisputeCat] = useState('');
@@ -23,16 +30,58 @@ const TransactionDets = ({
     const [showDispute, setShowDispute] = useState(false);
     const [reciept, setReciept] = useState(false);
     const [disputeType, setDisputeType] = useState();
+    const [selectedDisputeType, setSelectedDisputeType] = useState();
+    const [
+        selectedDisputSubCategory,
+        setSelectedDisputeSubCategory
+    ] = useState();
+    const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
+    const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
     const {
         getDisputCategorySuccess,
         getDisputCategoryErrorMessage
     } = useSelector((state) => state.getDisputeCategoryReducer);
-    const setDisputes = () => {
-        setDisputeType(e.target.value);
-        dispatch(getDisputCategoryGen(disputeType));
+    const {
+        getDisputCategorySubSuccess,
+        getDisputCategoryErrorSubMessage
+    } = useSelector((state) => state.getDisputeSubCategoryReducer);
+    const { lodgeDisputeSuccess, lodgeDisputeErrorSubMessage } = useSelector(
+        (state) => state.lodgeDisputeReducer
+    );
+    const disputesFunction = (event) => {
+        dispatch(getDisputCategoryGen(event.target.value));
+        setDisputeType(event.target.value);
+        if (getDisputCategorySuccess) {
+            setComplaintCategory(getDisputCategorySuccess);
+            console.log(getDisputCategorySuccess);
+        }
     };
-    console.log(disputeType);
+    const complainCateFunction = (event) => {
+        dispatch(getDisputCategorySubGen(event.target.value, disputeType));
+        setSelectedDisputeCategory(event.target.value);
+        if (getDisputCategorySubSuccess) {
+            console.log(getDisputCategorySubSuccess);
+        }
+    };
+    const complaintSubVateFunction = (event) => {
+        setSelectedDisputeSubCategory(event.target.value);
+    };
+    const [errors, setErrors] = useState('');
+    const lodgeTheComplaint = () => {
+        const data = {
+            accountId: accountId,
+            caseCategory: selectedDisputeCategory,
+            caseSubCategory: selectedDisputSubCategory,
+            caseType: disputeType,
+            description: `${disputeType} from USER about ${selectedDisputeCategory} regarding ${selectedDisputSubCategory}. With Transaction Id: ${transactionId} and Transaction Ref: ${transactionRef}. Amount involved: ${transactionAmmount}`
+        };
+        dispatch(lodgeDisputeSubGen(data));
+        if (lodgeDisputeErrorSubMessage) {
+        }
+    };
+
+    // console.log(disputeType);
     return (
         <div>
             <div className={styles.deadlines}>
@@ -87,6 +136,7 @@ const TransactionDets = ({
                                 >
                                     dispute
                                 </div>
+                                
                                 <hr />
                                 <div
                                     className={styles.reciept}
@@ -103,17 +153,19 @@ const TransactionDets = ({
                                         onClick={() => setShowDispute(false)}
                                     />
                                 </div>
+                                {lodgeDisputeErrorSubMessage ? (
+                                    <p className={styles.errors}>
+                                        {
+                                            lodgeDisputeErrorSubMessage?.data
+                                                ?.message
+                                        }
+                                    </p>
+                                ) : null}
                                 <div className={styles.maindispute}>
                                     <label>Disput type</label>
-                                    <select>
-                                        <option
-                                            onChange={(e) =>
-                                                setDisputeType(e.target.value)
-                                            }
-                                        >
-                                            Select Dispute Type
-                                        </option>
-                                        {disputes.map((item, index) => {
+                                    <select onChange={disputesFunction}>
+                                        <option>Select Dispute Type</option>
+                                        {disputes?.map((item, index) => {
                                             return (
                                                 <option
                                                     value={item}
@@ -127,17 +179,43 @@ const TransactionDets = ({
                                 </div>
                                 <div className={styles.maindispute}>
                                     <label>Dispute category</label>
-                                    <select>
+                                    <select onChange={complainCateFunction}>
                                         <option>Select Dispute Category</option>
+                                        {getDisputCategorySuccess?.map(
+                                            (item, index) => {
+                                                return (
+                                                    <option
+                                                        value={item}
+                                                        key={index}
+                                                    >
+                                                        {item}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
                                     </select>
                                 </div>
                                 <div className={styles.maindispute}>
                                     <label>Dispute Sub-Category</label>
-                                    <select>
+                                    <select onChange={complaintSubVateFunction}>
                                         <option>Select Dispute Category</option>
+                                        {getDisputCategorySubSuccess?.map(
+                                            (item, index) => {
+                                                return (
+                                                    <option
+                                                        value={item}
+                                                        key={index}
+                                                    >
+                                                        {item}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
                                     </select>
                                 </div>
-                                <button>Submit</button>
+                                <button onClick={lodgeTheComplaint}>
+                                    Submit
+                                </button>
                             </div>
                         ) : null}
                         {reciept ? (

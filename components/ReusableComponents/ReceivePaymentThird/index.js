@@ -183,9 +183,16 @@ const ReceivePaymentThird = ({
                                         return (
                                             <TransactionDets
                                                 key={index}
+                                                accountId={item.sourceAccountId}
                                                 disputes={dispute}
                                                 type={item.transactionType}
                                                 narration={item.narration}
+                                                transactionId={
+                                                    item.ransactionId
+                                                }
+                                                transactionRef={
+                                                    item.transactionRef
+                                                }
                                                 sender={item.sender}
                                                 destinationBank={
                                                     item.destinationBank
