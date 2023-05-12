@@ -136,6 +136,7 @@ const TransactionDets = ({
                                 >
                                     dispute
                                 </div>
+                                
                                 <hr />
                                 <div
                                     className={styles.reciept}
