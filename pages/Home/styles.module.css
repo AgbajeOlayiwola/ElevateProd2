@@ -1,3 +1,8 @@
+.homeContainer{
+    width: 100%;
+    background-color: white;
+}
+
 .homeBody {
     display: flex;
     height: 100vh;
@@ -67,7 +72,7 @@
 }
 
 .secondSection {
-    padding: 100px 0px;
+    padding: 200px 0px;
     max-width: 682px;
     width: 53%;
 }
@@ -75,7 +80,7 @@
 .secondSectionHeader {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .secondSectionHeaderText {
@@ -111,7 +116,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-top: 32px;
+    margin-top: 64px;
     border-bottom: 1px solid #ebebeb;
     padding-bottom: 32px;
 }
@@ -140,13 +145,16 @@
     font-size: 14px;
     line-height: 17px;
     color: #3e3e3e;
+    background: #F4F4F4;
+border-radius: 8px;
+border: 0px;
 }
 
 .homeForm {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-top: 24px;
+    margin-top: 32px;
 }
 
 .homeForm label {
@@ -158,6 +166,12 @@
     color: #7a7978;
     display: block;
     margin-bottom: 8px;
+}
+
+.homeForm input{
+    background: #F4F4F4;
+border: 1px solid rgba(108, 207, 0, 0.31);
+border-radius: 8px;
 }
 
 .divs {
