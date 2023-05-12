@@ -16,28 +16,25 @@
 .TableDetailBody .bene {
     font-size: 16px;
     color: #102572;
-    width: 25%;
+    width: 30%;
 }
 
 .TableDetailBody .transfer {
     color: #2f2f2f;
-    width: 15%;
+    width: 20%;
 }
 
 .TableDetailBody .amount {
     font-weight: 700;
     color: #455a64;
-    width: 18%;
-}
-
-.bank {
     width: 22%;
 }
 
+
 .date {
-    width: 10%;
+    width: 14%;
 }
 
 .status {
-    width: 10%;
+    width: 14%;
 }
