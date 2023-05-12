@@ -112,6 +112,11 @@ const ReceivePaymentSecond = ({
         'ellevate.com/qyweywbdbsdfsds/ei...'
     );
 
+    const [
+        ussData,
+        setUssdData
+    ] = useState(`https://recievepayment.netlify.app/Payments/ussd?data=
+    ${link}`);
     // This is the function we wrote earlier
 
     async function copyTextToClipboard(text) {
@@ -124,7 +129,7 @@ const ReceivePaymentSecond = ({
     // onClick handler function for the copy button
     const copy = () => {
         // Asynchronously call copyTextToClipboard
-        copyTextToClipboard(link)
+        copyTextToClipboard(ussData)
             .then(() => {
                 // If successful, update the isCopied state value
                 setIsCopied(true);
@@ -160,7 +165,7 @@ const ReceivePaymentSecond = ({
             });
     };
     const [qrUrlData, setQrUrlData] = useState(
-        `https://recievepayment.netlify.app/qr?data=${encodeURIComponent(
+        `https://recievepayment.netlify.app/Payments/qr?data=${encodeURIComponent(
             data?.data.data.dynamicQRBase64
         )}?ref=${data?.data.data.ref}`
     );
@@ -228,28 +233,43 @@ const ReceivePaymentSecond = ({
                             </div>
                         </>
                     ) : title === 'Payment Link Generated' ? (
-                        <div className={styles.secondCopy}>
-                            <LinkSvg />
-                            <input
-                                className={styles.inputBordr}
-                                type="text"
-                                value={payLinkData.paymentLink}
-                            />
-                            <button
-                                className={styles.copyBtn}
-                                onClick={copyPaylink}
-                            >
-                                {isCopied ? 'Copied!' : 'Copy'}
-                            </button>
-                        </div>
+                        <>
+                            <div className={styles.secondCopy}>
+                                <LinkSvg />
+                                <input
+                                    className={styles.inputBordr}
+                                    type="text"
+                                    value={payLinkData.paymentLink}
+                                />
+                                <button
+                                    className={styles.copyBtn}
+                                    onClick={copyPaylink}
+                                >
+                                    {isCopied ? 'Copied!' : 'Copy'}
+                                </button>
+                            </div>
+                            <div className={styles.paylinkvalidTill}>
+                                <p>Valid Till</p>
+                                <p>{timer}</p>
+                            </div>
+                        </>
                     ) : (
-                        <div className={styles.secondCopyII}>
-                            <LinkSvg />
-                            <p>{link}</p>
-                            <button className={styles.copyBtn} onClick={copy}>
-                                {isCopied ? 'Copied!' : 'Copy'}
-                            </button>
-                        </div>
+                        <>
+                            <div className={styles.secondCopyII}>
+                                <LinkSvg />
+                                <input
+                                    className={styles.inputBordr}
+                                    type="text"
+                                    value={ussData}
+                                />
+                                <button
+                                    className={styles.copyBtn}
+                                    onClick={copy}
+                                >
+                                    {isCopied ? 'Copied!' : 'Copy'}
+                                </button>
+                            </div>
+                        </>
                     )}
                     <EmailShareButton />
 
@@ -284,7 +304,7 @@ const ReceivePaymentSecond = ({
                                 {title === 'USSD'
                                     ? type
                                     : title === 'Payment Link Generated'
-                                    ? 'jhfdjs'
+                                    ? payLinkData?.status
                                     : data.data.data.transactionDescription}
                             </p>
                         </div>
@@ -296,7 +316,7 @@ const ReceivePaymentSecond = ({
                             {title === 'USSD'
                                 ? track
                                 : title === 'Payment Link Generated'
-                                ? 'jhfdjs'
+                                ? null
                                 : data.data.data.ref}
                         </p>
                         <p className={styles.copy}>

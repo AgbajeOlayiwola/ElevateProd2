@@ -209,5 +209,6 @@ export default {
     subcomplaint,
     getMiniStatemnt,
     getFullStatement,
-    qrMerchantInfo
+    qrMerchantInfo,
+    lodgeComplaint
 };

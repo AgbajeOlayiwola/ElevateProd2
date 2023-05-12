@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
 import DashLayout from '../../components/layout/Dashboard';
 import StorePopup from '../../components/ReusableComponents/StorePopup';
@@ -7,13 +7,18 @@ import ReactPaginate from 'react-paginate';
 import {
     bankAccountsData,
     getBalanceEnquiry,
+    loadAccountPrimary,
     loadbankStatement
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/ReusableComponents/Loader';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 const BankStatments = () => {
     const dispatch = useDispatch();
+
+    const printRef = useRef();
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -27,12 +32,15 @@ const BankStatments = () => {
     const [tableDetails, setTableDetails] = useState([]);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [searchValue, setSearchValue] = useState('');
     const [pageNumber, setPageNumber] = useState(0);
     const [bankAccount, setBankAccount] = useState([]);
     const [account, setAccount] = useState('');
-    const [searchType, setSearchType] = useState('transactionType');
+    const [searchType, setSearchType] = useState('Amount');
     const format = formatter.format(0);
     const [balance, setBalance] = useState(format);
+    const [inflow, setInflow] = useState(format);
+    const [outflow, setOutflow] = useState(format);
 
     const usersPerPage = 10;
     const pagesVisited = pageNumber * usersPerPage;
@@ -50,9 +58,35 @@ const BankStatments = () => {
         (state) => state.balanceEnquiryReducer
     );
 
+    const { accountPrimarys, accountPrimaryError } = useSelector(
+        (state) => state.accountPrimaryReducer
+    );
+
     useEffect(() => {
         dispatch(bankAccountsData());
+        dispatch(loadAccountPrimary());
+        const todaysDate = new Date().toISOString();
+        const getDateXDaysAgo = (numOfDays, date = new Date()) => {
+            const daysAgo = new Date();
+            return new Date(
+                daysAgo.setDate(date.getDate() - numOfDays)
+            ).toISOString();
+        };
+        const data = {
+            startDate: getDateXDaysAgo(365),
+            endDate: todaysDate
+        };
+        dispatch(loadbankStatement(data));
     }, []);
+
+    useEffect(() => {
+        if (accountPrimarys !== null) {
+            const data = {
+                accountId: accountPrimarys.accountId
+            };
+            dispatch(getBalanceEnquiry(data));
+        }
+    }, [accountPrimarys]);
 
     useEffect(() => {
         if (bankAccount !== null) {
@@ -86,35 +120,52 @@ const BankStatments = () => {
             setLoading(false);
             setTableDetails(bankStatement);
             setOverlay(false);
+            bankStatement
+                .filter((item) => {
+                    if (item.tranType === 'Inflow') {
+                        return item;
+                    }
+                })
+                .reduce((a, b) => {
+                    setInflow(formatter.format(a));
+                    return a + +b.amount;
+                }, 0);
+            bankStatement
+                .filter((item) => {
+                    if (item.tranType === 'Outflow') {
+                        return item;
+                    }
+                })
+                .reduce((a, b) => {
+                    setOutflow(formatter.format(a));
+                    return a + +b.amount;
+                }, 0);
         } else if (errorMessagebankStatement !== null) {
             setLoading(false);
         }
     }, [bankStatement, errorMessagebankStatement]);
+    useEffect(() => {}, [inflow, outflow, tableDetails]);
+    // console.log(inflow);
 
-    // const filterCondition = (item, searchType) => {
-    //     switch (searchType) {
-    //         case 'transactionType':
-    //             return item.transactionType
-    //                 .toLowerCase()
-    //                 .includes(searchValue.toLowerCase());
-    //         case 'transactionStatus':
-    //             return item.transactionStatus
-    //                 .toLowerCase()
-    //                 .includes(searchValue.toLowerCase());
-    //         case 'transactionAmount':
-    //             return item.transactionAmount
-    //                 .toLowerCase()
-    //                 .includes(searchValue.toLowerCase());
-    //         case 'transactionDate':
-    //             return item.transactionDate
-    //                 .toLowerCase()
-    //                 .includes(searchValue.toLowerCase());
-    //         default:
-    //             item.transactionType
-    //                 .toLowerCase()
-    //                 .includes(searchValue.toLowerCase());
-    //     }
-    // };
+    const filterCondition = (item, searchType) => {
+        switch (searchType) {
+            case 'amount':
+                return item.amount
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
+
+            case 'account':
+                return item.accountNo
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
+            case 'type':
+                return item.channel
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase());
+            default:
+                item.amount.toLowerCase().includes(searchValue.toLowerCase());
+        }
+    };
     return (
         <DashLayout page="Bank Statement">
             <div className={styles.chooseDate}>
@@ -124,7 +175,7 @@ const BankStatments = () => {
                         setOverlay(true);
                     }}
                 >
-                    <p>Choose Period</p>
+                    <p>Request Statement</p>
                 </div>
             </div>
             {date ? (
@@ -206,26 +257,28 @@ const BankStatments = () => {
                 </div>
                 <div>
                     <p>Total Inflow</p>
-                    <h2>N12,000.00</h2>
+                    <h2>{inflow}</h2>
                 </div>
                 <div>
                     <p>Total Outflow</p>
-                    <h2>N4,000.00</h2>
+                    <h2>{outflow}</h2>
                 </div>
             </div>
             <div className={styles.table}>
                 <div className={styles.tableHeader}>
                     <h2>Transactions History</h2>
+                </div>
+                <div className={styles.tableFilters}>
                     <div className={styles.tableFilter}>
                         <div>
-                            {/* <img src="../Assets/Svgs/search.svg" alt="" /> */}
-                            {/* <input
+                            <img src="../Assets/Svgs/search.svg" alt="" />
+                            <input
                                 type="text"
-                                placeholder={`Filter by ${displayType}`}
+                                placeholder={`Filter by ${searchType}`}
                                 onChange={(e) => {
                                     setSearchValue(e.target.value);
                                 }}
-                            /> */}
+                            />
                         </div>
                         <select
                             name=""
@@ -234,10 +287,9 @@ const BankStatments = () => {
                                 setSearchType(e.target.value);
                             }}
                         >
-                            <option value="transactionType">Type</option>
-                            <option value="transactionStatus">Status</option>
-                            <option value="transactionAmount">Amount</option>
-                            <option value="transactionDate">Date</option>
+                            <option value="amount">Amount</option>
+                            <option value="account">Account</option>
+                            <option value="type">Type</option>
                         </select>
                         {/* <button>
                         Filter
@@ -246,6 +298,29 @@ const BankStatments = () => {
                         </span>
                     </button> */}
                     </div>
+                    <h2
+                        onClick={async () => {
+                            const element = printRef.current;
+
+                            const pdf = new jsPDF({
+                                unit: 'px',
+                                format: 'letter',
+                                userUnit: 'px'
+                            });
+
+                            const pdfWidth = pdf.internal.pageSize.getWidth();
+                            pdf.html(element, {
+                                html2canvas: {
+                                    scale: 0.57,
+                                    width: pdfWidth
+                                }
+                            }).then(() => {
+                                pdf.save('Account Statement.pdf');
+                            });
+                        }}
+                    >
+                        Download
+                    </h2>
                 </div>
                 <table className={styles.tables}>
                     <thead className={styles.TableDetailHeader}>
@@ -306,54 +381,60 @@ const BankStatments = () => {
                             })} */}
                     </tbody>
                 </table>
-                <div className={styles.TableDetailHeader}>
-                    <p className={styles.date}>Date</p>
-                    <p className={styles.bank}>Account</p>
-                    <p className={styles.beneficiary}>Beneficiary </p>
-                    <p className={styles.amount}>Amount</p>
-                    <p className={styles.type}>Type</p>
+                <div ref={printRef}>
+                    <div className={styles.TableDetailHeader}>
+                        <p className={styles.date}>Date</p>
+                        <p className={styles.bank}>Account</p>
+                        <p className={styles.beneficiary}>Beneficiary </p>
+                        <p className={styles.amount}>Amount</p>
+                        <p className={styles.type}>Type</p>
+                    </div>
+                    {!tableDetails.length
+                        ? 'No Recent transaction'
+                        : tableDetails
+                              ?.sort((x, y) => {
+                                  let a = new Date(x.transactionDate),
+                                      b = new Date(y.transactionDate);
+                                  return b - a;
+                              })
+                              ?.filter((item) => {
+                                  if (searchValue === '') {
+                                      return item;
+                                  } else if (
+                                      filterCondition(item, searchType)
+                                  ) {
+                                      return item;
+                                  }
+                              })
+                              ?.slice(pagesVisited, pagesVisited + usersPerPage)
+                              ?.map((items, index) => {
+                                  const newDate =
+                                      items?.transactionTime?.split(' ');
+                                  return (
+                                      <div
+                                          className={styles.TableDetailBody}
+                                          key={index}
+                                      >
+                                          <p className={styles.date}>
+                                              {newDate[0]}
+                                          </p>
+                                          <p className={styles.bank}>
+                                              {items.accountNo}
+                                          </p>
+                                          <p className={styles.bene}>
+                                              {items.narration}
+                                          </p>
+                                          <p className={styles.amount}>
+                                              {formatter.format(items.amount)}
+                                          </p>
+                                          <p className={styles.transfer}>
+                                              {items.channel}
+                                          </p>
+                                      </div>
+                                  );
+                              })}
                 </div>
-                {!tableDetails.length
-                    ? 'No Recent transaction'
-                    : tableDetails
-                          ?.sort((x, y) => {
-                              let a = new Date(x.transactionDate),
-                                  b = new Date(y.transactionDate);
-                              return b - a;
-                          })
-                          //   ?.filter((item) => {
-                          //       if (searchValue === '') {
-                          //           return item;
-                          //       } else if (filterCondition(item, searchType)) {
-                          //           return item;
-                          //       }
-                          //   })
-                          ?.slice(pagesVisited, pagesVisited + usersPerPage)
-                          ?.map((items, index) => {
-                              const newDate = items?.transactionTime.split(' ');
-                              return (
-                                  <div
-                                      className={styles.TableDetailBody}
-                                      key={index}
-                                  >
-                                      <p className={styles.date}>
-                                          {newDate[0]}
-                                      </p>
-                                      <p className={styles.bank}>
-                                          {items.accountNo}
-                                      </p>
-                                      <p className={styles.bene}>
-                                          {items.narration}
-                                      </p>
-                                      <p className={styles.amount}>
-                                          {formatter.format(items.amount)}
-                                      </p>
-                                      <p className={styles.transfer}>
-                                          {items.channel}
-                                      </p>
-                                  </div>
-                              );
-                          })}
+
                 <ReactPaginate
                     previousLabel="Previous"
                     nextLabel="Next"

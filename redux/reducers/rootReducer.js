@@ -94,6 +94,7 @@ import getQrMerchantInfoReducermport from './getQrMerchantInfo.reducer';
 import getDisputeTypeReducer from './getDisputeType.reducer';
 import getDisputeCategoryReducer from './getDisputeCategory.reducer';
 import getDisputeSubCategoryReducer from './getDisputSubCategory.reducer';
+import lodgeDisputeReducer from './lodgeDispute.reducer';
 const appReducer = combineReducers({
     countryReducer: countryReducer,
     internationalCountryReducer: internationalCountryReducer,
@@ -193,7 +194,8 @@ const appReducer = combineReducers({
     getQrMerchantInfoReducermport: getQrMerchantInfoReducermport,
     getDisputeTypeReducer: getDisputeTypeReducer,
     getDisputeCategoryReducer: getDisputeCategoryReducer,
-    getDisputeSubCategoryReducer: getDisputeSubCategoryReducer
+    getDisputeSubCategoryReducer: getDisputeSubCategoryReducer,
+    lodgeDisputeReducer: lodgeDisputeReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

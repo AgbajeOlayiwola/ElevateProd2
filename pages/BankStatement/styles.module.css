@@ -108,7 +108,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
 .tableHeader h2 {
@@ -155,7 +155,7 @@
 }
 
 .tableFilter select {
-    width: 103px;
+    width: 107px;
     margin: 0px;
     background-color: #005b82;
     border-radius: 8px;
@@ -167,7 +167,7 @@
     color: white;
     border: none;
     background-image: url(../../public/Assets/Svgs/Vector\ 26.svg);
-    background-position-x: 74%;
+    background-position-x: 90%;
     background-position-y: 55%;
 }
 
@@ -289,4 +289,26 @@
 
 .date {
     width: 12%;
+}
+
+.tableFilters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 36px;
+}
+
+.tableFilters > h2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 16px 32px;
+    background: #ffffff;
+    border: 1px solid #7fbb01;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #7fbb01;
 }

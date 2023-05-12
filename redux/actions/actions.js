@@ -93,7 +93,8 @@ import {
     qrMerchantInfo_Type,
     disputeType,
     disputCategoryType,
-    disputSubCategoryType
+    disputSubCategoryType,
+    lodgeComplaint_Type
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -3675,7 +3676,7 @@ export const getDisputCategoryError = (getDisputCategoryErrorMessage) => ({
     type: disputCategoryType.DISPUTCATEGORY_LOAD_ERROR,
     payload: getDisputCategoryErrorMessage
 });
-export const getDisputCategoryGen = () => (data) => {
+export const getDisputCategoryGen = (disputeType) => (dispatch) => {
     dispatch(getDisputCategoryStart());
     let cookie;
 
@@ -3685,7 +3686,7 @@ export const getDisputCategoryGen = () => (data) => {
         cookie = getCookie('cookieToken');
     }
     axiosInstance
-        .post(`${apiRoutes.complaintCategories}`, data, {
+        .get(`${apiRoutes.complaintCategories}?caseType=${disputeType}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -3715,8 +3716,10 @@ export const getDisputCategorySubError = (
     type: disputSubCategoryType.DISPUTCATEGORYSUB_LOAD_ERROR,
     payload: getDisputCategoryErrorSubMessage
 });
-export const getDisputCategorySubGen = () => (dispatch) => {
-    dispatch(getDisputCategorySubStart());
+export const getDisputCategorySubGen = (categoryType, disputeSubCategory) => (
+    dispatch
+) => {
+    dispatch(getDisputCategorySubStart(disputeSubCategory));
     let cookie;
 
     if (getCookie('cookieToken') == undefined) {
@@ -3725,7 +3728,49 @@ export const getDisputCategorySubGen = () => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     axiosInstance
-        .get(`${apiRoutes.complaintCategories}`, {
+        .get(
+            `${apiRoutes.subComplaintCategories}?caseType=${disputeSubCategory}&caseCategory=${categoryType}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
+                }
+            }
+        )
+        .then((response) => {
+            dispatch(getDisputCategorySubSuccess(response.data.data));
+        })
+        .catch((error) => dispatch(getDisputCategorySubError(error)));
+};
+
+//Get Dispute Type Info actions end
+
+//GET Lodge Dispute Action
+export const lodgeDisputeStart = () => ({
+    type: lodgeComplaint_Type.GET_LODGE_COMPLAINT_START
+});
+
+export const lodgeDisputeSuccess = (lodgeDisputeSuccess) => ({
+    type: lodgeComplaint_Type.GET_LODGE_COMPLAINT_SUCCESS,
+    payload: lodgeDisputeSuccess
+});
+
+export const lodgeDisputeError = (lodgeDisputeErrorSubMessage) => ({
+    type: lodgeComplaint_Type.GET_LODGE_COMPLAINT_ERROR,
+    payload: lodgeDisputeErrorSubMessage
+});
+export const lodgeDisputeSubGen = (data) => (dispatch) => {
+    dispatch(lodgeDisputeStart(data));
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .post(`${apiRoutes.lodgeComplaint}`, data, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -3733,8 +3778,11 @@ export const getDisputCategorySubGen = () => (dispatch) => {
             }
         })
         .then((response) => {
-            dispatch(getDisputCategorySubSuccess(response.data.data));
+            dispatch(lodgeDisputeSuccess(response.data.data));
         })
-        .catch((error) => dispatch(getDisputCategorySubError(error)));
+        .catch((error) => {
+            dispatch(lodgeDisputeError(error.response)),
+                console.log(error.response);
+        });
 };
-//Get Dispute Type Info actions end
+//Get Lodege Dispute Type End
