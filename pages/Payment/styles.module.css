@@ -7,6 +7,13 @@
     align-items: center;
     justify-content: space-between;
 }
+.statementCover{
+    height: fit-content;
+    background: #FEFEFE;
+box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+border-radius: 15px;
+padding: 20px 15px;
+}
 
 .greencard h3 {
     font-family: 'Inter', sans-serif;
@@ -151,6 +158,11 @@
     padding: 16px 0px;
 }
 
+.allTypes{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
 .NFCScanner {
     width: 40%;
     max-width: 496px;

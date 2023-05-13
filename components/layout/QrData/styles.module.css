@@ -14,7 +14,7 @@ border-radius: 12px;
     display: flex;
     flex-direction: column;
     gap: 48px;
-    height: 804px;
+    height: 80vh;
     overflow: scroll;
     max-height: 804px;
 }

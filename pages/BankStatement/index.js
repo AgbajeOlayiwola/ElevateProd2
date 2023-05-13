@@ -168,173 +168,180 @@ const BankStatments = () => {
     };
     return (
         <DashLayout page="Bank Statement">
-            <div className={styles.chooseDate}>
-                <div
-                    onClick={() => {
-                        setDate(true);
-                        setOverlay(true);
-                    }}
-                >
-                    <p>Request Statement</p>
-                </div>
-            </div>
-            {date ? (
-                <StorePopup overlay={overlay}>
-                    <div className={styles.generateHead}>
-                        <CloseButton
-                            color="red"
-                            action={() => {
-                                setOverlay(false);
-                            }}
-                        />
+            <div className={styles.statementCover}>
+                <div className={styles.chooseDate}>
+                    <div
+                        onClick={() => {
+                            setDate(true);
+                            setOverlay(true);
+                        }}
+                    >
+                        <p>Request Statement</p>
                     </div>
-                    <div className={styles.generateForm}>
-                        <div className={styles.formGroup}>
-                            <label>Choose Account</label>
+                </div>
+                {date ? (
+                    <StorePopup overlay={overlay}>
+                        <div className={styles.generateHead}>
+                            <CloseButton
+                                color="red"
+                                action={() => {
+                                    setOverlay(false);
+                                }}
+                            />
+                        </div>
+                        <div className={styles.generateForm}>
+                            <div className={styles.formGroup}>
+                                <label>Choose Account</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    onChange={(e) => {
+                                        setAccount(e.target.value);
+                                    }}
+                                >
+                                    <option value="">
+                                        Select Bank Account
+                                    </option>
+                                    {bankAccount?.map((item, index) => {
+                                        return (
+                                            <option
+                                                key={index}
+                                                value={item.accountNumber}
+                                            >
+                                                {item.accountNumber}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Start Date</label>
+                                <input
+                                    type="date"
+                                    onChange={(e) => {
+                                        setStartDate(e.target.value);
+                                    }}
+                                />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Stop Date </label>
+                                <input
+                                    type="date"
+                                    onChange={(e) => {
+                                        setEndDate(e.target.value);
+                                    }}
+                                />
+                            </div>
+                            {loading ? (
+                                <Loader />
+                            ) : (
+                                <button
+                                    onClick={() => {
+                                        setLoading(true);
+                                        const data = {
+                                            startDate: new Date(
+                                                startDate
+                                            ).toISOString(),
+                                            endDate: new Date(
+                                                endDate
+                                            ).toISOString()
+                                        };
+                                        dispatch(loadbankStatement(data));
+                                    }}
+                                >
+                                    Generate
+                                </button>
+                            )}
+                        </div>
+                    </StorePopup>
+                ) : null}
+                <div className={styles.balanceStatement}>
+                    <div>
+                        <p>Balance</p>
+                        <h2>{balance}</h2>
+                    </div>
+                    <div>
+                        <p>Total Inflow</p>
+                        <h2>{inflow}</h2>
+                    </div>
+                    <div>
+                        <p>Total Outflow</p>
+                        <h2>{outflow}</h2>
+                    </div>
+                </div>
+                <div className={styles.table}>
+                    <div className={styles.tableHeader}>
+                        <h2>Transactions History</h2>
+                    </div>
+                    <div className={styles.tableFilters}>
+                        <div className={styles.tableFilter}>
+                            <div>
+                                <img src="../Assets/Svgs/search.svg" alt="" />
+                                <input
+                                    type="text"
+                                    placeholder={`Filter by ${searchType}`}
+                                    onChange={(e) => {
+                                        setSearchValue(e.target.value);
+                                    }}
+                                />
+                            </div>
                             <select
                                 name=""
                                 id=""
                                 onChange={(e) => {
-                                    setAccount(e.target.value);
+                                    setSearchType(e.target.value);
                                 }}
                             >
-                                <option value="">Select Bank Account</option>
-                                {bankAccount?.map((item, index) => {
-                                    return (
-                                        <option
-                                            key={index}
-                                            value={item.accountNumber}
-                                        >
-                                            {item.accountNumber}
-                                        </option>
-                                    );
-                                })}
+                                <option value="amount">Amount</option>
+                                <option value="account">Account</option>
+                                <option value="type">Type</option>
                             </select>
-                        </div>
-                        <div className={styles.formGroup}>
-                            <label>Start Date</label>
-                            <input
-                                type="date"
-                                onChange={(e) => {
-                                    setStartDate(e.target.value);
-                                }}
-                            />
-                        </div>
-                        <div className={styles.formGroup}>
-                            <label>Stop Date </label>
-                            <input
-                                type="date"
-                                onChange={(e) => {
-                                    setEndDate(e.target.value);
-                                }}
-                            />
-                        </div>
-                        {loading ? (
-                            <Loader />
-                        ) : (
-                            <button
-                                onClick={() => {
-                                    setLoading(true);
-                                    const data = {
-                                        startDate: new Date(
-                                            startDate
-                                        ).toISOString(),
-                                        endDate: new Date(endDate).toISOString()
-                                    };
-                                    dispatch(loadbankStatement(data));
-                                }}
-                            >
-                                Generate
-                            </button>
-                        )}
-                    </div>
-                </StorePopup>
-            ) : null}
-            <div className={styles.balanceStatement}>
-                <div>
-                    <p>Balance</p>
-                    <h2>{balance}</h2>
-                </div>
-                <div>
-                    <p>Total Inflow</p>
-                    <h2>{inflow}</h2>
-                </div>
-                <div>
-                    <p>Total Outflow</p>
-                    <h2>{outflow}</h2>
-                </div>
-            </div>
-            <div className={styles.table}>
-                <div className={styles.tableHeader}>
-                    <h2>Transactions History</h2>
-                </div>
-                <div className={styles.tableFilters}>
-                    <div className={styles.tableFilter}>
-                        <div>
-                            <img src="../Assets/Svgs/search.svg" alt="" />
-                            <input
-                                type="text"
-                                placeholder={`Filter by ${searchType}`}
-                                onChange={(e) => {
-                                    setSearchValue(e.target.value);
-                                }}
-                            />
-                        </div>
-                        <select
-                            name=""
-                            id=""
-                            onChange={(e) => {
-                                setSearchType(e.target.value);
-                            }}
-                        >
-                            <option value="amount">Amount</option>
-                            <option value="account">Account</option>
-                            <option value="type">Type</option>
-                        </select>
-                        {/* <button>
+                            {/* <button>
                         Filter
                         <span>
                             <img src="../Assets/Svgs/Vector 26.svg" alt="" />
                         </span>
                     </button> */}
+                        </div>
+                        <h2
+                            onClick={async () => {
+                                const element = printRef.current;
+
+                                const pdf = new jsPDF({
+                                    unit: 'px',
+                                    format: 'letter',
+                                    userUnit: 'px'
+                                });
+
+                                const pdfWidth = pdf.internal.pageSize.getWidth();
+                                pdf.html(element, {
+                                    html2canvas: {
+                                        scale: 0.57,
+                                        width: pdfWidth
+                                    }
+                                }).then(() => {
+                                    pdf.save('Account Statement.pdf');
+                                });
+                            }}
+                        >
+                            Download
+                        </h2>
                     </div>
-                    <h2
-                        onClick={async () => {
-                            const element = printRef.current;
-
-                            const pdf = new jsPDF({
-                                unit: 'px',
-                                format: 'letter',
-                                userUnit: 'px'
-                            });
-
-                            const pdfWidth = pdf.internal.pageSize.getWidth();
-                            pdf.html(element, {
-                                html2canvas: {
-                                    scale: 0.57,
-                                    width: pdfWidth
-                                }
-                            }).then(() => {
-                                pdf.save('Account Statement.pdf');
-                            });
-                        }}
-                    >
-                        Download
-                    </h2>
-                </div>
-                <table className={styles.tables}>
-                    <thead className={styles.TableDetailHeader}>
-                        <tr>
-                            <td className={styles.beneficiary}>Beneficiary </td>
-                            <td className={styles.type}>Type</td>
-                            <td className={styles.amount}>Amount</td>
-                            <td className={styles.bank}>Bank/Network</td>
-                            <td className={styles.date}>Date</td>
-                            <td className={styles.status}>Status</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* {tableDetails
+                    <table className={styles.tables}>
+                        <thead className={styles.TableDetailHeader}>
+                            <tr>
+                                <td className={styles.beneficiary}>
+                                    Beneficiary{' '}
+                                </td>
+                                <td className={styles.type}>Type</td>
+                                <td className={styles.amount}>Amount</td>
+                                <td className={styles.bank}>Bank/Network</td>
+                                <td className={styles.date}>Date</td>
+                                <td className={styles.status}>Status</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* {tableDetails
                             ?.filter((item) => {
                                 if (search === '') {
                                     return item;
@@ -379,74 +386,81 @@ const BankStatments = () => {
                                     </tr>
                                 );
                             })} */}
-                    </tbody>
-                </table>
-                <div ref={printRef}>
-                    <div className={styles.TableDetailHeader}>
-                        <p className={styles.date}>Date</p>
-                        <p className={styles.bank}>Account</p>
-                        <p className={styles.beneficiary}>Beneficiary </p>
-                        <p className={styles.amount}>Amount</p>
-                        <p className={styles.type}>Type</p>
+                        </tbody>
+                    </table>
+                    <div ref={printRef}>
+                        <div className={styles.TableDetailHeader}>
+                            <p className={styles.date}>Date</p>
+                            <p className={styles.bank}>Account</p>
+                            <p className={styles.beneficiary}>Beneficiary </p>
+                            <p className={styles.amount}>Amount</p>
+                            <p className={styles.type}>Type</p>
+                        </div>
+                        {!tableDetails.length
+                            ? 'No Recent transaction'
+                            : tableDetails
+                                  ?.sort((x, y) => {
+                                      let a = new Date(x.transactionDate),
+                                          b = new Date(y.transactionDate);
+                                      return b - a;
+                                  })
+                                  ?.filter((item) => {
+                                      if (searchValue === '') {
+                                          return item;
+                                      } else if (
+                                          filterCondition(item, searchType)
+                                      ) {
+                                          return item;
+                                      }
+                                  })
+                                  ?.slice(
+                                      pagesVisited,
+                                      pagesVisited + usersPerPage
+                                  )
+                                  ?.map((items, index) => {
+                                      const newDate = items?.transactionTime?.split(
+                                          ' '
+                                      );
+                                      return (
+                                          <div
+                                              className={styles.TableDetailBody}
+                                              key={index}
+                                          >
+                                              <p className={styles.date}>
+                                                  {newDate[0]}
+                                              </p>
+                                              <p className={styles.bank}>
+                                                  {items.accountNo}
+                                              </p>
+                                              <p className={styles.bene}>
+                                                  {items.narration}
+                                              </p>
+                                              <p className={styles.amount}>
+                                                  {formatter.format(
+                                                      items.amount
+                                                  )}
+                                              </p>
+                                              <p className={styles.transfer}>
+                                                  {items.channel}
+                                              </p>
+                                          </div>
+                                      );
+                                  })}
                     </div>
-                    {!tableDetails.length
-                        ? 'No Recent transaction'
-                        : tableDetails
-                              ?.sort((x, y) => {
-                                  let a = new Date(x.transactionDate),
-                                      b = new Date(y.transactionDate);
-                                  return b - a;
-                              })
-                              ?.filter((item) => {
-                                  if (searchValue === '') {
-                                      return item;
-                                  } else if (
-                                      filterCondition(item, searchType)
-                                  ) {
-                                      return item;
-                                  }
-                              })
-                              ?.slice(pagesVisited, pagesVisited + usersPerPage)
-                              ?.map((items, index) => {
-                                  const newDate =
-                                      items?.transactionTime?.split(' ');
-                                  return (
-                                      <div
-                                          className={styles.TableDetailBody}
-                                          key={index}
-                                      >
-                                          <p className={styles.date}>
-                                              {newDate[0]}
-                                          </p>
-                                          <p className={styles.bank}>
-                                              {items.accountNo}
-                                          </p>
-                                          <p className={styles.bene}>
-                                              {items.narration}
-                                          </p>
-                                          <p className={styles.amount}>
-                                              {formatter.format(items.amount)}
-                                          </p>
-                                          <p className={styles.transfer}>
-                                              {items.channel}
-                                          </p>
-                                      </div>
-                                  );
-                              })}
-                </div>
 
-                <ReactPaginate
-                    previousLabel="Previous"
-                    nextLabel="Next"
-                    pageCount={pageCount}
-                    onPageChange={({ selected }) => {
-                        setPageNumber(selected);
-                    }}
-                    containerClassName={styles.paginationBtns}
-                    previousClassName={styles.previousBtns}
-                    nextLinkClassName={styles.nextBtns}
-                    activeClassName={styles.paginationActive}
-                />
+                    <ReactPaginate
+                        previousLabel="Previous"
+                        nextLabel="Next"
+                        pageCount={pageCount}
+                        onPageChange={({ selected }) => {
+                            setPageNumber(selected);
+                        }}
+                        containerClassName={styles.paginationBtns}
+                        previousClassName={styles.previousBtns}
+                        nextLinkClassName={styles.nextBtns}
+                        activeClassName={styles.paginationActive}
+                    />
+                </div>
             </div>
         </DashLayout>
     );

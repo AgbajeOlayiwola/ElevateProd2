@@ -126,7 +126,7 @@ if (loginToken === null) {
 //     };
 // };
 const axiosInstance = axios.create({
-    baseURL: 'https://mysmeapp.ecobank.com:8443',
+    baseURL: 'https://testvate.live',
     headers: {
         'Content-Type': 'application/json',
         'X-Client-Type': 'web',
@@ -212,7 +212,7 @@ export const loadresetPassword = (code) => (dispatch) => {
             dispatch(resetPasswordLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(resetPasswordLoadError(error.response.data.message))
+            dispatch(resetPasswordLoadError(error?.response.data.message))
         );
 };
 //resetPassword actions end
@@ -238,7 +238,7 @@ export const loadbankStatement = (code) => (dispatch) => {
         .then((response) =>
             dispatch(bankStatementLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(bankStatementLoadError(error.message)));
+        .catch((error) => dispatch(bankStatementLoadError(error?.message)));
 };
 //bankStatement actions end
 
@@ -270,7 +270,7 @@ export const loadfetchRM = (code) => (dispatch) => {
         })
         .then((response) => dispatch(fetchRMLoadSuccess(response.data.data)))
         .catch((error) =>
-            dispatch(fetchRMLoadError(error.response.data.message))
+            dispatch(fetchRMLoadError(error?.response.data.message))
         );
 };
 //fetchRM actions end
@@ -295,7 +295,7 @@ export const loadViewBvn = (code) => (dispatch) => {
         .post(`${apiRoutes.viewBvn}`, code)
         .then((response) => dispatch(viewBvnLoadSuccess(response.data)))
         .catch((error) =>
-            dispatch(viewBvnLoadError(error.response.data.message))
+            dispatch(viewBvnLoadError(error?.response.data.message))
         );
 };
 //viewBvn actions end
@@ -333,7 +333,7 @@ export const loadussdStatus = (code) => (dispatch) => {
             }
         })
         .then((response) => dispatch(ussdStatusLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(ussdStatusLoadError(error.message)));
+        .catch((error) => dispatch(ussdStatusLoadError(error?.message)));
 };
 //uusdStatus actions end
 
@@ -357,7 +357,7 @@ export const loadCountry = () => (dispatch) => {
     axiosInstance
         .get(`${apiRoutes.getCountries}`)
         .then((response) => dispatch(countryLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(countryLoadError(error.response.message)));
+        .catch((error) => dispatch(countryLoadError(error?.response.message)));
 };
 //country actions end
 //profilingQuestions actions
@@ -383,7 +383,7 @@ export const loadprofilingQuestions = () => (dispatch) => {
             dispatch(profilingQuestionsLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(profilingQuestionsLoadError(error.response.message))
+            dispatch(profilingQuestionsLoadError(error?.response.message))
         );
 };
 //profilingQuestions actions end
@@ -411,7 +411,7 @@ export const loadinternationalCountry = () => (dispatch) => {
             dispatch(internationalCountryLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(internationalCountryLoadError(error.response.message))
+            dispatch(internationalCountryLoadError(error?.response.message))
         );
 };
 //internationalCountry actions end
@@ -439,7 +439,7 @@ export const loadfreezeTransactions = () => (dispatch) => {
             dispatch(freezeTransactionsLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(freezeTransactionsLoadError(error.response.message))
+            dispatch(freezeTransactionsLoadError(error?.response.message))
         );
 };
 //freezeTransactions actions end
@@ -467,7 +467,7 @@ export const loadunfreezeTransactions = () => (dispatch) => {
             dispatch(unfreezeTransactionsLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(unfreezeTransactionsLoadError(error.response.message))
+            dispatch(unfreezeTransactionsLoadError(error?.response.message))
         );
 };
 //unfreezeTransactions actions end
@@ -506,7 +506,7 @@ export const loadAccountPrimary = () => (dispatch) => {
             }
         })
         .then((response) => dispatch(accountPrimaryLoadSuccess(response.data)))
-        .catch((error) => dispatch(accountPrimaryLoadError(error.response)));
+        .catch((error) => dispatch(accountPrimaryLoadError(error?.response)));
 };
 //accountPrimary actions end
 
@@ -529,7 +529,7 @@ export const loadUserProfile = () => (dispatch) => {
     dispatch(userProfileLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`https://mysmeapp.ecobank.com:8443${apiRoutes.userProfile}`, {
+        .get(`https://testvate.live${apiRoutes.userProfile}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -541,7 +541,7 @@ export const loadUserProfile = () => (dispatch) => {
             //console.log(response.data);
         })
         .catch((error) =>
-            dispatch(userProfileLoadError(error.response.message))
+            dispatch(userProfileLoadError(error?.response.message))
         );
 };
 //userprofile actions end
@@ -569,7 +569,7 @@ export const businessCategoriesData = () => (dispatch) => {
             dispatch(businessCategoriesLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(businessCategoriesLoadError(error.response.data.message))
+            dispatch(businessCategoriesLoadError(error?.response.data.message))
         );
 };
 //businessCategories actions end
@@ -593,7 +593,7 @@ export const pushDocumentsData = () => (dispatch) => {
     dispatch(pushDocumentsLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`https://mysmeapp.ecobank.com:8443${apiRoutes.pushDocuments}`, {
+        .get(`https://testvate.live${apiRoutes.pushDocuments}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -604,7 +604,7 @@ export const pushDocumentsData = () => (dispatch) => {
             dispatch(pushDocumentsLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(pushDocumentsLoadError(error.response.data.message))
+            dispatch(pushDocumentsLoadError(error?.response.data.message))
         );
 };
 //pushDocuments actions end
@@ -628,7 +628,7 @@ export const shareDocumentsData = () => (dispatch) => {
     dispatch(shareDocumentsLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`https://mysmeapp.ecobank.com:8443${apiRoutes.shareDocuments}`, {
+        .get(`https://testvate.live${apiRoutes.shareDocuments}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -639,7 +639,7 @@ export const shareDocumentsData = () => (dispatch) => {
             dispatch(shareDocumentsLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(shareDocumentsLoadError(error.response.data.message))
+            dispatch(shareDocumentsLoadError(error?.response.data.message))
         );
 };
 //shareDocuments actions end
@@ -665,7 +665,7 @@ export const statesData = () => (dispatch) => {
         .get(`${apiRoutes.states}`)
         .then((response) => dispatch(statesLoadSuccess(response.data.data)))
         .catch((error) =>
-            dispatch(statesLoadError(error.response.data.message))
+            dispatch(statesLoadError(error?.response.data.message))
         );
 };
 //states actions end
@@ -690,7 +690,7 @@ export const loadbank = (code) => (dispatch) => {
     axiosInstance
         .get(`${apiRoutes.getBanks}?affiliateCode=${code}`)
         .then((response) => dispatch(bankLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(bankLoadError(error.message)));
+        .catch((error) => dispatch(bankLoadError(error?.message)));
 };
 //banks actions end
 
@@ -716,7 +716,7 @@ export const loadbillerCategory = (code) => (dispatch) => {
         .then((response) =>
             dispatch(billerCategoryLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(billerCategoryLoadError(error.message)));
+        .catch((error) => dispatch(billerCategoryLoadError(error?.message)));
 };
 //billerCategory actions end
 
@@ -739,7 +739,7 @@ export const loadbillerType = (category) => (dispatch) => {
     axiosInstance
         .get(`${apiRoutes.getBillerType}?category=${category}`)
         .then((response) => dispatch(billerTypeLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(billerTypeLoadError(error.message)));
+        .catch((error) => dispatch(billerTypeLoadError(error?.message)));
 };
 //country actions end
 
@@ -762,7 +762,7 @@ export const loadbillerPlan = (code) => (dispatch) => {
     axiosInstance
         .get(`${apiRoutes.getBillerPlan}?billerCode=${code}`)
         .then((response) => dispatch(billerPlanLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(billerPlanLoadError(error.message)));
+        .catch((error) => dispatch(billerPlanLoadError(error?.message)));
 };
 //country actions end
 
@@ -788,7 +788,9 @@ export const loadchangeTransactionPin = (code) => (dispatch) => {
             dispatch(changeTransactionPinLoadSuccess(response.data))
         )
         .catch((error) =>
-            dispatch(changeTransactionPinLoadError(error.response.data.message))
+            dispatch(
+                changeTransactionPinLoadError(error?.response.data.message)
+            )
         );
 };
 //changeTransactionPin actions end
@@ -811,22 +813,18 @@ export const loadsetTransactionPin = (code) => (dispatch) => {
     dispatch(setTransactionPinLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.setTransactionPin}`,
-            code,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`https://testvate.live${apiRoutes.setTransactionPin}`, code, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) =>
             dispatch(setTransactionPinLoadSuccess(response.data))
         )
         .catch((error) =>
-            dispatch(setTransactionPinLoadError(error.response.data.message))
+            dispatch(setTransactionPinLoadError(error?.response.data.message))
         );
 };
 //setTransactionPin actions end
@@ -851,7 +849,7 @@ export const loadLanguageAsync = () => (dispatch) => {
     axiosInstance
         .get(`${apiRoutes.getLanguages}`)
         .then((response) => dispatch(languageLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(languageLoadError(error.message)));
+        .catch((error) => dispatch(languageLoadError(error?.message)));
 };
 
 //languagex action end
@@ -883,7 +881,7 @@ export const postAirtime = (data) => (dispatch) => {
         })
         .then((response) => dispatch(airtimeLoadSuccess(response.data)))
         .catch((error) =>
-            dispatch(airtimeLoadError(error.response.data.message))
+            dispatch(airtimeLoadError(error?.response.data.message))
         );
 };
 
@@ -911,7 +909,7 @@ export const postAirtimeNetwork = () => (dispatch) => {
             dispatch(airtimeNetworkLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(airtimeNetworkLoadError(error.response.data.message))
+            dispatch(airtimeNetworkLoadError(error?.response.data.message))
         );
 };
 
@@ -944,7 +942,7 @@ export const postBills = (data) => (dispatch) => {
         })
         .then((response) => dispatch(billsLoadSuccess(response.data.data)))
         .catch((error) =>
-            dispatch(billsLoadError(error.response.data.message))
+            dispatch(billsLoadError(error?.response.data.message))
         );
 };
 
@@ -971,7 +969,7 @@ export const postInternalBank = (data) => (dispatch) => {
         .then((response) =>
             dispatch(internalBankLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(internalBankLoadError(error.message)));
+        .catch((error) => dispatch(internalBankLoadError(error?.message)));
 };
 
 //internalBank action end
@@ -1009,7 +1007,7 @@ export const postInterBank = (data) => (dispatch) => {
         })
         .then((response) => dispatch(interBankLoadSuccess(response.data)))
         .catch((error) =>
-            dispatch(interBankLoadError(error.response.data.message))
+            dispatch(interBankLoadError(error?.response.data.message))
         );
 };
 
@@ -1044,7 +1042,7 @@ export const postInterBankEnquiry = (data) => (dispatch) => {
             dispatch(interBankEnquiryLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(interBankEnquiryLoadError(error.response.data.message))
+            dispatch(interBankEnquiryLoadError(error?.response.data.message))
         );
 };
 
@@ -1072,7 +1070,7 @@ export const postIntraBankEnquiry = (data) => (dispatch) => {
             dispatch(intraBankEnquiryLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(intraBankEnquiryLoadError(error.response.data.message))
+            dispatch(intraBankEnquiryLoadError(error?.response.data.message))
         );
 };
 
@@ -1106,7 +1104,7 @@ export const getBalanceEnquiry = (data) => (dispatch) => {
         .then((response) =>
             dispatch(balanceEnquiryLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(balanceEnquiryLoadError(error.message)));
+        .catch((error) => dispatch(balanceEnquiryLoadError(error?.message)));
 };
 
 //balanceEnquiry action end
@@ -1149,7 +1147,9 @@ export const getTransactionHistory = (pageSrchIndex, numOfRecords) => (
         .then((response) =>
             dispatch(transactionHistoryLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(transactionHistoryLoadError(error.message)));
+        .catch((error) =>
+            dispatch(transactionHistoryLoadError(error?.message))
+        );
 };
 
 //transactionHistory action end
@@ -1174,7 +1174,7 @@ export const getTransactionFees = (data) => (dispatch) => {
         .post(`${apiRoutes.transactionFees}`, data)
         .then((response) => dispatch(transactionFeesLoadSuccess(response.data)))
         .catch((error) =>
-            dispatch(transactionFeesLoadError(error.response.data.message))
+            dispatch(transactionFeesLoadError(error?.response.data.message))
         );
 };
 
@@ -1220,7 +1220,9 @@ export const getTransactionElevate = (
         .then((response) =>
             dispatch(transactionElevateLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(transactionElevateLoadError(error.message)));
+        .catch((error) =>
+            dispatch(transactionElevateLoadError(error?.message))
+        );
 };
 
 //transactionElevate action end
@@ -1254,7 +1256,7 @@ export const getBulkTransfer = (data) => (dispatch) => {
             dispatch(bulkTransferLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(bulkTransferLoadError(error.response.data.message))
+            dispatch(bulkTransferLoadError(error?.response.data.message))
         );
 };
 
@@ -1282,7 +1284,7 @@ export const getInternationalTransfer = (data) => (dispatch) => {
             dispatch(internationalTransferLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(internationalTransferLoadError(error.message))
+            dispatch(internationalTransferLoadError(error?.message))
         );
 };
 
@@ -1307,7 +1309,7 @@ export const getverifyBank = (data) => (dispatch) => {
     axiosInstance
         .post(`${apiRoutes.verifyBank}`, data)
         .then((response) => dispatch(verifyBankLoadSuccess(response.data.data)))
-        .catch((error) => dispatch(verifyBankLoadError(error.message)));
+        .catch((error) => dispatch(verifyBankLoadError(error?.message)));
 };
 
 //verifyBank action end
@@ -1333,7 +1335,7 @@ export const getVerifyCurrency = (code) => (dispatch) => {
         .then((response) =>
             dispatch(verifyCurrencyLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(verifyCurrencyLoadError(error.message)));
+        .catch((error) => dispatch(verifyCurrencyLoadError(error?.message)));
 };
 
 //verifyCurrency action end
@@ -1366,7 +1368,7 @@ export const getBeneficiariesData = () => (dispatch) => {
         .then((response) =>
             dispatch(getBeneficiariesLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(getBeneficiariesLoadError(error.message)));
+        .catch((error) => dispatch(getBeneficiariesLoadError(error?.message)));
 };
 
 //getBeneficiaries action end
@@ -1400,7 +1402,7 @@ export const getAirtimeBeneficiariesData = () => (dispatch) => {
             dispatch(getAirtimeBeneficiariesLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(getAirtimeBeneficiariesLoadError(error.message))
+            dispatch(getAirtimeBeneficiariesLoadError(error?.message))
         );
 };
 
@@ -1435,7 +1437,7 @@ export const deleteBeneficiariesData = (data) => (dispatch) => {
             dispatch(deleteBeneficiariesLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(deleteBeneficiariesLoadError(error.message))
+            dispatch(deleteBeneficiariesLoadError(error?.message))
         );
 };
 
@@ -1472,7 +1474,7 @@ export const deleteAirtimeBeneficiariesData = (data) => (dispatch) => {
             dispatch(deleteAirtimeBeneficiariesLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(deleteAirtimeBeneficiariesLoadError(error.message))
+            dispatch(deleteAirtimeBeneficiariesLoadError(error?.message))
         );
 };
 
@@ -1506,7 +1508,7 @@ export const postBeneficiariesData = (data) => (dispatch) => {
         .then((response) =>
             dispatch(postBeneficiariesLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(postBeneficiariesLoadError(error.message)));
+        .catch((error) => dispatch(postBeneficiariesLoadError(error?.message)));
 };
 
 //postBeneficiaries action end
@@ -1542,7 +1544,7 @@ export const postAirtimeBeneficiariesData = (data) => (dispatch) => {
             dispatch(postAirtimeBeneficiariesLoadSuccess(response.data.data))
         )
         .catch((error) =>
-            dispatch(postAirtimeBeneficiariesLoadError(error.message))
+            dispatch(postAirtimeBeneficiariesLoadError(error?.message))
         );
 };
 
@@ -1568,7 +1570,7 @@ export const omniliteDataa = (data) => (dispatch) => {
         .post(`${apiRoutes.omnilite}`, data)
         .then((response) => dispatch(omniliteLoadSuccess(response.data)))
         .catch((error) =>
-            dispatch(omniliteLoadError(error.response.data.message))
+            dispatch(omniliteLoadError(error?.response.data.message))
         );
 };
 
@@ -1594,7 +1596,7 @@ export const ecobankOnlineData = (data) => (dispatch) => {
         .post(`${apiRoutes.ecobankOnline}`, data)
         .then((response) => dispatch(ecobankOnlineLoadSuccess(response.data)))
         .catch((error) =>
-            dispatch(ecobankOnlineLoadError(error.response.data.message))
+            dispatch(ecobankOnlineLoadError(error?.response.data.message))
         );
 };
 
@@ -1622,7 +1624,7 @@ export const accountNumberData = (data) => (dispatch) => {
             dispatch(accountNumberLoadSuccess(response.data));
         })
         .catch((error) =>
-            dispatch(accountNumberLoadError(error.response.data.message))
+            dispatch(accountNumberLoadError(error?.response.data.message))
         );
 };
 
@@ -1648,7 +1650,7 @@ export const cardLoginData = (data) => (dispatch) => {
         .post(`${apiRoutes.cardLogin}`, data)
         .then((response) => dispatch(cardLoginLoadSuccess(response.data)))
         .catch((error) =>
-            dispatch(cardLoginLoadError(error.response.data.message))
+            dispatch(cardLoginLoadError(error?.response.data.message))
         );
 };
 
@@ -1706,7 +1708,7 @@ export const createAccountData = (data) => (dispatch) => {
         .post(`${apiRoutes.createAccount}`, data)
         .then((response) => dispatch(createAccountLoadSuccess(response.data)))
         .catch((error) =>
-            dispatch(createAccountLoadError(error.response.data.message))
+            dispatch(createAccountLoadError(error?.response.data.message))
         );
 };
 
@@ -1735,7 +1737,7 @@ export const accountStatusData = (data) => (dispatch) => {
             dispatch(accountStatusLoadSuccess(response));
         })
         .catch((error) =>
-            dispatch(accountStatusLoadError(error.response.data.message))
+            dispatch(accountStatusLoadError(error?.response.data.message))
         );
 };
 
@@ -1756,7 +1758,7 @@ export const newAccountStatusData = () => (dispatch) => {
     const cookie = getCookie('cookieToken');
     // dispatch(accountStatusLoadStart());
     axiosInstance
-        .get(`https://mysmeapp.ecobank.com:8443${apiRoutes.accountStatus}`, {
+        .get(`https://testvate.live${apiRoutes.accountStatus}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -1768,7 +1770,7 @@ export const newAccountStatusData = () => (dispatch) => {
             //console.logresponse.data.message);
         })
         .catch((error) =>
-            dispatch(accountStatusLoadError(error.response.data.message))
+            dispatch(accountStatusLoadError(error?.response.data.message))
         );
 };
 
@@ -1792,7 +1794,7 @@ export const createUserAction = (postData) => {
                 dispatch(userRegisterStart(response.data.message));
             })
             .catch((error) => {
-                dispatch(userRegisterError(error.response.data.message));
+                dispatch(userRegisterError(error?.response.data.message));
             });
     };
 };
@@ -1811,16 +1813,12 @@ export const userLoadError = (errorMessages) => ({
 export const loginUserAction = (loginData) => {
     return (dispatch) => {
         axiosInstance
-            .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.login}`,
-                loginData,
-                {
-                    headers: {
-                        credentials: true,
-                        'Access-Control-Allow-Credentials': true
-                    }
+            .post(`https://testvate.live${apiRoutes.login}`, loginData, {
+                headers: {
+                    credentials: true,
+                    'Access-Control-Allow-Credentials': true
                 }
-            )
+            })
             .then((response) => {
                 //console.logresponse.data);
                 setCookie('cookieToken', response.data.data.token, {
@@ -1838,7 +1836,7 @@ export const loginUserAction = (loginData) => {
             })
             .catch((error) => {
                 //console.logerror);
-                dispatch(userLoadError(error.response.data.message));
+                dispatch(userLoadError(error?.response.data.message));
             });
     };
 };
@@ -1905,7 +1903,7 @@ export const createProfileSetup = (profileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.profileSetup}`,
+                `https://testvate.live${apiRoutes.profileSetup}`,
                 profileData,
                 {
                     headers: {
@@ -1929,7 +1927,7 @@ export const createProfileSetup = (profileData) => {
                     setTimeout(() => {
                         axios
                             .post(
-                                `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyStatus}`,
+                                `https://testvate.live${apiRoutes.verifyStatus}`,
                                 [],
                                 {
                                     headers: {
@@ -1946,7 +1944,7 @@ export const createProfileSetup = (profileData) => {
                             .catch((error) => {
                                 //console.log'profile otp dispatch', error);
                                 dispatch(
-                                    bvnNinError(error.response.data.message)
+                                    bvnNinError(error?.response.data.message)
                                 );
                             });
                     }, 5000);
@@ -1955,9 +1953,9 @@ export const createProfileSetup = (profileData) => {
             .catch((error) => {
                 //console.log
                 //     'profile setup dispatch',
-                //     error.response.data.message
+                //     error?.response.data.message
                 // );
-                dispatch(setupProfileError(error.response.data.message));
+                dispatch(setupProfileError(error?.response.data.message));
             });
     };
 };
@@ -2007,7 +2005,7 @@ export const createBusProfileSetup = (businessProfileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.profileSetupBus}`,
+                `https://testvate.live${apiRoutes.profileSetupBus}`,
                 businessProfileData,
                 {
                     headers: {
@@ -2026,7 +2024,7 @@ export const createBusProfileSetup = (businessProfileData) => {
                     setTimeout(() => {
                         axiosInstance
                             .post(
-                                `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyStatusBus}`,
+                                `https://testvate.live${apiRoutes.verifyStatusBus}`,
                                 [],
                                 {
                                     headers: {
@@ -2043,7 +2041,7 @@ export const createBusProfileSetup = (businessProfileData) => {
                             .catch((error) => {
                                 //console.log'profile otp dispatch', error);
                                 dispatch(
-                                    bvnNinError(error.response.data.message)
+                                    bvnNinError(error?.response.data.message)
                                 );
                             });
                     }, 5000);
@@ -2052,9 +2050,9 @@ export const createBusProfileSetup = (businessProfileData) => {
             .catch((error) => {
                 //console.log
                 //     'profile setup dispatch',
-                //     error.response.data.message
+                //     error?.response.data.message
                 // );
-                dispatch(setupProfileError(error.response.data.message));
+                dispatch(setupProfileError(error?.response.data.message));
             });
     };
 };
@@ -2083,17 +2081,13 @@ export const runVerifyOtp = (otpData) => {
     }
     return async (dispatch) => {
         await axiosInstance
-            .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyOtp}`,
-                otpData,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Client-Type': 'web',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            .post(`https://testvate.live${apiRoutes.verifyOtp}`, otpData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
+            })
             .then((response) => {
                 dispatch(otpLoadSuccess(response.data));
                 //console.log'otp', otpData);
@@ -2127,7 +2121,7 @@ export const CompProfile = () => {
     return (dispatch) => {
         dispatch(profileLoadStart());
         axiosInstance
-            .get(`https://mysmeapp.ecobank.com:8443${apiRoutes.authProfile}`, {
+            .get(`https://testvate.live${apiRoutes.authProfile}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Client-Type': 'web',
@@ -2170,7 +2164,7 @@ export const CompleteBusinessProfile = (completeProfileData) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
             .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.completesBusinessProfile}`,
+                `https://testvate.live${apiRoutes.completesBusinessProfile}`,
                 completeProfileData,
                 {
                     headers: {
@@ -2186,7 +2180,7 @@ export const CompleteBusinessProfile = (completeProfileData) => {
             })
             .catch((error) => {
                 //console.logerror);
-                dispatch(completeProfileLoadError(error.response.data));
+                dispatch(completeProfileLoadError(error?.response.data));
             });
     };
 };
@@ -2212,7 +2206,7 @@ export const createNewUserAccount = (accountData) => {
         // dispatch(completeProfileLoadStart());
         axiosInstance
             .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.newCreateAccount}`,
+                `https://testvate.live${apiRoutes.newCreateAccount}`,
                 accountData,
                 {
                     headers: {
@@ -2227,8 +2221,8 @@ export const createNewUserAccount = (accountData) => {
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
-                //console.log'create new account:', error.response.data.message);
-                dispatch(createNewAccountError(error.response.data.message));
+                //console.log'create new account:', error?.response.data.message);
+                dispatch(createNewAccountError(error?.response.data.message));
                 //console.logerror);
             });
     };
@@ -2268,16 +2262,16 @@ export const createNewCorpUserAccount = (accountData) => {
             )
             .then((response) => {
                 //console.log'create New Account', response.data);
-                //console.log'create new account:', error.response.data.message);
+                //console.log'create new account:', error?.response.data.message);
                 dispatch(createNewAccountSuccess(response.data));
             })
             .catch((error) => {
                 //console.log
                 //     'create new account Error:',
-                //     error.response.data.message
+                //     error?.response.data.message
                 // );
                 dispatch(
-                    createNewCorpAccountError(error.response.data.message)
+                    createNewCorpAccountError(error?.response.data.message)
                 );
             });
     };
@@ -2307,7 +2301,7 @@ export const getNewUserAccountDetails = (accountData) => {
             .get(`${apiRoutes.corpAccountStatus}`)
             .then((response) => dispatch(getNewAccountSuccess(response.data)))
             .catch((error) =>
-                dispatch(getNewAccountError(error.response.data.message))
+                dispatch(getNewAccountError(error?.response.data.message))
             );
     };
 };
@@ -2337,7 +2331,7 @@ export const bankAccountsData = () => (dispatch) => {
     }
     dispatch(accountNumberLoadStart());
     axiosInstance
-        .get(`https://mysmeapp.ecobank.com:8443${apiRoutes.banksAccounts}`, {
+        .get(`https://testvate.live${apiRoutes.banksAccounts}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'X-Client-Type': 'web',
@@ -2348,7 +2342,7 @@ export const bankAccountsData = () => (dispatch) => {
             dispatch(bankAccountsSuccess(response.data));
         })
         .catch((error) =>
-            dispatch(bankAccountsLoadError(error.response.data.message))
+            dispatch(bankAccountsLoadError(error?.response.data.message))
         );
 };
 
@@ -2378,7 +2372,7 @@ export const uploadUtilityData = (utilitydata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadUtilityDocument}`,
+            `https://testvate.live${apiRoutes.uploadUtilityDocument}`,
             utilitydata,
             {
                 headers: {
@@ -2393,7 +2387,7 @@ export const uploadUtilityData = (utilitydata) => (dispatch) => {
             //console.logresponse);
         })
         .catch((error) =>
-            dispatch(uploadUtilityError(error.response.data.message))
+            dispatch(uploadUtilityError(error?.response.data.message))
         );
 };
 
@@ -2423,7 +2417,7 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadIdentificationDoc}`,
+            `https://testvate.live${apiRoutes.uploadIdentificationDoc}`,
             identificationdata,
             {
                 headers: {
@@ -2438,7 +2432,7 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
             dispatch(identificationDocSuccess(response.data.message));
         })
         .catch((error) =>
-            dispatch(identificationDocError(error.response.data.message))
+            dispatch(identificationDocError(error?.response.data.message))
         );
 };
 
@@ -2467,22 +2461,18 @@ export const memartData = (memartdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadMemart}`,
-            memartdata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`https://testvate.live${apiRoutes.uploadMemart}`, memartdata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(memartSuccess(response));
             //console.logresponse);
         })
-        .catch((error) => dispatch(memartError(error.response.data.message)));
+        .catch((error) => dispatch(memartError(error?.response.data.message)));
 };
 
 //upload  uploadMemart end
@@ -2510,24 +2500,20 @@ export const cacData = (cacdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadCacCert}`,
-            cacdata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`https://testvate.live${apiRoutes.uploadCacCert}`, cacdata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(cacSuccess(response.data.message));
             //console.logresponse);
         })
         .catch((error) => {
-            dispatch(cacError(error.response));
-            //console.logerror.response);
+            dispatch(cacError(error?.response));
+            //console.logerror?.response);
         });
 };
 //upload cac document end
@@ -2555,22 +2541,18 @@ export const scmulData = (scmuldata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadScmul}`,
-            scmuldata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`https://testvate.live${apiRoutes.uploadScmul}`, scmuldata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(scmulSuccess(response));
             //console.logresponse);
         })
-        .catch((error) => dispatch(scmulError(error.response.data.message)));
+        .catch((error) => dispatch(scmulError(error?.response.data.message)));
 };
 //upload scmul document end
 
@@ -2599,7 +2581,7 @@ export const shareRefFormData = (sharerefformdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.shareRefForm}`,
+            `https://testvate.live${apiRoutes.shareRefForm}`,
             sharerefformdata,
             {
                 headers: {
@@ -2614,7 +2596,7 @@ export const shareRefFormData = (sharerefformdata) => (dispatch) => {
             //console.logresponse.data.accountNumber);
         })
         .catch((error) =>
-            dispatch(shareRefFormError(error.response.data.message))
+            dispatch(shareRefFormError(error?.response.data.message))
         );
 };
 //upload hare reffernce formt end
@@ -2644,7 +2626,7 @@ export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadRefForm}`,
+            `https://testvate.live${apiRoutes.uploadRefForm}`,
             uploadrefformdata,
             {
                 headers: {
@@ -2658,7 +2640,7 @@ export const uploadRefFormData = (uploadrefformdata) => (dispatch) => {
             dispatch(uploadRefFormSuccess(response));
             //console.logresponse);
         })
-        .catch((error) => dispatch(uploadRefFormError(error.response)));
+        .catch((error) => dispatch(uploadRefFormError(error?.response)));
 };
 //upload refference form end
 
@@ -2687,7 +2669,7 @@ export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadBoardRes}`,
+            `https://testvate.live${apiRoutes.uploadBoardRes}`,
             uploadboardresdata,
             {
                 headers: {
@@ -2702,7 +2684,7 @@ export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
             //console.logresponse.data.accountNumber);
         })
         .catch((error) =>
-            dispatch(uploadBoardResError(error.response.data.message))
+            dispatch(uploadBoardResError(error?.response.data.message))
         );
 };
 //upload board resolution end
@@ -2732,7 +2714,7 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.forgotPassword}`,
+            `https://testvate.live${apiRoutes.forgotPassword}`,
             forgotPassworddata,
             {
                 headers: {
@@ -2747,7 +2729,7 @@ export const forgotPasswordData = (forgotPassworddata) => (dispatch) => {
             //console.log(response);
         })
         .catch((error) =>
-            dispatch(forgotPasswordError(error.response.data.message))
+            dispatch(forgotPasswordError(error?.response.data.message))
         );
 };
 //forgot password resolution end
@@ -2776,23 +2758,19 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.forgotPasswordReset}`,
-            data,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`https://testvate.live${apiRoutes.forgotPasswordReset}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(forgotPasswordResetSuccess(response.data.message));
             //console.log(response);
         })
         .catch((error) =>
-            dispatch(forgotPasswordResetError(error.response.data.message))
+            dispatch(forgotPasswordResetError(error?.response.data.message))
         );
 };
 //forgot password reset end
@@ -2822,17 +2800,13 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
     }
     // dispatch(accountNumberLoadStart());
     axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.resetOtp}`,
-            resetOtpdata,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`https://testvate.live${apiRoutes.resetOtp}`, resetOtpdata, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(resetOtpSuccess(response));
             //console.logresponse);
@@ -2888,7 +2862,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
     return async (dispatch) => {
         await axios
             .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.businessNameCac}`,
+                `https://testvate.live${apiRoutes.businessNameCac}`,
                 {
                     registerationNumber: businessProfileData.registerationNumber
                 },
@@ -2914,16 +2888,13 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                     }
                     // dispatch(accountNumberLoadStart());
                     axios
-                        .get(
-                            `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyCac}`,
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-Client-Type': 'web',
-                                    Authorization: `Bearer ${cookie}`
-                                }
+                        .get(`https://testvate.live${apiRoutes.verifyCac}`, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Client-Type': 'web',
+                                Authorization: `Bearer ${cookie}`
                             }
-                        )
+                        })
                         .then((response) => {
                             //console.logresponse.data.data);
                             dispatch(exGetBusCacSuccess(response));
@@ -2941,7 +2912,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
                                 }
                                 axios
                                     .post(
-                                        `https://mysmeapp.ecobank.com:8443${apiRoutes.completesBusinessProfile}`,
+                                        `https://testvate.live${apiRoutes.completesBusinessProfile}`,
                                         businessProfileData,
                                         {
                                             headers: {
@@ -2967,7 +2938,7 @@ export const ExCreateBusProfileSetup = (businessProfileData) => {
             })
 
             .catch((error) => {
-                dispatch(exSetupBusSendCacError(error.response.data.message));
+                dispatch(exSetupBusSendCacError(error?.response.data.message));
             });
     };
 };
@@ -2992,7 +2963,7 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.businessNameCac}`,
+            `https://testvate.live${apiRoutes.businessNameCac}`,
             resetOtpdata,
             {
                 headers: {
@@ -3005,26 +2976,23 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
         .then((response) => {
             if (response.data) {
                 axios
-                    .get(
-                        `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyCac}`,
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-Client-Type': 'web',
-                                Authorization: `Bearer ${cookie}`
-                            }
+                    .get(`https://testvate.live${apiRoutes.verifyCac}`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Client-Type': 'web',
+                            Authorization: `Bearer ${cookie}`
                         }
-                    )
+                    })
                     .then((response) => {
                         //console.logresponse.data.data);
                         dispatch(getRCSuccess(response.data.data.dataFromCac));
                     })
                     .catch((error) =>
-                        dispatch(getRCError(error.response.message))
+                        dispatch(getRCError(error?.response.message))
                     );
             }
         })
-        .catch((error) => dispatch(getRCError(error.response.data.message)));
+        .catch((error) => dispatch(getRCError(error?.response.data.message)));
 };
 
 // business profile setuo action end
@@ -3055,7 +3023,7 @@ export const postEllevateProfilingDetails = (profileSetupItems) => (
     // dispatch(accountNumberLoadStart());
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.postEllevateProfiling}`,
+            `https://testvate.live${apiRoutes.postEllevateProfiling}`,
             profileSetupItems,
             {
                 headers: {
@@ -3069,7 +3037,7 @@ export const postEllevateProfilingDetails = (profileSetupItems) => (
             dispatch(postEllevateProfilingSuccess(response.data.message));
         })
         .catch((error) =>
-            dispatch(postEllevateProfilingError(error.response.data.message))
+            dispatch(postEllevateProfilingError(error?.response.data.message))
         );
 };
 //Ellevate Profiling end
@@ -3097,7 +3065,7 @@ export const postvnin = (vninItems) => (dispatch) => {
 
     // dispatch(accountNumberLoadStart());
     axios
-        .post(`https://mysmeapp.ecobank.com:8443${apiRoutes.vnin}`, vninItems, {
+        .post(`https://testvate.live${apiRoutes.vnin}`, vninItems, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -3109,7 +3077,7 @@ export const postvnin = (vninItems) => (dispatch) => {
                 if (response.data.message) {
                     axios
                         .get(
-                            `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyVNinAdd}`,
+                            `https://testvate.live${apiRoutes.verifyVNinAdd}`,
                             {
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -3122,12 +3090,12 @@ export const postvnin = (vninItems) => (dispatch) => {
                             dispatch(vninSuccess(response.data));
                         })
                         .catch((error) =>
-                            dispatch(vninError(error.response.data.message))
+                            dispatch(vninError(error?.response.data.message))
                         );
                 }
             }, 2000);
         })
-        .catch((error) => dispatch(vninError(error.response.data.message)));
+        .catch((error) => dispatch(vninError(error?.response.data.message)));
 };
 //Vnin end
 
@@ -3154,7 +3122,7 @@ export const postvnin = (vninItems) => (dispatch) => {
 
 //     // dispatch(accountNumberLoadStart());
 //     axios
-//         .post(`https://mysmeapp.ecobank.com:8443${apiRoutes.verifyVNinAdd}`, vninItems, {
+//         .post(`https://testvate.live${apiRoutes.verifyVNinAdd}`, vninItems, {
 //             headers: {
 //                'Content-Type': 'application/json',  'X-Client-Type': 'web',//                 Authorization: `Bearer ${cookie}`
 //             }
@@ -3162,7 +3130,7 @@ export const postvnin = (vninItems) => (dispatch) => {
 //         .then((response) => {
 //             dispatch(vninSuccess(response.data.message));
 //         })
-//         .catch((error) => dispatch(vninError(error.response.data.message)));
+//         .catch((error) => dispatch(vninError(error?.response.data.message)));
 // };
 // //Vnin end
 
@@ -3189,21 +3157,18 @@ export const getAddressStatusDetails = () => (dispatch) => {
     }
 
     axios
-        .get(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.addressVerification}`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .get(`https://testvate.live${apiRoutes.addressVerification}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             //console.logresponse.data.data);
             dispatch(getAddressStatusSuccess(response));
         })
-        .catch((error) => dispatch(getAddressStatusError(error.response)));
+        .catch((error) => dispatch(getAddressStatusError(error?.response)));
 };
 
 //ADDRESS VERIFICATION END
@@ -3232,7 +3197,7 @@ export const getReffereeDetails = (refereeData) => (dispatch) => {
 
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.reffernceFormShare}`,
+            `https://testvate.live${apiRoutes.reffernceFormShare}`,
             refereeData,
             {
                 headers: {
@@ -3246,7 +3211,7 @@ export const getReffereeDetails = (refereeData) => (dispatch) => {
             //console.logresponse.data.data);
             dispatch(getReffereeSuccess(response));
         })
-        .catch((error) => dispatch(getReffereeError(error.response)));
+        .catch((error) => dispatch(getReffereeError(error?.response)));
 };
 
 //REFEREE END
@@ -3275,7 +3240,7 @@ export const getUploadReffereeDetails = (uploadrefereeData) => (dispatch) => {
 
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadrefferee}`,
+            `https://testvate.live${apiRoutes.uploadrefferee}`,
             uploadrefereeData,
             {
                 headers: {
@@ -3289,7 +3254,7 @@ export const getUploadReffereeDetails = (uploadrefereeData) => (dispatch) => {
             //console.logresponse.data.data);
             dispatch(getUploadReffereeSuccess(response));
         })
-        .catch((error) => dispatch(getUploadReffereeError(error.response)));
+        .catch((error) => dispatch(getUploadReffereeError(error?.response)));
 };
 
 //REFEREE END
@@ -3317,22 +3282,18 @@ export const getTinDetails = (tinData) => (dispatch) => {
     }
 
     axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadTin}`,
-            tinData,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`https://testvate.live${apiRoutes.uploadTin}`, tinData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             //console.logresponse.data.data);
             dispatch(getTinSuccess(response));
         })
-        .catch((error) => dispatch(getTinError(error.response)));
+        .catch((error) => dispatch(getTinError(error?.response)));
 };
 
 //TIN END
@@ -3361,7 +3322,7 @@ export const getCacDocumentDetails = (cacDocumentData) => (dispatch) => {
 
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.cacDocumentUpload}`,
+            `https://testvate.live${apiRoutes.cacDocumentUpload}`,
             cacDocumentData,
             {
                 headers: {
@@ -3375,7 +3336,7 @@ export const getCacDocumentDetails = (cacDocumentData) => (dispatch) => {
             //console.logresponse.data.data);
             dispatch(getCacDocumentSuccess(response));
         })
-        .catch((error) => dispatch(getCacDocumentError(error.response)));
+        .catch((error) => dispatch(getCacDocumentError(error?.response)));
 };
 
 //CAC DOCUMENT END
@@ -3404,7 +3365,7 @@ export const getQrInfoDetails = (QrInfoData) => (dispatch) => {
 
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.cacDocumentUpload}`,
+            `https://testvate.live${apiRoutes.cacDocumentUpload}`,
             QrInfoData,
             {
                 headers: {
@@ -3418,7 +3379,7 @@ export const getQrInfoDetails = (QrInfoData) => (dispatch) => {
             //console.logresponse.data.data);
             dispatch(getQrInfoSuccess(response));
         })
-        .catch((error) => dispatch(getQrInfoError(error.response)));
+        .catch((error) => dispatch(getQrInfoError(error?.response)));
 };
 
 //QR INFO END
@@ -3446,7 +3407,7 @@ export const generateQrCodeDetails = (generateQrCodeData) => (dispatch) => {
 
     axios
         .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.generateQr}`,
+            `https://testvate.live${apiRoutes.generateQr}`,
             generateQrCodeData,
             {
                 headers: {
@@ -3488,18 +3449,14 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
     }
 
     axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.auth2Fa}`,
-            auth2FaCodeData,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    // withCredentials: true,
-                    Authorization: `Bearer ${cookie}`
-                }
+        .post(`https://testvate.live${apiRoutes.auth2Fa}`, auth2FaCodeData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                // withCredentials: true,
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             localStorage.setItem(
                 'user',
@@ -3515,7 +3472,7 @@ export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
             //console.logresponse.data.data);
             dispatch(auth2FaCodeSuccess(response));
         })
-        .catch((error) => dispatch(auth2FaCodeError(error.response)));
+        .catch((error) => dispatch(auth2FaCodeError(error?.response)));
 };
 
 //GAUTH 2FA CODE END
@@ -3830,8 +3787,8 @@ export const lodgeDisputeSubGen = (data) => (dispatch) => {
             dispatch(lodgeDisputeSuccess(response.data.data));
         })
         .catch((error) => {
-            dispatch(lodgeDisputeError(error.response)),
-                console.log(error.response);
+            dispatch(lodgeDisputeError(error?.response)),
+                console.log(error?.response);
         });
 };
 //Get Lodege Dispute Type End

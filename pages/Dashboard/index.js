@@ -37,6 +37,9 @@ import AccountUpgrade from '../AccountUpgrade';
 import withAuth from '../../components/HOC/withAuth';
 import Popup from '../../components/layout/Popup';
 import DropdownSvg from '../../components/ReusableComponents/ReusableSvgComponents/DropdownSvg';
+import TotalCollections from '../../components/ReusableComponents/ReusableSvgComponents/Totalcollections';
+import TotalPendingCollections from '../../components/ReusableComponents/ReusableSvgComponents/TotalPendingCollectionsSvg';
+import TotlaCollctionsSvg from '../../components/ReusableComponents/ReusableSvgComponents/TotlaCollectionsFailedSvg';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -194,8 +197,9 @@ const Dashboard = () => {
     useEffect(() => {
         if (transactionHistory !== null) {
             setTableDetails(transactionHistory.transactions);
-            const newDate =
-                transactionHistory.transactions[0]?.transactionDate?.split('T');
+            const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
+                'T'
+            );
             if (newDate[0] == time) {
                 setDateState(true);
             } else {
@@ -210,12 +214,104 @@ const Dashboard = () => {
     //console.log(newDate[0]);
     return (
         <DashLayout page="Dashboard">
-            <Levelup account={userProfileData} />
-            <div className={styles.cove}>
-                <section className={styles.sectionI}>
-                    <div className={styles.Tpwh}>
-                        <h2 className={styles.transP}>Transactions Today</h2>
-                        {/* <div className={styles.payEco}>
+            <div className={styles.statementCover}>
+                <Levelup account={userProfileData} />
+                <div className={styles.cove}>
+                    <section className={styles.sectionI}>
+                        <div className={styles.Tpwh}>
+                            <div className={styles.Tpwhflex}>
+                                <div>
+                                    <TotalCollections />
+                                    <p>Total Collections</p>
+                                    <p className={styles.Success}>
+                                        N 24,000,000
+                                    </p>
+                                </div>
+                                <div>
+                                    <TotalPendingCollections />
+                                    <p>Total Collections</p>
+                                    <p className={styles.pending}>
+                                        N 24,000,000
+                                    </p>
+                                </div>
+                                <div>
+                                    <TotlaCollctionsSvg />
+                                    <p>Total Collections</p>
+                                    <p className={styles.filed}>N 24,000,000</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={styles.otherTrans}>
+                            <p>Other Transaction</p>
+                        </div>
+                        <div className={styles.divCover}>
+                            <Link
+                                href={{
+                                    pathname: '/Payment',
+                                    query: { id: 'Bills Payment' }
+                                }}
+                            >
+                                <div className={styles.dinCLass}>
+                                    <div className={styles.svg}>
+                                        <PhoneSvg />
+                                    </div>
+                                    <p className={styles.name}>
+                                        {' '}
+                                        Airtime & Data
+                                    </p>
+                                </div>
+                            </Link>
+                            <Link
+                                href={{
+                                    pathname: '/Payment',
+                                    query: { id: 'Ecobank QR Only' }
+                                }}
+                            >
+                                <div className={styles.dinCLass}>
+                                    <div className={styles.svg}>
+                                        <EcobankQRSvg />
+                                    </div>
+                                    <p className={styles.name}>
+                                        Ecobank QR Code
+                                    </p>
+                                </div>
+                            </Link>
+                            <Link
+                                href={{
+                                    pathname: '/Payment',
+                                    query: { id: 'USSD only' }
+                                }}
+                            >
+                                <div className={styles.dinCLass}>
+                                    <div className={styles.svg}>
+                                        <Ussd />
+                                    </div>
+                                    <p className={styles.name}>USSD</p>
+                                </div>
+                            </Link>
+                            <Link
+                                href={{
+                                    pathname: '/Payment',
+                                    query: { id: 'Single Transfer' }
+                                }}
+                            >
+                                <div className={styles.dinCLass}>
+                                    <div className={styles.svg}>
+                                        <SingleTrans />
+                                    </div>
+                                    <p className={styles.name}>
+                                        Single Transfer
+                                    </p>
+                                </div>
+                            </Link>
+                        </div>
+                        <div className={styles.btmI}>
+                            <div className={styles.btmItop}>
+                                <h2 className={styles.transP}>
+                                    Transactions Today
+                                </h2>
+                                {/* <div className={styles.payEco}>
                             <div className={styles.svgTxt}
                                 <div className={styles.svgCov}>
                                     <Paylink2 />
@@ -236,365 +332,396 @@ const Dashboard = () => {
                             </div>
                         </div> */}
 
-                        {dateState === false ? (
-                            <div className={styles.transactionBody}>
-                                <div>
-                                    <div className={styles.transactionSvg}>
-                                        <TransactionSvg />
+                                {dateState === false ? (
+                                    <div className={styles.transactionBody}>
+                                        <div>
+                                            <div
+                                                className={
+                                                    styles.transactionSvg
+                                                }
+                                            >
+                                                <TransactionSvg />
+                                            </div>
+                                            <p>
+                                                No transactions has been made
+                                                today.
+                                            </p>
+                                        </div>
                                     </div>
-                                    <p>No transactions has been made today.</p>
-                                </div>
-                            </div>
-                        ) : (
-                            tableDetails
-                                ?.filter((item) => {
-                                    const newDate =
-                                        item.transactionDate.split('T');
-                                    return (
-                                        newDate[0] >= rangeDate &&
-                                        newDate[0] <= time
-                                    );
-                                })
-                                ?.map((item, index) => {
-                                    const formatter = new Intl.NumberFormat(
-                                        'en-US',
-                                        {
-                                            style: 'currency',
-                                            currency: 'NGN',
-                                            currencyDisplay: 'narrowSymbol'
-                                        }
-                                    );
-                                    const formattedAmount = formatter.format(
-                                        item.transactionAmount
-                                    );
-                                    let newBeneficiary;
-                                    if (item.receiversName === null) {
-                                        newBeneficiary = '';
-                                    } else {
-                                        newBeneficiary =
-                                            item?.receiversName?.split(' ');
-                                    }
-                                    // {
-                                    //     //console.log(item);
-                                    // }
-                                    return (
-                                        <div key={index}>
-                                            <div className={styles.transaction}>
-                                                {/* <div className={styles.names}>
+                                ) : (
+                                    tableDetails
+                                        ?.filter((item) => {
+                                            const newDate = item.transactionDate.split(
+                                                'T'
+                                            );
+                                            return (
+                                                newDate[0] >= rangeDate &&
+                                                newDate[0] <= time
+                                            );
+                                        })
+                                        ?.map((item, index) => {
+                                            const formatter = new Intl.NumberFormat(
+                                                'en-US',
+                                                {
+                                                    style: 'currency',
+                                                    currency: 'NGN',
+                                                    currencyDisplay:
+                                                        'narrowSymbol'
+                                                }
+                                            );
+                                            const formattedAmount = formatter.format(
+                                                item.transactionAmount
+                                            );
+                                            let newBeneficiary;
+                                            if (item.receiversName === null) {
+                                                newBeneficiary = '';
+                                            } else {
+                                                newBeneficiary = item?.receiversName?.split(
+                                                    ' '
+                                                );
+                                            }
+                                            // {
+                                            //     //console.log(item);
+                                            // }
+                                            return (
+                                                <div key={index}>
+                                                    <div
+                                                        className={
+                                                            styles.transaction
+                                                        }
+                                                    >
+                                                        {/* <div className={styles.names}>
                                                     <p>
                                                         {`${newBeneficiary[0]} ${newBeneficiary[1]}`}
                                                     </p>
                                                 </div> */}
-                                                <div className={styles.type}>
-                                                    <p>
-                                                        {item.transactionType}
-                                                    </p>
-                                                </div>
-                                                <div className={styles.money}>
-                                                    <p>{formattedAmount}</p>
-                                                </div>
-                                                <div className={item.status}>
-                                                    <div
-                                                        className={
-                                                            styles.statusColor
-                                                        }
-                                                    >
-                                                        <p>
-                                                            {
-                                                                item.transactionStatus
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className={styles.hr} />
-                                        </div>
-                                    );
-                                })
-                        )}
-                    </div>
-
-                    <div className={styles.otherTrans}>
-                        <p>Other Transaction</p>
-                    </div>
-                    <div className={styles.divCover}>
-                        <Link
-                            href={{
-                                pathname: '/Payment',
-                                query: { id: 'Bills Payment' }
-                            }}
-                        >
-                            <div className={styles.dinCLass}>
-                                <div className={styles.svg}>
-                                    <PhoneSvg />
-                                </div>
-                                <p className={styles.name}> Airtime & Data</p>
-                            </div>
-                        </Link>
-                        <Link
-                            href={{
-                                pathname: '/Payment',
-                                query: { id: 'Ecobank QR Only' }
-                            }}
-                        >
-                            <div className={styles.dinCLass}>
-                                <div className={styles.svg}>
-                                    <EcobankQRSvg />
-                                </div>
-                                <p className={styles.name}>Ecobank QR Code</p>
-                            </div>
-                        </Link>
-                        <Link
-                            href={{
-                                pathname: '/Payment',
-                                query: { id: 'USSD only' }
-                            }}
-                        >
-                            <div className={styles.dinCLass}>
-                                <div className={styles.svg}>
-                                    <Ussd />
-                                </div>
-                                <p className={styles.name}>USSD</p>
-                            </div>
-                        </Link>
-                        <Link
-                            href={{
-                                pathname: '/Payment',
-                                query: { id: 'Single Transfer' }
-                            }}
-                        >
-                            <div className={styles.dinCLass}>
-                                <div className={styles.svg}>
-                                    <SingleTrans />
-                                </div>
-                                <p className={styles.name}>Single Transfer</p>
-                            </div>
-                        </Link>
-                    </div>
-                    <div className={styles.btmI}>
-                        <div className={styles.btmItop}>
-                            <p>Cash Flow</p>
-                            <select className={styles.day}>
-                                <option>Last 7 Days</option>
-                            </select>
-                        </div>
-                        <LineChart />
-                    </div>
-                </section>
-                <section className={styles.sectionII}>
-                    <div className={styles.moneyCont}>
-                        <div className={styles.card}>
-                            <div className={styles.cardRight}>
-                                <div className={styles.moneyBody}>
-                                    <div className={styles.moneybodyDiv}>
-                                        <div>
-                                            <div className={styles.cardMone}>
-                                                <h1>
-                                                    {outType
-                                                        ? '*******'
-                                                        : balance}
-                                                </h1>
-                                                <Visbility
-                                                    color="green"
-                                                    typeSet={types}
-                                                />
-                                            </div>
-                                            <p className={styles.avail}>
-                                                Available Balance
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p
-                                                className={
-                                                    styles.accountDetails
-                                                }
-                                            >
-                                                Account Number
-                                            </p>
-                                            <div className={styles.assctDrop}>
-                                                <select
-                                                    className={
-                                                        styles.accountNumbers
-                                                    }
-                                                    value={acctNum}
-                                                    onChange={(e) => {
-                                                        setAcctNumm(
-                                                            e.target.value
-                                                        );
-                                                    }}
-                                                >
-                                                    <option>
-                                                        Select Account Number
-                                                    </option>
-                                                    {Object.keys(
-                                                        bankAccounts
-                                                    )?.map(
-                                                        (accountNo, index) => {
-                                                            return (
-                                                                <>
-                                                                    <option
-                                                                        value={
-                                                                            bankAccounts[
-                                                                                accountNo
-                                                                            ]
-                                                                                .accountNumber
-                                                                        }
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                    >
-                                                                        {
-                                                                            bankAccounts[
-                                                                                accountNo
-                                                                            ]
-                                                                                .accountNumber
-                                                                        }
-                                                                    </option>
-                                                                </>
-                                                            );
-                                                        }
-                                                    )}
-                                                </select>{' '}
-                                                <svg
-                                                    width="10"
-                                                    height="7"
-                                                    viewBox="0 0 8 5"
-                                                    fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                >
-                                                    <path
-                                                        d="M1 1L4 4L7 1"
-                                                        stroke="white"
-                                                        strokeWidth="1.66667"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    />
-                                                </svg>
-                                            </div>
-                                            {/* <p className={styles.accountNumber}>
-                                                {acctNumber.accountNumber}
-                                            </p> */}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={styles.recMak}>
-                                    <RecievePaymentBtn />
-                                    <MakePaymentBtn />
-                                </div>
-                            </div>
-                            <div className={styles.bagMoney}>
-                                <img src="/Assets/Images/bagmoney.png" />
-                            </div>
-                        </div>
-                        <div className={styles.otherAccounts}>
-                            <h2>Other Accounts</h2>
-                            <div className={styles.otherAccountsDiv}>
-                                <button>+Add New</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.btm}>
-                        <div className={styles.btmII}>
-                            <div className={styles.btmIIp}>
-                                <p>Recent Transactions</p>
-                            </div>
-                            {tableDetails.length == 0 ? (
-                                <div className={styles.transactionBody}>
-                                    <div>
-                                        <div className={styles.transactionSvg}>
-                                            <TransactionSvg />
-                                        </div>
-                                        <p>
-                                            No transactions has been made, click
-                                            on make payment to get started.
-                                        </p>
-                                    </div>
-                                </div>
-                            ) : (
-                                tableDetails
-                                    ?.filter((item) => {
-                                        const newDate =
-                                            item.transactionDate.split('T');
-                                        return item;
-                                    })
-                                    ?.map((item, index) => {
-                                        console.log(item);
-                                        const formatter = new Intl.NumberFormat(
-                                            'en-US',
-                                            {
-                                                style: 'currency',
-                                                currency: 'NGN',
-                                                currencyDisplay: 'narrowSymbol'
-                                            }
-                                        );
-                                        const formattedAmount =
-                                            formatter.format(
-                                                item.transactionAmount
-                                            );
-                                        let newBeneficiary;
-                                        if (item.receiver === null) {
-                                            newBeneficiary = '';
-                                        } else {
-                                            newBeneficiary =
-                                                item?.receiver?.split(' ');
-                                        }
-                                        return (
-                                            <div key={index}>
-                                                <div
-                                                    className={
-                                                        styles.transaction
-                                                    }
-                                                >
-                                                    <div
-                                                        className={styles.names}
-                                                    >
-                                                        <p>
-                                                            {newBeneficiary ===
-                                                            ''
-                                                                ? ''
-                                                                : newBeneficiary[1] ===
-                                                                  undefined
-                                                                ? newBeneficiary[0]
-                                                                : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
-                                                        </p>
-                                                    </div>
-                                                    <div
-                                                        className={styles.type}
-                                                    >
-                                                        <p>
-                                                            {
-                                                                item.transactionType
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                    <div
-                                                        className={styles.money}
-                                                    >
-                                                        <p>{formattedAmount}</p>
-                                                    </div>
-                                                    <div
-                                                        className={item.status}
-                                                    >
                                                         <div
                                                             className={
-                                                                styles.statusColor
+                                                                styles.type
                                                             }
                                                         >
                                                             <p>
                                                                 {
-                                                                    item.transactionStatus
+                                                                    item.transactionType
                                                                 }
                                                             </p>
                                                         </div>
+                                                        <div
+                                                            className={
+                                                                styles.money
+                                                            }
+                                                        >
+                                                            <p>
+                                                                {
+                                                                    formattedAmount
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                item.status
+                                                            }
+                                                        >
+                                                            <div
+                                                                className={
+                                                                    styles.statusColor
+                                                                }
+                                                            >
+                                                                <p>
+                                                                    {
+                                                                        item.transactionStatus
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <hr className={styles.hr} />
                                                 </div>
-                                                <hr className={styles.hr} />
-                                            </div>
-                                        );
-                                    })
-                            )}
+                                            );
+                                        })
+                                )}
+                            </div>
                         </div>
-                        {/* <div className={styles.btmIII}>
+                        {/* <LineChart />  */}
+                    </section>
+                    <section className={styles.sectionII}>
+                        <div className={styles.moneyCont}>
+                            <div className={styles.card}>
+                                <div className={styles.cardRight}>
+                                    <div className={styles.moneyBody}>
+                                        <div className={styles.moneybodyDiv}>
+                                            <div>
+                                                <div
+                                                    className={styles.cardMone}
+                                                >
+                                                    <h1>
+                                                        {outType
+                                                            ? '*******'
+                                                            : balance}
+                                                    </h1>
+                                                    <Visbility
+                                                        color="green"
+                                                        typeSet={types}
+                                                    />
+                                                </div>
+                                                <p className={styles.avail}>
+                                                    Available Balance
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p
+                                                    className={
+                                                        styles.accountDetails
+                                                    }
+                                                >
+                                                    Account Number
+                                                </p>
+                                                <div
+                                                    className={styles.assctDrop}
+                                                >
+                                                    <select
+                                                        className={
+                                                            styles.accountNumbers
+                                                        }
+                                                        value={acctNum}
+                                                        onChange={(e) => {
+                                                            setAcctNumm(
+                                                                e.target.value
+                                                            );
+                                                        }}
+                                                    >
+                                                        <option>
+                                                            Select Account
+                                                            Number
+                                                        </option>
+                                                        {Object.keys(
+                                                            bankAccounts
+                                                        )?.map(
+                                                            (
+                                                                accountNo,
+                                                                index
+                                                            ) => {
+                                                                return (
+                                                                    <>
+                                                                        <option
+                                                                            value={
+                                                                                bankAccounts[
+                                                                                    accountNo
+                                                                                ]
+                                                                                    .accountNumber
+                                                                            }
+                                                                            key={
+                                                                                index
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                bankAccounts[
+                                                                                    accountNo
+                                                                                ]
+                                                                                    .accountNumber
+                                                                            }
+                                                                        </option>
+                                                                    </>
+                                                                );
+                                                            }
+                                                        )}
+                                                    </select>{' '}
+                                                    <svg
+                                                        width="10"
+                                                        height="7"
+                                                        viewBox="0 0 8 5"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                            d="M1 1L4 4L7 1"
+                                                            stroke="white"
+                                                            strokeWidth="1.66667"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                        />
+                                                    </svg>
+                                                </div>
+                                                {/* <p className={styles.accountNumber}>
+                                                {acctNumber.accountNumber}
+                                            </p> */}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.recMak}>
+                                        <RecievePaymentBtn />
+                                        <MakePaymentBtn />
+                                    </div>
+                                </div>
+                                <div className={styles.bagMoney}>
+                                    <img src="/Assets/Images/bagmoney.png" />
+                                </div>
+                            </div>
+                            <div className={styles.otherAccounts}>
+                                <h2>Other Accounts</h2>
+                                <div className={styles.accountsALl}>
+                                    {Object.keys(bankAccounts)?.map(
+                                        (accountNo, index) => {
+                                            return (
+                                                <>
+                                                    <div
+                                                        key={index}
+                                                        className={
+                                                            styles.accntP
+                                                        }
+                                                    >
+                                                        <p>
+                                                            {
+                                                                bankAccounts[
+                                                                    accountNo
+                                                                ].accountNumber
+                                                            }
+                                                        </p>
+                                                        <p>
+                                                            {
+                                                                bankAccounts[
+                                                                    accountNo
+                                                                ].customerType
+                                                            }{' '}
+                                                            Account
+                                                        </p>
+                                                    </div>
+                                                    <hr
+                                                        className={
+                                                            styles.accountHr
+                                                        }
+                                                    />
+                                                </>
+                                            );
+                                        }
+                                    )}
+                                    <div className={styles.otherAccountsDiv}>
+                                        <button>+Add New</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.btm}>
+                            <div className={styles.btmII}>
+                                <div className={styles.btmIIp}>
+                                    <p>Recent Transactions</p>
+                                </div>
+                                {tableDetails.length == 0 ? (
+                                    <div className={styles.transactionBody}>
+                                        <div>
+                                            <div
+                                                className={
+                                                    styles.transactionSvg
+                                                }
+                                            >
+                                                <TransactionSvg />
+                                            </div>
+                                            <p>
+                                                No transactions has been made,
+                                                click on make payment to get
+                                                started.
+                                            </p>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    tableDetails
+                                        ?.filter((item) => {
+                                            const newDate = item.transactionDate.split(
+                                                'T'
+                                            );
+                                            return item;
+                                        })
+                                        ?.map((item, index) => {
+                                            console.log(item);
+                                            const formatter = new Intl.NumberFormat(
+                                                'en-US',
+                                                {
+                                                    style: 'currency',
+                                                    currency: 'NGN',
+                                                    currencyDisplay:
+                                                        'narrowSymbol'
+                                                }
+                                            );
+                                            const formattedAmount = formatter.format(
+                                                item.transactionAmount
+                                            );
+                                            let newBeneficiary;
+                                            if (item.receiver === null) {
+                                                newBeneficiary = '';
+                                            } else {
+                                                newBeneficiary = item?.receiver?.split(
+                                                    ' '
+                                                );
+                                            }
+                                            return (
+                                                <div key={index}>
+                                                    <div
+                                                        className={
+                                                            styles.transaction
+                                                        }
+                                                    >
+                                                        <div
+                                                            className={
+                                                                styles.names
+                                                            }
+                                                        >
+                                                            <p>
+                                                                {newBeneficiary ===
+                                                                ''
+                                                                    ? ''
+                                                                    : newBeneficiary[1] ===
+                                                                      undefined
+                                                                    ? newBeneficiary[0]
+                                                                    : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                            </p>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                styles.type
+                                                            }
+                                                        >
+                                                            <p>
+                                                                {
+                                                                    item.transactionType
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                styles.money
+                                                            }
+                                                        >
+                                                            <p>
+                                                                {
+                                                                    formattedAmount
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                item.status
+                                                            }
+                                                        >
+                                                            <div
+                                                                className={
+                                                                    styles.statusColor
+                                                                }
+                                                            >
+                                                                <p>
+                                                                    {
+                                                                        item.transactionStatus
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr className={styles.hr} />
+                                                </div>
+                                            );
+                                        })
+                                )}
+                            </div>
+                            {/* <div className={styles.btmIII}>
                             <p className={styles.paylink}>Other Accounts</p>
                             
                             {OtherAccounts.map((item, index) => {
@@ -609,8 +736,8 @@ const Dashboard = () => {
                                 );
                             })}
                         </div> */}
-                    </div>
-                    {/* <div className={styles.cards}>
+                        </div>
+                        {/* <div className={styles.cards}>
                         <Slider
                             {...settings}
                         >
@@ -648,9 +775,10 @@ const Dashboard = () => {
                             </div>
                         </Slider>
                     </div> */}
-                </section>
+                    </section>
+                </div>
+                {/* {accountUpgrade ? <h1>sawdrftyu</h1> : null} */}
             </div>
-            {/* {accountUpgrade ? <h1>sawdrftyu</h1> : null} */}
         </DashLayout>
     );
 };

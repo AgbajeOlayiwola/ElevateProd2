@@ -22,7 +22,8 @@ import {
     getBulkTransfer,
     loadUserProfile,
     postBeneficiariesData,
-    loadAccountPrimary
+    loadAccountPrimary,
+    bankAccountsData
 } from '../../redux/actions/actions';
 // import ChartDiv from './chartDivStyled';
 // import ChartContent from './chartContentStyled';
@@ -31,6 +32,7 @@ import PaymentCard from '../../components/ReusableComponents/PaymentCard';
 // import PaymentError from '../../components/ReusableComponents/PaymentError';
 import { useRouter } from 'next/router';
 import { PaymentData } from '../../components/ReusableComponents/Data';
+import AccountsInfoCard from '../../components/ReusableComponents/AccountInfoCard';
 
 const Payment = () => {
     const router = useRouter();
@@ -57,8 +59,10 @@ const Payment = () => {
         (state) => state.transactionFeesReducer
     );
 
-    const { internationalTransfer, errorMessageinternationalTransfer } =
-        useSelector((state) => state.internationalTransferReducer);
+    const {
+        internationalTransfer,
+        errorMessageinternationalTransfer
+    } = useSelector((state) => state.internationalTransferReducer);
 
     const { verifyCurrency, errorMessageverifyCurrency } = useSelector(
         (state) => state.verifyCurrencyReducer
@@ -139,14 +143,30 @@ const Payment = () => {
         numberofBene = JSON.parse(number);
     }
     useEffect(() => {
+        dispatch(bankAccountsData());
         dispatch(loadAccountPrimary());
         dispatch(loadUserProfile());
     }, []);
     useEffect(() => {
+        console.log(accountPrimarys);
         if (userProfile !== null) {
             setUserProfileData(userProfile);
         }
     }, [userProfile]);
+    useEffect(() => {
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            if (bankAccounts[accountNo].accountNumber === acctNum) {
+                setAcctNumber(accountPrimarys);
+                let balanceData;
+                balanceData = {
+                    accountId: bankAccounts[accountNo].accountId
+                };
+                dispatch(getBalanceEnquiry(balanceData));
+            } else {
+                setAcctNumber('Pending');
+            }
+        });
+    }, [acctNum]);
     useEffect(() => {
         if (balanceEnquiry !== null) {
             const formatter = new Intl.NumberFormat('en-US', {
@@ -665,11 +685,10 @@ const Payment = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount:
-                                                              parseInt(
-                                                                  e.Amount,
-                                                                  10
-                                                              ),
+                                                          transactionAmount: parseInt(
+                                                              e.Amount,
+                                                              10
+                                                          ),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -896,8 +915,7 @@ const Payment = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId:
-                                                airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
@@ -1050,7 +1068,8 @@ const Payment = () => {
     };
     return (
         <DashLayout page="Payments">
-            {/* {active && (
+            <div className={styles.statementCover}>
+                {/* {active && (
                 <div className={styles.greencard}>
                     <div className={styles.greencardDetails}>
                         <div>
@@ -1079,20 +1098,14 @@ const Payment = () => {
                     />
                 </div>
             )} */}
-
-            <div className={styles.cov}>
-                <div className={styles.whiteboard}>
-                    <div className={styles.balance}>
-                        <div>
-                            <div className={styles.visibility}>
-                                <p className={styles.thousand}>
-                                    {outType ? '*******' : balance}
-                                </p>
-                                <Visbility color="green" typeSet={types} />
-                            </div>
-                            <p className={styles.avail}>Available Balance</p>
-                        </div>
-                        {/* <div className={styles.balanceButtons}>
+                <div className={styles.allTypes}>
+                    <div className={styles.cov}>
+                        <div className={styles.whiteboard}>
+                            <div className={styles.balance}>
+                                <div>
+                                    <AccountsInfoCard />
+                                </div>
+                                {/* <div className={styles.balanceButtons}>
                             <div className={styles.first}>
                                 <p>Scheduled Payments</p>
                             </div>
@@ -1100,25 +1113,26 @@ const Payment = () => {
                                 <p>Repeat Payments</p>
                             </div>
                         </div> */}
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.cov}>
+                        <PaymentCard title="Make Payments" type="make">
+                            {PaymentData.make.map((payType, index) => (
+                                <PaymentSingleBody
+                                    data={payType}
+                                    key={index}
+                                    type="make"
+                                    handleFormChange={handleFormChange}
+                                />
+                            ))}
+                        </PaymentCard>
                     </div>
                 </div>
-            </div>
-            <div className={styles.cov}>
-                <PaymentCard title="Make Payments" type="make">
-                    {PaymentData.make.map((payType, index) => (
-                        <PaymentSingleBody
-                            data={payType}
-                            key={index}
-                            type="make"
-                            handleFormChange={handleFormChange}
-                        />
-                    ))}
-                </PaymentCard>
-            </div>
+                <PaymentTable title="Payment History" test={count} />
 
-            <PaymentTable title="Payment History" test={count} />
-
-            {renderForm()}
+                {renderForm()}
+            </div>
         </DashLayout>
     );
 };

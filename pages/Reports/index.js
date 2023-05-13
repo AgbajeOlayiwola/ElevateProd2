@@ -38,8 +38,10 @@ const Report = () => {
     // const { transactionHistory, errorMessageTransactionHistory } = useSelector(
     //     (state) => state.transactionHistoryReducer
     // );
-    const { getMiniStatementSuccess, getMiniStatementerrorMessage } =
-        useSelector((state) => state.getMiniStatementReducer);
+    const {
+        getMiniStatementSuccess,
+        getMiniStatementerrorMessage
+    } = useSelector((state) => state.getMiniStatementReducer);
 
     const { bankStatement, errorMessagebankStatement } = useSelector(
         (state) => state.bankStatementReducer
@@ -142,11 +144,11 @@ const Report = () => {
     return (
         <DashLayout>
             <div className={styles.collctionh1}>
-                <h1>Collection Report</h1>
+                <h1>Report</h1>
             </div>
             <div>
-                <p>Inflow per Channel</p>
                 <div className={styles.collectionChart}>
+                    <p>Inflow per Channel</p>
                     <div className={styles.collectionCHartDiv}>
                         <div className={styles.collectionChartTop}>
                             <h1 className={styles.chartH1}>23%</h1>
@@ -350,7 +352,7 @@ const Report = () => {
                         </div>
                     ) : null} */}
 
-                    <div className={styles.generate}>
+                    {/* <div className={styles.generate}>
                         <div className={styles.down}>
                             <p>Download</p>
                         </div>
@@ -362,7 +364,7 @@ const Report = () => {
                         >
                             <p>Generate Full Statement</p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 {/* <div className={styles.searches}>
                     <div className={styles.searchInp}>

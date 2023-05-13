@@ -4,8 +4,9 @@ import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getQrMerchantInfoGen } from '../../../redux/actions/actions';
 import exportAsImage from '../../../utils/exportAsImage';
+import CloseButton from '../../ReusableComponents/CloseButtonSvg';
 
-const QrFirst = ({ overlay, moveToNext }) => {
+const QrFirst = ({ overlay, moveToNext, closeAction }) => {
     const {
         getQrMerchnatInfoSuccess,
         getQrMerchnatInfoErrorMessage
@@ -26,6 +27,13 @@ const QrFirst = ({ overlay, moveToNext }) => {
         <Overlay overlay={overlay}>
             <div className={styles.overlay}>
                 <div className={styles.cver}>
+                    <div className={styles.closeCont}>
+                        <CloseButton
+                            color="#A5A5A5"
+                            classes={styles.closeBtn}
+                            action={closeAction}
+                        />
+                    </div>
                     <div className={styles.topMost}>
                         <h1>Ecobank QR Code</h1>
                         <p>Share QR code to receive money.</p>

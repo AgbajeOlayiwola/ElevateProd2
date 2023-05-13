@@ -3,6 +3,13 @@
     display: flex;
     justify-content: flex-end;
 }
+.statementCover{
+    height: fit-content;
+    background: #FEFEFE;
+box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+border-radius: 15px;
+padding: 20px 15px;
+}
 
 .chooseDate div {
     cursor: pointer;
@@ -220,7 +227,7 @@
 
 .paginationBtns {
     display: flex;
-    width: 100%;
+    width: 40%;
     justify-content: space-between;
     list-style-type: none;
 }
@@ -228,7 +235,7 @@
 .paginationBtns li {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #6ccf00;
+    /* border: 1px solid #6ccf00; */
     color: #6ccf00;
     /* cursor: pointer; */
     font-size: 15px;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './styles.module.css';
 const PaymentSingleBody = ({
-    data: { icon, text },
+    data: { icon, text, summary },
     index,
     type,
     handleFormChange
@@ -55,6 +55,7 @@ const PaymentSingleBody = ({
                                 {text}
                             </p>
                         </div>
+                        <p className={styles.summary}>{summary}</p>
                     </div>
                 </div>
             )}
