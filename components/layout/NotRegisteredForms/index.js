@@ -34,7 +34,7 @@ const ProfileSetups = () => {
 
     //console.log('register page', cookie);
 
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(3);
     const [formData, setFormData] = useState({
         type: false,
         rcnumber: '',
@@ -145,28 +145,6 @@ const ProfileSetups = () => {
                         loads={loads}
                     />
                 );
-            case 1:
-                return (
-                    <StepTwoBVNAuthenticator
-                        formData={formData}
-                        setFormData={setFormData}
-                        // setPage={page+1}
-                        page={page}
-                        action={handleOtp}
-                        otpError={otpError}
-                    />
-                );
-            case 2:
-                return (
-                    <Liveness
-                        action={() => {
-                            setPage(page + 1);
-                        }}
-                        cookie={cookie}
-                        loading={loading}
-                        setLoading={setLoading}
-                    />
-                );
             case 3:
                 return (
                     <StepThreeCompleteProfile1
@@ -258,33 +236,50 @@ const ProfileSetups = () => {
         page === 0
             ? (text =
                   'Input your BVN and open a Business Account in 3 minutes.')
-            : page === 1
-            ? (text =
-                  'Input your BVN and open a Business Account in 3 minutes.')
-            : page === 2
-            ? (text = 'Checkout Priceless opportunities, Be ahead!')
             : page === 3
             ? (text = 'Checkout Priceless opportunities, Be ahead!')
             : null;
     }
     return (
-        <div className={styles.sections}>
-            <section className={styles.sectionI}>
-                <ProfileSetupSide text={text} />
-            </section>
-            <section className={styles.sectionII}>
-                {page === 0 ? (
-                    // <>
-                    //     <p className={styles.error}>{errorI}</p> <br />
-                    // </>
-                    <></>
-                ) : (
-                    <></>
-                )}
-                {/* {error ? <div className={styles.error}>{error}</div> : null} */}
-                {conditionalComponent()}
-            </section>
-        </div>
+        <>
+            {page === 1 ? (
+                <StepTwoBVNAuthenticator
+                    formData={formData}
+                    setFormData={setFormData}
+                    // setPage={page+1}
+                    page={page}
+                    action={handleOtp}
+                    otpError={otpError}
+                />
+            ) : page === 2 ? (
+                <Liveness
+                    action={() => {
+                        setPage(page + 1);
+                    }}
+                    cookie={cookie}
+                    loading={loading}
+                    setLoading={setLoading}
+                />
+            ) : (
+                <div className={styles.sections}>
+                    <section className={styles.sectionI}>
+                        <ProfileSetupSide text={text} />
+                    </section>
+                    <section className={styles.sectionII}>
+                        {page === 0 ? (
+                            // <>
+                            //     <p className={styles.error}>{errorI}</p> <br />
+                            // </>
+                            <></>
+                        ) : (
+                            <></>
+                        )}
+                        {/* {error ? <div className={styles.error}>{error}</div> : null} */}
+                        {conditionalComponent()}
+                    </section>
+                </div>
+            )}
+        </>
     );
 };
 

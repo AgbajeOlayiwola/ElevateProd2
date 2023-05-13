@@ -1,6 +1,7 @@
 import React from 'react';
 import HomeSvg from '../HomeSvg';
 import styles from './styles.module.css';
+import Logo from '../ReusableSvgComponents/LogoSvg';
 
 const ProfileSetupSide = ({ text }) => {
     return (
@@ -9,10 +10,11 @@ const ProfileSetupSide = ({ text }) => {
             <div className={styles.grey}>
                 <div className={styles.content}>
                     <div className={styles.contentHeader}>
-                        <HomeSvg />
+                        {/* <HomeSvg />
                         <p className={styles.SMeApp}>
                             Powered by <span>Ecobank</span>
-                        </p>
+                        </p> */}
+                        <Logo />
                     </div>
 
                     <h2>{text}</h2>

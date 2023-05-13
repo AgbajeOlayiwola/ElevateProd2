@@ -92,32 +92,32 @@ export const SidebarData = [
         // ]
     },
 
-    {
-        title: 'Reports',
-        path: '/Reports',
-        // modal: 'show',
-        icon: <PaymentSvg />,
-        iconActive: <PaymentActiveSvg />,
-        iconClosed: <RiIcons.RiArrowDownSLine />,
-        iconOpened: <RiIcons.RiArrowUpSLine />
-        // subNav: [
-        //     {
-        //         title: 'Collections',
-        //         path: '/Collections',
-        //         icon: <BiIcons.BiTransfer />
-        //     },
-        //     {
-        //         title: 'Payment',
-        //         path: '/Payment',
-        //         icon: <BiIcons.BiTransfer />
-        //     },
-        //     {
-        //         title: 'Reports',
-        //         path: '/Reports',
-        //         icon: <BiIcons.BiTransfer />
-        //     }
-        // ]
-    },
+    // {
+    //     title: 'Reports',
+    //     path: '/Reports',
+    //     // modal: 'show',
+    //     icon: <PaymentSvg />,
+    //     iconActive: <PaymentActiveSvg />,
+    //     iconClosed: <RiIcons.RiArrowDownSLine />,
+    //     iconOpened: <RiIcons.RiArrowUpSLine />
+    // subNav: [
+    //     {
+    //         title: 'Collections',
+    //         path: '/Collections',
+    //         icon: <BiIcons.BiTransfer />
+    //     },
+    //     {
+    //         title: 'Payment',
+    //         path: '/Payment',
+    //         icon: <BiIcons.BiTransfer />
+    //     },
+    //     {
+    //         title: 'Reports',
+    //         path: '/Reports',
+    //         icon: <BiIcons.BiTransfer />
+    //     }
+    // ]
+    // },
 
     {
         title: 'Bank Statement',

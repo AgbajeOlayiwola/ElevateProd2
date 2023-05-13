@@ -44,7 +44,7 @@ const StepTwoBVNAuthenticator = ({
         (state) => state.resetOtpReducer
     );
 
-    const [activeBtn, setActiveBtn] = useState(true);
+    const [activeBtn, setActiveBtn] = useState(false);
 
     const numOfFields = 6;
 
@@ -69,6 +69,7 @@ const StepTwoBVNAuthenticator = ({
                 if (nextSibling !== null) {
                     nextSibling.focus();
                 } else {
+                    setActiveBtn(true);
                 }
             }
         }
@@ -121,9 +122,9 @@ const StepTwoBVNAuthenticator = ({
                     ) : null}
                     {resetOtpErrorMessages ? (
                         <p> {resetOtpErrorMessages.response.data.message}</p>
-                    ) : (
+                    ) : resetOtpErrorMessages?.response?.data?.message ? (
                         <p>{resetOtp?.data.message}</p>
-                    )}
+                    ) : null}
                     <p className={styles.inp}>Input OTP</p>
                     <form>
                         <div className={styles.otpInps}>
@@ -167,16 +168,13 @@ const StepTwoBVNAuthenticator = ({
                         <div className={styles.resendFlex}>
                             <button
                                 className={styles.resetOtp}
-                                style={{ cursor: 'pointer' }}
                                 onClick={ResetOtp}
                                 type="reset"
                             >
                                 Resend OTP
-                            </button>{' '}
-                            <br />
+                            </button>
                             <button
                                 onClick={clear}
-                                style={{ cursor: 'pointer' }}
                                 className={styles.clr}
                                 type="reset"
                             >

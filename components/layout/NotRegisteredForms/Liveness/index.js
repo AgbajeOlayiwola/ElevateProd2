@@ -59,17 +59,13 @@ const Liveness = ({ action, cookie }) => {
         //     cookie = getCookie('cookieToken');
         // }
         axios
-            .post(
-                `https://mysmeapp.ecobank.com:8443/authentication/facematch`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'X-Client-Type': 'web',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            .post(`https://testvate.live/authentication/facematch`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
+            })
             .then((response) => {
                 setSuccess(response.data.message);
                 setLoading(false);
@@ -111,25 +107,27 @@ const Liveness = ({ action, cookie }) => {
                             />
                         </div>
                     </div>
+                    {loading ? (
+                        <p>Hold on your face is been verified!!!!</p>
+                    ) : null}
+                    <ButtonComp
+                        onClick={
+                            succes === 'facial verification successful'
+                                ? action
+                                : capture
+                        }
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        type="button"
+                        text={
+                            succes === 'facial verification successful'
+                                ? 'Continue'
+                                : 'Snap'
+                        }
+                        err={succes}
+                        loads={loads}
+                    />
                 </div>
-                {loading ? <p>Hold on your face is been verified!!!!</p> : null}
-                <ButtonComp
-                    onClick={
-                        succes === 'facial verification successful'
-                            ? action
-                            : capture
-                    }
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    type="button"
-                    text={
-                        succes === 'facial verification successful'
-                            ? 'Continue'
-                            : 'Snap'
-                    }
-                    err={succes}
-                    loads={loads}
-                />
             </div>
         </div>
     );

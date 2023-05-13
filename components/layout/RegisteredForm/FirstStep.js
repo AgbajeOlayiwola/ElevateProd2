@@ -80,91 +80,83 @@ const FirstStep = ({
     }, [resetOtp, resetOtpErrorMessages]);
 
     return (
-        <div className={styles.body}>
-            <section className={styles.sectionI}>
-                <ProfileSetupSide text="The world is your Canvas. Explore!" />
-            </section>
-            <section className={styles.sectionII}>
+        <div className={styles.bodys}>
+            <section className={styles.sections}>
                 <div className={styles.existingBody}>
-                    <div className={styles.stepFour}>
-                        <h1 className={styles.header}>OTP Verification</h1>
-                        {otpError ? (
-                            <p className={styles.error}>{otpError}</p>
-                        ) : null}
-                        {resetOtpErrorMessages ? (
-                            <p>
-                                {' '}
-                                {resetOtpErrorMessages.response.data.message}
-                            </p>
-                        ) : (
-                            <p>{resetOtp?.data.message}</p>
-                        )}
+                    <h1 className={styles.header}>OTP Verification</h1>
+                    {otpError ? (
+                        <p className={styles.error}>{otpError}</p>
+                    ) : null}
+                    {resetOtpErrorMessages ? (
+                        <p>{resetOtpErrorMessages.response.data.message}</p>
+                    ) : (
+                        <p>{resetOtp?.data.message}</p>
+                    )}
 
-                        <p className={styles.p}>
-                            A one time Password has been sent to your registered
-                            phone number please enter digits below.
-                        </p>
-                        <form>
-                            <div className={styles.otpInps}>
-                                <input
-                                    type="password"
-                                    name="ssn-1"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-2"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-3"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-4"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-5"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-6"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                            </div>
+                    <p className={styles.p}>
+                        A one time Password has been sent to your registered
+                        phone number please enter digits below.
+                    </p>
+                    <form>
+                        <div className={styles.otpInps}>
+                            <input
+                                type="password"
+                                name="ssn-1"
+                                maxLength={1}
+                                onInput={handleOtpChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-2"
+                                maxLength={1}
+                                onInput={handleOtpChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-3"
+                                maxLength={1}
+                                onInput={handleOtpChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-4"
+                                maxLength={1}
+                                onInput={handleOtpChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-5"
+                                maxLength={1}
+                                onInput={handleOtpChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-6"
+                                maxLength={1}
+                                onInput={handleOtpChange}
+                            />
+                        </div>
 
-                            <div className={styles.resendFlex}>
-                                <p onClick={ResetOtp}>Resend OTP</p>
+                        <div className={styles.resendFlex}>
+                            <p onClick={ResetOtp}>Resend OTP</p>
 
-                                <button
-                                    onClick={clear}
-                                    style={{ cursor: 'pointer' }}
-                                    className={styles.clr}
-                                    type="reset"
-                                >
-                                    Clear
-                                </button>
-                            </div>
-                        </form>
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            onClick={action}
-                            type="submit"
-                            text="Proceed"
-                        />
-                    </div>
+                            <button
+                                onClick={clear}
+                                style={{ cursor: 'pointer' }}
+                                className={styles.clr}
+                                type="reset"
+                            >
+                                Clear
+                            </button>
+                        </div>
+                    </form>
+                    <ButtonComp
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        onClick={action}
+                        type="submit"
+                        text="Proceed"
+                    />
                 </div>
             </section>
         </div>

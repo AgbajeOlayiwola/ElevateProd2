@@ -20,15 +20,14 @@
 body {
     margin: 0;
     padding: 0;
-    background: #F5F6FA;
 }
 @font-face {
     font-family: 'inter';
     src: url('/Assets/Fonts/Inter/Inter-VariableFont_slnt,wght.ttf');
     font-weight: 500;
     font-style: normal;
-    }
-    /* @font-face {
+}
+/* @font-face {
       font-family: 'Neue Power Trial';
       src: url('/Assets/Font/NeuePowerTrial/NeuePowerTrial-Regular.ttf');
       font-weight: 500;
@@ -105,10 +104,11 @@ input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #dcdcdc;
     opacity: 1; /* Firefox */
-  }
+}
 button {
     padding: var(--global-button-padding);
     color: var(--global-button-color);
@@ -147,6 +147,6 @@ button:hover {
     text-align: center;
     color: #ffffff;
 }
-table{
+table {
     border-collapse: collapse;
 }
