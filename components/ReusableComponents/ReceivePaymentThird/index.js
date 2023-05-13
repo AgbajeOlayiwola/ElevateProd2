@@ -40,10 +40,8 @@ const ReceivePaymentThird = ({
     const [numOfRecords, setNumOfRecords] = useState(10);
 
     const [transactionType, setTransactionType] = useState();
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
 
     useEffect(() => {
         dispatch(getDisputCategOryTypeGen());
@@ -163,9 +161,8 @@ const ReceivePaymentThird = ({
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate = item.transactionDate.split(
-                                            'T'
-                                        );
+                                        const newDate =
+                                            item.transactionDate.split('T');
                                         return item;
                                     })
                                     ?.map((item, index) => {
@@ -177,9 +174,10 @@ const ReceivePaymentThird = ({
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount = formatter.format(
-                                            item.transactionAmount
-                                        );
+                                        const formattedAmount =
+                                            formatter.format(
+                                                item.transactionAmount
+                                            );
                                         return (
                                             <TransactionDets
                                                 key={index}
@@ -201,7 +199,7 @@ const ReceivePaymentThird = ({
                                                     item.paymentDirection
                                                 }
                                                 transactionAmmount={
-                                                    item.transactionAmount
+                                                    formattedAmount
                                                 }
                                                 transactionStatus={
                                                     item.transactionStatus

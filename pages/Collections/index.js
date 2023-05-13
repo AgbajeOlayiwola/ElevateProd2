@@ -556,7 +556,7 @@ const Collections = () => {
                                 overlay={overlay}
                                 isLoading={isLoading}
                                 firstTitle="Create USSD Payment Code"
-                                buttonText="Share USSD Codes"
+                                buttonText="Generate USSD Codes"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     //console.logdata);
@@ -638,7 +638,7 @@ const Collections = () => {
                                 isLoading={isLoading}
                                 overlay={overlay}
                                 firstTitle="Create Ecobank QR Code"
-                                buttonText="Share Ecobank QR Codes"
+                                buttonText="Generate Ecobank QR Codes"
                                 closeAction={handleClose}
                                 action={(data) => {
                                     //console.logdata);
@@ -744,7 +744,8 @@ const Collections = () => {
     };
     return (
         <DashLayout page="Collections">
-            {/* {active && (
+            <div className={styles.statementCover}>
+                {/* {active && (
                 <div className={styles.greencard}>
                     <div className={styles.greencardDetails}>
                         <div>
@@ -773,20 +774,25 @@ const Collections = () => {
                     />
                 </div>
             )} */}
-
-            <div className={styles.cov}>
-                <div className={styles.whiteboard}>
-                    <div className={styles.balance}>
-                        <div>
-                            <div className={styles.visibility}>
-                                <p className={styles.thousand}>
-                                    {outType ? '*******' : balance}
-                                </p>
-                                <Visbility color="green" typeSet={types} />
-                            </div>
-                            <p className={styles.avail}>Available Balance</p>
-                        </div>
-                        {/* <div className={styles.balanceButtons}>
+                <div className={styles.allTypes}>
+                    <div className={styles.cov}>
+                        <div className={styles.whiteboard}>
+                            <div className={styles.balance}>
+                                <div>
+                                    <div className={styles.visibility}>
+                                        <p className={styles.thousand}>
+                                            {outType ? '*******' : balance}
+                                        </p>
+                                        <Visbility
+                                            color="green"
+                                            typeSet={types}
+                                        />
+                                    </div>
+                                    <p className={styles.avail}>
+                                        Available Balance
+                                    </p>
+                                </div>
+                                {/* <div className={styles.balanceButtons}>
                             <div className={styles.first}>
                                 <p>Scheduled Payments</p>
                             </div>
@@ -794,25 +800,26 @@ const Collections = () => {
                                 <p>Repeat Payments</p>
                             </div>
                         </div> */}
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.cov}>
+                        <PaymentCard title="Receive Payments" type="receive">
+                            {PaymentData.receive.map((payType, index) => (
+                                <PaymentSingleBody
+                                    data={payType}
+                                    key={index}
+                                    type="receive"
+                                    handleFormChange={handleFormChange}
+                                />
+                            ))}
+                        </PaymentCard>
                     </div>
                 </div>
-            </div>
-            <div className={styles.cov}>
-                <PaymentCard title="Receive Payments" type="receive">
-                    {PaymentData.receive.map((payType, index) => (
-                        <PaymentSingleBody
-                            data={payType}
-                            key={index}
-                            type="receive"
-                            handleFormChange={handleFormChange}
-                        />
-                    ))}
-                </PaymentCard>
-            </div>
+                <PaymentTable title="Payment History" test={count} />
 
-            <PaymentTable title="Payment History" test={count} />
-
-            {renderForm()}
+                {renderForm()}
+            </div>
         </DashLayout>
     );
 };

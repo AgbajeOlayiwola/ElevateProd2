@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles.module.css';
+import MoreAction from '../MoreAction';
 
 const TableDetail = ({
     Beneficiary,
@@ -11,7 +12,8 @@ const TableDetail = ({
     keys,
     accountNumber,
     network,
-    title
+    title,
+    disputes
 }) => {
     let newBeneficiary;
     if (Beneficiary === null) {
@@ -40,6 +42,14 @@ const TableDetail = ({
                 </p> */}
                 <p className={styles.date}>{newDate[0]}</p>
                 <p className={styles.status}>{Status}</p>
+                <div className={styles.more}>
+                    <MoreAction
+                        disputes={disputes}
+                        transactionAmount={Amount}
+                        transactionStatus={Status}
+                        transactionTitle={Type}
+                    />
+                </div>
             </div>
         </>
     );

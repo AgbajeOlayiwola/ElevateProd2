@@ -1,0 +1,42 @@
+
+.visibility {
+    display: flex;
+    align-items: center;
+}
+
+.visibility span {
+    margin-left: 8px;
+    margin-top: 0px;
+    z-index: 1 !important;
+}
+
+.thousand {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    color: #ffffff;
+    margin: 0px;
+    /* width: 220px; */
+}.accountNumbers{
+    padding: 0px;
+    
+    background: no-repeat;
+    border: navajowhite;
+    color: white;
+    }
+    .assctDrop{
+        display: flex;
+        align-items: center;
+    }
+
+.avail {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ffffff;
+    margin: 0px;
+}

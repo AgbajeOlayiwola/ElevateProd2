@@ -330,15 +330,18 @@ export const PaymentData = {
     make: [
         {
             icon: <BillTransfer />,
-            text: 'Bills Payment'
+            text: 'Bills Payment',
+            summary: 'Pay for your TV bills, electricity e.t.c'
         },
         {
             icon: <SingleTrans />,
-            text: 'Single Transfer'
+            text: 'Single Transfer',
+            summary: 'Send money to any nigerian bank'
         },
         {
             icon: <BulkTransfer2 />,
-            text: 'Bulk Transfer'
+            text: 'Bulk Transfer',
+            summary: 'Send money to multiple nigerian banks at once'
         },
 
         {
@@ -349,19 +352,23 @@ export const PaymentData = {
     receive: [
         {
             icon: <EcobankQRSvg />,
-            text: 'Ecobank QR Only'
+            text: 'Ecobank QR Only',
+            summary: 'Recieve payment using your phone camera'
         },
         {
             icon: <MposSvg2 />,
-            text: 'Phone POS'
+            text: 'Phone POS',
+            summary: 'Pay for your TV bills, electricity e.t.c'
         },
         {
             icon: <Ussd />,
-            text: 'USSD only'
+            text: 'USSD only',
+            summary: 'Pay for your TV bills, electricity e.t.c'
         },
         {
             icon: <Paylink2 />,
-            text: 'Paylink'
+            text: 'Paylink',
+            summary: 'Pay for your TV bills, electricity e.t.c'
         }
     ]
 };

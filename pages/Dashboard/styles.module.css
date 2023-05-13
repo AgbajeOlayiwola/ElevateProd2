@@ -8,14 +8,56 @@
     display: flex;
     justify-content: space-between;
 }
-.accountNumbers{
-padding: 0px;
-background: no-repeat;
-border: navajowhite;
-color: white;
+.accountNumbers {
+    padding: 0px;
+    background: no-repeat;
+    border: navajowhite;
+    color: white;
 }
-.assctDrop{
+.assctDrop {
     display: flex;
+    align-items: center;
+}
+.filed {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    line-height: 14px !important;
+    text-align: center;
+    color: #394f5c !important;
+    margin: 0px !important;
+}
+.pending {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    line-height: 14px !important;
+    text-align: center !important;
+    color: #102572 !important;
+    margin: 0px !important;
+}
+.accountsALl {
+    display: flex;
+    gap: 30px;
+}
+.Success {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    line-height: 14px !important;
+    /* identical to box height, or 99% */
+
+    text-align: center !important;
+
+    color: #6ccf00 !important;
+    margin: 0px !important;
+}
+.Tpwhflex div {
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 .card {
@@ -39,13 +81,52 @@ color: white;
     display: flex;
     padding: 24px;
     overflow: scroll;
-    height: 40vh;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}    
+    height: 19vh;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+}
+.accountsALl {
+    display: flex;
+    gap: 30px;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+.statementCover {
+    height: fit-content;
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 15px;
+    padding: 20px 15px;
+}
+
+.accntP p:nth-child(1) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 19px;
+    color: #7fbb01;
+    margin-bottom: 6px;
+}
+.accntP p:nth-child(2) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #2f2f2f;
+    margin: 0px;
+}
+.accountHr {
+    height: 46px;
+    border-color: #756c6c2b;
+    margin: 0px;
+}
 .Tpwh::-webkit-scrollbar {
     display: none;
-  }
+}
 .Tpwh p {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -56,7 +137,7 @@ color: white;
     color: #a4a4a4;
     /* width: 34%; */
     max-width: 162px;
-    margin: 20px auto 20px;
+    margin: 23px auto 4px;
 }
 .transPs {
     font-family: 'Inter', sans-serif;
@@ -317,9 +398,20 @@ color: white;
     margin-top: 32px;
 }
 .btmItop {
-    display: flex;
     justify-content: space-between;
     margin-bottom: 29.1px;
+    height: 284px;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+.btmItop::-webkit-scrollbar {
+    display: none;
+}
+.Tpwhflex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .btmItop p {
     font-family: 'Inter', sans-serif;
@@ -331,13 +423,12 @@ color: white;
     color: #102572;
 }
 .btmItop div {
-    background: #f5f6fa;
     border-radius: 8px;
     padding: 0.2rem 0.5rem;
     overflow: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}    
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
 
 .btmI::-webkit-scrollbar {
     display: none;
@@ -354,15 +445,15 @@ color: white;
 .btmII {
     /* width: 51%;
     max-width: 378px; */
-    height: 352px;
+    height: 519px;
     background: #ffffff;
     box-shadow: 4px 14px 34px -11px #ededed;
     border-radius: 16px;
     padding: 1.5rem 1.25rem 1.5rem 1.25rem;
     overflow: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}    
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
 
 .btmII::-webkit-scrollbar {
     display: none;
@@ -377,9 +468,9 @@ color: white;
     border-radius: 16px;
     padding: 1.5rem 1.25rem 1.5rem 1.25rem;
     overflow: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}    
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
 
 .btmIII::-webkit-scrollbar {
     display: none;
@@ -424,18 +515,30 @@ color: white;
     height: 8vh;
 }
 .names {
-    width: 40%;
+    width: 35%;
 }
 .type {
     width: 30%;
 }
 
 .money {
-    width: 20%;
+    width: 15%;
 }
 
 .status {
-    width: 10%;
+    width: 13%;
+}
+
+.more {
+    width: 5%;
+}
+
+/* .transaction div > p {
+    text-align: left;
+} */
+
+.status p {
+    font-size: 10px;
 }
 
 .names p {
@@ -538,6 +641,7 @@ color: white;
     background: #ffffff;
     border-radius: 16px;
     padding: 32px 36px;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
 }
 
 .moneyBody {
@@ -599,7 +703,7 @@ color: white;
 }
 
 .otherAccountsDiv {
-    margin-top: 16px;
+    margin-top: 0px;
 }
 
 .otherAccounts button {

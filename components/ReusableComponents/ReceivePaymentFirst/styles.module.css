@@ -7,7 +7,9 @@
     display: flex;
     position: absolute;
     top: 5%;
-    left: 33%;
+    left: 25%;
+    height: 80vh;
+
     z-index: 10;
 }
 
@@ -34,6 +36,7 @@
 
 .firstBody {
     width: 70%;
+    overflow: scroll;
 }
 
 .firstBody > div {

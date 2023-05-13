@@ -3,12 +3,16 @@
     box-shadow: 0px 0px 26px #ededed;
     border-radius: 16px;
     min-width: 100px;
-    width: 20%;
-    height: 105px;
+    width: 50%;
+    padding-left: 20px;
     display: flex;
-    justify-content: center;
+    justify-content:flex-start;
     align-items: center;
     cursor: pointer;
+}
+.summary{
+    font-size: 12px !important;
+    color: #625f5f !important;
 }
 .paymentSingleBodyGrey {
     background: #ededed;
@@ -16,9 +20,9 @@
     border-radius: 16px;
     min-width: 100px;
     width: 20%;
-    height: 105px;
+    padding-left: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     cursor: pointer;
 }
@@ -31,11 +35,13 @@
     line-height: 14px;
     display: block;
     margin-top: 16px;
-    color: #2f2f2f;
+    color: #226988;
     cursor: pointer;
+    text-align: start !important;
 }
 
 .receivePara {
+    text-align: start !important;
     font-size: 14px;
     font-weight: 500;
     text-align: center;
@@ -50,7 +56,7 @@
 .paymentSingleImg {
     justify-content: center;
     align-items: center;
-    display: flex;
+    padding-top: 10px;
     width: 50%;
     margin: 0px auto;
 }

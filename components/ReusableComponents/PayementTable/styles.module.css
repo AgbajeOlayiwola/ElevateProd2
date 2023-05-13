@@ -86,7 +86,7 @@
     width: 100%;
     background: #f5f6fa;
     border-radius: 4px;
-    padding: 16px 0px 16px 24px;
+    padding: 10px 0px 10px 24px;
 }
 
 .TableDetailHeader p {
@@ -99,7 +99,7 @@
 }
 
 .beneficiary {
-    width: 30%;
+    width: 25%;
 }
 
 .type {
@@ -114,7 +114,9 @@
     width: 14%;
 }
 
-
+.more {
+    width: 5%;
+}
 
 .date {
     width: 14%;
@@ -122,7 +124,7 @@
 
 .paginationBtns {
     display: flex;
-    width: 100%;
+    width: 40%;
     justify-content: space-between;
     list-style-type: none;
 }
@@ -130,7 +132,7 @@
 .paginationBtns li {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #6ccf00;
+    /* border: 1px solid #6ccf00; */
     color: #6ccf00;
     /* cursor: pointer; */
     font-size: 15px;

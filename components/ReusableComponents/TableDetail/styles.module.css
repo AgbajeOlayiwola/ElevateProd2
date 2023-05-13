@@ -2,10 +2,11 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding: 24px 0px 58px 24px;
+    padding: 10px 0px 10px 24px;
+    border-bottom: 0.5px solid #3e3e3e;
 }
 
-.TableDetailBody p {
+.TableDetailBody > p {
     color: #455a64;
     font-size: 14px;
     font-weight: 500;
@@ -16,7 +17,7 @@
 .TableDetailBody .bene {
     font-size: 16px;
     color: #102572;
-    width: 30%;
+    width: 25%;
 }
 
 .TableDetailBody .transfer {
@@ -30,11 +31,14 @@
     width: 22%;
 }
 
-
 .date {
     width: 14%;
 }
 
 .status {
     width: 14%;
+}
+
+.more {
+    width: 5%;
 }

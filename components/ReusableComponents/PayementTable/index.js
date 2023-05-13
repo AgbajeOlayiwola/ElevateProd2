@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getTransactionElevate,
-    getTransactionHistory
+    getTransactionHistory,
+    getDisputCategOryTypeGen
 } from '../../../redux/actions/actions';
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
@@ -15,6 +16,8 @@ const PaymentTable = ({ title, test }) => {
     const { transactionHistory, errorMessageTransactionHistory } = useSelector(
         (state) => state.transactionHistoryReducer
     );
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
@@ -22,6 +25,16 @@ const PaymentTable = ({ title, test }) => {
     const [displayType, setDisplayType] = useState('');
     const [pageNumber, setPageNumber] = useState(0);
     const [searchType, setSearchType] = useState('transactionType');
+    const [disputes, setDisputes] = useState();
+    useEffect(() => {
+        setDisputes(getDisputCategOryTypeSuccess);
+    }, [getDisputCategOryTypeSuccess]);
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        currencyDisplay: 'narrowSymbol'
+    });
 
     const usersPerPage = 10;
     const pagesVisited = pageNumber * usersPerPage;
@@ -30,6 +43,10 @@ const PaymentTable = ({ title, test }) => {
     useEffect(() => {
         dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
     }, [test === 0]);
+
+    useEffect(() => {
+        dispatch(getDisputCategOryTypeGen());
+    }, []);
 
     useEffect(() => {
         if (transactionHistory !== null) {
@@ -114,6 +131,7 @@ const PaymentTable = ({ title, test }) => {
                 {/* <p className={styles.bank}>Bank/Network</p> */}
                 <p className={styles.date}>Date</p>
                 <p className={styles.status}>Status</p>
+                <div className={styles.more}></div>
             </div>
             {!tableDetails.length
                 ? 'No Recent transaction'
@@ -138,12 +156,15 @@ const PaymentTable = ({ title, test }) => {
                                   title={items.transactionTitle}
                                   Beneficiary={items.receiver}
                                   Type={items.transactionType}
-                                  Amount={items.transactionAmount}
+                                  Amount={formatter.format(
+                                      items.transactionAmount
+                                  )}
                                   Bank={items.destinationBank}
                                   Dates={items.transactionDate}
                                   Status={items.transactionStatus}
                                   accountNumber={items.destinationAccountNumber}
                                   network={items.billerCode}
+                                  disputes={disputes}
                                   //   phoneNumber={}
                               />
                           );
