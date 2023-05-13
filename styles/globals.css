@@ -1,4 +1,6 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Work+Sans:wght@300;500;800;900&display=swap');
+
 :root {
     --global-button-padding: 1.2rem 0rem 1.2rem 0rem;
     /* --global-button-padding: 1.2rem 12.568rem 1.2rem 12.568rem; */
@@ -23,7 +25,25 @@ body {
 }
 @font-face {
     font-family: 'inter';
-    src: url('/Assets/Fonts/Inter/Inter-VariableFont_slnt,wght.ttf');
+    src: url('/Assets/Fonts/Inter/Inter-Regular.ttf');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'inter';
+    src: url('/Assets/Fonts/Inter/Inter-SemiBold.ttf');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'inter';
+    src: url('/Assets/Fonts/Inter/Inter-Bold.ttf');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'inter';
+    src: url('/Assets/Fonts/Inter/Inter-Medium.ttf');
     font-weight: 500;
     font-style: normal;
 }

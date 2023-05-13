@@ -168,54 +168,58 @@ const PaymentTable = ({ title, test, page }) => {
                 <p className={styles.status}>Status</p>
                 <div className={styles.more}></div>
             </div>
-            {!newTableDetails.length
-                ? 'No Recent transaction'
-                : newTableDetails
-                      ?.sort((x, y) => {
-                          let a = new Date(x.transactionDate),
-                              b = new Date(y.transactionDate);
-                          return b - a;
-                      })
-                      ?.filter((item) => {
-                          if (searchValue === '') {
-                              return item;
-                          } else if (filterCondition(item, searchType)) {
-                              return item;
-                          }
-                      })
-                      ?.slice(pagesVisited, pagesVisited + usersPerPage)
-                      ?.map((items, index) => {
-                          return (
-                              <TableDetail
-                                  key={index}
-                                  title={items.transactionTitle}
-                                  Beneficiary={items.receiver}
-                                  Type={items.transactionType.replace('_', ' ')}
-                                  Amount={formatter.format(
-                                      items.transactionAmount
-                                  )}
-                                  Bank={items.destinationBank}
-                                  Dates={items.transactionDate}
-                                  Status={items.transactionStatus}
-                                  accountNumber={items.destinationAccountNumber}
-                                  network={items.billerCode}
-                                  disputes={disputes}
-                                  //   phoneNumber={}
-                              />
-                          );
-                      })}
-            <ReactPaginate
-                previousLabel="Previous"
-                nextLabel="Next"
-                pageCount={pageCount}
-                onPageChange={({ selected }) => {
-                    setPageNumber(selected);
-                }}
-                containerClassName={styles.paginationBtns}
-                previousClassName={styles.previousBtns}
-                nextLinkClassName={styles.nextBtns}
-                activeClassName={styles.paginationActive}
-            />
+            {!newTableDetails.length ? (
+                <p className={styles.noRecent}>No Recent transaction</p>
+            ) : (
+                newTableDetails
+                    ?.sort((x, y) => {
+                        let a = new Date(x.transactionDate),
+                            b = new Date(y.transactionDate);
+                        return b - a;
+                    })
+                    ?.filter((item) => {
+                        if (searchValue === '') {
+                            return item;
+                        } else if (filterCondition(item, searchType)) {
+                            return item;
+                        }
+                    })
+                    ?.slice(pagesVisited, pagesVisited + usersPerPage)
+                    ?.map((items, index) => {
+                        return (
+                            <TableDetail
+                                key={index}
+                                title={items.transactionTitle}
+                                Beneficiary={items.receiver}
+                                Type={items.transactionType.replace('_', ' ')}
+                                Amount={formatter.format(
+                                    items.transactionAmount
+                                )}
+                                Bank={items.destinationBank}
+                                Dates={items.transactionDate}
+                                Status={items.transactionStatus}
+                                accountNumber={items.destinationAccountNumber}
+                                network={items.billerCode}
+                                disputes={disputes}
+                                //   phoneNumber={}
+                            />
+                        );
+                    })
+            )}
+            {newTableDetails.length === 0 ? null : (
+                <ReactPaginate
+                    previousLabel="Previous"
+                    nextLabel="Next"
+                    pageCount={pageCount}
+                    onPageChange={({ selected }) => {
+                        setPageNumber(selected);
+                    }}
+                    containerClassName={styles.paginationBtns}
+                    previousClassName={styles.previousBtns}
+                    nextLinkClassName={styles.nextBtns}
+                    activeClassName={styles.paginationActive}
+                />
+            )}
         </div>
     );
 };

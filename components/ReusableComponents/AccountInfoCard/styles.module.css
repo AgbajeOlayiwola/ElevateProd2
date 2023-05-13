@@ -9,7 +9,41 @@
     margin-top: 0px;
     z-index: 1 !important;
 }
+.accountStuff{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 72px;
+}
 
+.adsDiv{
+    display:flex;
+    gap: 20px;
+}
+.adsDiv h1{
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 16px;
+/* or 80% */
+
+
+color: #FFFFFF;
+}
+.adsDiv p{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 19px;
+    color: #FFFFFF;
+}
+.accoutDetails{
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
 .thousand {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -21,7 +55,7 @@
     /* width: 220px; */
 }.accountNumbers{
     padding: 0px;
-    
+    width: 41%;
     background: no-repeat;
     border: navajowhite;
     color: white;

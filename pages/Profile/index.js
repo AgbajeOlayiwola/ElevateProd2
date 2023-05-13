@@ -112,7 +112,7 @@ const Profile = () => {
         (state) => state.unfreezeTransactionsReducer
     );
     const { userProfile } = useSelector((state) => state.userProfileReducer);
-    const { accountPrimary, accountPrimaryError } = useSelector(
+    const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
     );
     const { banks } = useSelector((state) => state.banksReducer);
@@ -246,7 +246,7 @@ const Profile = () => {
         // } else {
         //     setAcctNumber('Pending');
         // }
-    }, [accountPrimary]);
+    }, [accountPrimarys]);
     useEffect(() => {
         if (fetchRM !== null) {
             setRMDetails(fetchRM);
@@ -467,9 +467,9 @@ const Profile = () => {
                                         type="text"
                                         placeholder="Babatune Abiodun"
                                         value={
-                                            !userProfileData
+                                            !userProfile
                                                 ? null
-                                                : `${userProfileData.lastName} ${userProfileData.firstName}`
+                                                : `${userProfile.lastName} ${userProfile.firstName}`
                                         }
                                     />
                                 </div>
@@ -1710,7 +1710,7 @@ const Profile = () => {
                             <div className={styles.accountNumber}>
                                 <h4>Account Number</h4>
                                 <div className={styles.accountNumberCopy}>
-                                    <p>{acctNumber.accountNumber}</p>
+                                    <p>{accountPrimarys?.accountNumber}</p>
                                     <h5
                                         onClick={() => {
                                             {

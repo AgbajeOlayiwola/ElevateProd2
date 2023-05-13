@@ -73,6 +73,7 @@ const BulkTransfer = ({
 
         return checkDigit == accountNumberDigits[12];
     };
+    useEffect(() => {}, []);
 
     const getAllBanksByAccount = (accountNo) => {
         //NOTE, This can be fetched from the Database
@@ -324,6 +325,7 @@ const BulkTransfer = ({
                                         value={e?.number?.accountName}
                                         name={`${fieldName}.accountName`}
                                         disabled
+                                        required
                                     />
                                     <p className={styles.error}>
                                         {errors?.accountNumber?.message}

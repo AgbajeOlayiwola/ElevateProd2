@@ -27,7 +27,8 @@ import PaymentActiveSvg from '../ReusableSvgComponents/PaymentActiveSvg';
 import ToolsActiveSvg from '../ReusableSvgComponents/toolsActiveSvg';
 import StorefrontActiveSvg from '../ReusableSvgComponents/StorefrontActiveSvg';
 import SettingsActiveSvg from '../ReusableSvgComponents/SettingsActiveSvg';
-
+import { BsFillCollectionFill, BsPiggyBankFill } from 'react-icons/bs';
+import { HiBanknotes } from 'react-icons/hi';
 export const SidebarData = [
     {
         title: 'Dashboard',
@@ -69,8 +70,8 @@ export const SidebarData = [
         title: 'Collections',
         path: '/Collections',
         // modal: 'show',
-        icon: <PaymentSvg />,
-        iconActive: <PaymentActiveSvg />,
+        icon: <BsFillCollectionFill />,
+        iconActive: <BsFillCollectionFill style={{ color: '#69940d' }} />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
         // subNav: [
@@ -123,8 +124,8 @@ export const SidebarData = [
         title: 'Bank Statement',
         path: '/BankStatement',
         // modal: 'show',
-        icon: <PaymentSvg />,
-        iconActive: <PaymentActiveSvg />,
+        icon: <BsPiggyBankFill />,
+        iconActive: <BsPiggyBankFill style={{ color: '#69940d' }} />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
         // subNav: [
