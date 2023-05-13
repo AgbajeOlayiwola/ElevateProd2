@@ -42,6 +42,7 @@ import TotalCollections from '../../components/ReusableComponents/ReusableSvgCom
 import TotalPendingCollections from '../../components/ReusableComponents/ReusableSvgComponents/TotalPendingCollectionsSvg';
 import TotlaCollctionsSvg from '../../components/ReusableComponents/ReusableSvgComponents/TotlaCollectionsFailedSvg';
 import MoreAction from '../../components/ReusableComponents/MoreAction';
+import TransactionStatus from '../../components/ReusableComponents/TransactionStatus';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -75,6 +76,9 @@ const Dashboard = () => {
     const [outType, setOutType] = useState();
     const [time, setTime] = useState();
     const [rangeDate, setRangeDate] = useState();
+    let success = 0;
+    let pending = 0;
+    let failed = 0;
     const [accountUpgrade, setAccountUpgrade] = useState(true);
     const [balance, setBalance] = useState('₦0.00');
     const [tableDetails, setTableDetails] = useState([]);
@@ -219,6 +223,8 @@ const Dashboard = () => {
             // });
         }
     }, [transactionHistory]);
+
+    useEffect(() => {}, [pending, success, failed]);
     //console.log(newDate[0]);
     return (
         <DashLayout page="Dashboard">
@@ -613,6 +619,24 @@ const Dashboard = () => {
                                 <div className={styles.btmIIp}>
                                     <p>Recent Transactions</p>
                                 </div>
+                                {tableDetails.map((item) => {
+                                    if (item.transactionStatus === 'SUCCESS') {
+                                        success += 1;
+                                    } else if (
+                                        item.transactionStatus === 'PENDING'
+                                    ) {
+                                        pending = pending + 1;
+                                    } else if (
+                                        item.transactionStatus === 'FAILED'
+                                    ) {
+                                        failed += 1;
+                                    }
+                                })}
+                                <TransactionStatus
+                                    success={success}
+                                    failed={failed}
+                                    pending={pending}
+                                />
                                 {tableDetails.length == 0 ? (
                                     <div className={styles.transactionBody}>
                                         <div>
@@ -638,7 +662,6 @@ const Dashboard = () => {
                                             return item;
                                         })
                                         ?.map((item, index) => {
-                                            console.log(item);
                                             const formatter =
                                                 new Intl.NumberFormat('en-US', {
                                                     style: 'currency',
@@ -690,9 +713,10 @@ const Dashboard = () => {
                                                             }
                                                         >
                                                             <p>
-                                                                {
-                                                                    item.transactionType
-                                                                }
+                                                                {item.transactionType.replace(
+                                                                    '_',
+                                                                    ' '
+                                                                )}
                                                             </p>
                                                         </div>
                                                         <div

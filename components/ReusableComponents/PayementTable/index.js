@@ -8,8 +8,9 @@ import {
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
 import ReactPaginate from 'react-paginate';
+import TransactionStatus from '../TransactionStatus';
 
-const PaymentTable = ({ title, test }) => {
+const PaymentTable = ({ title, test, page }) => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
@@ -21,11 +22,15 @@ const PaymentTable = ({ title, test }) => {
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
+    const [newTableDetails, setNewTableDetails] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [displayType, setDisplayType] = useState('');
     const [pageNumber, setPageNumber] = useState(0);
     const [searchType, setSearchType] = useState('transactionType');
     const [disputes, setDisputes] = useState();
+    let pending = 0;
+    let success = 0;
+    let failed = 0;
     useEffect(() => {
         setDisputes(getDisputCategOryTypeSuccess);
     }, [getDisputCategOryTypeSuccess]);
@@ -38,7 +43,23 @@ const PaymentTable = ({ title, test }) => {
 
     const usersPerPage = 10;
     const pagesVisited = pageNumber * usersPerPage;
-    const pageCount = Math.ceil(tableDetails.length / usersPerPage);
+
+    useEffect(() => {
+        if (page === 'Collections') {
+            tableDetails.filter((item, index) => {
+                if (item.paymentDirection === 'CREDIT') {
+                    setNewTableDetails((arr) => [...arr, item]);
+                }
+            });
+        } else if (page === 'Payments') {
+            tableDetails.filter((item) => {
+                if (item.paymentDirection === 'DEBIT') {
+                    setNewTableDetails((arr) => [...arr, item]);
+                }
+            });
+        }
+    }, [tableDetails]);
+    const pageCount = Math.ceil(newTableDetails.length / usersPerPage);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
@@ -124,6 +145,20 @@ const PaymentTable = ({ title, test }) => {
                     </button> */}
                 </div>
             </div>
+            {newTableDetails?.map((item) => {
+                if (item.transactionStatus === 'SUCCESS') {
+                    success += 1;
+                } else if (item.transactionStatus === 'PENDING') {
+                    pending = pending + 1;
+                } else if (item.transactionStatus === 'FAILED') {
+                    failed += 1;
+                }
+            })}
+            <TransactionStatus
+                success={success}
+                failed={failed}
+                pending={pending}
+            />
             <div className={styles.TableDetailHeader}>
                 <p className={styles.beneficiary}>Beneficiary </p>
                 <p className={styles.type}>Type</p>
@@ -133,9 +168,9 @@ const PaymentTable = ({ title, test }) => {
                 <p className={styles.status}>Status</p>
                 <div className={styles.more}></div>
             </div>
-            {!tableDetails.length
+            {!newTableDetails.length
                 ? 'No Recent transaction'
-                : tableDetails
+                : newTableDetails
                       ?.sort((x, y) => {
                           let a = new Date(x.transactionDate),
                               b = new Date(y.transactionDate);
@@ -155,7 +190,7 @@ const PaymentTable = ({ title, test }) => {
                                   key={index}
                                   title={items.transactionTitle}
                                   Beneficiary={items.receiver}
-                                  Type={items.transactionType}
+                                  Type={items.transactionType.replace('_', ' ')}
                                   Amount={formatter.format(
                                       items.transactionAmount
                                   )}

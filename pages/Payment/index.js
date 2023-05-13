@@ -59,10 +59,8 @@ const Payment = () => {
         (state) => state.transactionFeesReducer
     );
 
-    const {
-        internationalTransfer,
-        errorMessageinternationalTransfer
-    } = useSelector((state) => state.internationalTransferReducer);
+    const { internationalTransfer, errorMessageinternationalTransfer } =
+        useSelector((state) => state.internationalTransferReducer);
 
     const { verifyCurrency, errorMessageverifyCurrency } = useSelector(
         (state) => state.verifyCurrencyReducer
@@ -685,10 +683,11 @@ const Payment = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount: parseInt(
-                                                              e.Amount,
-                                                              10
-                                                          ),
+                                                          transactionAmount:
+                                                              parseInt(
+                                                                  e.Amount,
+                                                                  10
+                                                              ),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -915,7 +914,8 @@ const Payment = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId:
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
@@ -1129,7 +1129,11 @@ const Payment = () => {
                         </PaymentCard>
                     </div>
                 </div>
-                <PaymentTable title="Payment History" test={count} />
+                <PaymentTable
+                    title="Payment History"
+                    test={count}
+                    page="Payments"
+                />
 
                 {renderForm()}
             </div>
