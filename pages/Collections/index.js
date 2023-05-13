@@ -777,12 +777,8 @@ const Collections = () => {
             )} */}
                 <div className={styles.allTypes}>
                     <div className={styles.cov}>
-                        <div className={styles.whiteboard}>
-                            <div className={styles.balance}>
-                                <div>
-                                    <AccountsInfoCard />
-                                </div>
-                                {/* <div className={styles.balanceButtons}>
+                        <AccountsInfoCard />
+                        {/* <div className={styles.balanceButtons}>
                             <div className={styles.first}>
                                 <p>Scheduled Payments</p>
                             </div>
@@ -790,8 +786,6 @@ const Collections = () => {
                                 <p>Repeat Payments</p>
                             </div>
                         </div> */}
-                            </div>
-                        </div>
                     </div>
                     <div className={styles.cov}>
                         <PaymentCard title="Receive Payments" type="receive">

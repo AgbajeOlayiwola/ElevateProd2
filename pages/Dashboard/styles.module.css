@@ -14,6 +14,35 @@
     border: navajowhite;
     color: white;
 }
+.accountsALl {
+    display: flex;
+    gap: 30px;
+}
+.accountDetails {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #efffcc;
+}
+
+.accountNumber {
+    margin: 0px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ffffff;
+}
+
+.bagMoney {
+    position: absolute;
+    right: 10%;
+    top: 30%;
+}
 .assctDrop {
     display: flex;
     align-items: center;
@@ -38,10 +67,7 @@
     color: #102572 !important;
     margin: 0px !important;
 }
-.accountsALl {
-    display: flex;
-    gap: 30px;
-}
+
 .Success {
     font-family: 'Inter';
     font-style: normal;
@@ -658,31 +684,7 @@
     width: 80%;
 }
 
-.accountDetails {
-    margin: 0px;
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-    color: #efffcc;
-}
 
-.accountNumber {
-    margin: 0px;
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 12px;
-    line-height: 15px;
-    color: #ffffff;
-}
-
-.bagMoney {
-    position: absolute;
-    right: 10%;
-    top: 30%;
-}
 
 .cardRight {
     position: relative;
