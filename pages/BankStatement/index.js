@@ -282,8 +282,6 @@ const BankStatments = () => {
                 <div className={styles.table}>
                     <div className={styles.tableHeader}>
                         <h2>Transactions History</h2>
-                    </div>
-                    <div className={styles.tableFilters}>
                         <div className={styles.tableFilter}>
                             <div>
                                 <img src="../Assets/Svgs/search.svg" alt="" />
@@ -313,7 +311,9 @@ const BankStatments = () => {
                         </span>
                     </button> */}
                         </div>
-                        <h2
+                    </div>
+                    <div className={styles.tableFilters}>
+                        {/* <h2
                             onClick={async () => {
                                 const element = printRef.current;
 
@@ -336,7 +336,7 @@ const BankStatments = () => {
                             }}
                         >
                             Download
-                        </h2>
+                        </h2> */}
                     </div>
                     <table className={styles.tables}>
                         <thead className={styles.TableDetailHeader}>

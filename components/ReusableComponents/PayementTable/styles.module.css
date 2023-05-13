@@ -9,6 +9,11 @@
     width: 100%;
 }
 
+.noRecent {
+    text-align: center;
+    margin: 20px 0px;
+}
+
 .tableHeader {
     width: 100%;
     display: flex;

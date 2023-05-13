@@ -1,0 +1,52 @@
+.transactionStatus {
+    display: flex;
+    margin: 30px 0px;
+}
+
+.transactionStatus .success {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.transactionStatus .success div {
+    background-color: green;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.transactionStatus .pending {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.transactionStatus .pending div {
+    background-color: yellow;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.transactionStatus .error {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.transactionStatus .error div {
+    background-color: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.transactionStatus > div p {
+    margin: 0px;
+    margin-left: 5px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 100%;
+    font-size: 15px;
+}

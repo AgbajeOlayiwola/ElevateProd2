@@ -800,7 +800,11 @@ const Collections = () => {
                         </PaymentCard>
                     </div>
                 </div>
-                <PaymentTable title="Payment History" test={count} />
+                <PaymentTable
+                    title="Payment History"
+                    test={count}
+                    page="Collections"
+                />
 
                 {renderForm()}
             </div>
