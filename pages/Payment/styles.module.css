@@ -72,12 +72,18 @@ padding: 20px 15px;
 }
 
 .whiteboard {
+    height: 310px;
+    overflow: scroll;
+    -ms-overflow-style: none;
+        scrollbar-width: none; 
     padding: 39px 32px 39px 48px;
     background-color: #69940d;
     width: 100%;
     border-radius: 16px;
 }
-
+.whiteboard::-webkit-scrollbar {
+    display: none;
+}
 .balance {
     display: flex;
     justify-content: space-between;

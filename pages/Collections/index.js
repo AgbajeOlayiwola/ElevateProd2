@@ -36,6 +36,7 @@ import PaylinkStepOne from '../../components/layout/Paylink/StepOne';
 import UssdFirst from '../../components/ReusableComponents/UssdFirst';
 import Share from '../../components/ReusableComponents/Share';
 import QrFirst from '../../components/layout/QrData';
+import AccountsInfoCard from '../../components/ReusableComponents/AccountInfoCard';
 
 const Collections = () => {
     const router = useRouter();
@@ -779,18 +780,7 @@ const Collections = () => {
                         <div className={styles.whiteboard}>
                             <div className={styles.balance}>
                                 <div>
-                                    <div className={styles.visibility}>
-                                        <p className={styles.thousand}>
-                                            {outType ? '*******' : balance}
-                                        </p>
-                                        <Visbility
-                                            color="green"
-                                            typeSet={types}
-                                        />
-                                    </div>
-                                    <p className={styles.avail}>
-                                        Available Balance
-                                    </p>
+                                    <AccountsInfoCard />
                                 </div>
                                 {/* <div className={styles.balanceButtons}>
                             <div className={styles.first}>

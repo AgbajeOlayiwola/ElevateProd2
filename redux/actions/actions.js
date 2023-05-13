@@ -461,8 +461,21 @@ export const unfreezeTransactionsLoadError = (errorMessage) => ({
 
 export const loadunfreezeTransactions = () => (dispatch) => {
     dispatch(unfreezeTransactionsLoadStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     axiosInstance
-        .get(`${apiRoutes.unfreezeTransactions}`)
+        .get(`${apiRoutes.unfreezeTransactions}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(unfreezeTransactionsLoadSuccess(response.data.data))
         )

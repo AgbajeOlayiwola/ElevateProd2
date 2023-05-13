@@ -91,54 +91,72 @@ const AccountsInfoCard = () => {
         setOutType(type);
     };
     return (
-        <div>
-            <div className={styles.visibility}>
-                <p className={styles.thousand}>
-                    {outType ? '*******' : balance}
-                </p>
-                <Visbility color="green" typeSet={types} />
-            </div>
-            <p className={styles.avail}>Available Balance</p>
+        <div className={styles.accountStuff}>
+            <div className={styles.accoutDetails}>
+                <div className={styles.visibility}>
+                    <p className={styles.thousand}>
+                        {outType ? '*******' : balance}
+                    </p>
+                    <Visbility color="green" typeSet={types} />
+                </div>
+                <p className={styles.avail}>Available Balance</p>
 
-            <div className={styles.assctDrop}>
-                <select
-                    className={styles.accountNumbers}
-                    value={acctNum}
-                    onChange={(e) => {
-                        setAcctNumm(e.target.value);
-                    }}
-                >
-                    <option>Select Account Number</option>
-                    {Object.keys(bankAccounts)?.map((accountNo, index) => {
-                        return (
-                            <>
-                                <option
-                                    value={
-                                        bankAccounts[accountNo].accountNumber
-                                    }
-                                    key={index}
-                                >
-                                    {bankAccounts[accountNo].accountNumber}
-                                </option>
-                            </>
-                        );
-                    })}
-                </select>{' '}
-                <svg
-                    width="10"
-                    height="7"
-                    viewBox="0 0 8 5"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M1 1L4 4L7 1"
-                        stroke="white"
-                        strokeWidth="1.66667"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </svg>
+                <div className={styles.assctDrop}>
+                    <select
+                        className={styles.accountNumbers}
+                        value={acctNum}
+                        onChange={(e) => {
+                            setAcctNumm(e.target.value);
+                        }}
+                    >
+                        <option>Select Account Number</option>
+                        {Object.keys(bankAccounts)?.map((accountNo, index) => {
+                            return (
+                                <>
+                                    <option
+                                        value={
+                                            bankAccounts[accountNo]
+                                                .accountNumber
+                                        }
+                                        key={index}
+                                    >
+                                        {bankAccounts[accountNo].accountNumber}
+                                    </option>
+                                </>
+                            );
+                        })}
+                    </select>{' '}
+                    <svg
+                        width="10"
+                        height="7"
+                        viewBox="0 0 8 5"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M1 1L4 4L7 1"
+                            stroke="white"
+                            strokeWidth="1.66667"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+                </div>
+            </div>
+            <div className={styles.adsDiv}>
+                <img
+                    src="Assets/Images/perspective.png"
+                    height={100}
+                    width={100}
+                />
+                <div>
+                    <h1>Introducing Scheduled Payments</h1>
+                    <p>
+                        You can now schedule your transfer for a later time or
+                        date by selecting ‘Schedule for later’ when you make
+                        payments.
+                    </p>
+                </div>
             </div>
         </div>
     );
