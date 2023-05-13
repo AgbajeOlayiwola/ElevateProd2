@@ -154,6 +154,10 @@
 }
 
 .singleFormGroup {
+    margin-top: 32px;
+}
+
+.singleFormGroup:last-child {
     margin-top: 24px;
 }
 
@@ -297,7 +301,6 @@
     color: #ffffff;
     cursor: pointer;
 }
-
 
 .formGroup input[type='file'] {
     display: none;

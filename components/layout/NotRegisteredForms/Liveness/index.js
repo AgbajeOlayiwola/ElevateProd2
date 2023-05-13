@@ -107,25 +107,27 @@ const Liveness = ({ action, cookie }) => {
                             />
                         </div>
                     </div>
+                    {loading ? (
+                        <p>Hold on your face is been verified!!!!</p>
+                    ) : null}
+                    <ButtonComp
+                        onClick={
+                            succes === 'facial verification successful'
+                                ? action
+                                : capture
+                        }
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        type="button"
+                        text={
+                            succes === 'facial verification successful'
+                                ? 'Continue'
+                                : 'Snap'
+                        }
+                        err={succes}
+                        loads={loads}
+                    />
                 </div>
-                {loading ? <p>Hold on your face is been verified!!!!</p> : null}
-                <ButtonComp
-                    onClick={
-                        succes === 'facial verification successful'
-                            ? action
-                            : capture
-                    }
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    type="button"
-                    text={
-                        succes === 'facial verification successful'
-                            ? 'Continue'
-                            : 'Snap'
-                    }
-                    err={succes}
-                    loads={loads}
-                />
             </div>
         </div>
     );

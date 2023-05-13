@@ -1,4 +1,4 @@
-.homeContainer{
+.homeContainer {
     width: 100%;
     background-color: white;
 }
@@ -75,6 +75,12 @@
     padding: 200px 0px;
     max-width: 682px;
     width: 53%;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.secondSection::-webkit-scrollbar {
+    display: none;
 }
 
 .secondSectionHeader {
@@ -145,9 +151,9 @@
     font-size: 14px;
     line-height: 17px;
     color: #3e3e3e;
-    background: #F4F4F4;
-border-radius: 8px;
-border: 0px;
+    background: #f4f4f4;
+    border-radius: 8px;
+    border: 0px;
 }
 
 .homeForm {
@@ -155,6 +161,10 @@ border: 0px;
     width: 100%;
     justify-content: space-between;
     margin-top: 32px;
+}
+
+.homeForm:last-child {
+    margin-top: 24px;
 }
 
 .homeForm label {
@@ -168,10 +178,10 @@ border: 0px;
     margin-bottom: 8px;
 }
 
-.homeForm input{
-    background: #F4F4F4;
-border: 1px solid rgba(108, 207, 0, 0.31);
-border-radius: 8px;
+.homeForm input {
+    background: #f4f4f4;
+    /* border: 1px solid rgba(108, 207, 0, 0.31); */
+    border-radius: 8px;
 }
 
 .divs {
@@ -306,6 +316,10 @@ border-radius: 8px;
     margin-bottom: 24px;
 }
 
+.existingForm > div:last-child {
+    margin-bottom: 0px;
+}
+
 .show {
     display: flex;
     transition: all 0.5s ease-in-out;
@@ -325,15 +339,6 @@ border-radius: 8px;
 }
 .exp {
     width: 50%;
-}
-
-.form {
-    height: 50vh;
-    overflow-y: scroll;
-}
-
-.form::-webkit-scrollbar {
-    display: none;
 }
 
 .idInput {
@@ -499,12 +504,12 @@ border-radius: 8px;
     align-items: center;
     display: flex;
     justify-content: center;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}    
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
 .sectionII::-webkit-scrollbar {
     display: none;
-  }
+}
 .bottom {
     margin-top: 3rem;
     width: fit-content;
@@ -960,10 +965,10 @@ border-radius: 8px;
         overflow-y: unset;
     } */
 }
-.termms{
-    width: 12%;
+.termms {
+    width: 20px;
 }
-.alreadyTC{
+.alreadyTC {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -971,18 +976,21 @@ border-radius: 8px;
     line-height: 17px;
     margin: 0px;
     margin-top: 24px;
-    color: #3e3e3e; 
+    color: #3e3e3e;
+    display: flex;
+    align-items: center;
 }
 .alreadyTC span {
     font-weight: 700;
     color: #102572;
     cursor: pointer;
+    margin-left: 4px;
 }
-.headerDiv{
+.headerDiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.errorX{
+.errorX {
     cursor: pointer;
 }

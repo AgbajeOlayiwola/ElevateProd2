@@ -8,12 +8,14 @@ import {
     bankAccountsData,
     getBalanceEnquiry,
     loadAccountPrimary,
-    loadbankStatement
+    loadbankStatement,
+    getDisputCategOryTypeGen
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/ReusableComponents/Loader';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
+import MoreAction from '../../components/ReusableComponents/MoreAction';
 
 const BankStatments = () => {
     const dispatch = useDispatch();
@@ -62,9 +64,13 @@ const BankStatments = () => {
         (state) => state.accountPrimaryReducer
     );
 
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
+
     useEffect(() => {
         dispatch(bankAccountsData());
         dispatch(loadAccountPrimary());
+        dispatch(getDisputCategOryTypeGen());
         const todaysDate = new Date().toISOString();
         const getDateXDaysAgo = (numOfDays, date = new Date()) => {
             const daysAgo = new Date();
@@ -78,6 +84,10 @@ const BankStatments = () => {
         };
         dispatch(loadbankStatement(data));
     }, []);
+    const [disputes, setDisputes] = useState();
+    useEffect(() => {
+        setDisputes(getDisputCategOryTypeSuccess);
+    }, [getDisputCategOryTypeSuccess]);
 
     useEffect(() => {
         if (accountPrimarys !== null) {
@@ -313,7 +323,8 @@ const BankStatments = () => {
                                     userUnit: 'px'
                                 });
 
-                                const pdfWidth = pdf.internal.pageSize.getWidth();
+                                const pdfWidth =
+                                    pdf.internal.pageSize.getWidth();
                                 pdf.html(element, {
                                     html2canvas: {
                                         scale: 0.57,
@@ -395,6 +406,7 @@ const BankStatments = () => {
                             <p className={styles.beneficiary}>Beneficiary </p>
                             <p className={styles.amount}>Amount</p>
                             <p className={styles.type}>Type</p>
+                            <div className={styles.more}></div>
                         </div>
                         {!tableDetails.length
                             ? 'No Recent transaction'
@@ -418,9 +430,8 @@ const BankStatments = () => {
                                       pagesVisited + usersPerPage
                                   )
                                   ?.map((items, index) => {
-                                      const newDate = items?.transactionTime?.split(
-                                          ' '
-                                      );
+                                      const newDate =
+                                          items?.transactionTime?.split(' ');
                                       return (
                                           <div
                                               className={styles.TableDetailBody}
@@ -443,6 +454,15 @@ const BankStatments = () => {
                                               <p className={styles.transfer}>
                                                   {items.channel}
                                               </p>
+                                              <div className={styles.more}>
+                                                  <MoreAction
+                                                      type={items.channel}
+                                                      transactionAmount={formatter.format(
+                                                          items.amount
+                                                      )}
+                                                      disputes={disputes}
+                                                  />
+                                              </div>
                                           </div>
                                       );
                                   })}

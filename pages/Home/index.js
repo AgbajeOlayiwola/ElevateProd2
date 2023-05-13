@@ -166,9 +166,11 @@ const HomeMain = () => {
                                 })}
                                 name="omniliteUsername"
                             />
-                            <p className={styles.error}>
-                                {errors?.omniliteUsername?.message}
-                            </p>
+                            {errors?.omniliteUsername?.message ? (
+                                <p className={styles.error}>
+                                    {errors?.omniliteUsername?.message}
+                                </p>
+                            ) : null}
                         </div>
                         <div>
                             <label>Enter Your Omnilite Password</label>
@@ -185,9 +187,11 @@ const HomeMain = () => {
                                 />
                                 <Visbility typeSet={types} />
                             </div>
-                            <p className={styles.error}>
-                                {errors?.omnilitePassword?.message}
-                            </p>
+                            {errors?.omnilitePassword?.message ? (
+                                <p className={styles.error}>
+                                    {errors?.omnilitePassword?.message}
+                                </p>
+                            ) : null}
                         </div>
                     </div>
                 );
@@ -210,9 +214,11 @@ const HomeMain = () => {
                                     setEconlineUsername(e.target.value)
                                 }
                             />
-                            <p className={styles.error}>
-                                {errors?.onlineUsername?.message}
-                            </p>
+                            {errors.onlineUsername?.message ? (
+                                <p className={styles.error}>
+                                    {errors?.onlineUsername?.message}
+                                </p>
+                            ) : null}
                         </div>
                         <div>
                             <label>Enter Your Ecobank Online Password</label>
@@ -233,9 +239,11 @@ const HomeMain = () => {
                                 />
                                 <Visbility typeSet={types} />
                             </div>
-                            <p className={styles.error}>
-                                {errors?.onlinePassword?.message}
-                            </p>
+                            {errors.onlinePassword?.message ? (
+                                <p className={styles.error}>
+                                    {errors?.onlinePassword?.message}
+                                </p>
+                            ) : null}
                         </div>
                     </div>
                 );
@@ -257,9 +265,11 @@ const HomeMain = () => {
                                 }}
                                 name="accountNumber"
                             />
-                            <p className={styles.error}>
-                                {errors?.accountNumber?.message}
-                            </p>
+                            {errors.accountNumber?.message ? (
+                                <p className={styles.error}>
+                                    {errors?.accountNumber?.message}
+                                </p>
+                            ) : null}
                         </div>
                     </div>
                 );
@@ -279,9 +289,11 @@ const HomeMain = () => {
                                 onInput={(e) => setCardPanMatch(e.target.value)}
                                 name="cardNumber"
                             />
-                            <p className={styles.error}>
-                                {errors?.cardNumber?.message}
-                            </p>
+                            {errors?.cardNumber?.message ? (
+                                <p className={styles.error}>
+                                    {errors?.cardNumber?.message}
+                                </p>
+                            ) : null}
                         </div>
                         <div className={styles.expCvv}>
                             <div className={styles.exp}>
@@ -304,9 +316,11 @@ const HomeMain = () => {
                                         value={cardExp}
                                         maxLength="5"
                                     />
-                                    <p className={styles.error}>
-                                        {errors?.expiryDate?.message}
-                                    </p>
+                                    {errors.expiryDate?.message ? (
+                                        <p className={styles.error}>
+                                            {errors?.expiryDate?.message}
+                                        </p>
+                                    ) : null}
                                 </div>
                             </div>
                             <div className={styles.cvvCode}>
@@ -324,9 +338,11 @@ const HomeMain = () => {
                                         value={cvv}
                                         name="cvv"
                                     />
-                                    <p className={styles.error}>
-                                        {errors?.cvv?.message}
-                                    </p>
+                                    {errors.cvv?.message ? (
+                                        <p className={styles.error}>
+                                            {errors?.cvv?.message}
+                                        </p>
+                                    ) : null}
                                 </div>
                             </div>
                         </div>
@@ -2011,21 +2027,21 @@ const HomeMain = () => {
                                     </div>
                                 </ul>
                             </Modal>
+                            <p className={styles.alreadyTC}>
+                                <input
+                                    type="radio"
+                                    onChange={() => setActiveBtn(true)}
+                                    className={styles.termms}
+                                />
+                                I agree with ellevate app{' '}
+                                <span
+                                    className={styles.termsBtn}
+                                    onClick={openModal}
+                                >
+                                    <span>Terms and Conditions</span>
+                                </span>
+                            </p>
                             <div className={styles.secondSectionMidCountry}>
-                                <p className={styles.alreadyTC}>
-                                    <input
-                                        type="radio"
-                                        onChange={() => setActiveBtn(true)}
-                                        className={styles.termms}
-                                    />
-                                    I agree with ellevate app{' '}
-                                    <span
-                                        className={styles.termsBtn}
-                                        onClick={openModal}
-                                    >
-                                        <span>Terms and Conditions</span>
-                                    </span>
-                                </p>
                                 <ButtonComp
                                     disabled={activeBtn}
                                     active={activeBtn ? 'active' : 'inactive'}
@@ -2034,14 +2050,13 @@ const HomeMain = () => {
                                     loads={loading}
                                     err={ecoOnlineErrorMessage}
                                 />
-
-                                <p className={styles.already}>
-                                    Already have an account?{' '}
-                                    <Link href="../Auth/Login">
-                                        <span>Sign in</span>
-                                    </Link>
-                                </p>
                             </div>
+                            <p className={styles.already}>
+                                Already have an account?{' '}
+                                <Link href="../Auth/Login">
+                                    <span>Sign in</span>
+                                </Link>
+                            </p>
                         </form>
                     )}
                 </section>

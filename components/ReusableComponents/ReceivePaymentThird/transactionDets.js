@@ -31,21 +31,15 @@ const TransactionDets = ({
     const [reciept, setReciept] = useState(false);
     const [disputeType, setDisputeType] = useState();
     const [selectedDisputeType, setSelectedDisputeType] = useState();
-    const [
-        selectedDisputSubCategory,
-        setSelectedDisputeSubCategory
-    ] = useState();
+    const [selectedDisputSubCategory, setSelectedDisputeSubCategory] =
+        useState();
     const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
     const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
-    const {
-        getDisputCategorySuccess,
-        getDisputCategoryErrorMessage
-    } = useSelector((state) => state.getDisputeCategoryReducer);
-    const {
-        getDisputCategorySubSuccess,
-        getDisputCategoryErrorSubMessage
-    } = useSelector((state) => state.getDisputeSubCategoryReducer);
+    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
+        useSelector((state) => state.getDisputeCategoryReducer);
+    const { getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage } =
+        useSelector((state) => state.getDisputeSubCategoryReducer);
     const { lodgeDisputeSuccess, lodgeDisputeErrorSubMessage } = useSelector(
         (state) => state.lodgeDisputeReducer
     );
@@ -87,7 +81,7 @@ const TransactionDets = ({
             <div className={styles.deadlines}>
                 <div className={styles.nameDate}>
                     <p>{transactionTitle}</p>
-                    <p>₦{transactionAmmount}</p>
+                    <p>{transactionAmmount}</p>
                 </div>
                 {/* <div
                         className={
@@ -134,9 +128,9 @@ const TransactionDets = ({
                                         setShowDispute((prev) => !prev)
                                     }
                                 >
-                                    dispute
+                                    Dispute
                                 </div>
-                                
+
                                 <hr />
                                 <div
                                     className={styles.reciept}
@@ -338,8 +332,6 @@ const TransactionDets = ({
                     </div>
                 </div>
             </div>
-
-            {/* </div> */}
         </div>
     );
 };

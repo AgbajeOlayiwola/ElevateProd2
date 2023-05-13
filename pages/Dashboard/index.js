@@ -23,7 +23,8 @@ import {
     loadAccountPrimary,
     getTransactionElevate,
     bankAccountsData,
-    getTransactionHistory
+    getTransactionHistory,
+    getDisputCategOryTypeGen
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
@@ -40,6 +41,7 @@ import DropdownSvg from '../../components/ReusableComponents/ReusableSvgComponen
 import TotalCollections from '../../components/ReusableComponents/ReusableSvgComponents/Totalcollections';
 import TotalPendingCollections from '../../components/ReusableComponents/ReusableSvgComponents/TotalPendingCollectionsSvg';
 import TotlaCollctionsSvg from '../../components/ReusableComponents/ReusableSvgComponents/TotlaCollectionsFailedSvg';
+import MoreAction from '../../components/ReusableComponents/MoreAction';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -97,6 +99,8 @@ const Dashboard = () => {
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
     );
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
@@ -105,6 +109,10 @@ const Dashboard = () => {
     };
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(10);
+    const [disputes, setDisputes] = useState();
+    useEffect(() => {
+        setDisputes(getDisputCategOryTypeSuccess);
+    }, [getDisputCategOryTypeSuccess]);
     useEffect(() => {
         if (balanceEnquiry !== null) {
             const formatter = new Intl.NumberFormat('en-US', {
@@ -152,6 +160,7 @@ const Dashboard = () => {
         dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
         getCurrentDate();
         getDateXDaysAgo(2);
+        dispatch(getDisputCategOryTypeGen());
     }, []);
 
     useEffect(() => {
@@ -197,9 +206,8 @@ const Dashboard = () => {
     useEffect(() => {
         if (transactionHistory !== null) {
             setTableDetails(transactionHistory.transactions);
-            const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
-                'T'
-            );
+            const newDate =
+                transactionHistory.transactions[0]?.transactionDate?.split('T');
             if (newDate[0] == time) {
                 setDateState(true);
             } else {
@@ -264,7 +272,7 @@ const Dashboard = () => {
                             </Link>
                             <Link
                                 href={{
-                                    pathname: '/Payment',
+                                    pathname: '/Collections',
                                     query: { id: 'Ecobank QR Only' }
                                 }}
                             >
@@ -279,7 +287,7 @@ const Dashboard = () => {
                             </Link>
                             <Link
                                 href={{
-                                    pathname: '/Payment',
+                                    pathname: '/Collections',
                                     query: { id: 'USSD only' }
                                 }}
                             >
@@ -351,34 +359,33 @@ const Dashboard = () => {
                                 ) : (
                                     tableDetails
                                         ?.filter((item) => {
-                                            const newDate = item.transactionDate.split(
-                                                'T'
-                                            );
+                                            const newDate =
+                                                item.transactionDate.split('T');
                                             return (
                                                 newDate[0] >= rangeDate &&
                                                 newDate[0] <= time
                                             );
                                         })
                                         ?.map((item, index) => {
-                                            const formatter = new Intl.NumberFormat(
-                                                'en-US',
-                                                {
+                                            const formatter =
+                                                new Intl.NumberFormat('en-US', {
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:
                                                         'narrowSymbol'
-                                                }
-                                            );
-                                            const formattedAmount = formatter.format(
-                                                item.transactionAmount
-                                            );
+                                                });
+                                            const formattedAmount =
+                                                formatter.format(
+                                                    item.transactionAmount
+                                                );
                                             let newBeneficiary;
                                             if (item.receiversName === null) {
                                                 newBeneficiary = '';
                                             } else {
-                                                newBeneficiary = item?.receiversName?.split(
-                                                    ' '
-                                                );
+                                                newBeneficiary =
+                                                    item?.receiversName?.split(
+                                                        ' '
+                                                    );
                                             }
                                             // {
                                             //     //console.log(item);
@@ -626,32 +633,29 @@ const Dashboard = () => {
                                 ) : (
                                     tableDetails
                                         ?.filter((item) => {
-                                            const newDate = item.transactionDate.split(
-                                                'T'
-                                            );
+                                            const newDate =
+                                                item.transactionDate.split('T');
                                             return item;
                                         })
                                         ?.map((item, index) => {
                                             console.log(item);
-                                            const formatter = new Intl.NumberFormat(
-                                                'en-US',
-                                                {
+                                            const formatter =
+                                                new Intl.NumberFormat('en-US', {
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:
                                                         'narrowSymbol'
-                                                }
-                                            );
-                                            const formattedAmount = formatter.format(
-                                                item.transactionAmount
-                                            );
+                                                });
+                                            const formattedAmount =
+                                                formatter.format(
+                                                    item.transactionAmount
+                                                );
                                             let newBeneficiary;
                                             if (item.receiver === null) {
                                                 newBeneficiary = '';
                                             } else {
-                                                newBeneficiary = item?.receiver?.split(
-                                                    ' '
-                                                );
+                                                newBeneficiary =
+                                                    item?.receiver?.split(' ');
                                             }
                                             return (
                                                 <div key={index}>
@@ -665,15 +669,20 @@ const Dashboard = () => {
                                                                 styles.names
                                                             }
                                                         >
-                                                            <p>
-                                                                {newBeneficiary ===
-                                                                ''
-                                                                    ? ''
-                                                                    : newBeneficiary[1] ===
-                                                                      undefined
-                                                                    ? newBeneficiary[0]
-                                                                    : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
-                                                            </p>
+                                                            {item.paymentDirection ===
+                                                            'CREDIT' ? (
+                                                                <p>Self</p>
+                                                            ) : (
+                                                                <p>
+                                                                    {newBeneficiary ===
+                                                                    ''
+                                                                        ? ''
+                                                                        : newBeneficiary[1] ===
+                                                                          undefined
+                                                                        ? newBeneficiary[0]
+                                                                        : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                                </p>
+                                                            )}
                                                         </div>
                                                         <div
                                                             className={
@@ -699,7 +708,7 @@ const Dashboard = () => {
                                                         </div>
                                                         <div
                                                             className={
-                                                                item.status
+                                                                styles.status
                                                             }
                                                         >
                                                             <div
@@ -713,6 +722,32 @@ const Dashboard = () => {
                                                                     }
                                                                 </p>
                                                             </div>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                styles.more
+                                                            }
+                                                        >
+                                                            <MoreAction
+                                                                transactionAmount={
+                                                                    formattedAmount
+                                                                }
+                                                                transactionStatus={
+                                                                    item.transactionStatus
+                                                                }
+                                                                transactionTitle={
+                                                                    item.transactionType
+                                                                }
+                                                                disputes={
+                                                                    disputes
+                                                                }
+                                                                narration={
+                                                                    item.narration
+                                                                }
+                                                                destinationBank={
+                                                                    item.receiver
+                                                                }
+                                                            />
                                                         </div>
                                                     </div>
                                                     <hr className={styles.hr} />

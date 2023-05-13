@@ -15,16 +15,16 @@
 }
 
 .sectionII {
-    padding: 120px 0px;
+    padding: 200px 0px;
     max-width: 682px;
     width: 53%;
     overflow: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-}    
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
 .sectionII::-webkit-scrollbar {
     display: none;
-  }
+}
 .loginCont {
     width: 60%;
     max-width: 400px;
@@ -80,7 +80,6 @@
 }
 
 .loginForm {
-    padding-bottom: 24px;
     display: block;
     margin-bottom: 24px;
 }

@@ -39,7 +39,7 @@ export const LeftHeading = styled.h3`
     font-weight: 700;
     font-size: 24px;
     line-height: 29px;
-    /* identical to box height */
+    margin: 0px;
     color: #102572;
 `;
 

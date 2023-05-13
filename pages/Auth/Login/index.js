@@ -473,9 +473,11 @@ const Login = () => {
                                     onInput={checkDataContent}
                                 />
                             </div>
-                            <p className={styles.errors}>
-                                {errors.email?.message}
-                            </p>
+                            {errors.email?.message ? (
+                                <p className={styles.errors}>
+                                    {errors.email?.message}
+                                </p>
+                            ) : null}
                         </div>
                         <div className={styles.loginForm}>
                             <label>Password </label>
@@ -494,9 +496,11 @@ const Login = () => {
                                 />
                                 <Visbility typeSet={types} />
                             </div>
-                            <p className={styles.errors}>
-                                {errors?.password?.message}
-                            </p>
+                            {errors?.password?.message ? (
+                                <p className={styles.errors}>
+                                    {errors?.password?.message}
+                                </p>
+                            ) : null}
                         </div>
                         <div className={styles.remForg}>
                             <div>
