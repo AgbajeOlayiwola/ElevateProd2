@@ -59,10 +59,8 @@ const BankStatments = () => {
         (state) => state.bankStatementReducer
     );
 
-    const {
-        getFullStatementSuccess,
-        getFullStatementerrorMessage
-    } = useSelector((state) => state.getFullStatementReducer);
+    const { getFullStatementSuccess, getFullStatementerrorMessage } =
+        useSelector((state) => state.getFullStatementReducer);
 
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
@@ -76,10 +74,8 @@ const BankStatments = () => {
         (state) => state.accountPrimaryReducer
     );
     const [isLoading, setIsLoading] = useState(true);
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -491,9 +487,8 @@ const BankStatments = () => {
                                     pagesVisited + usersPerPage
                                 )
                                 ?.map((items, index) => {
-                                    const newDate = items?.transactionTime?.split(
-                                        ' '
-                                    );
+                                    const newDate =
+                                        items?.transactionTime?.split(' ');
                                     return (
                                         <div
                                             className={styles.TableDetailBody}

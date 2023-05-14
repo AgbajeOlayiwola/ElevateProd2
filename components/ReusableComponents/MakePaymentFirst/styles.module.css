@@ -56,14 +56,13 @@
 .bulkBody {
     width: 70%;
     overflow: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
-.firstBody::-webkit-scrollbar ,
+.firstBody::-webkit-scrollbar,
 .bulkBody::-webkit-scrollbar {
     display: none;
-  }
-  
+}
 
 .firstBody > div {
     width: 72%;
@@ -856,6 +855,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    opacity: 0.3;
 }
 
 .networkSingle .greye {

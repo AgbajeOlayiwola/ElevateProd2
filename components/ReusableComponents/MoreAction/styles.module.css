@@ -326,7 +326,10 @@
 }
 .edit {
     cursor: pointer;
+}
+.edits {
     position: relative;
+    cursor: pointer;
 }
 .paidUnpaid {
     font-family: 'Inter';
@@ -455,7 +458,7 @@
     box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
 }
 
-.showDispute {
+/* .showDispute {
     box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
     background: white;
     padding: 50px 70px;
@@ -466,7 +469,7 @@
     flex-direction: column;
     width: 500px;
     gap: 20px;
-}
+} */
 
 .recieptPad {
     padding: 50px 70px;
@@ -494,7 +497,7 @@
     padding-left: 30px;
     padding-right: 30px;
 }
-.showReciept {
+/* .showReciept {
     padding: 0px;
     border-radius: 20px;
     box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
@@ -506,7 +509,7 @@
     flex-direction: column;
     width: 500px;
     gap: 20px;
-}
+} */
 .cancel {
     display: flex;
     justify-content: flex-end;

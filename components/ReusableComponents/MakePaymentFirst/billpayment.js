@@ -311,11 +311,6 @@ const BillPayment = ({
                                                     >
                                                         <div
                                                             className={
-                                                                styles.greye
-                                                            }
-                                                        ></div>
-                                                        <div
-                                                            className={
                                                                 styles.networkContent
                                                             }
                                                         >
