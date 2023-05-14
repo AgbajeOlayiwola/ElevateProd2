@@ -206,21 +206,21 @@ export const SidebarData = [
                 path: '/Profile',
                 icon: <BiIcons.BiTransfer />
             },
-            {
-                title: 'Customer Care Service',
-                path: '/Customer',
-                icon: <BulkTransfer />
-            },
+            // {
+            //     title: 'Customer Care Service',
+            //     path: '/Customer',
+            //     icon: <BulkTransfer />
+            // },
             {
                 title: 'Security',
                 path: '/Security',
                 icon: <NairaSvg />
-            },
-            {
-                title: 'Legal Terms & Conditions',
-                path: '/Legal',
-                icon: <FaIcons.FaHandHoldingUsd />
             }
+            // {
+            //     title: 'Legal Terms & Conditions',
+            //     path: '/Legal',
+            //     icon: <FaIcons.FaHandHoldingUsd />
+            // }
         ]
     }
 ];

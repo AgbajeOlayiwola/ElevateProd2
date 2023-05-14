@@ -75,9 +75,10 @@ color: #455A64;
     font-weight: 700;
     font-size: 20px;
     line-height: 30px;
+    margin-bottom: 38px;
     color: #005b82;
     font-family: 'Inter', sans-serif;
-    margin-bottom: 4px;
+    /* margin-bottom: 4px; */
 }
 
 .secondCont .intro {

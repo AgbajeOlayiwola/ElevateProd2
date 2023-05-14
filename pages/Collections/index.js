@@ -631,6 +631,7 @@ const Collections = () => {
                                     //console.logdata);
                                     setCount(count + 1);
                                 }}
+                                closeAction={buttonHandleClose}
                             />
                         );
                     case 1:

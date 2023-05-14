@@ -56,7 +56,14 @@
 .bulkBody {
     width: 70%;
     overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
+.firstBody,
+.bulkBody::-webkit-scrollbar {
+    display: none;
+  }
+  
 
 .firstBody > div {
     width: 72%;

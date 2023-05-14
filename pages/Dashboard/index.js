@@ -43,6 +43,7 @@ import TotalPendingCollections from '../../components/ReusableComponents/Reusabl
 import TotlaCollctionsSvg from '../../components/ReusableComponents/ReusableSvgComponents/TotlaCollectionsFailedSvg';
 import MoreAction from '../../components/ReusableComponents/MoreAction';
 import TransactionStatus from '../../components/ReusableComponents/TransactionStatus';
+import { IoMdCopy } from 'react-icons/io';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -85,7 +86,7 @@ const Dashboard = () => {
     const [userProfileData, setUserProfileData] = useState([]);
     const [dateState, setDateState] = useState(false);
     const [acctNum, setAcctNumm] = useState('');
-
+    const [isCopied, setIsCopied] = useState(false);
     const [acctNumber, setAcctNumber] = useState('');
 
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
@@ -103,8 +104,10 @@ const Dashboard = () => {
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
     );
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
@@ -196,12 +199,33 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
+        console.log(accountPrimarys);
+        setAcctNumm(accountPrimarys?.accountNumber);
+        const balanceData = {
+            accountId: accountPrimarys?.accountId
+        };
+        dispatch(getBalanceEnquiry(balanceData));
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            if (bankAccounts[accountNo].accountNumber === acctNum) {
+                setAcctNumber(accountPrimarys);
+                let balanceData;
+                balanceData = {
+                    accountId: bankAccounts[accountNo].accountId
+                };
+                dispatch(getBalanceEnquiry(balanceData));
+            } else {
+                setAcctNumber('Pending');
+            }
+        });
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
         if (userProfile !== null) {
             setUserProfileData(userProfile);
         }
 
         //console.log('upgrade check', accountUpgrade);
-    }, [userProfile]);
+    }, [userProfile, acctNum]);
 
     const current = new Date();
     const date = `${current.getFullYear()}-${
@@ -210,8 +234,9 @@ const Dashboard = () => {
     useEffect(() => {
         if (transactionHistory !== null) {
             setTableDetails(transactionHistory.transactions);
-            const newDate =
-                transactionHistory.transactions[0]?.transactionDate?.split('T');
+            const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
+                'T'
+            );
             if (newDate[0] == time) {
                 setDateState(true);
             } else {
@@ -226,6 +251,26 @@ const Dashboard = () => {
 
     useEffect(() => {}, [pending, success, failed]);
     //console.log(newDate[0]);
+    async function copyTextToClipboard(text) {
+        if ('clipboard' in navigator) {
+            return await navigator.clipboard.writeText(text);
+        } else {
+            return document.execCommand('copy', true, text);
+        }
+    }
+    const copyAccountNumber = () => {
+        copyTextToClipboard(acctNum)
+            .then(() => {
+                // If successful, update the isCopied state value
+                setIsCopied(true);
+                setTimeout(() => {
+                    setIsCopied(false);
+                }, 1500);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
     return (
         <DashLayout page="Dashboard">
             <div className={styles.statementCover}>
@@ -365,33 +410,34 @@ const Dashboard = () => {
                                 ) : (
                                     tableDetails
                                         ?.filter((item) => {
-                                            const newDate =
-                                                item.transactionDate.split('T');
+                                            const newDate = item.transactionDate.split(
+                                                'T'
+                                            );
                                             return (
                                                 newDate[0] >= rangeDate &&
                                                 newDate[0] <= time
                                             );
                                         })
                                         ?.map((item, index) => {
-                                            const formatter =
-                                                new Intl.NumberFormat('en-US', {
+                                            const formatter = new Intl.NumberFormat(
+                                                'en-US',
+                                                {
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:
                                                         'narrowSymbol'
-                                                });
-                                            const formattedAmount =
-                                                formatter.format(
-                                                    item.transactionAmount
-                                                );
+                                                }
+                                            );
+                                            const formattedAmount = formatter.format(
+                                                item.transactionAmount
+                                            );
                                             let newBeneficiary;
                                             if (item.receiversName === null) {
                                                 newBeneficiary = '';
                                             } else {
-                                                newBeneficiary =
-                                                    item?.receiversName?.split(
-                                                        ' '
-                                                    );
+                                                newBeneficiary = item?.receiversName?.split(
+                                                    ' '
+                                                );
                                             }
                                             // {
                                             //     //console.log(item);
@@ -492,7 +538,8 @@ const Dashboard = () => {
                                                 <div
                                                     className={styles.assctDrop}
                                                 >
-                                                    <select
+                                                    <p>{acctNum}</p>
+                                                    {/* <select
                                                         className={
                                                             styles.accountNumbers
                                                         }
@@ -538,22 +585,17 @@ const Dashboard = () => {
                                                                 );
                                                             }
                                                         )}
-                                                    </select>{' '}
-                                                    <svg
-                                                        width="10"
-                                                        height="7"
-                                                        viewBox="0 0 8 5"
-                                                        fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                    >
-                                                        <path
-                                                            d="M1 1L4 4L7 1"
-                                                            stroke="white"
-                                                            strokeWidth="1.66667"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                        />
-                                                    </svg>
+                                                    </select>{' '} */}
+                                                    <div>
+                                                        {isCopied
+                                                            ? 'Copied!'
+                                                            : null}
+                                                    </div>
+                                                    <IoMdCopy
+                                                        onClick={
+                                                            copyAccountNumber
+                                                        }
+                                                    />
                                                 </div>
                                                 {/* <p className={styles.accountNumber}>
                                                 {acctNumber.accountNumber}
@@ -583,7 +625,16 @@ const Dashboard = () => {
                                                             styles.accntP
                                                         }
                                                     >
-                                                        <p>
+                                                        <p
+                                                            onClick={(e) => {
+                                                                setAcctNumm(
+                                                                    bankAccounts[
+                                                                        accountNo
+                                                                    ]
+                                                                        .accountNumber
+                                                                );
+                                                            }}
+                                                        >
                                                             {
                                                                 bankAccounts[
                                                                     accountNo
@@ -657,28 +708,31 @@ const Dashboard = () => {
                                 ) : (
                                     tableDetails
                                         ?.filter((item) => {
-                                            const newDate =
-                                                item.transactionDate.split('T');
+                                            const newDate = item.transactionDate.split(
+                                                'T'
+                                            );
                                             return item;
                                         })
                                         ?.map((item, index) => {
-                                            const formatter =
-                                                new Intl.NumberFormat('en-US', {
+                                            const formatter = new Intl.NumberFormat(
+                                                'en-US',
+                                                {
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:
                                                         'narrowSymbol'
-                                                });
-                                            const formattedAmount =
-                                                formatter.format(
-                                                    item.transactionAmount
-                                                );
+                                                }
+                                            );
+                                            const formattedAmount = formatter.format(
+                                                item.transactionAmount
+                                            );
                                             let newBeneficiary;
                                             if (item.receiver === null) {
                                                 newBeneficiary = '';
                                             } else {
-                                                newBeneficiary =
-                                                    item?.receiver?.split(' ');
+                                                newBeneficiary = item?.receiver?.split(
+                                                    ' '
+                                                );
                                             }
                                             return (
                                                 <div key={index}>

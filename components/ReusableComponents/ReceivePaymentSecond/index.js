@@ -195,9 +195,9 @@ const ReceivePaymentSecond = ({
                 </div>
                 <div className={styles.secondCont}>
                     <h2>{title}</h2>
-                    <p className={styles.intro}>
+                    {/* <p className={styles.intro}>
                         Payment for Eraclitus purchase on Instagram
-                    </p>
+                    </p> */}
                     {title === 'Ecobank QR Code' ? (
                         <>
                             <div ref={exportRef}>

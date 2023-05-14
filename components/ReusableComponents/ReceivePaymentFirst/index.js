@@ -162,9 +162,9 @@ const ReceivePaymentFirst = ({
                 <div className={styles.firstBody}>
                     <div>
                         <h2>{firstTitle}</h2>
-                        <p className={styles.accept}>
+                        {/* <p className={styles.accept}>
                             (Accepts Card Payment without POS)
-                        </p>
+                        </p> */}
                         <form onSubmit={handleSubmit(action)}>
                             {/* <div className={styles.formGroup}>
                                 <label>Account to Credit</label>

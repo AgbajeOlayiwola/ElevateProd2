@@ -457,9 +457,9 @@ border-top-left-radius: 20px;
     display: flex;
     align-items: center;
     gap: 5px;
-    width: 52%;
+    width: 78%;
     border-radius: 20px;
-    flex-direction: column;
+    /* flex-direction: column; */
     position: absolute;
     background: white;
     z-index: 9999;

@@ -62,7 +62,7 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
                                 exportAsImage(exportRef.current, 'personalQR')
                             }
                         >
-                            Share Ecobank QR Code
+                            Download Static QR Code
                         </button>
                         <p className={styles.tap}>
                             Tap to create a

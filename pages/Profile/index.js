@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import DashLayout from '../../components/layout/Dashboard';
 import ProfileLayout from '../../components/layout/ProfileLayout';
 import ArrowBackSvg from '../../components/ReusableComponents/ArrowBackSvg';
@@ -25,7 +25,6 @@ import styles from './styles.module.css';
 import Lottie from 'react-lottie';
 import animationData from '../../components/ReusableComponents/Lotties/contact-us.json';
 import socialdata from '../../components/ReusableComponents/Lotties/social-media-marketing.json';
-
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getAirtimeBeneficiariesData,
@@ -125,8 +124,10 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
-    const { postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries } =
-        useSelector((state) => state.postAirtimeBeneficiariesReducer);
+    const {
+        postAirtimeBeneficiaries,
+        errorMessagepostAirtimeBeneficiaries
+    } = useSelector((state) => state.postAirtimeBeneficiariesReducer);
     const { fetchRM, fetchRMErrorMessages } = useSelector(
         (state) => state.fetchRMReducer
     );
@@ -156,6 +157,8 @@ const Profile = () => {
             setshowInterEnquiry(true);
         }
     };
+    const iframeRef = useRef(null);
+
     useEffect(() => {
         interBankEnquiryCheck();
     }, [interBankEnquiry]);
@@ -342,11 +345,11 @@ const Profile = () => {
                   icon: <ManageSignSvg />,
                   color: '#7A7978'
               },
-        {
-            text: 'Referral Code',
-            icon: <EditProfileSvg />,
-            color: '#7A7978'
-        },
+        // {
+        //     text: 'Referral Code',
+        //     icon: <EditProfileSvg />,
+        //     color: '#7A7978'
+        // },
 
         {
             text: 'Manage Beneficiaries',
@@ -444,6 +447,15 @@ const Profile = () => {
         reset,
         formState: { errors }
     } = useForm();
+    useEffect(() => {
+        const iframe = iframeRef.current;
+
+        // Add a request header to the iframe
+        iframe?.contentWindow.postMessage(
+            { type: 'SET_HEADER', header: 'Authorization: Bearer TOKEN' },
+            `{"channel":"SME","custId":${userProfile?.profileId},"affiliateCode":"ENG","lastactivedate":1574837056694,"appVersion":"4.0.1","languageCode":"en"}`
+        );
+    }, []);
     const renderForm = () => {
         switch (text) {
             case 'View Profile':
@@ -546,7 +558,7 @@ const Profile = () => {
                                     required: 'Limit Type is Required'
                                 })}
                             >
-                                <option value="Mpos Limit">Mpos Limit</option>
+                                {/* <option value="Mpos Limit">Mpos Limit</option> */}
                                 <option value="Transaction Limit">
                                     Transaction Limit
                                 </option>
@@ -1485,26 +1497,21 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details =
-                                                                    {
-                                                                        accountNumber:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    accountNumber: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details =
-                                                                    {
-                                                                        destinationBankCode:
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                        accountNo:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    destinationBankCode:
+                                                                        e.target
+                                                                            .value,
+                                                                    accountNo: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -1642,9 +1649,33 @@ const Profile = () => {
                                 <div>
                                     <Lottie
                                         options={socialOptions}
-                                        height={200}
-                                        width={200}
+                                        height={400}
+                                        width={400}
                                     />
+                                </div>
+                                <div className={styles.referralCont}>
+                                    <p className={styles.referralCode}>
+                                        Your Referral Code is:
+                                        <span>
+                                            {' '}
+                                            {userProfileData.referralCode}
+                                        </span>
+                                    </p>
+                                    <h5
+                                        onClick={() => {
+                                            {
+                                                navigator.clipboard
+                                                    .writeText(
+                                                        userProfileData.referralCode
+                                                    )
+                                                    .then(() => {
+                                                        alert('Copied');
+                                                    });
+                                            }
+                                        }}
+                                    >
+                                        copy
+                                    </h5>
                                 </div>
                             </>
                         );
@@ -1786,6 +1817,7 @@ const Profile = () => {
                         <div className={styles.chatWithUs}>
                             <Iframe
                                 url="https://ice.ecobank.com/chatbotui"
+                                ref={iframeRef}
                                 width="540px"
                                 height="520px"
                                 id=""

@@ -31,15 +31,21 @@ const TransactionDets = ({
     const [reciept, setReciept] = useState(false);
     const [disputeType, setDisputeType] = useState();
     const [selectedDisputeType, setSelectedDisputeType] = useState();
-    const [selectedDisputSubCategory, setSelectedDisputeSubCategory] =
-        useState();
+    const [
+        selectedDisputSubCategory,
+        setSelectedDisputeSubCategory
+    ] = useState();
     const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
     const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
-    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
-        useSelector((state) => state.getDisputeCategoryReducer);
-    const { getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage } =
-        useSelector((state) => state.getDisputeSubCategoryReducer);
+    const {
+        getDisputCategorySuccess,
+        getDisputCategoryErrorMessage
+    } = useSelector((state) => state.getDisputeCategoryReducer);
+    const {
+        getDisputCategorySubSuccess,
+        getDisputCategoryErrorSubMessage
+    } = useSelector((state) => state.getDisputeSubCategoryReducer);
     const { lodgeDisputeSuccess, lodgeDisputeErrorSubMessage } = useSelector(
         (state) => state.lodgeDisputeReducer
     );
@@ -156,7 +162,7 @@ const TransactionDets = ({
                                     </p>
                                 ) : null}
                                 <div className={styles.maindispute}>
-                                    <label>Disput type</label>
+                                    <label>Dispute type</label>
                                     <select onChange={disputesFunction}>
                                         <option>Select Dispute Type</option>
                                         {disputes?.map((item, index) => {

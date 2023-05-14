@@ -39,7 +39,10 @@ const AccountsInfoCard = () => {
     useEffect(() => {
         console.log(accountPrimarys);
         setAcctNumm(accountPrimarys?.accountNumber);
-        dispatch(getBalanceEnquiry(accountPrimarys?.accountId));
+        const balanceData = {
+            accountId: accountPrimarys?.accountId
+        };
+        dispatch(getBalanceEnquiry(balanceData));
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber === acctNum) {
                 setAcctNumber(accountPrimarys);
