@@ -38,10 +38,10 @@
 
 .balanceStatement div {
     width: 32%;
-    background: #ffffff;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
     box-sizing: border-box;
     padding: 32px;
-    border: 1px solid #e3e3e3;
     border-radius: 24px;
 }
 
@@ -229,30 +229,30 @@
 .more {
     width: 4%;
 }
-.benes{
+.benes {
     padding-right: 42px;
     overflow: scroll;
     width: 40%;
-    -ms-overflow-style: none;  /* IE and Edge */
+    -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none;
 }
 .benes::-webkit-scrollbar {
     display: none;
-  }
-  
-.beneNar{
+}
+
+.beneNar {
     display: inline-block;
     white-space: nowrap;
     width: 97%;
     color: #102572;
     overflow: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
+    -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none;
 }
 
 .beneNar::-webkit-scrollbar {
     display: none;
-  }
+}
 .paginationBtns {
     display: flex;
     width: 40%;
