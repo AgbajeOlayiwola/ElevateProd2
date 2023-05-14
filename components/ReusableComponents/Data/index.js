@@ -357,8 +357,8 @@ export const PaymentData = {
             summary: 'Recieve payment using your phone camera'
         },
         {
-            icon: <MposSvg2 />,
-            text: 'Phone POS',
+            icon: <Paylink2 />,
+            text: 'Paylink',
             summary: 'Pay for your TV bills, electricity e.t.c'
         },
         {
@@ -367,8 +367,8 @@ export const PaymentData = {
             summary: 'Pay for your TV bills, electricity e.t.c'
         },
         {
-            icon: <Paylink2 />,
-            text: 'Paylink',
+            icon: <MposSvg2 />,
+            text: 'Phone POS',
             summary: 'Pay for your TV bills, electricity e.t.c'
         }
     ]

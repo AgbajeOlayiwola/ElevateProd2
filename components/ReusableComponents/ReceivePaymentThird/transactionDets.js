@@ -31,21 +31,15 @@ const TransactionDets = ({
     const [reciept, setReciept] = useState(false);
     const [disputeType, setDisputeType] = useState();
     const [selectedDisputeType, setSelectedDisputeType] = useState();
-    const [
-        selectedDisputSubCategory,
-        setSelectedDisputeSubCategory
-    ] = useState();
+    const [selectedDisputSubCategory, setSelectedDisputeSubCategory] =
+        useState();
     const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
     const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
-    const {
-        getDisputCategorySuccess,
-        getDisputCategoryErrorMessage
-    } = useSelector((state) => state.getDisputeCategoryReducer);
-    const {
-        getDisputCategorySubSuccess,
-        getDisputCategoryErrorSubMessage
-    } = useSelector((state) => state.getDisputeSubCategoryReducer);
+    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
+        useSelector((state) => state.getDisputeCategoryReducer);
+    const { getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage } =
+        useSelector((state) => state.getDisputeSubCategoryReducer);
     const { lodgeDisputeSuccess, lodgeDisputeErrorSubMessage } = useSelector(
         (state) => state.lodgeDisputeReducer
     );
@@ -130,9 +124,10 @@ const TransactionDets = ({
                             <div className={styles.disput}>
                                 <div
                                     className={styles.dispute}
-                                    onClick={() =>
-                                        setShowDispute((prev) => !prev)
-                                    }
+                                    onClick={() => {
+                                        // setShowDispute((prev) => !prev);
+                                        setDispute(false);
+                                    }}
                                 >
                                     Dispute
                                 </div>
@@ -140,7 +135,10 @@ const TransactionDets = ({
                                 <hr />
                                 <div
                                     className={styles.reciept}
-                                    onClick={() => setReciept((prev) => !prev)}
+                                    onClick={() => {
+                                        setReciept((prev) => !prev);
+                                        setDispute(false);
+                                    }}
                                 >
                                     Get Reciept
                                 </div>

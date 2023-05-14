@@ -41,7 +41,17 @@ const TableDetail = ({
                     {Bank === null ? network : `${Bank} - ${accountNumber}`}
                 </p> */}
                 <p className={styles.date}>{newDate[0]}</p>
-                <p className={styles.status}>{Status}</p>
+                <p
+                    className={
+                        Status === 'PENDING'
+                            ? styles.pending
+                            : Status === 'SUCCESS'
+                            ? styles.success
+                            : styles.status
+                    }
+                >
+                    {Status}
+                </p>
                 <div className={styles.more}>
                     <MoreAction
                         disputes={disputes}

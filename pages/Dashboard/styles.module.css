@@ -134,6 +134,7 @@
     line-height: 19px;
     color: #7fbb01;
     margin-bottom: 6px;
+    cursor: pointer;
 }
 .accntP p:nth-child(2) {
     font-family: 'Inter';
@@ -144,7 +145,21 @@
     /* identical to box height */
     color: #2f2f2f;
     margin: 0px;
+    cursor: pointer;
 }
+
+.failed p {
+    color: #ff2e00 !important;
+}
+
+.success p {
+    color: #5dbe3f !important;
+}
+
+.pending p {
+    color: #ffde00 !important;
+}
+
 .accountHr {
     height: 46px;
     border-color: #756c6c2b;
@@ -563,7 +578,7 @@
     text-align: left;
 } */
 
-.status p {
+.statusColor p {
     font-size: 10px;
 }
 
@@ -683,8 +698,6 @@
     justify-content: space-between;
     width: 80%;
 }
-
-
 
 .cardRight {
     position: relative;

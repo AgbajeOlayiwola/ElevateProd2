@@ -50,10 +50,10 @@
     line-height: 29px;
     margin-right: 8px;
 }
-.assctDrop{
-display: flex;
-align-items: center;
-gap: 13px;
+.assctDrop {
+    display: flex;
+    align-items: center;
+    gap: 13px;
 }
 .accountNumbers {
     padding: 0px;
@@ -85,6 +85,7 @@ gap: 13px;
     line-height: 19px;
     color: #7fbb01;
     margin-bottom: 6px;
+    cursor: pointer;
 }
 .accntP p:nth-child(2) {
     font-family: 'Inter';

@@ -91,6 +91,8 @@ const Dashboard = () => {
     const [isCopied, setIsCopied] = useState(false);
     const [acctNumber, setAcctNumber] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [inflow, setInflow] = useState(0);
+    const [outflow, setOutflow] = useState(0);
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
@@ -106,10 +108,8 @@ const Dashboard = () => {
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
     );
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
@@ -122,13 +122,13 @@ const Dashboard = () => {
     useEffect(() => {
         setDisputes(getDisputCategOryTypeSuccess);
     }, [getDisputCategOryTypeSuccess]);
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        currencyDisplay: 'narrowSymbol'
+    });
     useEffect(() => {
         if (balanceEnquiry !== null) {
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'NGN',
-                currencyDisplay: 'narrowSymbol'
-            });
             const formattedAmount = formatter.format(
                 balanceEnquiry.availableBalance
             );
@@ -244,9 +244,28 @@ const Dashboard = () => {
         if (transactionHistory !== null) {
             setIsLoading(false);
             setTableDetails(transactionHistory.transactions);
-            const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
-                'T'
-            );
+            transactionHistory.transactions
+                .filter((item) => {
+                    if (item.paymentDirection === 'CREDIT') {
+                        return item;
+                    }
+                })
+                .reduce((a, b) => {
+                    setInflow(formatter.format(a));
+                    return a + +b.transactionAmount;
+                }, 0);
+            transactionHistory.transactions
+                .filter((item) => {
+                    if (item.paymentDirection === 'DEBIT') {
+                        return item;
+                    }
+                })
+                .reduce((a, b) => {
+                    setOutflow(formatter.format(a));
+                    return a + +b.transactionAmount;
+                }, 0);
+            const newDate =
+                transactionHistory.transactions[0]?.transactionDate?.split('T');
             if (newDate[0] == time) {
                 setDateState(true);
             } else {
@@ -292,16 +311,12 @@ const Dashboard = () => {
                                 <div>
                                     <TotalCollections />
                                     <p>Total Collections</p>
-                                    <p className={styles.Success}>
-                                        N 24,000,000
-                                    </p>
+                                    <p className={styles.Success}>{outflow}</p>
                                 </div>
                                 <div>
                                     <TotalPendingCollections />
                                     <p>Total Collections</p>
-                                    <p className={styles.pending}>
-                                        N 24,000,000
-                                    </p>
+                                    <p className={styles.pending}>{inflow}</p>
                                 </div>
                                 <div>
                                     <TotlaCollctionsSvg />
@@ -420,34 +435,33 @@ const Dashboard = () => {
                                 ) : (
                                     tableDetails
                                         ?.filter((item) => {
-                                            const newDate = item.transactionDate.split(
-                                                'T'
-                                            );
+                                            const newDate =
+                                                item.transactionDate.split('T');
                                             return (
                                                 newDate[0] >= rangeDate &&
                                                 newDate[0] <= time
                                             );
                                         })
                                         ?.map((item, index) => {
-                                            const formatter = new Intl.NumberFormat(
-                                                'en-US',
-                                                {
+                                            const formatter =
+                                                new Intl.NumberFormat('en-US', {
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:
                                                         'narrowSymbol'
-                                                }
-                                            );
-                                            const formattedAmount = formatter.format(
-                                                item.transactionAmount
-                                            );
+                                                });
+                                            const formattedAmount =
+                                                formatter.format(
+                                                    item.transactionAmount
+                                                );
                                             let newBeneficiary;
                                             if (item.receiversName === null) {
                                                 newBeneficiary = '';
                                             } else {
-                                                newBeneficiary = item?.receiversName?.split(
-                                                    ' '
-                                                );
+                                                newBeneficiary =
+                                                    item?.receiversName?.split(
+                                                        ' '
+                                                    );
                                             }
                                             // {
                                             //     //console.log(item);
@@ -470,9 +484,10 @@ const Dashboard = () => {
                                                             }
                                                         >
                                                             <p>
-                                                                {
-                                                                    item.transactionType
-                                                                }
+                                                                {item.transactionType.replace(
+                                                                    '_',
+                                                                    ' '
+                                                                )}
                                                             </p>
                                                         </div>
                                                         <div
@@ -488,7 +503,13 @@ const Dashboard = () => {
                                                         </div>
                                                         <div
                                                             className={
-                                                                item.status
+                                                                item.transactionStatus ===
+                                                                'PENDING'
+                                                                    ? styles.pending
+                                                                    : item.transactionStatus ===
+                                                                      'FAILED'
+                                                                    ? styles.failed
+                                                                    : styles.success
                                                             }
                                                         >
                                                             <div
@@ -728,31 +749,28 @@ const Dashboard = () => {
                                 ) : (
                                     tableDetails
                                         ?.filter((item) => {
-                                            const newDate = item.transactionDate.split(
-                                                'T'
-                                            );
+                                            const newDate =
+                                                item.transactionDate.split('T');
                                             return item;
                                         })
                                         ?.map((item, index) => {
-                                            const formatter = new Intl.NumberFormat(
-                                                'en-US',
-                                                {
+                                            const formatter =
+                                                new Intl.NumberFormat('en-US', {
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:
                                                         'narrowSymbol'
-                                                }
-                                            );
-                                            const formattedAmount = formatter.format(
-                                                item.transactionAmount
-                                            );
+                                                });
+                                            const formattedAmount =
+                                                formatter.format(
+                                                    item.transactionAmount
+                                                );
                                             let newBeneficiary;
                                             if (item.receiver === null) {
                                                 newBeneficiary = '';
                                             } else {
-                                                newBeneficiary = item?.receiver?.split(
-                                                    ' '
-                                                );
+                                                newBeneficiary =
+                                                    item?.receiver?.split(' ');
                                             }
                                             return (
                                                 <div key={index}>
@@ -806,7 +824,13 @@ const Dashboard = () => {
                                                         </div>
                                                         <div
                                                             className={
-                                                                styles.status
+                                                                item.transactionStatus ===
+                                                                'PENDING'
+                                                                    ? styles.pending
+                                                                    : item.transactionStatus ===
+                                                                      'FAILED'
+                                                                    ? styles.failed
+                                                                    : styles.success
                                                             }
                                                         >
                                                             <div
