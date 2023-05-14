@@ -98,6 +98,7 @@
     width: 100%;
     padding: 16px 24px;
     border-bottom: 1px solid #dbdbdb;
+    justify-content: space-between;
 }
 
 .transactionsingles {
@@ -106,14 +107,7 @@
     padding: 16px 24px;
     border-top: 1px solid #dbdbdb;
     border-bottom: 1px solid #dbdbdb;
-}
-
-.transactionsingle p,
-.transactionsingles p,
-.transactionsingle h3,
-.transactionsingles h3 {
-    width: 50%;
-    margin: 0px;
+    justify-content: space-between;
 }
 
 .transactionsingle p,
@@ -156,11 +150,12 @@
     width: 15%;
     max-width: 58px;
     background: #ffffff;
-    border: 1px solid #e6ebee;
+    border: 2px solid #6ccf00;
     border-radius: 8px;
     height: 70px;
     text-align: center;
-    padding: 0xp;
+    padding: 0px;
+    font-size: 75px;
 }
 
 .PaymentSecondCont button {

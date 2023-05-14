@@ -36,6 +36,33 @@ const PaymentSingleBody = ({
                         </div>
                     </div>
                 </div>
+            ) : text === 'Phone POS' ? (
+                <div
+                    className={styles.paymentSingleBodyGrey}
+                    key={index}
+                    // onClick={() => handleFormChange(text.toLowerCase())}
+                    onMouseEnter={() => {
+                        setTime(true);
+                    }}
+                    onMouseLeave={() => {
+                        setTime(false);
+                    }}
+                >
+                    <div>
+                        <div className={styles.paymentSingleImg}>{icon}</div>
+                        <div className={styles.paymentSingleText}>
+                            <p
+                                className={
+                                    type == 'receive'
+                                        ? styles.receivePara
+                                        : styles.makePara
+                                }
+                            >
+                                {time ? 'Coming Soon' : text}
+                            </p>
+                        </div>
+                    </div>
+                </div>
             ) : (
                 <div
                     className={styles.paymentSingleBody}

@@ -98,8 +98,6 @@ const Login = () => {
             // ) {
             // router.push('/Dashboard');,
             setNewUser(auth2FaCodeSuccess);
-
-            console.log(auth2FaCodeSuccess);
         } else if (auth2FaCodeSuccess) {
             console.log('here');
             if (auth2FaCodeSuccess.data.statusCode === 200) {
@@ -235,7 +233,6 @@ const Login = () => {
     useEffect(() => {
         if (user) {
             if (user.data._2FAToken === undefined) {
-                console.log(user);
                 if (user) {
                     if (user.statusCode === 200) {
                         if (
@@ -365,7 +362,6 @@ const Login = () => {
                     }
                 }
             } else {
-                console.log(user.data._2FAToken);
                 setOverlay(true);
                 setLoading((prev) => !prev);
             }
