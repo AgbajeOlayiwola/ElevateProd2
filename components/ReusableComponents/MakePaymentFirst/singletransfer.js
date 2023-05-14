@@ -30,6 +30,8 @@ const SingleTransfer = ({
     const [apibank, setApiBank] = useState([]);
     const [beneActive, setBeneActive] = useState();
     const [showInterEnquiry, setshowInterEnquiry] = useState(false);
+    const [newBeneficiaries, setNewBeneficiaries] = useState([]);
+    const [newBeneficiarieso, setNewBeneficiarieso] = useState([]);
     // const [inputType, setinputType] = useState(true);
     const [interEnquiry, setInterEnquiry] = useState('');
     const [accountName, setAccountName] = useState(
@@ -157,6 +159,25 @@ const SingleTransfer = ({
     useEffect(() => {
         dispatch(loadbank('ENG'));
     }, []);
+
+    useEffect(() => {
+        setNewBeneficiarieso([]);
+        setNewBeneficiaries([]);
+        if (type === 'Other') {
+            beneficiaries.beneficiaries?.filter((item) => {
+                if (item.bankName !== 'ECOBANK') {
+                    setNewBeneficiarieso((arr) => [...arr, item]);
+                }
+            });
+        }
+        if (type === 'Ecobank') {
+            beneficiaries.beneficiaries?.filter((item) => {
+                if (item.bankName === 'ECOBANK') {
+                    setNewBeneficiaries((arr) => [...arr, item]);
+                }
+            });
+        }
+    }, [beneficiaries, type]);
     // useEffect(() => {
     //     if (banks !== null) {
     //         setApiBank(banks);
@@ -235,14 +256,20 @@ const SingleTransfer = ({
                                 />
                             </div>
                         </div>
-                        <div className={styles.beneficiaryBody}>
-                            {!beneficiaries.beneficiaries?.length ? (
+                        <div
+                            className={
+                                !newBeneficiaries?.length
+                                    ? styles.beneficiaryBodyNo
+                                    : styles.beneficiaryBody
+                            }
+                        >
+                            {!newBeneficiaries?.length ? (
                                 <h2>
                                     You do not have any Beneficiaries at the
                                     Moment
                                 </h2>
                             ) : (
-                                beneficiaries.beneficiaries
+                                newBeneficiaries
                                     ?.filter((item) => {
                                         if (search === '') {
                                             return item;
@@ -257,9 +284,10 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
-                                                      ' '
-                                                  ))
+                                                ? (beneficiaryName =
+                                                      beneficiaries.beneficiaryName.split(
+                                                          ' '
+                                                      ))
                                                 : null;
                                         }
                                         if (
@@ -559,14 +587,20 @@ const SingleTransfer = ({
                                 />
                             </div>
                         </div>
-                        <div className={styles.beneficiaryBody}>
-                            {!beneficiaries.beneficiaries?.length ? (
+                        <div
+                            className={
+                                !newBeneficiarieso?.length
+                                    ? styles.beneficiaryBodyNo
+                                    : styles.beneficiaryBody
+                            }
+                        >
+                            {!newBeneficiarieso?.length ? (
                                 <h2>
                                     You do not have any Beneficiaries at the
                                     Moment
                                 </h2>
                             ) : (
-                                beneficiaries.beneficiaries
+                                newBeneficiarieso
                                     ?.filter((item) => {
                                         if (search === '') {
                                             return item;
@@ -581,9 +615,10 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
-                                                      ' '
-                                                  ))
+                                                ? (beneficiaryName =
+                                                      beneficiaries.beneficiaryName.split(
+                                                          ' '
+                                                      ))
                                                 : null;
                                         }
                                         if (

@@ -69,7 +69,6 @@ const PaymentTable = ({ title, test, page }) => {
                 }
             });
         }
-        setIsLoading(false);
     }, [tableDetails]);
     const pageCount = Math.ceil(newTableDetails.length / usersPerPage);
     const dispatch = useDispatch();
@@ -85,6 +84,9 @@ const PaymentTable = ({ title, test, page }) => {
         if (transactionHistory !== null) {
             setTableDetails(transactionHistory.transactions);
             //console.logtransactionElevate.transactions);
+            if (transactionHistory !== null) {
+                setIsLoading(false);
+            }
         }
     }, [transactionHistory]);
     useEffect(() => {

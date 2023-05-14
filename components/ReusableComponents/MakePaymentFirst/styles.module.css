@@ -142,15 +142,21 @@
     width: 100%;
     height: 15vh;
     overflow: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.beneficiaryBodyNo {
+    margin-top: 12px;
+    width: 100%;
 }
 
 .beneficiaryBody::-webkit-scrollbar {
     display: none;
 }
 
-.beneficiaryBody h2 {
+.beneficiaryBody h2,
+.beneficiaryBodyNo h2 {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 500;
@@ -298,6 +304,7 @@
 
 .firstBody input[type='number'] {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 .firstBody input[type='text'] {

@@ -9,13 +9,17 @@ import {
     getBalanceEnquiry,
     loadAccountPrimary,
     loadbankStatement,
-    getDisputCategOryTypeGen
+    getDisputCategOryTypeGen,
+    getFullStatementGen
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/ReusableComponents/Loader';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import MoreAction from '../../components/ReusableComponents/MoreAction';
+import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess';
+import socialdata from '../../components/ReusableComponents/Lotties/loading.json';
+import Lottie from 'react-lottie';
 
 const BankStatments = () => {
     const dispatch = useDispatch();
@@ -29,6 +33,8 @@ const BankStatments = () => {
     });
 
     const [date, setDate] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState('');
     const [overlay, setOverlay] = useState(false);
     const [loading, setLoading] = useState(false);
     const [tableDetails, setTableDetails] = useState([]);
@@ -38,6 +44,7 @@ const BankStatments = () => {
     const [pageNumber, setPageNumber] = useState(0);
     const [bankAccount, setBankAccount] = useState([]);
     const [account, setAccount] = useState('');
+    const [id, setId] = useState('');
     const [searchType, setSearchType] = useState('Amount');
     const format = formatter.format(0);
     const [balance, setBalance] = useState(format);
@@ -52,6 +59,11 @@ const BankStatments = () => {
         (state) => state.bankStatementReducer
     );
 
+    const {
+        getFullStatementSuccess,
+        getFullStatementerrorMessage
+    } = useSelector((state) => state.getFullStatementReducer);
+
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
     );
@@ -63,12 +75,19 @@ const BankStatments = () => {
     const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
     );
-
+    const [isLoading, setIsLoading] = useState(true);
     const {
         getDisputCategOryTypeSuccess,
         getDisputCategOryTypeErrorMessage
     } = useSelector((state) => state.getDisputeTypeReducer);
-
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     useEffect(() => {
         dispatch(bankAccountsData());
         dispatch(loadAccountPrimary());
@@ -107,9 +126,25 @@ const BankStatments = () => {
     }, [bankAccounts]);
 
     useEffect(() => {
+        if (getFullStatementSuccess !== null) {
+            setIsLoading(false);
+            setLoading(false);
+            setDate(false);
+            setSuccess(true);
+            setError('success');
+        } else if (getFullStatementerrorMessage !== null) {
+            setDate(false);
+            setLoading(false);
+            setSuccess(true);
+            setError('error');
+        }
+    }, [getFullStatementSuccess, getFullStatementerrorMessage]);
+
+    useEffect(() => {
         let balanceData;
         bankAccount?.filter((item) => {
             if (item.accountNumber === account) {
+                setId(item.accountId);
                 return (balanceData = {
                     accountId: item.accountId
                 });
@@ -129,6 +164,7 @@ const BankStatments = () => {
     }, [balanceEnquiry]);
     useEffect(() => {
         if (bankStatement !== null) {
+            setIsLoading(false);
             setLoading(false);
             setTableDetails(bankStatement);
             setOverlay(false);
@@ -191,6 +227,21 @@ const BankStatments = () => {
                         <p>Request Statement</p>
                     </div>
                 </div>
+                {success ? (
+                    <PaymentSuccess
+                        overlay={overlay}
+                        type="profile"
+                        statusbar={error}
+                        heading="Statement Generated Successfully"
+                        body="Statement generated has been sent to your email"
+                        action={() => {
+                            setOverlay(false);
+                            setEndDate('');
+                            setStartDate('');
+                            setSuccess(false);
+                        }}
+                    />
+                ) : null}
                 {date ? (
                     <StorePopup overlay={overlay}>
                         <div className={styles.generateHead}>
@@ -256,9 +307,10 @@ const BankStatments = () => {
                                             ).toISOString(),
                                             endDate: new Date(
                                                 endDate
-                                            ).toISOString()
+                                            ).toISOString(),
+                                            accountId: id
                                         };
-                                        dispatch(loadbankStatement(data));
+                                        dispatch(getFullStatementGen(data));
                                     }}
                                 >
                                     Generate
@@ -410,81 +462,88 @@ const BankStatments = () => {
                             <p className={styles.type}>Type</p>
                             <div className={styles.more}></div>
                         </div>
-                        {!tableDetails.length
-                            ? 'No Recent transaction'
-                            : tableDetails
-                                  ?.sort((x, y) => {
-                                      let a = new Date(x.transactionDate),
-                                          b = new Date(y.transactionDate);
-                                      return b - a;
-                                  })
-                                  ?.filter((item) => {
-                                      if (searchValue === '') {
-                                          return item;
-                                      } else if (
-                                          filterCondition(item, searchType)
-                                      ) {
-                                          return item;
-                                      }
-                                  })
-                                  ?.slice(
-                                      pagesVisited,
-                                      pagesVisited + usersPerPage
-                                  )
-                                  ?.map((items, index) => {
-                                      const newDate = items?.transactionTime?.split(
-                                          ' '
-                                      );
-                                      return (
-                                          <div
-                                              className={styles.TableDetailBody}
-                                              key={index}
-                                          >
-                                              <p className={styles.date}>
-                                                  {newDate[0]}
-                                              </p>
-                                              <p className={styles.bank}>
-                                                  {items.accountNo}
-                                              </p>
-                                              <div className={styles.benes}>
-                                                  <p className={styles.beneNar}>
-                                                      {items.narration}
-                                                  </p>
-                                              </div>
-                                              <p className={styles.amount}>
-                                                  {formatter.format(
-                                                      items.amount
-                                                  )}
-                                              </p>
-                                              <p className={styles.transfer}>
-                                                  {items.channel}
-                                              </p>
-                                              <div className={styles.more}>
-                                                  <MoreAction
-                                                      type={items.channel}
-                                                      transactionAmount={formatter.format(
-                                                          items.amount
-                                                      )}
-                                                      disputes={disputes}
-                                                  />
-                                              </div>
-                                          </div>
-                                      );
-                                  })}
+                        {isLoading ? (
+                            <Lottie
+                                options={socialOptions}
+                                height={200}
+                                width={200}
+                            />
+                        ) : !tableDetails.length ? (
+                            'No Recent transaction'
+                        ) : (
+                            tableDetails
+                                ?.sort((x, y) => {
+                                    let a = new Date(x.transactionDate),
+                                        b = new Date(y.transactionDate);
+                                    return b - a;
+                                })
+                                ?.filter((item) => {
+                                    if (searchValue === '') {
+                                        return item;
+                                    } else if (
+                                        filterCondition(item, searchType)
+                                    ) {
+                                        return item;
+                                    }
+                                })
+                                ?.slice(
+                                    pagesVisited,
+                                    pagesVisited + usersPerPage
+                                )
+                                ?.map((items, index) => {
+                                    const newDate = items?.transactionTime?.split(
+                                        ' '
+                                    );
+                                    return (
+                                        <div
+                                            className={styles.TableDetailBody}
+                                            key={index}
+                                        >
+                                            <p className={styles.date}>
+                                                {newDate[0]}
+                                            </p>
+                                            <p className={styles.bank}>
+                                                {items.accountNo}
+                                            </p>
+                                            <div className={styles.benes}>
+                                                <p className={styles.beneNar}>
+                                                    {items.narration}
+                                                </p>
+                                            </div>
+                                            <p className={styles.amount}>
+                                                {formatter.format(items.amount)}
+                                            </p>
+                                            <p className={styles.transfer}>
+                                                {items.channel}
+                                            </p>
+                                            <div className={styles.more}>
+                                                <MoreAction
+                                                    type={items.channel}
+                                                    transactionAmount={formatter.format(
+                                                        items.amount
+                                                    )}
+                                                    disputes={disputes}
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                        )}
                     </div>
-
-                    <ReactPaginate
-                        previousLabel="Previous"
-                        nextLabel="Next"
-                        pageCount={pageCount}
-                        onPageChange={({ selected }) => {
-                            setPageNumber(selected);
-                        }}
-                        containerClassName={styles.paginationBtns}
-                        previousClassName={styles.previousBtns}
-                        nextLinkClassName={styles.nextBtns}
-                        activeClassName={styles.paginationActive}
-                    />
+                    {!tableDetails.length ? null : (
+                        <ReactPaginate
+                            previousLabel="Previous"
+                            nextLabel="Next"
+                            pageCount={pageCount}
+                            onPageChange={({ selected }) => {
+                                setPageNumber(selected);
+                            }}
+                            containerClassName={styles.paginationBtns}
+                            previousClassName={styles.previousBtns}
+                            nextLinkClassName={styles.nextBtns}
+                            activeClassName={styles.paginationActive}
+                        />
+                    )}
                 </div>
             </div>
         </DashLayout>

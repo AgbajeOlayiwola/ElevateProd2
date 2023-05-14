@@ -15,6 +15,8 @@ import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import Loader from '../Loader';
 import ArrowBackSvg from '../ArrowBackSvg';
+import Lottie from 'react-lottie';
+import socialdata from '../../ReusableComponents/Lotties/loading.json';
 
 const BillPayment = ({
     action,
@@ -39,7 +41,7 @@ const BillPayment = ({
     const [billerPlans, setBillerPlans] = useState();
     const [billerId, setBillerId] = useState('');
     const [airtimebeneficiaries, setAirtimeBeneficiaries] = useState([]);
-
+    const [isLoadingg, setIsLoading] = useState(true);
     const dispatch = useDispatch();
     const { billerCategory } = useSelector(
         (state) => state.billerCategoryReducer
@@ -52,6 +54,14 @@ const BillPayment = ({
     const { getAirtimeBeneficiaries } = useSelector(
         (state) => state.getAirtimeBeneficiariesReducer
     );
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     useEffect(() => {
         dispatch(loadbillerCategory('ENG'));
         dispatch(getAirtimeBeneficiariesData());
@@ -71,6 +81,7 @@ const BillPayment = ({
     }, [getAirtimeBeneficiaries]);
     useEffect(() => {
         if (billerCategory !== null) {
+            setIsLoading(false);
             setBillerCategories(billerCategory);
         }
     }, [billerCategory]);
@@ -163,19 +174,27 @@ const BillPayment = ({
                         </div>
                     </div> */}
                     <div className={styles.billBody}>
-                        {billerCategories.billerCategoryInfoList?.map(
-                            (bill, index) => {
-                                return (
-                                    <div
-                                        className={styles.billSingle}
-                                        onClick={arrowAction}
-                                        key={index}
-                                    >
-                                        <p>{bill.categoryCode}</p>
-                                        <ArrowRightSvg />
-                                    </div>
-                                );
-                            }
+                        {isLoadingg ? (
+                            <Lottie
+                                options={socialOptions}
+                                height={200}
+                                width={200}
+                            />
+                        ) : (
+                            billerCategories.billerCategoryInfoList?.map(
+                                (bill, index) => {
+                                    return (
+                                        <div
+                                            className={styles.billSingle}
+                                            onClick={arrowAction}
+                                            key={index}
+                                        >
+                                            <p>{bill.categoryCode}</p>
+                                            <ArrowRightSvg />
+                                        </div>
+                                    );
+                                }
+                            )
                         )}
                     </div>
                 </>

@@ -241,14 +241,13 @@ const Profile = () => {
         setInterEnquiry('');
     }, []);
     useEffect(() => {
-        // console.log(accountPrimary);
-        // if (accountPrimary !== null) {
-        //     setAcctNumber(accountPrimary);
-        //     const test = { accountId: accountPrimary.accountId };
-        //     dispatch(loadfetchRM(test));
-        // } else {
-        //     setAcctNumber('Pending');
-        // }
+        if (accountPrimarys !== null) {
+            setAcctNumber(accountPrimarys.accountNumber);
+            const test = { accountId: accountPrimarys.accountId };
+            dispatch(loadfetchRM(test));
+        } else {
+            setAcctNumber('Pending');
+        }
     }, [accountPrimarys]);
     useEffect(() => {
         if (fetchRM !== null) {
@@ -1741,14 +1740,12 @@ const Profile = () => {
                             <div className={styles.accountNumber}>
                                 <h4>Account Number</h4>
                                 <div className={styles.accountNumberCopy}>
-                                    <p>{accountPrimarys?.accountNumber}</p>
+                                    <p>{acctNumber}</p>
                                     <h5
                                         onClick={() => {
                                             {
                                                 navigator.clipboard
-                                                    .writeText(
-                                                        acctNumber.accountNumber
-                                                    )
+                                                    .writeText(acctNumber)
                                                     .then(() => {
                                                         alert('Copied');
                                                     });

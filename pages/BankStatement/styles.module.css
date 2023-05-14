@@ -206,15 +206,16 @@
 }
 
 .beneficiary {
-    width: 37%;
+    width: 40%;
 }
 
 .type {
-    width: 17%;
+    width: 15%;
 }
 
 .amount {
     width: 15%;
+    text-align: center !important;
 }
 
 .bank {
@@ -226,7 +227,7 @@
 }
 
 .more {
-    width: 5%;
+    width: 4%;
 }
 .benes{
     padding-right: 42px;
@@ -256,7 +257,9 @@
     display: flex;
     width: 40%;
     justify-content: space-between;
+    margin: 20px auto;
     list-style-type: none;
+    padding-left: 0px;
 }
 
 .paginationBtns li {
@@ -285,9 +288,10 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding: 10px 0px 10px 24px;
+    padding: 20px 0px 20px 24px;
     align-items: center;
-    border-bottom: 0.5px solid #3e3e3e;
+    border-bottom: 2px solid #f6f6f6;
+    justify-content: space-between;
 }
 
 .TableDetailBody > p {
@@ -297,6 +301,7 @@
     line-height: 17%;
     font-family: 'Inter', sans-serif;
     text-align: left;
+    margin: 0px;
 }
 .TableDetailBody .bene {
     font-size: 16px;
@@ -305,17 +310,19 @@
     line-height: 100%;
     box-sizing: border-box;
     overflow: hidden;
+    text-align: left;
 }
 
 .TableDetailBody .transfer {
     color: #2f2f2f;
-    width: 17%;
+    width: 15%;
 }
 
 .TableDetailBody .amount {
     font-weight: 700;
     color: #455a64;
     width: 15%;
+    text-align: center;
 }
 
 .bank {
@@ -326,6 +333,10 @@
     width: 12%;
 }
 
+.noRecent {
+    text-align: center;
+    margin: 20px 0px;
+}
 .tableFilters {
     display: flex;
     justify-content: space-between;
