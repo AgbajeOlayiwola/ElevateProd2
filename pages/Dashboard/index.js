@@ -44,6 +44,8 @@ import TotlaCollctionsSvg from '../../components/ReusableComponents/ReusableSvgC
 import MoreAction from '../../components/ReusableComponents/MoreAction';
 import TransactionStatus from '../../components/ReusableComponents/TransactionStatus';
 import { IoMdCopy } from 'react-icons/io';
+import Lottie from 'react-lottie';
+import socialdata from '../../components/ReusableComponents/Lotties/loading.json';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -88,7 +90,7 @@ const Dashboard = () => {
     const [acctNum, setAcctNumm] = useState('');
     const [isCopied, setIsCopied] = useState(false);
     const [acctNumber, setAcctNumber] = useState('');
-
+    const [isLoading, setIsLoading] = useState(true);
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
@@ -133,7 +135,14 @@ const Dashboard = () => {
             setBalance(formattedAmount);
         }
     }, [balanceEnquiry]);
-
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     const getCurrentDate = () => {
         let newDate = new Date();
         let date = newDate.getDate();
@@ -233,6 +242,7 @@ const Dashboard = () => {
     }-0${current.getDate()}`;
     useEffect(() => {
         if (transactionHistory !== null) {
+            setIsLoading(false);
             setTableDetails(transactionHistory.transactions);
             const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
                 'T'
@@ -670,19 +680,29 @@ const Dashboard = () => {
                                 <div className={styles.btmIIp}>
                                     <p>Recent Transactions</p>
                                 </div>
-                                {tableDetails.map((item) => {
-                                    if (item.transactionStatus === 'SUCCESS') {
-                                        success += 1;
-                                    } else if (
-                                        item.transactionStatus === 'PENDING'
-                                    ) {
-                                        pending = pending + 1;
-                                    } else if (
-                                        item.transactionStatus === 'FAILED'
-                                    ) {
-                                        failed += 1;
-                                    }
-                                })}
+                                {isLoading ? (
+                                    <Lottie
+                                        options={socialOptions}
+                                        height={200}
+                                        width={200}
+                                    />
+                                ) : (
+                                    tableDetails.map((item) => {
+                                        if (
+                                            item.transactionStatus === 'SUCCESS'
+                                        ) {
+                                            success += 1;
+                                        } else if (
+                                            item.transactionStatus === 'PENDING'
+                                        ) {
+                                            pending = pending + 1;
+                                        } else if (
+                                            item.transactionStatus === 'FAILED'
+                                        ) {
+                                            failed += 1;
+                                        }
+                                    })
+                                )}
                                 <TransactionStatus
                                     success={success}
                                     failed={failed}
