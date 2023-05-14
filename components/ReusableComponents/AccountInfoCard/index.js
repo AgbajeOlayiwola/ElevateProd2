@@ -55,9 +55,6 @@ const AccountsInfoCard = () => {
         }
     }, [balanceEnquiry]);
     useEffect(() => {
-        console.log(accountPrimarys);
-        console.log(bankAccounts);
-        console.log(formData.accountNum);
         setSenderDetails(accountPrimarys);
         console.log(senderDetails);
         Object.keys(bankAccounts)?.map((accountNo) => {
@@ -77,7 +74,7 @@ const AccountsInfoCard = () => {
     }, [formData.accountNum]);
     useEffect(() => {
         console.log(accountPrimarys);
-        // setAcctNumm(accountPrimarys?.accountNumber);
+        setAcctNumm(accountPrimarys?.accountNumber);
         const balanceData = {
             accountId: accountPrimarys?.accountId
         };
