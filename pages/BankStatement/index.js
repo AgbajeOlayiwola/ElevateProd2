@@ -64,8 +64,10 @@ const BankStatments = () => {
         (state) => state.accountPrimaryReducer
     );
 
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
 
     useEffect(() => {
         dispatch(bankAccountsData());
@@ -430,8 +432,9 @@ const BankStatments = () => {
                                       pagesVisited + usersPerPage
                                   )
                                   ?.map((items, index) => {
-                                      const newDate =
-                                          items?.transactionTime?.split(' ');
+                                      const newDate = items?.transactionTime?.split(
+                                          ' '
+                                      );
                                       return (
                                           <div
                                               className={styles.TableDetailBody}
@@ -443,9 +446,11 @@ const BankStatments = () => {
                                               <p className={styles.bank}>
                                                   {items.accountNo}
                                               </p>
-                                              <p className={styles.bene}>
-                                                  {items.narration}
-                                              </p>
+                                              <div className={styles.benes}>
+                                                  <p className={styles.beneNar}>
+                                                      {items.narration}
+                                                  </p>
+                                              </div>
                                               <p className={styles.amount}>
                                                   {formatter.format(
                                                       items.amount

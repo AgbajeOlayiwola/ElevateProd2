@@ -62,7 +62,7 @@
 .transactionamount {
     margin-top: 32px;
     display: flex;
-    justify-content: space-between;
+    gap: 93px;
     width: 100%;
     padding: 16px 24px;
     align-items: center;
@@ -150,13 +150,14 @@
     justify-content: space-between;
     width: 100%;
     margin-bottom: 32px;
+  
 }
 
 .otpInps input {
     width: 15%;
     max-width: 58px;
     background: #ffffff;
-    border: 1px solid #e6ebee;
+    border: 1px solid green;
     border-radius: 8px;
     height: 70px;
     text-align: center;

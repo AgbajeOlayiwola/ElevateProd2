@@ -9,7 +9,8 @@ import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
 import ReactPaginate from 'react-paginate';
 import TransactionStatus from '../TransactionStatus';
-
+import Lottie from 'react-lottie';
+import socialdata from '../../ReusableComponents/Lotties/loading.json';
 const PaymentTable = ({ title, test, page }) => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
@@ -17,8 +18,10 @@ const PaymentTable = ({ title, test, page }) => {
     const { transactionHistory, errorMessageTransactionHistory } = useSelector(
         (state) => state.transactionHistoryReducer
     );
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
@@ -28,6 +31,7 @@ const PaymentTable = ({ title, test, page }) => {
     const [pageNumber, setPageNumber] = useState(0);
     const [searchType, setSearchType] = useState('transactionType');
     const [disputes, setDisputes] = useState();
+    const [isLoading, setIsLoading] = useState(true);
     let pending = 0;
     let success = 0;
     let failed = 0;
@@ -43,7 +47,14 @@ const PaymentTable = ({ title, test, page }) => {
 
     const usersPerPage = 10;
     const pagesVisited = pageNumber * usersPerPage;
-
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     useEffect(() => {
         if (page === 'Collections') {
             tableDetails.filter((item, index) => {
@@ -58,6 +69,7 @@ const PaymentTable = ({ title, test, page }) => {
                 }
             });
         }
+        setIsLoading(false);
     }, [tableDetails]);
     const pageCount = Math.ceil(newTableDetails.length / usersPerPage);
     const dispatch = useDispatch();
@@ -168,7 +180,9 @@ const PaymentTable = ({ title, test, page }) => {
                 <p className={styles.status}>Status</p>
                 <div className={styles.more}></div>
             </div>
-            {!newTableDetails.length ? (
+            {isLoading ? (
+                <Lottie options={socialOptions} height={200} width={200} />
+            ) : !newTableDetails.length ? (
                 <p className={styles.noRecent}>No Recent transaction</p>
             ) : (
                 newTableDetails

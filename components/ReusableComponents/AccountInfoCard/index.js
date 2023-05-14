@@ -37,28 +37,10 @@ const AccountsInfoCard = () => {
         dispatch(loadUserProfile());
     }, []);
     useEffect(() => {
-        console.log(accountPrimarys);
-        setAcctNumm(accountPrimarys?.accountNumber);
-        const balanceData = {
-            accountId: accountPrimarys?.accountId
-        };
-        dispatch(getBalanceEnquiry(balanceData));
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber === acctNum) {
-                setAcctNumber(accountPrimarys);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                dispatch(getBalanceEnquiry(balanceData));
-            } else {
-                setAcctNumber('Pending');
-            }
-        });
         if (userProfile !== null) {
             setUserProfileData(userProfile);
         }
-    }, [userProfile, acctNum]);
+    }, [userProfile]);
     useEffect(() => {
         if (balanceEnquiry !== null) {
             const formatter = new Intl.NumberFormat('en-US', {
@@ -94,6 +76,24 @@ const AccountsInfoCard = () => {
         });
     }, [formData.accountNum]);
     useEffect(() => {
+        console.log(accountPrimarys);
+        // setAcctNumm(accountPrimarys?.accountNumber);
+        const balanceData = {
+            accountId: accountPrimarys?.accountId
+        };
+        dispatch(getBalanceEnquiry(balanceData));
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            if (bankAccounts[accountNo].accountNumber === acctNum) {
+                setAcctNumber(accountPrimarys);
+                let balanceData;
+                balanceData = {
+                    accountId: bankAccounts[accountNo].accountId
+                };
+                dispatch(getBalanceEnquiry(balanceData));
+            } else {
+                setAcctNumber('Pending');
+            }
+        });
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber === acctNum) {
                 setAcctNumber(accountPrimarys);

@@ -59,7 +59,7 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
-.firstBody,
+.firstBody::-webkit-scrollbar ,
 .bulkBody::-webkit-scrollbar {
     display: none;
   }

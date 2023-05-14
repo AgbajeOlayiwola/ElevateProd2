@@ -228,7 +228,30 @@
 .more {
     width: 5%;
 }
+.benes{
+    padding-right: 42px;
+    overflow: scroll;
+    width: 40%;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+}
+.benes::-webkit-scrollbar {
+    display: none;
+  }
+  
+.beneNar{
+    display: inline-block;
+    white-space: nowrap;
+    width: 97%;
+    color: #102572;
+    overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
+}
 
+.beneNar::-webkit-scrollbar {
+    display: none;
+  }
 .paginationBtns {
     display: flex;
     width: 40%;

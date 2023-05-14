@@ -59,8 +59,10 @@ const Payment = () => {
         (state) => state.transactionFeesReducer
     );
 
-    const { internationalTransfer, errorMessageinternationalTransfer } =
-        useSelector((state) => state.internationalTransferReducer);
+    const {
+        internationalTransfer,
+        errorMessageinternationalTransfer
+    } = useSelector((state) => state.internationalTransferReducer);
 
     const { verifyCurrency, errorMessageverifyCurrency } = useSelector(
         (state) => state.verifyCurrencyReducer
@@ -489,11 +491,13 @@ const Payment = () => {
                                             paymentDetails.accountNumber === ''
                                                 ? paymentDetails.accountNumberBene
                                                 : paymentDetails.accountNumber,
-                                        transactionAmount:
+                                        //change back to int
+                                        transactionAmount: (
                                             parseInt(
                                                 paymentDetails.amount,
                                                 10
-                                            ) + parseInt(transactionFee, 10),
+                                            ) + parseInt(transactionFee, 10)
+                                        ).toString(),
                                         narration: paymentDetails.narration,
                                         transactionPin: Object.values(data)
                                             .toString()
@@ -683,11 +687,10 @@ const Payment = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount:
-                                                              parseInt(
-                                                                  e.Amount,
-                                                                  10
-                                                              ),
+                                                          transactionAmount: parseInt(
+                                                              e.Amount,
+                                                              10
+                                                          ),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -914,8 +917,7 @@ const Payment = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId:
-                                                airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
