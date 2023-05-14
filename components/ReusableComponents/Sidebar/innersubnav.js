@@ -15,11 +15,11 @@ const Innersubnav = ({ item, subNav }) => {
                 ? item.subNav && subNav
                     ? item.subNav.map((item, index) => {
                           return (
-                              <div className={styles.subMenuLink} key={index}>
-                                  <Link href={item.path}>
+                              <Link key={index} href={item.path}>
+                                  <div className={styles.subMenuLink}>
                                       <a>{item.title}</a>
-                                  </Link>
-                              </div>
+                                  </div>
+                              </Link>
                           );
                       })
                     : null

@@ -59,8 +59,10 @@ const BankStatments = () => {
         (state) => state.bankStatementReducer
     );
 
-    const { getFullStatementSuccess, getFullStatementerrorMessage } =
-        useSelector((state) => state.getFullStatementReducer);
+    const {
+        getFullStatementSuccess,
+        getFullStatementerrorMessage
+    } = useSelector((state) => state.getFullStatementReducer);
 
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
@@ -74,8 +76,10 @@ const BankStatments = () => {
         (state) => state.accountPrimaryReducer
     );
     const [isLoading, setIsLoading] = useState(true);
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -240,78 +244,80 @@ const BankStatments = () => {
                 ) : null}
                 {date ? (
                     <StorePopup overlay={overlay}>
-                        <div className={styles.generateHead}>
-                            <CloseButton
-                                color="red"
-                                action={() => {
-                                    setOverlay(false);
-                                }}
-                            />
-                        </div>
-                        <div className={styles.generateForm}>
-                            <div className={styles.formGroup}>
-                                <label>Choose Account</label>
-                                <select
-                                    name=""
-                                    id=""
-                                    onChange={(e) => {
-                                        setAccount(e.target.value);
-                                    }}
-                                >
-                                    <option value="">
-                                        Select Bank Account
-                                    </option>
-                                    {bankAccount?.map((item, index) => {
-                                        return (
-                                            <option
-                                                key={index}
-                                                value={item.accountNumber}
-                                            >
-                                                {item.accountNumber}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label>Start Date</label>
-                                <input
-                                    type="date"
-                                    onChange={(e) => {
-                                        setStartDate(e.target.value);
+                        <div className={styles.generateCover}>
+                            <div className={styles.generateHead}>
+                                <CloseButton
+                                    color="red"
+                                    action={() => {
+                                        setOverlay(false);
                                     }}
                                 />
                             </div>
-                            <div className={styles.formGroup}>
-                                <label>Stop Date </label>
-                                <input
-                                    type="date"
-                                    onChange={(e) => {
-                                        setEndDate(e.target.value);
-                                    }}
-                                />
+                            <div className={styles.generateForm}>
+                                <div className={styles.formGroup}>
+                                    <label>Choose Account</label>
+                                    <select
+                                        name=""
+                                        id=""
+                                        onChange={(e) => {
+                                            setAccount(e.target.value);
+                                        }}
+                                    >
+                                        <option value="">
+                                            Select Bank Account
+                                        </option>
+                                        {bankAccount?.map((item, index) => {
+                                            return (
+                                                <option
+                                                    key={index}
+                                                    value={item.accountNumber}
+                                                >
+                                                    {item.accountNumber}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Start Date</label>
+                                    <input
+                                        type="date"
+                                        onChange={(e) => {
+                                            setStartDate(e.target.value);
+                                        }}
+                                    />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Stop Date </label>
+                                    <input
+                                        type="date"
+                                        onChange={(e) => {
+                                            setEndDate(e.target.value);
+                                        }}
+                                    />
+                                </div>
+                                {loading ? (
+                                    <Loader />
+                                ) : (
+                                    <button
+                                        onClick={() => {
+                                            setLoading(true);
+                                            const data = {
+                                                startDate: new Date(
+                                                    startDate
+                                                ).toISOString(),
+                                                endDate: new Date(
+                                                    endDate
+                                                ).toISOString(),
+                                                accountId: id
+                                            };
+                                            dispatch(getFullStatementGen(data));
+                                        }}
+                                    >
+                                        Generate
+                                    </button>
+                                )}
                             </div>
-                            {loading ? (
-                                <Loader />
-                            ) : (
-                                <button
-                                    onClick={() => {
-                                        setLoading(true);
-                                        const data = {
-                                            startDate: new Date(
-                                                startDate
-                                            ).toISOString(),
-                                            endDate: new Date(
-                                                endDate
-                                            ).toISOString(),
-                                            accountId: id
-                                        };
-                                        dispatch(getFullStatementGen(data));
-                                    }}
-                                >
-                                    Generate
-                                </button>
-                            )}
                         </div>
                     </StorePopup>
                 ) : null}
@@ -487,8 +493,9 @@ const BankStatments = () => {
                                     pagesVisited + usersPerPage
                                 )
                                 ?.map((items, index) => {
-                                    const newDate =
-                                        items?.transactionTime?.split(' ');
+                                    const newDate = items?.transactionTime?.split(
+                                        ' '
+                                    );
                                     return (
                                         <div
                                             className={styles.TableDetailBody}

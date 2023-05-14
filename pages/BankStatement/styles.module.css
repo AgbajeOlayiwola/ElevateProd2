@@ -337,6 +337,12 @@
     text-align: center;
     margin: 20px 0px;
 }
+.generateCover{
+    display: flex;
+    justify-content: center;
+    flex-direction:column;
+    padding: 60px;
+}
 .tableFilters {
     display: flex;
     justify-content: space-between;
