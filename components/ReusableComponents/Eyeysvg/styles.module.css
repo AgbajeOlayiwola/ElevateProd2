@@ -6,3 +6,36 @@
     color: #7a7978;
     /* margin-top: 22px; */
 }
+
+.otpInps {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 18px;
+}
+.otpInps input{
+    padding: 5px !important;
+    width: 21px !important;
+}
+.transactPin{
+    color: black;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+}
+.error{
+    color: red;
+    font-size: 10px;
+}
+.transaId{
+
+    position: absolute;
+    padding: 20px;
+    /* height: 27%; */
+    background: white;
+    border-radius: 20px;
+    bottom: 24px;
+}
+.relativity{
+    position: relative;
+}

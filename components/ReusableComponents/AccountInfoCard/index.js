@@ -299,9 +299,9 @@ const AccountsInfoCard = () => {
                             );
                         }
                     })}
-                    <div className={styles.otherAccountsDiv}>
+                    {/* <div className={styles.otherAccountsDiv}>
                         <button>+Add New</button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
