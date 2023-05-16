@@ -233,6 +233,7 @@ const Storefront = () => {
                             {stores?.map((store, index) => {
                                 return (
                                     <TableDetail
+                                        accountId={store?.accountId}
                                         storeName={store.storeName}
                                         orders={store.orders}
                                         link={store.link}

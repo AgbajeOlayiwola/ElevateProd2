@@ -21,7 +21,8 @@ const ReceivePaymentSecond = ({
     data,
     info,
     payLinkData,
-    amountPaylink
+    amountPaylink,
+    share
 }) => {
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
@@ -112,11 +113,7 @@ const ReceivePaymentSecond = ({
         'ellevate.com/qyweywbdbsdfsds/ei...'
     );
 
-    const [
-        ussData,
-        setUssdData
-    ] = useState(`https://recievepayment.netlify.app/Payments/ussd?data=
-    ${link}`);
+    const [ussData, setUssdData] = useState(link);
     // This is the function we wrote earlier
 
     async function copyTextToClipboard(text) {
@@ -229,6 +226,9 @@ const ReceivePaymentSecond = ({
                                 </div>
                                 <div className={styles.createdQr}>
                                     <input type="text" value={qrUrlData} />
+                                </div>
+                                <div className={styles.share} onClick={share}>
+                                    <p>Share</p>
                                 </div>
                             </div>
                         </>

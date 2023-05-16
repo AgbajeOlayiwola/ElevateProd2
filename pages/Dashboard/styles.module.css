@@ -45,7 +45,11 @@
 }
 .assctDrop {
     display: flex;
+    gap: 10px;
     align-items: center;
+}
+.mdCopy{
+    cursor: pointer;
 }
 .filed {
     font-family: 'Inter';
@@ -56,6 +60,17 @@
     text-align: center;
     color: #394f5c !important;
     margin: 0px !important;
+}
+.seeAll{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+.seeAll a{
+    color: #102572;
+    cursor: pointer; 
+    margin-bottom: 10px;
 }
 .pending {
     font-family: 'Inter';
@@ -78,7 +93,7 @@
 
     text-align: center !important;
 
-    color: #6ccf00 !important;
+    color: #AF3800 !important;
     margin: 0px !important;
 }
 .Tpwhflex div {
@@ -92,7 +107,7 @@
     width: 100%;
     border-radius: 16px;
     color: white;
-    padding: 32px;
+    padding: 11px;
 }
 .Top {
     display: flex;
@@ -134,6 +149,7 @@
     line-height: 19px;
     color: #7fbb01;
     margin-bottom: 6px;
+    cursor: pointer;
 }
 .accntP p:nth-child(2) {
     font-family: 'Inter';
@@ -144,7 +160,21 @@
     /* identical to box height */
     color: #2f2f2f;
     margin: 0px;
+    cursor: pointer;
 }
+
+.failed p {
+    color: #ff2e00 !important;
+}
+
+.success p {
+    color: #AF3800 !important;
+}
+
+.pending p {
+    color: #ceb407 !important;
+}
+
 .accountHr {
     height: 46px;
     border-color: #756c6c2b;
@@ -415,7 +445,7 @@
     margin-top: 32px;
 }
 .btmI {
-    /* height: 352px; */
+    height: 552px;
     /* max-width: 478px; */
     background: #ffffff;
     box-shadow: 4px 14px 34px -11px #ededed;
@@ -426,7 +456,7 @@
 .btmItop {
     justify-content: space-between;
     margin-bottom: 29.1px;
-    height: 284px;
+    height: 497px;
     overflow: scroll;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none;
@@ -563,7 +593,7 @@
     text-align: left;
 } */
 
-.status p {
+.statusColor p {
     font-size: 10px;
 }
 
@@ -665,16 +695,26 @@
 .moneyCont {
     width: 100%;
     background: #ffffff;
+    margin-bottom: 20px;
     border-radius: 16px;
     padding: 32px 36px;
     box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
 }
-
+.coppied{
+    position: absolute;
+    top: 10px;
+    padding: 10px;
+    left: 40%;
+    background-color: #6ccf00;
+    color: white;
+    border-radius: 20px;
+}
 .moneyBody {
     background: rgba(255, 255, 255, 0.06);
     border-radius: 12px;
     width: 100%;
     padding: 16px 23px;
+    position: relative;
 }
 
 .moneybodyDiv {
@@ -684,14 +724,12 @@
     width: 80%;
 }
 
-
-
 .cardRight {
     position: relative;
 }
 
 .otherAccounts {
-    margin-top: 32px;
+    margin-top: 15px;
 }
 
 .otherAccounts h2 {

@@ -16,7 +16,7 @@ import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg'
 import Loader from '../Loader';
 import ArrowBackSvg from '../ArrowBackSvg';
 import Lottie from 'react-lottie';
-import socialdata from '../../ReusableComponents/Lotties/loading.json';
+import socialdata from '../Lotties/loading.json';
 
 const BillPayment = ({
     action,
@@ -42,6 +42,8 @@ const BillPayment = ({
     const [billerId, setBillerId] = useState('');
     const [airtimebeneficiaries, setAirtimeBeneficiaries] = useState([]);
     const [isLoadingg, setIsLoading] = useState(true);
+
+    const [isLoadinggg, setIsLoadinggg] = useState(false);
     const dispatch = useDispatch();
     const { billerCategory } = useSelector(
         (state) => state.billerCategoryReducer
@@ -123,6 +125,7 @@ const BillPayment = ({
         if (billerPlan !== null) {
             localStorage.setItem('Airtime', JSON.stringify(billerPlan));
             setBillerPlans(billerPlan);
+            setIsLoadinggg(false);
         }
     }, [billerPlan]);
     return (
@@ -570,6 +573,7 @@ const BillPayment = ({
                                         required: 'Biller Type  is required'
                                     })}
                                     onChange={(e) => {
+                                        setIsLoadinggg(true);
                                         dispatch(
                                             loadbillerPlan(e.target.value)
                                         );
@@ -591,7 +595,13 @@ const BillPayment = ({
                                     )}
                                 </select>
                             </div>
-                            {billerPlans ? (
+                            {isLoadinggg ? (
+                                <Lottie
+                                    options={socialOptions}
+                                    height={200}
+                                    width={200}
+                                />
+                            ) : billerPlans ? (
                                 <>
                                     <div className={styles.narration}>
                                         <label>

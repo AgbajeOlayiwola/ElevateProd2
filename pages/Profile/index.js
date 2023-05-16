@@ -53,6 +53,8 @@ import { ButtonComp } from '../../components';
 import { useRouter } from 'next/router';
 import { FaTrash } from 'react-icons/fa';
 import OutsideClick from '../../components/ReusableComponents/OutsideClick';
+import StorePopup from '../../components/ReusableComponents/StorePopup';
+import CloseBtnSvg from '../../components/ReusableComponents/ClosebtnSvg';
 const Profile = () => {
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
@@ -385,12 +387,12 @@ const Profile = () => {
             text: 'Share App/Refer a Friend',
             icon: <ShareSvg color="#102572" />,
             color: '#7A7978'
-        },
-        {
-            text: 'Delete Account',
-            icon: <FaTrash />,
-            color: 'red'
         }
+        // {
+        //     text: 'Delete Account',
+        //     icon: <FaTrash />,
+        //     color: 'red'
+        // }
     ];
     const [countryNames, setCountryNames] = useState();
     const [searchItem, setSearchItem] = useState('');
@@ -455,6 +457,7 @@ const Profile = () => {
             `{"channel":"SME","custId":${userProfile?.profileId},"affiliateCode":"ENG","lastactivedate":1574837056694,"appVersion":"4.0.1","languageCode":"en"}`
         );
     }, []);
+    const [openDelete, setOpenDelete] = useState(false);
     const renderForm = () => {
         switch (text) {
             case 'View Profile':
@@ -537,6 +540,152 @@ const Profile = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div
+                                className={styles.deleteAccount}
+                                onClick={() => setOpenDelete((prev) => !prev)}
+                            >
+                                <p>Delete Account</p>
+                            </div>
+                            {openDelete ? (
+                                <OutsideClick
+                                    onClickOutside={() => {
+                                        setOpenDelete(false);
+                                    }}
+                                >
+                                    <StorePopup overlay={true}>
+                                        <div className={styles.deleteInner}>
+                                            <div className={styles.cancel}>
+                                                <CloseBtnSvg
+                                                    action={() =>
+                                                        setOpenDelete(
+                                                            (prev) => !prev
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                            <form
+                                                onSubmit={handleSubmit(
+                                                    deleteAction
+                                                )}
+                                            >
+                                                <h2 className={styles.title}>
+                                                    Delete Account
+                                                </h2>
+                                                <div className={styles.bvn}>
+                                                    <p>
+                                                        You wont be able to
+                                                        recover account once
+                                                        deleted
+                                                    </p>
+                                                </div>
+                                                {error ? (
+                                                    <p className={styles.error}>
+                                                        {error}
+                                                    </p>
+                                                ) : null}
+                                                <div
+                                                    className={styles.formGroup}
+                                                >
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Enter Delete Account"
+                                                        {...register('delete', {
+                                                            required:
+                                                                'Input is Required'
+                                                        })}
+                                                    />
+                                                    <p className={styles.error}>
+                                                        {
+                                                            errors?.delete
+                                                                ?.message
+                                                        }
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    className={styles.formGroup}
+                                                >
+                                                    <div
+                                                        className={styles.divs}
+                                                    >
+                                                        <input
+                                                            placeholder="Enter your Password"
+                                                            {...register(
+                                                                'deletePassword',
+                                                                {
+                                                                    required:
+                                                                        'Password is Required'
+                                                                }
+                                                            )}
+                                                            onInput={(e) => {
+                                                                if (
+                                                                    e?.target
+                                                                        .value
+                                                                        .length ===
+                                                                    0
+                                                                ) {
+                                                                    setActive(
+                                                                        false
+                                                                    );
+                                                                } else if (
+                                                                    e?.target
+                                                                        .value
+                                                                        .length >
+                                                                    0
+                                                                ) {
+                                                                    setActive(
+                                                                        true
+                                                                    );
+                                                                }
+                                                            }}
+                                                            name="deletePassword"
+                                                            type={
+                                                                outType
+                                                                    ? 'text'
+                                                                    : 'password'
+                                                            }
+                                                        />
+                                                        <Visbility
+                                                            typeSet={types}
+                                                        />
+                                                    </div>
+                                                    <p className={styles.error}>
+                                                        {
+                                                            errors
+                                                                ?.deletePassword
+                                                                ?.message
+                                                        }
+                                                    </p>
+                                                </div>
+
+                                                <div
+                                                    className={
+                                                        styles.deleteButton
+                                                    }
+                                                >
+                                                    {console.log(active)}
+                                                    {loading ? (
+                                                        <Loader />
+                                                    ) : active ? (
+                                                        <button type="submit">
+                                                            Delete
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            type="submit"
+                                                            className={
+                                                                styles.disabled
+                                                            }
+                                                            disabled
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </StorePopup>
+                                </OutsideClick>
+                            ) : null}
                         </div>
                     </>
                 );
@@ -745,70 +894,6 @@ const Profile = () => {
                     </div>
                 );
 
-            case 'Delete Account':
-                return (
-                    <form onSubmit={handleSubmit(deleteAction)}>
-                        <h2 className={styles.title}>Delete Account</h2>
-                        <div className={styles.bvn}>
-                            <p>
-                                You wont be able to recover account once deleted
-                            </p>
-                        </div>
-                        {error ? <p className={styles.error}>{error}</p> : null}
-                        <div className={styles.formGroup}>
-                            <input
-                                type="text"
-                                placeholder="Enter Delete Account"
-                                {...register('delete', {
-                                    required: 'Input is Required'
-                                })}
-                            />
-                            <p className={styles.error}>
-                                {errors?.delete?.message}
-                            </p>
-                        </div>
-                        <div className={styles.formGroup}>
-                            <div className={styles.divs}>
-                                <input
-                                    placeholder="Enter your Password"
-                                    {...register('deletePassword', {
-                                        required: 'Password is Required'
-                                    })}
-                                    onInput={(e) => {
-                                        if (e?.target.value.length === 0) {
-                                            setActive(false);
-                                        } else if (e?.target.value.length > 0) {
-                                            setActive(true);
-                                        }
-                                    }}
-                                    name="deletePassword"
-                                    type={outType ? 'text' : 'password'}
-                                />
-                                <Visbility typeSet={types} />
-                            </div>
-                            <p className={styles.error}>
-                                {errors?.deletePassword?.message}
-                            </p>
-                        </div>
-
-                        <div className={styles.deleteButton}>
-                            {console.log(active)}
-                            {loading ? (
-                                <Loader />
-                            ) : active ? (
-                                <button type="submit">Delete</button>
-                            ) : (
-                                <button
-                                    type="submit"
-                                    className={styles.disabled}
-                                    disabled
-                                >
-                                    Delete
-                                </button>
-                            )}
-                        </div>
-                    </form>
-                );
             // case 'Manage Signatories':
             //     switch (count) {
             //         case 0:
@@ -1652,6 +1737,21 @@ const Profile = () => {
                                         width={400}
                                     />
                                 </div>
+                                <p className={styles.toGet}>
+                                    To get started, simply copy and share your
+                                    unique referral code with as many people as
+                                    possible. You can share it via social media,
+                                    email, text, or even by word of mouth.
+                                    Remember, the more people who use your code,
+                                    the greater the rewards youll receive. So
+                                    dont hesitate to spread the word and tell
+                                    everyone you know about our product or
+                                    service. Thank you for helping us grow and
+                                    for being a valuable member of our
+                                    community. If you have any questions or
+                                    concerns, please dont hesitate to contact
+                                    us.
+                                </p>
                                 <div className={styles.referralCont}>
                                     <p className={styles.referralCode}>
                                         Your Referral Code is:

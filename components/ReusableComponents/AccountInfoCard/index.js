@@ -16,10 +16,12 @@ const AccountsInfoCard = () => {
     const [senderDetails, setSenderDetails] = useState({});
     const [acctNummber, setAcctNumber] = useState('');
     const [outType, setOutType] = useState();
-    const [balance, setBalance] = useState('₦ 0.00');
+    const [balance, setBalance] = useState('.....');
     const [userProfileData, setUserProfileData] = useState({});
     const [formData, setFormdata] = useState({ accountNum: '' });
     const [isCopied, setIsCopied] = useState(false);
+    const [accountNumberTest, setAccountNumberTest] = useState();
+    const [accountBalanceTest, setAccountBalanceTest] = useState();
     const { userProfile } = useSelector((state) => state.userProfileReducer);
     const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
@@ -30,7 +32,8 @@ const AccountsInfoCard = () => {
     const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
         (state) => state.balanceEnquiryReducer
     );
-    const [acctNum, setAcctNumm] = useState('');
+    const [acctNum, setAcctNumm] = useState(accountPrimarys?.accountNumber);
+    const [acctInfoNum, setAcctInfoNum] = useState();
     useEffect(() => {
         dispatch(bankAccountsData());
         dispatch(loadAccountPrimary());
@@ -55,7 +58,42 @@ const AccountsInfoCard = () => {
         }
     }, [balanceEnquiry]);
     useEffect(() => {
-        setSenderDetails(accountPrimarys);
+        setAcctInfoNum(accountPrimarys?.accountNumber);
+        let balanceData;
+        balanceData = {
+            accountId: accountPrimarys?.accountId
+        };
+        dispatch(getBalanceEnquiry(balanceData));
+        if (balanceEnquiry) {
+            setAccountBalanceTest(balanceEnquiry?.availableBalance);
+        }
+    }, [accountPrimarys]);
+    useEffect(() => {
+        setAcctNumm(accountPrimarys?.accountNumber);
+    }, [accountPrimarys]);
+
+    useEffect(() => {
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            // if (bankAccounts[accountNo].isPrimaryAccount === true) {
+            //     setAccountBalanceTest(bankAccounts[accountNo].accountBalance);
+            // }
+
+            if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
+                // setAcctNumber(accountPrimarys);
+                let balanceData;
+                balanceData = {
+                    accountId: bankAccounts[accountNo].accountId
+                };
+                // setAccountBalanceTest(bankAccounts[accountNo].accountBalance);
+                // setSenderDetails(bankAccounts[accountNo].accountBalance);
+                dispatch(getBalanceEnquiry(balanceData));
+            } else {
+                setAcctNumber('Pending');
+            }
+        });
+    }, [acctInfoNum]);
+    useEffect(() => {
+        // setSenderDetails(accountPrimarys);
         console.log(senderDetails);
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
@@ -64,7 +102,8 @@ const AccountsInfoCard = () => {
                 balanceData = {
                     accountId: bankAccounts[accountNo].accountId
                 };
-                setSenderDetails(accountPrimarys.accountId);
+                // setSenderDetails(accountPrimarys.accountId);
+                if (bankAccounts[accountNo]) setAcctInfo(accountNo);
                 // console.log(senderDetails.accountId);
                 dispatch(getBalanceEnquiry(balanceData));
             } else {
@@ -73,15 +112,15 @@ const AccountsInfoCard = () => {
         });
     }, [formData.accountNum]);
     useEffect(() => {
-        console.log(accountPrimarys);
-        setAcctNumm(accountPrimarys?.accountNumber);
-        const balanceData = {
-            accountId: accountPrimarys?.accountId
-        };
-        dispatch(getBalanceEnquiry(balanceData));
+        // console.log(accountPrimarys);
+        // setAcctNumm(accountPrimarys?.accountNumber);
+        // const balanceData = {
+        //     accountId: accountPrimarys?.accountId
+        // };
+        // dispatch(getBalanceEnquiry(balanceData));
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber === acctNum) {
-                setAcctNumber(accountPrimarys);
+                // setAcctNumber(accountPrimarys);
                 let balanceData;
                 balanceData = {
                     accountId: bankAccounts[accountNo].accountId
@@ -135,7 +174,13 @@ const AccountsInfoCard = () => {
                         <div className={styles.moneybodyDiv}>
                             <div>
                                 <div className={styles.cardMone}>
-                                    <h1>{outType ? '*******' : balance}</h1>
+                                    <h1>
+                                        {outType
+                                            ? '*******'
+                                            : accountBalanceTest
+                                            ? accountBalanceTest
+                                            : balance}
+                                    </h1>
                                     <Visbility color="green" typeSet={types} />
                                 </div>
                                 <p className={styles.avail}>
@@ -147,7 +192,11 @@ const AccountsInfoCard = () => {
                                     Account Number
                                 </p>
                                 <div className={styles.assctDrop}>
-                                    <p>{acctNum}</p>
+                                    <p>
+                                        {acctInfoNum != null
+                                            ? acctInfoNum
+                                            : acctNum}
+                                    </p>
                                     {/* <select
                                         className={styles.accountNumbers}
                                         value={acctNum}
@@ -194,8 +243,18 @@ const AccountsInfoCard = () => {
                                             strokeLinejoin="round"
                                         />
                                     </svg> */}
-                                    <div>{isCopied ? 'Copied!' : null}</div>
-                                    <IoMdCopy onClick={copyAccountNumber} />
+                                    <div>
+                                        {isCopied ? (
+                                            <div className={styles.coppied}>
+                                                Copied!
+                                            </div>
+                                        ) : null}
+                                    </div>
+
+                                    <IoMdCopy
+                                        className={styles.mdCopy}
+                                        onClick={copyAccountNumber}
+                                    />
                                 </div>
                                 {/* <p className={styles.accountNumber}>
                             {acctNumber.accountNumber}
@@ -217,10 +276,12 @@ const AccountsInfoCard = () => {
                                 <div key={index} className={styles.accntP}>
                                     <p
                                         onClick={(e) => {
-                                            setAcctNumm(
-                                                bankAccounts[accountNo]
-                                                    .accountNumber
-                                            );
+                                            setAccountBalanceTest(null),
+                                                setAcctInfoNum(null),
+                                                setAcctNumm(
+                                                    bankAccounts[accountNo]
+                                                        .accountNumber
+                                                );
                                         }}
                                     >
                                         {bankAccounts[accountNo].accountNumber}

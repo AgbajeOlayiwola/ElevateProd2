@@ -18,20 +18,41 @@ const AccountUpgradeSingle = ({
 }) => {
     return (
         <>
-            <div key={index} className={styles.accountUpgradeSingle}>
+            <div
+                key={index}
+                onClick={action}
+                className={styles.accountUpgradeSingle}
+            >
                 <div className={styles.accountUpgradeSingleIcon}>{icon}</div>
                 <div className={styles.accountUpgradeSingleText}>
-                    <h2 onClick={action}>
+                    <h2>
                         {text}
                         {text === 'Documents' ? (
-                            <span>
+                            <span className={styles.downLine}>
                                 <RiIcons.RiArrowDownSLine />
                             </span>
                         ) : null}
                     </h2>
                     <div>
-                        <p>More Info</p>
-                        <InfoSvg />
+                        {text === 'Documents' ? (
+                            <p onClick={action} className={styles.moreInfo}>
+                                Click For More <RiIcons.RiArrowDownSLine />
+                            </p>
+                        ) : (
+                            <>
+                                <Tooltip id="my-tooltip" />
+
+                                <p
+                                    key={index}
+                                    data-tooltip-id="my-tooltip"
+                                    className={styles.moreInfo}
+                                    data-tooltip-content="More About this account upgrade option"
+                                >
+                                    More Info
+                                </p>
+                                <InfoSvg />
+                            </>
+                        )}
                     </div>
                 </div>
 

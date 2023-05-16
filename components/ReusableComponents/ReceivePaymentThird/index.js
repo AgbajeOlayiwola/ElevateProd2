@@ -14,6 +14,8 @@ import TransactionSvg from '../ReusableSvgComponents/TransactionSvg';
 import { RiDivideFill } from 'react-icons/ri';
 import { MdDiversity1 } from 'react-icons/md';
 import TransactionDets from './transactionDets';
+import Lottie from 'react-lottie';
+import socialdata from '../../ReusableComponents/Lotties/loading.json';
 const ReceivePaymentThird = ({
     title,
     action,
@@ -38,10 +40,20 @@ const ReceivePaymentThird = ({
     const [rangeDate, setRangeDate] = useState();
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(10);
-
+    const [isLoading, setIsLoading] = useState(true);
     const [transactionType, setTransactionType] = useState();
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
 
     useEffect(() => {
         dispatch(getDisputCategOryTypeGen());
@@ -109,6 +121,7 @@ const ReceivePaymentThird = ({
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
+            setIsLoading(false);
             // console.log(transactionElevate.transactions);
             tableDetails?.filter((item) => {
                 const newDate = item.transactionDate.split('T');
@@ -152,7 +165,13 @@ const ReceivePaymentThird = ({
                     </div> */}
                         <section className={styles.sectionI}></section>
                         <div className={styles.Tpwh}>
-                            {tableDetails.length === 0 ? (
+                            {isLoading ? (
+                                <Lottie
+                                    options={socialOptions}
+                                    height={200}
+                                    width={200}
+                                />
+                            ) : tableDetails.length === 0 ? (
                                 <div className={styles.transactionBody}>
                                     <div>
                                         <p>No {type} Has Been Generated yet</p>
@@ -161,8 +180,9 @@ const ReceivePaymentThird = ({
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate =
-                                            item.transactionDate.split('T');
+                                        const newDate = item.transactionDate.split(
+                                            'T'
+                                        );
                                         return item;
                                     })
                                     ?.map((item, index) => {
@@ -174,10 +194,9 @@ const ReceivePaymentThird = ({
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount =
-                                            formatter.format(
-                                                item.transactionAmount
-                                            );
+                                        const formattedAmount = formatter.format(
+                                            item.transactionAmount
+                                        );
                                         return (
                                             <TransactionDets
                                                 key={index}

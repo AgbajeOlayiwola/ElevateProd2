@@ -39,6 +39,17 @@
 
 .status {
     width: 14%;
+    color: #ff2e00 !important;
+}
+
+.pending {
+    width: 14%;
+    color: #ceb407 !important;
+}
+
+.success {
+    width: 14%;
+    color: #5dbe3f !important;
 }
 
 .more {

@@ -9,7 +9,7 @@
 }
 .otpDiv{
     padding: 20px;
-    height: 100%;
+    height: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -184,6 +184,7 @@
     text-align: center;
     color: #005b82;
     margin: 0px;
+    margin-top: 180px;
 }
 
 .otpInps input {
@@ -202,6 +203,11 @@
 .otpInps input:focus {
     border: 1px solid #6ccf00;
     transition: all 0.2s ease-in-out;
+}
+
+.otpForm {
+    width: 85%;
+    margin: 0px auto;
 }
 
 .otp {

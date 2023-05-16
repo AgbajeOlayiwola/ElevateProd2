@@ -616,7 +616,7 @@ const Collections = () => {
                                 type="USSD"
                                 closeAction={(data) => {
                                     //console.logdata);
-                                    setCount(count - 1);
+                                    setCount(count - 2);
                                 }}
                             />
                         );
@@ -667,10 +667,13 @@ const Collections = () => {
                                 overlay={overlay}
                                 title="Ecobank QR Code"
                                 action={buttonHandleClose}
-                                buttonText="Next"
+                                buttonText="Complete"
                                 allLink={(data) => {
                                     //console.logdata);
                                     setCount(count + 1);
+                                }}
+                                share={() => {
+                                    setCount(count + 2);
                                 }}
                                 data={generateQrCodeSuccess}
                                 type=" Ecobank QR Code"
@@ -689,6 +692,18 @@ const Collections = () => {
                                     //console.logdata);
                                     setCount(count - 1);
                                 }}
+                            />
+                        );
+                    case 4:
+                        return (
+                            <Share
+                                title="ecoQr"
+                                overlay={overlay}
+                                link={`https://recievepayment.netlify.app/Payments/qr?data=${encodeURIComponent(
+                                    generateQrCodeSuccess?.data.data
+                                        .dynamicQRBase64
+                                )}?ref=${generateQrCodeSuccess?.data.data.ref}`}
+                                action={handleClose}
                             />
                         );
                 }

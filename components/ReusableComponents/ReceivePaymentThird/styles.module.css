@@ -450,9 +450,63 @@ border-top-left-radius: 20px;
 .accepted{
     color: #5DBE3F !important;
 }
-.disput{
+
+.successReciept{
+    background-color: #A2FAA3;
     padding-top: 20px;
     padding-bottom: 20px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.successReciept h1 {
+    text-align: center;
+    color: white;
+    font-weight: 600;
+}
+.failedReciept{
+    background-color: #931621;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.failedReciept h1 {
+    text-align: center;
+    color: white;
+    font-weight: 600;
+}
+.pendingReciept {
+    background-color: #ffde00;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.pendingReciept h1 {
+    text-align: center;
+    color: white;
+    font-weight: 600;
+}
+.statusText{
+    display: flex;
+    justify-content: center;
+    color: #F18F01 !important;
+}
+.failedText{
+    display: flex;
+    justify-content: center;
+color:#F21B3F
+}
+.successText{
+    display: flex;
+    justify-content: center;
+    color: #ABFF4F;
+}
+.disput{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    padding-right: 20px;
     right: -37px;
     display: flex;
     align-items: center;

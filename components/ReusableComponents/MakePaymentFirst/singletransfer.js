@@ -10,7 +10,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import Loader from '../Loader';
-
+import Lottie from 'react-lottie';
+import socialdata from '../Lotties/loading.json';
 const SingleTransfer = ({
     othersaction,
     firstTitle,
@@ -37,6 +38,7 @@ const SingleTransfer = ({
     const [accountName, setAccountName] = useState(
         payload.accountName !== '' ? payload.accountName : ''
     );
+    const [isLoadinggg, setIsLoadinggg] = useState(false);
     const [accountNumber, setAccountNumber] = useState(
         payload.accountNumber !== ''
             ? payload.accountNumber
@@ -99,7 +101,14 @@ const SingleTransfer = ({
 
         return checkDigit == accountNumberDigits[12];
     };
-
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     const getAllBanksByAccount = (accountNo) => {
         //NOTE, This can be fetched from the Database
         let bankArray = `ACCESS BANK:044:000014:999044~ACCESS BANK:063:000005:999044~Citi Bank:023:000009:CITI-ACC~Fidelity Bank:070:000007:FIDELITY-ACC~First Bank of Nigeria:011:000016:FIRST-ACC~First City Monument Bank:214:000003:FCMB-ACC~GT Bank Plc:058:000013:GUARANTY-ACC~Heritage:030:000020:HERITAGE-ACC~POLARIS BANK:076:000008:POLARIS~Stanbic IBTC Bank:221:000012:STANBIC-IBTC-ACC~Standard Chartered:068:000021:STANDARD-CHARTERED~Sterling Bank:232:000001:STERLING-ACC~Union Bank:032:000018:UNION-ACC~United Bank for Africa:033:000004:UNITED-ACC~Unity Bank:215:000011:UNITY-ACC~Wema Bank:035:000017:WEMA-ACC~Zenith Bank:057:000015:ZENITH-ACC~Sun Trust Account:100:000022:SUNTRUST-ACC`;
@@ -138,6 +147,7 @@ const SingleTransfer = ({
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
             setshowInterEnquiry(true);
+            setIsLoadinggg(false);
         } else if (errorMessageInterBankEnquiry !== null) {
             alert(errorMessageInterBankEnquiry);
         }
@@ -149,6 +159,7 @@ const SingleTransfer = ({
     const intraBankEnquiryCheck = () => {
         if (intraBankEnquiry !== null) {
             setInterEnquiry(intraBankEnquiry);
+            setIsLoadinggg(false);
         } else if (errorMessageIntraBankEnquiry !== null) {
             alert(errorMessageIntraBankEnquiry);
         }
@@ -284,10 +295,9 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName =
-                                                      beneficiaries.beneficiaryName.split(
-                                                          ' '
-                                                      ))
+                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
+                                                      ' '
+                                                  ))
                                                 : null;
                                         }
                                         if (
@@ -400,6 +410,7 @@ const SingleTransfer = ({
                                     })}
                                     value={accountNumber}
                                     onInput={(e) => {
+                                        setIsLoadinggg(true);
                                         setAccountNumber(e.target.value);
                                         if (e.target.value.length === 10) {
                                             const details = {
@@ -424,7 +435,13 @@ const SingleTransfer = ({
                                 {errors?.accountNumber?.message}
                             </p>
                         </div>
-                        {beneActive ? (
+                        {isLoadinggg ? (
+                            <Lottie
+                                options={socialOptions}
+                                height={100}
+                                width={100}
+                            />
+                        ) : beneActive ? (
                             <div className={styles.narration}>
                                 <label> Account Name</label>
                                 <input
@@ -615,10 +632,9 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName =
-                                                      beneficiaries.beneficiaryName.split(
-                                                          ' '
-                                                      ))
+                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
+                                                      ' '
+                                                  ))
                                                 : null;
                                         }
                                         if (
@@ -753,7 +769,13 @@ const SingleTransfer = ({
                                 {errors?.accountNumber?.message}
                             </p>
                         </div>
-                        {beneActive ? (
+                        {isLoadinggg ? (
+                            <Lottie
+                                options={socialOptions}
+                                height={100}
+                                width={100}
+                            />
+                        ) : beneActive ? (
                             <div className={styles.narration}>
                                 <label> Account Name</label>
                                 <input
@@ -814,6 +836,7 @@ const SingleTransfer = ({
                                         })}
                                         name="bankName"
                                         onChange={(e) => {
+                                            setIsLoadinggg(true);
                                             const details = {
                                                 destinationBankCode:
                                                     e.target.value,
@@ -893,10 +916,12 @@ const SingleTransfer = ({
                                 type="text"
                                 placeholder="5,000,000,000.00"
                                 onInput={(e) => {
-                                    setAmount(e.target.value);
-                                    if (e?.target.value.length === 0) {
+                                    const inputValue = e.target.value;
+
+                                    setAmount(`${inputValue}.OO`);
+                                    if (inputValue.length === 0) {
                                         setActiveBtn(false);
-                                    } else if (e?.target.value.length > 0) {
+                                    } else if (inputValue.length > 0) {
                                         setActiveBtn(true);
                                     }
                                 }}

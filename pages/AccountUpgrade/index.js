@@ -14,6 +14,8 @@ import { useEffect } from 'react';
 import Iframe from 'react-iframe';
 import Modal from 'react-modal';
 import Link from 'next/link';
+import Lottie from 'react-lottie';
+import socialdata from '../../components/ReusableComponents/Lotties/loading.json';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     cacData,
@@ -117,6 +119,7 @@ const AccountUpgrade = () => {
     const [verifyStatus, setVerifyStatus] = useState('notDone');
     const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
     const [reffereeEmailI, setReffereeEmailI] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     // const [vninStatus, setVninStatus] = useState('notDone');
     const [virtualNin, setVirtualNin] = useState('');
     const [elevateStatus, setElevateStatus] = useState('notDone');
@@ -241,6 +244,14 @@ const AccountUpgrade = () => {
 
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     const dispatch = useDispatch();
     const {
         register,
@@ -276,7 +287,10 @@ const AccountUpgrade = () => {
         }
     }, [link]);
     //console.log(link);
-
+    const moveToDash = () => {
+        setIsLoading(true);
+        router.push('../Dashboard');
+    };
     const transactionPin = () => {
         if (setTransactionPin !== null) {
             setMessage('Transaction Pin Set Successfully');
@@ -585,6 +599,7 @@ const AccountUpgrade = () => {
         setMemtFile(e.target.files[0]);
         setMemtFileName(e.target.files[0].name);
     };
+    const [active, setActive] = useState(false);
     //console.logco2file);
     const cacDocumentUpload = () => {
         const cacDocData = {
@@ -1635,6 +1650,15 @@ const AccountUpgrade = () => {
                               )
                             : null}
 
+                        {isLoading ? (
+                            <div className={styles.lottie}>
+                                <Lottie
+                                    options={socialOptions}
+                                    height={200}
+                                    width={200}
+                                />
+                            </div>
+                        ) : null}
                         {loading ? (
                             <Loader />
                         ) : (
@@ -1644,15 +1668,29 @@ const AccountUpgrade = () => {
                             //     active={activeBtn ? 'active' : 'inactive'}
                             //     type="submit"
                             // />
-                            <button
-                                className={styles.buttonDone}
-                                onClick={() => {
-                                    setLoading(true);
-                                    dispatch(pushDocumentsData());
-                                }}
-                            >
-                                Done
-                            </button>
+
+                            <div className={styles.relativeBtn}>
+                                <button
+                                    className={styles.buttonDone}
+                                    onClick={moveToDash}
+                                >
+                                    Save And Continue Later
+                                </button>
+                                <button
+                                    className={
+                                        active
+                                            ? styles.buttonDone
+                                            : styles.inactive
+                                    }
+                                    disabled={active ? null : true}
+                                    onClick={() => {
+                                        setLoading(true);
+                                        dispatch(pushDocumentsData());
+                                    }}
+                                >
+                                    Submit
+                                </button>
+                            </div>
                         )}
                     </AccountUpgradeComponent>
                 );
@@ -3261,7 +3299,7 @@ const AccountUpgrade = () => {
     };
 
     return (
-        <>
+        <div className={styles.relativeServie}>
             {outcome ? (
                 <PaymentSuccess
                     body={message}
@@ -3285,7 +3323,7 @@ const AccountUpgrade = () => {
                 />
             ) : null}
             {multiStep()}
-        </>
+        </div>
     );
 };
 

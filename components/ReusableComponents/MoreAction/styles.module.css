@@ -367,6 +367,21 @@
 
     color: #cccccc;
 }
+.statusText{
+    display: flex;
+    justify-content: center;
+    color: #F18F01;
+}
+.failedText{
+    display: flex;
+    justify-content: center;
+color:#F21B3F
+}
+.successText{
+    display: flex;
+    justify-content: center;
+    color: #ABFF4F;
+}
 .pending {
     font-family: 'Inter';
     font-style: normal;
@@ -400,6 +415,30 @@
     width: 9px;
     height: 9px;
     border-radius: 50%;
+}
+.successReciept{
+    background-color: #A2FAA3;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.successReciept h1 {
+    text-align: center;
+    color: white;
+    font-weight: 600;
+}
+.failedReciept{
+    background-color: #931621;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.failedReciept h1 {
+    text-align: center;
+    color: white;
+    font-weight: 600;
 }
 .pendingReciept {
     background-color: #ffde00;

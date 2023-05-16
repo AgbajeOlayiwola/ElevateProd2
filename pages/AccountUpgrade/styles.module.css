@@ -7,7 +7,20 @@
     margin-top: 32px;
     align-items: center;
 }
-
+.relativeBtn{
+    background: white;
+    position: fixed;
+    /* z-index: 10000000000000; */
+    width: 30%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 53px;
+    border-radius: 42px;
+    left: 35%;
+    bottom: 12.6%;
+    display: flex;
+    gap: 10px;
+}
 .perc {
     position: absolute;
     /* top: 0px; */
@@ -48,7 +61,14 @@
 .verifyText {
     margin-top: 16px;
 }
-
+.lottie{
+    position: absolute;
+    top: 50%;
+    left: 20%;
+}
+.relativeServie{
+    position: relative;
+}
 .verifyText p {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -62,6 +82,12 @@
 
 .buttonDone {
     margin-top: 32px;
+}
+.inactive{
+    background-color: grey;
+    /* padding: 0px; */
+    margin-top: 32px;
+
 }
 
 /* Utility Popup*/
