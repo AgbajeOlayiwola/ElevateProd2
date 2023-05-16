@@ -76,9 +76,11 @@ const Visbility = ({ typeSet, color, input }) => {
     const submitPin = (e) => {
         e.preventDefault();
         const data = {
-            pin: ssnValues.toString()
+            pin: ssnValues
         };
-        dispatch(verifyTransactionPinGet(data));
+
+        console.log(data);
+        // dispatch(verifyTransactionPinGet(data));
         console.log(verifyTransactionPinErrorMessage);
     };
     useEffect(() => {

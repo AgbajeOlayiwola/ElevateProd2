@@ -260,7 +260,9 @@ const BillPayment = ({
                                 <select
                                     name=""
                                     id=""
-                                    {...register('sourceAccount')}
+                                    {...register('sourceAccount', {
+                                        required: 'Source Account is required'
+                                    })}
                                     onInput={(event) => {
                                         setFormdata({
                                             ...formData,
@@ -540,7 +542,9 @@ const BillPayment = ({
                                 <select
                                     name=""
                                     id=""
-                                    {...register('sourceAccount')}
+                                    {...register('sourceAccount', {
+                                        required: 'Source Account is required'
+                                    })}
                                     onInput={(event) => {
                                         setFormdata({
                                             ...formData,
