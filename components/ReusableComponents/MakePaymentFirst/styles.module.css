@@ -318,7 +318,7 @@
 .firstBody input::placeholder {
     font-size: 14px;
     font-family: 'Inter', sans-serif;
-    color: #3e3e3e;
+    color: rgba(62, 62, 62, 0.5);
     font-weight: 400;
 }
 

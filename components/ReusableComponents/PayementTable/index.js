@@ -18,10 +18,8 @@ const PaymentTable = ({ title, test, page }) => {
     const { transactionHistory, errorMessageTransactionHistory } = useSelector(
         (state) => state.transactionHistoryReducer
     );
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
@@ -68,6 +66,8 @@ const PaymentTable = ({ title, test, page }) => {
                     setNewTableDetails((arr) => [...arr, item]);
                 }
             });
+        } else if (page === 'Reports') {
+            setNewTableDetails(tableDetails);
         }
     }, [tableDetails]);
     const pageCount = Math.ceil(newTableDetails.length / usersPerPage);
@@ -206,7 +206,11 @@ const PaymentTable = ({ title, test, page }) => {
                             <TableDetail
                                 key={index}
                                 title={items.transactionTitle}
-                                Beneficiary={items.receiver}
+                                Beneficiary={
+                                    items.paymentDirection === 'CREDIT'
+                                        ? items.transactionTitle
+                                        : items.receiver
+                                }
                                 Type={items.transactionType.replace('_', ' ')}
                                 Amount={formatter.format(
                                     items.transactionAmount

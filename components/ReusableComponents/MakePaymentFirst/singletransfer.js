@@ -109,6 +109,11 @@ const SingleTransfer = ({
             preserveAspectRatio: 'xMidYMid slice'
         }
     };
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        currencyDisplay: 'narrowSymbol'
+    });
     const getAllBanksByAccount = (accountNo) => {
         //NOTE, This can be fetched from the Database
         let bankArray = `ACCESS BANK:044:000014:999044~ACCESS BANK:063:000005:999044~Citi Bank:023:000009:CITI-ACC~Fidelity Bank:070:000007:FIDELITY-ACC~First Bank of Nigeria:011:000016:FIRST-ACC~First City Monument Bank:214:000003:FCMB-ACC~GT Bank Plc:058:000013:GUARANTY-ACC~Heritage:030:000020:HERITAGE-ACC~POLARIS BANK:076:000008:POLARIS~Stanbic IBTC Bank:221:000012:STANBIC-IBTC-ACC~Standard Chartered:068:000021:STANDARD-CHARTERED~Sterling Bank:232:000001:STERLING-ACC~Union Bank:032:000018:UNION-ACC~United Bank for Africa:033:000004:UNITED-ACC~Unity Bank:215:000011:UNITY-ACC~Wema Bank:035:000017:WEMA-ACC~Zenith Bank:057:000015:ZENITH-ACC~Sun Trust Account:100:000022:SUNTRUST-ACC`;
@@ -295,9 +300,10 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
-                                                      ' '
-                                                  ))
+                                                ? (beneficiaryName =
+                                                      beneficiaries.beneficiaryName.split(
+                                                          ' '
+                                                      ))
                                                 : null;
                                         }
                                         if (
@@ -520,7 +526,9 @@ const SingleTransfer = ({
                                 type="text"
                                 placeholder="5,000,000,000.00"
                                 onInput={(e) => {
-                                    setAmount(e.target.value);
+                                    const inputValue = e.target.value;
+
+                                    setAmount(`${inputValue}.OO`);
                                     if (e?.target.value.length === 0) {
                                         setActiveBtn(false);
                                     } else if (e?.target.value.length > 0) {
@@ -632,9 +640,10 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
-                                                      ' '
-                                                  ))
+                                                ? (beneficiaryName =
+                                                      beneficiaries.beneficiaryName.split(
+                                                          ' '
+                                                      ))
                                                 : null;
                                         }
                                         if (
@@ -707,7 +716,6 @@ const SingleTransfer = ({
                                 // value={formData.accountNum}
                             >
                                 <option value="">Select Account To Use</option>
-                                <option>Select Account To Use</option>
                                 {bankAccounts?.map((accounts, index) => {
                                     return (
                                         <option
@@ -769,53 +777,6 @@ const SingleTransfer = ({
                                 {errors?.accountNumber?.message}
                             </p>
                         </div>
-                        {isLoadinggg ? (
-                            <Lottie
-                                options={socialOptions}
-                                height={100}
-                                width={100}
-                            />
-                        ) : beneActive ? (
-                            <div className={styles.narration}>
-                                <label> Account Name</label>
-                                <input
-                                    {...register('accountName')}
-                                    type="text"
-                                    value={beneActive.beneficiaryName}
-                                />
-                                <p className={styles.error}>
-                                    {errors?.accountName?.message}
-                                </p>
-                            </div>
-                        ) : Object.keys(payload).length !== 0 ? (
-                            <div className={styles.narration}>
-                                <label> Account Name</label>
-                                <input
-                                    {...register('accountName')}
-                                    type="text"
-                                    value={accountName}
-                                />
-                                <p className={styles.error}>
-                                    {errors?.accountName?.message}
-                                </p>
-                            </div>
-                        ) : (
-                            <>
-                                {showInterEnquiry ? (
-                                    <div className={styles.narration}>
-                                        <label> Account Name</label>
-                                        <input
-                                            {...register('accountName')}
-                                            type="text"
-                                            value={interEnquiry.accountName}
-                                        />
-                                        <p className={styles.error}>
-                                            {errors?.accountNumber?.message}
-                                        </p>
-                                    </div>
-                                ) : null}
-                            </>
-                        )}
 
                         <div className={styles.narration}>
                             <label>Choose Bank</label>
@@ -867,6 +828,66 @@ const SingleTransfer = ({
                                             );
                                         })}
                                     </select>
+                                    {isLoadinggg ? (
+                                        <Lottie
+                                            options={socialOptions}
+                                            height={100}
+                                            width={100}
+                                        />
+                                    ) : beneActive ? (
+                                        <div className={styles.narration}>
+                                            <label> Account Name</label>
+                                            <input
+                                                {...register('accountName')}
+                                                type="text"
+                                                value={
+                                                    beneActive.beneficiaryName
+                                                }
+                                            />
+                                            <p className={styles.error}>
+                                                {errors?.accountName?.message}
+                                            </p>
+                                        </div>
+                                    ) : Object.keys(payload).length !== 0 ? (
+                                        <div className={styles.narration}>
+                                            <label> Account Name</label>
+                                            <input
+                                                {...register('accountName')}
+                                                type="text"
+                                                value={accountName}
+                                                readOnly
+                                            />
+                                            <p className={styles.error}>
+                                                {errors?.accountName?.message}
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            {showInterEnquiry ? (
+                                                <div
+                                                    className={styles.narration}
+                                                >
+                                                    <label> Account Name</label>
+                                                    <input
+                                                        {...register(
+                                                            'accountName'
+                                                        )}
+                                                        type="text"
+                                                        value={
+                                                            interEnquiry.accountName
+                                                        }
+                                                    />
+                                                    <p className={styles.error}>
+                                                        {
+                                                            errors
+                                                                ?.accountNumber
+                                                                ?.message
+                                                        }
+                                                    </p>
+                                                </div>
+                                            ) : null}
+                                        </>
+                                    )}
                                     {/* <input
                                         type="text"
                                         name=""
@@ -917,8 +938,11 @@ const SingleTransfer = ({
                                 placeholder="5,000,000,000.00"
                                 onInput={(e) => {
                                     const inputValue = e.target.value;
-
-                                    setAmount(`${inputValue}.OO`);
+                                    // console.log(
+                                    //     parseInt(inputValue).toFixed(2)
+                                    // );
+                                    setAmount(inputValue);
+                                    // setAmount(parseInt(inputValue).toFixed(2));
                                     if (inputValue.length === 0) {
                                         setActiveBtn(false);
                                     } else if (inputValue.length > 0) {
@@ -953,21 +977,6 @@ const SingleTransfer = ({
                                 {errors?.narration?.message}
                             </p>
                         </div>
-                        {beneActive ? null : (
-                            <div className={styles.saveBene}>
-                                <label className={styles.beneCheck}>
-                                    <input
-                                        type="checkbox"
-                                        name="beneficiary"
-                                        {...register('beneficiary')}
-                                    />
-                                    <span>
-                                        <i></i>
-                                    </span>
-                                </label>
-                                <p>Save Beneficiary</p>
-                            </div>
-                        )}
 
                         {isLoading ? (
                             <Loader />

@@ -8,9 +8,9 @@ import ReportsData from '../../components/ReusableComponents/ReportsData';
 import { BiFilter } from 'react-icons/bi';
 import {
     // getTransactionElevate,
-    // getTransactionHistory,
+    getTransactionHistory,
     getMiniStatementGen,
-    loadAccountPrimary,
+    // loadAccountPrimary,
     loadbankStatement
 } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,63 +18,51 @@ import StorePopup from '../../components/ReusableComponents/StorePopup';
 import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
 import Loader from '../../components/ReusableComponents/Loader';
 import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess';
+import TableDetail from '../../components/ReusableComponents/TableDetail';
+import ReactPaginate from 'react-paginate';
+import PaymentTable from '../../components/ReusableComponents/PayementTable';
 
 const Report = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     // const [filterPara, setFilterPara] = useState('');
     // const [filterType, setFilterType] = useState('All');
     const [overlay, setOverlay] = useState(false);
     const [success, setSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [pageNumber, setPageNumber] = useState(0);
     const [error, setError] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+
+    // const usersPerPage = 10;
+    // const pagesVisited = pageNumber * usersPerPage;
+    // const pageCount = Math.ceil(tableDetails.length / usersPerPage);
+
     // const [dateState, setDateState] = useState(false);
     // const [time, setTime] = useState();
-    const [tableDetails, setTableDetails] = useState([]);
+    // const [tableDetails, setTableDetails] = useState([]);
     // const { transactionElevate, errorMessageTransactionElevate } = useSelector(
     //     (state) => state.transactionElevateReducer
     // );
     // const { transactionHistory, errorMessageTransactionHistory } = useSelector(
     //     (state) => state.transactionHistoryReducer
     // );
-    const {
-        getMiniStatementSuccess,
-        getMiniStatementerrorMessage
-    } = useSelector((state) => state.getMiniStatementReducer);
+    // const { getMiniStatementSuccess, getMiniStatementerrorMessage } =
+    //     useSelector((state) => state.getMiniStatementReducer);
 
-    const { bankStatement, errorMessagebankStatement } = useSelector(
-        (state) => state.bankStatementReducer
-    );
+    // const { bankStatement, errorMessagebankStatement } = useSelector(
+    //     (state) => state.bankStatementReducer
+    // );
 
-    const { accountPrimarys, accountPrimaryError } = useSelector(
-        (state) => state.accountPrimaryReducer
-    );
-    // const [pageSrchIndex, setPageSrchIndex] = useState(0);
-    // const [numOfRecords, setNumOfRecords] = useState(10);
-    const [transactionType, setTransactionType] = useState('');
-    useEffect(() => {
-        dispatch(loadAccountPrimary());
-        // if (filterType === 'All') {
-        //     dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
-        // } else {
-        //     dispatch(
-        //         getTransactionElevate(
-        //             pageSrchIndex,
-        //             numOfRecords,
-        //             transactionType
-        //         )
-        //     );
-        // }
-        // getCurrentDate();
-    }, []);
-    useEffect(() => {
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'NGN',
-            currencyDisplay: 'narrowSymbol'
-        });
-    }, []);
+    // const { accountPrimarys, accountPrimaryError } = useSelector(
+    //     (state) => state.accountPrimaryReducer
+    // );
+
+    // const formatter = new Intl.NumberFormat('en-US', {
+    //     style: 'currency',
+    //     currency: 'NGN',
+    //     currencyDisplay: 'narrowSymbol'
+    // });
     // const getCurrentDate = () => {
     //     let newDate = new Date();
     //     let date = newDate.getDate();
@@ -87,180 +75,69 @@ const Report = () => {
     //     );
     // };
     // useEffect(() => {
-    //     if (transactionElevate !== null) {
-    //         setTableDetails(transactionElevate.transactions);
-    //         console.log(transactionElevate.transactions);
-    //         tableDetails?.filter((item) => {
-    //             const newDate = item.transactionDate.split('T');
-    //             console.log(newDate[0], time);
-    //             if (newDate[0] !== time) {
-    //                 setDateState(true);
-    //             } else {
-    //                 setDateState(false);
-    //             }
-    //         });
+    // if (transactionElevate !== null) {
+    //     setTableDetails(transactionElevate.transactions);
+    //     console.log(transactionElevate.transactions);
+    //     tableDetails?.filter((item) => {
+    //         const newDate = item.transactionDate.split('T');
+    //         console.log(newDate[0], time);
+    //         if (newDate[0] !== time) {
+    //             setDateState(true);
+    //         } else {
+    //             setDateState(false);
+    //         }
+    //     });
 
-    //         // tableDetails.data?.map((item) => {
-    //         //     //console.log(item.transactionDate);
-    //         // });
-    //     } else if (transactionHistory !== null) {
-    //         setTableDetails(transactionHistory.transactions);
-    //         console.log(transactionHistory.transactions);
-    //         tableDetails?.filter((item) => {
-    //             const newDate = item.transactionDate.split('T');
-    //             if (newDate[0] !== time) {
-    //                 setDateState(true);
-    //             } else {
-    //                 setDateState(false);
-    //             }
-    //         });
+    //     // tableDetails.data?.map((item) => {
+    //     //     //console.log(item.transactionDate);
+    //     // });
+    // } else
+    // if (transactionHistory !== null) {
+    // setTableDetails(transactionHistory.transactions);
+    // tableDetails?.filter((item) => {
+    //     const newDate = item.transactionDate.split('T');
+    //     if (newDate[0] !== time) {
+    //         setDateState(true);
+    //     } else {
+    //         setDateState(false);
     //     }
-    //     // console.log(transactionElevate);
-    // }, [transactionElevate, transactionHistory]);
-    useEffect(() => {
-        if (accountPrimarys !== null) {
-            const data = {
-                accountId: accountPrimarys.accountId
-            };
-            dispatch(getMiniStatementGen(data));
-        }
-    }, [accountPrimarys]);
-    useEffect(() => {
-        if (getMiniStatementSuccess !== null) {
-            // dispatch(getMiniStatementGen(accountPrimarys.accountId));
-            setTableDetails(getMiniStatementSuccess.transactionList);
-        }
-    }, [getMiniStatementSuccess]);
-    useEffect(() => {
-        if (bankStatement !== null) {
-            setLoading(false);
-            console.log(bankStatement);
-        } else if (errorMessagebankStatement !== null) {
-            setLoading(false);
-            setSuccess(true);
-            setError('error');
-        }
-    }, [bankStatement, errorMessagebankStatement]);
+    // });
+    // }
+    // console.log(transactionElevate);
+    // }, [transactionHistory]);
+    // useEffect(() => {
+    //     if (accountPrimarys !== null) {
+    //         const data = {
+    //             accountId: accountPrimarys.accountId
+    //         };
+    //         dispatch(getMiniStatementGen(data));
+    //     }
+    // }, [accountPrimarys]);
+    // useEffect(() => {
+    //     if (getMiniStatementSuccess !== null) {
+    //         // dispatch(getMiniStatementGen(accountPrimarys.accountId));
+    //         setTableDetails(getMiniStatementSuccess.transactionList);
+    //     }
+    // }, [getMiniStatementSuccess]);
+    // useEffect(() => {
+    //     if (bankStatement !== null) {
+    //         setLoading(false);
+    //         console.log(bankStatement);
+    //     } else if (errorMessagebankStatement !== null) {
+    //         setLoading(false);
+    //         setSuccess(true);
+    //         setError('error');
+    //     }
+    // }, [bankStatement, errorMessagebankStatement]);
     return (
         <DashLayout>
-            <div className={styles.collctionh1}>
+            {/* <div className={styles.collctionh1}>
                 <h1>Report</h1>
-            </div>
-            <div>
-                <div className={styles.collectionChart}>
-                    <p>Inflow per Channel</p>
-                    <div className={styles.collectionCHartDiv}>
-                        <div className={styles.collectionChartTop}>
-                            <h1 className={styles.chartH1}>23%</h1>
-                            <p>increase in successful collections today. </p>
-                        </div>
-                        <div>
-                            <div className={styles.charts}>
-                                <div className={styles.greenIdiv}>
-                                    <div className={styles.green}></div>
-                                    <h1>
-                                        <span>QR</span> <br />
-                                        N23,566 (10%)
-                                    </h1>
-                                </div>
-                                <div className={styles.greenIIdiv}>
-                                    <div className={styles.greenI}></div>
-                                    <h1>
-                                        <span>Paylink</span>
-                                        <br /> N23,355 (35%)
-                                    </h1>
-                                </div>
-                                <div className={styles.greenIIIdiv}>
-                                    <div className={styles.greenII}></div>
-                                    <h1>
-                                        <span>USSD</span>
-                                        <br /> N23,456 (25%)
-                                    </h1>
-                                </div>
-                                <div className={styles.greenIVdiv}>
-                                    <div className={styles.greenIII}></div>
-                                    <h1>
-                                        <span>Cards</span>
-                                        <br /> N34,876 (30%)
-                                    </h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div> */}
 
             <div className={styles.collectionsTable}>
-                {success ? (
-                    <PaymentSuccess
-                        overlay={overlay}
-                        type="profile"
-                        statusbar={error}
-                        heading="Statement Generated Successfully"
-                        body="Statement generated has been sent to your email"
-                        action={() => {
-                            setOverlay(false);
-                            setEndDate('');
-                            setStartDate('');
-                            setSuccess(false);
-                        }}
-                    />
-                ) : (
-                    <StorePopup overlay={overlay}>
-                        <div className={styles.generateHead}>
-                            <CloseButton
-                                color="red"
-                                action={() => {
-                                    setOverlay(false);
-                                }}
-                            />
-                        </div>
-                        <div className={styles.generateForm}>
-                            <div className={styles.formGroup}>
-                                <label>Start Date</label>
-                                <input
-                                    type="date"
-                                    onChange={(e) => {
-                                        setStartDate(e.target.value);
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label>Stop Date </label>
-                                <input
-                                    type="date"
-                                    onChange={(e) => {
-                                        setEndDate(e.target.value);
-                                    }}
-                                />
-                            </div>
-                            {loading ? (
-                                <Loader />
-                            ) : (
-                                <button
-                                    onClick={() => {
-                                        setLoading(true);
-                                        const data = {
-                                            startDate: new Date(
-                                                startDate
-                                            ).toISOString(),
-                                            endDate: new Date(
-                                                endDate
-                                            ).toISOString(),
-                                            accountId: accountPrimarys.accountId
-                                        };
-                                        dispatch(loadbankStatement(data));
-                                    }}
-                                >
-                                    Generate
-                                </button>
-                            )}
-                        </div>
-                    </StorePopup>
-                )}
-
                 <div className={styles.filter}>
-                    <h2 className={styles.allTrans}>All Transactions</h2>
+                    {/* <h2 className={styles.allTrans}>All Transactions</h2> */}
                     {/* {filterPara === 'Outflow' ? (
                         <div className={styles.filterFlex}>
                             <div
@@ -392,98 +269,11 @@ const Report = () => {
                         <BsChevronDown />
                     </div>
                 </div> */}
-                <table className={styles.table}>
-                    <thead>
-                        <tr>
-                            <th className={styles.theadTop}>
-                                <div>
-                                    <p>Beneficairy</p>
-                                </div>
-                            </th>
-                            <th>
-                                <div>
-                                    <p>Type</p>
-                                </div>
-                            </th>
-                            <th>
-                                <div>
-                                    <p> Amount</p>
-                                </div>
-                            </th>
-                            {/* <th>
-                                <div>
-                                    <p>Email</p>
-                                </div>
-                            </th> */}
-                            {/* <th>
-                                <div>
-                                    <p>Bank</p>
-                                </div>
-                            </th> */}
-                            <th className={styles.theadBtm}>
-                                <div>
-                                    <p>Date</p>
-                                </div>
-                            </th>
-                            {/* <th>
-                                <div>
-                                    <p>Check out Type</p>
-                                </div>
-                            </th>
-                            <th>
-                                <div>
-                                    <p>Status</p>
-                                </div>
-                            </th>
-                            <th className={styles.theadBtm}>
-                                <div>
-                                    <p></p>
-                                </div>
-                            </th> */}
-                        </tr>
-                    </thead>
-                    {tableDetails.length === 0 ? (
-                        <div className={styles.transactionBody}>
-                            <div>
-                                <p>No Transactions Have Been Generated yet</p>
-                            </div>
-                        </div>
-                    ) : (
-                        tableDetails
-                            // ?.filter((item) => {
-                            //     console.log(item);
-                            //     const newDate = item.transactionDate.split('T');
-                            //     return item;
-                            // })
-                            ?.map((item, index) => {
-                                const formatter = new Intl.NumberFormat(
-                                    'en-US',
-                                    {
-                                        style: 'currency',
-                                        currency: 'NGN',
-                                        currencyDisplay: 'narrowSymbol'
-                                    }
-                                );
-                                const formattedAmount = formatter.format(
-                                    item.amount
-                                );
-                                return (
-                                    <ReportsData
-                                        key={index}
-                                        bank={
-                                            item.isEcobankToEcobankTransaction
-                                        }
-                                        date={new Date(item.tranDate)
-                                            .toISOString()
-                                            .split('T')}
-                                        type={item.crDr}
-                                        ammount={formattedAmount}
-                                        bene={item.narration}
-                                    />
-                                );
-                            })
-                    )}
-                </table>
+                <PaymentTable
+                    title="Reports"
+                    // test={count}
+                    page="Reports"
+                />
             </div>
         </DashLayout>
     );

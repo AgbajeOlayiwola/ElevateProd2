@@ -126,10 +126,8 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
-    const {
-        postAirtimeBeneficiaries,
-        errorMessagepostAirtimeBeneficiaries
-    } = useSelector((state) => state.postAirtimeBeneficiariesReducer);
+    const { postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries } =
+        useSelector((state) => state.postAirtimeBeneficiariesReducer);
     const { fetchRM, fetchRMErrorMessages } = useSelector(
         (state) => state.fetchRMReducer
     );
@@ -357,11 +355,11 @@ const Profile = () => {
             icon: <BeneSvg />,
             color: '#7A7978'
         },
-        {
-            text: 'Manage Limit',
-            icon: <ManageLimitSvg />,
-            color: '#7A7978'
-        },
+        // {
+        //     text: 'Manage Limit',
+        //     icon: <ManageLimitSvg />,
+        //     color: '#7A7978'
+        // },
         {
             text: 'Bank Verification Number (BVN)',
             icon: <BvnSvg />,
@@ -689,62 +687,62 @@ const Profile = () => {
                         </div>
                     </>
                 );
-            case 'Manage Limit':
-                return (
-                    <form
-                        onSubmit={handleSubmit(() => {
-                            setOutcome(true);
-                            setMessage('Limit saved Successfully');
-                            setStatusbar('success');
-                        })}
-                    >
-                        <h2 className={styles.title}>Manage Limit</h2>
-                        <div className={styles.formGroup}>
-                            <label>Limit Type </label>
-                            <select
-                                {...register('limitType', {
-                                    required: 'Limit Type is Required'
-                                })}
-                            >
-                                {/* <option value="Mpos Limit">Mpos Limit</option> */}
-                                <option value="Transaction Limit">
-                                    Transaction Limit
-                                </option>
-                            </select>
-                        </div>
-                        <div className={styles.formGroup}>
-                            <label>Add Limit </label>
-                            <input
-                                type="text"
-                                placeholder="Add Limit"
-                                {...register('limit', {
-                                    required: 'Limit is Required'
-                                })}
-                            />
-                        </div>
-                        <p className={styles.error}>{errors?.limit?.message}</p>
-                        <div className={styles.formGroup}>
-                            <label>Enter your Password</label>
-                            <div className={styles.divs}>
-                                <input
-                                    placeholder="Enter your Password"
-                                    {...register('limitpassword', {
-                                        required: 'Password is Required'
-                                    })}
-                                    name="limitpassword"
-                                    type={outType ? 'text' : 'password'}
-                                />
-                                <Visbility typeSet={types} />
-                            </div>
-                            <p className={styles.error}>
-                                {errors?.limitpassword?.message}
-                            </p>
-                        </div>
-                        <div className={styles.profileBody}>
-                            <button type="submit">Add Limit</button>
-                        </div>
-                    </form>
-                );
+            // case 'Manage Limit':
+            //     return (
+            //         <form
+            //             onSubmit={handleSubmit(() => {
+            //                 setOutcome(true);
+            //                 setMessage('Limit saved Successfully');
+            //                 setStatusbar('success');
+            //             })}
+            //         >
+            //             <h2 className={styles.title}>Manage Limit</h2>
+            //             <div className={styles.formGroup}>
+            //                 <label>Limit Type </label>
+            //                 <select
+            //                     {...register('limitType', {
+            //                         required: 'Limit Type is Required'
+            //                     })}
+            //                 >
+            //                     {/* <option value="Mpos Limit">Mpos Limit</option> */}
+            //                     <option value="Transaction Limit">
+            //                         Transaction Limit
+            //                     </option>
+            //                 </select>
+            //             </div>
+            //             <div className={styles.formGroup}>
+            //                 <label>Add Limit </label>
+            //                 <input
+            //                     type="text"
+            //                     placeholder="Add Limit"
+            //                     {...register('limit', {
+            //                         required: 'Limit is Required'
+            //                     })}
+            //                 />
+            //             </div>
+            //             <p className={styles.error}>{errors?.limit?.message}</p>
+            //             <div className={styles.formGroup}>
+            //                 <label>Enter your Password</label>
+            //                 <div className={styles.divs}>
+            //                     <input
+            //                         placeholder="Enter your Password"
+            //                         {...register('limitpassword', {
+            //                             required: 'Password is Required'
+            //                         })}
+            //                         name="limitpassword"
+            //                         type={outType ? 'text' : 'password'}
+            //                     />
+            //                     <Visbility typeSet={types} />
+            //                 </div>
+            //                 <p className={styles.error}>
+            //                     {errors?.limitpassword?.message}
+            //                 </p>
+            //             </div>
+            //             <div className={styles.profileBody}>
+            //                 <button type="submit">Add Limit</button>
+            //             </div>
+            //         </form>
+            //     );
 
             case 'Bank Verification Number (BVN)':
                 switch (count) {
@@ -1581,21 +1579,26 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details = {
-                                                                    accountNumber: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        accountNumber:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details = {
-                                                                    destinationBankCode:
-                                                                        e.target
-                                                                            .value,
-                                                                    accountNo: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        destinationBankCode:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        accountNo:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details

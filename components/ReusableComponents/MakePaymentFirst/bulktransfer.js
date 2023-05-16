@@ -193,6 +193,7 @@ const BulkTransfer = ({
                 ) : (
                     number?.map((e, index) => {
                         const fieldName = `details[${index}]`;
+                        // let `amount${index}` = 0;
                         return (
                             <div key={index}>
                                 <div className={styles.addedFormCont}>
@@ -493,9 +494,10 @@ const BulkTransfer = ({
                                                         workbook.Sheets[
                                                             sheetName
                                                         ];
-                                                    const json = XLSX.utils.sheet_to_json(
-                                                        worksheet
-                                                    );
+                                                    const json =
+                                                        XLSX.utils.sheet_to_json(
+                                                            worksheet
+                                                        );
                                                     localStorage.setItem(
                                                         'csvData',
                                                         JSON.stringify(json)

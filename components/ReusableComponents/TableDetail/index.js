@@ -18,9 +18,9 @@ const TableDetail = ({
 }) => {
     let newBeneficiary;
     if (Beneficiary === null) {
-        newBeneficiary = '';
+        newBeneficiary = 'Self';
     } else if (Beneficiary === undefined) {
-        newBeneficiary = '';
+        newBeneficiary = 'Self';
     } else {
         newBeneficiary = Beneficiary?.split(' ');
     }
@@ -29,7 +29,7 @@ const TableDetail = ({
         <>
             <div className={styles.TableDetailBody} key={keys}>
                 <p className={styles.bene}>
-                    {title}
+                    {/* {title} */}
                     {newBeneficiary === ''
                         ? ''
                         : newBeneficiary[1] === undefined

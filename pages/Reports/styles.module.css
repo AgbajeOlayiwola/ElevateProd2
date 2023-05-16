@@ -192,8 +192,8 @@
 }
 .collectionsTable {
     background: #fff;
-    padding: 48px 32px;
-    margin-top: 23.99px;
+    padding: 0px 32px;
+    margin-top: 0.99px;
 }
 .active {
     background: #6ccf00;

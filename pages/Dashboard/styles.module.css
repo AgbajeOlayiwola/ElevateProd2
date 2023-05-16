@@ -48,7 +48,7 @@
     gap: 10px;
     align-items: center;
 }
-.mdCopy{
+.mdCopy {
     cursor: pointer;
 }
 .filed {
@@ -61,15 +61,15 @@
     color: #394f5c !important;
     margin: 0px !important;
 }
-.seeAll{
+.seeAll {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
 }
-.seeAll a{
+.seeAll a {
     color: #102572;
-    cursor: pointer; 
+    cursor: pointer;
     margin-bottom: 10px;
 }
 .pending {
@@ -93,7 +93,7 @@
 
     text-align: center !important;
 
-    color: #AF3800 !important;
+    color: #af3800 !important;
     margin: 0px !important;
 }
 .Tpwhflex div {
@@ -168,7 +168,7 @@
 }
 
 .success p {
-    color: #AF3800 !important;
+    color: #af3800 !important;
 }
 
 .pending p {
@@ -568,7 +568,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 8vh;
+    padding: 10px 0px;
 }
 .names {
     width: 35%;
@@ -579,6 +579,10 @@
 
 .money {
     width: 15%;
+}
+
+.money p {
+    margin: 0px;
 }
 
 .status {
@@ -595,6 +599,7 @@
 
 .statusColor p {
     font-size: 10px;
+    margin: 0px;
 }
 
 .names p {
@@ -697,10 +702,10 @@
     background: #ffffff;
     margin-bottom: 20px;
     border-radius: 16px;
-    padding: 32px 36px;
+    padding: 24px 36px;
     box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
 }
-.coppied{
+.coppied {
     position: absolute;
     top: 10px;
     padding: 10px;

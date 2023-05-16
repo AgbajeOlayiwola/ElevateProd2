@@ -270,30 +270,32 @@ const AccountsInfoCard = () => {
             <div className={styles.otherAccounts}>
                 <h2>Other Accounts</h2>
                 <div className={styles.accountsALl}>
-                    {Object.keys(bankAccounts)?.map((accountNo, index) => {
-                        return (
-                            <>
-                                <div key={index} className={styles.accntP}>
-                                    <p
-                                        onClick={(e) => {
-                                            setAccountBalanceTest(null),
-                                                setAcctInfoNum(null),
-                                                setAcctNumm(
-                                                    bankAccounts[accountNo]
-                                                        .accountNumber
-                                                );
-                                        }}
-                                    >
-                                        {bankAccounts[accountNo].accountNumber}
-                                    </p>
-                                    <p>
-                                        {bankAccounts[accountNo].customerType}{' '}
-                                        Account
-                                    </p>
-                                </div>
-                                <hr className={styles.accountHr} />
-                            </>
-                        );
+                    {bankAccounts?.map((accountNo, index) => {
+                        if (acctInfoNum === accountNo.accountNumber)
+                            return null;
+                        else if (acctNum === accountNo.accountNumber) {
+                            return null;
+                        } else {
+                            return (
+                                <>
+                                    <div key={index} className={styles.accntP}>
+                                        <p
+                                            onClick={(e) => {
+                                                setAccountBalanceTest(null),
+                                                    setAcctInfoNum(null),
+                                                    setAcctNumm(
+                                                        accountNo.accountNumber
+                                                    );
+                                            }}
+                                        >
+                                            {accountNo.accountNumber}
+                                        </p>
+                                        <p>{accountNo.customerType} Account</p>
+                                    </div>
+                                    <hr className={styles.accountHr} />
+                                </>
+                            );
+                        }
                     })}
                     <div className={styles.otherAccountsDiv}>
                         <button>+Add New</button>

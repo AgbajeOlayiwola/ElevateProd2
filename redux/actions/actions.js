@@ -1435,7 +1435,7 @@ export const deleteBeneficiariesData = (data) => (dispatch) => {
     dispatch(deleteBeneficiariesLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .delete(`${apiRoutes.deleteBeneficiaries}${data}`, {
+        .get(`${apiRoutes.deleteBeneficiaries}${data}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -1472,7 +1472,7 @@ export const deleteAirtimeBeneficiariesData = (data) => (dispatch) => {
     dispatch(deleteAirtimeBeneficiariesLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .delete(`${apiRoutes.deleteAirtimeBeneficiaries}${data}`, {
+        .get(`${apiRoutes.deleteAirtimeBeneficiaries}${data}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
