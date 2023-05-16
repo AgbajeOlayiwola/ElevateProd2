@@ -59,10 +59,8 @@ const BankStatments = () => {
         (state) => state.bankStatementReducer
     );
 
-    const {
-        getFullStatementSuccess,
-        getFullStatementerrorMessage
-    } = useSelector((state) => state.getFullStatementReducer);
+    const { getFullStatementSuccess, getFullStatementerrorMessage } =
+        useSelector((state) => state.getFullStatementReducer);
 
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
@@ -76,10 +74,8 @@ const BankStatments = () => {
         (state) => state.accountPrimaryReducer
     );
     const [isLoading, setIsLoading] = useState(true);
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -100,7 +96,7 @@ const BankStatments = () => {
             ).toISOString();
         };
         const data = {
-            startDate: getDateXDaysAgo(365),
+            startDate: getDateXDaysAgo(183),
             endDate: todaysDate
         };
         dispatch(loadbankStatement(data));
@@ -303,12 +299,8 @@ const BankStatments = () => {
                                         onClick={() => {
                                             setLoading(true);
                                             const data = {
-                                                startDate: new Date(
-                                                    startDate
-                                                ).toISOString(),
-                                                endDate: new Date(
-                                                    endDate
-                                                ).toISOString(),
+                                                startRange: startDate,
+                                                endRange: endDate,
                                                 accountId: id
                                             };
                                             dispatch(getFullStatementGen(data));
@@ -338,7 +330,7 @@ const BankStatments = () => {
                 <div className={styles.table}>
                     <div className={styles.tableHeader}>
                         <h2>Transactions History</h2>
-                        <div className={styles.tableFilter}>
+                        {/* <div className={styles.tableFilter}>
                             <div>
                                 <img src="../Assets/Svgs/search.svg" alt="" />
                                 <input
@@ -360,13 +352,13 @@ const BankStatments = () => {
                                 <option value="account">Account</option>
                                 <option value="type">Type</option>
                             </select>
-                            {/* <button>
+                            <button>
                         Filter
                         <span>
                             <img src="../Assets/Svgs/Vector 26.svg" alt="" />
                         </span>
-                    </button> */}
-                        </div>
+                    </button>
+                        </div> */}
                     </div>
                     <div className={styles.tableFilters}>
                         {/* <h2
@@ -462,7 +454,7 @@ const BankStatments = () => {
                             <p className={styles.beneficiary}>Beneficiary </p>
                             <p className={styles.amount}>Amount</p>
                             <p className={styles.type}>Type</p>
-                            <div className={styles.more}></div>
+                            {/* <div className={styles.more}></div> */}
                         </div>
                         {isLoading ? (
                             <Lottie
@@ -493,9 +485,8 @@ const BankStatments = () => {
                                     pagesVisited + usersPerPage
                                 )
                                 ?.map((items, index) => {
-                                    const newDate = items?.transactionTime?.split(
-                                        ' '
-                                    );
+                                    const newDate =
+                                        items?.transactionTime?.split(' ');
                                     return (
                                         <div
                                             className={styles.TableDetailBody}
@@ -518,7 +509,7 @@ const BankStatments = () => {
                                             <p className={styles.transfer}>
                                                 {items.channel}
                                             </p>
-                                            <div className={styles.more}>
+                                            {/* <div className={styles.more}>
                                                 <MoreAction
                                                     type={items.channel}
                                                     transactionAmount={formatter.format(
@@ -526,7 +517,7 @@ const BankStatments = () => {
                                                     )}
                                                     disputes={disputes}
                                                 />
-                                            </div>
+                                            </div> */}
                                         </div>
                                     );
                                 })

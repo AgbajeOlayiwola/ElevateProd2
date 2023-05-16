@@ -66,7 +66,7 @@
 }
 
 .tableFilter select {
-    width: 103px;
+    width: 150px;
     margin: 0px;
     background-color: #005b82;
     border-radius: 8px;
@@ -78,7 +78,7 @@
     color: white;
     border: none;
     background-image: url(../../../public/Assets/Svgs/Vector\ 26.svg);
-    background-position-x: 74%;
+    background-position-x: 84%;
     background-position-y: 55%;
 }
 
