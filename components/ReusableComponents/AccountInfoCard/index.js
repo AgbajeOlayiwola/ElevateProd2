@@ -44,13 +44,13 @@ const AccountsInfoCard = () => {
             setUserProfileData(userProfile);
         }
     }, [userProfile]);
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        currencyDisplay: 'narrowSymbol'
+    });
     useEffect(() => {
         if (balanceEnquiry !== null) {
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'NGN',
-                currencyDisplay: 'narrowSymbol'
-            });
             const formattedAmount = formatter.format(
                 balanceEnquiry.availableBalance
             );
@@ -65,7 +65,9 @@ const AccountsInfoCard = () => {
         };
         dispatch(getBalanceEnquiry(balanceData));
         if (balanceEnquiry) {
-            setAccountBalanceTest(balanceEnquiry?.availableBalance);
+            setAccountBalanceTest(
+                formatter.format(balanceEnquiry?.availableBalance)
+            );
         }
     }, [accountPrimarys]);
     useEffect(() => {

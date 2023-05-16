@@ -19,7 +19,8 @@ import {
     loadUserProfile,
     loadAccountPrimary,
     generateQrCodeDetails,
-    loadpaylinkGen
+    loadpaylinkGen,
+    getQrMerchantInfoGen
 } from '../../redux/actions/actions';
 // import ChartDiv from './chartDivStyled';
 // import ChartContent from './chartContentStyled';
@@ -449,6 +450,20 @@ const Collections = () => {
         }
         console.log(formType);
     }, [count]);
+    const {
+        getQrMerchnatInfoSuccess,
+        getQrMerchnatInfoErrorMessage
+    } = useSelector((state) => state.getQrMerchantInfoReducermport);
+    const [merchantInf, setMerchantInfo] = useState();
+    useEffect(() => {
+        dispatch(getQrMerchantInfoGen());
+        console.log(getQrMerchnatInfoSuccess);
+    }, []);
+    useEffect(() => {
+        if (getQrMerchnatInfoSuccess != null) {
+            setMerchantInfo(getQrMerchnatInfoSuccess);
+        }
+    }, [getQrMerchnatInfoSuccess]);
     const renderForm = () => {
         switch (formType) {
             case 'paylink':
@@ -670,6 +685,8 @@ const Collections = () => {
                                 title="Ecobank QR Code"
                                 action={buttonHandleClose}
                                 buttonText="Complete"
+                                merchantCode={merchantInf?.merchantCode}
+                                terminalId={merchantInf?.terminalId}
                                 allLink={(data) => {
                                     //console.logdata);
                                     setCount(count + 1);
