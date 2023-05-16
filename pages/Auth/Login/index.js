@@ -490,7 +490,7 @@ const Login = () => {
                                     })}
                                     onInput={handlePwd}
                                 />
-                                <Visbility typeSet={types} />
+                                <Visbility typeSet={types} input="input" />
                             </div>
                             {errors?.password?.message ? (
                                 <p className={styles.errors}>

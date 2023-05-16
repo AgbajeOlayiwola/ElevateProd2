@@ -206,7 +206,7 @@ const BillPayment = ({
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     <div className={styles.body}>
                         <form onSubmit={handleSubmit(airtimeAction)}>
-                            {airtimebeneficiaries.phoneNumberBeneficiaries?.map(
+                            {airtimebeneficiaries?.phoneNumberBeneficiaries?.map(
                                 (account, index) => {
                                     return (
                                         <div

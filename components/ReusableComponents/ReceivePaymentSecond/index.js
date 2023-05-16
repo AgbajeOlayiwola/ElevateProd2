@@ -23,7 +23,9 @@ const ReceivePaymentSecond = ({
     payLinkData,
     amountPaylink,
     share,
-    primary
+    primary,
+    merchantCode,
+    terminalId
 }) => {
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
@@ -127,7 +129,9 @@ const ReceivePaymentSecond = ({
     // onClick handler function for the copy button
     const copy = () => {
         // Asynchronously call copyTextToClipboard
-        copyTextToClipboard(ussData)
+        copyTextToClipboard(
+            `https://recievepayment.netlify.app/Payments/ussd?data=${link}&accountId=${primary}`
+        )
             .then(() => {
                 // If successful, update the isCopied state value
                 setIsCopied(true);
@@ -165,7 +169,9 @@ const ReceivePaymentSecond = ({
     const [qrUrlData, setQrUrlData] = useState(
         `https://recievepayment.netlify.app/Payments/qr?data=${encodeURIComponent(
             data?.data.data.dynamicQRBase64
-        )}&ref=${data?.data.data.ref}&accountId=${primary}`
+        )}&ref=${
+            data?.data.data.ref
+        }&accountId=${primary}&merchantCode=${merchantCode}&terminalId=${terminalId}`
     );
 
     const copyQr = () => {
@@ -261,7 +267,7 @@ const ReceivePaymentSecond = ({
                                 <input
                                     className={styles.inputBordr}
                                     type="text"
-                                    value={ussData}
+                                    value={link}
                                 />
                                 <button
                                     className={styles.copyBtn}

@@ -577,10 +577,16 @@
     display: block;
     margin: 0px auto;
 }
-
-.chatWithUs {
+.chatWitUsBt{
     position: absolute;
     bottom: 0px;
+    right: 10px;
+    z-index: 20; 
+    cursor: pointer;
+}
+.chatWithUs {
+    position: absolute;
+    bottom: 80px;
     right: 10px;
     z-index: 20;
 }

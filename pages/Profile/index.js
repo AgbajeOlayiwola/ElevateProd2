@@ -126,8 +126,10 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
-    const { postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries } =
-        useSelector((state) => state.postAirtimeBeneficiariesReducer);
+    const {
+        postAirtimeBeneficiaries,
+        errorMessagepostAirtimeBeneficiaries
+    } = useSelector((state) => state.postAirtimeBeneficiariesReducer);
     const { fetchRM, fetchRMErrorMessages } = useSelector(
         (state) => state.fetchRMReducer
     );
@@ -1377,7 +1379,7 @@ const Profile = () => {
 
                                             {!airtimebeneficiaries
                                                 .phoneNumberBeneficiaries
-                                                .length ? (
+                                                ?.length ? (
                                                 <h2 className={styles.dontHave}>
                                                     You do not have any
                                                     Beneficiary at the moment
@@ -1580,26 +1582,21 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details =
-                                                                    {
-                                                                        accountNumber:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    accountNumber: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details =
-                                                                    {
-                                                                        destinationBankCode:
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                        accountNo:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    destinationBankCode:
+                                                                        e.target
+                                                                            .value,
+                                                                    accountNo: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -1943,6 +1940,13 @@ const Profile = () => {
                         }}
                     >
                         <div className={styles.chatWithUs}>
+                            <div
+                                onClick={() => {
+                                    setRafiki(false);
+                                }}
+                            >
+                                <CloseBtnSvg />
+                            </div>
                             <Iframe
                                 url="https://ice.ecobank.com/chatbotui"
                                 ref={iframeRef}
@@ -1957,6 +1961,14 @@ const Profile = () => {
                     </OutsideClick>
                 ) : null}
                 {renderForm()}
+                {/* <h1
+                    className={styles.chatWitUsBt}
+                    onClick={() => {
+                        setRafiki((prev) => !prev);
+                    }}
+                >
+                    Chat With Us
+                </h1> */}
             </ProfileLayout>
             {outcome ? (
                 <PaymentSuccess

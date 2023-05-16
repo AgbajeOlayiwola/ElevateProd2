@@ -944,3 +944,13 @@ export const disputSubCategoryType = {
 };
 
 //dispute Type action type end
+
+//Verify transactionpin action type start
+
+export const verifyTransactionPinType = {
+    VERIFY_TTRANSACTIONPIN_LOAD_START: 'VERIFY_TRANSACTIONPIN_LOAD_START',
+    VERIFY_TRANSACTIONPIN_LOAD_SUCCESS: 'VERIFY_TRANSACTIONPIN_LOAD_SUCCESS',
+    VERIFY_TRANSACTIONPIN_LOAD_ERROR: 'VERIFY_TRANSACTIONPIN_LOAD_ERROR'
+};
+
+//Verify transactionpin action type end
