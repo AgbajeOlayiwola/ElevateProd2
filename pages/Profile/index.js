@@ -1990,7 +1990,7 @@ const Profile = () => {
                             : statusbar === 'success'
                             ? () => {
                                   setOutcome(false);
-                                  setText('View Profile');
+                                  //   setText('View Profile');
                                   reset();
                               }
                             : null

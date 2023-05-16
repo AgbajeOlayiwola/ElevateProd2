@@ -24,10 +24,11 @@ const PaymentTable = ({ title, test, page }) => {
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
     const [newTableDetails, setNewTableDetails] = useState([]);
+    const [newestTableDetails, setNewestTableDetails] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [displayType, setDisplayType] = useState('');
     const [pageNumber, setPageNumber] = useState(0);
-    const [searchType, setSearchType] = useState('transactionType');
+    const [searchType, setSearchType] = useState('');
     const [disputes, setDisputes] = useState();
     const [isLoading, setIsLoading] = useState(true);
     let pending = 0;
@@ -114,43 +115,114 @@ const PaymentTable = ({ title, test, page }) => {
                 return item.transactionAmount
                     .toLowerCase()
                     .includes(searchValue.toLowerCase());
-            case 'transactionDate':
-                return item.transactionDate
-                    .toLowerCase()
-                    .includes(searchValue.toLowerCase());
             default:
                 item.transactionType
                     .toLowerCase()
                     .includes(searchValue.toLowerCase());
         }
     };
+    useEffect(() => {}, [searchValue]);
     return (
         <div className={styles.table}>
             <div className={styles.tableHeader}>
                 <h2>{title}</h2>
                 <div className={styles.tableFilter}>
-                    <div>
-                        {/* <img src="../Assets/Svgs/search.svg" alt="" /> */}
-                        <input
-                            type="text"
-                            placeholder={`Filter by ${displayType}`}
-                            onChange={(e) => {
-                                setSearchValue(e.target.value);
-                            }}
-                        />
-                    </div>
                     <select
                         name=""
                         id=""
                         onChange={(e) => {
                             setSearchType(e.target.value);
+                            setSearchValue('');
                         }}
                     >
+                        <option value="">Choose</option>
                         <option value="transactionType">Type</option>
                         <option value="transactionStatus">Status</option>
                         <option value="transactionAmount">Amount</option>
-                        <option value="transactionDate">Date</option>
                     </select>
+                    {page === 'Collections' ? (
+                        searchType === 'transactionType' ? (
+                            <select
+                                name=""
+                                id=""
+                                onChange={(e) => {
+                                    setSearchValue(e.target.value);
+                                }}
+                            >
+                                <option value="">Choose Type</option>
+                                <option value="Paylink">Paylink</option>
+                                <option value="QR_Payment">QR Payment</option>
+                                <option value="USSD">USSD</option>
+                            </select>
+                        ) : searchType === 'transactionStatus' ? (
+                            <select
+                                name=""
+                                id=""
+                                onChange={(e) => {
+                                    setSearchValue(e.target.value);
+                                }}
+                            >
+                                <option value="">Choose Status</option>
+                                <option value="Success">Success</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Failed">Failed</option>
+                            </select>
+                        ) : searchType === 'transactionAmount' ? (
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Filter by Amount"
+                                    onChange={(e) => {
+                                        setSearchValue(e.target.value);
+                                    }}
+                                />
+                            </div>
+                        ) : null
+                    ) : page === 'Payments' ? (
+                        searchType === 'transactionType' ? (
+                            <select
+                                name=""
+                                id=""
+                                onChange={(e) => {
+                                    setSearchValue(e.target.value);
+                                }}
+                            >
+                                <option value="">Choose Type</option>
+                                <option value="Single Transfer">
+                                    Single Transfer
+                                </option>
+                                <option value="Bulk Transfer">
+                                    Bulk Transfer
+                                </option>
+                                <option value="Bills Payment">
+                                    Bills Payment
+                                </option>
+                            </select>
+                        ) : searchType === 'transactionStatus' ? (
+                            <select
+                                name=""
+                                id=""
+                                onChange={(e) => {
+                                    setSearchValue(e.target.value);
+                                }}
+                            >
+                                <option value="">Choose Status</option>
+                                <option value="Success">Success</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Failed">Failed</option>
+                            </select>
+                        ) : searchType === 'transactionAmount' ? (
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Filter by Amount"
+                                    onChange={(e) => {
+                                        setSearchValue(e.target.value);
+                                    }}
+                                />
+                            </div>
+                        ) : null
+                    ) : null}
                     {/* <button>
                         Filter
                         <span>
