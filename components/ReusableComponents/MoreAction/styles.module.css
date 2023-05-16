@@ -375,12 +375,16 @@
 .failedText{
     display: flex;
     justify-content: center;
-color:#F21B3F
+color:#FFF
+}
+.disputTextArea{
+    border-radius: 20px;
+    padding: 20px;
 }
 .successText{
     display: flex;
     justify-content: center;
-    color: #ABFF4F;
+    color: #000;
 }
 .pending {
     font-family: 'Inter';
@@ -420,8 +424,8 @@ color:#F21B3F
     background-color: #A2FAA3;
     padding-top: 20px;
     padding-bottom: 20px;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
 }
 .successReciept h1 {
     text-align: center;
@@ -429,11 +433,11 @@ color:#F21B3F
     font-weight: 600;
 }
 .failedReciept{
-    background-color: #931621;
+    background-color: #F4A5AE;
     padding-top: 20px;
     padding-bottom: 20px;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
+    border-top-right-radius: 49px;
+    border-top-left-radius: 48px;
 }
 .failedReciept h1 {
     text-align: center;
@@ -444,8 +448,8 @@ color:#F21B3F
     background-color: #ffde00;
     padding-top: 20px;
     padding-bottom: 20px;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
 }
 .pendingReciept h1 {
     text-align: center;
@@ -507,7 +511,7 @@ color:#F21B3F
 }
 
 .recieptPad {
-    padding: 50px 70px;
+    padding: 5px 70px;
 }
 .recieptPad h1 {
     text-align: center;
@@ -522,7 +526,7 @@ color:#F21B3F
     justify-content: center;
 }
 .recieptDiv {
-    padding-bottom: 30px;
+    padding-bottom: 0px;
 }
 .diclaimer p {
     width: 80%;

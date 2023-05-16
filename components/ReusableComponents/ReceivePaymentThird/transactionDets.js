@@ -13,6 +13,7 @@ import OutsideClick from '../OutsideClick';
 import Lottie from 'react-lottie';
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
 import Loader from '../Loader';
+import CloseBtnSvg from '../ClosebtnSvg';
 const TransactionDets = ({
     paymentDirection,
     transactionAmmount,
@@ -25,7 +26,8 @@ const TransactionDets = ({
     disputes,
     accountId,
     transactionId,
-    transactionRef
+    transactionRef,
+    beneficiary
 }) => {
     const [dispute, setDispute] = useState('');
     const [disputeCate, setDisputeCat] = useState('');
@@ -186,20 +188,16 @@ const TransactionDets = ({
                                 }}
                             >
                                 <div className={styles.showDispute}>
+                                    <p>
+                                        Transacton Amount:{transactionAmmount}
+                                    </p>
+                                    <p>Type: Complaint</p>
+                                    <p>Sub Category: Transfers</p>
                                     <div className={styles.cancel}>
-                                        <MdCancel
-                                            onClick={() =>
-                                                setShowDispute(false)
-                                            }
+                                        <CloseBtnSvg
+                                            action={() => setShowDispute(false)}
                                         />
                                     </div>
-                                    {isLoading ? (
-                                        <Lottie
-                                            options={socialOptions}
-                                            height={200}
-                                            width={200}
-                                        />
-                                    ) : null}
                                     {lodgeDisputeErrorSubMessage ? (
                                         <p className={styles.errors}>
                                             {
@@ -208,71 +206,14 @@ const TransactionDets = ({
                                             }
                                         </p>
                                     ) : null}
-                                    <div className={styles.maindispute}>
-                                        <label>Dispute type</label>
-                                        <select onChange={disputesFunction}>
-                                            <option>Select Dispute Type</option>
-                                            {disputes?.map((item, index) => {
-                                                return (
-                                                    <option
-                                                        value={item}
-                                                        key={index}
-                                                    >
-                                                        {item}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-                                    </div>
-                                    <div className={styles.maindispute}>
-                                        <label>Dispute category</label>
-                                        <select onChange={complainCateFunction}>
-                                            <option>
-                                                Select Dispute Category
-                                            </option>
-                                            {getDisputCategorySuccess?.map(
-                                                (item, index) => {
-                                                    return (
-                                                        <option
-                                                            value={item}
-                                                            key={index}
-                                                        >
-                                                            {item}
-                                                        </option>
-                                                    );
-                                                }
-                                            )}
-                                        </select>
-                                    </div>
-                                    <div className={styles.maindispute}>
-                                        <label>Dispute Sub-Category</label>
-                                        <select
-                                            onChange={complaintSubVateFunction}
-                                        >
-                                            <option>
-                                                Select Dispute Category
-                                            </option>
-                                            {getDisputCategorySubSuccess?.map(
-                                                (item, index) => {
-                                                    return (
-                                                        <option
-                                                            value={item}
-                                                            key={index}
-                                                        >
-                                                            {item}
-                                                        </option>
-                                                    );
-                                                }
-                                            )}
-                                        </select>
-                                    </div>
-                                    {loading ? (
-                                        <Loader />
-                                    ) : (
-                                        <button onClick={lodgeTheComplaint}>
-                                            Submit Dispute
-                                        </button>
-                                    )}
+                                    <textarea
+                                        className={styles.disputTextArea}
+                                        cols={8}
+                                        rows={6}
+                                    ></textarea>
+                                    <button onClick={lodgeTheComplaint}>
+                                        Submit
+                                    </button>
                                 </div>
                             </OutsideClick>
                         ) : null}
@@ -321,11 +262,25 @@ const TransactionDets = ({
                                             <div>
                                                 <h1>{transactionTitle}</h1>
                                             </div>
-                                            <div className={styles.senderInfo}>
-                                                <p>Beneficiary Account</p>
-                                                <p>1234567890</p>
-                                            </div>
-                                            <hr />
+                                            {transactionTitle ===
+                                            null ? null : (
+                                                <>
+                                                    {' '}
+                                                    <div
+                                                        className={
+                                                            styles.senderInfo
+                                                        }
+                                                    >
+                                                        <p>
+                                                            Beneficiary Account
+                                                        </p>
+                                                        <p>
+                                                            {transactionTitle}
+                                                        </p>
+                                                    </div>
+                                                    <hr />
+                                                </>
+                                            )}
                                             {type === null ? null : (
                                                 <>
                                                     <div

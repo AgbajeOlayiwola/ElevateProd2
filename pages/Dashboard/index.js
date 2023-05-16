@@ -78,7 +78,11 @@ const settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 2,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 9000,
+    autoplaySpeed: 2000,
+    cssEase: 'linear'
 };
 
 const Dashboard = () => {

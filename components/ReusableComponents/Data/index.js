@@ -94,7 +94,7 @@ export const SidebarData = [
     },
 
     {
-        title: 'Reports',
+        title: 'Transaction Reports',
         path: '/Reports',
         // modal: 'show',
         icon: <PaymentSvg />,

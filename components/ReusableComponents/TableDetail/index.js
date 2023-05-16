@@ -3,6 +3,7 @@ import styles from './styles.module.css';
 import MoreAction from '../MoreAction';
 
 const TableDetail = ({
+    direction,
     Beneficiary,
     Type,
     Amount,
@@ -14,7 +15,11 @@ const TableDetail = ({
     network,
     title,
     disputes,
-    accountId
+    accountId,
+    date,
+    narration,
+    senderBank,
+    sender
 }) => {
     let newBeneficiary;
     if (Beneficiary === null) {
@@ -55,11 +60,17 @@ const TableDetail = ({
                 </p>
                 <div className={styles.more}>
                     <MoreAction
+                        senders={sender}
+                        sendBank={senderBank}
+                        narr={narration}
+                        dates={Dates}
+                        isDirection={direction}
                         accountId={accountId}
                         disputes={disputes}
                         transactionAmount={Amount}
                         transactionStatus={Status}
                         transactionTitle={Type}
+                        bene={Beneficiary}
                     />
                 </div>
             </div>

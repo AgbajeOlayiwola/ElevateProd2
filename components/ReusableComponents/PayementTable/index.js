@@ -18,8 +18,10 @@ const PaymentTable = ({ title, test, page }) => {
     const { transactionHistory, errorMessageTransactionHistory } = useSelector(
         (state) => state.transactionHistoryReducer
     );
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
@@ -135,7 +137,7 @@ const PaymentTable = ({ title, test, page }) => {
                             setSearchValue('');
                         }}
                     >
-                        <option value="">Choose</option>
+                        <option value="">Filter</option>
                         <option value="transactionType">Type</option>
                         <option value="transactionStatus">Status</option>
                         <option value="transactionAmount">Amount</option>
@@ -274,9 +276,13 @@ const PaymentTable = ({ title, test, page }) => {
                     })
                     ?.slice(pagesVisited, pagesVisited + usersPerPage)
                     ?.map((items, index) => {
+                        {
+                            console.log(items);
+                        }
                         return (
                             <TableDetail
                                 key={index}
+                                // date={items.transactionDate}
                                 title={items.transactionTitle}
                                 Beneficiary={
                                     items.paymentDirection === 'CREDIT'
@@ -294,6 +300,11 @@ const PaymentTable = ({ title, test, page }) => {
                                 accountNumber={items.destinationAccountNumber}
                                 network={items.billerCode}
                                 disputes={disputes}
+                                direction={items.paymentDirection}
+                                sender={items.sender}
+                                senderBank={items.sendersBank}
+                                narration={items.narration}
+
                                 //   phoneNumber={}
                             />
                         );

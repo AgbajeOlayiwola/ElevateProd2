@@ -39,7 +39,7 @@ const ReceivePaymentThird = ({
     const [tableDetails, setTableDetails] = useState([]);
     const [rangeDate, setRangeDate] = useState();
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
-    const [numOfRecords, setNumOfRecords] = useState(10);
+    const [numOfRecords, setNumOfRecords] = useState(1000);
     const [isLoading, setIsLoading] = useState(true);
     const [transactionType, setTransactionType] = useState();
     const {
@@ -197,9 +197,13 @@ const ReceivePaymentThird = ({
                                         const formattedAmount = formatter.format(
                                             item.transactionAmount
                                         );
+                                        console.log(item);
                                         return (
                                             <TransactionDets
                                                 key={index}
+                                                beneficiary={
+                                                    item.sourceAccountId
+                                                }
                                                 accountId={item.sourceAccountId}
                                                 disputes={dispute}
                                                 type={item.transactionType}

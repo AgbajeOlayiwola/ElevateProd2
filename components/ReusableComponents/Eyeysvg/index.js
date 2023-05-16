@@ -7,6 +7,7 @@ import ButtonComp from '../Button';
 import StorePopup from '../StorePopup';
 import { useDispatch, useSelector } from 'react-redux';
 import { verifyTransactionPinGet } from '../../../redux/actions/actions';
+import OutsideClick from '../OutsideClick';
 const Visbility = ({ typeSet, color }) => {
     const dispatch = useDispatch();
     const [type, setType] = useState(true);
@@ -98,66 +99,74 @@ const Visbility = ({ typeSet, color }) => {
                 {visible ? 'visibility' : 'visibility_off'}
             </span>
             {showTransId ? (
-                <form className={styles.transaId}>
-                    {verifyTransactionPinErrorMessage ? (
-                        <p className={styles.error}>
-                            {tansactiopnPinResponse?.data?.message}
+                <OutsideClick
+                    onClickOutside={() => {
+                        setShowtransId(false);
+                    }}
+                >
+                    <form className={styles.transaId}>
+                        {verifyTransactionPinErrorMessage ? (
+                            <p className={styles.error}>
+                                {tansactiopnPinResponse?.data?.message}
+                            </p>
+                        ) : null}
+                        <p className={styles.transactPin}>
+                            Enter Transaction Pin
                         </p>
-                    ) : null}
-                    <p className={styles.transactPin}>Enter Transaction Pin</p>
-                    <div className={styles.otpInps}>
-                        <input
-                            type="password"
-                            name="ssn-1"
-                            {...register('ssn-1')}
-                            maxLength={1}
-                            onChange={handleChange}
+                        <div className={styles.otpInps}>
+                            <input
+                                type="password"
+                                name="ssn-1"
+                                {...register('ssn-1')}
+                                maxLength={1}
+                                onChange={handleChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-2"
+                                {...register('ssn-2')}
+                                maxLength={1}
+                                onChange={handleChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-3"
+                                {...register('ssn-3')}
+                                maxLength={1}
+                                onChange={handleChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-4"
+                                {...register('ssn-4')}
+                                maxLength={1}
+                                onChange={handleChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-5"
+                                {...register('ssn-5')}
+                                maxLength={1}
+                                onChange={handleChange}
+                            />
+                            <input
+                                type="password"
+                                name="ssn-6"
+                                {...register('ssn-6')}
+                                maxLength={1}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <ButtonComp
+                            onClick={submitPin}
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            text="Confirm"
+                            type="submit"
+                            // err={isLoading}
                         />
-                        <input
-                            type="password"
-                            name="ssn-2"
-                            {...register('ssn-2')}
-                            maxLength={1}
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="password"
-                            name="ssn-3"
-                            {...register('ssn-3')}
-                            maxLength={1}
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="password"
-                            name="ssn-4"
-                            {...register('ssn-4')}
-                            maxLength={1}
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="password"
-                            name="ssn-5"
-                            {...register('ssn-5')}
-                            maxLength={1}
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="password"
-                            name="ssn-6"
-                            {...register('ssn-6')}
-                            maxLength={1}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <ButtonComp
-                        onClick={submitPin}
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        text="Confirm"
-                        type="submit"
-                        // err={isLoading}
-                    />
-                </form>
+                    </form>
+                </OutsideClick>
             ) : null}
         </div>
     );

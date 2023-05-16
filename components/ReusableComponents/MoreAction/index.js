@@ -14,15 +14,20 @@ import StorePopup from '../StorePopup';
 import CloseBtnSvg from '../ClosebtnSvg';
 
 const MoreAction = ({
+    isDirection,
     transactionAmount,
     transactionStatus,
     transactionTitle,
     sender,
     destinationBank,
-    type,
     narration,
     disputes,
-    accountId
+    accountId,
+    dates,
+    senders,
+    sendBank,
+    narr,
+    bene
 }) => {
     const [dispute, setDispute] = useState('');
     const [disputeCate, setDisputeCat] = useState('');
@@ -72,6 +77,22 @@ const MoreAction = ({
     };
     const [errors, setErrors] = useState('');
 
+    const type = 'Complaint';
+    const sub = 'Transfers';
+    useEffect(() => {
+        if (isDirection?.toLowerCase() === 'debit') {
+            setSelectedDisputeCategory('Payments');
+        }
+        if (transactionTitle?.toLowerCase() === 'ussd') {
+            setSelectedDisputeCategory('Ussd');
+        }
+        if (transactionTitle?.toLowerCase() === 'payment_link') {
+            setSelectedDisputeCategory('Cards');
+        }
+        if (transactionTitle?.toLowerCase() === 'qr_payment') {
+            setSelectedDisputeCategory('Payments');
+        }
+    }, [isDirection]);
     const lodgeTheComplaint = () => {
         const data = {
             accountId: accountId,
@@ -84,6 +105,7 @@ const MoreAction = ({
         if (lodgeDisputeErrorSubMessage) {
         }
     };
+    let newDate = dates.split('T');
     return (
         <div
             className={
@@ -127,54 +149,22 @@ const MoreAction = ({
                         <div className={styles.cancel}>
                             <CloseBtnSvg action={() => setShowDispute(false)} />
                         </div>
+                        <div>
+                            <p>Transaction Amount: {transactionAmount}</p>
+                            <p>Type: {type}</p>
+                            <p>Sub Category: {sub}</p>
+                            <p>date :{newDate[0]}</p>
+                        </div>
                         {lodgeDisputeErrorSubMessage ? (
                             <p className={styles.errors}>
                                 {lodgeDisputeErrorSubMessage?.data?.message}
                             </p>
                         ) : null}
-                        <div className={styles.maindispute}>
-                            <label>Disput type</label>
-                            <select onChange={disputesFunction}>
-                                <option>Select Dispute Type</option>
-                                {disputes?.map((item, index) => {
-                                    return (
-                                        <option value={item} key={index}>
-                                            {item}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                        <div className={styles.maindispute}>
-                            <label>Dispute category</label>
-                            <select onChange={complainCateFunction}>
-                                <option>Select Dispute Category</option>
-                                {getDisputCategorySuccess?.map(
-                                    (item, index) => {
-                                        return (
-                                            <option value={item} key={index}>
-                                                {item}
-                                            </option>
-                                        );
-                                    }
-                                )}
-                            </select>
-                        </div>
-                        <div className={styles.maindispute}>
-                            <label>Dispute Sub-Category</label>
-                            <select onChange={complaintSubVateFunction}>
-                                <option>Select Dispute Category</option>
-                                {getDisputCategorySubSuccess?.map(
-                                    (item, index) => {
-                                        return (
-                                            <option value={item} key={index}>
-                                                {item}
-                                            </option>
-                                        );
-                                    }
-                                )}
-                            </select>
-                        </div>
+                        <textarea
+                            className={styles.disputTextArea}
+                            cols={8}
+                            rows={6}
+                        ></textarea>
                         <button onClick={lodgeTheComplaint}>Submit</button>
                     </div>
                 </StorePopup>
@@ -212,22 +202,26 @@ const MoreAction = ({
                                 <div>
                                     <h1>{transactionTitle}</h1>
                                 </div>
-                                <div className={styles.senderInfo}>
-                                    <p>Beneficiary Account</p>
-                                    <p>1234567890</p>
-                                </div>
-                                <hr />
+                                {bene === null ? null : (
+                                    <>
+                                        <div className={styles.senderInfo}>
+                                            <p>Beneficiary</p>
+                                            <p>{bene}</p>
+                                        </div>
+                                        <hr />
+                                    </>
+                                )}
                                 {type === null ? null : (
                                     <>
                                         <div className={styles.senderInfo}>
                                             <p>Transaction Type</p>
-                                            <p>{type}</p>
+                                            <p>{isDirection}</p>
                                         </div>
                                         <hr />
                                     </>
                                 )}
 
-                                {sender === null ? null : (
+                                {senders === null ? null : (
                                     <>
                                         <div className={styles.senderInfo}>
                                             <p>Sender Name</p>
@@ -237,7 +231,7 @@ const MoreAction = ({
                                     </>
                                 )}
 
-                                {destinationBank === null ? null : (
+                                {sendBank === null ? null : (
                                     <>
                                         <div className={styles.senderInfo}>
                                             <p>Destination Bank</p>
@@ -246,11 +240,11 @@ const MoreAction = ({
                                         <hr />
                                     </>
                                 )}
-                                {narration === null ? null : (
+                                {narr === null ? null : (
                                     <>
                                         <div className={styles.senderInfo}>
                                             <p>Narration</p>
-                                            <p>{narration}</p>
+                                            <p>{narr}</p>
                                         </div>
                                         <hr />
                                     </>
