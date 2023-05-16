@@ -28,6 +28,7 @@ const MakePaymentSecond = ({
     const numOfFields = 6;
     const [activeBtn, setActiveBtn] = useState(false);
     const [newAmount, setNewAmount] = useState('');
+    const [beneActive, setBeneActive] = useState(false);
     const [ssnValues, setValue] = useState({
         ssn1: '',
         ssn2: '',
@@ -189,9 +190,25 @@ const MakePaymentSecond = ({
                                 </div>
                             </div>
                         )}
-                        <h4>Enter Transaction Pin</h4>
-
                         <form onSubmit={handleSubmit(transferAction)}>
+                            {title === 'Single Transfer' ? (
+                                beneActive ? null : (
+                                    <div className={styles.saveBene}>
+                                        <label className={styles.beneCheck}>
+                                            <input
+                                                type="checkbox"
+                                                name="beneficiary"
+                                                {...register('beneficiary')}
+                                            />
+                                            <span>
+                                                <i></i>
+                                            </span>
+                                        </label>
+                                        <p>Save Beneficiary</p>
+                                    </div>
+                                )
+                            ) : null}
+                            <h4>Enter Transaction Pin</h4>
                             <div className={styles.otpInps}>
                                 <input
                                     type="password"
@@ -236,7 +253,6 @@ const MakePaymentSecond = ({
                                     onChange={handleChange}
                                 />
                             </div>
-
                             <ButtonComp
                                 disabled={activeBtn}
                                 active={activeBtn ? 'active' : 'inactive'}

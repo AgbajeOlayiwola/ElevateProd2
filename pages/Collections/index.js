@@ -517,6 +517,7 @@ const Collections = () => {
                                 buttonText="Send Paylink"
                                 type="Paylinks"
                                 closeAction={buttonHandleClose}
+                                primary={accountPrimarys.accountId}
                             />
                         );
 
@@ -596,6 +597,7 @@ const Collections = () => {
                                 type="USSD Code"
                                 closeAction={buttonHandleClose}
                                 info={paymentDetails.description}
+                                primary={accountPrimarys.accountId}
                             />
                         );
                     case 3:
@@ -678,6 +680,7 @@ const Collections = () => {
                                 data={generateQrCodeSuccess}
                                 type=" Ecobank QR Code"
                                 closeAction={buttonHandleClose}
+                                primary={accountPrimarys.accountId}
                             />
                         );
                     case 3:

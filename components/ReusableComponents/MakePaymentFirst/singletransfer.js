@@ -563,21 +563,6 @@ const SingleTransfer = ({
                                 {errors?.narration?.message}
                             </p>
                         </div>
-                        {beneActive ? null : (
-                            <div className={styles.saveBene}>
-                                <label className={styles.beneCheck}>
-                                    <input
-                                        type="checkbox"
-                                        name="beneficiary"
-                                        {...register('beneficiary')}
-                                    />
-                                    <span>
-                                        <i></i>
-                                    </span>
-                                </label>
-                                <p>Save Beneficiary</p>
-                            </div>
-                        )}
 
                         {isLoading ? (
                             <Loader />

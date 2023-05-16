@@ -1392,7 +1392,7 @@ const Profile = () => {
                                                                         account.mobileNetwork
                                                                     }
                                                                     beneName={
-                                                                        account.phoneNumber
+                                                                        account.name
                                                                     }
                                                                     key={index}
                                                                     deleteAction={() => {
@@ -1464,7 +1464,8 @@ const Profile = () => {
                                         ) {
                                             const airtimeData = {
                                                 phoneNumber: data.phoneNumber,
-                                                mobileNetwork: data.network
+                                                mobileNetwork: data.network,
+                                                name: data.name
                                             };
                                             dispatch(
                                                 postAirtimeBeneficiariesData(
@@ -1708,6 +1709,33 @@ const Profile = () => {
                                                             ?.message
                                                     }
                                                 </p> */}
+                                                    <div
+                                                        className={
+                                                            styles.formGroup
+                                                        }
+                                                    >
+                                                        <label>Name</label>
+                                                        <input
+                                                            {...register(
+                                                                'name',
+                                                                {
+                                                                    required:
+                                                                        'Name is required'
+                                                                }
+                                                            )}
+                                                            type="text"
+                                                            placeholder="Enter Name"
+                                                            // value={
+                                                            //     interEnquiry.accountName
+                                                            // }
+                                                        />
+                                                        {/* <p className={styles.error}>
+                                                    {
+                                                        errors?.accountNumber
+                                                            ?.message
+                                                    }
+                                                </p> */}
+                                                    </div>
                                                 </div>
                                             </>
                                         ) : null}

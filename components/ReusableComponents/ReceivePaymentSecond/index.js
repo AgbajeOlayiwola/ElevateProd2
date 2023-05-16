@@ -22,7 +22,8 @@ const ReceivePaymentSecond = ({
     info,
     payLinkData,
     amountPaylink,
-    share
+    share,
+    primary
 }) => {
     const [destinationTrue, setDestinationTrue] = useState(true);
     const [addnew, setAddnew] = useState(false);
@@ -164,7 +165,7 @@ const ReceivePaymentSecond = ({
     const [qrUrlData, setQrUrlData] = useState(
         `https://recievepayment.netlify.app/Payments/qr?data=${encodeURIComponent(
             data?.data.data.dynamicQRBase64
-        )}?ref=${data?.data.data.ref}`
+        )}&ref=${data?.data.data.ref}&accountId=${primary}`
     );
 
     const copyQr = () => {

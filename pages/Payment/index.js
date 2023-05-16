@@ -427,19 +427,19 @@ const Payment = () => {
                                         dispatch(getTransactionFees(payload));
                                         setIsLoading(true);
                                     }
-                                    if (data.beneficiary === true) {
-                                        const beneficiaryData = {
-                                            beneficiaryName: data.accountName,
-                                            accountNumber: data.accountNumber,
-                                            bankName: data.bankName,
-                                            bankCode: data.bankName
-                                        };
-                                        dispatch(
-                                            postBeneficiariesData(
-                                                beneficiaryData
-                                            )
-                                        );
-                                    }
+                                    // if (data.beneficiary === true) {
+                                    //     const beneficiaryData = {
+                                    //         beneficiaryName: data.accountName,
+                                    //         accountNumber: data.accountNumber,
+                                    //         bankName: data.bankName,
+                                    //         bankCode: data.bankName
+                                    //     };
+                                    //     dispatch(
+                                    //         postBeneficiariesData(
+                                    //             beneficiaryData
+                                    //         )
+                                    //     );
+                                    // }
                                     setPaymentDetails(data);
                                 }}
                                 // scheduleLater={() => {
@@ -473,6 +473,21 @@ const Payment = () => {
                                 }}
                                 transferAction={(data) => {
                                     setIsLoading(true);
+                                    if (data.beneficiary === true) {
+                                        const beneficiaryData = {
+                                            beneficiaryName:
+                                                paymentDetails.accountName,
+                                            accountNumber:
+                                                paymentDetails.accountNumber,
+                                            bankName: paymentDetails.bankName,
+                                            bankCode: paymentDetails.bankName
+                                        };
+                                        dispatch(
+                                            postBeneficiariesData(
+                                                beneficiaryData
+                                            )
+                                        );
+                                    }
                                     const paymentData = {
                                         isEcobankToEcobankTransaction: ecobank,
                                         destinationBank:
@@ -499,6 +514,7 @@ const Payment = () => {
                                         narration: paymentDetails.narration,
                                         transactionPin: Object.values(data)
                                             .toString()
+                                            .replace('true', '')
                                             .replaceAll(',', ''),
                                         accountId: accountPrimarys.accountId
                                     };
