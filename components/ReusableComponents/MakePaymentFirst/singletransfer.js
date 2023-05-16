@@ -528,7 +528,8 @@ const SingleTransfer = ({
                                 onInput={(e) => {
                                     const inputValue = e.target.value;
 
-                                    setAmount(`${inputValue}.OO`);
+                                    setAmount(inputValue);
+                                    // setAmount(`${inputValue}.OO`);
                                     if (e?.target.value.length === 0) {
                                         setActiveBtn(false);
                                     } else if (e?.target.value.length > 0) {
