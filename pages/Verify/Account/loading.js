@@ -144,6 +144,7 @@ const AccountLoading = () => {
             errorMessages === 'Try Again' ||
             errorMessages === 'Bank Account has not been created for this user'
         ) {
+            console.log('done');
             // if (count === 1) {
             const interval = setInterval(() => {
                 dispatch(newAccountStatusData());
@@ -160,22 +161,24 @@ const AccountLoading = () => {
             //console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         }
-        if (timer === '00:00:00') {
-            dispatch(logoutAction());
-            if (!localStorage.getItem('user')) {
-                router.replace('/Auth/Login');
-            }
-        }
-        if (timer === '00:00:10') {
-            setAccountWait('Your Account Number will be sent to your Email');
-        }
 
         // setTimeout(() => {
         //     setError(
         //         'Your account creatio is taking a while, once its completed an email will be sent to you'
         //     );
         // }, 60000);
-    }, [errorMessages, accountStatuss, timer]);
+    }, [errorMessages, accountStatuss]);
+    useEffect(() => {
+        if (timer == '00:00:00') {
+            dispatch(logoutAction());
+            if (!localStorage.getItem('user')) {
+                router.replace('/Auth/Login');
+            }
+        }
+        if (timer == '00:00:10') {
+            setAccountWait('Your Account Number will be sent to your Email');
+        }
+    }, [timer]);
 
     return (
         <>
@@ -191,7 +194,7 @@ const AccountLoading = () => {
                         ) : timer <= '00:00:10' ? (
                             <div>
                                 <p className={styles.error}>{timer}</p>
-                                <p>{accountWait}</p>
+                                <p className={styles.error}>{accountWait}</p>
                             </div>
                         ) : (
                             <>
