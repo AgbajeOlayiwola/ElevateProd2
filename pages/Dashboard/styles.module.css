@@ -484,7 +484,13 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
+.sliderImage{
+    margin-right: 40px;
+}
 
+.btmI div::-webkit-scrollbar {
+    display: none;
+}
 .btmI::-webkit-scrollbar {
     display: none;
 }

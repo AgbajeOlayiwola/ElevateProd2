@@ -769,17 +769,33 @@ const Dashboard = () => {
                             {/* <div>
                                 <img src="/Assets/Images/1.png" />
                             </div> */}
-                            <div>
-                                <img src="/Assets/Images/2.png" />
+                            <div className={styles.sliderImage}>
+                                <img
+                                    src="/Assets/Images/2.png"
+                                    width={250}
+                                    height={100}
+                                />
                             </div>
-                            <div>
-                                <img src="/Assets/Images/3.png" />
+                            <div className={styles.sliderImage}>
+                                <img
+                                    src="/Assets/Images/3.png"
+                                    width={250}
+                                    height={100}
+                                />
                             </div>
-                            <div>
-                                <img src="/Assets/Images/4.png" />
+                            <div className={styles.sliderImage}>
+                                <img
+                                    src="/Assets/Images/4.png"
+                                    width={250}
+                                    height={100}
+                                />
                             </div>
-                            <div>
-                                <img src="/Assets/Images/5.png" />
+                            <div className={styles.sliderImage}>
+                                <img
+                                    src="/Assets/Images/5.png"
+                                    width={250}
+                                    height={100}
+                                />
                             </div>
                         </Slider>
                         <div className={styles.btm}>

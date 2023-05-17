@@ -305,10 +305,9 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName =
-                                                      beneficiaries.beneficiaryName.split(
-                                                          ' '
-                                                      ))
+                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
+                                                      ' '
+                                                  ))
                                                 : null;
                                         }
                                         if (
@@ -539,7 +538,7 @@ const SingleTransfer = ({
                                 })}
                                 value={amount}
                                 type="text"
-                                placeholder="5,000,000,000.00"
+                                placeholder="Enter Amount"
                                 onInput={(e) => {
                                     const inputValue = e.target.value;
 
@@ -641,10 +640,9 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName =
-                                                      beneficiaries.beneficiaryName.split(
-                                                          ' '
-                                                      ))
+                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
+                                                      ' '
+                                                  ))
                                                 : null;
                                         }
                                         if (
@@ -953,7 +951,7 @@ const SingleTransfer = ({
                                 })}
                                 value={amount}
                                 type="text"
-                                placeholder="5,000,000,000.00"
+                                placeholder="Enter Amount"
                                 onInput={(e) => {
                                     const inputValue = e.target.value;
                                     // console.log(

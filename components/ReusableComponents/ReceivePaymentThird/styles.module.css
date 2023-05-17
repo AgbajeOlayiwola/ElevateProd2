@@ -494,12 +494,12 @@ border-top-left-radius: 20px;
 .statusText{
     display: flex;
     justify-content: center;
-    color: #F18F01 !important;
+    color: #000 !important;
 }
 .failedText{
     display: flex;
     justify-content: center;
-color:#FFF;
+color:#000;
 }
 .successText{
     display: flex;

@@ -370,12 +370,12 @@
 .statusText{
     display: flex;
     justify-content: center;
-    color: #F18F01;
+    color: #000;
 }
 .failedText{
     display: flex;
     justify-content: center;
-color:#FFF
+color:#000
 }
 .disputTextArea{
     border-radius: 20px;
