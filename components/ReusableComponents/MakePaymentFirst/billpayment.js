@@ -616,15 +616,15 @@ const BillPayment = ({
                                     <div className={styles.narration}>
                                         <label>
                                             {
-                                                billerPlans.billFormData[0]
-                                                    .fieldTitle
+                                                billerPlans?.billFormData[0]
+                                                    ?.fieldTitle
                                             }
                                         </label>
                                         <input
                                             type="text"
                                             placeholder={
-                                                billerPlans.billFormData[0]
-                                                    .fieldTitle
+                                                billerPlans?.billFormData[0]
+                                                    ?.fieldTitle
                                             }
                                             name="paymentDescription"
                                             {...register('paymentDescription', {
@@ -643,7 +643,7 @@ const BillPayment = ({
                                                     'Desired Package is required'
                                             })}
                                             onChange={(e) => {
-                                                billerPlans.billerProductInfo?.map(
+                                                billerPlans?.billerProductInfo?.map(
                                                     (item) => {
                                                         if (
                                                             item.productName ===
@@ -663,7 +663,7 @@ const BillPayment = ({
                                             <option value="">
                                                 Select Desired Pacakge
                                             </option>
-                                            {billerPlans.billerProductInfo?.map(
+                                            {billerPlans?.billerProductInfo?.map(
                                                 (item, index) => {
                                                     return (
                                                         <option
