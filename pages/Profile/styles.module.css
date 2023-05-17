@@ -17,6 +17,7 @@
     margin-top:100px;
     display:flex;
     justify-content:flex-end;
+    font-size: 10px;
 }
 .profileHeaderImg img {
     border-radius: 50%;
