@@ -187,6 +187,12 @@ const ReceivePaymentSecond = ({
                 console.log(err);
             });
     };
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        currencyDisplay: 'narrowSymbol'
+    });
+
     return (
         <Overlay overlay={overlay}>
             <div className={styles.secondBody}>
@@ -297,10 +303,12 @@ const ReceivePaymentSecond = ({
                         <div className={styles.deadlineValues}>
                             <p>
                                 {title === 'USSD'
-                                    ? amount
+                                    ? formatter.format(amount)
                                     : title === 'Payment Link Generated'
-                                    ? amountPaylink
-                                    : data.data.data.transactionAmount}
+                                    ? formatter.format(amountPaylink)
+                                    : formatter.format(
+                                          data.data.data.transactionAmount
+                                      )}
                             </p>
                         </div>
                     </div>

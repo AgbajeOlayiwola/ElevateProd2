@@ -282,6 +282,9 @@ const BillPayment = ({
                                         );
                                     })}
                                 </select>
+                                <p className={styles.error}>
+                                    {errors?.sourceAccount?.message}
+                                </p>
                             </div>
                             <div className={styles.networkCarrier}>
                                 <h2>Network</h2>
@@ -567,6 +570,9 @@ const BillPayment = ({
                                         );
                                     })}
                                 </select>
+                                <p className={styles.error}>
+                                    {errors?.sourceAccount?.message}
+                                </p>
                             </div>
                             <div className={styles.narration}>
                                 <label>Biller Type</label>

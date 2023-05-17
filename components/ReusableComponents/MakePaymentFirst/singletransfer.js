@@ -29,6 +29,8 @@ const SingleTransfer = ({
     );
     const [bank, setBank] = useState([]);
     const [apibank, setApiBank] = useState([]);
+    const [errorInterBank, setErrorInterBank] = useState('');
+    const [errorIntraBank, setErrorIntraBank] = useState('');
     const [beneActive, setBeneActive] = useState();
     const [showInterEnquiry, setshowInterEnquiry] = useState(false);
     const [newBeneficiaries, setNewBeneficiaries] = useState([]);
@@ -154,7 +156,9 @@ const SingleTransfer = ({
             setshowInterEnquiry(true);
             setIsLoadinggg(false);
         } else if (errorMessageInterBankEnquiry !== null) {
-            alert(errorMessageInterBankEnquiry);
+            setErrorInterBank(errorMessageInterBankEnquiry);
+            setshowInterEnquiry(true);
+            setIsLoadinggg(false);
         }
     };
     useEffect(() => {
@@ -166,7 +170,8 @@ const SingleTransfer = ({
             setInterEnquiry(intraBankEnquiry);
             setIsLoadinggg(false);
         } else if (errorMessageIntraBankEnquiry !== null) {
-            alert(errorMessageIntraBankEnquiry);
+            setErrorIntraBank(errorMessageIntraBankEnquiry);
+            setIsLoadinggg(false);
         }
     };
     useEffect(() => {
@@ -389,6 +394,9 @@ const SingleTransfer = ({
                                     );
                                 })}
                             </select>
+                            <p className={styles.error}>
+                                {errors?.sourceAccount?.message}
+                            </p>
                         </div>
                         <div className={styles.narration}>
                             <label> Account Number</label>
@@ -485,8 +493,13 @@ const SingleTransfer = ({
                                             name="accountName"
                                         />
                                         <p className={styles.error}>
-                                            {errors?.accountNumber?.message}
+                                            {errors?.accountName?.message}
                                         </p>
+                                        {errorIntraBank ? (
+                                            <p className={styles.error}>
+                                                errorIntraBank
+                                            </p>
+                                        ) : null}
                                     </div>
                                 ) : null}
                             </>
@@ -717,6 +730,9 @@ const SingleTransfer = ({
                                     );
                                 })}
                             </select>
+                            <p className={styles.error}>
+                                {errors?.sourceAccount?.message}
+                            </p>
                         </div>
                         <div className={styles.narration}>
                             <label> Account Number</label>
@@ -818,6 +834,9 @@ const SingleTransfer = ({
                                             );
                                         })}
                                     </select>
+                                    <p className={styles.error}>
+                                        {errors?.bankName?.message}
+                                    </p>
                                     {isLoadinggg ? (
                                         <Lottie
                                             options={socialOptions}
@@ -874,6 +893,15 @@ const SingleTransfer = ({
                                                                 ?.message
                                                         }
                                                     </p>
+                                                    {errorInterBank ? (
+                                                        <p
+                                                            className={
+                                                                styles.error
+                                                            }
+                                                        >
+                                                            errorInterBank
+                                                        </p>
+                                                    ) : null}
                                                 </div>
                                             ) : null}
                                         </>
