@@ -512,10 +512,16 @@ const Payment = () => {
                                             ) + parseInt(transactionFee, 10)
                                         ).toString(),
                                         narration: paymentDetails.narration,
-                                        transactionPin: Object.values(data)
-                                            .toString()
-                                            .replace('true', '')
-                                            .replaceAll(',', ''),
+                                        transactionPin:
+                                            data.beneficiary === true
+                                                ? Object.values(data)
+                                                      .toString()
+                                                      .replace('true', '')
+                                                      .replaceAll(',', '')
+                                                : Object.values(data)
+                                                      .toString()
+                                                      .replace('false', '')
+                                                      .replaceAll(',', ''),
                                         accountId: accountPrimarys.accountId
                                     };
 

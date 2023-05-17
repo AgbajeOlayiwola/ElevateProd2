@@ -27,7 +27,8 @@ const MoreAction = ({
     senders,
     sendBank,
     narr,
-    bene
+    bene,
+    isaccountId
 }) => {
     const [dispute, setDispute] = useState('');
     const [disputeCate, setDisputeCat] = useState('');
@@ -76,6 +77,7 @@ const MoreAction = ({
         setSelectedDisputeSubCategory(event.target.value);
     };
     const [errors, setErrors] = useState('');
+    const [descriptions, setDescription] = useState('');
 
     const type = 'Complaint';
     const sub = 'Transfers';
@@ -95,17 +97,17 @@ const MoreAction = ({
     }, [isDirection]);
     const lodgeTheComplaint = () => {
         const data = {
-            accountId: accountId,
+            accountId: isaccountId,
             caseCategory: selectedDisputeCategory,
-            caseSubCategory: selectedDisputSubCategory,
-            caseType: disputeType,
-            description: `${disputeType} from USER about ${selectedDisputeCategory} regarding ${selectedDisputSubCategory}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmount}`
+            caseSubCategory: sub,
+            caseType: type,
+            description: `${type} from USER about ${selectedDisputeCategory} regarding ${sub}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmount}. Futher Insight From User:${descriptions}`
         };
         dispatch(lodgeDisputeSubGen(data));
         if (lodgeDisputeErrorSubMessage) {
         }
     };
-    let newDate = dates.split('T');
+    let newDate = dates?.split('T');
     return (
         <div
             className={
@@ -153,7 +155,7 @@ const MoreAction = ({
                             <p>Transaction Amount: {transactionAmount}</p>
                             <p>Type: {type}</p>
                             <p>Sub Category: {sub}</p>
-                            <p>date :{newDate[0]}</p>
+                            {newDate == null ? null : <p>date :{newDate[0]}</p>}
                         </div>
                         {lodgeDisputeErrorSubMessage ? (
                             <p className={styles.errors}>
@@ -161,6 +163,7 @@ const MoreAction = ({
                             </p>
                         ) : null}
                         <textarea
+                            onChange={(e) => setDescription(e.target.value)}
                             className={styles.disputTextArea}
                             cols={8}
                             rows={6}

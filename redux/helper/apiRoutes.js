@@ -68,6 +68,7 @@ const uploadBoardRes = '/account-upgrade/board-resolution/upload';
 const forgotPassword = '/authentication/forget-password';
 const forgotPasswordReset = '/authentication/reset-password';
 const resetOtp = '/authentication/otp/re-send';
+const resetPin = '/users/transaction-pin/reset';
 const viewBvn = '/users/bvn/view';
 const resetPassword = '/users/password';
 const bankStatement = '/transactions';
@@ -212,5 +213,6 @@ export default {
     getFullStatement,
     qrMerchantInfo,
     lodgeComplaint,
+    resetPin,
     verifyTransactionPin
 };

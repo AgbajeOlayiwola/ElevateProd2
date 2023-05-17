@@ -89,7 +89,10 @@
     margin-top: 32px;
 
 }
-
+.inactive:hover{
+    background-color: grey;
+    margin-top: 32px;
+}
 /* Utility Popup*/
 .utilityBody {
     margin-top: 48px;

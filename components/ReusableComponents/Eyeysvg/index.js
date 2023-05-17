@@ -8,7 +8,7 @@ import StorePopup from '../StorePopup';
 import { useDispatch, useSelector } from 'react-redux';
 import { verifyTransactionPinGet } from '../../../redux/actions/actions';
 import OutsideClick from '../OutsideClick';
-const Visbility = ({ typeSet, color }) => {
+const Visbility = ({ typeSet, color, input }) => {
     const dispatch = useDispatch();
     const [type, setType] = useState(true);
     const [visible, setVisible] = useState(false);
@@ -19,19 +19,18 @@ const Visbility = ({ typeSet, color }) => {
         typeSet(type);
     };
     const visibilityToggleoff = () => {
-        setShowtransId(true);
+        if (input === 'input') {
+            setVisible((prev) => !prev);
+            setType((prev) => !prev);
+            typeSet(type);
+        } else {
+            setShowtransId(true);
+        }
     };
     const numOfFields = 6;
     const [tansactiopnPinResponse, setTransactionPinResponse] = useState('');
-    const [activeBtn, setActiveBtn] = useState(false);
-    const [ssnValues, setValue] = useState({
-        ssn1: '',
-        ssn2: '',
-        ssn3: '',
-        ssn4: '',
-        ssn5: '',
-        ssn6: ''
-    });
+    const [activeBtn, setActiveBtn] = useState(true);
+    const [ssnValues, setValue] = useState(['']);
     const handleChange = (e) => {
         const { maxLength, value, name } = e.target;
         const [fieldName, fieldIndex] = name.split('-');
@@ -39,27 +38,24 @@ const Visbility = ({ typeSet, color }) => {
         // Check if they hit the max character length
         if (value.length >= maxLength) {
             // Check if it's not the last input field
-            if (parseInt(fieldIndex, 10) < 6) {
+            if (parseInt(fieldIndex, 10) <= 6) {
                 // Get the next input field
                 const nextSibling = document.querySelector(
                     `input[name=ssn-${parseInt(fieldIndex, 10) + 1}]`
                 );
+                setValue((prevValue) => [...prevValue, value]);
+
+                console.log(ssnValues);
+
                 // If found, focus the next field
                 if (nextSibling !== null) {
                     nextSibling.focus();
                 } else {
-                    setActiveBtn(true);
                 }
-            } else {
-                setActiveBtn(true);
             }
         }
-
-        setValue({
-            ...value,
-            [`ssn${fieldIndex}`]: value
-        });
     };
+
     const {
         register,
         handleSubmit,
@@ -71,8 +67,9 @@ const Visbility = ({ typeSet, color }) => {
     } = useSelector((state) => state.verifyTransactionPinReducer);
     const submitPin = (e) => {
         e.preventDefault();
+        console.log('check');
         const data = {
-            pin: '123456'
+            pin: ssnValues.join('')
         };
         dispatch(verifyTransactionPinGet(data));
         console.log(verifyTransactionPinErrorMessage);
@@ -119,52 +116,54 @@ const Visbility = ({ typeSet, color }) => {
                                 name="ssn-1"
                                 {...register('ssn-1')}
                                 maxLength={1}
-                                onChange={handleChange}
+                                onInput={handleChange}
                             />
                             <input
                                 type="password"
                                 name="ssn-2"
                                 {...register('ssn-2')}
                                 maxLength={1}
-                                onChange={handleChange}
+                                onInput={handleChange}
                             />
                             <input
                                 type="password"
                                 name="ssn-3"
                                 {...register('ssn-3')}
                                 maxLength={1}
-                                onChange={handleChange}
+                                onInput={handleChange}
                             />
                             <input
                                 type="password"
                                 name="ssn-4"
                                 {...register('ssn-4')}
                                 maxLength={1}
-                                onChange={handleChange}
+                                onInput={handleChange}
                             />
                             <input
                                 type="password"
                                 name="ssn-5"
                                 {...register('ssn-5')}
                                 maxLength={1}
-                                onChange={handleChange}
+                                onInput={handleChange}
                             />
                             <input
                                 type="password"
                                 name="ssn-6"
                                 {...register('ssn-6')}
                                 maxLength={1}
-                                onChange={handleChange}
+                                onInput={handleChange}
                             />
                         </div>
-                        <ButtonComp
-                            onClick={submitPin}
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="Confirm"
-                            type="submit"
-                            // err={isLoading}
-                        />
+                        <div onClick={submitPin}>
+                            <ButtonComp
+                                // onClick={submitPin}
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Confirm"
+                                type="submit"
+                                // err={isLoading}
+                            />
+                        </div>
                     </form>
                 </OutsideClick>
             ) : null}

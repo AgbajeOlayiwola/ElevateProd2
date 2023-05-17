@@ -162,7 +162,9 @@ const BulkTransfer = ({
                     <label className={styles.bulkLabel}>Source Account</label>
                     <select
                         name="sourceAccount"
-                        {...register('sourceAccount')}
+                        {...register('sourceAccount', {
+                            required: 'Source Account is required'
+                        })}
                         onInput={(event) => {
                             setFormdata({
                                 ...formData,

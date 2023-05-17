@@ -1,7 +1,7 @@
 .chooseDate {
     /* width: fit-content; */
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 .statementCover {
     height: fit-content;
@@ -328,7 +328,9 @@
 .bank {
     width: 14%;
 }
-
+.accountNumbers{
+width: 10%;
+}
 .date {
     width: 12%;
 }

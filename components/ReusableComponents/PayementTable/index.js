@@ -293,7 +293,7 @@ const PaymentTable = ({ title, test, page }) => {
                                 Amount={formatter.format(
                                     items.transactionAmount
                                 )}
-                                accountId={items.accountId}
+                                accountId={items.sourceAccountId}
                                 Bank={items.destinationBank}
                                 Dates={items.transactionDate}
                                 Status={items.transactionStatus}

@@ -7,7 +7,13 @@
     position: absolute;
     top: 3%;
     left: 33%;
+    height: 90vh;
+    overflow-y: scroll;
     z-index: 10;
+}
+
+.PaymentSecond::-webkit-scrollbar {
+    display: none;
 }
 
 .PaymentSecondCont {

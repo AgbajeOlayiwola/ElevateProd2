@@ -59,8 +59,10 @@ const BankStatments = () => {
         (state) => state.bankStatementReducer
     );
 
-    const { getFullStatementSuccess, getFullStatementerrorMessage } =
-        useSelector((state) => state.getFullStatementReducer);
+    const {
+        getFullStatementSuccess,
+        getFullStatementerrorMessage
+    } = useSelector((state) => state.getFullStatementReducer);
 
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
@@ -74,8 +76,10 @@ const BankStatments = () => {
         (state) => state.accountPrimaryReducer
     );
     const [isLoading, setIsLoading] = useState(true);
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -214,6 +218,18 @@ const BankStatments = () => {
         <DashLayout page="Bank Statement">
             <div className={styles.statementCover}>
                 <div className={styles.chooseDate}>
+                    <select className={styles.accountNumbers}>
+                        <option>Select Account Number</option>
+                        {Object.keys(bankAccounts)?.map((accountNo, index) => {
+                            return (
+                                <>
+                                    <option key={index}>
+                                        {bankAccounts[accountNo].accountNumber}
+                                    </option>
+                                </>
+                            );
+                        })}
+                    </select>
                     <div
                         onClick={() => {
                             setDate(true);
@@ -330,6 +346,7 @@ const BankStatments = () => {
                 <div className={styles.table}>
                     <div className={styles.tableHeader}>
                         <h2>Transactions History</h2>
+                        <p>The Table Contains 50 Transactions</p>
                         {/* <div className={styles.tableFilter}>
                             <div>
                                 <img src="../Assets/Svgs/search.svg" alt="" />
@@ -485,8 +502,9 @@ const BankStatments = () => {
                                     pagesVisited + usersPerPage
                                 )
                                 ?.map((items, index) => {
-                                    const newDate =
-                                        items?.transactionTime?.split(' ');
+                                    const newDate = items?.transactionTime?.split(
+                                        ' '
+                                    );
                                     return (
                                         <div
                                             className={styles.TableDetailBody}

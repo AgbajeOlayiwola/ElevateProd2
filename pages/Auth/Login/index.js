@@ -8,7 +8,8 @@ import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     auth2FaCodeDetails,
-    loginUserAction
+    loginUserAction,
+    resetOtpData
 } from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
@@ -46,6 +47,10 @@ const Login = () => {
     const { auth2FaCodeSuccess, auth2FaCodeError } = useSelector(
         (state) => state.auth2FaReducer
     );
+    const { resetOtp, resetOtpErrorMessages } = useSelector(
+        (state) => state.resetOtpReducer
+    );
+
     const {
         register,
         handleSubmit,
@@ -68,7 +73,17 @@ const Login = () => {
     const checkDataContent = (e) => {
         setEmail(e.target.value);
     };
-
+    const clear = (e) => {
+        setValue((ssnValues) => ['']);
+    };
+    const ResetOtp = (e) => {
+        setValue((ssnValues) => ['']);
+        const data = {
+            userId: user?.data?.user?.userId
+        };
+        dispatch(resetOtpData(data));
+        //console.logresetOtp, resetOtpErrorMessages);
+    };
     const onSubmit = (data) => {
         setError('');
         setMloading((prev) => !prev);
@@ -82,6 +97,10 @@ const Login = () => {
         dispatch(auth2FaCodeDetails(loginData));
         // dispatch(createNewUserAccount());
     };
+    useEffect(() => {
+        console.log(resetOtp);
+        // setValue((ssnValues) => ['']);
+    }, [resetOtp, resetOtpErrorMessages]);
 
     //console.log(user);
     const sentLogin = () => {
@@ -490,7 +509,7 @@ const Login = () => {
                                     })}
                                     onInput={handlePwd}
                                 />
-                                <Visbility typeSet={types} />
+                                <Visbility typeSet={types} input="input" />
                             </div>
                             {errors?.password?.message ? (
                                 <p className={styles.errors}>
@@ -595,77 +614,108 @@ const Login = () => {
                         <OutsideClick onClickOutside={closeModal}>
                             <StorePopup overlay={overlay}>
                                 <div className={styles.otpDiv}>
-                                    <h1
-                                        className={styles.errorX}
-                                        onClick={closeModal}
-                                    >
-                                        Enter OTP Below
-                                    </h1>
-                                    {error ? (
-                                        <h2 className={styles.error}>
-                                            {error}
-                                        </h2>
-                                    ) : null}
-                                    <div className={styles.otp}>
-                                        <div className={styles.otpInn}>
-                                            <div className={styles.otpInps}>
-                                                <input
-                                                    type="password"
-                                                    name="ssn-1"
-                                                    maxLength={1}
-                                                    onChange={handleChange}
-                                                />
-                                                <input
-                                                    type="password"
-                                                    name="ssn-2"
-                                                    maxLength={1}
-                                                    onChange={handleChange}
-                                                />
-                                                <input
-                                                    type="password"
-                                                    name="ssn-3"
-                                                    maxLength={1}
-                                                    onChange={handleChange}
-                                                />
-                                                <input
-                                                    type="password"
-                                                    name="ssn-4"
-                                                    maxLength={1}
-                                                    onChange={handleChange}
-                                                />
-                                                <input
-                                                    type="password"
-                                                    name="ssn-5"
-                                                    maxLength={1}
-                                                    onChange={handleChange}
-                                                />
-                                                <input
-                                                    type="password"
-                                                    name="ssn-6"
-                                                    maxLength={1}
-                                                    onChange={handleChange}
-                                                />
+                                    <form>
+                                        <h1
+                                            className={styles.errorX}
+                                            onClick={closeModal}
+                                        >
+                                            Enter OTP Below
+                                        </h1>
+                                        {error ? (
+                                            <h2 className={styles.error}>
+                                                {error}
+                                            </h2>
+                                        ) : null}
+                                        {resetOtpErrorMessages ? (
+                                            <p>
+                                                {' '}
+                                                {
+                                                    resetOtpErrorMessages
+                                                        ?.response?.data
+                                                        ?.message
+                                                }
+                                            </p>
+                                        ) : (
+                                            <p>{resetOtp?.data?.message}</p>
+                                        )}
+                                        <div className={styles.otp}>
+                                            <div className={styles.otpInn}>
+                                                <div className={styles.otpInps}>
+                                                    <input
+                                                        type="password"
+                                                        name="ssn-1"
+                                                        maxLength={1}
+                                                        onInput={handleChange}
+                                                    />
+                                                    <input
+                                                        type="password"
+                                                        name="ssn-2"
+                                                        maxLength={1}
+                                                        onInput={handleChange}
+                                                    />
+                                                    <input
+                                                        type="password"
+                                                        name="ssn-3"
+                                                        maxLength={1}
+                                                        onInput={handleChange}
+                                                    />
+                                                    <input
+                                                        type="password"
+                                                        name="ssn-4"
+                                                        maxLength={1}
+                                                        onInput={handleChange}
+                                                    />
+                                                    <input
+                                                        type="password"
+                                                        name="ssn-5"
+                                                        maxLength={1}
+                                                        onInput={handleChange}
+                                                    />
+                                                    <input
+                                                        type="password"
+                                                        name="ssn-6"
+                                                        maxLength={1}
+                                                        onInput={handleChange}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {mloading ? (
-                                        <Loader />
-                                    ) : (
-                                        <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            text="Submit & Login"
-                                            type="submit"
-                                            // onClick={openModal}
-                                            onClick={onSubmit}
-                                            loads={mloading}
-                                            err={errorMessages}
-                                        />
-                                    )}
+                                        <div className={styles.resendFlex}>
+                                            <button
+                                                className={styles.resetOtp}
+                                                onClick={ResetOtp}
+                                                type="reset"
+                                            >
+                                                Resend OTP
+                                            </button>
+                                            <button
+                                                onClick={clear}
+                                                className={styles.clr}
+                                                type="reset"
+                                            >
+                                                Clear
+                                            </button>
+                                        </div>
+
+                                        {mloading ? (
+                                            <Loader />
+                                        ) : (
+                                            <ButtonComp
+                                                disabled={activeBtn}
+                                                active={
+                                                    activeBtn
+                                                        ? 'active'
+                                                        : 'inactive'
+                                                }
+                                                text="Submit & Login"
+                                                type="submit"
+                                                // onClick={openModal}
+                                                onClick={onSubmit}
+                                                loads={mloading}
+                                                err={errorMessages}
+                                            />
+                                        )}
+                                    </form>
                                 </div>
                             </StorePopup>
                         </OutsideClick>

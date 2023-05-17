@@ -60,6 +60,7 @@ const TableDetail = ({
                 </p>
                 <div className={styles.more}>
                     <MoreAction
+                        isaccountId={accountId}
                         senders={sender}
                         sendBank={senderBank}
                         narr={narration}

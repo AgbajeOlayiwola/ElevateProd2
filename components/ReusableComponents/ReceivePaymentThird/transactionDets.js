@@ -80,15 +80,31 @@ const TransactionDets = ({
     };
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState('');
-
+    const [descriptions, setDescription] = useState('');
+    const types = 'Complaint';
+    const sub = 'Transfers';
+    useEffect(() => {
+        if (paymentDirection?.toLowerCase() === 'debit') {
+            setSelectedDisputeCategory('Payments');
+        }
+        if (type.toLowerCase() === 'ussd') {
+            setSelectedDisputeCategory('Ussd');
+        }
+        if (type?.toLowerCase() === 'payment_link') {
+            setSelectedDisputeCategory('Cards');
+        }
+        if (type?.toLowerCase() === 'qr_payment') {
+            setSelectedDisputeCategory('Payments');
+        }
+    }, [paymentDirection]);
     const lodgeTheComplaint = () => {
         setLoading(true);
         const data = {
             accountId: accountId,
             caseCategory: selectedDisputeCategory,
-            caseSubCategory: selectedDisputSubCategory,
-            caseType: disputeType,
-            description: `${disputeType} from USER about ${selectedDisputeCategory} regarding ${selectedDisputSubCategory}. With Transaction Id: ${transactionId} and Transaction Ref: ${transactionRef}. Amount involved: ${transactionAmmount}`
+            caseSubCategory: sub,
+            caseType: types,
+            description: `${types} from USER about ${selectedDisputeCategory} regarding ${sub}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmmount}. Futher Insight From User:${descriptions}`
         };
         dispatch(lodgeDisputeSubGen(data));
     };
@@ -188,16 +204,21 @@ const TransactionDets = ({
                                 }}
                             >
                                 <div className={styles.showDispute}>
-                                    <p>
-                                        Transacton Amount:{transactionAmmount}
-                                    </p>
-                                    <p>Type: Complaint</p>
-                                    <p>Sub Category: Transfers</p>
-                                    <div className={styles.cancel}>
+                                    <div className={styles.cancelDispute}>
                                         <CloseBtnSvg
                                             action={() => setShowDispute(false)}
                                         />
                                     </div>
+                                    <p classNmae={styles.typeSub}>
+                                        Transacton Amount:{transactionAmmount}
+                                    </p>
+                                    <p classNmae={styles.typeSub}>
+                                        Type: {type}
+                                    </p>
+                                    <p classNmae={styles.typeSub}>
+                                        Sub Category: {sub}
+                                    </p>
+                                    <div className={styles.cancel}></div>
                                     {lodgeDisputeErrorSubMessage ? (
                                         <p className={styles.errors}>
                                             {
@@ -207,6 +228,9 @@ const TransactionDets = ({
                                         </p>
                                     ) : null}
                                     <textarea
+                                        onChange={(e) =>
+                                            setDescription(e.target.value)
+                                        }
                                         className={styles.disputTextArea}
                                         cols={8}
                                         rows={6}

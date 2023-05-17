@@ -42,7 +42,7 @@ line-height: 15px;
 /* identical to box height */
 
 
-color: #102572;
+/* color: #102572; */
 }
 .closeBtn {
     display: block;
@@ -142,7 +142,7 @@ color: #102572;
     font-size: 12px;
     line-height: 15px;
     margin: 0px;
-    color: #102572;
+    /* color: #102572; */
 }
 
 .deadlines {
@@ -164,7 +164,7 @@ position: relative;
     font-size: 12px;
     line-height: 15px;
     margin: 0px;
-    color: #102572;
+    /* color: #102572; */
     font-family: 'Inter', sans-serif;
 }
 
@@ -328,7 +328,7 @@ position: relative;
     /* identical to box height */
     
     
-    color: #FFDE00;
+    /* color: #FFDE00; */
 }
 .edit{
     cursor: pointer;
@@ -384,7 +384,7 @@ line-height: 15px;
 /* identical to box height */
 
 
-color: #005B82;
+color: #FFDE00;
 }
 .accepted{
     font-family: 'Inter';
@@ -563,6 +563,16 @@ color:#FFF;
 .btnDiv{
    padding-left: 30px;
    padding-right: 30px;
+}
+.typeSub{
+    color: black !important;
+}
+.cancelDispute{
+    display:flex;
+    justify-content: flex-end;
+}
+.errors{
+    color: red !important;
 }
 .showReciept{
     padding: 0px;

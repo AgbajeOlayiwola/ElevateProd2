@@ -766,9 +766,9 @@ const Dashboard = () => {
                         </div>
 
                         <Slider {...settings}>
-                            <div>
+                            {/* <div>
                                 <img src="/Assets/Images/1.png" />
-                            </div>
+                            </div> */}
                             <div>
                                 <img src="/Assets/Images/2.png" />
                             </div>
