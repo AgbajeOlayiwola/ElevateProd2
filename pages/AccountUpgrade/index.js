@@ -149,17 +149,12 @@ const AccountUpgrade = () => {
     const [fileNameI, setFileNameI] = useState();
     const [fileII, setFileII] = useState(null);
     const [fileNameII, setFileNameII] = useState();
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        null
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
-    const [
-        identificationBackDocument,
-        setIdentificationBackDocument
-    ] = useState(null);
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState(null);
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
+    const [identificationBackDocument, setIdentificationBackDocument] =
+        useState(null);
     const [
         identificationBackDocumentFileName,
         setIdentificationBackDocumentFileName
@@ -902,7 +897,7 @@ const AccountUpgrade = () => {
                 status:
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
-                        ? addressVerificationSuc.data.data.verificationStatus
+                        ? 'Done'
                         : addressVerificationSuc?.data.data.verificationStatus
             },
             {
@@ -929,7 +924,7 @@ const AccountUpgrade = () => {
                 statusReport: reffereeFormStatus,
                 status:
                     refereeStatus === 'APPROVED'
-                        ? 'Approved'
+                        ? 'Done'
                         : refereeStatus === 'notDone'
                         ? pending
                         : refereeStatus === 'comment'
@@ -953,7 +948,7 @@ const AccountUpgrade = () => {
                             : utilityStatus === 'comment'
                             ? rejected
                             : utilityStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             },
@@ -966,13 +961,13 @@ const AccountUpgrade = () => {
                 status:
                     userProfile?.idDocumentVerificationStatus === 'verified'
                         ? idCardStatus === 'done'
-                            ? 'Approved'
+                            ? 'Done'
                             : idCardStatus === 'notDone'
                             ? userProfile?.idDocumentVerificationStatus
                             : idCardStatus === 'comment'
                             ? rejected
                             : idCardStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : userProfile?.idDocumentVerificationStatus
             },
@@ -1031,7 +1026,7 @@ const AccountUpgrade = () => {
                 status:
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
-                        ? addressVerificationSuc.data.data.verificationStatus
+                        ? 'Done'
                         : addressVerificationSuc?.data.data.verificationStatus
             },
 
@@ -1054,13 +1049,13 @@ const AccountUpgrade = () => {
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
                         ? utilityStatus === 'done'
-                            ? 'Approved'
+                            ? 'Done'
                             : utilityStatus === 'notDone'
                             ? pending
                             : utilityStatus === 'comment'
                             ? rejected
                             : utilityStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             },
@@ -1073,13 +1068,13 @@ const AccountUpgrade = () => {
                 status:
                     userProfile?.idDocumentVerificationStatus === 'verified'
                         ? idCardStatus === 'done'
-                            ? 'Approved'
+                            ? 'Done'
                             : idCardStatus === 'notDone'
                             ? userProfile?.idDocumentVerificationStatus
                             : idCardStatus === 'comment'
                             ? rejected
                             : idCardStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : userProfile?.idDocumentVerificationStatus
             },
@@ -1126,7 +1121,7 @@ const AccountUpgrade = () => {
                 statusReport: reffereeFormStatus,
                 status:
                     refereeStatus === 'APPROVED'
-                        ? 'Approved'
+                        ? 'Done'
                         : refereeStatus === 'notDone'
                         ? pending
                         : refereeStatus === 'comment'
@@ -1141,7 +1136,7 @@ const AccountUpgrade = () => {
                 status:
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
-                        ? addressVerificationSuc.data.data.verificationStatus
+                        ? 'Done'
                         : addressVerificationSuc?.data.data.verificationStatus
             },
             {
@@ -1169,7 +1164,7 @@ const AccountUpgrade = () => {
                             : utilityStatus === 'comment'
                             ? rejected
                             : utilityStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             },
@@ -1182,13 +1177,13 @@ const AccountUpgrade = () => {
                 status:
                     userProfile?.idDocumentVerificationStatus === 'verified'
                         ? idCardStatus === 'done'
-                            ? 'Approved'
+                            ? 'Done'
                             : idCardStatus === 'notDone'
                             ? userProfile?.idDocumentVerificationStatus
                             : idCardStatus === 'comment'
                             ? rejected
                             : idCardStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : userProfile?.idDocumentVerificationStatus
             },
@@ -1243,7 +1238,7 @@ const AccountUpgrade = () => {
                             : cacStatus === 'comment'
                             ? rejected
                             : cacStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             },
@@ -1261,7 +1256,7 @@ const AccountUpgrade = () => {
                             : mematStatus === 'comment'
                             ? rejected
                             : mematStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             },
@@ -1279,7 +1274,7 @@ const AccountUpgrade = () => {
                             : tinStatus === 'comment'
                             ? rejected
                             : tinStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             },
@@ -1297,7 +1292,7 @@ const AccountUpgrade = () => {
                             : scumlStatus === 'comment'
                             ? rejected
                             : scumlStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             }
@@ -1410,7 +1405,12 @@ const AccountUpgrade = () => {
                                           key={index}
                                           status={item.status}
                                           action={() => {
-                                              setTitle(item.title);
+                                              console.log(item.status);
+                                              if (item.status === 'Done')
+                                                  alert('Already Completed');
+                                              else {
+                                                  setTitle(item.title);
+                                              }
                                           }}
                                       />
                                   );
@@ -1459,9 +1459,18 @@ const AccountUpgrade = () => {
                                                                                 item.statusReport
                                                                             }
                                                                             action={() => {
-                                                                                setTitle(
-                                                                                    item.title
-                                                                                );
+                                                                                if (
+                                                                                    item.status ===
+                                                                                    'Done'
+                                                                                )
+                                                                                    alert(
+                                                                                        'Already Completed'
+                                                                                    );
+                                                                                else {
+                                                                                    setTitle(
+                                                                                        item.title
+                                                                                    );
+                                                                                }
                                                                             }}
                                                                         />
                                                                     </>
@@ -1493,7 +1502,15 @@ const AccountUpgrade = () => {
                                                   key={index}
                                                   status={item.status}
                                                   action={() => {
-                                                      setTitle(item.title);
+                                                      if (
+                                                          item.status === 'Done'
+                                                      )
+                                                          alert(
+                                                              'Already Completed'
+                                                          );
+                                                      else {
+                                                          setTitle(item.title);
+                                                      }
                                                   }}
                                               />
                                           );
@@ -1525,7 +1542,15 @@ const AccountUpgrade = () => {
                                                   key={index}
                                                   status={item.status}
                                                   action={() => {
-                                                      setTitle(item.title);
+                                                      if (
+                                                          item.status === 'Done'
+                                                      )
+                                                          alert(
+                                                              'Already Completed'
+                                                          );
+                                                      else {
+                                                          setTitle(item.title);
+                                                      }
                                                   }}
                                               />
                                               {document
@@ -1550,9 +1575,18 @@ const AccountUpgrade = () => {
                                                                             item.statusReport
                                                                         }
                                                                         action={() => {
-                                                                            setTitle(
-                                                                                item.title
-                                                                            );
+                                                                            if (
+                                                                                item.status ===
+                                                                                'Done'
+                                                                            )
+                                                                                alert(
+                                                                                    'Already Completed'
+                                                                                );
+                                                                            else {
+                                                                                setTitle(
+                                                                                    item.title
+                                                                                );
+                                                                            }
                                                                         }}
                                                                     />
                                                                 </>
@@ -1641,7 +1675,15 @@ const AccountUpgrade = () => {
                                                   key={index}
                                                   status={item.status}
                                                   action={() => {
-                                                      setTitle(item.title);
+                                                      if (
+                                                          item.status === 'Done'
+                                                      )
+                                                          alert(
+                                                              'Already Completed'
+                                                          );
+                                                      else {
+                                                          setTitle(item.title);
+                                                      }
                                                   }}
                                               />
                                           );

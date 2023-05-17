@@ -888,8 +888,7 @@ const SingleTransfer = ({
                                                     />
                                                     <p className={styles.error}>
                                                         {
-                                                            errors
-                                                                ?.accountNumber
+                                                            errors?.accountName
                                                                 ?.message
                                                         }
                                                     </p>
