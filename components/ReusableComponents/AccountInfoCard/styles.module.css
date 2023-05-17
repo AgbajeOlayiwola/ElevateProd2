@@ -56,6 +56,10 @@
     align-items: center;
     gap: 13px;
 }
+.assctDrop:last-child {
+    cursor: pointer;
+}
+
 .accountNumbers {
     padding: 0px;
     background: no-repeat;
@@ -124,7 +128,7 @@
     line-height: 15px;
     color: #ffffff;
 }
-.coppied{
+.coppied {
     position: absolute;
     top: 10px;
     padding: 10px;

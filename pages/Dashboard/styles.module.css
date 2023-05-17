@@ -48,6 +48,13 @@
     gap: 10px;
     align-items: center;
 }
+
+.assctDrop div:last-child {
+    cursor: pointer;
+    position: relative;
+    z-index: 20;
+}
+
 .mdCopy {
     cursor: pointer;
 }
@@ -93,7 +100,7 @@
 
     text-align: center !important;
 
-    color: #C28CAE!important;
+    color: #c28cae !important;
     margin: 0px !important;
 }
 .Tpwhflex div {

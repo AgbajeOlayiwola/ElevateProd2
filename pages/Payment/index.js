@@ -183,8 +183,6 @@ const Payment = () => {
         console.log(accountPrimarys);
         console.log(bankAccounts);
         console.log(formData.accountNum);
-        setSenderDetails(accountPrimarys);
-        console.log(senderDetails);
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
                 // setAcctNumber(accountPrimarys);
@@ -192,7 +190,6 @@ const Payment = () => {
                 balanceData = {
                     accountId: bankAccounts[accountNo].accountId
                 };
-                setSenderDetails(accountPrimarys.accountId);
                 // console.log(senderDetails.accountId);
                 dispatch(getBalanceEnquiry(balanceData));
             } else {
@@ -402,6 +399,8 @@ const Payment = () => {
                                 buttonText="Next"
                                 othersaction={(data) => {
                                     console.log(data);
+                                    setSenderDetails(data.sourceAccount);
+                                    console.log(senderDetails);
                                     if (data.bankName === 'ECOBANK') {
                                         setEcobank(true);
                                         setCount(count + 1);
@@ -412,8 +411,7 @@ const Payment = () => {
                                         setCount(count + 1);
                                     } else {
                                         const payload = {
-                                            accountId:
-                                                accountPrimarys.accountId,
+                                            accountId: data.sourceAccount,
                                             destinationBankCode:
                                                 data.bankName === ''
                                                     ? data.bankNameBene
@@ -522,7 +520,7 @@ const Payment = () => {
                                                       .toString()
                                                       .replace('false', '')
                                                       .replaceAll(',', ''),
-                                        accountId: accountPrimarys.accountId
+                                        accountId: senderDetails
                                     };
 
                                     dispatch(postInterBank(paymentData));
@@ -596,6 +594,7 @@ const Payment = () => {
                                 payload={paymentDetails.details}
                                 action={(data) => {
                                     setPaymentDetails(data);
+                                    setSenderDetails(data.sourceAccount);
                                     //console.log(data);
                                     setCount(count + 1);
                                 }}
@@ -638,10 +637,9 @@ const Payment = () => {
                                     setCount(count - 1);
                                 }}
                                 transferAction={(data) => {
-                                    console.log(accountPrimarys.accountId);
                                     setIsLoading(true);
                                     const paymentData = {
-                                        accountId: senderDetails?.accountId,
+                                        accountId: senderDetails,
                                         transactionPin: Object.values(data)
                                             .toString()
                                             .replaceAll(',', ''),
@@ -711,7 +709,7 @@ const Payment = () => {
                                                               parseInt(
                                                                   e.Amount,
                                                                   10
-                                                              ),
+                                                              ).toString(),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -746,11 +744,11 @@ const Payment = () => {
                                                                           ? parseInt(
                                                                                 details.amount,
                                                                                 10
-                                                                            )
+                                                                            ).toString()
                                                                           : parseInt(
                                                                                 paymentDetails.amount,
                                                                                 10
-                                                                            ),
+                                                                            ).toString(),
                                                                   narration: ''
                                                               };
                                                           }
@@ -843,8 +841,9 @@ const Payment = () => {
                                 // }}
                                 airtimeAction={(data) => {
                                     setPaymentDetails(data);
+                                    setSenderDetails(data.sourceAccount);
                                     const payload = {
-                                        accountId: accountPrimarys.accountId,
+                                        accountId: data.sourceAccount,
                                         billerCode:
                                             bill === 'AIRTIME'
                                                 ? airtimeNetData.code
@@ -904,8 +903,7 @@ const Payment = () => {
                                             transactionPin: Object.values(data)
                                                 .toString()
                                                 .replaceAll(',', ''),
-                                            accountId:
-                                                accountPrimarys.accountId,
+                                            accountId: senderDetails,
                                             billerCode: airtimeNetData.code,
                                             billerId: airtimeNetData.id,
                                             // productCode: airtimeNetData.name,
@@ -933,8 +931,7 @@ const Payment = () => {
                                         dispatch(postAirtime(billerdata));
                                     } else {
                                         const billerData = {
-                                            accountId:
-                                                accountPrimarys.accountId,
+                                            accountId: senderDetails,
                                             transactionPin: Object.values(data)
                                                 .toString()
                                                 .replaceAll(',', ''),

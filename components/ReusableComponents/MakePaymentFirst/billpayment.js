@@ -274,7 +274,7 @@ const BillPayment = ({
                                     {bankAccounts?.map((accounts, index) => {
                                         return (
                                             <option
-                                                value={accounts.accountNumber}
+                                                value={accounts.accountId}
                                                 key={index}
                                             >
                                                 {accounts.accountNumber}
@@ -388,6 +388,9 @@ const BillPayment = ({
                                             })}
                                         />
                                     ) : null}
+                                    <p className={styles.error}>
+                                        {errors?.phoneNumber?.message}
+                                    </p>
                                 </div>
 
                                 <div className={styles.formGroup}>
@@ -406,6 +409,9 @@ const BillPayment = ({
                                             }
                                         })}
                                     />
+                                    <p className={styles.error}>
+                                        {errors?.amount?.message}
+                                    </p>
                                 </div>
                                 {isLoading ? (
                                     <Loader />
@@ -562,7 +568,7 @@ const BillPayment = ({
                                     {bankAccounts?.map((accounts, index) => {
                                         return (
                                             <option
-                                                value={accounts.accountNumber}
+                                                value={accounts.accountId}
                                                 key={index}
                                             >
                                                 {accounts.accountNumber}
@@ -604,6 +610,9 @@ const BillPayment = ({
                                         }
                                     )}
                                 </select>
+                                <p className={styles.error}>
+                                    {errors?.billerTypes?.message}
+                                </p>
                             </div>
                             {isLoadinggg ? (
                                 <Lottie
@@ -632,6 +641,12 @@ const BillPayment = ({
                                                     'Payment Description is required'
                                             })}
                                         />
+                                        <p className={styles.error}>
+                                            {
+                                                errors?.paymentDescription
+                                                    ?.message
+                                            }
+                                        </p>
                                     </div>
                                     <div className={styles.narration}>
                                         <label>Select Package</label>
@@ -678,6 +693,9 @@ const BillPayment = ({
                                                 }
                                             )}
                                         </select>
+                                        <p className={styles.error}>
+                                            {errors?.desiredPackage?.message}
+                                        </p>
                                     </div>
                                 </>
                             ) : null}
@@ -765,6 +783,9 @@ const BillPayment = ({
                                             }
                                         })}
                                     />
+                                    <p className={styles.error}>
+                                        {errors?.amount?.message}
+                                    </p>
                                 </div>
 
                                 {isLoading ? (

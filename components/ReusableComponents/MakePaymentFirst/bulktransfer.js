@@ -179,10 +179,7 @@ const BulkTransfer = ({
                             </option> */}
                         {bankAccounts?.map((accounts, index) => {
                             return (
-                                <option
-                                    value={accounts.accountNumber}
-                                    key={index}
-                                >
+                                <option value={accounts.accountId} key={index}>
                                     {accounts.accountNumber}
                                 </option>
                             );
