@@ -450,10 +450,8 @@ const Collections = () => {
         }
         console.log(formType);
     }, [count]);
-    const {
-        getQrMerchnatInfoSuccess,
-        getQrMerchnatInfoErrorMessage
-    } = useSelector((state) => state.getQrMerchantInfoReducermport);
+    const { getQrMerchnatInfoSuccess, getQrMerchnatInfoErrorMessage } =
+        useSelector((state) => state.getQrMerchantInfoReducermport);
     const [merchantInf, setMerchantInfo] = useState();
     useEffect(() => {
         dispatch(getQrMerchantInfoGen());

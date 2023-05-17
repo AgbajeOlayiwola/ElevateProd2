@@ -188,6 +188,9 @@ const BulkTransfer = ({
                             );
                         })}
                     </select>
+                    <p className={styles.error}>
+                        {errors?.sourceAccount?.message}
+                    </p>
                 </div>
                 <p className={styles.beneTitle}>Beneficiary Details</p>
                 {csvUpload ? (
