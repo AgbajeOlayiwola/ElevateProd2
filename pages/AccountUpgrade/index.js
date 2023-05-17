@@ -3282,7 +3282,10 @@ const AccountUpgrade = () => {
                                             })}
                                             placeholder="Enter Transaction Pin"
                                         />
-                                        <Visbility typeSet={types} />
+                                        <Visbility
+                                            typeSet={types}
+                                            input="input"
+                                        />
                                     </div>
                                     <p className={styles.error}>
                                         {errors.transactionPin?.message}
@@ -3301,7 +3304,10 @@ const AccountUpgrade = () => {
                                             })}
                                             placeholder="Enter Password"
                                         />
-                                        <Visbility typeSet={typed} />
+                                        <Visbility
+                                            typeSet={typed}
+                                            input="input"
+                                        />
                                     </div>
                                     <p className={styles.error}>
                                         {errors.password?.message}

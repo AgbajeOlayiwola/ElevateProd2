@@ -278,7 +278,7 @@ const Dashboard = () => {
             let two = 0;
             setIsLoading(false);
             transactionHistory.transactions.filter((item) => {
-                if (item.paymentDirection === 'Debit') {
+                if (item.paymentDirection === 'DEBIT') {
                     setTableDetails((arr) => [...arr, item]);
                 }
             });
