@@ -385,7 +385,7 @@ const SingleTransfer = ({
                                 {bankAccounts?.map((accounts, index) => {
                                     return (
                                         <option
-                                            value={accounts.accountNumber}
+                                            value={accounts.accountId}
                                             key={index}
                                         >
                                             {accounts.accountNumber}
@@ -720,7 +720,7 @@ const SingleTransfer = ({
                                 {bankAccounts?.map((accounts, index) => {
                                     return (
                                         <option
-                                            value={accounts.accountNumber}
+                                            value={accounts.accountId}
                                             key={index}
                                         >
                                             {accounts.accountNumber}

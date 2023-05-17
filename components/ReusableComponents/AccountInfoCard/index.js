@@ -252,11 +252,9 @@ const AccountsInfoCard = () => {
                                             </div>
                                         ) : null}
                                     </div>
-
-                                    <IoMdCopy
-                                        className={styles.mdCopy}
-                                        onClick={copyAccountNumber}
-                                    />
+                                    <div className={styles.mdCopy}>
+                                        <IoMdCopy onClick={copyAccountNumber} />
+                                    </div>
                                 </div>
                                 {/* <p className={styles.accountNumber}>
                             {acctNumber.accountNumber}
