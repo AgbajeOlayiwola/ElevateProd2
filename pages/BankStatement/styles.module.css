@@ -17,7 +17,9 @@
     border-radius: 16px;
     padding: 12px 24px;
 }
-
+.italisize{
+    font-size: 1=px;
+}
 .chooseDate p {
     margin: 0px;
     font-family: 'Inter';
@@ -329,7 +331,7 @@
     width: 14%;
 }
 .accountNumbers{
-width: 10%;
+width: 20%;
 }
 .date {
     width: 12%;

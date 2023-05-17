@@ -32,7 +32,7 @@
 }
 
 .inActive {
-    padding: 16px 32px;
+    padding: 16px 25px;
     margin-bottom: 8px;
     background: rgba(108, 207, 0, 0.11);
     border-radius: 19px;
@@ -44,7 +44,7 @@
 
 .cont {
     margin-bottom: 8px;
-    padding: 16px 32px;
+    padding: 16px 25px;
     cursor: pointer;
 }
 

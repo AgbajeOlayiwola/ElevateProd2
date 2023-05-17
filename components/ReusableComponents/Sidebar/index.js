@@ -59,35 +59,32 @@ const Sidebar = ({ showSubnav }) => {
                             );
                         } else {
                             return (
-                                <div
-                                    key={index}
-                                    className={
-                                        router.pathname === item.path
-                                            ? styles.inActive
-                                            : styles.cont
+                                <a
+                                    href={
+                                        router.pathname !== item.path
+                                            ? item.path
+                                            : null
                                     }
+                                    className={styles.title}
                                 >
-                                    <div className={styles.contWrapper}>
-                                        <span className={styles.titleIcon}>
-                                            {router.pathname === item.path
-                                                ? item.iconActive
-                                                : item.icon}
-                                        </span>
-                                        <div>
-                                            <a
-                                                href={
-                                                    router.pathname !==
-                                                    item.path
-                                                        ? item.path
-                                                        : null
-                                                }
-                                                className={styles.title}
-                                            >
-                                                {item.title}
-                                            </a>
+                                    <div
+                                        key={index}
+                                        className={
+                                            router.pathname === item.path
+                                                ? styles.inActive
+                                                : styles.cont
+                                        }
+                                    >
+                                        <div className={styles.contWrapper}>
+                                            <span className={styles.titleIcon}>
+                                                {router.pathname === item.path
+                                                    ? item.iconActive
+                                                    : item.icon}
+                                            </span>
+                                            <div>{item.title}</div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             );
                         }
                     })}

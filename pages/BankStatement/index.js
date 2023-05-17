@@ -219,7 +219,6 @@ const BankStatments = () => {
             <div className={styles.statementCover}>
                 <div className={styles.chooseDate}>
                     <select className={styles.accountNumbers}>
-                        <option>Select Account Number</option>
                         {Object.keys(bankAccounts)?.map((accountNo, index) => {
                             return (
                                 <>
@@ -346,7 +345,9 @@ const BankStatments = () => {
                 <div className={styles.table}>
                     <div className={styles.tableHeader}>
                         <h2>Transactions History</h2>
-                        <p>The Table Contains 50 Transactions</p>
+                        <i className={styles.italisize}>
+                            * The Table Contains 50 Transactions
+                        </i>
                         {/* <div className={styles.tableFilter}>
                             <div>
                                 <img src="../Assets/Svgs/search.svg" alt="" />
