@@ -75,14 +75,14 @@ const DashLayout = ({
                     }}
                 />
             </div>
-            {/* <Idle
+            <Idle
                 timeout={300000}
                 onChange={({ idle }) => {
                     if (idle) {
                         preloadCornify();
                     }
                 }}
-            /> */}
+            />
 
             {!sideActive ? (
                 <div className={styles.dashCont}>

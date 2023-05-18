@@ -57,7 +57,7 @@ import StorePopup from '../../components/ReusableComponents/StorePopup';
 import CloseBtnSvg from '../../components/ReusableComponents/ClosebtnSvg';
 const Profile = () => {
     const router = useRouter();
-    const [activeBtn, setActiveBtn] = useState(true);
+    const [activeBtn, setActiveBtn] = useState(false);
     const [type, setType] = useState('Account');
     const [loading, setLoading] = useState(false);
     const [outcome, setOutcome] = useState(false);
@@ -154,7 +154,7 @@ const Profile = () => {
     const interBankEnquiryCheck = () => {
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
-            setshowInterEnquiry(true);
+            setActiveBtn(true);
         }
     };
     const iframeRef = useRef(null);
@@ -165,7 +165,7 @@ const Profile = () => {
     const intraBankEnquiryCheck = () => {
         if (intraBankEnquiry !== null) {
             setInterEnquiry(intraBankEnquiry);
-            setshowInterEnquiry(true);
+            setActiveBtn(true);
         }
     };
     useEffect(() => {
@@ -177,11 +177,15 @@ const Profile = () => {
             setMessage('Beneficary added successfully');
             setStatusbar('success');
             setLoading(false);
+            setshowInterEnquiry(false);
+            setInterEnquiry('');
+            setActiveBtn(false);
         } else if (errorMessagepostBeneficiaries !== null) {
             setOutcome(true);
             setMessage(errorMessagepostBeneficiaries);
             setStatusbar('error');
             setLoading(false);
+            setActiveBtn(false);
         }
     };
 
@@ -194,11 +198,13 @@ const Profile = () => {
             setMessage('Beneficary added successfully');
             setStatusbar('success');
             setLoading(false);
+            setActiveBtn(false);
         } else if (errorMessagepostAirtimeBeneficiaries !== null) {
             setOutcome(true);
             setMessage(errorMessagepostAirtimeBeneficiaries);
             setStatusbar('error');
             setLoading(false);
+            setActiveBtn(false);
         }
     }, [postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries]);
     const transactionPin = () => {
@@ -1449,7 +1455,7 @@ const Profile = () => {
                                             setLoading(true);
                                             const beneData = {
                                                 beneficiaryName:
-                                                    data.accountName,
+                                                    interEnquiry.accountName,
                                                 accountNumber:
                                                     data.accountNumber,
                                                 bankName: data.bankName,
@@ -1547,6 +1553,7 @@ const Profile = () => {
                                                             value={
                                                                 interEnquiry.accountName
                                                             }
+                                                            placeholder="Loading..."
                                                         />
                                                         <p
                                                             className={
@@ -1575,6 +1582,9 @@ const Profile = () => {
                                                         )}
                                                         name="bankName"
                                                         onChange={(e) => {
+                                                            setshowInterEnquiry(
+                                                                true
+                                                            );
                                                             if (
                                                                 e.target
                                                                     .value ===
@@ -1728,6 +1738,30 @@ const Profile = () => {
                                                             // value={
                                                             //     interEnquiry.accountName
                                                             // }
+                                                            onInput={(e) => {
+                                                                const inputValue =
+                                                                    e.target
+                                                                        .value;
+                                                                // console.log(
+                                                                //     parseInt(inputValue).toFixed(2)
+                                                                // );
+                                                                // setAmount(parseInt(inputValue).toFixed(2));
+                                                                if (
+                                                                    inputValue.length ===
+                                                                    0
+                                                                ) {
+                                                                    setActiveBtn(
+                                                                        false
+                                                                    );
+                                                                } else if (
+                                                                    inputValue.length >
+                                                                    0
+                                                                ) {
+                                                                    setActiveBtn(
+                                                                        true
+                                                                    );
+                                                                }
+                                                            }}
                                                         />
                                                         {/* <p className={styles.error}>
                                                     {
@@ -1746,9 +1780,16 @@ const Profile = () => {
                                             {loading ? (
                                                 <Loader />
                                             ) : (
-                                                <button type="submit">
-                                                    Create Beneficiary
-                                                </button>
+                                                <ButtonComp
+                                                    text="Create Beneficiary"
+                                                    type="submit"
+                                                    disabled={activeBtn}
+                                                    active={
+                                                        activeBtn
+                                                            ? 'active'
+                                                            : 'inactive'
+                                                    }
+                                                />
                                             )}
                                         </div>
                                     </div>

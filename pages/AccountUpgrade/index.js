@@ -172,6 +172,7 @@ const AccountUpgrade = () => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [questions, setQuestions] = useState();
     const [base64Code, setBase64Code] = useState('');
+    const [errorActive, setErrorActive] = useState('');
     const [backBase64Code, setBackBase64Code] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const [corporateAccount, setCorporateAccount] = useState();
@@ -286,6 +287,13 @@ const AccountUpgrade = () => {
         setIsLoading(true);
         router.push('../Dashboard');
     };
+
+    const tinRegistration = () => {
+        const data = {
+            tin: tinNumber
+        };
+        dispatch(getTinDetails(data));
+    };
     const transactionPin = () => {
         if (setTransactionPin !== null) {
             setMessage('Transaction Pin Set Successfully');
@@ -353,6 +361,8 @@ const AccountUpgrade = () => {
                         setUtilityStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setUtilityStatus(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setUtilityStatus('notDone');
                     } else {
                         setUtilityStatus('done');
                     }
@@ -361,6 +371,8 @@ const AccountUpgrade = () => {
                         setCacStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setCacStatus(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setCacStatus('notDone');
                     } else {
                         setCacStatus('done');
                     }
@@ -369,6 +381,8 @@ const AccountUpgrade = () => {
                         setMematStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setMematStatus(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setMematStatus('notDone');
                     } else {
                         setMematStatus('done');
                     }
@@ -377,6 +391,8 @@ const AccountUpgrade = () => {
                         setScumlStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setScumlStatus(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setScumlStatus('notDone');
                     } else {
                         setScumlStatus('done');
                     }
@@ -386,6 +402,8 @@ const AccountUpgrade = () => {
                     } else if (document.status === 'APPROVED') {
                         setRefereeStatus(document.status);
                         setReffereeFormStatus('done');
+                    } else if (document.status === 'PENDING') {
+                        setRefereeStatus('notDone');
                     } else {
                         setRefereeStatus('done');
                     }
@@ -447,6 +465,22 @@ const AccountUpgrade = () => {
             setLoading(false);
         }
     }, [cac, cacErrorMessages]);
+
+    useEffect(() => {
+        if (tinSuccess !== null) {
+            setMessage('TIN uploaded Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setTinStatus('done');
+        } else if (tinError !== null) {
+            console.log(tinError);
+            // setMessage(cacErrorMessages.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [tinSuccess, tinError]);
     useEffect(() => {
         if (pushDocuments !== null) {
             setMessage(' Uploaded Successfully');
@@ -865,7 +899,7 @@ const AccountUpgrade = () => {
                 statusReport: elevateStatus,
                 status:
                     elevateStatus === 'done'
-                        ? review
+                        ? status
                         : elevateStatus === 'notDone'
                         ? pending
                         : null
@@ -1385,34 +1419,48 @@ const AccountUpgrade = () => {
                         userProfileData.customerCategory === 'INDIVIDUAL'
                             ? AccountUpgradeData.existing.map((item, index) => {
                                   return (
-                                      <AccountUpgradeSingle
-                                          statusInfo={item.statusReport}
-                                          textII={item.textII}
-                                          content={shareDocuments?.map(
-                                              (items) => {
-                                                  if (
-                                                      items.documentType ===
-                                                      item.title
-                                                  ) {
-                                                      return items.comment;
-                                                  } else {
-                                                      return '';
+                                      <>
+                                          <AccountUpgradeSingle
+                                              statusInfo={item.statusReport}
+                                              textII={item.textII}
+                                              content={shareDocuments?.map(
+                                                  (items) => {
+                                                      if (
+                                                          items.documentType ===
+                                                          item.title
+                                                      ) {
+                                                          return items.comment;
+                                                      } else {
+                                                          return '';
+                                                      }
                                                   }
-                                              }
-                                          )}
-                                          icon={item.icon}
-                                          text={item.title}
-                                          key={index}
-                                          status={item.status}
-                                          action={() => {
-                                              console.log(item.status);
-                                              if (item.status === 'Done')
-                                                  alert('Already Completed');
-                                              else {
-                                                  setTitle(item.title);
-                                              }
-                                          }}
-                                      />
+                                              )}
+                                              icon={item.icon}
+                                              text={item.title}
+                                              key={index}
+                                              status={item.status}
+                                              action={() => {
+                                                  console.log(item.status);
+                                                  if (item.status === 'Done')
+                                                      setErrorActive(
+                                                          item.title
+                                                      );
+                                                  else {
+                                                      setTitle(item.title);
+                                                  }
+                                              }}
+                                          />
+                                          {errorActive === item.title ? (
+                                              <>
+                                                  {/* <p className={styles.error}>
+                                                      Already Completed
+                                                  </p> */}
+                                                  {setTimeout(() => {
+                                                      setErrorActive('');
+                                                  }, 1500)}
+                                              </>
+                                          ) : null}
+                                      </>
                                   );
                               })
                             : userProfileData.createdFromEcobankCred === true &&
@@ -1473,6 +1521,14 @@ const AccountUpgrade = () => {
                                                                                 }
                                                                             }}
                                                                         />
+                                                                        <p
+                                                                            className={
+                                                                                styles.error
+                                                                            }
+                                                                        >
+                                                                            Already
+                                                                            Completed
+                                                                        </p>
                                                                     </>
                                                                 );
                                                             }
@@ -2832,7 +2888,7 @@ const AccountUpgrade = () => {
                             <input
                                 type="text"
                                 onChange={(e) => setTinNumber(e.target.value)}
-                                placeholder="Enter  Your Tin"
+                                placeholder="********-***"
                             />
                         </div>
                         {loading ? (

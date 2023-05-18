@@ -277,22 +277,18 @@ const Dashboard = () => {
             let one = 0;
             let two = 0;
             setIsLoading(false);
-            transactionHistory.transactions.filter((item) => {
-                if (item.paymentDirection === 'Debit') {
-                    setTableDetails((arr) => [...arr, item]);
-                }
-            });
-            // transactionHistory.transactions
-            //     .filter((item) => {
-            //         if (item.paymentDirection === 'CREDIT') {
-            //             return item;
-            //         }
-            //     })
-            //     .reduce((a, b) => {
-            //         setInflow(formatter.format(a));
-            //         one = a;
-            //         return a + +b.transactionAmount;
-            //     }, 0);
+            setTableDetails(transactionHistory.transactions);
+            transactionHistory.transactions
+                .filter((item) => {
+                    if (item.paymentDirection === 'CREDIT') {
+                        return item;
+                    }
+                })
+                .reduce((a, b) => {
+                    setInflow(formatter.format(a));
+                    one = a;
+                    return a + +b.transactionAmount;
+                }, 0);
             transactionHistory.transactions
                 .filter((item) => {
                     if (item.paymentDirection === 'DEBIT') {
@@ -408,32 +404,6 @@ const Dashboard = () => {
                             </Link>
                             <Link
                                 href={{
-                                    pathname: '/Payment',
-                                    query: { id: 'Bills Payment' }
-                                }}
-                            >
-                                <div className={styles.dinCLass}>
-                                    <div className={styles.svg}>
-                                        <BillTransfer />
-                                    </div>
-                                    <p className={styles.name}>Bills Payment</p>
-                                </div>
-                            </Link>
-                            <Link
-                                href={{
-                                    pathname: '/Payment',
-                                    query: { id: 'Bulk Transfer' }
-                                }}
-                            >
-                                <div className={styles.dinCLass}>
-                                    <div className={styles.svg}>
-                                        <BulkTransfer2 />
-                                    </div>
-                                    <p className={styles.name}>Bulk Transfer</p>
-                                </div>
-                            </Link>
-                            {/* <Link
-                                href={{
                                     pathname: '/Collections',
                                     query: { id: 'Ecobank QR Only' }
                                 }}
@@ -459,7 +429,7 @@ const Dashboard = () => {
                                     </div>
                                     <p className={styles.name}>USSD</p>
                                 </div>
-                            </Link> */}
+                            </Link>
                         </div>
                         <div className={styles.btmI}>
                             <div className={styles.btmItop}>
@@ -724,7 +694,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className={styles.recMak}>
-                                        {/* <RecievePaymentBtn /> */}
+                                        <RecievePaymentBtn />
                                         <MakePaymentBtn />
                                     </div>
                                 </div>

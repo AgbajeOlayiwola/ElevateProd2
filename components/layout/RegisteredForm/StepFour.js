@@ -742,7 +742,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                         <img
                                                             src={
                                                                 countryNames
-                                                                    .flags.svg
+                                                                    ?.flags.svg
                                                             }
                                                             alt=""
                                                         />

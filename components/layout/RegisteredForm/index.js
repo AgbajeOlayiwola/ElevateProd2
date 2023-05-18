@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Liveness from '../NotRegisteredForms/Liveness';
 
 const ExistingMultiStep = () => {
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(4);
     const [pageType, setPageType] = useState('');
     const [country, setCountry] = useState();
     const [loads, setLoads] = useState(false);
