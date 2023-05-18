@@ -301,9 +301,8 @@ const Dashboard = () => {
                     return a + +b.transactionAmount;
                 }, 0);
             setTotalMMoney(formatter.format(one + two));
-            const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
-                'T'
-            );
+            const newDate =
+                transactionHistory.transactions[0]?.transactionDate?.split('T');
             if (newDate) {
                 if (newDate[0] == time) {
                     setDateState(true);
@@ -857,15 +856,9 @@ const Dashboard = () => {
                                             return item;
                                         })
                                         ?.map((item, index) => {
-<<<<<<< HEAD
+                                            console.log(item);
                                             const formatter =
                                                 new Intl.NumberFormat('en-US', {
-=======
-                                            console.log(item);
-                                            const formatter = new Intl.NumberFormat(
-                                                'en-US',
-                                                {
->>>>>>> d79823e073093a20f99f72a330e9c8dd47587bb5
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:

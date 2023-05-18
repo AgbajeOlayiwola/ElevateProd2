@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Liveness from '../NotRegisteredForms/Liveness';
 
 const ExistingMultiStep = () => {
-    const [page, setPage] = useState(4);
+    const [page, setPage] = useState(0);
     const [pageType, setPageType] = useState('');
     const [country, setCountry] = useState();
     const [loads, setLoads] = useState(false);
@@ -221,7 +221,9 @@ const ExistingMultiStep = () => {
             setCookies(existingUserProfilee.data.data.token);
             if (
                 existingUserProfilee.data.message ==
-                'Profile setup Intialization completed'
+                    'Profile setup Intialization completed' ||
+                errorMessage?.response?.data?.message ===
+                    'an account alaready exists with this email, if it you have already setup your profile with this email just login'
             ) {
                 let loginWith = localStorage.getItem('LoginWith');
                 if (loginWith !== null) {

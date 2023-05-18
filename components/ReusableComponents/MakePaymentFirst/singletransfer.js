@@ -305,9 +305,10 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
-                                                      ' '
-                                                  ))
+                                                ? (beneficiaryName =
+                                                      beneficiaries.beneficiaryName.split(
+                                                          ' '
+                                                      ))
                                                 : null;
                                         }
                                         if (
@@ -640,9 +641,10 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
-                                                      ' '
-                                                  ))
+                                                ? (beneficiaryName =
+                                                      beneficiaries.beneficiaryName.split(
+                                                          ' '
+                                                      ))
                                                 : null;
                                         }
                                         if (
@@ -658,6 +660,7 @@ const SingleTransfer = ({
                                                         setBeneActive(
                                                             beneficiaries
                                                         );
+                                                        setIsLoadinggg(false);
                                                     }}
                                                 >
                                                     <div
@@ -699,7 +702,6 @@ const SingleTransfer = ({
                             value={type}
                             className={styles.displayNone}
                         />
-
                         <div className={styles.narration}>
                             <label>Source Account</label>
                             <select
@@ -781,7 +783,6 @@ const SingleTransfer = ({
                                 {errors?.accountNumber?.message}
                             </p>
                         </div>
-
                         <div className={styles.narration}>
                             <label>Choose Bank</label>
                             {beneActive ? (
@@ -835,75 +836,69 @@ const SingleTransfer = ({
                                     <p className={styles.error}>
                                         {errors?.bankName?.message}
                                     </p>
-                                    {isLoadinggg ? (
-                                        <Lottie
-                                            options={socialOptions}
-                                            height={100}
-                                            width={100}
+                                </>
+                            )}
+
+                            {errors.bankName && (
+                                <p className={styles.error}>
+                                    {errors?.bankName?.message}
+                                </p>
+                            )}
+                        </div>{' '}
+                        {isLoadinggg ? (
+                            <Lottie
+                                options={socialOptions}
+                                height={100}
+                                width={100}
+                            />
+                        ) : beneActive !== undefined ? (
+                            <div className={styles.narration}>
+                                <label> Account Name</label>
+                                <input
+                                    {...register('accountName')}
+                                    type="text"
+                                    value={beneActive?.beneficiaryName}
+                                />
+                                <p className={styles.error}>
+                                    {errors?.accountName?.message}
+                                </p>
+                            </div>
+                        ) : Object.keys(payload).length !== 0 ? (
+                            <div className={styles.narration}>
+                                <label> Account Name</label>
+                                <input
+                                    {...register('accountName')}
+                                    type="text"
+                                    value={accountName}
+                                    readOnly
+                                />
+                                <p className={styles.error}>
+                                    {errors?.accountName?.message}
+                                </p>
+                            </div>
+                        ) : (
+                            <>
+                                {showInterEnquiry ? (
+                                    <div className={styles.narration}>
+                                        <label> Account Name</label>
+                                        <input
+                                            {...register('accountName')}
+                                            type="text"
+                                            value={interEnquiry.accountName}
                                         />
-                                    ) : beneActive ? (
-                                        <div className={styles.narration}>
-                                            <label> Account Name</label>
-                                            <input
-                                                {...register('accountName')}
-                                                type="text"
-                                                value={
-                                                    beneActive.beneficiaryName
-                                                }
-                                            />
+                                        <p className={styles.error}>
+                                            {errors?.accountName?.message}
+                                        </p>
+                                        {errorInterBank ? (
                                             <p className={styles.error}>
-                                                {errors?.accountName?.message}
+                                                errorInterBank
                                             </p>
-                                        </div>
-                                    ) : Object.keys(payload).length !== 0 ? (
-                                        <div className={styles.narration}>
-                                            <label> Account Name</label>
-                                            <input
-                                                {...register('accountName')}
-                                                type="text"
-                                                value={accountName}
-                                                readOnly
-                                            />
-                                            <p className={styles.error}>
-                                                {errors?.accountName?.message}
-                                            </p>
-                                        </div>
-                                    ) : (
-                                        <>
-                                            {showInterEnquiry ? (
-                                                <div
-                                                    className={styles.narration}
-                                                >
-                                                    <label> Account Name</label>
-                                                    <input
-                                                        {...register(
-                                                            'accountName'
-                                                        )}
-                                                        type="text"
-                                                        value={
-                                                            interEnquiry.accountName
-                                                        }
-                                                    />
-                                                    <p className={styles.error}>
-                                                        {
-                                                            errors?.accountName
-                                                                ?.message
-                                                        }
-                                                    </p>
-                                                    {errorInterBank ? (
-                                                        <p
-                                                            className={
-                                                                styles.error
-                                                            }
-                                                        >
-                                                            errorInterBank
-                                                        </p>
-                                                    ) : null}
-                                                </div>
-                                            ) : null}
-                                        </>
-                                    )}
-                                    {/* <input
+                                        ) : null}
+                                    </div>
+                                ) : null}
+                            </>
+                        )}
+                        {/* <input
                                         type="text"
                                         name=""
                                         id=""
@@ -929,15 +924,6 @@ const SingleTransfer = ({
                                             });
                                         }}
                                     /> */}
-                                </>
-                            )}
-
-                            {errors.bankName && (
-                                <p className={styles.error}>
-                                    {errors?.bankName?.message}
-                                </p>
-                            )}
-                        </div>
                         <div className={styles.narration}>
                             <label>Enter Amount</label>
                             <input
@@ -992,7 +978,6 @@ const SingleTransfer = ({
                                 {errors?.narration?.message}
                             </p>
                         </div>
-
                         {isLoading ? (
                             <Loader />
                         ) : (
