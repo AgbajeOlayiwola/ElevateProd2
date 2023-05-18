@@ -203,7 +203,7 @@ const MoreAction = ({
                                             : styles.successText
                                     }
                                 >
-                                    {transactionStatus}
+                                    {transactionStatus.toLowerCase()}
                                 </h2>
                             </div>
                             <div className={styles.recieptPad}>

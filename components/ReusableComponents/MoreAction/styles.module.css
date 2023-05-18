@@ -368,11 +368,13 @@
     color: #cccccc;
 }
 .statusText{
+    text-transform: capitalize;
     display: flex;
     justify-content: center;
     color: #000;
 }
 .failedText{
+    text-transform: capitalize;
     display: flex;
     justify-content: center;
 color:#000
@@ -382,6 +384,7 @@ color:#000
     padding: 20px;
 }
 .successText{
+    text-transform: capitalize;
     display: flex;
     justify-content: center;
     color: #000;
@@ -429,7 +432,7 @@ color:#000
 }
 .successReciept h1 {
     text-align: center;
-    color: white;
+    color: black;
     font-weight: 600;
 }
 .failedReciept{
@@ -441,7 +444,7 @@ color:#000
 }
 .failedReciept h1 {
     text-align: center;
-    color: white;
+    color: black;
     font-weight: 600;
 }
 .pendingReciept {
@@ -453,7 +456,7 @@ color:#000
 }
 .pendingReciept h1 {
     text-align: center;
-    color: white;
+    color: black;
     font-weight: 600;
 }
 .success {

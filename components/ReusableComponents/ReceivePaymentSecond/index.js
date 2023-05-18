@@ -130,7 +130,9 @@ const ReceivePaymentSecond = ({
     const copy = () => {
         // Asynchronously call copyTextToClipboard
         copyTextToClipboard(
-            `https://recievepayment.netlify.app/Payments/ussd?data=${link}&accountId=${primary}`
+            `https://recievepayment.netlify.app/Payments/ussd?&accountId=${primary}&amount=${formatter.format(
+                amount
+            )}&data=${link}`
         )
             .then(() => {
                 // If successful, update the isCopied state value
@@ -154,7 +156,11 @@ const ReceivePaymentSecond = ({
     // onClick handler function for the copy button
     const copyPaylink = () => {
         // Asynchronously call copyTextToClipboard
-        copyTextToClipboard(payLinkData.paymentLink)
+        copyTextToClipboard(
+            `https://recievepayment.netlify.app/Payments/card?&accountId=${primary}&data=${
+                payLinkData.paymentLink
+            }&amount=${formatter.format(amountPaylink)}`
+        )
             .then(() => {
                 // If successful, update the isCopied state value
                 setIsCopied(true);
@@ -171,7 +177,9 @@ const ReceivePaymentSecond = ({
             data?.data.data.dynamicQRBase64
         )}&ref=${
             data?.data.data.ref
-        }&accountId=${primary}&merchantCode=${merchantCode}&terminalId=${terminalId}`
+        }&accountId=${primary}&merchantCode=${merchantCode}&terminalId=${terminalId}&amount=${
+            data?.data.data.transactionAmount
+        }`
     );
 
     const copyQr = () => {
@@ -252,7 +260,11 @@ const ReceivePaymentSecond = ({
                                 <input
                                     className={styles.inputBordr}
                                     type="text"
-                                    value={payLinkData.paymentLink}
+                                    value={`https://recievepayment.netlify.app/Payments/card?&accountId=${primary}&data=${
+                                        payLinkData.paymentLink
+                                    }&amount=${formatter.format(
+                                        amountPaylink
+                                    )}`}
                                 />
                                 <button
                                     className={styles.copyBtn}

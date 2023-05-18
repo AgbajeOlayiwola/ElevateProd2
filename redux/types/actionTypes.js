@@ -954,3 +954,13 @@ export const verifyTransactionPinType = {
 };
 
 //Verify transactionpin action type end
+
+//Get Complaint action type start
+
+export const getAllComplaintType = {
+    GET_ALL_COMPLAINT_LOAD_START: 'GET_ALL_COMPLAINT_LOAD_START',
+    GET_ALL_COMPLAINT_LOAD_SUCCESS: 'GET_ALL_COMPLAINT_LOAD_SUCCESS',
+    GET_ALL_COMPLAINT_LOAD_ERROR: 'GET_ALL_COMPLAINT_LOAD_ERROR'
+};
+
+//Get Complaint action type end

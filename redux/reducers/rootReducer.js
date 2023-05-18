@@ -96,6 +96,7 @@ import getDisputeCategoryReducer from './getDisputeCategory.reducer';
 import getDisputeSubCategoryReducer from './getDisputSubCategory.reducer';
 import lodgeDisputeReducer from './lodgeDispute.reducer';
 import verifyTransactionPinReducer from './verifyTransactionPin.reducer';
+import getComplaintReducer from './getCompaint.reducer';
 const appReducer = combineReducers({
     countryReducer: countryReducer,
     internationalCountryReducer: internationalCountryReducer,
@@ -197,7 +198,8 @@ const appReducer = combineReducers({
     getDisputeCategoryReducer: getDisputeCategoryReducer,
     getDisputeSubCategoryReducer: getDisputeSubCategoryReducer,
     lodgeDisputeReducer: lodgeDisputeReducer,
-    verifyTransactionPinReducer: verifyTransactionPinReducer
+    verifyTransactionPinReducer: verifyTransactionPinReducer,
+    getComplaintReducer: getComplaintReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

@@ -419,7 +419,7 @@ color: #6CCF00;
 border-top-left-radius: 50px;
 }.pendingReciept h1{
     text-align: center;
-    color: white;
+    color: black;
     font-weight: 600;
  }
  .success{
@@ -460,7 +460,7 @@ border-top-left-radius: 20px;
 }
 .successReciept h1 {
     text-align: center;
-    color: white;
+    color: black;
     font-weight: 600;
 }
 .failedReciept{
@@ -472,7 +472,7 @@ border-top-left-radius: 20px;
 }
 .failedReciept h1 {
     text-align: center;
-    color: white;
+    color: black;
     font-weight: 600;
 }
 .pendingReciept {
@@ -488,20 +488,23 @@ border-top-left-radius: 20px;
 }
 .pendingReciept h1 {
     text-align: center;
-    color: white;
+    color: black;
     font-weight: 600;
 }
 .statusText{
+    text-transform: capitalize;
     display: flex;
     justify-content: center;
     color: #000 !important;
 }
 .failedText{
+    text-transform: capitalize;
     display: flex;
     justify-content: center;
 color:#000;
 }
 .successText{
+    text-transform: capitalize;
     display: flex;
     justify-content: center;
     color: #000;

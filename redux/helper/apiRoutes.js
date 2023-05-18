@@ -107,7 +107,9 @@ const subComplaintCategories =
     '/dispute-management/get-complaint-sub-categories';
 const qrMerchantInfo = '/payment/qr/merchant-info';
 const verifyTransactionPin = '/users/transaction-pin/verify';
+const getAllComplaint = '/dispute-management/records';
 export default {
+    getAllComplaint,
     trackComplaint,
     lodgeComplaint,
     complaintCategories,
