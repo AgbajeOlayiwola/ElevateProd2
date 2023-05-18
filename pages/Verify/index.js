@@ -25,7 +25,7 @@ const Verify = () => {
         if (token) {
             axios
                 .get(
-                    `https://testvate.live/authentication/email-verification/${token}`,
+                    `https://mysmeapp.ecobank.com:8443/authentication/email-verification/${token}`,
                     {
                         headers: {
                             'X-Client-Type': 'web'
