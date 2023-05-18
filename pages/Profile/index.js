@@ -126,8 +126,10 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
-    const { postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries } =
-        useSelector((state) => state.postAirtimeBeneficiariesReducer);
+    const {
+        postAirtimeBeneficiaries,
+        errorMessagepostAirtimeBeneficiaries
+    } = useSelector((state) => state.postAirtimeBeneficiariesReducer);
     const { fetchRM, fetchRMErrorMessages } = useSelector(
         (state) => state.fetchRMReducer
     );
@@ -650,6 +652,7 @@ const Profile = () => {
                                                         />
                                                         <Visbility
                                                             typeSet={types}
+                                                            input="input"
                                                         />
                                                     </div>
                                                     <p className={styles.error}>
@@ -789,7 +792,10 @@ const Profile = () => {
                                             name="bvnPassword"
                                             type={outType ? 'text' : 'password'}
                                         />
-                                        <Visbility typeSet={types} />
+                                        <Visbility
+                                            typeSet={types}
+                                            input="input"
+                                        />
                                     </div>
                                     <p className={styles.error}>
                                         {errors?.bvnPassword?.message}
@@ -807,7 +813,10 @@ const Profile = () => {
                                                         : 'text'
                                                 }
                                             />
-                                            <Visbility typeSet={typed} />
+                                            <Visbility
+                                                typeSet={typed}
+                                                input="input"
+                                            />
                                         </div>
                                     </div>
                                 ) : null}
@@ -1160,7 +1169,10 @@ const Profile = () => {
                                                     outPin ? 'text' : 'password'
                                                 }
                                             />
-                                            <Visbility typeSet={pin} />
+                                            <Visbility
+                                                typeSet={pin}
+                                                input="input"
+                                            />
                                         </div>
                                         <p className={styles.error}>
                                             {errors?.transactionPin?.message}
@@ -1182,7 +1194,10 @@ const Profile = () => {
                                                         : 'password'
                                                 }
                                             />
-                                            <Visbility typeSet={pins} />
+                                            <Visbility
+                                                typeSet={pins}
+                                                input="input"
+                                            />
                                         </div>
                                         <p className={styles.error}>
                                             {errors?.password?.message}
@@ -1590,26 +1605,21 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details =
-                                                                    {
-                                                                        accountNumber:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    accountNumber: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details =
-                                                                    {
-                                                                        destinationBankCode:
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                        accountNo:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    destinationBankCode:
+                                                                        e.target
+                                                                            .value,
+                                                                    accountNo: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details

@@ -160,6 +160,8 @@ const AccountLoading = () => {
             //console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         }
+    }, [errorMessages, accountStatuss]);
+    useEffect(() => {
         if (timer === '00:00:00') {
             dispatch(logoutAction());
             if (!localStorage.getItem('user')) {
@@ -175,7 +177,7 @@ const AccountLoading = () => {
         //         'Your account creatio is taking a while, once its completed an email will be sent to you'
         //     );
         // }, 60000);
-    }, [errorMessages, accountStatuss, timer]);
+    }, [timer]);
 
     return (
         <>
@@ -191,7 +193,7 @@ const AccountLoading = () => {
                         ) : timer <= '00:00:10' ? (
                             <div>
                                 <p className={styles.error}>{timer}</p>
-                                <p>{accountWait}</p>
+                                <p className={styles.error}>{accountWait}</p>
                             </div>
                         ) : (
                             <>

@@ -185,7 +185,7 @@ const HomeMain = () => {
                                     name="omnilitePassword"
                                     type={outType ? 'text' : 'password'}
                                 />
-                                <Visbility typeSet={types} />
+                                <Visbility typeSet={types} input="input" />
                             </div>
                             {errors?.omnilitePassword?.message ? (
                                 <p className={styles.error}>
@@ -237,7 +237,7 @@ const HomeMain = () => {
                                         setEcoonlinePassword(e.target.value)
                                     }
                                 />
-                                <Visbility typeSet={types} />
+                                <Visbility typeSet={types} input="input" />
                             </div>
                             {errors.onlinePassword?.message ? (
                                 <p className={styles.error}>

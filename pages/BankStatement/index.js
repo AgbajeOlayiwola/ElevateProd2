@@ -233,7 +233,7 @@ const BankStatments = () => {
                             setOverlay(true);
                         }}
                     >
-                        <p>Request Statement</p>
+                        <p>Request Full Statement</p>
                     </div>
                 </div>
                 {success ? (

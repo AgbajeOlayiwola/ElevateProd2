@@ -265,7 +265,10 @@ const Signup = ({ type }) => {
                                                 onChange={handlePwd}
                                             />
 
-                                            <Visbility typeSet={types} />
+                                            <Visbility
+                                                typeSet={types}
+                                                input="input"
+                                            />
                                         </div>
                                         {errorMessages === '' ? null : (
                                             <div className={styles.errorCont}>
@@ -306,7 +309,10 @@ const Signup = ({ type }) => {
                                                 }
                                                 onChange={handlePaswword}
                                             />
-                                            <Visbility typeSet={types} />
+                                            <Visbility
+                                                typeSet={types}
+                                                input="input"
+                                            />
                                         </div>
                                     </div>
 

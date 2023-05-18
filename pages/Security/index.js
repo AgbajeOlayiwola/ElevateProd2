@@ -214,7 +214,7 @@ const Security = () => {
                                         value={pin}
                                         onInput={handlePin}
                                     />
-                                    <Visbility typeSet={types} />
+                                    <Visbility typeSet={types} input="input" />
                                 </div>
                                 <p className={styles.error}>
                                     {errors?.newPin?.message}
@@ -232,7 +232,7 @@ const Security = () => {
                                         value={confirmPin}
                                         onChange={handleNewPin}
                                     />
-                                    <Visbility typeSet={typed} />
+                                    <Visbility typeSet={typed} input="input" />
                                 </div>
                                 {pin == confirmPin ? null : (
                                     <p className={styles.error}>
@@ -287,7 +287,7 @@ const Security = () => {
                                         value={password}
                                         onInput={handlePwd}
                                     />
-                                    <Visbility typeSet={types} />
+                                    <Visbility typeSet={types} input="input" />
                                 </div>
                                 <p className={styles.error}>
                                     {errors?.newPassword?.message}
@@ -323,7 +323,7 @@ const Security = () => {
                                         value={confirmPassword}
                                         onChange={handlePaswword}
                                     />
-                                    <Visbility typeSet={typed} />
+                                    <Visbility typeSet={typed} input="input" />
                                 </div>
                                 {password == confirmPassword ? null : (
                                     <p className={styles.error}>

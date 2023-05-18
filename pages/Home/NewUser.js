@@ -280,7 +280,7 @@ const NewUser = ({ selectCountry }) => {
                                 placeholder="Enter Password"
                                 onInput={handlePwd}
                             />
-                            <Visbility typeSet={types} />
+                            <Visbility typeSet={types} input="input" />
                         </div>
                         {errorMessages === '' ? null : (
                             <div className={styles.errorCont}>

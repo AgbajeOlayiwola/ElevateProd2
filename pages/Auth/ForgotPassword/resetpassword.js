@@ -50,7 +50,7 @@ const ResetPassword = ({ submit, forgotPasswordErrorMessages, loading }) => {
                                 required: 'New Password is required'
                             })}
                         />
-                        <Visbility typeSet={types} />
+                        <Visbility typeSet={types} input="input" />
                     </div>
                     <p className={styles.errors}>
                         {errors.newPassword?.message}
@@ -70,7 +70,7 @@ const ResetPassword = ({ submit, forgotPasswordErrorMessages, loading }) => {
                                 required: 'Confirm Password is required'
                             })}
                         />
-                        <Visbility typeSet={type} />
+                        <Visbility typeSet={type} input="input" />
                     </div>
                     <p className={styles.errors}>
                         {errors.confnewPassword?.message}
