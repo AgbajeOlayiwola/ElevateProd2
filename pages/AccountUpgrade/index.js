@@ -1719,7 +1719,10 @@ const AccountUpgrade = () => {
                             <div className={styles.relativeBtn}>
                                 <button
                                     className={styles.buttonDone}
-                                    onClick={moveToDash}
+                                    onClick={() => {
+                                        setLoading(true);
+                                        dispatch(pushDocumentsData());
+                                    }}
                                 >
                                     Save And Continue Later
                                 </button>
