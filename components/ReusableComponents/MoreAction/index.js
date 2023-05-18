@@ -28,7 +28,8 @@ const MoreAction = ({
     sendBank,
     narr,
     bene,
-    isaccountId
+    isaccountId,
+    dateTrans
 }) => {
     const [dispute, setDispute] = useState('');
     const [disputeCate, setDisputeCat] = useState('');
@@ -108,6 +109,7 @@ const MoreAction = ({
         }
     };
     let newDate = dates?.split('T');
+    let newTranDate = dateTrans?.split('T');
     return (
         <div
             className={
@@ -156,6 +158,9 @@ const MoreAction = ({
                             <p>Type: {type}</p>
                             <p>Sub Category: {sub}</p>
                             {newDate == null ? null : <p>date :{newDate[0]}</p>}
+                            {newTranDate == null ? null : (
+                                <p>date :{newTranDate[0]}</p>
+                            )}
                         </div>
                         {lodgeDisputeErrorSubMessage ? (
                             <p className={styles.errors}>

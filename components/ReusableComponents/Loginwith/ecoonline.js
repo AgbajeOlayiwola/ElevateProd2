@@ -106,7 +106,7 @@ const Ecoonline = () => {
                             name="password"
                             type={outType ? 'text' : 'password'}
                         />
-                        <Visbility typeSet={types} />
+                        <Visbility typeSet={types} input="input" />
                     </div>
                 </div>
                 <p className={styles.error}>{errors?.password?.message}</p>

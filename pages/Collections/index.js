@@ -450,8 +450,10 @@ const Collections = () => {
         }
         console.log(formType);
     }, [count]);
-    const { getQrMerchnatInfoSuccess, getQrMerchnatInfoErrorMessage } =
-        useSelector((state) => state.getQrMerchantInfoReducermport);
+    const {
+        getQrMerchnatInfoSuccess,
+        getQrMerchnatInfoErrorMessage
+    } = useSelector((state) => state.getQrMerchantInfoReducermport);
     const [merchantInf, setMerchantInfo] = useState();
     useEffect(() => {
         dispatch(getQrMerchantInfoGen());
@@ -522,11 +524,11 @@ const Collections = () => {
                                 title="Payment Link Generated"
                                 allLink={(data) => {
                                     //console.logdata);
-                                    setCount(count + 1);
+                                    setCount(count + 2);
                                 }}
                                 amountPaylink={paymentDetails.amount}
                                 payLinkData={paylikSuccess}
-                                action={buttonHandleClose}
+                                action={() => setCount(count + 2)}
                                 buttonText="Send Paylink"
                                 type="Paylinks"
                                 closeAction={buttonHandleClose}
@@ -546,6 +548,14 @@ const Collections = () => {
                                     setCount(count - 1);
                                 }}
                                 type="PAYMENT_LINK"
+                            />
+                        );
+                    case 3:
+                        return (
+                            <Share
+                                overlay={overlay}
+                                link={paylikSuccess?.paymentLink}
+                                action={handleClose}
                             />
                         );
                 }

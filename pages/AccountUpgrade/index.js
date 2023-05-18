@@ -149,12 +149,17 @@ const AccountUpgrade = () => {
     const [fileNameI, setFileNameI] = useState();
     const [fileII, setFileII] = useState(null);
     const [fileNameII, setFileNameII] = useState();
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState(null);
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
-    const [identificationBackDocument, setIdentificationBackDocument] =
-        useState(null);
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        null
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
+    const [
+        identificationBackDocument,
+        setIdentificationBackDocument
+    ] = useState(null);
     const [
         identificationBackDocumentFileName,
         setIdentificationBackDocumentFileName
@@ -3282,7 +3287,10 @@ const AccountUpgrade = () => {
                                             })}
                                             placeholder="Enter Transaction Pin"
                                         />
-                                        <Visbility typeSet={types} />
+                                        <Visbility
+                                            typeSet={types}
+                                            input="input"
+                                        />
                                     </div>
                                     <p className={styles.error}>
                                         {errors.transactionPin?.message}
@@ -3301,7 +3309,10 @@ const AccountUpgrade = () => {
                                             })}
                                             placeholder="Enter Password"
                                         />
-                                        <Visbility typeSet={typed} />
+                                        <Visbility
+                                            typeSet={typed}
+                                            input="input"
+                                        />
                                     </div>
                                     <p className={styles.error}>
                                         {errors.password?.message}

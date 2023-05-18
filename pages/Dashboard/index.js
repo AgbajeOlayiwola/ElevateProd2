@@ -304,10 +304,12 @@ const Dashboard = () => {
             const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
                 'T'
             );
-            if (newDate[0] == time) {
-                setDateState(true);
-            } else {
-                setDateState(false);
+            if (newDate) {
+                if (newDate[0] == time) {
+                    setDateState(true);
+                } else {
+                    setDateState(false);
+                }
             }
 
             // tableDetails.data?.map((item) => {
@@ -857,6 +859,7 @@ const Dashboard = () => {
                                             return item;
                                         })
                                         ?.map((item, index) => {
+                                            console.log(item);
                                             const formatter = new Intl.NumberFormat(
                                                 'en-US',
                                                 {
@@ -973,6 +976,9 @@ const Dashboard = () => {
                                                                 }
                                                                 destinationBank={
                                                                     item.receiver
+                                                                }
+                                                                dateTrans={
+                                                                    item.transactionDate
                                                                 }
                                                             />
                                                         </div>

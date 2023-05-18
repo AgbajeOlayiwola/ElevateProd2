@@ -58,7 +58,11 @@ const ResetPin = ({ overlay, title, label1, label2, action, formAction }) => {
                             type={outType ? 'text' : 'password'}
                             onChange={handlePwd}
                         />
-                        <Visbility color="green" typeSet={types} />
+                        <Visbility
+                            color="green"
+                            typeSet={types}
+                            input="input"
+                        />
                     </div>
                     {count <= 0 || count >= 6 ? null : (
                         <p className={styles.error}>
@@ -75,7 +79,7 @@ const ResetPin = ({ overlay, title, label1, label2, action, formAction }) => {
                             type={outType ? 'text' : 'password'}
                             onChange={handlePaswword}
                         />
-                        <Visbility typeSet={types} />
+                        <Visbility typeSet={types} input="input" />
                     </div>
                     {password == confPassword ? null : (
                         <p className={styles.error}>{passwordMatch}</p>
@@ -90,7 +94,7 @@ const ResetPin = ({ overlay, title, label1, label2, action, formAction }) => {
                             type={outType ? 'text' : 'password'}
                             onChange={handlePin}
                         />
-                        <Visbility typeSet={types} />
+                        <Visbility typeSet={types} input="input" />
                     </div>
                     {counts <= 0 || counts >= 8 ? null : (
                         <p className={styles.error}>

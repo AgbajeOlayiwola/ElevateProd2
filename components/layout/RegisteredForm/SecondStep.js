@@ -187,7 +187,7 @@ const RegisteredForm = ({
                                     type={outTypes ? 'text' : 'password'}
                                     onChange={handlePwd}
                                 />
-                                <Visbility typeSet={types} />
+                                <Visbility typeSet={types} input="input" />
                             </div>
                             {errorMessages === '' ? null : (
                                 <div className={styles.errorCont}>
@@ -220,7 +220,7 @@ const RegisteredForm = ({
                                     onChange={handlePaswword}
                                 />
 
-                                <Visbility typeSet={type} />
+                                <Visbility typeSet={type} input="input" />
                             </div>
                             {password === confPassword ? null : (
                                 <p className={styles.error}>{passwordMatch}</p>
