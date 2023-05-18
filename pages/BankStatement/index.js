@@ -20,6 +20,7 @@ import MoreAction from '../../components/ReusableComponents/MoreAction';
 import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess';
 import socialdata from '../../components/ReusableComponents/Lotties/loading.json';
 import Lottie from 'react-lottie';
+import { FaDownload } from 'react-icons/fa';
 
 const BankStatments = () => {
     const dispatch = useDispatch();
@@ -51,7 +52,7 @@ const BankStatments = () => {
     const [inflow, setInflow] = useState(format);
     const [outflow, setOutflow] = useState(format);
 
-    const usersPerPage = 10;
+    const usersPerPage = 15;
     const pagesVisited = pageNumber * usersPerPage;
     const pageCount = Math.ceil(tableDetails.length / usersPerPage);
 
@@ -59,10 +60,8 @@ const BankStatments = () => {
         (state) => state.bankStatementReducer
     );
 
-    const {
-        getFullStatementSuccess,
-        getFullStatementerrorMessage
-    } = useSelector((state) => state.getFullStatementReducer);
+    const { getFullStatementSuccess, getFullStatementerrorMessage } =
+        useSelector((state) => state.getFullStatementReducer);
 
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
@@ -76,10 +75,8 @@ const BankStatments = () => {
         (state) => state.accountPrimaryReducer
     );
     const [isLoading, setIsLoading] = useState(true);
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -236,7 +233,7 @@ const BankStatments = () => {
                             setOverlay(true);
                         }}
                     >
-                        <p>Request Statement</p>
+                        <p>Request Full Statement</p>
                     </div>
                 </div>
                 {success ? (
@@ -346,9 +343,33 @@ const BankStatments = () => {
                 <div className={styles.table}>
                     <div className={styles.tableHeader}>
                         <h2>Transactions History</h2>
-                        <i className={styles.italisize}>
-                            * The Table Contains 50 Transactions
-                        </i>
+                        <div>
+                            <i className={styles.italisize}>
+                                * The Table Contains 50 Transactions
+                            </i>
+                            <FaDownload
+                                onClick={async () => {
+                                    const element = printRef.current;
+
+                                    const pdf = new jsPDF({
+                                        unit: 'px',
+                                        format: 'letter',
+                                        userUnit: 'px'
+                                    });
+
+                                    const pdfWidth =
+                                        pdf.internal.pageSize.getWidth();
+                                    pdf.html(element, {
+                                        html2canvas: {
+                                            scale: 0.57,
+                                            width: pdfWidth
+                                        }
+                                    }).then(() => {
+                                        pdf.save('Account Statement.pdf');
+                                    });
+                                }}
+                            />
+                        </div>
                         {/* <div className={styles.tableFilter}>
                             <div>
                                 <img src="../Assets/Svgs/search.svg" alt="" />
@@ -381,26 +402,7 @@ const BankStatments = () => {
                     </div>
                     <div className={styles.tableFilters}>
                         {/* <h2
-                            onClick={async () => {
-                                const element = printRef.current;
-
-                                const pdf = new jsPDF({
-                                    unit: 'px',
-                                    format: 'letter',
-                                    userUnit: 'px'
-                                });
-
-                                const pdfWidth =
-                                    pdf.internal.pageSize.getWidth();
-                                pdf.html(element, {
-                                    html2canvas: {
-                                        scale: 0.57,
-                                        width: pdfWidth
-                                    }
-                                }).then(() => {
-                                    pdf.save('Account Statement.pdf');
-                                });
-                            }}
+                            
                         >
                             Download
                         </h2> */}
@@ -419,51 +421,61 @@ const BankStatments = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {tableDetails
-                            ?.filter((item) => {
-                                if (search === '') {
-                                    return item;
-                                } else if (
-                                    item.name
-                                        .toLowerCase()
-                                        .includes(search.toLowerCase())
-                                ) {
-                                    return item;
-                                } else if (
-                                    item.mail
-                                        .toLowerCase()
-                                        .includes(search.toLowerCase())
-                                ) {
-                                    return item;
-                                } else {
-                                    return null;
-                                }
-                            })
-                            ?.map((items, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td data-label="Name">{items.name}</td>
-                                        <td data-label="Amount">
-                                            {items.amount}
-                                        </td>
-                                        <td data-label="Date">{items.date}</td>
-                                        <td data-label="Type">{items.type}</td>
-                                        <td
-                                            data-label="Status"
-                                            className={
-                                                items.status === 'Successful'
-                                                    ? 'wallet-success'
-                                                    : 'wallet-failure'
-                                            }
-                                        >
-                                            <span>{items.status}</span>
-                                        </td>
-                                        <td data-label="Reference No.">
-                                            {items.ref}
-                                        </td>
-                                    </tr>
-                                );
-                            })} */}
+                            {tableDetails
+                                // ?.filter((item) => {
+                                //     if (search === '') {
+                                //         return item;
+                                //     } else if (
+                                //         item.name
+                                //             .toLowerCase()
+                                //             .includes(search.toLowerCase())
+                                //     ) {
+                                //         return item;
+                                //     } else if (
+                                //         item.mail
+                                //             .toLowerCase()
+                                //             .includes(search.toLowerCase())
+                                //     ) {
+                                //         return item;
+                                //     } else {
+                                //         return null;
+                                //     }
+                                // })
+                                ?.map((items, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td
+                                                data-label="Date"
+                                                className={styles.date}
+                                            >
+                                                {newDate[0]}
+                                            </td>
+                                            <td data-label="Amount">
+                                                {items.amount}
+                                            </td>
+                                            <td data-label="Date">
+                                                {items.date}
+                                            </td>
+                                            <td data-label="Type">
+                                                {items.type}
+                                            </td>
+                                            <td
+                                                data-label="Status"
+                                                className={
+                                                    items.status ===
+                                                    'Successful'
+                                                        ? 'wallet-success'
+                                                        : 'wallet-failure'
+                                                }
+                                            >
+                                                <span>{items.status}</span>
+                                            </td>
+                                            <td data-label="Reference No.">
+                                                {items.ref}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                         </tbody>
                     </table>
                     <div ref={printRef}>
@@ -504,9 +516,8 @@ const BankStatments = () => {
                                     pagesVisited + usersPerPage
                                 )
                                 ?.map((items, index) => {
-                                    const newDate = items?.transactionTime?.split(
-                                        ' '
-                                    );
+                                    const newDate =
+                                        items?.transactionTime?.split(' ');
                                     return (
                                         <div
                                             className={styles.TableDetailBody}

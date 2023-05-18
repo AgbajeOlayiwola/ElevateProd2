@@ -161,23 +161,23 @@ const AccountLoading = () => {
             //console.log(accountStatus.messages, errorMessages);
             router.push('/Succes');
         }
+    }, [errorMessages, accountStatuss]);
+    useEffect(() => {
+        if (timer === '00:00:00') {
+            dispatch(logoutAction());
+            if (!localStorage.getItem('user')) {
+                router.replace('/Auth/Login');
+            }
+        }
+        if (timer === '00:00:10') {
+            setAccountWait('Your Account Number will be sent to your Email');
+        }
 
         // setTimeout(() => {
         //     setError(
         //         'Your account creatio is taking a while, once its completed an email will be sent to you'
         //     );
         // }, 60000);
-    }, [errorMessages, accountStatuss]);
-    useEffect(() => {
-        if (timer == '00:00:00') {
-            dispatch(logoutAction());
-            if (!localStorage.getItem('user')) {
-                router.replace('/Auth/Login');
-            }
-        }
-        if (timer == '00:00:10') {
-            setAccountWait('Your Account Number will be sent to your Email');
-        }
     }, [timer]);
 
     return (

@@ -7,7 +7,7 @@
     margin-top: 32px;
     align-items: center;
 }
-.relativeBtn{
+.relativeBtn {
     background: white;
     position: fixed;
     /* z-index: 10000000000000; */
@@ -17,7 +17,7 @@
     padding-bottom: 53px;
     border-radius: 42px;
     left: 35%;
-    bottom: 12.6%;
+    bottom: 9.6%;
     display: flex;
     gap: 10px;
 }
@@ -61,12 +61,12 @@
 .verifyText {
     margin-top: 16px;
 }
-.lottie{
+.lottie {
     position: absolute;
     top: 50%;
     left: 20%;
 }
-.relativeServie{
+.relativeServie {
     position: relative;
 }
 .verifyText p {
@@ -83,13 +83,12 @@
 .buttonDone {
     margin-top: 32px;
 }
-.inactive{
+.inactive {
     background-color: grey;
     /* padding: 0px; */
     margin-top: 32px;
-
 }
-.inactive:hover{
+.inactive:hover {
     background-color: grey;
     margin-top: 32px;
 }
@@ -393,7 +392,7 @@
     color: #a5a5a5;
     margin-top: 16px;
 }
-.statuses{
+.statuses {
     display: flex;
     justify-content: space-between;
 }
@@ -428,34 +427,33 @@
         width: 48%;
     }
 }
-.profilingInput{
+.profilingInput {
     width: 4%;
     margin-right: 25px;
     accent-color: #6ccf00;
-    transition: all 0.5s ease-in-out ;
+    transition: all 0.5s ease-in-out;
 }
-.profilingInput:hover{
-    transition: all 0.5s ease-in-out ;
+.profilingInput:hover {
+    transition: all 0.5s ease-in-out;
     width: 6%;
 }
- .profilingDiv{
+.profilingDiv {
     display: flex;
     margin-bottom: 36px;
     margin-top: 42px;
 
     margin-right: 26px;
- }
- .disclaimer{
-    margin-top:20px;
+}
+.disclaimer {
+    margin-top: 20px;
     font-size: 12px;
     color: #6ccf00;
-
- }
- .selUtilDiv{
+}
+.selUtilDiv {
     padding-top: 10px;
     padding-bottom: 10px;
- }
- .selUtil{
+}
+.selUtil {
     margin: 0px;
     font-family: 'Inter', sans-serif;
     margin-bottom: 8px;
@@ -464,23 +462,23 @@
     font-size: 12px;
     line-height: 15px;
     color: #7a7978;
- }
- .selUtil select{
+}
+.selUtil select {
     margin-bottom: 20px;
- }
- .headerDiv{
+}
+.headerDiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.errorX{
+.errorX {
     cursor: pointer;
 }
-.ellevateCopy{
+.ellevateCopy {
     font-size: 16px;
     color: #3e3e3e;
 }
-.profilingGrey{
+.profilingGrey {
     display: flex;
     margin-bottom: 36px;
     margin-top: 42px;
@@ -489,8 +487,8 @@
     color: grey;
     /* background-color: red;; */
 }
-.profilingGrey label{
-color: grey !important;
-border-color: grey;
-/* background-color: red; */
+.profilingGrey label {
+    color: grey !important;
+    border-color: grey;
+    /* background-color: red; */
 }

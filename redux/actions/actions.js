@@ -1523,7 +1523,11 @@ export const postBeneficiariesData = (data) => (dispatch) => {
         .then((response) =>
             dispatch(postBeneficiariesLoadSuccess(response.data.data))
         )
-        .catch((error) => dispatch(postBeneficiariesLoadError(error?.message)));
+        .catch((error) =>
+            dispatch(
+                postBeneficiariesLoadError(error?.response.data.message[0])
+            )
+        );
 };
 
 //postBeneficiaries action end

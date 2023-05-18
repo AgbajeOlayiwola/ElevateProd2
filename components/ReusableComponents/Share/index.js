@@ -126,7 +126,11 @@ const Share = ({ overlay, link, action, title }) => {
 
                     <div className={styles.secondCopy}>
                         <LinkSvg />
-                        <p>{link}</p>
+                        <input
+                            styles={{ border: 'none' }}
+                            type="text"
+                            value={link}
+                        />
                         <button
                             onClick={() => {
                                 {

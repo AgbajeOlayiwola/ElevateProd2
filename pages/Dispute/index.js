@@ -7,7 +7,7 @@ const Dispute = () => {
         <DashLayout>
             <Iframe
                 url="https://ice.ecobank.com/chatbotui"
-                width="1240px"
+                width="540px"
                 height="820px"
                 id=""
                 className=""

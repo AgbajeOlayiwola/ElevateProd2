@@ -17,7 +17,7 @@
     border-radius: 16px;
     padding: 12px 24px;
 }
-.italisize{
+.italisize {
     font-size: 13px;
     color: #102572;
 }
@@ -103,7 +103,7 @@
 }
 
 .table {
-    padding: 32px 32px;
+    padding: 1px 32px;
     box-shadow: 4px 14px 34px -11px #ededed;
     border-radius: 16px;
     background-color: white;
@@ -127,6 +127,12 @@
     font-weight: 700;
     font-family: 'Inter', sans-serif;
     line-height: 19.36px;
+}
+
+.tableHeader svg {
+    margin-left: 20px;
+    cursor: pointer;
+    font-size: 20px;
 }
 
 .tableFilter {
@@ -291,7 +297,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding: 20px 0px 20px 24px;
+    padding: 0px 0px 0px 24px;
     align-items: center;
     border-bottom: 2px solid #f6f6f6;
     justify-content: space-between;
@@ -331,8 +337,8 @@
 .bank {
     width: 14%;
 }
-.accountNumbers{
-width: 20%;
+.accountNumbers {
+    width: 20%;
 }
 .date {
     width: 12%;
@@ -342,10 +348,10 @@ width: 20%;
     text-align: center;
     margin: 20px 0px;
 }
-.generateCover{
+.generateCover {
     display: flex;
     justify-content: center;
-    flex-direction:column;
+    flex-direction: column;
     padding: 60px;
 }
 .tableFilters {

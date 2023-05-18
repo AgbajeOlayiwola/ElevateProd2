@@ -58,7 +58,11 @@ const ResetPin = ({ overlay, title, label1, label2, action, formAction }) => {
                             type={outType ? 'text' : 'password'}
                             onChange={handlePwd}
                         />
-                        <Visbility color="green" typeSet={types} />
+                        <Visbility
+                            color="green"
+                            typeSet={types}
+                            input="input"
+                        />
                     </div>
                     {count <= 0 || count >= 6 ? null : (
                         <p className={styles.error}>

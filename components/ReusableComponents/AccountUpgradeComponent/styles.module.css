@@ -17,12 +17,12 @@
     overflow: scroll;
     max-width: 600px;
     margin: 0px auto;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 .accountUpgradePopup::-webkit-scrollbar {
     display: none;
-  }
+}
 
 .accountUpgradePopup .accountUpgradeSingle {
     width: 69%;

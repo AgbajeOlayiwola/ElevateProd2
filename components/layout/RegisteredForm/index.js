@@ -221,7 +221,9 @@ const ExistingMultiStep = () => {
             setCookies(existingUserProfilee.data.data.token);
             if (
                 existingUserProfilee.data.message ==
-                'Profile setup Intialization completed'
+                    'Profile setup Intialization completed' ||
+                errorMessage?.response?.data?.message ===
+                    'an account alaready exists with this email, if it you have already setup your profile with this email just login'
             ) {
                 let loginWith = localStorage.getItem('LoginWith');
                 if (loginWith !== null) {

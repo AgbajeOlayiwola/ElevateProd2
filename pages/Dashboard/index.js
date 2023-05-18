@@ -408,32 +408,6 @@ const Dashboard = () => {
                             </Link>
                             <Link
                                 href={{
-                                    pathname: '/Payment',
-                                    query: { id: 'Bills Payment' }
-                                }}
-                            >
-                                <div className={styles.dinCLass}>
-                                    <div className={styles.svg}>
-                                        <BillTransfer />
-                                    </div>
-                                    <p className={styles.name}>Bills Payment</p>
-                                </div>
-                            </Link>
-                            <Link
-                                href={{
-                                    pathname: '/Payment',
-                                    query: { id: 'Bulk Transfer' }
-                                }}
-                            >
-                                <div className={styles.dinCLass}>
-                                    <div className={styles.svg}>
-                                        <BulkTransfer2 />
-                                    </div>
-                                    <p className={styles.name}>Bulk Transfer</p>
-                                </div>
-                            </Link>
-                            {/* <Link
-                                href={{
                                     pathname: '/Collections',
                                     query: { id: 'Ecobank QR Only' }
                                 }}
@@ -459,7 +433,7 @@ const Dashboard = () => {
                                     </div>
                                     <p className={styles.name}>USSD</p>
                                 </div>
-                            </Link> */}
+                            </Link>
                         </div>
                         <div className={styles.btmI}>
                             <div className={styles.btmItop}>
@@ -724,7 +698,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className={styles.recMak}>
-                                        {/* <RecievePaymentBtn /> */}
+                                        <RecievePaymentBtn />
                                         <MakePaymentBtn />
                                     </div>
                                 </div>
@@ -886,6 +860,7 @@ const Dashboard = () => {
                                             return item;
                                         })
                                         ?.map((item, index) => {
+                                            console.log(item);
                                             const formatter =
                                                 new Intl.NumberFormat('en-US', {
                                                     style: 'currency',
@@ -1000,6 +975,9 @@ const Dashboard = () => {
                                                                 }
                                                                 destinationBank={
                                                                     item.receiver
+                                                                }
+                                                                dateTrans={
+                                                                    item.transactionDate
                                                                 }
                                                             />
                                                         </div>
