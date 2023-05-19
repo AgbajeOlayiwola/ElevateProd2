@@ -389,7 +389,11 @@ const SingleTransfer = ({
                                             value={accounts.accountId}
                                             key={index}
                                         >
-                                            {accounts.accountNumber}
+                                            {`${
+                                                accounts.accountNumber
+                                            } - ${formatter.format(
+                                                accounts.accountBalance
+                                            )}`}
                                         </option>
                                     );
                                 })}
@@ -725,7 +729,11 @@ const SingleTransfer = ({
                                             value={accounts.accountId}
                                             key={index}
                                         >
-                                            {accounts.accountNumber}
+                                            {`${
+                                                accounts.accountNumber
+                                            } - ${formatter.format(
+                                                accounts.accountBalance
+                                            )}`}
                                         </option>
                                     );
                                 })}

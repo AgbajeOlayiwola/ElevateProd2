@@ -56,18 +56,21 @@ const PaymentTable = ({ title, test, page }) => {
     };
     useEffect(() => {
         if (page === 'Collections') {
+            setNewestTableDetails([]);
             tableDetails.filter((item, index) => {
                 if (item.paymentDirection === 'CREDIT') {
                     setNewTableDetails((arr) => [...arr, item]);
                 }
             });
         } else if (page === 'Payments') {
+            setNewestTableDetails([]);
             tableDetails.filter((item) => {
                 if (item.paymentDirection === 'DEBIT') {
                     setNewTableDetails((arr) => [...arr, item]);
                 }
             });
         } else if (page === 'Reports') {
+            setNewestTableDetails([]);
             setNewTableDetails(tableDetails);
         }
     }, [tableDetails]);
@@ -93,6 +96,7 @@ const PaymentTable = ({ title, test, page }) => {
 
     useEffect(() => {
         if (transactionHistory !== null) {
+            setNewestTableDetails([]);
             setTableDetails(transactionHistory.transactions);
             //console.logtransactionElevate.transactions);
             if (transactionHistory !== null) {
@@ -221,14 +225,17 @@ const PaymentTable = ({ title, test, page }) => {
                                 }}
                             >
                                 <option value="">Choose Type</option>
-                                <option value="Single Transfer">
+                                <option value="SINGLE_TRANSFER">
                                     Single Transfer
                                 </option>
-                                <option value="Bulk Transfer">
+                                <option value="BULK_TRANSFER">
                                     Bulk Transfer
                                 </option>
-                                <option value="Bills Payment">
+                                <option value="BILL_PAYMENT">
                                     Bills Payment
+                                </option>
+                                <option value="AIRTIME_TOPUP">
+                                    Airtime Topup
                                 </option>
                             </select>
                         ) : searchType === 'transactionStatus' ? (

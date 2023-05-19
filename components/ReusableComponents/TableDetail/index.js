@@ -29,7 +29,14 @@ const TableDetail = ({
     } else {
         newBeneficiary = Beneficiary?.split(' ');
     }
-    const newDate = Dates?.split('T');
+
+    const current = new Date(Dates).toLocaleDateString('en-us', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+
+    const time = new Date(Dates).toLocaleTimeString('en-US');
     return (
         <>
             <div className={styles.TableDetailBody} key={keys}>
@@ -46,7 +53,7 @@ const TableDetail = ({
                 {/* <p className={styles.bank}>
                     {Bank === null ? network : `${Bank} - ${accountNumber}`}
                 </p> */}
-                <p className={styles.date}>{newDate[0]}</p>
+                <p className={styles.date}>{`${current} ${time}`}</p>
                 <p
                     className={
                         Status === 'PENDING'

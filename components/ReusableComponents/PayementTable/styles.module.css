@@ -104,15 +104,15 @@
 }
 
 .beneficiary {
-    width: 25%;
+    width: 24%;
 }
 
 .type {
-    width: 20%;
+    width: 17%;
 }
 
 .amount {
-    width: 22%;
+    width: 20%;
 }
 
 .status {
@@ -124,7 +124,7 @@
 }
 
 .date {
-    width: 14%;
+    width: 20%;
 }
 
 .paginationBtns {
