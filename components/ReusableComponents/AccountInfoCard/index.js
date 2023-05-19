@@ -9,7 +9,19 @@ import {
 import Visbility from '../Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoMdCopy } from 'react-icons/io';
+import Slider from 'react-slick';
 
+const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 9000,
+    autoplaySpeed: 2000,
+    cssEase: 'linear'
+};
 const AccountsInfoCard = () => {
     const dispatch = useDispatch();
 
@@ -268,39 +280,87 @@ const AccountsInfoCard = () => {
                 </div>
             </div>
             <div className={styles.otherAccounts}>
-                <h2>Other Accounts</h2>
-                <div className={styles.accountsALl}>
-                    {bankAccounts?.map((accountNo, index) => {
-                        if (acctInfoNum === accountNo.accountNumber)
-                            return null;
-                        else if (acctNum === accountNo.accountNumber) {
-                            return null;
-                        } else {
-                            return (
-                                <>
-                                    <div key={index} className={styles.accntP}>
-                                        <p
-                                            onClick={(e) => {
-                                                setAccountBalanceTest(null),
-                                                    setAcctInfoNum(null),
-                                                    setAcctNumm(
-                                                        accountNo.accountNumber
-                                                    );
-                                            }}
-                                        >
-                                            {accountNo.accountNumber}
-                                        </p>
-                                        <p>{accountNo.customerType} Account</p>
-                                    </div>
-                                    <hr className={styles.accountHr} />
-                                </>
-                            );
-                        }
-                    })}
-                    {/* <div className={styles.otherAccountsDiv}>
+                {bankAccounts.length === 1 ? (
+                    // <Slider {...settings}>
+                    //     {/* <div>
+                    //             <img src="/Assets/Images/1.png" />
+                    //         </div> */}
+                    <div className={styles.sliderImage}>
+                        <img
+                            src="/Assets/Images/2.png"
+                            width={380}
+                            height={150}
+                        />
+                    </div>
+                ) : (
+                    //     <div className={styles.sliderImage}>
+                    //         <img
+                    //             src="/Assets/Images/3.png"
+                    //             width={150}
+                    //             height={100}
+                    //         />
+                    //     </div>
+                    //     <div className={styles.sliderImage}>
+                    //         <img
+                    //             src="/Assets/Images/4.png"
+                    //             width={150}
+                    //             height={100}
+                    //         />
+                    //     </div>
+                    //     <div className={styles.sliderImage}>
+                    //         <img
+                    //             src="/Assets/Images/5.png"
+                    //             width={150}
+                    //             height={100}
+                    //         />
+                    //     </div>
+                    // </Slider>
+                    <>
+                        <h2>Other Accounts</h2>
+                        <div className={styles.accountsALl}>
+                            {bankAccounts?.map((accountNo, index) => {
+                                if (acctInfoNum === accountNo.accountNumber)
+                                    return null;
+                                else if (acctNum === accountNo.accountNumber) {
+                                    return null;
+                                } else {
+                                    return (
+                                        <>
+                                            <div
+                                                key={index}
+                                                className={styles.accntP}
+                                            >
+                                                <p
+                                                    onClick={(e) => {
+                                                        setAccountBalanceTest(
+                                                            null
+                                                        ),
+                                                            setAcctInfoNum(
+                                                                null
+                                                            ),
+                                                            setAcctNumm(
+                                                                accountNo.accountNumber
+                                                            );
+                                                    }}
+                                                >
+                                                    {accountNo.accountNumber}
+                                                </p>
+                                                <p>
+                                                    {accountNo.customerType}{' '}
+                                                    Account
+                                                </p>
+                                            </div>
+                                            <hr className={styles.accountHr} />
+                                        </>
+                                    );
+                                }
+                            })}
+                            {/* <div className={styles.otherAccountsDiv}>
                         <button>+Add New</button>
                     </div> */}
-                </div>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

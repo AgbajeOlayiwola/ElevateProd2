@@ -3005,7 +3005,7 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
                     })
                     .then((response) => {
                         //console.logresponse.data.data);
-                        dispatch(getRCSuccess(response.data.data.dataFromCac));
+                        dispatch(getRCSuccess(response.data));
                     })
                     .catch((error) =>
                         dispatch(getRCError(error?.response.message))

@@ -308,7 +308,7 @@ const NewUser = ({ selectCountry }) => {
                                 type={outTyped ? 'text' : 'password'}
                                 onChange={handlePaswword}
                             />
-                            <Visbility typeSet={typed} />
+                            <Visbility typeSet={typed} input="input" />
                         </div>
                         {password == confirmPassword ? null : (
                             <>

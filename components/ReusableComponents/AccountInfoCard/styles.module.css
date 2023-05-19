@@ -82,6 +82,11 @@
 .otherAccountsDiv {
     margin-top: 0px;
 }
+.sliderImage {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
 .accntP p:nth-child(1) {
     font-family: 'Inter';
     font-style: normal;

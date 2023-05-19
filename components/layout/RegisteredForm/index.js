@@ -16,8 +16,10 @@ import {
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Liveness from '../NotRegisteredForms/Liveness';
+import { useRouter } from 'next/router';
 
 const ExistingMultiStep = () => {
+    const router = useRouter();
     const [page, setPage] = useState(0);
     const [pageType, setPageType] = useState('');
     const [country, setCountry] = useState();
@@ -43,6 +45,13 @@ const ExistingMultiStep = () => {
     useEffect(() => {
         dispatch(loadCountry());
     }, []);
+    useEffect(() => {
+        const {
+            query: { id }
+        } = router;
+        setPage(parseInt({ id }.id));
+    });
+    useEffect(() => {}, [page]);
     useEffect(() => {
         if (countries !== null) {
             countries.filter((item) => {
@@ -100,9 +109,14 @@ const ExistingMultiStep = () => {
             setOtpError(otpErrorMessage.response.data.message);
         } else if (otpActData) {
             // console.log('otpErrorI');
-            setPage(page + 1);
+            router.push({
+                pathname: '/Onboarding/ExistingProfileSetup',
+                query: { id: 1 }
+            });
         }
     }, [otpErrorMessage, otpActData]);
+
+    console.log(page);
 
     const conditionalComponent = () => {
         switch (page) {
@@ -153,7 +167,10 @@ const ExistingMultiStep = () => {
                         formData={formData}
                         setFormData={setFormData}
                         action={() => {
-                            setPage(page - 1);
+                            router.push({
+                                pathname: '/Onboarding/ExistingProfileSetup',
+                                query: { id: 0 }
+                            });
                         }}
                         loading={loading}
                         setLoading={setLoading}
@@ -167,7 +184,11 @@ const ExistingMultiStep = () => {
                         <Liveness
                             action={() => {
                                 setLoads((prev) => !prev);
-                                setPage(page + 1);
+                                router.push({
+                                    pathname:
+                                        '/Onboarding/ExistingProfileSetup',
+                                    query: { id: 3 }
+                                });
                             }}
                             cookie={cookie}
                             loading={loading}
@@ -181,11 +202,15 @@ const ExistingMultiStep = () => {
                 return (
                     <StepThree
                         action={() => {
-                            setPage(page - 1);
+                            router.push({
+                                pathname: '/Onboarding/ExistingProfileSetup',
+                                query: { id: 2 }
+                            });
                         }}
                         handleSubmit={handleSubmit}
                         handleSubmitNew={handleSubmitNew}
                         countryNames={country}
+                        mainAccount={newAccounts}
                     />
                 );
             case 4:
@@ -193,7 +218,10 @@ const ExistingMultiStep = () => {
                     <StepFour
                         title={pageType}
                         action={() => {
-                            setPage(page - 1);
+                            router.push({
+                                pathname: '/Onboarding/ExistingProfileSetup',
+                                query: { id: 3 }
+                            });
                             setPageType('');
                         }}
                         formData={formData}
@@ -207,11 +235,17 @@ const ExistingMultiStep = () => {
     };
     function handleSubmit() {
         // setLoads((prev) => !prev);
-        setPage(page + 1);
+        router.push({
+            pathname: '/Onboarding/ExistingProfileSetup',
+            query: { id: 4 }
+        });
         setFormData({ ...formData, type: 'true' });
     }
     function handleSubmitNew() {
-        setPage(page + 1);
+        router.push({
+            pathname: '/Onboarding/ExistingProfileSetup',
+            query: { id: 4 }
+        });
         setPageType('New');
     }
 
@@ -228,10 +262,16 @@ const ExistingMultiStep = () => {
                 let loginWith = localStorage.getItem('LoginWith');
                 if (loginWith !== null) {
                     // console.log(loginWith);
-                    setPage(page + 1);
+                    router.push({
+                        pathname: '/Onboarding/ExistingProfileSetup',
+                        query: { id: 2 }
+                    });
                     setFormData({ ...formData, type: 'true' });
                 } else if (loginWith === null) {
-                    setPage(page + 2);
+                    router.push({
+                        pathname: '/Onboarding/ExistingProfileSetup',
+                        query: { id: 3 }
+                    });
                     setFormData({ ...formData, type: 'true' });
                 }
             }

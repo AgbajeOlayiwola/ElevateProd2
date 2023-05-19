@@ -92,8 +92,11 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
 
     //console.logformData.type);
     useEffect(() => {
-        if (getRC !== null) {
-            setBusinessName(getRC.companyName);
+        console.log(getRC);
+        if (getRC?.data?.dataFromCac?.companyName !== undefined) {
+            setBusinessName(getRC?.data?.dataFromCac?.companyName);
+        } else if (getRC?.data?.reason !== undefined) {
+            console.log(getRC?.data?.reason);
         }
     }, [getRC, getRCErrorMessage]);
     const saveFile = (e) => {
@@ -233,10 +236,14 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     }, []);
 
     useEffect(() => {
-        if (accountDetails.profile !== undefined) {
+        const account = localStorage.getItem('account');
+        const accountDetails = JSON.parse(account);
+        if (accountDetails?.profile !== undefined) {
             setProfileInfo(accountDetails.profile);
         } else if (accountDetails.user !== undefined) {
             setProfileInfo(accountDetails.user.profile);
+        } else {
+            setProfileInfo(accountDetails);
         }
         //console.logprofileInfo);
         if (businessCategories !== null) {
@@ -667,7 +674,11 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                         <div
                                             className={styles.existingUserCont}
                                         >
-                                            {/* {getCacNameError?getCacNameError.response.data.message:null} */}
+                                            <p className={styles.error}>
+                                                {getRC?.data?.reason
+                                                    ? getRC?.data?.reason
+                                                    : null}
+                                            </p>
                                             <label>
                                                 Enter your RC /Business
                                                 Registration Number
