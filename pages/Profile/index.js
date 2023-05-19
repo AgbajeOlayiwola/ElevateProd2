@@ -26,6 +26,8 @@ import Lottie from 'react-lottie';
 import animationData from '../../components/ReusableComponents/Lotties/contact-us.json';
 import socialdata from '../../components/ReusableComponents/Lotties/social-media-marketing.json';
 import { useDispatch, useSelector } from 'react-redux';
+import { getAllComplaintGet } from '../../redux/actions/actions';
+import socialdataa from '../../components/ReusableComponents/Lotties/loading.json';
 import {
     getAirtimeBeneficiariesData,
     deleteAirtimeBeneficiariesData,
@@ -136,6 +138,30 @@ const Profile = () => {
     const { airtimeNetwork } = useSelector(
         (state) => state.airtimeNetworkReducer
     );
+    const [allDisputes, setAllDisputes] = useState();
+    const { getAllComplaintSuccess, getAllComplaintErrorMessage } = useSelector(
+        (state) => state.getComplaintReducer
+    );
+    const [isLoading, setIsLoading] = useState(true);
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
+    useEffect(() => {
+        dispatch(getAllComplaintGet());
+    }, []);
+    useEffect(() => {
+        if (getAllComplaintSuccess !== null) {
+            console.log(getAllComplaintSuccess);
+            setAllDisputes(getAllComplaintSuccess?.data?.disputeRecord);
+            setIsLoading(false);
+        }
+    }, [getAllComplaintSuccess]);
+
     const defaultOptions = {
         loop: true,
         autoplay: true,
@@ -145,10 +171,10 @@ const Profile = () => {
         }
     };
 
-    const socialOptions = {
+    const socialOptionss = {
         loop: true,
         autoplay: true,
-        animationData: socialdata,
+        animationData: socialdataa,
         rendererSettings: {
             preserveAspectRatio: 'xMidYMid slice'
         }
@@ -383,7 +409,11 @@ const Profile = () => {
         //     icon: <ManageSignSvg />,
         //     color: '#7A7978'
         // },
-
+        {
+            text: 'All Disputes',
+            icon: <ShareSvg color="#102572" />,
+            color: '#7A7978'
+        },
         {
             text: 'Contact us',
             icon: <ContactSvg />,
@@ -1857,6 +1887,57 @@ const Profile = () => {
                                     >
                                         copy
                                     </h5>
+                                </div>
+                            </>
+                        );
+                }
+            case 'All Disputes':
+                switch (count) {
+                    case 0:
+                        return (
+                            <>
+                                <div className={styles.statementCover}>
+                                    <h1 className={styles.nodisputesHeading}>
+                                        All Disputes
+                                    </h1>
+                                    <div className={styles.TableDetailHeader}>
+                                        <div className={styles.beneficiary}>
+                                            Create At
+                                        </div>
+                                        <p className={styles.amount}>
+                                            Case Type
+                                        </p>
+                                        {/* <p className={styles.bank}>Bank/Network</p> */}
+
+                                        <div className={styles.more}>
+                                            Description
+                                        </div>
+                                    </div>
+                                    {isLoading ? (
+                                        <Lottie
+                                            options={socialOptionss}
+                                            height={200}
+                                            width={200}
+                                        />
+                                    ) : allDisputes.length === 0 ? (
+                                        <>
+                                            <h1 className={styles.nodisputes}>
+                                                No Disputes have been lodged
+                                            </h1>
+                                        </>
+                                    ) : (
+                                        allDisputes
+                                            ?.filter((item) => {
+                                                const newDate = item.createAt.split(
+                                                    'T'
+                                                );
+                                                return item;
+                                            })
+                                            ?.map((item, index) => {
+                                                console.log(item);
+                                                return item;
+                                            })
+                                    )}
                                 </div>
                             </>
                         );
