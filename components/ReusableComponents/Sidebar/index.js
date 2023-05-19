@@ -40,7 +40,9 @@ const Sidebar = ({ showSubnav }) => {
             </div>
             <div className={styles.top}>
                 <div className={styles.ellevate}>
-                    <ElevateLogo />
+                    <Link href="/Dashboard">
+                        <ElevateLogo />
+                    </Link>
                 </div>
                 <div className={styles.track}>
                     {SidebarData.map((item, index) => {

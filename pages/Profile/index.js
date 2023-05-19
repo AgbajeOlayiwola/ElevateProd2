@@ -599,6 +599,7 @@ const Profile = () => {
                                                     }
                                                 />
                                             </div>
+
                                             <form
                                                 onSubmit={handleSubmit(
                                                     deleteAction
@@ -607,6 +608,33 @@ const Profile = () => {
                                                 <h2 className={styles.title}>
                                                     Delete Account
                                                 </h2>
+                                                <div className={styles.bvn}>
+                                                    <p>
+                                                        We are sorry to see you
+                                                        go, but we understand
+                                                        that you may want to
+                                                        delete your account.
+                                                        Before you proceed with
+                                                        this decision, please
+                                                        note that all of your
+                                                        data will be permanently
+                                                        erased from our system.
+                                                        This includes your
+                                                        personal information,
+                                                        account settings, and
+                                                        any content or activity
+                                                        associated with your
+                                                        account. Once your
+                                                        account is deleted, it
+                                                        cannot be recovered. If
+                                                        you change your mind,
+                                                        you will need to create
+                                                        a new account and start
+                                                        from scratch. Enter your
+                                                        email below to confirm
+                                                        account deletion
+                                                    </p>
+                                                </div>
                                                 <div className={styles.bvn}>
                                                     <p>
                                                         You wont be able to

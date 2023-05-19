@@ -46,6 +46,7 @@ const AccountsInfoCard = () => {
     );
     const [acctNum, setAcctNumm] = useState(accountPrimarys?.accountNumber);
     const [acctInfoNum, setAcctInfoNum] = useState();
+    const [copyAcctInfo, setCopyAcctInfo] = useState();
     useEffect(() => {
         dispatch(bankAccountsData());
         dispatch(loadAccountPrimary());
@@ -126,6 +127,19 @@ const AccountsInfoCard = () => {
         });
     }, [formData.accountNum]);
     useEffect(() => {
+        setAcctNumm(accountPrimarys?.accountNumber);
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            if (bankAccounts[accountNo].isPrimaryAccount === true) {
+                setCopyAcctInfo(bankAccounts[0]);
+                let balanceData;
+                balanceData = {
+                    accountId: bankAccounts[accountNo].accountId
+                };
+                dispatch(getBalanceEnquiry(balanceData));
+            }
+        });
+    }, [accountPrimarys, bankAccounts]);
+    useEffect(() => {
         // console.log(accountPrimarys);
         // setAcctNumm(accountPrimarys?.accountNumber);
         // const balanceData = {
@@ -168,7 +182,11 @@ const AccountsInfoCard = () => {
         }
     }
     const copyAccountNumber = () => {
-        copyTextToClipboard(acctNum)
+        copyTextToClipboard(`Account Name - ${userProfileData.firstName}
+        Account No. - ${copyAcctInfo.accountNumber}
+        Bank Name - Ecobank
+        Swift Code - ${copyAcctInfo.accountSwiftCode}
+        Bank Branch - ${copyAcctInfo.accountBankName} `)
             .then(() => {
                 // If successful, update the isCopied state value
                 setIsCopied(true);
@@ -341,6 +359,9 @@ const AccountsInfoCard = () => {
                                                             setAcctNumm(
                                                                 accountNo.accountNumber
                                                             );
+                                                        setCopyAcctInfo(
+                                                            accountNo
+                                                        );
                                                     }}
                                                 >
                                                     {accountNo.accountNumber}

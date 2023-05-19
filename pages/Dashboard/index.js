@@ -113,6 +113,7 @@ const Dashboard = () => {
     const [inflow, setInflow] = useState(formatter.format(0));
     const [outflow, setOutflow] = useState(formatter.format(0));
     const [totalMoney, setTotalMMoney] = useState(formatter.format(0));
+    const [copyAcctInfo, setCopyAcctInfo] = useState();
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
@@ -128,8 +129,10 @@ const Dashboard = () => {
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
     );
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
@@ -210,7 +213,17 @@ const Dashboard = () => {
     }, []);
     useEffect(() => {
         setAcctNumm(accountPrimarys?.accountNumber);
-    }, [accountPrimarys]);
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            if (bankAccounts[accountNo].isPrimaryAccount === true) {
+                setCopyAcctInfo(bankAccounts[0]);
+                let balanceData;
+                balanceData = {
+                    accountId: bankAccounts[accountNo].accountId
+                };
+                dispatch(getBalanceEnquiry(balanceData));
+            }
+        });
+    }, [accountPrimarys, bankAccounts]);
     useEffect(() => {
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber === acctNum) {
@@ -317,7 +330,7 @@ const Dashboard = () => {
             // });
         }
     }, [transactionHistory]);
-    console.log(bankAccounts);
+    // console.log(bankAccounts);
 
     useEffect(() => {}, [pending, success, failed]);
     //console.log(newDate[0]);
@@ -329,8 +342,12 @@ const Dashboard = () => {
         }
     }
     const copyAccountNumber = () => {
-        console.log('copy');
-        copyTextToClipboard(`Account Number is ${acctNum} `)
+        console.log(acctInfoNum);
+        copyTextToClipboard(`Account Name - ${userProfileData.firstName}
+        Account No. - ${copyAcctInfo.accountNumber}
+        Bank Name - Ecobank
+        Swift Code - ${copyAcctInfo.accountSwiftCode}
+        Bank Branch - ${copyAcctInfo.accountBankName} `)
             .then(() => {
                 // If successful, update the isCopied state value
                 setIsCopied(true);
@@ -477,33 +494,34 @@ const Dashboard = () => {
                                 ) : (
                                     tableDetails
                                         ?.filter((item) => {
-                                            const newDate =
-                                                item.transactionDate.split('T');
+                                            const newDate = item.transactionDate.split(
+                                                'T'
+                                            );
                                             return (
                                                 newDate[0] >= rangeDate &&
                                                 newDate[0] <= time
                                             );
                                         })
                                         ?.map((item, index) => {
-                                            const formatter =
-                                                new Intl.NumberFormat('en-US', {
+                                            const formatter = new Intl.NumberFormat(
+                                                'en-US',
+                                                {
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:
                                                         'narrowSymbol'
-                                                });
-                                            const formattedAmount =
-                                                formatter.format(
-                                                    item.transactionAmount
-                                                );
+                                                }
+                                            );
+                                            const formattedAmount = formatter.format(
+                                                item.transactionAmount
+                                            );
                                             let newBeneficiary;
                                             if (item.receiversName === null) {
                                                 newBeneficiary = '';
                                             } else {
-                                                newBeneficiary =
-                                                    item?.receiversName?.split(
-                                                        ' '
-                                                    );
+                                                newBeneficiary = item?.receiversName?.split(
+                                                    ' '
+                                                );
                                             }
                                             // {
                                             //     //console.log(item);
@@ -737,6 +755,9 @@ const Dashboard = () => {
                                                                     setAcctNumm(
                                                                         accountNo.accountNumber
                                                                     );
+                                                                setCopyAcctInfo(
+                                                                    accountNo
+                                                                );
                                                             }}
                                                         >
                                                             {
@@ -852,12 +873,13 @@ const Dashboard = () => {
                                 ) : (
                                     tableDetails
                                         ?.filter((item) => {
-                                            const newDate =
-                                                item.transactionDate.split('T');
+                                            const newDate = item.transactionDate.split(
+                                                'T'
+                                            );
                                             return item;
                                         })
                                         ?.map((item, index) => {
-                                            console.log(item);
+                                            // console.log(item);
                                             const formatter = new Intl.NumberFormat(
                                                 'en-US',
                                                 {
@@ -865,17 +887,18 @@ const Dashboard = () => {
                                                     currency: 'NGN',
                                                     currencyDisplay:
                                                         'narrowSymbol'
-                                                });
-                                            const formattedAmount =
-                                                formatter.format(
-                                                    item.transactionAmount
-                                                );
+                                                }
+                                            );
+                                            const formattedAmount = formatter.format(
+                                                item.transactionAmount
+                                            );
                                             let newBeneficiary;
                                             if (item.receiver === null) {
                                                 newBeneficiary = '';
                                             } else {
-                                                newBeneficiary =
-                                                    item?.receiver?.split(' ');
+                                                newBeneficiary = item?.receiver?.split(
+                                                    ' '
+                                                );
                                             }
                                             return (
                                                 <div key={index}>
