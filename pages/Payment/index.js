@@ -360,8 +360,6 @@ const Payment = () => {
         setError([]);
         setErrorQr([]);
     };
-    console.log(csvData);
-    console.log(sum);
 
     useEffect(() => {
         setSum(
@@ -841,14 +839,11 @@ const Payment = () => {
                                 // }}
                                 airtimeAction={(data) => {
                                     setPaymentDetails(data);
+                                    console.log(data);
                                     setSenderDetails(data.sourceAccount);
                                     const payload = {
                                         accountId: data.sourceAccount,
-                                        billerCode:
-                                            bill === 'AIRTIME'
-                                                ? airtimeNetData.code
-                                                : airtimeNetData?.billerDetail
-                                                      ?.billerCode,
+                                        billerCode: data.type,
                                         transactionAmount: parseInt(
                                             data.amount,
                                             10
@@ -885,9 +880,7 @@ const Payment = () => {
                                 title="Bills Payment"
                                 charges={transactionFee}
                                 recieverBank={
-                                    bill === 'AIRTIME'
-                                        ? airtimeNetData.name
-                                        : airtimeNetData.billerDetail.billerName
+                                    airtimeNetData.billerDetail.billerName
                                 }
                                 sender={`${userProfileData.lastName} ${userProfileData.firstName}`}
                                 overlay={overlay}
@@ -904,28 +897,29 @@ const Payment = () => {
                                                 .toString()
                                                 .replaceAll(',', ''),
                                             accountId: senderDetails,
-                                            billerCode: airtimeNetData.code,
-                                            billerId: airtimeNetData.id,
+                                            billerCode:
+                                                airtimeNetData.billerDetail.billerCode.toString(),
+                                            billerId:
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             // productCode: airtimeNetData.name,
                                             productCode:
-                                                airtimeNetData.name ===
-                                                'MTN Nigeria'
-                                                    ? 'MTN-ANY'
-                                                    : airtimeNetData.name ===
-                                                      'GLO Nigeria'
-                                                    ? 'GLO-ANY'
-                                                    : airtimeNetData.name ===
-                                                      'Airtel Nigeria'
-                                                    ? 'AIRTEL-ANY'
-                                                    : airtimeNetData.name ===
-                                                      'Etisalat Nigeria'
-                                                    ? 'ETISALAT-ANY'
-                                                    : null,
+                                                desiredPackageData.productCode,
                                             mobileNo:
                                                 paymentDetails.phoneNumber ===
                                                 ''
                                                     ? paymentDetails.phoneNumberBene
-                                                    : paymentDetails.phoneNumber
+                                                    : paymentDetails.phoneNumber,
+                                            formDataValue: [
+                                                {
+                                                    fieldName: 'BEN_PHONE_NO',
+                                                    fieldValue:
+                                                        paymentDetails.phoneNumber ===
+                                                        ''
+                                                            ? paymentDetails.phoneNumberBene
+                                                            : paymentDetails.phoneNumber,
+                                                    dataType: 'string'
+                                                }
+                                            ]
                                         };
 
                                         dispatch(postAirtime(billerdata));

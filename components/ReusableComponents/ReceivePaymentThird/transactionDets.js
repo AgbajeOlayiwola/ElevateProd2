@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './styles.module.css';
 import EditSvg from '../editSvg';
 import { MdCancel } from 'react-icons/md';
@@ -9,11 +9,6 @@ import {
     getDisputCategorySubGen,
     lodgeDisputeSubGen
 } from '../../../redux/actions/actions';
-import OutsideClick from '../OutsideClick';
-import Lottie from 'react-lottie';
-import socialdata from '../../ReusableComponents/Lotties/loading.json';
-import Loader from '../Loader';
-import CloseBtnSvg from '../ClosebtnSvg';
 const TransactionDets = ({
     paymentDirection,
     transactionAmmount,
@@ -26,8 +21,7 @@ const TransactionDets = ({
     disputes,
     accountId,
     transactionId,
-    transactionRef,
-    beneficiary
+    transactionRef
 }) => {
     const [dispute, setDispute] = useState('');
     const [disputeCate, setDisputeCat] = useState('');
@@ -37,91 +31,50 @@ const TransactionDets = ({
     const [reciept, setReciept] = useState(false);
     const [disputeType, setDisputeType] = useState();
     const [selectedDisputeType, setSelectedDisputeType] = useState();
-    const [
-        selectedDisputSubCategory,
-        setSelectedDisputeSubCategory
-    ] = useState();
+    const [selectedDisputSubCategory, setSelectedDisputeSubCategory] =
+        useState();
     const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
     const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
-    const [isLoading, setIsLoading] = useState(false);
-    const {
-        getDisputCategorySuccess,
-        getDisputCategoryErrorMessage
-    } = useSelector((state) => state.getDisputeCategoryReducer);
-    const {
-        getDisputCategorySubSuccess,
-        getDisputCategoryErrorSubMessage
-    } = useSelector((state) => state.getDisputeSubCategoryReducer);
+    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
+        useSelector((state) => state.getDisputeCategoryReducer);
+    const { getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage } =
+        useSelector((state) => state.getDisputeSubCategoryReducer);
     const { lodgeDisputeSuccess, lodgeDisputeErrorSubMessage } = useSelector(
         (state) => state.lodgeDisputeReducer
     );
     const disputesFunction = (event) => {
         dispatch(getDisputCategoryGen(event.target.value));
-        setIsLoading(true);
         setDisputeType(event.target.value);
         if (getDisputCategorySuccess) {
-            setIsLoading(false);
             setComplaintCategory(getDisputCategorySuccess);
             console.log(getDisputCategorySuccess);
         }
     };
     const complainCateFunction = (event) => {
-        setIsLoading(true);
         dispatch(getDisputCategorySubGen(event.target.value, disputeType));
         setSelectedDisputeCategory(event.target.value);
         if (getDisputCategorySubSuccess) {
-            setIsLoading(false);
             console.log(getDisputCategorySubSuccess);
         }
     };
     const complaintSubVateFunction = (event) => {
         setSelectedDisputeSubCategory(event.target.value);
     };
-    const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState('');
-    const [descriptions, setDescription] = useState('');
-    const types = 'Complaint';
-    const sub = 'Transfers';
-    useEffect(() => {
-        if (paymentDirection?.toLowerCase() === 'debit') {
-            setSelectedDisputeCategory('Payments');
-        }
-        if (type.toLowerCase() === 'ussd') {
-            setSelectedDisputeCategory('Ussd');
-        }
-        if (type?.toLowerCase() === 'payment_link') {
-            setSelectedDisputeCategory('Cards');
-        }
-        if (type?.toLowerCase() === 'qr_payment') {
-            setSelectedDisputeCategory('Payments');
-        }
-    }, [paymentDirection]);
     const lodgeTheComplaint = () => {
-        setLoading(true);
         const data = {
             accountId: accountId,
             caseCategory: selectedDisputeCategory,
-            caseSubCategory: sub,
-            caseType: types,
-            description: `${types} from USER about ${selectedDisputeCategory} regarding ${sub}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmmount}. Futher Insight From User:${descriptions}`
+            caseSubCategory: selectedDisputSubCategory,
+            caseType: disputeType,
+            description: `${disputeType} from USER about ${selectedDisputeCategory} regarding ${selectedDisputSubCategory}. With Transaction Id: ${transactionId} and Transaction Ref: ${transactionRef}. Amount involved: ${transactionAmmount}`
         };
         dispatch(lodgeDisputeSubGen(data));
-    };
-    useEffect(() => {
         if (lodgeDisputeErrorSubMessage) {
-            setLoading(false);
-        }
-    }, [lodgeDisputeErrorSubMessage]);
-
-    const socialOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: socialdata,
-        rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice'
         }
     };
+
     // console.log(disputeType);
     return (
         <div>
@@ -168,232 +121,217 @@ const TransactionDets = ({
                     >
                         <EditSvg />
                         {dispute ? (
-                            <OutsideClick
-                                onClickOutside={() => {
-                                    setDispute(false);
-                                }}
-                            >
-                                <div className={styles.disput}>
-                                    <div
-                                        className={styles.dispute}
-                                        onClick={() => {
-                                            setShowDispute((prev) => !prev);
-                                            // setDispute(false);
-                                        }}
-                                    >
-                                        Dispute
-                                    </div>
-
-                                    <hr />
-                                    <div
-                                        className={styles.reciept}
-                                        onClick={() => {
-                                            setReciept((prev) => !prev);
-                                            setDispute(false);
-                                        }}
-                                    >
-                                        Get Reciept
-                                    </div>
+                            <div className={styles.disput}>
+                                <div
+                                    className={styles.dispute}
+                                    onClick={() => {
+                                        setShowDispute((prev) => !prev);
+                                        setDispute(false);
+                                    }}
+                                >
+                                    Dispute
                                 </div>
-                            </OutsideClick>
+
+                                <hr />
+                                <div
+                                    className={styles.reciept}
+                                    onClick={() => {
+                                        setReciept((prev) => !prev);
+                                        setDispute(false);
+                                    }}
+                                >
+                                    Get Reciept
+                                </div>
+                            </div>
                         ) : null}
                         {showDispute ? (
-                            <OutsideClick
-                                onClickOutside={() => {
-                                    setShowDispute((prev) => !prev);
-                                }}
-                            >
-                                <div className={styles.showDispute}>
-                                    <div className={styles.cancelDispute}>
-                                        <CloseBtnSvg
-                                            action={() => setShowDispute(false)}
-                                        />
-                                    </div>
-                                    <p classNmae={styles.typeSub}>
-                                        Transacton Amount:{transactionAmmount}
-                                    </p>
-                                    <p classNmae={styles.typeSub}>
-                                        Type: {type}
-                                    </p>
-                                    <p classNmae={styles.typeSub}>
-                                        Sub Category: {sub}
-                                    </p>
-                                    <div className={styles.cancel}></div>
-                                    {lodgeDisputeErrorSubMessage ? (
-                                        <p className={styles.errors}>
-                                            {
-                                                lodgeDisputeErrorSubMessage
-                                                    ?.data?.message
-                                            }
-                                        </p>
-                                    ) : null}
-                                    <textarea
-                                        onChange={(e) =>
-                                            setDescription(e.target.value)
-                                        }
-                                        className={styles.disputTextArea}
-                                        cols={8}
-                                        rows={6}
-                                    ></textarea>
-                                    <button onClick={lodgeTheComplaint}>
-                                        Submit
-                                    </button>
+                            <div className={styles.showDispute}>
+                                <div className={styles.cancel}>
+                                    <MdCancel
+                                        onClick={() => setShowDispute(false)}
+                                    />
                                 </div>
-                            </OutsideClick>
+                                {lodgeDisputeErrorSubMessage ? (
+                                    <p className={styles.errors}>
+                                        {
+                                            lodgeDisputeErrorSubMessage?.data
+                                                ?.message
+                                        }
+                                    </p>
+                                ) : null}
+                                <div className={styles.maindispute}>
+                                    <label>Dispute type</label>
+                                    <select onChange={disputesFunction}>
+                                        <option>Select Dispute Type</option>
+                                        {disputes?.map((item, index) => {
+                                            return (
+                                                <option
+                                                    value={item}
+                                                    key={index}
+                                                >
+                                                    {item}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+                                <div className={styles.maindispute}>
+                                    <label>Dispute category</label>
+                                    <select onChange={complainCateFunction}>
+                                        <option>Select Dispute Category</option>
+                                        {getDisputCategorySuccess?.map(
+                                            (item, index) => {
+                                                return (
+                                                    <option
+                                                        value={item}
+                                                        key={index}
+                                                    >
+                                                        {item}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
+                                    </select>
+                                </div>
+                                <div className={styles.maindispute}>
+                                    <label>Dispute Sub-Category</label>
+                                    <select onChange={complaintSubVateFunction}>
+                                        <option>Select Dispute Category</option>
+                                        {getDisputCategorySubSuccess?.map(
+                                            (item, index) => {
+                                                return (
+                                                    <option
+                                                        value={item}
+                                                        key={index}
+                                                    >
+                                                        {item}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
+                                    </select>
+                                </div>
+                                <button onClick={lodgeTheComplaint}>
+                                    Submit
+                                </button>
+                            </div>
                         ) : null}
                         {reciept ? (
-                            <OutsideClick
-                                onClickOutside={() => {
-                                    setReciept((prev) => !prev);
-                                }}
-                            >
-                                <div className={styles.showReciept}>
-                                    <div className={styles.cancelReciept}>
-                                        <MdCancel
-                                            onClick={() => setReciept(false)}
-                                        />
-                                    </div>
+                            <div className={styles.showReciept}>
+                                <div className={styles.cancelReciept}>
+                                    <MdCancel
+                                        onClick={() => setReciept(false)}
+                                    />
+                                </div>
+                                <div
+                                    ref={exportRef}
+                                    className={styles.recieptDiv}
+                                >
                                     <div
-                                        ref={exportRef}
-                                        className={styles.recieptDiv}
+                                        className={
+                                            transactionStatus === 'PENDING'
+                                                ? styles.pendingReciept
+                                                : styles.success
+                                        }
                                     >
-                                        <div
-                                            className={
-                                                transactionStatus === 'PENDING'
-                                                    ? styles.pendingReciept
-                                                    : transactionStatus ===
-                                                      'FAILED'
-                                                    ? styles.failedReciept
-                                                    : styles.successReciept
-                                            }
-                                        >
-                                            <h1>{transactionAmmount}</h1>
-                                            <h2
-                                                className={
-                                                    transactionStatus ===
-                                                    'PENDING'
-                                                        ? styles.statusText
-                                                        : transactionStatus ===
-                                                          'FAILED'
-                                                        ? styles.failedText
-                                                        : styles.successText
-                                                }
-                                            >
-                                                {transactionStatus}
-                                            </h2>
-                                        </div>
-                                        <div className={styles.recieptPad}>
-                                            <div>
-                                                <h1>{transactionTitle}</h1>
-                                            </div>
-                                            {transactionTitle ===
-                                            null ? null : (
-                                                <>
-                                                    {' '}
-                                                    <div
-                                                        className={
-                                                            styles.senderInfo
-                                                        }
-                                                    >
-                                                        <p>
-                                                            Beneficiary Account
-                                                        </p>
-                                                        <p>
-                                                            {transactionTitle}
-                                                        </p>
-                                                    </div>
-                                                    <hr />
-                                                </>
-                                            )}
-                                            {type === null ? null : (
-                                                <>
-                                                    <div
-                                                        className={
-                                                            styles.senderInfo
-                                                        }
-                                                    >
-                                                        <p>Transaction Type</p>
-                                                        <p>{type}</p>
-                                                    </div>
-                                                    <hr />
-                                                </>
-                                            )}
-
-                                            {sender === null ? null : (
-                                                <>
-                                                    <div
-                                                        className={
-                                                            styles.senderInfo
-                                                        }
-                                                    >
-                                                        <p>Sender Name</p>
-                                                        <p>{sender}</p>
-                                                    </div>
-                                                    <hr />
-                                                </>
-                                            )}
-
-                                            {destinationBank === null ? null : (
-                                                <>
-                                                    <div
-                                                        className={
-                                                            styles.senderInfo
-                                                        }
-                                                    >
-                                                        <p>Destination Bank</p>
-                                                        <p>{destinationBank}</p>
-                                                    </div>
-                                                    <hr />
-                                                </>
-                                            )}
-                                            {narration === null ? null : (
-                                                <>
-                                                    <div
-                                                        className={
-                                                            styles.senderInfo
-                                                        }
-                                                    >
-                                                        <p>Narration</p>
-                                                        <p>{narration}</p>
-                                                    </div>
-                                                    <hr />
-                                                </>
-                                            )}
-                                        </div>
-                                        <div className={styles.diclaimer}>
-                                            <p>
-                                                Due to the nature of the
-                                                internet, transactions may be
-                                                subject to interruption
-                                                blackout, delayed transmission
-                                                and incorrect data transmission.
-                                                The Bank is not liable for
-                                                malfunction in communication
-                                                facilities not within its
-                                                control that may affect the
-                                                accuracy and timeliness of
-                                                messages and transaction you
-                                                send. All transactions are
-                                                subject to verification and
-                                                normal fraud checks.
-                                            </p>
-                                        </div>
+                                        <h1>₦{transactionAmmount}</h1>
                                     </div>
-                                    <div className={styles.btnDiv}>
-                                        <button
-                                            className={styles.dounloadReciept}
-                                            onClick={() =>
-                                                exportAsImage(
-                                                    exportRef.current,
-                                                    'QrReciept'
-                                                )
-                                            }
-                                        >
-                                            Download
-                                        </button>
+                                    <div className={styles.recieptPad}>
+                                        <div>
+                                            <h1>{transactionTitle}</h1>
+                                        </div>
+                                        <div className={styles.senderInfo}>
+                                            <p>Beneficiary Account</p>
+                                            <p>1234567890</p>
+                                        </div>
+                                        <hr />
+                                        {type === null ? null : (
+                                            <>
+                                                <div
+                                                    className={
+                                                        styles.senderInfo
+                                                    }
+                                                >
+                                                    <p>Transaction Type</p>
+                                                    <p>{type}</p>
+                                                </div>
+                                                <hr />
+                                            </>
+                                        )}
+
+                                        {sender === null ? null : (
+                                            <>
+                                                <div
+                                                    className={
+                                                        styles.senderInfo
+                                                    }
+                                                >
+                                                    <p>Sender Name</p>
+                                                    <p>{sender}</p>
+                                                </div>
+                                                <hr />
+                                            </>
+                                        )}
+
+                                        {destinationBank === null ? null : (
+                                            <>
+                                                <div
+                                                    className={
+                                                        styles.senderInfo
+                                                    }
+                                                >
+                                                    <p>Destination Bank</p>
+                                                    <p>{destinationBank}</p>
+                                                </div>
+                                                <hr />
+                                            </>
+                                        )}
+                                        {narration === null ? null : (
+                                            <>
+                                                <div
+                                                    className={
+                                                        styles.senderInfo
+                                                    }
+                                                >
+                                                    <p>Narration</p>
+                                                    <p>{narration}</p>
+                                                </div>
+                                                <hr />
+                                            </>
+                                        )}
+                                    </div>
+                                    <div className={styles.diclaimer}>
+                                        <p>
+                                            Due to the nature of the internet,
+                                            transactions may be subject to
+                                            interruption blackout, delayed
+                                            transmission and incorrect data
+                                            transmission. The Bank is not liable
+                                            for malfunction in communication
+                                            facilities not within its control
+                                            that may affect the accuracy and
+                                            timeliness of messages and
+                                            transaction you send. All
+                                            transactions are subject to
+                                            verification and normal fraud
+                                            checks.
+                                        </p>
                                     </div>
                                 </div>
-                            </OutsideClick>
+                                <div className={styles.btnDiv}>
+                                    <button
+                                        className={styles.dounloadReciept}
+                                        onClick={() =>
+                                            exportAsImage(
+                                                exportRef.current,
+                                                'QrReciept'
+                                            )
+                                        }
+                                    >
+                                        Download
+                                    </button>
+                                </div>
+                            </div>
                         ) : null}
                     </div>
                 </div>

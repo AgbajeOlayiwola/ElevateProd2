@@ -46,6 +46,8 @@ import TransactionStatus from '../../components/ReusableComponents/TransactionSt
 import { IoMdCopy } from 'react-icons/io';
 import Lottie from 'react-lottie';
 import socialdata from '../../components/ReusableComponents/Lotties/loading.json';
+import BulkTransfer2 from '../../components/ReusableComponents/BulkTransfSvg/bulktrans';
+import BillTransfer from '../../components/ReusableComponents/BillTransSvg';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -126,10 +128,8 @@ const Dashboard = () => {
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
     );
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
@@ -301,9 +301,8 @@ const Dashboard = () => {
                     return a + +b.transactionAmount;
                 }, 0);
             setTotalMMoney(formatter.format(one + two));
-            const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
-                'T'
-            );
+            const newDate =
+                transactionHistory.transactions[0]?.transactionDate?.split('T');
             if (newDate) {
                 if (newDate[0] == time) {
                     setDateState(true);
@@ -362,7 +361,7 @@ const Dashboard = () => {
                                 </div>
                                 <div>
                                     <TotlaCollctionsSvg />
-                                    <p>Total</p>
+                                    <p>Total Transaction</p>
                                     <p className={styles.filed}>{totalMoney}</p>
                                 </div>
                             </div>
@@ -477,34 +476,33 @@ const Dashboard = () => {
                                 ) : (
                                     tableDetails
                                         ?.filter((item) => {
-                                            const newDate = item.transactionDate.split(
-                                                'T'
-                                            );
+                                            const newDate =
+                                                item.transactionDate.split('T');
                                             return (
                                                 newDate[0] >= rangeDate &&
                                                 newDate[0] <= time
                                             );
                                         })
                                         ?.map((item, index) => {
-                                            const formatter = new Intl.NumberFormat(
-                                                'en-US',
-                                                {
+                                            const formatter =
+                                                new Intl.NumberFormat('en-US', {
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:
                                                         'narrowSymbol'
-                                                }
-                                            );
-                                            const formattedAmount = formatter.format(
-                                                item.transactionAmount
-                                            );
+                                                });
+                                            const formattedAmount =
+                                                formatter.format(
+                                                    item.transactionAmount
+                                                );
                                             let newBeneficiary;
                                             if (item.receiversName === null) {
                                                 newBeneficiary = '';
                                             } else {
-                                                newBeneficiary = item?.receiversName?.split(
-                                                    ' '
-                                                );
+                                                newBeneficiary =
+                                                    item?.receiversName?.split(
+                                                        ' '
+                                                    );
                                             }
                                             // {
                                             //     //console.log(item);
@@ -853,32 +851,29 @@ const Dashboard = () => {
                                 ) : (
                                     tableDetails
                                         ?.filter((item) => {
-                                            const newDate = item.transactionDate.split(
-                                                'T'
-                                            );
+                                            const newDate =
+                                                item.transactionDate.split('T');
                                             return item;
                                         })
                                         ?.map((item, index) => {
                                             console.log(item);
-                                            const formatter = new Intl.NumberFormat(
-                                                'en-US',
-                                                {
+                                            const formatter =
+                                                new Intl.NumberFormat('en-US', {
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:
                                                         'narrowSymbol'
-                                                }
-                                            );
-                                            const formattedAmount = formatter.format(
-                                                item.transactionAmount
-                                            );
+                                                });
+                                            const formattedAmount =
+                                                formatter.format(
+                                                    item.transactionAmount
+                                                );
                                             let newBeneficiary;
                                             if (item.receiver === null) {
                                                 newBeneficiary = '';
                                             } else {
-                                                newBeneficiary = item?.receiver?.split(
-                                                    ' '
-                                                );
+                                                newBeneficiary =
+                                                    item?.receiver?.split(' ');
                                             }
                                             return (
                                                 <div key={index}>

@@ -2,7 +2,7 @@ import { cardLogin } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    cardLoginS: [],
+    cardLoginS: null,
     cardLoginerrorMessages: ''
 };
 

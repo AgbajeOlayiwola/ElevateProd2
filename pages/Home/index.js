@@ -510,24 +510,26 @@ const HomeMain = () => {
 
     const cardTest = () => {
         // console.log(cardLogin);
-        if (cardLoginS.message === 'success') {
-            // console.log(cardLogin);
-            // const data = {
-            //     email: omniliteData.data.user.email,
-            //     // accountNumber: omniliteData.data.user.profile.firstName,
-            //     fullName: omniliteData.data.user.profile.lastName,
-            //     phoneNumber: omniliteData.data.user.phoneNumber
-            // };
-            window.localStorage.setItem(
-                'displayAccount',
-                JSON.stringify(cardLoginS.data)
-            );
-            window.localStorage.setItem(
-                'account',
-                JSON.stringify(cardLoginS.data.user)
-            );
+        if (cardLoginS !== null) {
+            if (cardLoginS.message === 'success') {
+                // console.log(cardLogin);
+                // const data = {
+                //     email: omniliteData.data.user.email,
+                //     // accountNumber: omniliteData.data.user.profile.firstName,
+                //     fullName: omniliteData.data.user.profile.lastName,
+                //     phoneNumber: omniliteData.data.user.phoneNumber
+                // };
+                window.localStorage.setItem(
+                    'displayAccount',
+                    JSON.stringify(cardLoginS.data)
+                );
+                window.localStorage.setItem(
+                    'account',
+                    JSON.stringify(cardLoginS.data.user)
+                );
 
-            router.push('/Onboarding/ExistingProfileSetup');
+                router.push('/Onboarding/ExistingProfileSetup');
+            }
         } else {
             setLoading(false);
             setError(cardLoginerrorMessages);

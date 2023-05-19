@@ -7,11 +7,10 @@ import exportAsImage from '../../../utils/exportAsImage';
 import CloseButton from '../../ReusableComponents/CloseButtonSvg';
 
 const QrFirst = ({ overlay, moveToNext, closeAction }) => {
-    const {
-        getQrMerchnatInfoSuccess,
-        getQrMerchnatInfoErrorMessage
-    } = useSelector((state) => state.getQrMerchantInfoReducermport);
+    const { getQrMerchnatInfoSuccess, getQrMerchnatInfoErrorMessage } =
+        useSelector((state) => state.getQrMerchantInfoReducermport);
     const [merchantInf, setMerchantInfo] = useState();
+    const [error, setError] = useState();
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getQrMerchantInfoGen());
@@ -20,8 +19,10 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
     useEffect(() => {
         if (getQrMerchnatInfoSuccess != null) {
             setMerchantInfo(getQrMerchnatInfoSuccess);
+        } else if (getQrMerchnatInfoErrorMessage !== null) {
+            setError(getQrMerchnatInfoErrorMessage.response.data.message);
         }
-    }, [getQrMerchnatInfoSuccess]);
+    }, [getQrMerchnatInfoSuccess, getQrMerchnatInfoErrorMessage]);
     const exportRef = useRef();
     return (
         <Overlay overlay={overlay}>
@@ -38,43 +39,52 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
                         <h1>Ecobank QR Code</h1>
                         <p>Share QR code to receive money.</p>
                     </div>
-                    <div className={styles.qrMain}>
-                        <img
-                            ref={exportRef}
-                            src={`data:image/png;base64,${merchantInf?.staticQRCodeBase64}`}
-                            width={156}
-                            height={156}
-                        />
-                    </div>
-                    <div>
-                        <div className={styles.ids}>
-                            <p>Merchant ID</p>
-                            <p>{merchantInf?.merchantCode}</p>
-                        </div>
-                        <div className={styles.ids}>
-                            <p>Terminal ID</p>
-                            <p>{merchantInf?.terminalId}</p>
-                        </div>
-                    </div>
-                    <div>
-                        <button
-                            onClick={() =>
-                                exportAsImage(exportRef.current, 'personalQR')
-                            }
-                        >
-                            Download Static QR Code
-                        </button>
-                        <p className={styles.tap}>
-                            Tap to create a
-                            <span
-                                className={styles.tapSpan}
-                                onClick={moveToNext}
-                            >
-                                {' '}
-                                Ecobank QR Code for a transaction.
-                            </span>
-                        </p>
-                    </div>
+                    {error ? (
+                        <h2 className={styles.error}>{error}</h2>
+                    ) : (
+                        <>
+                            <div className={styles.qrMain}>
+                                <img
+                                    ref={exportRef}
+                                    src={`data:image/png;base64,${merchantInf?.staticQRCodeBase64}`}
+                                    width={156}
+                                    height={156}
+                                />
+                            </div>
+                            <div>
+                                <div className={styles.ids}>
+                                    <p>Merchant ID</p>
+                                    <p>{merchantInf?.merchantCode}</p>
+                                </div>
+                                <div className={styles.ids}>
+                                    <p>Terminal ID</p>
+                                    <p>{merchantInf?.terminalId}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button
+                                    onClick={() =>
+                                        exportAsImage(
+                                            exportRef.current,
+                                            'personalQR'
+                                        )
+                                    }
+                                >
+                                    Download Static QR Code
+                                </button>
+                                <p className={styles.tap}>
+                                    Tap to create a
+                                    <span
+                                        className={styles.tapSpan}
+                                        onClick={moveToNext}
+                                    >
+                                        {' '}
+                                        Ecobank QR Code for a transaction.
+                                    </span>
+                                </p>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </Overlay>

@@ -149,17 +149,12 @@ const AccountUpgrade = () => {
     const [fileNameI, setFileNameI] = useState();
     const [fileII, setFileII] = useState(null);
     const [fileNameII, setFileNameII] = useState();
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        null
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
-    const [
-        identificationBackDocument,
-        setIdentificationBackDocument
-    ] = useState(null);
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState(null);
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
+    const [identificationBackDocument, setIdentificationBackDocument] =
+        useState(null);
     const [
         identificationBackDocumentFileName,
         setIdentificationBackDocumentFileName
@@ -177,6 +172,7 @@ const AccountUpgrade = () => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [questions, setQuestions] = useState();
     const [base64Code, setBase64Code] = useState('');
+    const [errorActive, setErrorActive] = useState('');
     const [backBase64Code, setBackBase64Code] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const [corporateAccount, setCorporateAccount] = useState();
@@ -242,6 +238,77 @@ const AccountUpgrade = () => {
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
+    useEffect(() => {
+        if (
+            userProfileData.createdFromEcobankCred === true &&
+            userProfileData.customerCategory === 'INDIVIDUAL'
+        ) {
+            if (elevateStatus === 'done') {
+                setActive(true);
+            }
+        }
+        if (
+            userProfileData.createdFromEcobankCred === true &&
+            userProfileData.customerCategory === 'COMMERCIAL'
+        ) {
+            if (
+                userProfile?.hasDoneVNINVerification === true &&
+                addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS' &&
+                userProfile?.hasSetTransactionPin === true &&
+                refereeStatus === 'done' &&
+                utilityStatus === 'done' &&
+                idCardStatus === 'done' &&
+                userProfile?.hasDoneEllevateProfiling === true
+            ) {
+                setActive(true);
+            }
+        }
+        if (text === 'INDIVIDUAL') {
+            if (
+                userProfile?.hasDoneVNINVerification === true &&
+                addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS' &&
+                userProfile?.hasSetTransactionPin === true &&
+                utilityStatus === 'done' &&
+                idCardStatus === 'done' &&
+                userProfile?.hasDoneEllevateProfiling === true
+            ) {
+                setActive(true);
+            }
+        }
+
+        if (text === 'COMMERCIAL') {
+            if (
+                userProfile?.hasDoneVNINVerification === true &&
+                refereeStatus === 'done' &&
+                addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS' &&
+                userProfile?.hasSetTransactionPin === true &&
+                idCardStatus === 'done' &&
+                userProfile?.hasDoneEllevateProfiling === true &&
+                utilityStatus === 'done' &&
+                cacStatus === 'done' &&
+                mematStatus === 'done' &&
+                tinStatus === 'done' &&
+                tinStatus === 'done' &&
+                scumlStatus === 'done'
+            ) {
+                setActive(true);
+            }
+        }
+    }, [
+        ellevateProfilingSeccess,
+        userProfile,
+        addressVerificationSuc,
+        scmul,
+        tinSuccess,
+        CacDocumentSuccess,
+        identification,
+        utilityUpload,
+        UploadreffereeSuccess
+    ]);
+
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
     const socialOptions = {
@@ -290,6 +357,13 @@ const AccountUpgrade = () => {
     const moveToDash = () => {
         setIsLoading(true);
         router.push('../Dashboard');
+    };
+
+    const tinRegistration = () => {
+        const data = {
+            tin: tinNumber
+        };
+        dispatch(getTinDetails(data));
     };
     const transactionPin = () => {
         if (setTransactionPin !== null) {
@@ -358,6 +432,8 @@ const AccountUpgrade = () => {
                         setUtilityStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setUtilityStatus(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setUtilityStatus('notDone');
                     } else {
                         setUtilityStatus('done');
                     }
@@ -366,6 +442,8 @@ const AccountUpgrade = () => {
                         setCacStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setCacStatus(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setCacStatus('notDone');
                     } else {
                         setCacStatus('done');
                     }
@@ -374,6 +452,8 @@ const AccountUpgrade = () => {
                         setMematStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setMematStatus(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setMematStatus('notDone');
                     } else {
                         setMematStatus('done');
                     }
@@ -382,6 +462,8 @@ const AccountUpgrade = () => {
                         setScumlStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setScumlStatus(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setScumlStatus('notDone');
                     } else {
                         setScumlStatus('done');
                     }
@@ -391,6 +473,8 @@ const AccountUpgrade = () => {
                     } else if (document.status === 'APPROVED') {
                         setRefereeStatus(document.status);
                         setReffereeFormStatus('done');
+                    } else if (document.status === 'PENDING') {
+                        setRefereeStatus('notDone');
                     } else {
                         setRefereeStatus('done');
                     }
@@ -452,6 +536,22 @@ const AccountUpgrade = () => {
             setLoading(false);
         }
     }, [cac, cacErrorMessages]);
+
+    useEffect(() => {
+        if (tinSuccess !== null) {
+            setMessage('TIN uploaded Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setTinStatus('done');
+        } else if (tinError !== null) {
+            console.log(tinError);
+            // setMessage(cacErrorMessages.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [tinSuccess, tinError]);
     useEffect(() => {
         if (pushDocuments !== null) {
             setMessage(' Uploaded Successfully');
@@ -870,7 +970,7 @@ const AccountUpgrade = () => {
                 statusReport: elevateStatus,
                 status:
                     elevateStatus === 'done'
-                        ? review
+                        ? status
                         : elevateStatus === 'notDone'
                         ? pending
                         : null
@@ -1390,34 +1490,47 @@ const AccountUpgrade = () => {
                         userProfileData.customerCategory === 'INDIVIDUAL'
                             ? AccountUpgradeData.existing.map((item, index) => {
                                   return (
-                                      <AccountUpgradeSingle
-                                          statusInfo={item.statusReport}
-                                          textII={item.textII}
-                                          content={shareDocuments?.map(
-                                              (items) => {
-                                                  if (
-                                                      items.documentType ===
-                                                      item.title
-                                                  ) {
-                                                      return items.comment;
-                                                  } else {
-                                                      return '';
+                                      <>
+                                          <AccountUpgradeSingle
+                                              statusInfo={item.statusReport}
+                                              textII={item.textII}
+                                              content={shareDocuments?.map(
+                                                  (items) => {
+                                                      if (
+                                                          items.documentType ===
+                                                          item.title
+                                                      ) {
+                                                          return items.comment;
+                                                      } else {
+                                                          return '';
+                                                      }
                                                   }
-                                              }
-                                          )}
-                                          icon={item.icon}
-                                          text={item.title}
-                                          key={index}
-                                          status={item.status}
-                                          action={() => {
-                                              console.log(item.status);
-                                              if (item.status === 'Done')
-                                                  alert('Already Completed');
-                                              else {
-                                                  setTitle(item.title);
-                                              }
-                                          }}
-                                      />
+                                              )}
+                                              icon={item.icon}
+                                              text={item.title}
+                                              key={index}
+                                              status={item.status}
+                                              action={() => {
+                                                  if (item.status === 'Done')
+                                                      setErrorActive(
+                                                          item.title
+                                                      );
+                                                  else {
+                                                      setTitle(item.title);
+                                                  }
+                                              }}
+                                          />
+                                          {errorActive === item.title ? (
+                                              <>
+                                                  <p className={styles.error}>
+                                                      Already Completed
+                                                  </p>
+                                                  {setTimeout(() => {
+                                                      setErrorActive('');
+                                                  }, 1500)}
+                                              </>
+                                          ) : null}
+                                      </>
                                   );
                               })
                             : userProfileData.createdFromEcobankCred === true &&
@@ -1468,8 +1581,8 @@ const AccountUpgrade = () => {
                                                                                     item.status ===
                                                                                     'Done'
                                                                                 )
-                                                                                    alert(
-                                                                                        'Already Completed'
+                                                                                    setErrorActive(
+                                                                                        item.title
                                                                                     );
                                                                                 else {
                                                                                     setTitle(
@@ -1478,6 +1591,27 @@ const AccountUpgrade = () => {
                                                                                 }
                                                                             }}
                                                                         />
+                                                                        {errorActive ===
+                                                                        item.title ? (
+                                                                            <>
+                                                                                <p
+                                                                                    className={
+                                                                                        styles.error
+                                                                                    }
+                                                                                >
+                                                                                    Already
+                                                                                    Completed
+                                                                                </p>
+                                                                                {setTimeout(
+                                                                                    () => {
+                                                                                        setErrorActive(
+                                                                                            ''
+                                                                                        );
+                                                                                    },
+                                                                                    1500
+                                                                                )}
+                                                                            </>
+                                                                        ) : null}
                                                                     </>
                                                                 );
                                                             }
@@ -1487,37 +1621,61 @@ const AccountUpgrade = () => {
                                           );
                                       } else {
                                           return (
-                                              <AccountUpgradeSingle
-                                                  textII={item.textII}
-                                                  content={shareDocuments?.map(
-                                                      (items) => {
-                                                          if (
-                                                              items.documentType ===
-                                                              item.name
-                                                          ) {
-                                                              return items.comment;
-                                                          } else {
-                                                              return '';
+                                              <>
+                                                  <AccountUpgradeSingle
+                                                      textII={item.textII}
+                                                      content={shareDocuments?.map(
+                                                          (items) => {
+                                                              if (
+                                                                  items.documentType ===
+                                                                  item.name
+                                                              ) {
+                                                                  return items.comment;
+                                                              } else {
+                                                                  return '';
+                                                              }
                                                           }
+                                                      )}
+                                                      statusInfo={
+                                                          item.statusReport
                                                       }
-                                                  )}
-                                                  statusInfo={item.statusReport}
-                                                  icon={item.icon}
-                                                  text={item.title}
-                                                  key={index}
-                                                  status={item.status}
-                                                  action={() => {
-                                                      if (
-                                                          item.status === 'Done'
-                                                      )
-                                                          alert(
-                                                              'Already Completed'
-                                                          );
-                                                      else {
-                                                          setTitle(item.title);
-                                                      }
-                                                  }}
-                                              />
+                                                      icon={item.icon}
+                                                      text={item.title}
+                                                      key={index}
+                                                      status={item.status}
+                                                      action={() => {
+                                                          if (
+                                                              item.status ===
+                                                              'Done'
+                                                          )
+                                                              setErrorActive(
+                                                                  item.title
+                                                              );
+                                                          else {
+                                                              setTitle(
+                                                                  item.title
+                                                              );
+                                                          }
+                                                      }}
+                                                  />
+                                                  {errorActive ===
+                                                  item.title ? (
+                                                      <>
+                                                          <p
+                                                              className={
+                                                                  styles.error
+                                                              }
+                                                          >
+                                                              Already Completed
+                                                          </p>
+                                                          {setTimeout(() => {
+                                                              setErrorActive(
+                                                                  ''
+                                                              );
+                                                          }, 1500)}
+                                                      </>
+                                                  ) : null}
+                                              </>
                                           );
                                       }
                                   }
@@ -1527,37 +1685,61 @@ const AccountUpgrade = () => {
                                   (item, index) => {
                                       return (
                                           <>
-                                              <AccountUpgradeSingle
-                                                  statusInfo={item.statusReport}
-                                                  textII={item.textII}
-                                                  content={shareDocuments?.map(
-                                                      (items) => {
-                                                          if (
-                                                              items.documentType ===
-                                                              item.name
-                                                          ) {
-                                                              return items.comment;
-                                                          } else {
-                                                              return '';
+                                              <>
+                                                  <AccountUpgradeSingle
+                                                      statusInfo={
+                                                          item.statusReport
+                                                      }
+                                                      textII={item.textII}
+                                                      content={shareDocuments?.map(
+                                                          (items) => {
+                                                              if (
+                                                                  items.documentType ===
+                                                                  item.name
+                                                              ) {
+                                                                  return items.comment;
+                                                              } else {
+                                                                  return '';
+                                                              }
                                                           }
-                                                      }
-                                                  )}
-                                                  icon={item.icon}
-                                                  text={item.title}
-                                                  key={index}
-                                                  status={item.status}
-                                                  action={() => {
-                                                      if (
-                                                          item.status === 'Done'
-                                                      )
-                                                          alert(
-                                                              'Already Completed'
-                                                          );
-                                                      else {
-                                                          setTitle(item.title);
-                                                      }
-                                                  }}
-                                              />
+                                                      )}
+                                                      icon={item.icon}
+                                                      text={item.title}
+                                                      key={index}
+                                                      status={item.status}
+                                                      action={() => {
+                                                          if (
+                                                              item.status ===
+                                                              'Done'
+                                                          )
+                                                              setErrorActive(
+                                                                  item.title
+                                                              );
+                                                          else {
+                                                              setTitle(
+                                                                  item.title
+                                                              );
+                                                          }
+                                                      }}
+                                                  />
+                                                  {errorActive ===
+                                                  item.title ? (
+                                                      <>
+                                                          <p
+                                                              className={
+                                                                  styles.error
+                                                              }
+                                                          >
+                                                              Already Completed
+                                                          </p>
+                                                          {setTimeout(() => {
+                                                              setErrorActive(
+                                                                  ''
+                                                              );
+                                                          }, 1500)}
+                                                      </>
+                                                  ) : null}
+                                              </>
                                               {document
                                                   ? AccountUpgradeData.document.map(
                                                         (item, index) => {
@@ -1584,8 +1766,8 @@ const AccountUpgrade = () => {
                                                                                 item.status ===
                                                                                 'Done'
                                                                             )
-                                                                                alert(
-                                                                                    'Already Completed'
+                                                                                setErrorActive(
+                                                                                    item.title
                                                                                 );
                                                                             else {
                                                                                 setTitle(
@@ -1594,6 +1776,27 @@ const AccountUpgrade = () => {
                                                                             }
                                                                         }}
                                                                     />
+                                                                    {errorActive ===
+                                                                    item.title ? (
+                                                                        <>
+                                                                            <p
+                                                                                className={
+                                                                                    styles.error
+                                                                                }
+                                                                            >
+                                                                                Already
+                                                                                Completed
+                                                                            </p>
+                                                                            {setTimeout(
+                                                                                () => {
+                                                                                    setErrorActive(
+                                                                                        ''
+                                                                                    );
+                                                                                },
+                                                                                1500
+                                                                            )}
+                                                                        </>
+                                                                    ) : null}
                                                                 </>
                                                             );
                                                         }
@@ -1646,11 +1849,41 @@ const AccountUpgrade = () => {
                                                                                 item.statusReport
                                                                             }
                                                                             action={() => {
-                                                                                setTitle(
-                                                                                    item.title
-                                                                                );
+                                                                                if (
+                                                                                    item.status ===
+                                                                                    'Done'
+                                                                                )
+                                                                                    setErrorActive(
+                                                                                        item.title
+                                                                                    );
+                                                                                else {
+                                                                                    setTitle(
+                                                                                        item.title
+                                                                                    );
+                                                                                }
                                                                             }}
                                                                         />
+                                                                        {errorActive ===
+                                                                        item.title ? (
+                                                                            <>
+                                                                                <p
+                                                                                    className={
+                                                                                        styles.error
+                                                                                    }
+                                                                                >
+                                                                                    Already
+                                                                                    Completed
+                                                                                </p>
+                                                                                {setTimeout(
+                                                                                    () => {
+                                                                                        setErrorActive(
+                                                                                            ''
+                                                                                        );
+                                                                                    },
+                                                                                    1500
+                                                                                )}
+                                                                            </>
+                                                                        ) : null}
                                                                     </>
                                                                 );
                                                             }
@@ -1660,37 +1893,61 @@ const AccountUpgrade = () => {
                                           );
                                       } else {
                                           return (
-                                              <AccountUpgradeSingle
-                                                  textII={item.textII}
-                                                  content={shareDocuments?.map(
-                                                      (items) => {
-                                                          if (
-                                                              items.documentType ===
-                                                              item.name
-                                                          ) {
-                                                              return items.comment;
-                                                          } else {
-                                                              return '';
+                                              <>
+                                                  <AccountUpgradeSingle
+                                                      textII={item.textII}
+                                                      content={shareDocuments?.map(
+                                                          (items) => {
+                                                              if (
+                                                                  items.documentType ===
+                                                                  item.name
+                                                              ) {
+                                                                  return items.comment;
+                                                              } else {
+                                                                  return '';
+                                                              }
                                                           }
+                                                      )}
+                                                      statusInfo={
+                                                          item.statusReport
                                                       }
-                                                  )}
-                                                  statusInfo={item.statusReport}
-                                                  icon={item.icon}
-                                                  text={item.title}
-                                                  key={index}
-                                                  status={item.status}
-                                                  action={() => {
-                                                      if (
-                                                          item.status === 'Done'
-                                                      )
-                                                          alert(
-                                                              'Already Completed'
-                                                          );
-                                                      else {
-                                                          setTitle(item.title);
-                                                      }
-                                                  }}
-                                              />
+                                                      icon={item.icon}
+                                                      text={item.title}
+                                                      key={index}
+                                                      status={item.status}
+                                                      action={() => {
+                                                          if (
+                                                              item.status ===
+                                                              'Done'
+                                                          )
+                                                              setErrorActive(
+                                                                  item.title
+                                                              );
+                                                          else {
+                                                              setTitle(
+                                                                  item.title
+                                                              );
+                                                          }
+                                                      }}
+                                                  />
+                                                  {errorActive ===
+                                                  item.title ? (
+                                                      <>
+                                                          <p
+                                                              className={
+                                                                  styles.error
+                                                              }
+                                                          >
+                                                              Already Completed
+                                                          </p>
+                                                          {setTimeout(() => {
+                                                              setErrorActive(
+                                                                  ''
+                                                              );
+                                                          }, 1500)}
+                                                      </>
+                                                  ) : null}
+                                              </>
                                           );
                                       }
                                   }
@@ -1719,10 +1976,7 @@ const AccountUpgrade = () => {
                             <div className={styles.relativeBtn}>
                                 <button
                                     className={styles.buttonDone}
-                                    onClick={() => {
-                                        setLoading(true);
-                                        dispatch(pushDocumentsData());
-                                    }}
+                                    onClick={moveToDash}
                                 >
                                     Save And Continue Later
                                 </button>
@@ -2840,7 +3094,7 @@ const AccountUpgrade = () => {
                             <input
                                 type="text"
                                 onChange={(e) => setTinNumber(e.target.value)}
-                                placeholder="Enter  Your Tin"
+                                placeholder="********-***"
                             />
                         </div>
                         {loading ? (
@@ -3290,10 +3544,7 @@ const AccountUpgrade = () => {
                                             })}
                                             placeholder="Enter Transaction Pin"
                                         />
-                                        <Visbility
-                                            typeSet={types}
-                                            input="input"
-                                        />
+                                        <Visbility typeSet={types} />
                                     </div>
                                     <p className={styles.error}>
                                         {errors.transactionPin?.message}
@@ -3312,10 +3563,7 @@ const AccountUpgrade = () => {
                                             })}
                                             placeholder="Enter Password"
                                         />
-                                        <Visbility
-                                            typeSet={typed}
-                                            input="input"
-                                        />
+                                        <Visbility typeSet={typed} />
                                     </div>
                                     <p className={styles.error}>
                                         {errors.password?.message}
