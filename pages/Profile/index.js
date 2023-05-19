@@ -126,10 +126,8 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
-    const {
-        postAirtimeBeneficiaries,
-        errorMessagepostAirtimeBeneficiaries
-    } = useSelector((state) => state.postAirtimeBeneficiariesReducer);
+    const { postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries } =
+        useSelector((state) => state.postAirtimeBeneficiariesReducer);
     const { fetchRM, fetchRMErrorMessages } = useSelector(
         (state) => state.fetchRMReducer
     );
@@ -227,17 +225,68 @@ const Profile = () => {
     useEffect(() => {
         transactionPin();
     }, [setTransactionPin, setTransactionPinError]);
-    useEffect(() => {
-        if (banks !== null) {
-            setBank(banks);
+
+    const getAllBanksByAccount = (accountNo) => {
+        //NOTE, This can be fetched from the Database
+        let bankArray = `ACCESS BANK:044:000014:999044~ACCESS BANK:063:000005:999044~Citi Bank:023:000009:CITI-ACC~Fidelity Bank:070:000007:FIDELITY-ACC~First Bank of Nigeria:011:000016:FIRST-ACC~First City Monument Bank:214:000003:FCMB-ACC~GT Bank Plc:058:000013:GUARANTY-ACC~Heritage:030:000020:HERITAGE-ACC~POLARIS BANK:076:000008:POLARIS~Stanbic IBTC Bank:221:000012:STANBIC-IBTC-ACC~Standard Chartered:068:000021:STANDARD-CHARTERED~Sterling Bank:232:000001:STERLING-ACC~Union Bank:032:000018:UNION-ACC~United Bank for Africa:033:000004:UNITED-ACC~Unity Bank:215:000011:UNITY-ACC~Wema Bank:035:000017:WEMA-ACC~Zenith Bank:057:000015:ZENITH-ACC~Sun Trust Account:100:000022:SUNTRUST-ACC`;
+
+        let bankList = [];
+        let bankDets = bankArray.split('~');
+        //   //console.log("bankDets", bankDets);
+
+        for (var bankdet of bankDets) {
+            let split = bankdet.split(':');
+            //console.log('split', split);
+
+            if (isValidNUBAN(accountNo, split[1])) {
+                bankList.push({
+                    bankname: split[0],
+                    cbncode: split[1],
+                    bankcode: split[2],
+                    bankCodes: split[3]
+                });
+            }
         }
-    }, [banks]);
+
+        return bankList.map((bank) => bank);
+    };
+    const isValidNUBAN = (accountNumber, bankCode) => {
+        return isValidNUBANAcct(bankCode.trim() + accountNumber.trim());
+    };
+    const isValidNUBANAcct = (accountNumber) => {
+        accountNumber = accountNumber.trim();
+
+        if (accountNumber.length != 13) return false; // 3-digit bank code + 10-digit NUBAN
+
+        let accountNumberDigits = accountNumber.split('');
+
+        //   //console.log("accountNumberDigits: ", accountNumberDigits);
+
+        let sum =
+            accountNumberDigits[0] * 3 +
+            accountNumberDigits[1] * 7 +
+            accountNumberDigits[2] * 3 +
+            accountNumberDigits[3] * 3 +
+            accountNumberDigits[4] * 7 +
+            accountNumberDigits[5] * 3 +
+            accountNumberDigits[6] * 3 +
+            accountNumberDigits[7] * 7 +
+            accountNumberDigits[8] * 3 +
+            accountNumberDigits[9] * 3 +
+            accountNumberDigits[10] * 7 +
+            accountNumberDigits[11] * 3;
+
+        let mod = sum % 10;
+        let checkDigit = mod == 0 ? mod : 10 - mod;
+
+        return checkDigit == accountNumberDigits[12];
+    };
     useEffect(() => {
         dispatch(getBeneficiariesData());
         dispatch(getAirtimeBeneficiariesData());
         dispatch(loadUserProfile());
         dispatch(loadAccountPrimary());
-        dispatch(loadbank('ENG'));
+        // dispatch(loadbank('ENG'));
         dispatch(postAirtimeNetwork());
     }, []);
     useEffect(() => {
@@ -1534,11 +1583,23 @@ const Profile = () => {
                                                                     .length ===
                                                                 10
                                                             ) {
-                                                                setAccountNumber(
-                                                                    e.target
-                                                                        .value
+                                                                setBank(
+                                                                    getAllBanksByAccount(
+                                                                        e.target
+                                                                            .value
+                                                                    )
                                                                 );
-                                                                //console.log();
+                                                            } else if (
+                                                                e.target.value
+                                                                    .length < 10
+                                                            ) {
+                                                                setInterEnquiry(
+                                                                    ''
+                                                                );
+                                                                setshowInterEnquiry(
+                                                                    false
+                                                                );
+                                                                setBank([]);
                                                             }
                                                         }}
                                                         type="number"
@@ -1605,21 +1666,26 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details = {
-                                                                    accountNumber: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        accountNumber:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details = {
-                                                                    destinationBankCode:
-                                                                        e.target
-                                                                            .value,
-                                                                    accountNo: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        destinationBankCode:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        accountNo:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -1639,14 +1705,14 @@ const Profile = () => {
                                                                 return (
                                                                     <option
                                                                         value={
-                                                                            bank.institutionId
+                                                                            bank.bankCodes
                                                                         }
                                                                         key={
                                                                             index
                                                                         }
                                                                     >
                                                                         {
-                                                                            bank.institutionName
+                                                                            bank.bankname
                                                                         }
                                                                     </option>
                                                                 );

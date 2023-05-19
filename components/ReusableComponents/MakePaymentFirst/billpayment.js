@@ -127,6 +127,11 @@ const BillPayment = ({
             setIsLoadinggg(false);
         }
     }, [billerPlan]);
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        currencyDisplay: 'narrowSymbol'
+    });
     return (
         <div>
             {firstTitle === 'Bill Payment' ? (
@@ -279,7 +284,11 @@ const BillPayment = ({
                                                 value={accounts.accountId}
                                                 key={index}
                                             >
-                                                {accounts.accountNumber}
+                                                {`${
+                                                    accounts.accountNumber
+                                                } - ${formatter.format(
+                                                    accounts.accountBalance
+                                                )}`}
                                             </option>
                                         );
                                     })}
@@ -676,7 +685,11 @@ const BillPayment = ({
                                                 value={accounts.accountId}
                                                 key={index}
                                             >
-                                                {accounts.accountNumber}
+                                                {`${
+                                                    accounts.accountNumber
+                                                } - ${formatter.format(
+                                                    accounts.accountBalance
+                                                )}`}
                                             </option>
                                         );
                                     })}

@@ -153,6 +153,11 @@ const BulkTransfer = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        currencyDisplay: 'narrowSymbol'
+    });
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
@@ -180,7 +185,11 @@ const BulkTransfer = ({
                         {bankAccounts?.map((accounts, index) => {
                             return (
                                 <option value={accounts.accountId} key={index}>
-                                    {accounts.accountNumber}
+                                    {`${
+                                        accounts.accountNumber
+                                    } - ${formatter.format(
+                                        accounts.accountBalance
+                                    )}`}
                                 </option>
                             );
                         })}
