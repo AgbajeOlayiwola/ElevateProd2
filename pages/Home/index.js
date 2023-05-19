@@ -401,7 +401,10 @@ const HomeMain = () => {
                     'account',
                     JSON.stringify(omniliteData.data.user)
                 );
-                router.push('/Onboarding/ExistingProfileSetup');
+                router.push({
+                    pathname: '/Onboarding/ExistingProfileSetup',
+                    query: { id: 0 }
+                });
             }
             //omnilite login end
         } else if (page === 2) {
@@ -446,7 +449,10 @@ const HomeMain = () => {
                 'account',
                 JSON.stringify(omniliteData.data.user)
             );
-            router.push('/Onboarding/ExistingProfileSetup');
+            router.push({
+                pathname: '/Onboarding/ExistingProfileSetup',
+                query: { id: 0 }
+            });
         }
     };
     useEffect(() => {
@@ -462,7 +468,10 @@ const HomeMain = () => {
             setError(errorMessages);
             setLoading(false);
         } else if (accountNumbers.message === 'success') {
-            router.push('/Onboarding/ExistingProfileSetup');
+            router.push({
+                pathname: '/Onboarding/ExistingProfileSetup',
+                query: { id: 0 }
+            });
             const data = {
                 email: accountNumbers.data.email,
                 accountNumber: accountNumbers.data.accountNumber,
@@ -501,7 +510,10 @@ const HomeMain = () => {
                 'account',
                 JSON.stringify(ecobankOnline.data.user)
             );
-            router.push('/Onboarding/ExistingProfileSetup');
+            router.push({
+                pathname: '/Onboarding/ExistingProfileSetup',
+                query: { id: 0 }
+            });
         } else if (ecoOnlineErrorMessage !== null) {
             setError(ecoOnlineErrorMessage);
             setLoading(false);

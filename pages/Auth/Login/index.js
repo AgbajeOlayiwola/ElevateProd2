@@ -212,6 +212,36 @@ const Login = () => {
                                 auth2FaCodeSuccess.data.data.user.profile
                             )
                         );
+
+                        router.push('/Onboarding/ExistingProfileSetup');
+                    } else if (
+                        user.data.user.profile.profileSetupStatus ===
+                        'LIVENESS_VERIFIED'
+                    ) {
+                        window.localStorage.setItem(
+                            'displayAccount',
+                            JSON.stringify(user.data.user)
+                        );
+                        window.localStorage.setItem(
+                            'account',
+                            JSON.stringify(user.data.user.profile)
+                        );
+                        router.push({
+                            pathname: '/Onboarding/ExistingProfileSetup',
+                            query: { id: 3 }
+                        });
+                    } else if (
+                        user.data.user.profile.profileSetupStatus ===
+                        'PROFILE_SETUP_AWAITING_OTP'
+                    ) {
+                        window.localStorage.setItem(
+                            'displayAccount',
+                            JSON.stringify(user.data.user)
+                        );
+                        window.localStorage.setItem(
+                            'account',
+                            JSON.stringify(user.data.user.profile)
+                        );
                         router.push('/Onboarding/ExistingProfileSetup');
                     }
                     if (
@@ -349,6 +379,37 @@ const Login = () => {
                                 'account',
                                 JSON.stringify(user.data.user.profile)
                             );
+
+                            router.push('/Onboarding/ExistingProfileSetup');
+                        } else if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'LIVENESS_VERIFIED'
+                        ) {
+                            window.localStorage.setItem(
+                                'displayAccount',
+                                JSON.stringify(user.data.user)
+                            );
+                            window.localStorage.setItem(
+                                'account',
+                                JSON.stringify(user.data.user.profile)
+                            );
+                            router.push({
+                                pathname: '/Onboarding/ExistingProfileSetup',
+                                query: { id: 3 }
+                            });
+                        } else if (
+                            user.data.user.profile.profileSetupStatus ===
+                            'PROFILE_SETUP_AWAITING_OTP'
+                        ) {
+                            window.localStorage.setItem(
+                                'displayAccount',
+                                JSON.stringify(user.data.user)
+                            );
+                            window.localStorage.setItem(
+                                'account',
+                                JSON.stringify(user.data.user.profile)
+                            );
+
                             router.push('/Onboarding/ExistingProfileSetup');
                         }
                         if (

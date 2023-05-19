@@ -277,22 +277,18 @@ const Dashboard = () => {
             let one = 0;
             let two = 0;
             setIsLoading(false);
-            transactionHistory.transactions.filter((item) => {
-                if (item.paymentDirection === 'DEBIT') {
-                    setTableDetails((arr) => [...arr, item]);
-                }
-            });
-            // transactionHistory.transactions
-            //     .filter((item) => {
-            //         if (item.paymentDirection === 'CREDIT') {
-            //             return item;
-            //         }
-            //     })
-            //     .reduce((a, b) => {
-            //         setInflow(formatter.format(a));
-            //         one = a;
-            //         return a + +b.transactionAmount;
-            //     }, 0);
+            setTableDetails(transactionHistory.transactions);
+            transactionHistory.transactions
+                .filter((item) => {
+                    if (item.paymentDirection === 'CREDIT') {
+                        return item;
+                    }
+                })
+                .reduce((a, b) => {
+                    setInflow(formatter.format(a));
+                    one = a;
+                    return a + +b.transactionAmount;
+                }, 0);
             transactionHistory.transactions
                 .filter((item) => {
                     if (item.paymentDirection === 'DEBIT') {
@@ -305,8 +301,9 @@ const Dashboard = () => {
                     return a + +b.transactionAmount;
                 }, 0);
             setTotalMMoney(formatter.format(one + two));
-            const newDate =
-                transactionHistory.transactions[0]?.transactionDate?.split('T');
+            const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
+                'T'
+            );
             if (newDate) {
                 if (newDate[0] == time) {
                     setDateState(true);
@@ -861,8 +858,9 @@ const Dashboard = () => {
                                         })
                                         ?.map((item, index) => {
                                             console.log(item);
-                                            const formatter =
-                                                new Intl.NumberFormat('en-US', {
+                                            const formatter = new Intl.NumberFormat(
+                                                'en-US',
+                                                {
                                                     style: 'currency',
                                                     currency: 'NGN',
                                                     currencyDisplay:

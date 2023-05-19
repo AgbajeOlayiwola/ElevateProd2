@@ -61,7 +61,9 @@ const FirstStep = ({
         }
     };
     useEffect(() => {
-        setFormData({ ...formData, otp: ssnValues.join('') });
+        if (ssnValues.length !== 1) {
+            setFormData({ ...formData, otp: ssnValues.join('') });
+        }
     }, [ssnValues]);
     const ResetOtp = (e) => {
         setValue((ssnValues) => ['']);
