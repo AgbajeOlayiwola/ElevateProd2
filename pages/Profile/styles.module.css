@@ -11,12 +11,12 @@
     width: 50px;
     height: 50px;
 }
-.deleteAccount{
+.deleteAccount {
     cursor: pointer;
     color: #3e3e3e;
-    margin-top:100px;
-    display:flex;
-    justify-content:flex-end;
+    margin-top: 100px;
+    display: flex;
+    justify-content: flex-end;
     font-size: 10px;
 }
 .profileHeaderImg img {
@@ -69,14 +69,14 @@
 .date {
     width: 14%;
 }
-.nodisputes{
+.nodisputes {
     text-align: center;
     font-size: 20px;
     margin-top: 30px;
     margin-bottom: 30px;
     font-weight: 500;
 }
-.nodisputesHeading{
+.nodisputesHeading {
     margin-bottom: 30px;
 }
 .profileBodyHeadImg img {
@@ -87,20 +87,19 @@
     flex: 1;
     margin-left: 24px;
 }
-.toGet{
+.toGet {
     font-size: 12px;
     color: #303030;
 }
-.cancel{
+.cancel {
     display: flex;
     justify-content: flex-end;
 }
-.cancel svg{
+.cancel svg {
     cursor: pointer;
 }
-.deleteInner{
+.deleteInner {
     padding: 30px;
-    
 }
 .profileBodyHeaderCont h2 {
     font-family: 'Inter', sans-serif;
@@ -623,7 +622,7 @@
     background-color: #e6ebee !important;
     color: #cccccc !important;
 }
-.deleteConfirmation{
+.deleteConfirmation {
     position: absolute;
     top: 203px;
     padding: 33px;
@@ -632,12 +631,11 @@
     border: 1px solid rgba(228, 228, 228, 0.5);
     box-shadow: 0px 6px 24px rgb(0 0 0);
     border-radius: 10px;
-
 }
-.deleteButtons button:nth-child(2){
+.deleteButtons button:nth-child(2) {
     background-color: red;
 }
-.deleteButtons{
+.deleteButtons {
     gap: 20px;
     display: flex;
     justify-content: space-between;
@@ -653,11 +651,11 @@
     display: block;
     margin: 0px auto;
 }
-.chatWitUsBt{
+.chatWitUsBt {
     position: absolute;
     bottom: 0px;
     right: 10px;
-    z-index: 20; 
+    z-index: 20;
     cursor: pointer;
 }
 .chatWithUs {
@@ -952,7 +950,7 @@
     }
 
     .accountNumber div {
-        width: 50%;
+        width: 70%;
     }
 
     .profileBodyButton,
@@ -978,4 +976,3 @@
         text-align: center;
     }
 }
-

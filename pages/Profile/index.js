@@ -46,6 +46,7 @@ import {
     postIntraBankEnquiry,
     loadbank,
     loadfetchRM,
+    bankAccountsData,
     postBeneficiariesData,
     postAirtimeNetwork,
     loadsetTransactionPin,
@@ -94,6 +95,8 @@ const Profile = () => {
     const [rafiki, setRafiki] = useState(false);
     const [active, setActive] = useState(false);
     const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
+    const [copyAcctInfo, setCopyAcctInfo] = useState();
+    const [alert, setAlert] = useState(false);
     const dispatch = useDispatch();
     const { getBeneficiaries } = useSelector(
         (state) => state.getBeneficiariesReducer
@@ -133,10 +136,8 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
-    const {
-        postAirtimeBeneficiaries,
-        errorMessagepostAirtimeBeneficiaries
-    } = useSelector((state) => state.postAirtimeBeneficiariesReducer);
+    const { postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries } =
+        useSelector((state) => state.postAirtimeBeneficiariesReducer);
     const { fetchRM, fetchRMErrorMessages } = useSelector(
         (state) => state.fetchRMReducer
     );
@@ -149,6 +150,9 @@ const Profile = () => {
     );
     const { deleteAccountSuccess, deleteAccountErrorMessage } = useSelector(
         (state) => state.deleteAccountReducer
+    );
+    const { bankAccounts, bankAccountErrorMessages } = useSelector(
+        (state) => state.bankAccountsReducer
     );
     const [isLoading, setIsLoading] = useState(true);
     const socialOptions = {
@@ -169,6 +173,13 @@ const Profile = () => {
         };
         dispatch(deleteAccountAction(Data));
     };
+    useEffect(() => {
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            if (bankAccounts[accountNo].isPrimaryAccount === true) {
+                setCopyAcctInfo(bankAccounts[0]);
+            }
+        });
+    }, [bankAccounts]);
     useEffect(() => {
         console.log(deleteAccountErrorMessage);
         if (deleteAccountErrorMessage) {
@@ -358,6 +369,7 @@ const Profile = () => {
         dispatch(loadAccountPrimary());
         // dispatch(loadbank('ENG'));
         dispatch(postAirtimeNetwork());
+        dispatch(bankAccountsData());
     }, []);
     useEffect(() => {
         if (airtimeNetwork !== null) {
@@ -1749,6 +1761,10 @@ const Profile = () => {
                                                                             .value
                                                                     )
                                                                 );
+                                                                setAccountNumber(
+                                                                    e.target
+                                                                        .value
+                                                                );
                                                             } else if (
                                                                 e.target.value
                                                                     .length < 10
@@ -1826,21 +1842,26 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details = {
-                                                                    accountNumber: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        accountNumber:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details = {
-                                                                    destinationBankCode:
-                                                                        e.target
-                                                                            .value,
-                                                                    accountNo: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        destinationBankCode:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        accountNo:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -2119,9 +2140,8 @@ const Profile = () => {
                                     ) : (
                                         allDisputes
                                             ?.filter((item) => {
-                                                const newDate = item.createAt.split(
-                                                    'T'
-                                                );
+                                                const newDate =
+                                                    item.createAt.split('T');
                                                 return item;
                                             })
                                             ?.map((item, index) => {
@@ -2195,21 +2215,32 @@ const Profile = () => {
                                 <h4>Account Number</h4>
                                 <div className={styles.accountNumberCopy}>
                                     <p>{acctNumber}</p>
-                                    <h5
-                                        onClick={() => {
-                                            {
-                                                navigator.clipboard
-                                                    .writeText(acctNumber)
-                                                    .then(() => {
-                                                        alert(
-                                                            'Copied To Clipboard'
-                                                        );
-                                                    });
-                                            }
-                                        }}
-                                    >
-                                        copy
-                                    </h5>
+                                    {alert ? (
+                                        <p>Copied to Clipboard</p>
+                                    ) : (
+                                        <h5
+                                            onClick={() => {
+                                                {
+                                                    navigator.clipboard
+                                                        .writeText(
+                                                            `Account Name - ${userProfileData.lastName}  ${userProfileData.firstName} 
+        Account No. - ${copyAcctInfo.accountNumber}
+        Bank Name - Ecobank
+        Swift Code - ${copyAcctInfo.accountSwiftCode}
+        Bank Branch - ${copyAcctInfo.accountBankName} `
+                                                        )
+                                                        .then(() => {
+                                                            setAlert(true);
+                                                            setTimeout(() => {
+                                                                setAlert(false);
+                                                            }, 1500);
+                                                        });
+                                                }
+                                            }}
+                                        >
+                                            copy
+                                        </h5>
+                                    )}
                                 </div>
                             </div>
                         </div>

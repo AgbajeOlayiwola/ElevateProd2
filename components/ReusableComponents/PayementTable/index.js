@@ -18,10 +18,8 @@ const PaymentTable = ({ title, test, page }) => {
     const { transactionHistory, errorMessageTransactionHistory } = useSelector(
         (state) => state.transactionHistoryReducer
     );
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
@@ -201,7 +199,7 @@ const PaymentTable = ({ title, test, page }) => {
                                     setSearchValue(e.target.value);
                                 }}
                             >
-                                <option value="">Choose Status</option>
+                                <option value="">All</option>
                                 <option value="Success">Success</option>
                                 <option value="Pending">Pending</option>
                                 <option value="Failed">Failed</option>
@@ -226,7 +224,7 @@ const PaymentTable = ({ title, test, page }) => {
                                     setSearchValue(e.target.value);
                                 }}
                             >
-                                <option value="">Choose Type</option>
+                                <option value="">All</option>
                                 <option value="SINGLE_TRANSFER">
                                     Single Transfer
                                 </option>
@@ -248,7 +246,7 @@ const PaymentTable = ({ title, test, page }) => {
                                     setSearchValue(e.target.value);
                                 }}
                             >
-                                <option value="">Choose Status</option>
+                                <option value="">All</option>
                                 <option value="Success">Success</option>
                                 <option value="Pending">Pending</option>
                                 <option value="Failed">Failed</option>
@@ -273,7 +271,7 @@ const PaymentTable = ({ title, test, page }) => {
                                     setSearchValue(e.target.value);
                                 }}
                             >
-                                <option value="">Choose Type</option>
+                                <option value="">All</option>
                                 <option value="Single Transfer">
                                     Single Transfer
                                 </option>
@@ -292,7 +290,7 @@ const PaymentTable = ({ title, test, page }) => {
                                     setSearchValue(e.target.value);
                                 }}
                             >
-                                <option value="">Choose Type</option>
+                                <option value="">All</option>
                                 <option value="Paylink">Paylink</option>
                                 <option value="QR_Payment">QR Payment</option>
                                 <option value="USSD">USSD</option>

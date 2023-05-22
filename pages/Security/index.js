@@ -224,7 +224,7 @@ const Security = () => {
                                 <label>Confirm Transaction Pin</label>
                                 <div className={styles.divs}>
                                     <input
-                                        type={outTyped ? 'text' : 'password'}
+                                        type={outTyped ? 'password' : 'text'}
                                         placeholder="Confirm Transaction Pin"
                                         {...register('confirmPin', {
                                             required: 'Confirm Pin is Required'
@@ -315,7 +315,7 @@ const Security = () => {
                                 <div className={styles.divs}>
                                     <input
                                         placeholder="Confirm Password "
-                                        type={outTyped ? 'text' : 'password'}
+                                        type={outTyped ? 'password' : 'text'}
                                         {...register('confirmPassword', {
                                             required:
                                                 'Confirm Password is Required'
