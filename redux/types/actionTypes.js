@@ -964,3 +964,23 @@ export const getAllComplaintType = {
 };
 
 //Get Complaint action type end
+
+//Delete Account action type start
+
+export const deleteAccountType = {
+    DELETEACCOUNT_LOAD_START: 'DELETEACCOUNT_LOAD_START',
+    DELETEACCOUNT_LOAD_SUCCESS: 'DELETEACCOUNT_LOAD_SUCCESS',
+    DELETEACCOUNT_LOAD_ERROR: 'DELETEACCOUNT_LOAD_ERROR'
+};
+
+//Delet Account action type end
+
+//Set Primary Account action type start
+
+export const setPrimaryAccountType = {
+    SET_PRIMARY_ACCOUNT_LOAD_START: 'SET_PRIMARY_ACCOUNT_LOAD_START',
+    SET_PRIMARY_ACCOUNT_LOAD_SUCCESS: 'SET_PRIMARY_ACCOUNT_LOAD_SUCCESS',
+    SET_PRIMARY_ACCOUNT_LOAD_ERROR: 'SET_PRIMARY_ACCOUNT_LOAD_ERROR'
+};
+
+//Set Primary Account action type end

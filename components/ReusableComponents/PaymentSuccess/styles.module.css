@@ -13,7 +13,15 @@
 .elevateSuccess span {
     font-weight: 700;
 }
-
+.closeCont svg{
+    cursor: pointer;
+}
+.closeCont {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    padding: 32px 32px 0px 0px;
+}
 .centerP {
     text-align: center;
     font-style: normal;

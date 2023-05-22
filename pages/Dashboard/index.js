@@ -979,6 +979,12 @@ const Dashboard = () => {
                                                             }
                                                         >
                                                             <MoreAction
+                                                                isaccountId={
+                                                                    item.sourceAccountId
+                                                                }
+                                                                isDirection={
+                                                                    item.paymentDirection
+                                                                }
                                                                 transactionAmount={
                                                                     formattedAmount
                                                                 }

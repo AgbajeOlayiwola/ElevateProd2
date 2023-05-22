@@ -18,8 +18,10 @@ const PaymentTable = ({ title, test, page }) => {
     const { transactionHistory, errorMessageTransactionHistory } = useSelector(
         (state) => state.transactionHistoryReducer
     );
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
@@ -186,7 +188,7 @@ const PaymentTable = ({ title, test, page }) => {
                                     setSearchValue(e.target.value);
                                 }}
                             >
-                                <option value="">Choose Type</option>
+                                <option value="">All</option>
                                 <option value="Paylink">Paylink</option>
                                 <option value="QR_Payment">QR Payment</option>
                                 <option value="USSD">USSD</option>
@@ -348,6 +350,9 @@ const PaymentTable = ({ title, test, page }) => {
                     })
                     ?.slice(pagesVisited, pagesVisited + usersPerPage)
                     ?.map((items, index) => {
+                        {
+                            console.log(items);
+                        }
                         return (
                             <TableDetail
                                 key={index}

@@ -20,13 +20,14 @@ const StepThree = ({
     const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
     console.log(accountDetails);
+
     useEffect(() => {
         const account = localStorage.getItem('account');
         const accountDetails = JSON.parse(account);
         if (accountDetails?.profile !== undefined) {
-            setProfileInfo(accountDetails.profile);
+            setProfileInfo(accountDetails?.profile);
         } else if (accountDetails?.user !== undefined) {
-            setProfileInfo(accountDetails.user.profile);
+            setProfileInfo(accountDetails?.user.profile);
         } else {
             setProfileInfo(accountDetails);
         }

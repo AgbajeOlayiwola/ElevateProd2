@@ -11,7 +11,7 @@ export default function Home() {
     return (
         <div className={styles.container}>
             <Head>
-                <title>Ellevate</title>
+                <title>MYSMEApp</title>
 
                 <meta
                     name="description"

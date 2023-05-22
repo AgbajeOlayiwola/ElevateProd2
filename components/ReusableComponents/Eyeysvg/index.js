@@ -14,7 +14,7 @@ const Visbility = ({ typeSet, color, input }) => {
     const [visible, setVisible] = useState(false);
     const [showTransId, setShowtransId] = useState(false);
     const visibilityToggle = () => {
-        setVisible((prev) => !prev);
+        setVisible(true);
         setType((prev) => !prev);
         typeSet(type);
     };
@@ -72,11 +72,18 @@ const Visbility = ({ typeSet, color, input }) => {
             pin: ssnValues.join('')
         };
         dispatch(verifyTransactionPinGet(data));
+
         console.log(verifyTransactionPinErrorMessage);
     };
     useEffect(() => {
         console.log(verifyTransactionPinErrorMessage);
-        setTransactionPinResponse(verifyTransactionPinErrorMessage);
+        if (verifyTransactionPinSuccess) {
+            setVisible(true);
+            setType(false);
+            typeSet(type);
+        } else {
+            setTransactionPinResponse(verifyTransactionPinErrorMessage);
+        }
     }, [verifyTransactionPinErrorMessage, verifyTransactionPinSuccess]);
 
     return (

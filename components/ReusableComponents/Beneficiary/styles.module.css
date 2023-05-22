@@ -1,5 +1,5 @@
 .beneficiary {
-    margin-bottom: 48px;
+    /* margin-bottom: 48px; */
 }
 
 .beneficiaryHeader {
@@ -33,7 +33,7 @@
 .beneficiaryBody {
     margin-top: 12px;
     width: 100%;
-    height: 15vh;
+    height: 10vh;
     overflow: scroll;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -103,7 +103,7 @@
 }
 
 .beneficiaryIcon {
-    height: 50px;
+    height: 33px;
     width: 100%;
     display: flex;
     justify-content: center;

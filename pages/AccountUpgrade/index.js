@@ -149,12 +149,17 @@ const AccountUpgrade = () => {
     const [fileNameI, setFileNameI] = useState();
     const [fileII, setFileII] = useState(null);
     const [fileNameII, setFileNameII] = useState();
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState(null);
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
-    const [identificationBackDocument, setIdentificationBackDocument] =
-        useState(null);
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        null
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
+    const [
+        identificationBackDocument,
+        setIdentificationBackDocument
+    ] = useState(null);
     const [
         identificationBackDocumentFileName,
         setIdentificationBackDocumentFileName
@@ -874,7 +879,7 @@ const AccountUpgrade = () => {
     useEffect(() => {
         if (ellevateProfilingSeccess !== null) {
             setEllevateProfilingzDone('Done');
-            setMessage('Ellevate Profiling Success');
+            setMessage('SMEApp Profiling Success');
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
@@ -964,7 +969,7 @@ const AccountUpgrade = () => {
     const AccountUpgradeData = {
         existing: [
             {
-                title: 'Ellevate Profiling',
+                title: 'SMEApp Profiling',
                 textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
@@ -1098,7 +1103,7 @@ const AccountUpgrade = () => {
             //             : pending
             // },
             {
-                title: 'Ellevate Profiling',
+                title: 'SMEApp Profiling',
                 textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
@@ -1184,7 +1189,7 @@ const AccountUpgrade = () => {
                         : userProfile?.idDocumentVerificationStatus
             },
             {
-                title: 'Ellevate Profiling',
+                title: 'SMEApp Profiling',
                 textII: 'EllevateProfilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
@@ -1314,7 +1319,7 @@ const AccountUpgrade = () => {
             //             : pending
             // },
             {
-                title: 'Ellevate Profiling',
+                title: 'SMEApp Profiling',
                 textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
@@ -2161,11 +2166,11 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <Link
-                                href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark=${landMark}&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=${userProfile?.phoneNumber}`}
+                            <Link
+                                href={`https://ecodigitalavr.comono.io/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark=${landMark}&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP_WEB&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=${userProfile?.phoneNumber}`}
                             >
                                 Links
-                            </Link> */}
+                            </Link>
                             <Modal
                                 isOpen={modalIsOpen}
                                 onAfterOpen={afterOpenModal}
@@ -2660,18 +2665,18 @@ const AccountUpgrade = () => {
                         )}
                     </AccountUpgradeComponent>
                 );
-            case 'Ellevate Profiling':
+            case 'SMEApp Profiling':
                 return (
                     <AccountUpgradeComponent
                         action={() => {
                             setTitle('First');
                         }}
-                        title="Ellevate Profiling"
+                        title="SMEApp Profiling"
                     >
                         <>
                             <div className={styles.ellevateCopy}>
                                 <p>
-                                    Ellevate offers a range of solutions to
+                                    SMEApp offers a range of solutions to
                                     women-owned businesses to grow their
                                     enterprise. It supports companies making
                                     women focused products and businesses with
@@ -2784,7 +2789,7 @@ const AccountUpgrade = () => {
                                         className={styles.updateBtn}
                                         type="submit"
                                     >
-                                        Ellevate Profiling
+                                        SMEApp Profiling
                                     </button>
                                 )}
                             </form>

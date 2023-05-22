@@ -15,6 +15,9 @@ import { jsPDF } from 'jspdf';
 import { FaDownload, FaUser } from 'react-icons/fa';
 import SingleTrans from '../SingleTransSvg';
 import ManageSignSvg from '../ManageSignSvg';
+import CloseButton from '../CloseButtonSvg';
+import OutsideClick from '../OutsideClick';
+// import { CloseButton } from 'react-toastify/dist/components';
 
 const PaymentSuccess = ({
     action,
@@ -486,8 +489,7 @@ const PaymentSuccess = ({
                                                 userUnit: 'px'
                                             });
 
-                                            const pdfWidth =
-                                                pdf.internal.pageSize.getWidth();
+                                            const pdfWidth = pdf.internal.pageSize.getWidth();
                                             pdf.html(element, {
                                                 html2canvas: {
                                                     scale: 0.57,
@@ -504,63 +506,72 @@ const PaymentSuccess = ({
                         )}
                     </div>
                 ) : statusbar === 'error' ? (
-                    <div className={styles.errorCont}>
-                        <div>
-                            <ErrorSvg />
+                    <>
+                        <div className={styles.closeCont} onClick={action}>
+                            <CloseButton
+                                color="#A5A5A5"
+                                classes={styles.closeBtn}
+                                onClick={action}
+                            />
                         </div>
-                        <h2>Oops.</h2>
-                        {title === 'Bulk Payment' ? (
-                            <>
-                                {successfulTrans.map((tran, index) => {
-                                    return (
-                                        <div
-                                            className={styles.bulkTransfer}
-                                            key={index}
-                                        >
-                                            <p className={styles.name}>
-                                                {tran.receiver}
-                                            </p>
-                                            <p className={styles.amount}>
-                                                {tran.transactionAmount}
-                                            </p>
-                                            <p className={styles.status}>
-                                                {tran.transactionStatus}
-                                            </p>
-                                        </div>
-                                    );
-                                })}
-                                {failedTrans.map((tran, index) => {
-                                    return (
-                                        <div
-                                            className={styles.bulkTransfer}
-                                            key={index}
-                                        >
-                                            <p className={styles.name}>
-                                                {tran.receiver}
-                                            </p>
-                                            <p className={styles.amount}>
-                                                {tran.transactionAmount}
-                                            </p>
-                                            <p className={styles.status}>
-                                                {tran.transactionStatus}
-                                            </p>
-                                        </div>
-                                    );
-                                })}
+                        <div className={styles.errorCont}>
+                            <div>
+                                <ErrorSvg />
+                            </div>
+                            <h2>Oops.</h2>
+                            {title === 'Bulk Payment' ? (
+                                <>
+                                    {successfulTrans.map((tran, index) => {
+                                        return (
+                                            <div
+                                                className={styles.bulkTransfer}
+                                                key={index}
+                                            >
+                                                <p className={styles.name}>
+                                                    {tran.receiver}
+                                                </p>
+                                                <p className={styles.amount}>
+                                                    {tran.transactionAmount}
+                                                </p>
+                                                <p className={styles.status}>
+                                                    {tran.transactionStatus}
+                                                </p>
+                                            </div>
+                                        );
+                                    })}
+                                    {failedTrans.map((tran, index) => {
+                                        return (
+                                            <div
+                                                className={styles.bulkTransfer}
+                                                key={index}
+                                            >
+                                                <p className={styles.name}>
+                                                    {tran.receiver}
+                                                </p>
+                                                <p className={styles.amount}>
+                                                    {tran.transactionAmount}
+                                                </p>
+                                                <p className={styles.status}>
+                                                    {tran.transactionStatus}
+                                                </p>
+                                            </div>
+                                        );
+                                    })}
+                                    <p>{error}</p>
+                                </>
+                            ) : (
                                 <p>{error}</p>
-                            </>
-                        ) : (
-                            <p>{error}</p>
-                        )}
+                            )}
 
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text="Try again"
-                            type="button"
-                            onClick={action}
-                        />
-                    </div>
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Try again"
+                                type="button"
+                                onClick={action}
+                            />
+                        </div>
+                    </>
                 ) : null}
             </div>
         </Overlay>

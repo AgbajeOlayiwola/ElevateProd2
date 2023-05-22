@@ -39,11 +39,11 @@ const Sidebar = ({ showSubnav }) => {
                 <FaTimes />
             </div>
             <div className={styles.top}>
-                <div className={styles.ellevate}>
-                    <Link href="/Dashboard">
+                <Link href="/Dashboard">
+                    <div className={styles.ellevate}>
                         <ElevateLogo />
-                    </Link>
-                </div>
+                    </div>
+                </Link>
                 <div className={styles.track}>
                     {SidebarData.map((item, index) => {
                         if (item.subNav) {

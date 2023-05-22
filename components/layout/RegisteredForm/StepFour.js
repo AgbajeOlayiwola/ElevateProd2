@@ -105,15 +105,24 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
 
         //console.logformData.type);
     };
+    const [phoneNumer, setPhoneNumer] = useState();
+
     useEffect(() => {
         if (window.typeof !== 'undefined') {
             setPhones(JSON.parse(window.localStorage.getItem('account')));
+        }
+        if (userDetails) {
+            setPhoneNumer(userDetails.phoneNumber);
+        } else if (profileInfo) {
+            setPhoneNumer(profileInfo.phoneNumber);
         }
     }, []);
     const [profileInfo, setProfileInfo] = useState([]);
     const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
-
+    const user = localStorage.getItem('user');
+    const userDetails = JSON.parse(user);
+    console.log(userDetails);
     const onSubmitNew = (data) => {
         setLoading((prev) => !prev);
         const userData = {
@@ -123,7 +132,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             businessType: businesses,
             referralCode: refferalCode,
             countryCode: '+234',
-            businessPhoneNumber: profileInfo.phoneNumber,
+            businessPhoneNumber: phoneNumer,
             street: streetName,
             state: localState,
             city: city,
@@ -163,7 +172,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             businessType: businesses,
             referralCode: refferalCode,
             countryCode: '+234',
-            businessPhoneNumber: profileInfo.phoneNumber,
+            businessPhoneNumber: phoneNumer,
             street: streetName,
             state: localState,
             city: city,
@@ -498,7 +507,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                         //     }
                                                         // )}
                                                         // value={phoneNumber}
-                                                        onChange={(e) =>
+                                                        onInput={(e) =>
                                                             setPhoneNumber(
                                                                 e.target.value
                                                             )
@@ -506,6 +515,8 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                         value={
                                                             profileInfo.phoneNumber
                                                                 ? profileInfo.phoneNumber
+                                                                : userDetails
+                                                                ? userDetails?.phoneNumber
                                                                 : phoneNumber
                                                         }
                                                         disabled

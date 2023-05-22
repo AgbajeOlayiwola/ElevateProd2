@@ -108,6 +108,8 @@ const subComplaintCategories =
 const qrMerchantInfo = '/payment/qr/merchant-info';
 const verifyTransactionPin = '/users/transaction-pin/verify';
 const getAllComplaint = '/dispute-management/records';
+const deleteAccount = '/users/delete-account';
+const setPrimaryAccount = '/bank-account/primary';
 export default {
     getAllComplaint,
     trackComplaint,
@@ -216,5 +218,7 @@ export default {
     qrMerchantInfo,
     lodgeComplaint,
     resetPin,
-    verifyTransactionPin
+    verifyTransactionPin,
+    deleteAccount,
+    setPrimaryAccount
 };

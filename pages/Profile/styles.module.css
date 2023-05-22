@@ -623,7 +623,26 @@
     background-color: #e6ebee !important;
     color: #cccccc !important;
 }
+.deleteConfirmation{
+    position: absolute;
+    top: 203px;
+    padding: 33px;
+    width: 93%;
+    background-color: white;
+    border: 1px solid rgba(228, 228, 228, 0.5);
+    box-shadow: 0px 6px 24px rgb(0 0 0);
+    border-radius: 10px;
 
+}
+.deleteButtons button:nth-child(2){
+    background-color: red;
+}
+.deleteButtons{
+    gap: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .beneficiaryHead {
     display: flex;
     justify-content: space-between;
@@ -959,3 +978,4 @@
         text-align: center;
     }
 }
+
