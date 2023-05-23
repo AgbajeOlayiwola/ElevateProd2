@@ -177,6 +177,13 @@
 .success p {
     color: #6ccf00 !important;
 }
+.success{
+    color: #69940d;
+    cursor: pointer;
+}
+.nothing{
+    cursor: pointer;
+}
 
 .pending p {
     color: #ceb407 !important;

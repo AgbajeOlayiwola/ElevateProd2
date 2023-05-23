@@ -4058,7 +4058,7 @@ export const setPrimaryAccountAction = (data) => (dispatch) => {
             }
         })
         .then((response) => {
-            dispatch(setPrimaryAccountSuccess(response?.data));
+            dispatch(setPrimaryAccountSuccess(response));
         })
         .catch((error) => {
             dispatch(setPrimaryAccountError(error?.response));

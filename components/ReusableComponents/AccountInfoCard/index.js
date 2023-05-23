@@ -4,12 +4,14 @@ import {
     bankAccountsData,
     getBalanceEnquiry,
     loadAccountPrimary,
-    loadUserProfile
+    loadUserProfile,
+    setPrimaryAccountAction
 } from '../../../redux/actions/actions';
 import Visbility from '../Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoMdCopy } from 'react-icons/io';
 import Slider from 'react-slick';
+import { AiFillCheckCircle } from 'react-icons/ai';
 
 const settings = {
     dots: false,
@@ -34,7 +36,12 @@ const AccountsInfoCard = () => {
     const [isCopied, setIsCopied] = useState(false);
     const [accountNumberTest, setAccountNumberTest] = useState();
     const [accountBalanceTest, setAccountBalanceTest] = useState();
+    const [setPrimaryAccount, setSetPrimaryAccount] = useState();
     const { userProfile } = useSelector((state) => state.userProfileReducer);
+    const {
+        setPrimaryAccountSuccess,
+        setPrimaryAccountErrorMessage
+    } = useSelector((state) => state.setPrimaryAccountReducer);
     const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
     );
@@ -181,6 +188,24 @@ const AccountsInfoCard = () => {
             return document.execCommand('copy', true, text);
         }
     }
+    const [newAccuntId, setNewAccountId] = useState();
+    const [isPrimar, setIsPrimary] = useState(false);
+
+    useEffect(() => {
+        console.log(setPrimaryAccountSuccess);
+    }, [accountPrimarys, bankAccounts, setPrimaryAccountSuccess]);
+
+    const setAccountAsPrimary = () => {
+        if (acctInfoNum != null) {
+            setNewAccountId(acctInfoNum?.accountId);
+        } else {
+            setNewAccountId(acctNum?.accountId);
+        }
+        const data = {
+            accountId: newAccuntId
+        };
+        dispatch(setPrimaryAccountAction(data));
+    };
     const copyAccountNumber = () => {
         copyTextToClipboard(`Account Name - ${userProfileData.lastName}  ${userProfileData.firstName} 
         Account No. - ${copyAcctInfo.accountNumber}
@@ -224,11 +249,27 @@ const AccountsInfoCard = () => {
                                     Account Number
                                 </p>
                                 <div className={styles.assctDrop}>
-                                    <p>
-                                        {acctInfoNum != null
-                                            ? acctInfoNum
-                                            : acctNum}
-                                    </p>
+                                    <div
+                                        className={
+                                            styles.setAccountNumberAsPrimary
+                                        }
+                                    >
+                                        <p>
+                                            {acctInfoNum != null
+                                                ? acctInfoNum
+                                                : acctNum}
+                                        </p>
+                                        {/* <div
+                                            className={
+                                                isPrimar
+                                                    ? styles.success
+                                                    : styles.nothing
+                                            }
+                                            onClick={setAccountAsPrimary}
+                                        >
+                                            <AiFillCheckCircle />
+                                        </div> */}
+                                    </div>
                                     {/* <select
                                         className={styles.accountNumbers}
                                         value={acctNum}
@@ -357,10 +398,10 @@ const AccountsInfoCard = () => {
                                                                 null
                                                             ),
                                                             setAcctNumm(
-                                                                accountNo.accountNumber
+                                                                accountNo?.accountNumber
                                                             );
                                                         setCopyAcctInfo(
-                                                            accountNo
+                                                            accountNo?.accountNumber
                                                         );
                                                     }}
                                                 >
@@ -370,6 +411,30 @@ const AccountsInfoCard = () => {
                                                     {accountNo.customerType}{' '}
                                                     Account
                                                 </p>
+                                            </div>
+                                            <div
+                                                className={
+                                                    setPrimaryAccountSuccess
+                                                        ?.data?.data
+                                                        ?.isPrimaryAccount ===
+                                                        true ||
+                                                    accountNo?.isPrimaryAccount
+                                                        ? styles.success
+                                                        : styles.nothing
+                                                }
+                                                onClick={() => {
+                                                    const data = {
+                                                        accountId:
+                                                            accountNo.accountId
+                                                    };
+                                                    dispatch(
+                                                        setPrimaryAccountAction(
+                                                            data
+                                                        )
+                                                    );
+                                                }}
+                                            >
+                                                <AiFillCheckCircle />
                                             </div>
                                             <hr className={styles.accountHr} />
                                         </>

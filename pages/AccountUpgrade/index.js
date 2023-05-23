@@ -2166,11 +2166,11 @@ const AccountUpgrade = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Link
+                            {/* <Link
                                 href={`https://ecodigitalavr.comono.io/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark=${landMark}&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP_WEB&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=${userProfile?.phoneNumber}`}
                             >
                                 Links
-                            </Link>
+                            </Link> */}
                             <Modal
                                 isOpen={modalIsOpen}
                                 onAfterOpen={afterOpenModal}

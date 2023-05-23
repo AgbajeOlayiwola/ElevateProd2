@@ -6,7 +6,7 @@ import {
 
 const initialState = {
     isLoading: false,
-    setPrimaryAccountSuccess: [],
+    setPrimaryAccountSuccess: null,
     setPrimaryAccountErrorMessage: ''
 };
 
@@ -23,7 +23,7 @@ const setPrimaryAccountReducer = (state = initialState, { type, payload }) => {
         case setPrimaryAccountType.SET_PRIMARY_ACCOUNT_LOAD_SUCCESS:
             return {
                 ...state,
-                setPrimaryAccountSuccess: false,
+                setPrimaryAccountSuccess: payload,
                 deleteAccountSuccess: payload
             };
         case setPrimaryAccountType.SET_PRIMARY_ACCOUNT_LOAD_ERROR:

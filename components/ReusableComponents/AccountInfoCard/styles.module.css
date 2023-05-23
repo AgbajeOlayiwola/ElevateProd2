@@ -14,6 +14,18 @@
     color: white;
     padding: 11px;
 }
+.setAccountNumberAsPrimary{
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+.success{
+    color: #69940d;
+    cursor: pointer;
+}
+.nothing{
+    cursor: pointer;
+}
 .cardRight {
     position: relative;
 }
