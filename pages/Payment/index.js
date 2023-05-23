@@ -698,6 +698,9 @@ const Payment = () => {
                                                                   : e.Bank ===
                                                                     'Zenith Bank'
                                                                   ? 'ZENITH-ACC'
+                                                                  : e.Bank ===
+                                                                    'Ecobank'
+                                                                  ? 'ECOBANK'
                                                                   : null,
                                                           beneficiaryName:
                                                               e.BeneName,
