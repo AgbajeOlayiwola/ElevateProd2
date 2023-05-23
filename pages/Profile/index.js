@@ -881,7 +881,7 @@ const Profile = () => {
                                                         }
                                                     >
                                                         <p>
-                                                            ARe You SUre You
+                                                            Are You Sure You
                                                             Want To Delete Your
                                                             Account
                                                         </p>
