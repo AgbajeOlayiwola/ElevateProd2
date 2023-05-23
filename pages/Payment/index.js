@@ -761,6 +761,11 @@ const Payment = () => {
                     case 2:
                         return (
                             <PaymentSuccess
+                                beneName={`${
+                                    csvData !== null
+                                        ? csvData.slice(2).length
+                                        : paymentDetails?.details?.length
+                                } beneficiaries`}
                                 error={error}
                                 statusbar={status}
                                 overlay={overlay}
