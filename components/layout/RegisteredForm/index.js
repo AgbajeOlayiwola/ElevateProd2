@@ -17,6 +17,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Liveness from '../NotRegisteredForms/Liveness';
 import { useRouter } from 'next/router';
+import withAuth from '../../HOC/withAuth';
 
 const ExistingMultiStep = () => {
     const router = useRouter();
@@ -284,4 +285,4 @@ const ExistingMultiStep = () => {
     );
 };
 
-export default ExistingMultiStep;
+export default withAuth(ExistingMultiStep);
