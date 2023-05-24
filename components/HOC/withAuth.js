@@ -26,15 +26,15 @@ const withAuth = (WrappedComponent) => {
         const { accountPrimary, accountPrimaryError } = useSelector(
             (state) => state.accountPrimaryReducer
         );
-        useEffect(() => {
-            console.log(accountPrimaryError);
-            if (accountPrimaryError?.data?.message === 'Unauthorized') {
-                dispatch(logoutAction());
-                if (!localStorage.getItem('user')) {
-                    Router.replace('../Auth/Login');
-                }
-            }
-        }, [accountPrimary, accountPrimaryError]);
+        // useEffect(() => {
+        //     console.log(accountPrimaryError);
+        //     if (accountPrimaryError?.data?.message === 'Unauthorized') {
+        //         dispatch(logoutAction());
+        //         if (!localStorage.getItem('user')) {
+        //             Router.replace('../Auth/Login');
+        //         }
+        //     }
+        // }, [accountPrimary, accountPrimaryError]);
 
         useEffect(() => {
             if (localStorage.getItem('user')) {
@@ -56,9 +56,8 @@ const withAuth = (WrappedComponent) => {
                                 preloadCornify();
                             }
                         }}
-                    >
-                        <WrappedComponent {...props} />
-                    </Idle>
+                    />
+                    <WrappedComponent {...props} />
                 </>
             );
         } else {
