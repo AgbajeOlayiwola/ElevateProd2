@@ -48,7 +48,6 @@ const withAuth = (WrappedComponent) => {
         if (accessGranted) {
             return (
                 <>
-                    {' '}
                     <Idle
                         timeout={300000}
                         onChange={({ idle }) => {
