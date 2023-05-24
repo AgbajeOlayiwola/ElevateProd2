@@ -242,7 +242,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             if (
                 compBusprofile.message === 'Successful' ||
                 comperrorMessage.message ===
-                    'your have already setup your business'
+                    'You have already setup your business'
             ) {
                 profile.data?.map((item) => {
                     if (type === true) {
