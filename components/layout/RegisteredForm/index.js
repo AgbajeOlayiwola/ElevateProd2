@@ -285,4 +285,4 @@ const ExistingMultiStep = () => {
     );
 };
 
-export default withAuth(ExistingMultiStep);
+export default ExistingMultiStep;
