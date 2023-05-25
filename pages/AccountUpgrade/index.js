@@ -149,17 +149,12 @@ const AccountUpgrade = () => {
     const [fileNameI, setFileNameI] = useState();
     const [fileII, setFileII] = useState(null);
     const [fileNameII, setFileNameII] = useState();
-    const [identificationDocumentFile, setIdentificationDocument] = useState(
-        null
-    );
-    const [
-        identificationDocumentFileName,
-        setIdentificationDocumentName
-    ] = useState('');
-    const [
-        identificationBackDocument,
-        setIdentificationBackDocument
-    ] = useState(null);
+    const [identificationDocumentFile, setIdentificationDocument] =
+        useState(null);
+    const [identificationDocumentFileName, setIdentificationDocumentName] =
+        useState('');
+    const [identificationBackDocument, setIdentificationBackDocument] =
+        useState(null);
     const [
         identificationBackDocumentFileName,
         setIdentificationBackDocumentFileName
@@ -3458,6 +3453,14 @@ const AccountUpgrade = () => {
                         <div className={styles.directorsBody}>
                             <h2>Reference 1</h2>
                             <div className={styles.directorsGroup}>
+                                <label>Full Name</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Full Name"
+                                />
+                            </div>
+                            <div className={styles.directorsGroup}>
                                 <label>Email</label>
                                 <input
                                     type="text"
@@ -3469,17 +3472,17 @@ const AccountUpgrade = () => {
                                     }
                                 />
                             </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Phone Number</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    placeholder="Enter Phone Number"
-                                />
-                            </div>
                         </div>
                         <div className={styles.directorsBody}>
                             <h2>Reference 2</h2>
+                            <div className={styles.directorsGroup}>
+                                <label>Full Name</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Full Name"
+                                />
+                            </div>
                             <div className={styles.directorsGroup}>
                                 <label>Email</label>
                                 <input
@@ -3490,14 +3493,6 @@ const AccountUpgrade = () => {
                                     onChange={(e) =>
                                         setRefoneNo(e.target.value)
                                     }
-                                />
-                            </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Phone Number</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    placeholder="Enter Phone Number"
                                 />
                             </div>
                         </div>

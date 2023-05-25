@@ -110,7 +110,9 @@ const Payment = () => {
     let desiredPackageData = {};
     if (typeof window !== 'undefined') {
         desiredPackage = window.localStorage.getItem('DesiredPackage');
-        desiredPackageData = JSON.parse(desiredPackage);
+        if (desiredPackage !== 'undefined') {
+            desiredPackageData = JSON.parse(desiredPackage);
+        }
     }
     let csvType = [];
     useEffect(() => {
@@ -911,7 +913,7 @@ const Payment = () => {
                                                 airtimeNetData.billerDetail.billerID.toString(),
                                             // productCode: airtimeNetData.name,
                                             productCode:
-                                                desiredPackageData.productCode,
+                                                paymentDetails.airtimeCode,
                                             mobileNo:
                                                 paymentDetails.phoneNumber ===
                                                 ''
