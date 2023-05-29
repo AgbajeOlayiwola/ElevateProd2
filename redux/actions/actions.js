@@ -801,7 +801,7 @@ export const changeTransactionPinLoadError = (errorMessage) => ({
 export const loadchangeTransactionPin = (code) => (dispatch) => {
     dispatch(changeTransactionPinLoadStart());
     axiosInstance
-        .patch(`${apiRoutes.changeTransactionPin}`, code)
+        .post(`${apiRoutes.changeTransactionPin}`, code)
         .then((response) =>
             dispatch(changeTransactionPinLoadSuccess(response.data))
         )

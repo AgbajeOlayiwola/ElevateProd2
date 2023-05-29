@@ -306,7 +306,6 @@ const BillPayment = ({
                                         required: 'Biller Type  is required'
                                     })}
                                     onChange={(e) => {
-                                        setIsLoadinggg(true);
                                         dispatch(
                                             loadbillerPlan(e.target.value)
                                         );
@@ -348,8 +347,17 @@ const BillPayment = ({
                                         }
                                         className={styles.displayNone}
                                     />
+                                    <input
+                                        type="text"
+                                        {...register('airtimeCode')}
+                                        value={
+                                            billerPlans?.billerProductInfo[0]
+                                                .productCode
+                                        }
+                                        className={styles.displayNone}
+                                    />
 
-                                    <div className={styles.narration}>
+                                    {/* <div className={styles.narration}>
                                         <label>Select Package</label>
                                         <select
                                             name="desiredPackage"
@@ -397,7 +405,7 @@ const BillPayment = ({
                                         <p className={styles.error}>
                                             {errors?.desiredPackage?.message}
                                         </p>
-                                    </div>
+                                    </div> */}
                                 </>
                             ) : null}
                             {/* <div className={styles.networkCarrier}>
