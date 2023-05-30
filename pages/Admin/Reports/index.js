@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Layout } from '../../components';
-import DashLayout from '../../components/layout/Dashboard';
+import { Layout } from '../../../components';
+import DashLayout from '../../../components/layout/Dashboard';
 import styles from './styles.module.css';
 import { BsChevronDown } from 'react-icons/bs';
 import { AiOutlineSearch } from 'react-icons/ai';
-import ReportsData from '../../components/ReusableComponents/ReportsData';
+import ReportsData from '../../../components/ReusableComponents/ReportsData';
 import { BiFilter } from 'react-icons/bi';
 import {
     // getTransactionElevate,
@@ -12,15 +12,15 @@ import {
     getMiniStatementGen,
     // loadAccountPrimary,
     loadbankStatement
-} from '../../redux/actions/actions';
+} from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import StorePopup from '../../components/ReusableComponents/StorePopup';
-import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
-import Loader from '../../components/ReusableComponents/Loader';
-import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess';
-import TableDetail from '../../components/ReusableComponents/TableDetail';
+import StorePopup from '../../../components/ReusableComponents/StorePopup';
+import CloseButton from '../../../components/ReusableComponents/CloseButtonSvg';
+import Loader from '../../../components/ReusableComponents/Loader';
+import PaymentSuccess from '../../../components/ReusableComponents/PaymentSuccess';
+import TableDetail from '../../../components/ReusableComponents/TableDetail';
 import ReactPaginate from 'react-paginate';
-import PaymentTable from '../../components/ReusableComponents/PayementTable';
+import PaymentTable from '../../../components/ReusableComponents/PayementTable';
 
 const Report = () => {
     // const dispatch = useDispatch();
@@ -130,7 +130,7 @@ const Report = () => {
     //     }
     // }, [bankStatement, errorMessagebankStatement]);
     return (
-        <DashLayout>
+        <>
             {/* <div className={styles.collctionh1}>
                 <h1>Report</h1>
             </div> */}
@@ -275,7 +275,7 @@ const Report = () => {
                     page="Reports"
                 />
             </div>
-        </DashLayout>
+        </>
     );
 };
 

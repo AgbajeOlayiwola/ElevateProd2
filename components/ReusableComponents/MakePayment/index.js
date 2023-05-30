@@ -26,7 +26,7 @@ const MakePaymentBtn = () => {
                                 <p>{item.icon}</p>
                                 <Link
                                     href={{
-                                        pathname: '/Payment',
+                                        pathname: '/Admin/Payment',
                                         query: { id: item.path }
                                     }}
                                 >

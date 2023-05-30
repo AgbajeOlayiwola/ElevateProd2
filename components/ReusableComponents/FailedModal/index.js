@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 const FailedModal = ({ text }) => {
     const router = useRouter();
     const restart = () => {
-        router.push('/Dashboard');
+        router.push('/Admin/Dashboard');
     };
     return (
         <div className={styles.cover}>

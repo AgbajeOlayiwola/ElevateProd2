@@ -25,7 +25,6 @@ import StorePopup from '../../../components/ReusableComponents/StorePopup';
 import OutsideClick from '../../../components/ReusableComponents/OutsideClick';
 
 // Number of input fields that make up SSN
-
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -115,7 +114,7 @@ const Login = () => {
             //     newAccountErrorMessage ===
             //     'You already have an account with us. Please contact us for more information'
             // ) {
-            // router.push('/Dashboard');,
+            // router.push('/Admin/Dashboard');,
             setNewUser(auth2FaCodeSuccess);
         } else if (auth2FaCodeSuccess) {
             console.log('here');
@@ -147,7 +146,7 @@ const Login = () => {
                             'ACCOUNT_NUMBER_RETRIEVED'
                         ) {
                             console.log('here');
-                            router.push('../../Dashboard');
+                            router.push('../../Admin/Dashboard');
                         } else {
                             router.push('../../Onboarding/ProfileSetup');
                         }
@@ -169,7 +168,7 @@ const Login = () => {
                                 .profileSetupStatus ===
                             'ACCOUNT_NUMBER_RETRIEVED'
                         ) {
-                            router.push('../../Dashboard');
+                            router.push('../../Admin/Dashboard');
                         } else {
                             router.push('../../Onboarding/ProfileSetup');
                         }
@@ -197,7 +196,7 @@ const Login = () => {
                                 auth2FaCodeSuccess.data.data.user.profile
                             )
                         );
-                        router.push('../../Dashboard');
+                        router.push('../../Admin/Dashboard');
                     } else if (
                         auth2FaCodeSuccess.data.data.user.profile
                             .profileSetupStatus === 'PROFILE_SETUP'
@@ -273,7 +272,7 @@ const Login = () => {
                                 auth2FaCodeSuccess.data.data.user.profile
                             )
                         );
-                        router.push('../../Dashboard');
+                        router.push('../../Admin/Dashboard');
                     }
                 }
             }
@@ -315,7 +314,7 @@ const Login = () => {
                                     'ACCOUNT_NUMBER_RETRIEVED'
                                 ) {
                                     console.log('here');
-                                    router.push('../../Dashboard');
+                                    router.push('../../Admin/Dashboard');
                                 } else {
                                     router.push(
                                         '../../Onboarding/ProfileSetup'
@@ -339,7 +338,7 @@ const Login = () => {
                                         .profileSetupStatus ===
                                     'ACCOUNT_NUMBER_RETRIEVED'
                                 ) {
-                                    router.push('../../Dashboard');
+                                    router.push('../../Admin/Dashboard');
                                 } else {
                                     router.push(
                                         '../../Onboarding/ProfileSetup'
@@ -366,7 +365,7 @@ const Login = () => {
                                 'account',
                                 JSON.stringify(user.data.user.profile)
                             );
-                            router.push('../../Dashboard');
+                            router.push('../../Admin/Dashboard');
                         } else if (
                             user.data.user.profile.profileSetupStatus ===
                             'PROFILE_SETUP'
@@ -437,7 +436,7 @@ const Login = () => {
                                 'account',
                                 JSON.stringify(user.data.user.profile)
                             );
-                            router.push('../../Dashboard');
+                            router.push('../../Admin/Dashboard');
                         }
                     }
                 }

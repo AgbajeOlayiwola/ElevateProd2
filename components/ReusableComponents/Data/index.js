@@ -32,7 +32,7 @@ import { HiBanknotes } from 'react-icons/hi';
 export const SidebarData = [
     {
         title: 'Dashboard',
-        path: '/Dashboard',
+        path: '/Admin/Dashboard',
         icon: <DashboardSvg fill="none" stroke="black" />,
         iconActive: <DashboardSvg fill="#6CCF00" stroke="none" />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
@@ -41,7 +41,7 @@ export const SidebarData = [
 
     {
         title: 'Payment',
-        path: '/Payment',
+        path: '/Admin/Payment',
         // modal: 'show',
         icon: <PaymentSvg />,
         iconActive: <PaymentActiveSvg />,
@@ -50,17 +50,17 @@ export const SidebarData = [
         // subNav: [
         //     {
         //         title: 'Collections',
-        //         path: '/Collections',
+        //         path: '/CAdmin/ollections',
         //         icon: <BiIcons.BiTransfer />
         //     },
         //     {
         //         title: 'Payment',
-        //         path: '/Payment',
+        //         path: '/Admin/Payment',
         //         icon: <BiIcons.BiTransfer />
         //     },
         //     {
         //         title: 'Reports',
-        //         path: '/Reports',
+        //         path: '/Admin/Reports',
         //         icon: <BiIcons.BiTransfer />
         //     }
         // ]
@@ -68,7 +68,7 @@ export const SidebarData = [
 
     // {
     //     title: 'Collections',
-    //     path: '/Collections',
+    //     path: '/Admin/Collections',
     //     // modal: 'show',
     //     icon: <BsFillCollectionFill />,
     //     iconActive: <BsFillCollectionFill style={{ color: '#69940d' }} />,
@@ -77,17 +77,17 @@ export const SidebarData = [
     // subNav: [
     //     {
     //         title: 'Collections',
-    //         path: '/Collections',
+    //         path: '/Admin/Collections',
     //         icon: <BiIcons.BiTransfer />
     //     },
     //     {
     //         title: 'Payment',
-    //         path: '/Payment',
+    //         path: '/Admin/Payment',
     //         icon: <BiIcons.BiTransfer />
     //     },
     //     {
     //         title: 'Reports',
-    //         path: '/Reports',
+    //         path: '/Admin/Reports',
     //         icon: <BiIcons.BiTransfer />
     //     }
     // ]
@@ -95,7 +95,7 @@ export const SidebarData = [
 
     // {
     //     title: 'Transaction Reports',
-    //     path: '/Reports',
+    //     path: '/Admin/Reports',
     //     // modal: 'show',
     //     icon: <PaymentSvg />,
     //     iconActive: <PaymentActiveSvg />,
@@ -104,24 +104,24 @@ export const SidebarData = [
     // subNav: [
     //     {
     //         title: 'Collections',
-    //         path: '/Collections',
+    //         path: '/Admin/Collections',
     //         icon: <BiIcons.BiTransfer />
     //     },
     //     {
     //         title: 'Payment',
-    //         path: '/Payment',
+    //         path: '/Admin/Payment',
     //         icon: <BiIcons.BiTransfer />
     //     },
     //     {
     //         title: 'Reports',
-    //         path: '/Reports',
+    //         path: '/Admin/Reports',
     //         icon: <BiIcons.BiTransfer />
     //     }
     // ]
     // },
     // {
     //     title: 'Bank Statement',
-    //     path: '/BankStatement',
+    //     path: '/Admin/BankStatement',
     //     // modal: 'show',
     //     icon: <BsPiggyBankFill />,
     //     iconActive: <BsPiggyBankFill style={{ color: '#69940d' }} />,
@@ -130,24 +130,24 @@ export const SidebarData = [
     // subNav: [
     //     {
     //         title: 'Collections',
-    //         path: '/Collections',
+    //         path: '/Admin/Collections',
     //         icon: <BiIcons.BiTransfer />
     //     },
     //     {
     //         title: 'Payment',
-    //         path: '/Payment',
+    //         path: '/Admin/Payment',
     //         icon: <BiIcons.BiTransfer />
     //     },
     //     {
     //         title: 'Reports',
-    //         path: '/Reports',
+    //         path: '/Admin/Reports',
     //         icon: <BiIcons.BiTransfer />
     //     }
     // ]
     // },
     // {
     //     title: 'Tools',
-    //     path: '/Tools',
+    //     path: '/Admin/Tools',
     //     icon: <ToolSvg />,
     //     iconActive: <ToolsActiveSvg />,
     //     iconClosed: <RiIcons.RiArrowDownSLine />,
@@ -155,29 +155,29 @@ export const SidebarData = [
     //     subNav: [
     //         {
     //             title: 'Analysis',
-    //             path: '/Analysis',
+    //             path: '/Admin/Analysis',
     //             icon: <BiIcons.BiTransfer />
     //         },
     //         {
     //             title: 'Inventory',
-    //             path: '/Inventory',
+    //             path: '/Admin/Inventory',
     //             icon: <BulkTransfer />
     //         },
     //         {
     //             title: 'e invoice',
-    //             path: '/invoice',
+    //             path: '/Admin/invoice',
     //             icon: <NairaSvg />
     //         },
     //         {
     //             title: 'Others',
-    //             path: '/others',
+    //             path: '/Admin/others',
     //             icon: <FaIcons.FaHandHoldingUsd />
     //         }
     //     ]
     // },
     // {
     //     title: 'Storefront',
-    //     path: '/Storefront',
+    //     path: '/Admin/Storefront',
     //     icon: <StorefrontSvg />,
     //     iconActive: <StorefrontActiveSvg />,
     //     iconClosed: <RiIcons.RiArrowDownSLine />,
@@ -185,7 +185,7 @@ export const SidebarData = [
     // },
     // {
     //     title: 'Dispute ',
-    //     path: '/Dispute',
+    //     path: '/Admin/Dispute',
     //     icon: <StorefrontSvg />,
     //     iconActive: <StorefrontActiveSvg />,
     //     iconClosed: <RiIcons.RiArrowDownSLine />,
@@ -202,7 +202,7 @@ export const SidebarData = [
         subNav: [
             {
                 title: 'Profile Management',
-                path: '/Profile',
+                path: '/Admin/Profile',
                 icon: <BiIcons.BiTransfer />
             },
             // {
@@ -212,7 +212,7 @@ export const SidebarData = [
             // },
             {
                 title: 'Security',
-                path: '/Security',
+                path: '/Admin/Security',
                 icon: <NairaSvg />
             }
             // {

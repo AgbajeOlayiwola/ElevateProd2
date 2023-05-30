@@ -43,7 +43,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
                     <h3>
                         Your Account Number is <span>{acctNo}</span>
                     </h3>
-                    <Link href="/Dashboard">
+                    <Link href="/Admin/Dashboard">
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}

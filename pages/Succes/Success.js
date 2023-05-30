@@ -14,7 +14,7 @@ const SuccessN = () => {
                     <Success />
                 </div>
                 <h2 className={styles.h2}>Sign up Successful</h2>
-                <Link href="/Dashboard">
+                <Link href="/Admin/Dashboard">
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}

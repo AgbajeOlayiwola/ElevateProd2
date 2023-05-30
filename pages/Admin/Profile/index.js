@@ -1,37 +1,37 @@
 import Image from 'next/image';
 import React, { useEffect, useState, useRef } from 'react';
-import DashLayout from '../../components/layout/Dashboard';
-import ProfileLayout from '../../components/layout/ProfileLayout';
-import ArrowBackSvg from '../../components/ReusableComponents/ArrowBackSvg';
-import BeneSvg from '../../components/ReusableComponents/BeneSvg';
-import BvnSvg from '../../components/ReusableComponents/BvnSvg';
+import DashLayout from '../../../components/layout/Dashboard';
+import ProfileLayout from '../../../components/layout/ProfileLayout';
+import ArrowBackSvg from '../../../components/ReusableComponents/ArrowBackSvg';
+import BeneSvg from '../../../components/ReusableComponents/BeneSvg';
+import BvnSvg from '../../../components/ReusableComponents/BvnSvg';
 import Iframe from 'react-iframe';
-import CheckedSvg from '../../components/ReusableComponents/CheckedSvg';
-import Visbility from '../../components/ReusableComponents/Eyeysvg';
-import InputTag from '../../components/ReusableComponents/Input';
-import ManageBeneSingle from '../../components/ReusableComponents/ManageBene';
-import ManageLimit from '../../components/ReusableComponents/ManageLimit1';
-import ManageLimit2 from '../../components/ReusableComponents/ManageLimit2';
-import ManageLimitSvg from '../../components/ReusableComponents/ManageLimitSvg';
-import ManageSignSvg from '../../components/ReusableComponents/ManageSignSvg';
-import ProfileSingle from '../../components/ReusableComponents/ProfileSingle';
-import AddSvg from '../../components/ReusableComponents/ReusableSvgComponents/AddSvg';
-import ContactSvg from '../../components/ReusableComponents/ReusableSvgComponents/ContactSvg';
-import EditProfileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
-import LogoutSvg from '../../components/ReusableComponents/ReusableSvgComponents/LogoutSvg';
-import RmSvg from '../../components/ReusableComponents/RmSvg';
-import ShareSvg from '../../components/ReusableComponents/ShareSvg';
+import CheckedSvg from '../../../components/ReusableComponents/CheckedSvg';
+import Visbility from '../../../components/ReusableComponents/Eyeysvg';
+import InputTag from '../../../components/ReusableComponents/Input';
+import ManageBeneSingle from '../../../components/ReusableComponents/ManageBene';
+import ManageLimit from '../../../components/ReusableComponents/ManageLimit1';
+import ManageLimit2 from '../../../components/ReusableComponents/ManageLimit2';
+import ManageLimitSvg from '../../../components/ReusableComponents/ManageLimitSvg';
+import ManageSignSvg from '../../../components/ReusableComponents/ManageSignSvg';
+import ProfileSingle from '../../../components/ReusableComponents/ProfileSingle';
+import AddSvg from '../../../components/ReusableComponents/ReusableSvgComponents/AddSvg';
+import ContactSvg from '../../../components/ReusableComponents/ReusableSvgComponents/ContactSvg';
+import EditProfileSvg from '../../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
+import LogoutSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LogoutSvg';
+import RmSvg from '../../../components/ReusableComponents/RmSvg';
+import ShareSvg from '../../../components/ReusableComponents/ShareSvg';
 import styles from './styles.module.css';
 import Lottie from 'react-lottie';
-import animationData from '../../components/ReusableComponents/Lotties/contact-us.json';
-import socialdata from '../../components/ReusableComponents/Lotties/social-media-marketing.json';
+import animationData from '../../../components/ReusableComponents/Lotties/contact-us.json';
+import socialdata from '../../../components/ReusableComponents/Lotties/social-media-marketing.json';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     deleteAccountAction,
     getAllComplaintGet,
     logoutAction
-} from '../../redux/actions/actions';
-import socialdataa from '../../components/ReusableComponents/Lotties/loading.json';
+} from '../../../redux/actions/actions';
+import socialdataa from '../../../components/ReusableComponents/Lotties/loading.json';
 import {
     getAirtimeBeneficiariesData,
     deleteAirtimeBeneficiariesData,
@@ -51,17 +51,17 @@ import {
     postAirtimeNetwork,
     loadsetTransactionPin,
     postAirtimeBeneficiariesData
-} from '../../redux/actions/actions';
+} from '../../../redux/actions/actions';
 import { useForm } from 'react-hook-form';
-import Loader from '../../components/ReusableComponents/Loader';
-import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
+import Loader from '../../../components/ReusableComponents/Loader';
+import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
 import Link from 'next/link';
-import { ButtonComp } from '../../components';
+import { ButtonComp } from '../../../components';
 import { useRouter } from 'next/router';
 import { FaTrash } from 'react-icons/fa';
-import OutsideClick from '../../components/ReusableComponents/OutsideClick';
-import StorePopup from '../../components/ReusableComponents/StorePopup';
-import CloseBtnSvg from '../../components/ReusableComponents/ClosebtnSvg';
+import OutsideClick from '../../../components/ReusableComponents/OutsideClick';
+import StorePopup from '../../../components/ReusableComponents/StorePopup';
+import CloseBtnSvg from '../../../components/ReusableComponents/ClosebtnSvg';
 import { deleteCookie, getCookie } from 'cookies-next';
 const Profile = () => {
     const router = useRouter();
@@ -136,8 +136,10 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
-    const { postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries } =
-        useSelector((state) => state.postAirtimeBeneficiariesReducer);
+    const {
+        postAirtimeBeneficiaries,
+        errorMessagepostAirtimeBeneficiaries
+    } = useSelector((state) => state.postAirtimeBeneficiariesReducer);
     const { fetchRM, fetchRMErrorMessages } = useSelector(
         (state) => state.fetchRMReducer
     );
@@ -505,7 +507,7 @@ const Profile = () => {
             color: '#7A7978'
         },
         {
-            text: 'RM Name and Contact Details ',
+            text: 'RM Name and Contact Details',
             icon: <RmSvg />,
             color: '#7A7978'
         },
@@ -1053,7 +1055,7 @@ const Profile = () => {
                             </form>
                         );
                 }
-            case 'RM Name and Contact Details ':
+            case 'RM Name and Contact Details':
                 switch (count) {
                     case 0:
                         return (
@@ -1448,7 +1450,7 @@ const Profile = () => {
                                     </div>
                                 </div>
                                 <img
-                                    src="Assets/Images/rafiki.jpeg"
+                                    src="/Assets/Images/rafiki.jpeg"
                                     alt="Rafiki"
                                     className={styles.rafiki}
                                 />
@@ -1842,26 +1844,21 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details =
-                                                                    {
-                                                                        accountNumber:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    accountNumber: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details =
-                                                                    {
-                                                                        destinationBankCode:
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                        accountNo:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    destinationBankCode:
+                                                                        e.target
+                                                                            .value,
+                                                                    accountNo: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -2140,8 +2137,9 @@ const Profile = () => {
                                     ) : (
                                         allDisputes
                                             ?.filter((item) => {
-                                                const newDate =
-                                                    item.createAt.split('T');
+                                                const newDate = item.createAt.split(
+                                                    'T'
+                                                );
                                                 return item;
                                             })
                                             ?.map((item, index) => {
@@ -2157,7 +2155,8 @@ const Profile = () => {
     };
 
     return (
-        <DashLayout page="Profile Management">
+        // <DashLayout page="Profile Management">
+        <>
             <ProfileLayout
                 head={
                     <>
@@ -2369,7 +2368,8 @@ const Profile = () => {
                     }
                 />
             ) : null}
-        </DashLayout>
+            {/* </DashLayout> */}
+        </>
     );
 };
 

@@ -39,7 +39,7 @@ const Sidebar = ({ showSubnav }) => {
                 <FaTimes />
             </div>
             <div className={styles.top}>
-                <Link href="/Dashboard">
+                <Link href="/Admin/Dashboard">
                     <div className={styles.ellevate}>
                         <ElevateLogo />
                     </div>
@@ -61,11 +61,11 @@ const Sidebar = ({ showSubnav }) => {
                             );
                         } else {
                             return (
-                                <a
+                                <Link
                                     href={
                                         router.pathname !== item.path
                                             ? item.path
-                                            : null
+                                            : '#'
                                     }
                                     className={styles.title}
                                 >
@@ -86,7 +86,7 @@ const Sidebar = ({ showSubnav }) => {
                                             <div>{item.title}</div>
                                         </div>
                                     </div>
-                                </a>
+                                </Link>
                             );
                         }
                     })}

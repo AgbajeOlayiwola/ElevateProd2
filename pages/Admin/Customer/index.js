@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
-import DashLayout from '../../components/layout/Dashboard';
-import ProfileLayout from '../../components/layout/ProfileLayout';
-import ArrowBackSvg from '../../components/ReusableComponents/ArrowBackSvg';
-import CustomerSingle from '../../components/ReusableComponents/CustomerSingle';
-import BusinessSvg from '../../components/ReusableComponents/ReusableSvgComponents/BusinessSvg';
-import CardsSvg from '../../components/ReusableComponents/ReusableSvgComponents/CardsSvg';
-import Cheques from '../../components/ReusableComponents/ReusableSvgComponents/Cheques';
-import DisputeSvg from '../../components/ReusableComponents/ReusableSvgComponents/DisputeSvg';
-import EditProfileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
-import FXSalesSvg from '../../components/ReusableComponents/ReusableSvgComponents/FXSalesSvg';
-import RmSvg from '../../components/ReusableComponents/RmSvg';
+import DashLayout from '../../../components/layout/Dashboard';
+import ProfileLayout from '../../../components/layout/ProfileLayout';
+import ArrowBackSvg from '../../../components/ReusableComponents/ArrowBackSvg';
+import CustomerSingle from '../../../components/ReusableComponents/CustomerSingle';
+import BusinessSvg from '../../../components/ReusableComponents/ReusableSvgComponents/BusinessSvg';
+import CardsSvg from '../../../components/ReusableComponents/ReusableSvgComponents/CardsSvg';
+import Cheques from '../../../components/ReusableComponents/ReusableSvgComponents/Cheques';
+import DisputeSvg from '../../../components/ReusableComponents/ReusableSvgComponents/DisputeSvg';
+import EditProfileSvg from '../../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
+import FXSalesSvg from '../../../components/ReusableComponents/ReusableSvgComponents/FXSalesSvg';
+import RmSvg from '../../../components/ReusableComponents/RmSvg';
 import styles from './styles.module.css';
 
 const Customer = () => {
@@ -496,26 +496,25 @@ const Customer = () => {
         }
     };
     return (
-        <DashLayout page="Customer Self Service">
-            <ProfileLayout
-                head={profileData?.map((profile, index) => {
-                    return (
-                        <CustomerSingle
-                            key={index}
-                            profileText={profile.text}
-                            icon={profile.icon}
-                            color={profile.color}
-                            action={() => {
-                                setText(profile.text);
-                                setCount(0);
-                            }}
-                        />
-                    );
-                })}
-            >
-                {renderForm()}
-            </ProfileLayout>
-        </DashLayout>
+        // <DashLayout page="Customer Self Service">
+        <ProfileLayout
+            head={profileData?.map((profile, index) => {
+                return (
+                    <CustomerSingle
+                        key={index}
+                        profileText={profile.text}
+                        icon={profile.icon}
+                        color={profile.color}
+                        action={() => {
+                            setText(profile.text);
+                            setCount(0);
+                        }}
+                    />
+                );
+            })}
+        >
+            {renderForm()}
+        </ProfileLayout>
     );
 };
 

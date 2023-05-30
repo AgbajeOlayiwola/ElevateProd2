@@ -81,7 +81,7 @@ const MoreAction = ({
     const [descriptions, setDescription] = useState('');
 
     const type = 'Complaint';
-    const sub = 'Transfers';
+    const sub = 'TransferError';
     useEffect(() => {
         if (isDirection?.toLowerCase() === 'debit') {
             setSelectedDisputeCategory('Payments');

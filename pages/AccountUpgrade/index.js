@@ -153,12 +153,17 @@ const AccountUpgrade = () => {
     const [fileNameI, setFileNameI] = useState();
     const [fileII, setFileII] = useState(null);
     const [fileNameII, setFileNameII] = useState();
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState(null);
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
-    const [identificationBackDocument, setIdentificationBackDocument] =
-        useState(null);
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        null
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
+    const [
+        identificationBackDocument,
+        setIdentificationBackDocument
+    ] = useState(null);
     const [
         identificationBackDocumentFileName,
         setIdentificationBackDocumentFileName
@@ -360,7 +365,7 @@ const AccountUpgrade = () => {
     //console.log(link);
     const moveToDash = () => {
         setIsLoading(true);
-        router.push('../Dashboard');
+        router.push('../Admin/Dashboard');
     };
 
     const tinRegistration = () => {
@@ -1467,7 +1472,7 @@ const AccountUpgrade = () => {
                                 : null
                         }
                         action={() => {
-                            router.push('./Dashboard');
+                            router.push('./Admin/Dashboard');
                         }}
                     >
                         <div className={styles.currentLevel}>
