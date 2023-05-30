@@ -462,6 +462,8 @@ const AccountUpgrade = () => {
                         setMematStatus('done');
                     }
                 } else if (document.documentType === 'SCUML') {
+                    const test = document.absoluteUrl.split('/');
+                    setScmulFileName(test[test.length - 1]);
                     if (document.status === 'REJECTED') {
                         setScumlStatus('comment');
                     } else if (document.status === 'APPROVED') {
@@ -471,7 +473,7 @@ const AccountUpgrade = () => {
                     } else {
                         setScumlStatus('done');
                     }
-                } else if (document.documentType === 'REFERENCE_FORM') {
+                } else if (document.documentType === 'REFERENCE_FORM_1') {
                     if (document.status === 'REJECTED') {
                         setRefereeStatus('comment');
                     } else if (document.status === 'APPROVED') {
@@ -479,8 +481,10 @@ const AccountUpgrade = () => {
                         setReffereeFormStatus('done');
                     } else if (document.status === 'PENDING') {
                         setRefereeStatus('notDone');
+                        setReffereeFormStatus('notDone');
                     } else {
                         setRefereeStatus('done');
+                        setReffereeFormStatus('done');
                     }
                 } else if (document.documentType === 'IDENTIFICATION') {
                     const test = document.absoluteUrl.split('/');
@@ -1029,7 +1033,7 @@ const AccountUpgrade = () => {
                 title: 'Referee',
                 textII: 'Referee',
                 icon: <AddressSvg />,
-                statusReport: reffereeStatus,
+                statusReport: refereeStatus,
                 status: pending
             },
             {
@@ -1038,11 +1042,11 @@ const AccountUpgrade = () => {
                 icon: <AddressSvg />,
                 statusReport: reffereeFormStatus,
                 status:
-                    refereeStatus === 'APPROVED'
+                    reffereeFormStatus === 'APPROVED'
                         ? 'Done'
-                        : refereeStatus === 'notDone'
+                        : reffereeFormStatus === 'notDone'
                         ? pending
-                        : refereeStatus === 'comment'
+                        : reffereeFormStatus === 'comment'
                         ? rejected
                         : 'pending'
             },
@@ -1226,7 +1230,7 @@ const AccountUpgrade = () => {
                 title: 'Referee',
                 textII: 'Referee',
                 icon: <AddressSvg />,
-                statusReport: reffereeStatus,
+                statusReport: refereeStatus,
                 status: pending
             },
             {
@@ -1235,11 +1239,11 @@ const AccountUpgrade = () => {
                 icon: <AddressSvg />,
                 statusReport: reffereeFormStatus,
                 status:
-                    refereeStatus === 'APPROVED'
+                    reffereeFormStatus === 'APPROVED'
                         ? 'Done'
-                        : refereeStatus === 'notDone'
+                        : reffereeFormStatus === 'notDone'
                         ? pending
-                        : refereeStatus === 'comment'
+                        : reffereeFormStatus === 'comment'
                         ? rejected
                         : 'pending'
             },
@@ -1986,7 +1990,10 @@ const AccountUpgrade = () => {
                             <div className={styles.relativeBtn}>
                                 <button
                                     className={styles.buttonDone}
-                                    onClick={moveToDash}
+                                    onClick={() => {
+                                        dispatch(pushDocumentsData());
+                                        moveToDash();
+                                    }}
                                 >
                                     Save And Continue Later
                                 </button>
