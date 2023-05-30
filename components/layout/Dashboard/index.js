@@ -57,52 +57,54 @@ const DashLayout = ({
     productAction
 }) => {
     const [sideActive, setSideActive] = useState(false);
-    const [cornifyLoaded, setCornifyLoaded] = useState('');
     const router = useRouter();
-    const dispatch = useDispatch();
-    const preloadCornify = () => {
-        dispatch(logoutAction());
-        if (!localStorage.getItem('user')) {
-            router.replace('../Auth/Login');
-        }
-    };
     return (
-        <div className={styles.dash}>
-            <div className={sideActive ? styles.sidebar : styles.sidebarActive}>
-                <Sidebar
-                    showSubnav={() => {
-                        setSideActive(false);
-                    }}
-                />
-            </div>
-            <Idle
-                timeout={300000}
-                onChange={({ idle }) => {
-                    if (idle) {
-                        preloadCornify();
-                    }
-                }}
-            />
-
-            {!sideActive ? (
-                <div className={styles.dashCont}>
-                    <Navbar
-                        page={page}
-                        text={text}
-                        action={action}
-                        preview={preview}
-                        previewSingle={previewSingle}
-                        productAction={productAction}
-                        sideAction={() => {
-                            setSideActive(true);
+        <>
+            {router.pathname.includes('Admin') ? (
+                <div className={styles.dash}>
+                    <div
+                        className={
+                            sideActive ? styles.sidebar : styles.sidebarActive
+                        }
+                    >
+                        <Sidebar
+                            showSubnav={() => {
+                                setSideActive(false);
+                            }}
+                        />
+                    </div>
+                    {/* <Idle
+                        timeout={300000}
+                        onChange={({ idle }) => {
+                            if (idle) {
+                                preloadCornify();
+                            }
                         }}
-                    />
-                    {children}
+                    /> */}
+
+                    {!sideActive ? (
+                        <div className={styles.dashCont}>
+                            <Navbar
+                                page={page}
+                                text={text}
+                                action={action}
+                                preview={preview}
+                                previewSingle={previewSingle}
+                                productAction={productAction}
+                                sideAction={() => {
+                                    setSideActive(true);
+                                }}
+                            />
+                            {children}
+                        </div>
+                    ) : null}
                 </div>
-            ) : null}
-        </div>
+            ) : (
+                <> {children}</>
+            )}
+        </>
     );
 };
 
-export default withAuth(DashLayout);
+export default DashLayout;
 // export default DashLayout;

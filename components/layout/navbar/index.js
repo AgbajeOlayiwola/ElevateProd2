@@ -140,7 +140,7 @@ const Navbar = ({
                             <div className={styles.notification}>
                                 <NotificationsSvg />
                             </div>
-                            <Link href="/Profile">
+                            <Link href="/Admin/Profile">
                                 <div>
                                     {userProfileData ? (
                                         <img

@@ -788,9 +788,8 @@ const Collections = () => {
         setOutType(type);
     };
     return (
-        <DashLayout page="Collections">
-            <div className={styles.statementCover}>
-                {/* {active && (
+        <div className={styles.statementCover}>
+            {/* {active && (
                 <div className={styles.greencard}>
                     <div className={styles.greencardDetails}>
                         <div>
@@ -819,10 +818,10 @@ const Collections = () => {
                     />
                 </div>
             )} */}
-                <div className={styles.allTypes}>
-                    <div className={styles.cov}>
-                        <AccountsInfoCard />
-                        {/* <div className={styles.balanceButtons}>
+            <div className={styles.allTypes}>
+                <div className={styles.cov}>
+                    <AccountsInfoCard />
+                    {/* <div className={styles.balanceButtons}>
                             <div className={styles.first}>
                                 <p>Scheduled Payments</p>
                             </div>
@@ -830,29 +829,28 @@ const Collections = () => {
                                 <p>Repeat Payments</p>
                             </div>
                         </div> */}
-                    </div>
-                    <div className={styles.cov}>
-                        <PaymentCard title="Receive Payments" type="receive">
-                            {PaymentData.receive.map((payType, index) => (
-                                <PaymentSingleBody
-                                    data={payType}
-                                    key={index}
-                                    type="receive"
-                                    handleFormChange={handleFormChange}
-                                />
-                            ))}
-                        </PaymentCard>
-                    </div>
                 </div>
-                <PaymentTable
-                    title="Payment History"
-                    test={count}
-                    page="Collections"
-                />
-
-                {renderForm()}
+                <div className={styles.cov}>
+                    <PaymentCard title="Receive Payments" type="receive">
+                        {PaymentData.receive.map((payType, index) => (
+                            <PaymentSingleBody
+                                data={payType}
+                                key={index}
+                                type="receive"
+                                handleFormChange={handleFormChange}
+                            />
+                        ))}
+                    </PaymentCard>
+                </div>
             </div>
-        </DashLayout>
+            <PaymentTable
+                title="Payment History"
+                test={count}
+                page="Collections"
+            />
+
+            {renderForm()}
+        </div>
     );
 };
 

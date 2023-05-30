@@ -112,7 +112,7 @@ const CorporateAccount = () => {
         }
         axiosInstance
             .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.corpNewUser}`,
+                `https://testvate.live${apiRoutes.corpNewUser}`,
 
                 accountData,
                 {
@@ -128,16 +128,13 @@ const CorporateAccount = () => {
                 if (response.data.message === 'success') {
                     setInterval(() => {
                         axiosInstance
-                            .get(
-                                `https://mysmeapp.ecobank.com:8443/bank-account/status`,
-                                {
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-Client-Type': 'web',
-                                        Authorization: `Bearer ${cookie}`
-                                    }
+                            .get(`https://testvate.live/bank-account/status`, {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-Client-Type': 'web',
+                                    Authorization: `Bearer ${cookie}`
                                 }
-                            )
+                            })
                             .then((response) => {
                                 //console.log'Accoutn Status', response);
                                 setAccountDone(response.data.message);
@@ -161,16 +158,13 @@ const CorporateAccount = () => {
                 ) {
                     setTimeout(() => {
                         axiosInstance
-                            .get(
-                                `https://mysmeapp.ecobank.com:8443/bank-account/status`,
-                                {
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-Client-Type': 'web',
-                                        Authorization: `Bearer ${cookie}`
-                                    }
+                            .get(`https://testvate.live/bank-account/status`, {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-Client-Type': 'web',
+                                    Authorization: `Bearer ${cookie}`
                                 }
-                            )
+                            })
                             .then((response) => {
                                 //console.log'Accoutn Status', response);
                                 setAccountDone(response.data.message);

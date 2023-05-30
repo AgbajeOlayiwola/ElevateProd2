@@ -361,7 +361,7 @@ const AccountUpgrade = () => {
     //console.log(link);
     const moveToDash = () => {
         setIsLoading(true);
-        router.push('../Dashboard');
+        router.push('../Admin/Dashboard');
     };
 
     const tinRegistration = () => {
@@ -1463,7 +1463,7 @@ const AccountUpgrade = () => {
                                 : null
                         }
                         action={() => {
-                            router.push('./Dashboard');
+                            router.push('./Admin/Dashboard');
                         }}
                     >
                         <div className={styles.currentLevel}>

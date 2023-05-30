@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import DashLayout from '../../components/layout/Dashboard';
-import ProfileLayout from '../../components/layout/ProfileLayout';
-import BeneSvg from '../../components/ReusableComponents/BeneSvg';
-import CustomerSingle from '../../components/ReusableComponents/CustomerSingle';
-import EditProfileSvg from '../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
+import DashLayout from '../../../components/layout/Dashboard';
+import ProfileLayout from '../../../components/layout/ProfileLayout';
+import BeneSvg from '../../../components/ReusableComponents/BeneSvg';
+import CustomerSingle from '../../../components/ReusableComponents/CustomerSingle';
+import EditProfileSvg from '../../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     loadresetPassword,
     loadchangeTransactionPin
-} from '../../redux/actions/actions';
-import Visbility from '../../components/ReusableComponents/Eyeysvg';
-import Loader from '../../components/ReusableComponents/Loader';
+} from '../../../redux/actions/actions';
+import Visbility from '../../../components/ReusableComponents/Eyeysvg';
+import Loader from '../../../components/ReusableComponents/Loader';
 import validator from 'validator';
 import { useEffect } from 'react';
-import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
+import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
 
 const Security = () => {
     const dispatch = useDispatch();
@@ -347,59 +347,58 @@ const Security = () => {
         }
     };
     return (
-        <DashLayout page="Security">
-            <ProfileLayout
-                head={profileData?.map((profile, index) => {
-                    return (
-                        <CustomerSingle
-                            key={index}
-                            profileText={profile.text}
-                            icon={profile.icon}
-                            color={profile.color}
-                            action={() => {
-                                setText(profile.text);
-                                setCount(0);
-                                setConfPassword('');
-                                setConfPin('');
-                                setOldPassword('');
-                                setOldTransactionPin('');
-                                setPin('');
-                                setPassword('');
-                                setPasswordMatch('');
-                            }}
-                        />
-                    );
-                })}
-            >
-                {outcome ? (
-                    <PaymentSuccess
-                        body={message}
-                        error={message}
-                        statusbar={statusbar}
-                        overlay="true"
-                        action={
-                            statusbar === 'error'
-                                ? () => {
-                                      setOutcome(false);
-                                  }
-                                : statusbar === 'success'
-                                ? () => {
-                                      setOutcome(false);
-                                      setConfPassword('');
-                                      setConfPin('');
-                                      setOldPassword('');
-                                      setOldTransactionPin('');
-                                      setPin('');
-                                      setPassword('');
-                                  }
-                                : null
-                        }
-                        text="Retry"
+        // <DashLayout page="Security">
+        <ProfileLayout
+            head={profileData?.map((profile, index) => {
+                return (
+                    <CustomerSingle
+                        key={index}
+                        profileText={profile.text}
+                        icon={profile.icon}
+                        color={profile.color}
+                        action={() => {
+                            setText(profile.text);
+                            setCount(0);
+                            setConfPassword('');
+                            setConfPin('');
+                            setOldPassword('');
+                            setOldTransactionPin('');
+                            setPin('');
+                            setPassword('');
+                            setPasswordMatch('');
+                        }}
                     />
-                ) : null}
-                {renderForm()}
-            </ProfileLayout>
-        </DashLayout>
+                );
+            })}
+        >
+            {outcome ? (
+                <PaymentSuccess
+                    body={message}
+                    error={message}
+                    statusbar={statusbar}
+                    overlay="true"
+                    action={
+                        statusbar === 'error'
+                            ? () => {
+                                  setOutcome(false);
+                              }
+                            : statusbar === 'success'
+                            ? () => {
+                                  setOutcome(false);
+                                  setConfPassword('');
+                                  setConfPin('');
+                                  setOldPassword('');
+                                  setOldTransactionPin('');
+                                  setPin('');
+                                  setPassword('');
+                              }
+                            : null
+                    }
+                    text="Retry"
+                />
+            ) : null}
+            {renderForm()}
+        </ProfileLayout>
     );
 };
 

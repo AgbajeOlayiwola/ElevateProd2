@@ -5,6 +5,7 @@ import '../styles/globals.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import { wrapper, store } from '../store';
 import { Provider } from 'react-redux';
+import DashLayout from '../components/layout/Dashboard';
 
 function MyApp({ Component, pageProps, router }) {
     const variants = {
@@ -32,23 +33,25 @@ function MyApp({ Component, pageProps, router }) {
 
     // const store = configureStore();
     return (
-        <Layout>
-            <AnimatePresence exitBeforeEnter>
-                <motion.div
-                    key={router.route}
-                    variants={variants} // Pass the variant object into Framer Motion
-                    initial="hidden" // Set the initial state to variants.hidden
-                    animate="enter" // Animated state to variants.enter
-                    exit="exit" // Exit state (used later) to variants.exit
-                    transition={{ type: 'linear' }} // Set the transition to linear
-                    className=""
-                >
-                    <Provider store={store}>
+        // <Layout>
+        <Provider store={store}>
+            <DashLayout page="kjhgf">
+                <AnimatePresence exitBeforeEnter>
+                    <motion.div
+                        key={router.route}
+                        variants={variants} // Pass the variant object into Framer Motion
+                        initial="hidden" // Set the initial state to variants.hidden
+                        animate="enter" // Animated state to variants.enter
+                        exit="exit" // Exit state (used later) to variants.exit
+                        transition={{ type: 'linear' }} // Set the transition to linear
+                        className=""
+                    >
                         <Component {...pageProps} />
-                    </Provider>
-                </motion.div>
-            </AnimatePresence>
-        </Layout>
+                    </motion.div>
+                </AnimatePresence>
+            </DashLayout>
+        </Provider>
+        // </Layout>
     );
 }
 

@@ -14,15 +14,12 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     useEffect(() => {
         const cookie = getCookie('cookieToken');
         axiosInstance
-            .get(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.accountStatus}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            .get(`https://testvate.live${apiRoutes.accountStatus}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
+            })
             .then((response) => {
                 // console.log('Accoutn Status', response);
                 setAccountDone(response.data.data);
@@ -46,7 +43,7 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                         Your Account Number is{' '}
                         <span>{accountDone.accountNumber}</span>
                     </h3>
-                    <Link href="/Dashboard">
+                    <Link href="/Admin/Dashboard">
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}

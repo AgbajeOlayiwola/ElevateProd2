@@ -17,7 +17,7 @@ const AccountSuccess = () => {
                     <h2 className={styles.h2}>
                         Your profile has been successfully created
                     </h2>
-                    <Link href="/Dashboard">
+                    <Link href="/Admin/Dashboard">
                         <ButtonComp
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
