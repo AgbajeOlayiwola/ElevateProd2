@@ -140,6 +140,10 @@ const AccountUpgrade = () => {
     const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
     const [reffereeEmail, setReffereeEmail] = useState('');
+    const [refereeName1, setRefereeName1] = useState('');
+    const [reffereeName2, setReffereeName2] = useState('');
+    const [refereeEmail1, setRefereeEmail1] = useState('');
+    const [reffereeEmail2, setReffereeEmail2] = useState('');
     const [link, setLink] = useState('');
     const [reffereeStatus, setReffereeStatus] = useState('');
     const [reffereeFormStatus, setReffereeFormStatus] = useState('');
@@ -577,6 +581,7 @@ const AccountUpgrade = () => {
     };
     const saveRefFileI = (e) => {
         //console.log(e.target.files[0]);
+
         setFileII(e.target.files[0]);
         setFileNameII(e.target.files[0].name);
         //console.log(file);
@@ -585,7 +590,11 @@ const AccountUpgrade = () => {
     const refereeFileUpload = () => {
         setLoading(true);
         const uploadrefereeData = {
+            nameOfForm1Filler: refereeName1,
+            emailOfForm1Filler: refereeEmail1,
             form1: fileI,
+            nameOfForm2Filler: reffereeName2,
+            emailOfForm2Filler: reffereeEmail2,
             form2: fileII
         };
         dispatch(getUploadReffereeDetails(uploadrefereeData));
@@ -874,7 +883,7 @@ const AccountUpgrade = () => {
     useEffect(() => {
         if (ellevateProfilingSeccess !== null) {
             setEllevateProfilingzDone('Done');
-            setMessage('SMEApp Profiling Success');
+            setMessage('Ellevate Profiling Success');
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
@@ -964,13 +973,13 @@ const AccountUpgrade = () => {
     const AccountUpgradeData = {
         existing: [
             {
-                title: 'SMEApp Profiling',
+                title: 'Ellevate Profiling',
                 textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
                 status:
                     elevateStatus === 'done'
-                        ? status
+                        ? 'Done'
                         : elevateStatus === 'notDone'
                         ? pending
                         : null
@@ -1098,13 +1107,13 @@ const AccountUpgrade = () => {
             //             : pending
             // },
             {
-                title: 'SMEApp Profiling',
+                title: 'Ellevate Profiling',
                 textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
                 status:
                     userProfile?.hasDoneEllevateProfiling === true
-                        ? status
+                        ? 'Done'
                         : pending
             }
             // {
@@ -1184,13 +1193,13 @@ const AccountUpgrade = () => {
                         : userProfile?.idDocumentVerificationStatus
             },
             {
-                title: 'SMEApp Profiling',
+                title: 'Ellevate Profiling',
                 textII: 'EllevateProfilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
                 status:
                     userProfile?.hasDoneEllevateProfiling === true
-                        ? status
+                        ? 'Done'
                         : pending
             }
         ],
@@ -1314,13 +1323,13 @@ const AccountUpgrade = () => {
             //             : pending
             // },
             {
-                title: 'SMEApp Profiling',
+                title: 'Ellevate Profiling',
                 textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
                 status:
                     userProfile?.hasDoneEllevateProfiling === true
-                        ? status
+                        ? 'Done'
                         : pending
             }
             // {
@@ -2609,6 +2618,32 @@ const AccountUpgrade = () => {
                         }}
                         title="Input Referee Details"
                     >
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Name Referee 1</label>
+                                <input
+                                    type="text"
+                                    value={refereeName1}
+                                    placeholder="Input Referee one's Name"
+                                    onChange={(e) =>
+                                        setRefereeName1(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Email Referee 1</label>
+                                <input
+                                    type="text"
+                                    value={refereeEmail1}
+                                    placeholder="Input Referee one's Email"
+                                    onChange={(e) =>
+                                        setRefereeEmail1(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
                         <div className={styles.signatureGroup}>
                             <p>Input Referee Document</p>
                             <div className={styles.signatureFormGroup}>
@@ -2622,6 +2657,32 @@ const AccountUpgrade = () => {
                                     <input type="file" onChange={saveRefFile} />{' '}
                                     Upload
                                 </label>
+                            </div>
+                        </div>
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Name Referee 2</label>
+                                <input
+                                    type="text"
+                                    value={reffereeName2}
+                                    placeholder="Input Referee two's Name"
+                                    onChange={(e) =>
+                                        setReffereeName2(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.meansIdentification}>
+                            <div className={styles.identificationGroup}>
+                                <label>Email Referee 2</label>
+                                <input
+                                    type="text"
+                                    value={reffereeName2}
+                                    placeholder="Input Referee two's Email"
+                                    onChange={(e) =>
+                                        setReffereeName2(e.target.value)
+                                    }
+                                />
                             </div>
                         </div>
 
@@ -2660,13 +2721,13 @@ const AccountUpgrade = () => {
                         )}
                     </AccountUpgradeComponent>
                 );
-            case 'SMEApp Profiling':
+            case 'Ellevate Profiling':
                 return (
                     <AccountUpgradeComponent
                         action={() => {
                             setTitle('First');
                         }}
-                        title="SMEApp Profiling"
+                        title="Ellevate Profiling"
                     >
                         <>
                             <div className={styles.ellevateCopy}>
@@ -2784,7 +2845,7 @@ const AccountUpgrade = () => {
                                         className={styles.updateBtn}
                                         type="submit"
                                     >
-                                        SMEApp Profiling
+                                        Ellevate Profiling
                                     </button>
                                 )}
                             </form>
