@@ -21,6 +21,7 @@ import PaymentSuccess from '../../../components/ReusableComponents/PaymentSucces
 import TableDetail from '../../../components/ReusableComponents/TableDetail';
 import ReactPaginate from 'react-paginate';
 import PaymentTable from '../../../components/ReusableComponents/PayementTable';
+import withAuth from '../../../components/HOC/withAuth';
 
 const Report = () => {
     // const dispatch = useDispatch();
@@ -279,4 +280,4 @@ const Report = () => {
     );
 };
 
-export default Report;
+export default withAuth(Report);

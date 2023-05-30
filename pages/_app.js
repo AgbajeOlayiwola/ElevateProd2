@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps, router }) {
     return (
         // <Layout>
         <Provider store={store}>
-            <DashLayout page="kjhgf">
+            <DashLayout>
                 <AnimatePresence exitBeforeEnter>
                     <motion.div
                         key={router.route}

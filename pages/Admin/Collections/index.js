@@ -38,6 +38,7 @@ import UssdFirst from '../../components/ReusableComponents/UssdFirst';
 import Share from '../../components/ReusableComponents/Share';
 import QrFirst from '../../components/layout/QrData';
 import AccountsInfoCard from '../../components/ReusableComponents/AccountInfoCard';
+import withAuth from '../../../components/HOC/withAuth';
 
 const Collections = () => {
     const router = useRouter();
@@ -854,4 +855,4 @@ const Collections = () => {
     );
 };
 
-export default Collections;
+export default withAuth(Collections);
