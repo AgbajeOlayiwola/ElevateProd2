@@ -365,6 +365,7 @@ const AccountUpgrade = () => {
     };
 
     const tinRegistration = () => {
+        setLoading(true);
         const data = {
             tin: tinNumber
         };
