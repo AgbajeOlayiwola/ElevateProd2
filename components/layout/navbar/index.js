@@ -126,8 +126,15 @@ const Navbar = ({
                             <h2 className={styles.name}>Payment</h2>
                         ) : router.pathname == '/Admin/Security' ? (
                             <h2 className={styles.name}>Security</h2>
+                        ) : router.pathname == '/Admin/Reports' ? (
+                            <h2 className={styles.name}>Transaction Reports</h2>
+                        ) : router.pathname == '/Admin/Collections' ? (
+                            <h2 className={styles.name}>Collections</h2>
+                        ) : router.pathname == '/Admin/BankStatement' ? (
+                            <h2 className={styles.name}>Bank Statement</h2>
                         ) : null}
                     </div>
+
                     <div className={styles.rightNav}>
                         {page === 'Payments' ? null : (
                             <form>

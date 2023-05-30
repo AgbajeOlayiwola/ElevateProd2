@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import DashLayout from '../../components/layout/Dashboard';
-import MakePaymentFirst from '../../components/ReusableComponents/MakePaymentFirst';
-import MakePaymentSecond from '../../components/ReusableComponents/MakePaymentSecond';
-import PaymentTable from '../../components/ReusableComponents/PayementTable';
-import PaymentSuccess from '../../components/ReusableComponents/PaymentSuccess';
-import ReceivePaymentFirst from '../../components/ReusableComponents/ReceivePaymentFirst';
-import ReceivePaymentSecond from '../../components/ReusableComponents/ReceivePaymentSecond';
+// import DashLayout from '../../components/layout/Dashboard';
+import MakePaymentFirst from '../../../components/ReusableComponents/MakePaymentFirst';
+import MakePaymentSecond from '../../../components/ReusableComponents/MakePaymentSecond';
+import PaymentTable from '../../../components/ReusableComponents/PayementTable';
+import PaymentSuccess from '../../../components/ReusableComponents/PaymentSuccess';
+import ReceivePaymentFirst from '../../../components/ReusableComponents/ReceivePaymentFirst';
+import ReceivePaymentSecond from '../../../components/ReusableComponents/ReceivePaymentSecond';
 import styles from './styles.module.css';
 import Image from 'next/image';
-import Overlay from '../../components/ReusableComponents/Overlay';
-import SchedulePayment from '../../components/ReusableComponents/Schedulepayment';
-import Visbility from '../../components/ReusableComponents/Eyeysvg';
+import Overlay from '../../../components/ReusableComponents/Overlay';
+import SchedulePayment from '../../../components/ReusableComponents/Schedulepayment';
+import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { RWebShare } from 'react-web-share';
 import {
     loadussdGen,
@@ -21,23 +21,23 @@ import {
     generateQrCodeDetails,
     loadpaylinkGen,
     getQrMerchantInfoGen
-} from '../../redux/actions/actions';
+} from '../../../redux/actions/actions';
 // import ChartDiv from './chartDivStyled';
 // import ChartContent from './chartContentStyled';
-import PaymentSingleBody from '../../components/ReusableComponents/PaymentSingleBody';
-import PaymentCard from '../../components/ReusableComponents/PaymentCard';
-// import PaymentError from '../../components/ReusableComponents/PaymentError';
+import PaymentSingleBody from '../../../components/ReusableComponents/PaymentSingleBody';
+import PaymentCard from '../../../components/ReusableComponents/PaymentCard';
+// import PaymentError from '../../../components/ReusableComponents/PaymentError';
 import { useRouter } from 'next/router';
-import { PaymentData } from '../../components/ReusableComponents/Data';
-import CloseButton from '../../components/ReusableComponents/CloseButtonSvg';
-import PaymentRepeat from '../../components/ReusableComponents/PaymentRepeat';
-import ReceivePaymentThird from '../../components/ReusableComponents/ReceivePaymentThird';
-import RecievePaymentShare from '../../components/ReusableComponents/ReceivePaymentShare';
-import PaylinkStepOne from '../../components/layout/Paylink/StepOne';
-import UssdFirst from '../../components/ReusableComponents/UssdFirst';
-import Share from '../../components/ReusableComponents/Share';
-import QrFirst from '../../components/layout/QrData';
-import AccountsInfoCard from '../../components/ReusableComponents/AccountInfoCard';
+import { PaymentData } from '../../../components/ReusableComponents/Data';
+import CloseButton from '../../../components/ReusableComponents/CloseButtonSvg';
+import PaymentRepeat from '../../../components/ReusableComponents/PaymentRepeat';
+import ReceivePaymentThird from '../../../components/ReusableComponents/ReceivePaymentThird';
+import RecievePaymentShare from '../../../components/ReusableComponents/ReceivePaymentShare';
+import PaylinkStepOne from '../../../components/layout/Paylink/StepOne';
+import UssdFirst from '../../../components/ReusableComponents/UssdFirst';
+import Share from '../../../components/ReusableComponents/Share';
+import QrFirst from '../../../components/layout/QrData';
+import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
 import withAuth from '../../../components/HOC/withAuth';
 
 const Collections = () => {

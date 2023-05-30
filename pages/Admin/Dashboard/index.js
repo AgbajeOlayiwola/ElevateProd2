@@ -397,7 +397,7 @@ const Dashboard = () => {
                     <div className={styles.divCover}>
                         <Link
                             href={{
-                                pathname: '/Payment',
+                                pathname: '/Admin/Payment',
                                 query: { id: 'Single Transfer' }
                             }}
                         >
@@ -410,7 +410,7 @@ const Dashboard = () => {
                         </Link>
                         <Link
                             href={{
-                                pathname: '/Payment',
+                                pathname: '/Admin/Payment',
                                 query: { id: 'Bills Payment' }
                             }}
                         >
@@ -423,7 +423,7 @@ const Dashboard = () => {
                         </Link>
                         <Link
                             href={{
-                                pathname: '/Payment',
+                                pathname: '/Admin/Payment',
                                 query: { id: 'Bills Payment' }
                             }}
                         >
@@ -436,7 +436,7 @@ const Dashboard = () => {
                         </Link>
                         <Link
                             href={{
-                                pathname: '/Payment',
+                                pathname: '/Admin/Payment',
                                 query: { id: 'Bulk Transfer' }
                             }}
                         >
@@ -449,7 +449,7 @@ const Dashboard = () => {
                         </Link>
                         {/* <Link
                                 href={{
-                                    pathname: '/Collections',
+                                    pathname: '/Admin/Collections',
                                     query: { id: 'Ecobank QR Only' }
                                 }}
                             >
@@ -464,7 +464,7 @@ const Dashboard = () => {
                             </Link>
                             <Link
                                 href={{
-                                    pathname: '/Collections',
+                                    pathname: '/Admin/Collections',
                                     query: { id: 'USSD only' }
                                 }}
                             >
@@ -720,7 +720,7 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                                 <div className={styles.recMak}>
-                                    {/* <RecievePaymentBtn /> */}
+                                    <RecievePaymentBtn />
                                     <MakePaymentBtn />
                                 </div>
                             </div>
