@@ -1,6 +1,7 @@
 import React from 'react';
 import Iframe from 'react-iframe';
 import DashLayout from '../../../components/layout/Dashboard';
+import withAuth from '../../../components/HOC/withAuth';
 
 const Dispute = () => {
     return (
@@ -18,4 +19,4 @@ const Dispute = () => {
     );
 };
 
-export default Dispute;
+export default withAuth(Dispute);

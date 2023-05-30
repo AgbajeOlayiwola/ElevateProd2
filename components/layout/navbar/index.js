@@ -8,6 +8,7 @@ import SearchButtonSvg from '../../ReusableComponents/ReusableSvgComponents/Sear
 import CartSvg from '../../ReusableComponents/ReusableSvgComponents/CartSvg';
 import { FaBars } from 'react-icons/fa';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const Navbar = ({
     page,
@@ -18,6 +19,7 @@ const Navbar = ({
     productAction,
     sideAction
 }) => {
+    const router = useRouter();
     const [userProfile, setUserProfile] = useState();
     const [userProfileData, setUserProfileData] = useState();
     useEffect(() => {
@@ -89,7 +91,7 @@ const Navbar = ({
                 <>
                     <FaBars onClick={sideAction} className={styles.bars} />
                     <div className={styles.imageName}>
-                        {page === 'Dashboard' ? (
+                        {router.pathname === '/Admin/Dashboard' ? (
                             <div className={styles.userName}>
                                 <h3 className={styles.name}>
                                     Welcome,
@@ -120,9 +122,11 @@ const Navbar = ({
                                 </span>
                                 {text}
                             </h2>
-                        ) : (
-                            <h2 className={styles.name}>{page}</h2>
-                        )}
+                        ) : router.pathname == '/Admin/Payment' ? (
+                            <h2 className={styles.name}>Payment</h2>
+                        ) : router.pathname == '/Admin/Security' ? (
+                            <h2 className={styles.name}>Security</h2>
+                        ) : null}
                     </div>
                     <div className={styles.rightNav}>
                         {page === 'Payments' ? null : (

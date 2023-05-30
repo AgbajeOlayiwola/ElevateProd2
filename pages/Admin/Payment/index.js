@@ -33,6 +33,7 @@ import PaymentCard from '../../../components/ReusableComponents/PaymentCard';
 import { useRouter } from 'next/router';
 import { PaymentData } from '../../../components/ReusableComponents/Data';
 import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
+import withAuth from '../../../components/HOC/withAuth';
 
 const Payment = () => {
     const router = useRouter();
@@ -1169,4 +1170,4 @@ const Payment = () => {
     );
 };
 
-export default Payment;
+export default withAuth(Payment);

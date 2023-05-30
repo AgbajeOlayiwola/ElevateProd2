@@ -63,6 +63,7 @@ import OutsideClick from '../../../components/ReusableComponents/OutsideClick';
 import StorePopup from '../../../components/ReusableComponents/StorePopup';
 import CloseBtnSvg from '../../../components/ReusableComponents/ClosebtnSvg';
 import { deleteCookie, getCookie } from 'cookies-next';
+import withAuth from '../../../components/HOC/withAuth';
 const Profile = () => {
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(false);
@@ -2373,4 +2374,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default withAuth(Profile);

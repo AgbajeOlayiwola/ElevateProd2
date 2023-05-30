@@ -714,6 +714,7 @@ const AccountUpgrade = () => {
             cac2_1: cac2File,
             memart: memtFile
         };
+        setLoading(true);
         dispatch(getCacDocumentDetails(cacDocData));
     };
     useEffect(() => {

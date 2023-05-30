@@ -21,6 +21,7 @@ import PaymentSuccess from '../../../components/ReusableComponents/PaymentSucces
 import socialdata from '../../../components/ReusableComponents/Lotties/loading.json';
 import Lottie from 'react-lottie';
 import { FaDownload } from 'react-icons/fa';
+import withAuth from '../../../components/HOC/withAuth';
 
 const BankStatments = () => {
     const dispatch = useDispatch();
@@ -564,4 +565,4 @@ const BankStatments = () => {
     );
 };
 
-export default BankStatments;
+export default withAuth(BankStatments);
