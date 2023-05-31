@@ -49,19 +49,23 @@ const Liveness = ({ action, cookie }) => {
 
         var formData = new FormData();
         formData.append('userFace', file);
-        // let cookie;
+        let cookies;
+        if (cookie === '') {
+            if (getCookie('cookieToken') == undefined) {
+                cookies = getCookie('existingToken');
+            } else {
+                cookies = getCookie('cookieToken');
+            }
+        } else {
+            cookies = cookie;
+        }
 
-        // if (getCookie('cookieToken') == undefined) {
-        //     cookie = getCookie('existingToken');
-        // } else {
-        //     cookie = getCookie('cookieToken');
-        // }
         axios
             .post(`https://testvate.live/authentication/facematch`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
+                    Authorization: `Bearer ${cookies}`
                 }
             })
             .then((response) => {
