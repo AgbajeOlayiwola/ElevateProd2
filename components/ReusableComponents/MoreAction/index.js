@@ -12,6 +12,7 @@ import {
 import OutsideClick from '../OutsideClick';
 import StorePopup from '../StorePopup';
 import CloseBtnSvg from '../ClosebtnSvg';
+import Loader from '../Loader';
 
 const MoreAction = ({
     isDirection,
@@ -40,7 +41,7 @@ const MoreAction = ({
     const [reciept, setReciept] = useState(false);
     const [disputeType, setDisputeType] = useState();
     const [selectedDisputeType, setSelectedDisputeType] = useState();
-
+    const [isLoading, setIsLoading] = useState(false);
     const [
         selectedDisputSubCategory,
         setSelectedDisputeSubCategory
@@ -97,6 +98,7 @@ const MoreAction = ({
         }
     }, [isDirection]);
     const lodgeTheComplaint = () => {
+        setLoading(true);
         const data = {
             accountId: isaccountId,
             caseCategory: selectedDisputeCategory,
@@ -106,9 +108,18 @@ const MoreAction = ({
         };
         dispatch(lodgeDisputeSubGen(data));
         if (lodgeDisputeErrorSubMessage) {
+            setLoading(false);
             setLodgeDisputeError(lodgeDisputeErrorSubMessage?.data?.message);
         }
     };
+    const [lodgeSuccess, setLodgeSuccess] = useState();
+    useEffect(() => {
+        if (lodgeDisputeErrorSubMessage) {
+            setLoading(false);
+        } else if (lodgeDisputeSuccess)
+            setLodgeSuccess('Dispute Lodged Successfully');
+    }, [lodgeDisputeSuccess, lodgeDisputeErrorSubMessage]);
+
     let newDate = dates?.split('T');
     let newTranDate = dateTrans?.split('T');
     return (
@@ -163,6 +174,11 @@ const MoreAction = ({
                                 <p>date :{newTranDate[0]}</p>
                             )}
                         </div>
+                        {lodgeSuccess ? (
+                            <p className={styles.lofgeSuccess}>
+                                {lodgeSuccess}
+                            </p>
+                        ) : null}
                         {lodgeDisputeErrorSubMessage ? (
                             <p className={styles.errors}>
                                 {lodgeDisputeErrorSubMessage?.data?.message}
@@ -174,7 +190,11 @@ const MoreAction = ({
                             cols={8}
                             rows={6}
                         ></textarea>
-                        <button onClick={lodgeTheComplaint}>Submit</button>
+                        {loading ? (
+                            <Loader />
+                        ) : (
+                            <button onClick={lodgeTheComplaint}>Submit</button>
+                        )}
                     </div>
                 </StorePopup>
             ) : null}

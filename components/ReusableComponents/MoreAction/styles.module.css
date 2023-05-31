@@ -454,6 +454,9 @@ color:#000
     border-top-right-radius: 50px;
     border-top-left-radius: 50px;
 }
+.lofgeSuccess{
+    color: #6ccf00;
+}
 .pendingReciept h1 {
     text-align: center;
     color: black;
