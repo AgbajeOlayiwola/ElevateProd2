@@ -116,25 +116,25 @@ const AccountUpgrade = () => {
     const [review, setReview] = useState('In Review');
     const [rejected, setRejected] = useState('Rejected');
     const [status, setStatus] = useState('Done');
-    const [verifyStatus, setVerifyStatus] = useState('notDone');
-    const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
+    const [verifyStatus, setVerifyStatus] = useState('');
+    const [transactionPinStatus, setTransactionPinStatus] = useState('');
     const [reffereeEmailI, setReffereeEmailI] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    // const [vninStatus, setVninStatus] = useState('notDone');
+    // const [vninStatus, setVninStatus] = useState('');
     const [virtualNin, setVirtualNin] = useState('');
-    const [elevateStatus, setElevateStatus] = useState('notDone');
-    const [utilityStatus, setUtilityStatus] = useState('notDone');
+    const [elevateStatus, setElevateStatus] = useState('');
+    const [utilityStatus, setUtilityStatus] = useState('');
     const [utilitytype, setUtilityType] = useState('');
-    const [idCardStatus, setidCardStatus] = useState('notDone');
-    const [profillingStatus, setProfillingStatus] = useState('notDone');
-    const [vninStatus, setVninStatus] = useState('notDone');
-    const [documentStatus, setDocumentStatus] = useState('notDone');
-    const [refereeStatus, setRefereeStatus] = useState('notDone');
-    const [cacStatus, setCacStatus] = useState('notDone');
-    const [tinStatus, setTinStatus] = useState('notDone');
+    const [idCardStatus, setidCardStatus] = useState('');
+    const [profillingStatus, setProfillingStatus] = useState('');
+    const [vninStatus, setVninStatus] = useState('');
+    const [documentStatus, setDocumentStatus] = useState('');
+    const [refereeStatus, setRefereeStatus] = useState('');
+    const [cacStatus, setCacStatus] = useState('');
+    const [tinStatus, setTinStatus] = useState('');
     const [cacNumber, setCacNumber] = useState('');
-    const [scumlStatus, setScumlStatus] = useState('notDone');
-    const [mematStatus, setMematStatus] = useState('notDone');
+    const [scumlStatus, setScumlStatus] = useState('');
+    const [mematStatus, setMematStatus] = useState('');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
     const [elevateData, setElevateData] = useState();
@@ -260,9 +260,9 @@ const AccountUpgrade = () => {
                 addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS' &&
                 userProfile?.hasSetTransactionPin === true &&
-                refereeStatus === 'done' &&
-                utilityStatus === 'done' &&
-                idCardStatus === 'done' &&
+                refereeStatus === 'notDone' &&
+                utilityStatus === 'notDone' &&
+                idCardStatus === 'notDone' &&
                 userProfile?.hasDoneEllevateProfiling === true
             ) {
                 setActive(true);
@@ -285,18 +285,18 @@ const AccountUpgrade = () => {
         if (text === 'COMMERCIAL') {
             if (
                 userProfile?.hasDoneVNINVerification === true &&
-                refereeStatus === 'done' &&
+                refereeStatus === 'notDone' &&
                 addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS' &&
                 userProfile?.hasSetTransactionPin === true &&
-                idCardStatus === 'done' &&
+                idCardStatus === 'notDone' &&
                 userProfile?.hasDoneEllevateProfiling === true &&
-                utilityStatus === 'done' &&
-                cacStatus === 'done' &&
-                mematStatus === 'done' &&
-                tinStatus === 'done' &&
-                tinStatus === 'done' &&
-                scumlStatus === 'done'
+                utilityStatus === 'notDone' &&
+                cacStatus === 'notDone' &&
+                mematStatus === 'notDone' &&
+                tinStatus === 'notDone' &&
+                tinStatus === 'notDone' &&
+                scumlStatus === 'notDone'
             ) {
                 setActive(true);
             }
