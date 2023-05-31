@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import DashLayout from '../../../components/layout/Dashboard';
+import DashLayout from '../../../../components/layout/Dashboard';
 import Modal from 'react-modal';
-import PaylinkLayout from '../../../components/layout/Paylink';
+import PaylinkLayout from '../../../../components/layout/Paylink';
 
 const customStyles = {
     content: {

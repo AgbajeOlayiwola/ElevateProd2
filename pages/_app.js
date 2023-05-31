@@ -14,15 +14,15 @@ function MyApp({ Component, pageProps, router }) {
         exit: { opacity: 0, x: 0, y: -200 }
     };
     const [previous, setPrevious] = useState();
-    // if (
-    //     typeof window !== 'undefined' &&
-    //     typeof window.navigator !== 'undefined' &&
-    //     typeof navigator !== 'undefined' &&
-    //     navigator.userAgent
-    // ) {
-    //     const disableDevtool = require('disable-devtool');
-    //     disableDevtool();
-    // }
+    if (
+        typeof window !== 'undefined' &&
+        typeof window.navigator !== 'undefined' &&
+        typeof navigator !== 'undefined' &&
+        navigator.userAgent
+    ) {
+        const disableDevtool = require('disable-devtool');
+        disableDevtool();
+    }
 
     // const pageMotionProps = {
     //     initial: 'pageInitial',

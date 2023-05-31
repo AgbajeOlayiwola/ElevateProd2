@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
-import DashLayout from '../../components/layout/Dashboard';
-import ProductBox from '../../components/ReusableComponents/products';
+import DashLayout from '../../../components/layout/Dashboard';
+import ProductBox from '../../../components/ReusableComponents/products';
 import styles from './store.module.css';
 
 const Store = () => {
