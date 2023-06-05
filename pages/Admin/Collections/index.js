@@ -39,6 +39,7 @@ import Share from '../../../components/ReusableComponents/Share';
 import QrFirst from '../../../components/layout/QrData';
 import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
 import withAuth from '../../../components/HOC/withAuth';
+import RecievePaymentStatus from '../../../components/ReusableComponents/RecievePaymentStatus';
 
 const Collections = () => {
     const router = useRouter();
@@ -222,23 +223,23 @@ const Collections = () => {
         ussdGenCheck();
         // console.log(error.response.data.message[0]);
     }, [ussdGen, errorMessageussdGen]);
-    const ussdStatusCheck = () => {
-        if (ussdStatus !== null) {
-            //console.logussdStatus);
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            // setStatus('success');
-        } else if (errorMessageussdStatus !== null) {
-            // setCount((count) => count + 1);
-            setIsLoading(false);
-            setError(errorMessageussdStatus);
-            console.log(error);
-            // setStatus('error');
-        }
-    };
-    useEffect(() => {
-        ussdStatusCheck();
-    }, [ussdStatus, errorMessageussdStatus]);
+    // const ussdStatusCheck = () => {
+    //     if (ussdStatus !== null) {
+    //         //console.logussdStatus);
+    //         setCount((count) => count + 1);
+    //         setIsLoading(false);
+    //         // setStatus('success');
+    //     } else if (errorMessageussdStatus !== null) {
+    //         // setCount((count) => count + 1);
+    //         setIsLoading(false);
+    //         setError(errorMessageussdStatus);
+    //         console.log(error);
+    //         // setStatus('error');
+    //     }
+    // };
+    // useEffect(() => {
+    //     ussdStatusCheck();
+    // }, [ussdStatus, errorMessageussdStatus]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -263,7 +264,7 @@ const Collections = () => {
                     });
                 } else if (userProfileData.createdFromEcobankCred === true) {
                     router.push({
-                        pathname: '/Profile',
+                        pathname: '/Admin/Profile',
                         query: { id: 'Transaction Pin' }
                     });
                 }
@@ -283,7 +284,7 @@ const Collections = () => {
                 });
             } else if (userProfileData.createdFromEcobankCred === true) {
                 router.push({
-                    pathname: '/Profile',
+                    pathname: '/Admin/Profile',
                     query: { id: 'Transaction Pin' }
                 });
             }
@@ -622,6 +623,9 @@ const Collections = () => {
                                 closeAction={buttonHandleClose}
                                 info={paymentDetails.description}
                                 primary={accountPrimarys.accountId}
+                                ussdStatusClick={() => {
+                                    setCount(5);
+                                }}
                             />
                         );
                     case 3:
@@ -643,6 +647,19 @@ const Collections = () => {
                                 closeAction={(data) => {
                                     //console.logdata);
                                     setCount(count - 2);
+                                }}
+                            />
+                        );
+                    case 5:
+                        return (
+                            <RecievePaymentStatus
+                                transactionId={ussdGen?.transactionId}
+                                overlay={overlay}
+                                action={handleClose}
+                                type="USSD"
+                                back={(data) => {
+                                    //console.logdata);
+                                    setCount(2);
                                 }}
                             />
                         );
@@ -855,4 +872,4 @@ const Collections = () => {
     );
 };
 
-export default withAuth(Collections);
+export default Collections;

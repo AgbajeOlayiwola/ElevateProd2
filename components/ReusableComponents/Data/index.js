@@ -93,32 +93,32 @@ export const SidebarData = [
     // ]
     // },
 
-    // {
-    //     title: 'Transaction Reports',
-    //     path: '/Admin/Reports',
-    //     // modal: 'show',
-    //     icon: <PaymentSvg />,
-    //     iconActive: <PaymentActiveSvg />,
-    //     iconClosed: <RiIcons.RiArrowDownSLine />,
-    //     iconOpened: <RiIcons.RiArrowUpSLine />
-    // subNav: [
-    //     {
-    //         title: 'Collections',
-    //         path: '/Admin/Collections',
-    //         icon: <BiIcons.BiTransfer />
-    //     },
-    //     {
-    //         title: 'Payment',
-    //         path: '/Admin/Payment',
-    //         icon: <BiIcons.BiTransfer />
-    //     },
-    //     {
-    //         title: 'Reports',
-    //         path: '/Admin/Reports',
-    //         icon: <BiIcons.BiTransfer />
-    //     }
-    // ]
-    // },
+    {
+        title: 'Transaction Reports',
+        path: '/Admin/Reports',
+        // modal: 'show',
+        icon: <PaymentSvg />,
+        iconActive: <PaymentActiveSvg />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+        // subNav: [
+        //     {
+        //         title: 'Collections',
+        //         path: '/Admin/Collections',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Payment',
+        //         path: '/Admin/Payment',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Reports',
+        //         path: '/Admin/Reports',
+        //         icon: <BiIcons.BiTransfer />
+        //     }
+        // ]
+    },
     // {
     //     title: 'Bank Statement',
     //     path: '/Admin/BankStatement',
@@ -275,21 +275,21 @@ export const RecievePayment = [
         path: 'Ecobank QR only',
         icon: <BiIcons.BiScan />
     },
-    {
-        title: 'By Phone POS',
-        path: 'Phone POS',
-        icon: <HiIcons.HiOutlineCreditCard />
-    },
+    // {
+    //     title: 'By Phone POS',
+    //     path: 'Phone POS',
+    //     icon: <HiIcons.HiOutlineCreditCard />
+    // },
     {
         title: 'USSD',
         path: 'USSD only',
         icon: <StarSharp />
-    },
-    {
-        title: 'Paylink',
-        path: 'Paylink',
-        icon: <BiIcons.BiLinkAlt />
     }
+    // {
+    //     title: 'Paylink',
+    //     path: 'Paylink',
+    //     icon: <BiIcons.BiLinkAlt />
+    // }
 ];
 
 export const MakePayment = [

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './styles.module.css';
 import EditSvg from '../editSvg';
 import { MdCancel } from 'react-icons/md';
@@ -9,12 +9,16 @@ import {
     getDisputCategorySubGen,
     lodgeDisputeSubGen
 } from '../../../redux/actions/actions';
+import CloseBtnSvg from '../ClosebtnSvg';
+import Loader from '../Loader';
 const TransactionDets = ({
     paymentDirection,
     transactionAmmount,
     transactionStatus,
     transactionTitle,
-    type,
+    dateTrans,
+    // dates
+    // type,
     sender,
     destinationBank,
     narration,
@@ -30,16 +34,23 @@ const TransactionDets = ({
     const [showDispute, setShowDispute] = useState(false);
     const [reciept, setReciept] = useState(false);
     const [disputeType, setDisputeType] = useState();
+    const [loading, setLoading] = useState(false);
     const [selectedDisputeType, setSelectedDisputeType] = useState();
-    const [selectedDisputSubCategory, setSelectedDisputeSubCategory] =
-        useState();
+    const [
+        selectedDisputSubCategory,
+        setSelectedDisputeSubCategory
+    ] = useState();
     const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
     const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
-    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
-        useSelector((state) => state.getDisputeCategoryReducer);
-    const { getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage } =
-        useSelector((state) => state.getDisputeSubCategoryReducer);
+    const {
+        getDisputCategorySuccess,
+        getDisputCategoryErrorMessage
+    } = useSelector((state) => state.getDisputeCategoryReducer);
+    const {
+        getDisputCategorySubSuccess,
+        getDisputCategoryErrorSubMessage
+    } = useSelector((state) => state.getDisputeSubCategoryReducer);
     const { lodgeDisputeSuccess, lodgeDisputeErrorSubMessage } = useSelector(
         (state) => state.lodgeDisputeReducer
     );
@@ -62,18 +73,59 @@ const TransactionDets = ({
         setSelectedDisputeSubCategory(event.target.value);
     };
     const [errors, setErrors] = useState('');
+    // const lodgeTheComplaint = () => {
+    //     const data = {
+    //         accountId: accountId,
+    //         caseCategory: selectedDisputeCategory,
+    //         caseSubCategory: selectedDisputSubCategory,
+    //         caseType: disputeType,
+    //         description: `${disputeType} from USER about ${selectedDisputeCategory} regarding ${selectedDisputSubCategory}. With Transaction Id: ${transactionId} and Transaction Ref: ${transactionRef}. Amount involved: ${transactionAmmount}`
+    //     };
+    //     dispatch(lodgeDisputeSubGen(data));
+    //     if (lodgeDisputeErrorSubMessage) {
+    //     }
+    // };
+
+    const type = 'Complaint';
+    const sub = 'TransferError';
+    useEffect(() => {
+        if (paymentDirection?.toLowerCase() === 'debit') {
+            setSelectedDisputeCategory('Payments');
+        }
+        if (transactionTitle?.toLowerCase() === 'ussd') {
+            setSelectedDisputeCategory('Ussd');
+        }
+        if (transactionTitle?.toLowerCase() === 'payment_link') {
+            setSelectedDisputeCategory('Cards');
+        }
+        if (transactionTitle?.toLowerCase() === 'qr_payment') {
+            setSelectedDisputeCategory('Payments');
+        }
+    }, [paymentDirection]);
     const lodgeTheComplaint = () => {
+        setLoading(true);
         const data = {
-            accountId: accountId,
+            accountId: isaccountId,
             caseCategory: selectedDisputeCategory,
-            caseSubCategory: selectedDisputSubCategory,
-            caseType: disputeType,
-            description: `${disputeType} from USER about ${selectedDisputeCategory} regarding ${selectedDisputSubCategory}. With Transaction Id: ${transactionId} and Transaction Ref: ${transactionRef}. Amount involved: ${transactionAmmount}`
+            caseSubCategory: sub,
+            caseType: type,
+            description: `${type} from USER about ${selectedDisputeCategory} regarding ${sub}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmount}. Futher Insight From User:${descriptions}`
         };
         dispatch(lodgeDisputeSubGen(data));
         if (lodgeDisputeErrorSubMessage) {
+            setLoading(false);
+            setLodgeDisputeError(lodgeDisputeErrorSubMessage?.data?.message);
         }
     };
+    const [lodgeSuccess, setLodgeSuccess] = useState();
+    useEffect(() => {
+        if (lodgeDisputeErrorSubMessage) {
+            setLoading(false);
+        } else if (lodgeDisputeSuccess)
+            setLodgeSuccess('Dispute Lodged Successfully');
+    }, [lodgeDisputeSuccess, lodgeDisputeErrorSubMessage]);
+    let newDate = dateTrans?.split('T');
+    let newTranDate = dateTrans?.split('T');
 
     // console.log(disputeType);
     return (
@@ -146,11 +198,11 @@ const TransactionDets = ({
                         ) : null}
                         {showDispute ? (
                             <div className={styles.showDispute}>
-                                <div className={styles.cancel}>
+                                {/* <div className={styles.cancel}>
                                     <MdCancel
                                         onClick={() => setShowDispute(false)}
                                     />
-                                </div>
+                                </div> */}
                                 {lodgeDisputeErrorSubMessage ? (
                                     <p className={styles.errors}>
                                         {
@@ -160,60 +212,72 @@ const TransactionDets = ({
                                     </p>
                                 ) : null}
                                 <div className={styles.maindispute}>
-                                    <label>Dispute type</label>
-                                    <select onChange={disputesFunction}>
-                                        <option>Select Dispute Type</option>
-                                        {disputes?.map((item, index) => {
-                                            return (
-                                                <option
-                                                    value={item}
-                                                    key={index}
-                                                >
-                                                    {item}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </div>
-                                <div className={styles.maindispute}>
-                                    <label>Dispute category</label>
-                                    <select onChange={complainCateFunction}>
-                                        <option>Select Dispute Category</option>
-                                        {getDisputCategorySuccess?.map(
-                                            (item, index) => {
-                                                return (
-                                                    <option
-                                                        value={item}
-                                                        key={index}
-                                                    >
-                                                        {item}
-                                                    </option>
-                                                );
+                                    <div className={styles.showDispute}>
+                                        <div className={styles.cancel}>
+                                            <CloseBtnSvg
+                                                action={() =>
+                                                    setShowDispute(false)
+                                                }
+                                            />
+                                        </div>
+                                        <div className={styles.amountTrans}>
+                                            <p>
+                                                Transaction Amount:{' '}
+                                                {transactionAmmount}
+                                            </p>
+
+                                            <p>
+                                                Transaction Type:{' '}
+                                                {transactionTitle}
+                                            </p>
+                                            {/* <p>Sub Category: {sub}</p> */}
+                                            <p>
+                                                Transaction Status:{' '}
+                                                {transactionStatus}
+                                            </p>
+                                            {/* {newDate == null ? null : (
+                                                <p>
+                                                    date :{newDate[0]},{' '}
+                                                    {newDate[1]}
+                                                </p>
+                                            )} */}
+                                            {newTranDate == null ? null : (
+                                                <p>
+                                                    date :{newTranDate[0]},{' '}
+                                                    {newTranDate[1]}
+                                                </p>
+                                            )}
+                                        </div>
+                                        {lodgeSuccess ? (
+                                            <p className={styles.lofgeSuccess}>
+                                                {lodgeSuccess}
+                                            </p>
+                                        ) : null}
+                                        {lodgeDisputeErrorSubMessage ? (
+                                            <p className={styles.errors}>
+                                                {
+                                                    lodgeDisputeErrorSubMessage
+                                                        ?.data?.message
+                                                }
+                                            </p>
+                                        ) : null}
+                                        <textarea
+                                            onChange={(e) =>
+                                                setDescription(e.target.value)
                                             }
+                                            className={styles.disputTextArea}
+                                            cols={8}
+                                            rows={6}
+                                        ></textarea>
+                                        {loading ? (
+                                            <Loader />
+                                        ) : (
+                                            <button onClick={lodgeTheComplaint}>
+                                                Submit
+                                            </button>
                                         )}
-                                    </select>
+                                    </div>
                                 </div>
-                                <div className={styles.maindispute}>
-                                    <label>Dispute Sub-Category</label>
-                                    <select onChange={complaintSubVateFunction}>
-                                        <option>Select Dispute Category</option>
-                                        {getDisputCategorySubSuccess?.map(
-                                            (item, index) => {
-                                                return (
-                                                    <option
-                                                        value={item}
-                                                        key={index}
-                                                    >
-                                                        {item}
-                                                    </option>
-                                                );
-                                            }
-                                        )}
-                                    </select>
-                                </div>
-                                <button onClick={lodgeTheComplaint}>
-                                    Submit
-                                </button>
                             </div>
                         ) : null}
                         {reciept ? (

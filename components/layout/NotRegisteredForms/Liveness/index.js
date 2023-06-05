@@ -49,31 +49,32 @@ const Liveness = ({ action, cookie }) => {
 
         var formData = new FormData();
         formData.append('userFace', file);
-        // let cookie;
+        let cookies;
+        if (cookie === '') {
+            if (getCookie('cookieToken') == undefined) {
+                cookies = getCookie('existingToken');
+            } else {
+                cookies = getCookie('cookieToken');
+            }
+        } else {
+            cookies = cookie;
+        }
 
-        // if (getCookie('cookieToken') == undefined) {
-        //     cookie = getCookie('existingToken');
-        // } else {
-        //     cookie = getCookie('cookieToken');
-        // }
         axios
-            .post(
-                `https://mysmeapp.ecobank.com:8443/authentication/facematch`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'X-Client-Type': 'web',
-                        Authorization: `Bearer ${cookie}`
-                    }
+            .post(`https://testvate.live/authentication/facematch`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookies}`
                 }
-            )
+            })
             .then((response) => {
                 setSuccess(response.data.message);
                 setLoading(false);
                 setLoads(false);
             })
             .catch((error) => {
+                // setSuccess(error.response.data.message);
                 setError(error.response.data.message);
                 setLoading(false);
                 setLoads(false);

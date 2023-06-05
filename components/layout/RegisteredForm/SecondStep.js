@@ -184,7 +184,7 @@ const RegisteredForm = ({
                                     className={styles.textInput}
                                     required
                                     autoComplete="false"
-                                    type={outTypes ? 'text' : 'password'}
+                                    type={outTypes ? 'password' : 'text'}
                                     onChange={handlePwd}
                                 />
                                 <Visbility typeSet={types} input="input" />
@@ -216,7 +216,7 @@ const RegisteredForm = ({
                                     className={styles.textInput}
                                     autoComplete="false"
                                     required
-                                    type={outType ? 'text' : 'password'}
+                                    type={outType ? 'password' : 'text'}
                                     onChange={handlePaswword}
                                 />
 

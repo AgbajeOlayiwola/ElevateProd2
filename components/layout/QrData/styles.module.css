@@ -12,6 +12,99 @@
     display: flex;
     justify-content: flex-end;
 }
+.qrDecal{
+    display: flex;
+    justify-content: space-between;
+    border-radius: 12px;
+    border: solid 1px #d3d3d3;
+    align-items: center;
+    padding: 10px;
+}
+
+.beneCheck {
+    position: relative;
+    width: 48px;
+    height: 18px;
+    cursor: pointer;
+    margin-bottom: 0px !important;
+}
+
+.beneCheck input {
+    position: absolute;
+    z-index: 1;
+    width: unset;
+    display: none;
+}
+
+.beneCheck span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0px;
+    background: #eceef4;
+    border-radius: 100px;
+    transition: 0.5s;
+}
+
+.beneCheck span i {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #dfdfdf;
+    bottom: -2px;
+    top: -2px;
+    left: -4px;
+    transition: 0.5s;
+}
+
+.beneChecked {
+    position: relative;
+    width: 48px;
+    height: 18px;
+    cursor: pointer;
+    margin-bottom: 0px !important;
+}
+
+.beneChecked input {
+    position: absolute;
+    z-index: 1;
+    width: unset;
+    display: none;
+}
+
+.beneChecked span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0px;
+    background: #eceef4;
+    border-radius: 100px;
+    transition: 0.5s;
+}
+
+.beneChecked span i {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #dfdfdf;
+    bottom: -2px;
+    top: -2px;
+    left: -4px;
+    transition: 0.5s;
+}
+
+.beneChecked span i {
+    left: 24px;
+}
+
+.beneChecked span {
+    background-color: #6ccf00;
+}
+
 .cver {
     padding: 64px 100px;
     width: 39%;

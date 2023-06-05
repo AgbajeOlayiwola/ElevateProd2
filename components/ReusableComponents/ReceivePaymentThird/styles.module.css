@@ -21,7 +21,14 @@
     width: 67%;
     margin: 4px auto 64px;
 }
-
+.amountTrans{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+.amountTrans p{
+    font-size: 15px !important;
+}
 .closeCont {
     display: flex;
     justify-content: right;
@@ -156,6 +163,15 @@ box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
 border-radius: 12px;
 margin-top: 20px;
 position: relative;
+}
+.dates{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 15px;  
+    color: #7f7f7f;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .deadlines p {

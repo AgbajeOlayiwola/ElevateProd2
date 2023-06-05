@@ -212,7 +212,10 @@ const Login = () => {
                             )
                         );
 
-                        router.push('/Onboarding/ExistingProfileSetup');
+                        router.push({
+                            pathname: '/Onboarding/ExistingProfileSetup',
+                            query: { id: 2 }
+                        });
                     } else if (
                         user.data.user.profile.profileSetupStatus ===
                         'LIVENESS_VERIFIED'
@@ -241,7 +244,10 @@ const Login = () => {
                             'account',
                             JSON.stringify(user.data.user.profile)
                         );
-                        router.push('/Onboarding/ExistingProfileSetup');
+                        router.push({
+                            pathname: '/Onboarding/ExistingProfileSetup',
+                            query: { id: 0 }
+                        });
                     }
                     if (
                         auth2FaCodeSuccess.data.data.user.profile
@@ -378,8 +384,10 @@ const Login = () => {
                                 'account',
                                 JSON.stringify(user.data.user.profile)
                             );
-
-                            router.push('/Onboarding/ExistingProfileSetup');
+                            router.push({
+                                pathname: '/Onboarding/ExistingProfileSetup',
+                                query: { id: 2 }
+                            });
                         } else if (
                             user.data.user.profile.profileSetupStatus ===
                             'LIVENESS_VERIFIED'
@@ -409,7 +417,10 @@ const Login = () => {
                                 JSON.stringify(user.data.user.profile)
                             );
 
-                            router.push('/Onboarding/ExistingProfileSetup');
+                            router.push({
+                                pathname: '/Onboarding/ExistingProfileSetup',
+                                query: { id: 0 }
+                            });
                         }
                         if (
                             user.data.user.profile.profileSetupStatus ===

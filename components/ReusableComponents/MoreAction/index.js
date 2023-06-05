@@ -167,11 +167,19 @@ const MoreAction = ({
                         </div>
                         <div>
                             <p>Transaction Amount: {transactionAmount}</p>
-                            <p>Type: {type}</p>
-                            <p>Sub Category: {sub}</p>
-                            {newDate == null ? null : <p>date :{newDate[0]}</p>}
+
+                            <p>Transaction Type: {transactionTitle}</p>
+                            {/* <p>Sub Category: {sub}</p> */}
+                            <p>Transaction Status: {transactionStatus}</p>
+                            {newDate == null ? null : (
+                                <p>
+                                    date :{newDate[0]}, {newDate[1]}
+                                </p>
+                            )}
                             {newTranDate == null ? null : (
-                                <p>date :{newTranDate[0]}</p>
+                                <p>
+                                    date :{newTranDate[0]}, {newTranDate[1]}
+                                </p>
                             )}
                         </div>
                         {lodgeSuccess ? (

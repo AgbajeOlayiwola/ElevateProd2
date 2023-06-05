@@ -2,13 +2,27 @@ import React, { useEffect, useState, useRef } from 'react';
 import Overlay from '../../ReusableComponents/Overlay';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getQrMerchantInfoGen } from '../../../redux/actions/actions';
+import {
+    getQrMerchantInfoGen,
+    requestPhysicalQrAction
+} from '../../../redux/actions/actions';
 import exportAsImage from '../../../utils/exportAsImage';
 import CloseButton from '../../ReusableComponents/CloseButtonSvg';
 
 const QrFirst = ({ overlay, moveToNext, closeAction }) => {
-    const { getQrMerchnatInfoSuccess, getQrMerchnatInfoErrorMessage } =
-        useSelector((state) => state.getQrMerchantInfoReducermport);
+    const {
+        getQrMerchnatInfoSuccess,
+        getQrMerchnatInfoErrorMessage
+    } = useSelector((state) => state.getQrMerchantInfoReducermport);
+    const {
+        requestPhysicalQrSuccess,
+        requestPhysicalQrErrorMessage
+    } = useSelector((state) => state.requestPhysicalQrReducer);
+
+    useEffect(() => {
+        console.log(requestPhysicalQrSuccess, requestPhysicalQrErrorMessage);
+    }, [requestPhysicalQrSuccess, requestPhysicalQrErrorMessage]);
+
     const [merchantInf, setMerchantInfo] = useState();
     const [error, setError] = useState();
     const dispatch = useDispatch();
@@ -24,6 +38,7 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
         }
     }, [getQrMerchnatInfoSuccess, getQrMerchnatInfoErrorMessage]);
     const exportRef = useRef();
+    const [freeze, setFreeze] = useState(false);
     return (
         <Overlay overlay={overlay}>
             <div className={styles.overlay}>
@@ -60,6 +75,33 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
                                     <p>Terminal ID</p>
                                     <p>{merchantInf?.terminalId}</p>
                                 </div>
+                            </div>
+                            <div className={styles.qrDecal}>
+                                <p>Request QR Decal</p>
+                                <label
+                                    className={
+                                        freeze
+                                            ? styles.beneChecked
+                                            : styles.beneCheck
+                                    }
+                                >
+                                    <input
+                                        type="checkbox"
+                                        onChange={(e) => {
+                                            if (!freeze) {
+                                                dispatch(
+                                                    requestPhysicalQrAction()
+                                                );
+                                                if (getQrMerchnatInfoSuccess) {
+                                                    setFreeze(true);
+                                                }
+                                            }
+                                        }}
+                                    />
+                                    <span>
+                                        <i></i>
+                                    </span>
+                                </label>
                             </div>
                             <div>
                                 <button

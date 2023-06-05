@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import CloseButton from '../CloseButtonSvg';
 import Overlay from '../Overlay';
-import LinkSvg from '../ReusableSvgComponents/LinkSvg';
 import styles from './styles.module.css';
-import MoreSvg from '../MoreSvg';
-import EditSvg from '../editSvg';
+import moment from 'moment';
+import { of } from 'rxjs';
+import { groupBy, map, mergeMap, reduce, toArray } from 'rxjs/operators';
 import {
     getDisputCategOryTypeGen,
     getTransactionElevate
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import TransactionSvg from '../ReusableSvgComponents/TransactionSvg';
-import { RiDivideFill } from 'react-icons/ri';
-import { MdDiversity1 } from 'react-icons/md';
 import TransactionDets from './transactionDets';
 import Lottie from 'react-lottie';
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
@@ -42,10 +39,12 @@ const ReceivePaymentThird = ({
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [isLoading, setIsLoading] = useState(true);
     const [transactionType, setTransactionType] = useState();
+    const [currentDate, setCurrentDate] = useState();
     const {
         getDisputCategOryTypeSuccess,
         getDisputCategOryTypeErrorMessage
     } = useSelector((state) => state.getDisputeTypeReducer);
+    const [trans, setTrans] = useState(null);
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -118,30 +117,50 @@ const ReceivePaymentThird = ({
             }`
         );
     };
+    const txs = ''; // Replace with the actual data for `txs`
+
     useEffect(() => {
         if (transactionElevate !== null) {
             setTableDetails(transactionElevate.transactions);
             setIsLoading(false);
-            // console.log(transactionElevate.transactions);
+
             tableDetails?.filter((item) => {
                 const newDate = item.transactionDate.split('T');
-                console.log(newDate[0], time);
+                setCurrentDate(newDate[0]);
                 if (newDate[0] !== time) {
                     setDateState(true);
+                    setCurrentDate(newDate[0]);
                 } else {
                     setDateState(false);
+                    setCurrentDate(newDate[0]);
                 }
             });
 
-            // tableDetails.data?.map((item) => {
-            //     //console.log(item.transactionDate);
-            // });
+            const txs = transactionElevate.transactions;
+
+            of(...txs)
+                .pipe(
+                    groupBy((p) => p?.transactionDate?.split('T')[0]),
+                    mergeMap((group$) =>
+                        group$.pipe(
+                            reduce((acc, cur) => [...acc, cur], [
+                                `${group$.key}`
+                            ])
+                        )
+                    ),
+                    map((arr) => ({ date: arr[0], trans: arr.slice(1) })),
+                    toArray()
+                )
+                .subscribe((p) => {
+                    setTrans(p);
+                    console.log(trans);
+                });
         }
-        // console.log(transactionElevate);
     }, [transactionElevate]);
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
     return (
         <div>
             <Overlay overlay={overlay}>
@@ -155,7 +174,10 @@ const ReceivePaymentThird = ({
                     </div>
                     <div className={styles.secondCont}>
                         <h2>{title}</h2>
-                        <p className={styles.intro}>Today - 22/04/2022</p>
+                        <p className={styles.intro}>
+                            {' '}
+                            {/* {moment(item?.date)?.format('YYYY-MM-DD')} */}
+                        </p>
 
                         {/* <div className={styles.deadlines}>
                         <p>Valid Till</p>
@@ -165,91 +187,103 @@ const ReceivePaymentThird = ({
                     </div> */}
                         <section className={styles.sectionI}></section>
                         <div className={styles.Tpwh}>
-                            {isLoading ? (
-                                <Lottie
-                                    options={socialOptions}
-                                    height={200}
-                                    width={200}
-                                />
-                            ) : tableDetails.length === 0 ? (
-                                <div className={styles.transactionBody}>
-                                    <div>
-                                        <p>No {type} Has Been Generated yet</p>
+                            <div>
+                                {/* {console.log(trans)} */}
+                                {isLoading ? (
+                                    <Lottie
+                                        options={socialOptions}
+                                        height={200}
+                                        width={200}
+                                    />
+                                ) : tableDetails.length === 0 ? (
+                                    <div className={styles.transactionBody}>
+                                        <div>
+                                            <p>
+                                                No {type} Has Been Generated yet
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            ) : (
-                                tableDetails
-                                    ?.filter((item) => {
-                                        const newDate = item.transactionDate.split(
-                                            'T'
-                                        );
-                                        return item;
-                                    })
-                                    ?.map((item, index) => {
-                                        const formatter = new Intl.NumberFormat(
-                                            'en-US',
-                                            {
-                                                style: 'currency',
-                                                currency: 'NGN',
-                                                currencyDisplay: 'narrowSymbol'
-                                            }
-                                        );
-                                        const formattedAmount = formatter.format(
-                                            item.transactionAmount
-                                        );
-                                        console.log(item);
-                                        return (
-                                            <TransactionDets
-                                                key={index}
-                                                beneficiary={
-                                                    item.sourceAccountId
-                                                }
-                                                accountId={item.sourceAccountId}
-                                                disputes={dispute}
-                                                type={item.transactionType}
-                                                narration={item.narration}
-                                                transactionId={
-                                                    item.ransactionId
-                                                }
-                                                transactionRef={
-                                                    item.transactionRef
-                                                }
-                                                sender={item.sender}
-                                                destinationBank={
-                                                    item.destinationBank
-                                                }
-                                                paymentDirection={
-                                                    item.paymentDirection
-                                                }
-                                                transactionAmmount={
-                                                    formattedAmount
-                                                }
-                                                transactionStatus={
-                                                    item.transactionStatus
-                                                }
-                                                transactionTitle={
-                                                    item.transactionTitle
-                                                }
-                                            />
-                                        );
-                                    })
-                            )}
+                                ) : trans == null ? null : (
+                                    trans?.map((item) => (
+                                        <div key={item.date}>
+                                            <p className={styles.dates}>
+                                                {moment(item?.date)?.format(
+                                                    'YYYY-MM-DD'
+                                                )}
+                                            </p>
+                                            <div>
+                                                {item?.trans?.map(
+                                                    (data, index) => {
+                                                        const formatter = new Intl.NumberFormat(
+                                                            'en-US',
+                                                            {
+                                                                style:
+                                                                    'currency',
+                                                                currency: 'NGN',
+                                                                currencyDisplay:
+                                                                    'narrowSymbol'
+                                                            }
+                                                        );
+                                                        const formattedAmount = formatter.format(
+                                                            data.transactionAmount
+                                                        );
+                                                        return (
+                                                            <div key={data.id}>
+                                                                <TransactionDets
+                                                                    key={index}
+                                                                    beneficiary={
+                                                                        data.sourceAccountId
+                                                                    }
+                                                                    accountId={
+                                                                        data.sourceAccountId
+                                                                    }
+                                                                    disputes={
+                                                                        dispute
+                                                                    }
+                                                                    type={
+                                                                        data.transactionType
+                                                                    }
+                                                                    narration={
+                                                                        data.narration
+                                                                    }
+                                                                    transactionId={
+                                                                        data.ransactionId
+                                                                    }
+                                                                    transactionRef={
+                                                                        data.transactionRef
+                                                                    }
+                                                                    sender={
+                                                                        data.sender
+                                                                    }
+                                                                    destinationBank={
+                                                                        data.destinationBank
+                                                                    }
+                                                                    paymentDirection={
+                                                                        data.paymentDirection
+                                                                    }
+                                                                    transactionAmmount={
+                                                                        formattedAmount
+                                                                    }
+                                                                    transactionStatus={
+                                                                        data.transactionStatus
+                                                                    }
+                                                                    transactionTitle={
+                                                                        data.transactionTitle
+                                                                    }
+                                                                    dateTrans={
+                                                                        data.transactionDate
+                                                                    }
+                                                                />
+                                                            </div>
+                                                        );
+                                                    }
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
                         </div>
-                        {/* <div className={styles.deadlines}>
-                            <div className={styles.nameDate}>
-                                <p>Ayomide James</p>
-                                <p>ellevate.com/essg/esd4...</p>
-                            </div>
-                            <div className={styles.acceptedOrCancelled}>
-                                <div className={styles.redOrGreen}></div>
-                                <div>
-                                    <p className={styles.cancel}>Cancel</p>
-                                </div>
-                                <div>
-                                    <EditSvg />
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </Overlay>

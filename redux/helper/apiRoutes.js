@@ -110,6 +110,7 @@ const verifyTransactionPin = '/users/transaction-pin/verify';
 const getAllComplaint = '/dispute-management/records';
 const deleteAccount = '/users/delete-account';
 const setPrimaryAccount = '/bank-account/primary';
+const requestPhysicalQr = '/qr-merchant/request-physical-qr';
 export default {
     getAllComplaint,
     trackComplaint,
@@ -220,5 +221,6 @@ export default {
     resetPin,
     verifyTransactionPin,
     deleteAccount,
-    setPrimaryAccount
+    setPrimaryAccount,
+    requestPhysicalQr
 };

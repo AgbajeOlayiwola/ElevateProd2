@@ -720,7 +720,7 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                                 <div className={styles.recMak}>
-                                    <RecievePaymentBtn />
+                                    {/* <RecievePaymentBtn /> */}
                                     <MakePaymentBtn />
                                 </div>
                             </div>
@@ -1015,7 +1015,7 @@ const Dashboard = () => {
                                     })
                             )}
                             <div className={styles.seeAll}>
-                                <Link href="/Reports">See All</Link>
+                                <Link href="/Admin/Reports">See All</Link>
                             </div>
                         </div>
                         {/* <div className={styles.btmIII}>

@@ -227,11 +227,11 @@ const ReceivePaymentFirst = ({
                                 <label>Payment title</label>
                                 <input
                                     {...register('accountName', {
-                                        required: 'Please enter Paayment Name',
-                                        pattern: {
-                                            value: /^[A-Za-z ]+$/i,
-                                            message: 'Only Alphabelts allowed'
-                                        }
+                                        required: 'Please enter Paayment Name'
+                                        // pattern: {
+                                        //     value: /^[A-Za-z ]+$/i,
+                                        //     message: 'Only Alphabelts allowed'
+                                        // }
                                     })}
                                     type="text"
                                     placeholder="Enter Payment Name"
@@ -245,11 +245,11 @@ const ReceivePaymentFirst = ({
                                 <label>Description</label>
                                 <textarea
                                     {...register('description', {
-                                        required: 'Please enter Description',
-                                        pattern: {
-                                            value: /^[A-Za-z ]+$/i,
-                                            message: 'Only Alphabelts allowed'
-                                        }
+                                        required: 'Please enter Description'
+                                        // pattern: {
+                                        //     value: /^[A-Za-z ]+$/i,
+                                        //     message: 'Only Alphabelts allowed'
+                                        // }
                                     })}
                                     name="description"
                                     id=""

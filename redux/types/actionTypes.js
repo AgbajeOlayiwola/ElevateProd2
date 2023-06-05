@@ -984,3 +984,13 @@ export const setPrimaryAccountType = {
 };
 
 //Set Primary Account action type end
+
+//Request Physical Qr action type start
+
+export const requestPhysicalQrType = {
+    REQUEST_PHYSICAL_QR_LOAD_START: 'REQUEST_PHYSICAL_QR_LOAD_START',
+    REQUEST_PHYSICAL_QR_LOAD_SUCCESS: 'REQUEST_PHYSICAL_QR_LOAD_SUCCESS',
+    REQUEST_PHYSICAL_QR_LOAD_ERROR: 'REQUEST_PHYSICAL_QR_LOAD_ERROR'
+};
+
+//Request Physical Qr  action type end
