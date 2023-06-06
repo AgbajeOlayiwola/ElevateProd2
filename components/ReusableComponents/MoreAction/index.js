@@ -42,69 +42,65 @@ const MoreAction = ({
     const [disputeType, setDisputeType] = useState();
     const [selectedDisputeType, setSelectedDisputeType] = useState();
     const [isLoading, setIsLoading] = useState(false);
-    const [
-        selectedDisputSubCategory,
-        setSelectedDisputeSubCategory
-    ] = useState();
+    const [selectedDisputSubCategory, setSelectedDisputeSubCategory] =
+        useState();
     const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
     const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
-    const {
-        getDisputCategorySuccess,
-        getDisputCategoryErrorMessage
-    } = useSelector((state) => state.getDisputeCategoryReducer);
-    const {
-        getDisputCategorySubSuccess,
-        getDisputCategoryErrorSubMessage
-    } = useSelector((state) => state.getDisputeSubCategoryReducer);
+    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
+        useSelector((state) => state.getDisputeCategoryReducer);
+    const { getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage } =
+        useSelector((state) => state.getDisputeSubCategoryReducer);
     const { lodgeDisputeSuccess, lodgeDisputeErrorSubMessage } = useSelector(
         (state) => state.lodgeDisputeReducer
     );
-    const disputesFunction = (event) => {
-        dispatch(getDisputCategoryGen(event.target.value));
-        setDisputeType(event.target.value);
-        if (getDisputCategorySuccess) {
-            setComplaintCategory(getDisputCategorySuccess);
-            console.log(getDisputCategorySuccess);
-        }
-    };
-    const complainCateFunction = (event) => {
-        dispatch(getDisputCategorySubGen(event.target.value, disputeType));
-        setSelectedDisputeCategory(event.target.value);
-        if (getDisputCategorySubSuccess) {
+
+    // useEffect(() => {
+    //     if (getDisputCategorySuccess !== null) {
+    //         setComplaintCategory(getDisputCategorySuccess);
+    //         console.log(getDisputCategorySuccess);
+    //     }
+    // }, [getDisputCategorySuccess, getDisputCategoryErrorMessage]);
+    useEffect(() => {
+        if (getDisputCategorySubSuccess !== null) {
+            setSelectedDisputeSubCategory(getDisputCategorySubSuccess);
             console.log(getDisputCategorySubSuccess);
         }
-    };
+    }, [getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage]);
+
     const complaintSubVateFunction = (event) => {
-        setSelectedDisputeSubCategory(event.target.value);
+        dispatch(getDisputCategorySubGen(event.target.value, 'Complaint'));
+        setSelectedDisputeCategory(event.target.value);
     };
+
     const [errors, setErrors] = useState('');
     const [descriptions, setDescription] = useState('');
 
     const type = 'Complaint';
     const sub = 'TransferError';
-    useEffect(() => {
-        if (isDirection?.toLowerCase() === 'debit') {
-            setSelectedDisputeCategory('Payments');
-        }
-        if (transactionTitle?.toLowerCase() === 'ussd') {
-            setSelectedDisputeCategory('Ussd');
-        }
-        if (transactionTitle?.toLowerCase() === 'payment_link') {
-            setSelectedDisputeCategory('Cards');
-        }
-        if (transactionTitle?.toLowerCase() === 'qr_payment') {
-            setSelectedDisputeCategory('Payments');
-        }
-    }, [isDirection]);
+    // useEffect(() => {
+    //     if (isDirection?.toLowerCase() === 'debit') {
+    //         setSelectedDisputeCategory('Payments');
+    //     }
+    //     if (transactionTitle?.toLowerCase() === 'ussd') {
+    //         setSelectedDisputeCategory('Ussd');
+    //     }
+    //     if (transactionTitle?.toLowerCase() === 'payment_link') {
+    //         setSelectedDisputeCategory('Cards');
+    //     }
+    //     if (transactionTitle?.toLowerCase() === 'qr_payment') {
+    //         setSelectedDisputeCategory('Payments');
+    //     }
+    // }, [isDirection]);
     const lodgeTheComplaint = () => {
         setLoading(true);
         const data = {
             accountId: isaccountId,
             caseCategory: selectedDisputeCategory,
-            caseSubCategory: sub,
-            caseType: type,
-            description: `${type} from USER about ${selectedDisputeCategory} regarding ${sub}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmount}. Futher Insight From User:${descriptions}`
+            caseSubCategory: selectedDisputeType,
+            caseType: 'Complaint',
+            // caseType: type,
+            description: `${type} from USER about ${selectedDisputeCategory} regarding ${selectedDisputeType}. With Transaction Id:  and Transaction Ref: . Amount involved: ${transactionAmount}. Futher Insight From User:${descriptions}`
         };
         dispatch(lodgeDisputeSubGen(data));
         if (lodgeDisputeErrorSubMessage) {
@@ -123,37 +119,49 @@ const MoreAction = ({
     let newDate = dates?.split('T');
     let newTranDate = dateTrans?.split('T');
     return (
-        <div
-            className={
-                showDispute ? styles.edit : reciept ? styles.edit : styles.edits
-            }
-            onClick={() => setDispute((prev) => !prev)}
-        >
-            <EditSvg />
-            {dispute ? (
-                <OutsideClick
-                    onClickOutside={() => {
-                        setDispute(false);
-                    }}
-                >
-                    <div className={styles.disput}>
-                        <div
-                            className={styles.dispute}
-                            onClick={() => setShowDispute((prev) => !prev)}
-                        >
-                            Dispute
-                        </div>
+        <>
+            <div
+                className={
+                    showDispute
+                        ? styles.edit
+                        : reciept
+                        ? styles.edit
+                        : styles.edits
+                }
+                onClick={() => setDispute(true)}
+            >
+                <EditSvg />
+                {dispute ? (
+                    <OutsideClick
+                        onClickOutside={() => {
+                            setDispute(false);
+                        }}
+                    >
+                        <div className={styles.disput}>
+                            <div
+                                className={styles.dispute}
+                                onClick={() => {
+                                    setShowDispute((prev) => !prev);
+                                    setDispute(false);
+                                }}
+                            >
+                                Dispute
+                            </div>
 
-                        <hr />
-                        <div
-                            className={styles.reciept}
-                            onClick={() => setReciept((prev) => !prev)}
-                        >
-                            Get Reciept
+                            <hr />
+                            <div
+                                className={styles.reciept}
+                                onClick={() => {
+                                    setReciept((prev) => !prev);
+                                    setDispute(false);
+                                }}
+                            >
+                                Get Reciept
+                            </div>
                         </div>
-                    </div>
-                </OutsideClick>
-            ) : null}
+                    </OutsideClick>
+                ) : null}
+            </div>
             {showDispute ? (
                 // <OutsideClick
                 //     onClickOutside={() => {
@@ -173,12 +181,12 @@ const MoreAction = ({
                             <p>Transaction Status: {transactionStatus}</p>
                             {newDate == null ? null : (
                                 <p>
-                                    date :{newDate[0]}, {newDate[1]}
+                                    Date :{newDate[0]}, {newDate[1]}
                                 </p>
                             )}
                             {newTranDate == null ? null : (
                                 <p>
-                                    date :{newTranDate[0]}, {newTranDate[1]}
+                                    Date :{newTranDate[0]}, {newTranDate[1]}
                                 </p>
                             )}
                         </div>
@@ -192,6 +200,61 @@ const MoreAction = ({
                                 {lodgeDisputeErrorSubMessage?.data?.message}
                             </p>
                         ) : null}
+                        {/* <div className={styles.formGroup}>
+                            <label>Choose Complaint Category</label>
+                            <select name="" id="" onChange={disputesFunction}>
+                                <option value="">
+                                    Select Complaint Category
+                                </option>
+                                {?.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item}>
+                                            {item}
+                                        </option>
+                                    );
+                                })}
+                            </select>
+                        </div> */}
+                        <div className={styles.formGroup}>
+                            <label>Choose Complaint Category</label>
+                            <select
+                                name=""
+                                id=""
+                                onChange={complaintSubVateFunction}
+                            >
+                                <option value="">
+                                    Select Complaint Category
+                                </option>
+                                {disputes?.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item}>
+                                            {item}
+                                        </option>
+                                    );
+                                })}
+                            </select>
+                        </div>
+                        <div className={styles.formGroup}>
+                            <label>Choose Sub Category</label>
+                            <select
+                                name=""
+                                id=""
+                                onChange={(e) => {
+                                    setSelectedDisputeType(e.target.value);
+                                }}
+                            >
+                                <option value="">Select Sub Category</option>
+                                {selectedDisputSubCategory?.map(
+                                    (item, index) => {
+                                        return (
+                                            <option key={index} value={item}>
+                                                {item}
+                                            </option>
+                                        );
+                                    }
+                                )}
+                            </select>
+                        </div>
                         <textarea
                             onChange={(e) => setDescription(e.target.value)}
                             className={styles.disputTextArea}
@@ -318,7 +381,7 @@ const MoreAction = ({
                     </div>
                 </StorePopup>
             ) : null}
-        </div>
+        </>
     );
 };
 

@@ -7,7 +7,8 @@ import { of } from 'rxjs';
 import { groupBy, map, mergeMap, reduce, toArray } from 'rxjs/operators';
 import {
     getDisputCategOryTypeGen,
-    getTransactionElevate
+    getTransactionElevate,
+    getDisputCategoryGen
 } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionDets from './transactionDets';
@@ -40,10 +41,10 @@ const ReceivePaymentThird = ({
     const [isLoading, setIsLoading] = useState(true);
     const [transactionType, setTransactionType] = useState();
     const [currentDate, setCurrentDate] = useState();
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
+        useSelector((state) => state.getDisputeCategoryReducer);
     const [trans, setTrans] = useState(null);
     const socialOptions = {
         loop: true,
@@ -55,7 +56,7 @@ const ReceivePaymentThird = ({
     };
 
     useEffect(() => {
-        dispatch(getDisputCategOryTypeGen());
+        dispatch(getDisputCategoryGen('Complaint'));
         console.log(getDisputCategOryTypeSuccess);
 
         if (title === 'View all Qr Links') {
@@ -93,9 +94,9 @@ const ReceivePaymentThird = ({
     }, [transactionType]);
     const [dispute, setDispute] = useState();
     useEffect(() => {
-        setDispute(getDisputCategOryTypeSuccess);
+        setDispute(getDisputCategorySuccess);
         console.log(dispute);
-    }, [getDisputCategOryTypeSuccess]);
+    }, [getDisputCategorySuccess]);
 
     useEffect(() => {
         const formatter = new Intl.NumberFormat('en-US', {
@@ -143,9 +144,10 @@ const ReceivePaymentThird = ({
                     groupBy((p) => p?.transactionDate?.split('T')[0]),
                     mergeMap((group$) =>
                         group$.pipe(
-                            reduce((acc, cur) => [...acc, cur], [
-                                `${group$.key}`
-                            ])
+                            reduce(
+                                (acc, cur) => [...acc, cur],
+                                [`${group$.key}`]
+                            )
                         )
                     ),
                     map((arr) => ({ date: arr[0], trans: arr.slice(1) })),
@@ -214,19 +216,21 @@ const ReceivePaymentThird = ({
                                             <div>
                                                 {item?.trans?.map(
                                                     (data, index) => {
-                                                        const formatter = new Intl.NumberFormat(
-                                                            'en-US',
-                                                            {
-                                                                style:
-                                                                    'currency',
-                                                                currency: 'NGN',
-                                                                currencyDisplay:
-                                                                    'narrowSymbol'
-                                                            }
-                                                        );
-                                                        const formattedAmount = formatter.format(
-                                                            data.transactionAmount
-                                                        );
+                                                        const formatter =
+                                                            new Intl.NumberFormat(
+                                                                'en-US',
+                                                                {
+                                                                    style: 'currency',
+                                                                    currency:
+                                                                        'NGN',
+                                                                    currencyDisplay:
+                                                                        'narrowSymbol'
+                                                                }
+                                                            );
+                                                        const formattedAmount =
+                                                            formatter.format(
+                                                                data.transactionAmount
+                                                            );
                                                         return (
                                                             <div key={data.id}>
                                                                 <TransactionDets

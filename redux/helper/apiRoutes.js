@@ -30,7 +30,8 @@ const deleteAirtimeBeneficiaries = '/phone-number-beneficiaries/delete/';
 const ussdGen = '/payment/ussd/generate';
 const ussdStatus = '/payment/ussd/status';
 const register = '/authentication/register';
-const login = '/authentication/login';
+const login = '/authentication/v1/login';
+// const login = '/authentication/login';
 const newProfileSetup = '/auth/profile-setup';
 const userProfile = '/users/profile';
 const profileSetupBus = '/authentication/profile-setup/registered-business';
@@ -111,6 +112,7 @@ const getAllComplaint = '/dispute-management/records';
 const deleteAccount = '/users/delete-account';
 const setPrimaryAccount = '/bank-account/primary';
 const requestPhysicalQr = '/qr-merchant/request-physical-qr';
+const checkStatus = '/account-upgrade/check-submitted';
 export default {
     getAllComplaint,
     trackComplaint,
@@ -222,5 +224,6 @@ export default {
     verifyTransactionPin,
     deleteAccount,
     setPrimaryAccount,
-    requestPhysicalQr
+    requestPhysicalQr,
+    checkStatus
 };

@@ -61,10 +61,8 @@ const BankStatments = () => {
         (state) => state.bankStatementReducer
     );
 
-    const {
-        getFullStatementSuccess,
-        getFullStatementerrorMessage
-    } = useSelector((state) => state.getFullStatementReducer);
+    const { getFullStatementSuccess, getFullStatementerrorMessage } =
+        useSelector((state) => state.getFullStatementReducer);
 
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
@@ -78,10 +76,8 @@ const BankStatments = () => {
         (state) => state.accountPrimaryReducer
     );
     const [isLoading, setIsLoading] = useState(true);
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
+    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
+        useSelector((state) => state.getDisputeTypeReducer);
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -146,6 +142,7 @@ const BankStatments = () => {
         let balanceData;
         bankAccount?.filter((item) => {
             if (item.accountNumber === account) {
+                console.log('Test');
                 setId(item.accountId);
                 return (balanceData = {
                     accountId: item.accountId
@@ -219,15 +216,17 @@ const BankStatments = () => {
     return (
         <div className={styles.statementCover}>
             <div className={styles.chooseDate}>
-                <select className={styles.accountNumbers}>
-                    Qq
+                <select
+                    className={styles.accountNumbers}
+                    onChange={(e) => {
+                        setAccount(e.target.value);
+                    }}
+                >
                     {Object.keys(bankAccounts)?.map((accountNo, index) => {
                         return (
-                            <>
-                                <option key={index}>
-                                    {bankAccounts[accountNo].accountNumber}
-                                </option>
-                            </>
+                            <option key={index}>
+                                {bankAccounts[accountNo].accountNumber}
+                            </option>
                         );
                     })}
                 </select>
@@ -361,7 +360,8 @@ const BankStatments = () => {
                                     userUnit: 'px'
                                 });
 
-                                const pdfWidth = pdf.internal.pageSize.getWidth();
+                                const pdfWidth =
+                                    pdf.internal.pageSize.getWidth();
                                 pdf.html(element, {
                                     html2canvas: {
                                         scale: 0.57,
@@ -507,9 +507,8 @@ const BankStatments = () => {
                             })
                             ?.slice(pagesVisited, pagesVisited + usersPerPage)
                             ?.map((items, index) => {
-                                const newDate = items?.transactionTime?.split(
-                                    ' '
-                                );
+                                const newDate =
+                                    items?.transactionTime?.split(' ');
                                 return (
                                     <div
                                         className={styles.TableDetailBody}

@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     getTransactionElevate,
     getTransactionHistory,
-    getDisputCategOryTypeGen
+    getDisputCategOryTypeGen,
+    getDisputCategoryGen
 } from '../../../redux/actions/actions';
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
@@ -20,6 +21,9 @@ const PaymentTable = ({ title, test, page }) => {
     );
     const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
         useSelector((state) => state.getDisputeTypeReducer);
+
+    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
+        useSelector((state) => state.getDisputeCategoryReducer);
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
@@ -35,8 +39,8 @@ const PaymentTable = ({ title, test, page }) => {
     let success = 0;
     let failed = 0;
     useEffect(() => {
-        setDisputes(getDisputCategOryTypeSuccess);
-    }, [getDisputCategOryTypeSuccess]);
+        setDisputes(getDisputCategorySuccess);
+    }, [getDisputCategorySuccess]);
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -91,7 +95,7 @@ const PaymentTable = ({ title, test, page }) => {
     }, [test === 0]);
 
     useEffect(() => {
-        dispatch(getDisputCategOryTypeGen());
+        dispatch(getDisputCategoryGen('Complaint'));
     }, []);
 
     useEffect(() => {

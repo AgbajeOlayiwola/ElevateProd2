@@ -367,23 +367,23 @@
 
     color: #cccccc;
 }
-.statusText{
+.statusText {
     text-transform: capitalize;
     display: flex;
     justify-content: center;
     color: #000;
 }
-.failedText{
+.failedText {
     text-transform: capitalize;
     display: flex;
     justify-content: center;
-color:#000
+    color: #000;
 }
-.disputTextArea{
+.disputTextArea {
     border-radius: 20px;
     padding: 20px;
 }
-.successText{
+.successText {
     text-transform: capitalize;
     display: flex;
     justify-content: center;
@@ -423,8 +423,8 @@ color:#000
     height: 9px;
     border-radius: 50%;
 }
-.successReciept{
-    background-color: #A2FAA3;
+.successReciept {
+    background-color: #a2faa3;
     padding-top: 20px;
     padding-bottom: 20px;
     border-top-right-radius: 50px;
@@ -435,8 +435,8 @@ color:#000
     color: black;
     font-weight: 600;
 }
-.failedReciept{
-    background-color: #F4A5AE;
+.failedReciept {
+    background-color: #f4a5ae;
     padding-top: 20px;
     padding-bottom: 20px;
     border-top-right-radius: 49px;
@@ -454,7 +454,7 @@ color:#000
     border-top-right-radius: 50px;
     border-top-left-radius: 50px;
 }
-.lofgeSuccess{
+.lofgeSuccess {
     color: #6ccf00;
 }
 .pendingReciept h1 {
@@ -513,7 +513,7 @@ color:#000
     padding: 50px 70px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 15px;
 }
 
 .recieptPad {
@@ -612,4 +612,15 @@ color:#000
     margin: 0px auto;
     text-align: center;
     background: #6ccf00;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
 }

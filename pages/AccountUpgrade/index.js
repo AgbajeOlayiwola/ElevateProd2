@@ -36,7 +36,8 @@ import {
     getReffereeDetails,
     getTinDetails,
     getUploadReffereeDetails,
-    getCacDocumentDetails
+    getCacDocumentDetails,
+    checkStatusAction
 } from '../../redux/actions/actions';
 import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
@@ -131,8 +132,13 @@ const AccountUpgrade = () => {
     const [documentStatus, setDocumentStatus] = useState('');
     const [refereeStatus, setRefereeStatus] = useState('');
     const [cacStatus, setCacStatus] = useState('');
+    const [cacDocStatus, setCacDocStatus] = useState('');
     const [tinStatus, setTinStatus] = useState('');
     const [cacNumber, setCacNumber] = useState('');
+    const [co2Status, setCo2Status] = useState('');
+    const [cac1_Status, setCac1_1Status] = useState('');
+    const [cac2_1Status, setCac2_1Status] = useState('');
+    const [co7Status, setCo7Status] = useState('');
     const [scumlStatus, setScumlStatus] = useState('');
     const [mematStatus, setMematStatus] = useState('');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
@@ -226,6 +232,9 @@ const AccountUpgrade = () => {
     const { identification, identificationErrorMessages } = useSelector(
         (state) => state.documentIdentificationReducer
     );
+    const { checkStatus, errorMessageCheck } = useSelector(
+        (state) => state.checkStatusReducer
+    );
     const { ellevateProfilingSeccess, ellevateProfillingError } = useSelector(
         (state) => state.postEllevateReducer
     );
@@ -274,8 +283,8 @@ const AccountUpgrade = () => {
                 addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS' &&
                 userProfile?.hasSetTransactionPin === true &&
-                utilityStatus === 'done' &&
-                idCardStatus === 'done' &&
+                utilityStatus === 'notDone' &&
+                idCardStatus === 'notDone' &&
                 userProfile?.hasDoneEllevateProfiling === true
             ) {
                 setActive(true);
@@ -295,7 +304,7 @@ const AccountUpgrade = () => {
                 cacStatus === 'notDone' &&
                 mematStatus === 'notDone' &&
                 tinStatus === 'notDone' &&
-                tinStatus === 'notDone' &&
+                // tinStatus === 'notDone' &&
                 scumlStatus === 'notDone'
             ) {
                 setActive(true);
@@ -389,12 +398,73 @@ const AccountUpgrade = () => {
         transactionPin();
     }, [setTransactionPin, setTransactionPinError]);
     useEffect(() => {
+        dispatch(checkStatusAction());
         dispatch(getAddressStatusDetails());
         dispatch(loadUserProfile());
         dispatch(shareDocumentsData());
         dispatch(loadprofilingQuestions());
     }, []);
 
+    useEffect(() => {
+        if (profilingQuestions !== null) {
+            setQuestions(profilingQuestions);
+        }
+    }, [profilingQuestions]);
+    useEffect(() => {
+        if (checkStatus !== null) {
+            console.log(checkStatus.data);
+            if (checkStatus.data.noneDocumentSubmissions.tin === true) {
+                setTinStatus('notDone');
+            }
+            if (
+                checkStatus.data.noneDocumentSubmissions.addressVerification ===
+                true
+            ) {
+                setVerifyStatus('notDone');
+            }
+            if (
+                checkStatus.data.noneDocumentSubmissions
+                    .hasDoneEllevateProfiling === true
+            ) {
+                setElevateStatus('notDone');
+            }
+            if (
+                checkStatus.data.noneDocumentSubmissions
+                    .hasSetTransactionPin === true
+            ) {
+                setTransactionPinStatus('notDone');
+            }
+            if (
+                checkStatus.data.noneDocumentSubmissions.vNinVerification ===
+                true
+            ) {
+                setVninStatus('notDone');
+            }
+
+            checkStatus.data.documentSubmission?.map((item) => {
+                if (item.IDENTIFICATION === true) {
+                    setidCardStatus('notDone');
+                }
+
+                if (item.SCUML === true) {
+                    setScumlStatus('notDone');
+                }
+
+                if (
+                    item.CAC === true &&
+                    item.CO2 === true &&
+                    item.CO7 === true &&
+                    item.CAC1_1 === true &&
+                    item.CAC2_1 === true &&
+                    item.MEMART === true &&
+                    tinStatus === 'notDone' &&
+                    item.SCUML === true
+                ) {
+                    setDocumentStatus('notDone');
+                }
+            });
+        }
+    }, [checkStatus]);
     useEffect(() => {
         if (userProfile !== null) {
             if (userProfile?.idDocumentVerificationStatus === 'verified') {
@@ -407,24 +477,9 @@ const AccountUpgrade = () => {
             setCity(userProfile.city);
             setState(userProfile.state);
             setLocalGovernmane(userProfile.lga);
-
-            if (userProfile.hasSetTransactionPin === true) {
-                setTransactionPinStatus('done');
-            }
-            if (userProfile.hasDoneVNINVerification === true) {
-                setVninStatus('done');
-            }
-            if (userProfile?.hasDoneEllevateProfiling === true) {
-                setElevateStatus('done');
-            }
         }
         //console.log(userProfile);
     }, [userProfile]);
-    useEffect(() => {
-        if (profilingQuestions !== null) {
-            setQuestions(profilingQuestions);
-        }
-    }, [profilingQuestions]);
     useEffect(() => {
         if (shareDocuments !== null) {
             // console.log(shareDocuments);
@@ -447,8 +502,6 @@ const AccountUpgrade = () => {
                         setCacStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setCacStatus(document.status);
-                    } else if (document.status === 'PENDING') {
-                        setCacStatus('notDone');
                     } else {
                         setCacStatus('done');
                     }
@@ -462,6 +515,46 @@ const AccountUpgrade = () => {
                     } else {
                         setMematStatus('done');
                     }
+                } else if (document.documentType === 'CO2') {
+                    if (document.status === 'REJECTED') {
+                        setCo2Status('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setCo2Status(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setCo2Status('notDone');
+                    } else {
+                        setCo2Status('done');
+                    }
+                } else if (document.documentType === 'CO7') {
+                    if (document.status === 'REJECTED') {
+                        setCo7Status('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setCo7Status(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setCo7Status('notDone');
+                    } else {
+                        setCo7Status('done');
+                    }
+                } else if (document.documentType === 'CAC1_1') {
+                    if (document.status === 'REJECTED') {
+                        setCac1_1Status('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setCac1_1Status(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setCac1_1Status('notDone');
+                    } else {
+                        setCac1_1Status('done');
+                    }
+                } else if (document.documentType === 'CAC2_1') {
+                    if (document.status === 'REJECTED') {
+                        setCac2_1Status('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setCac2_1Status(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setCac2_1Status('notDone');
+                    } else {
+                        setCac2_1Status('done');
+                    }
                 } else if (document.documentType === 'SCUML') {
                     const test = document.absoluteUrl.split('/');
                     setScmulFileName(test[test.length - 1]);
@@ -469,8 +562,6 @@ const AccountUpgrade = () => {
                         setScumlStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setScumlStatus(document.status);
-                    } else if (document.status === 'PENDING') {
-                        setScumlStatus('notDone');
                     } else {
                         setScumlStatus('done');
                     }
@@ -478,7 +569,7 @@ const AccountUpgrade = () => {
                     if (document.status === 'REJECTED') {
                         setRefereeStatus('comment');
                     } else if (document.status === 'APPROVED') {
-                        setRefereeStatus(document.status);
+                        setRefereeStatus('done');
                         setReffereeFormStatus('done');
                     } else if (document.status === 'PENDING') {
                         setRefereeStatus('notDone');
@@ -499,8 +590,6 @@ const AccountUpgrade = () => {
                         setidCardStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setidCardStatus('done');
-                    } else if (document.status === 'PENDING') {
-                        setidCardStatus('notDone');
                     }
                 }
             });
@@ -1018,24 +1107,21 @@ const AccountUpgrade = () => {
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
                         ? 'Done'
-                        : addressVerificationSuc?.data.data.verificationStatus
+                        : pending
             },
             {
                 title: 'Set Transaction Pin',
                 textII: 'TransactionPin',
                 icon: <SignatureRuleSvg />,
                 statusReport: transactionPinStatus,
-                status:
-                    userProfile?.hasSetTransactionPin === true
-                        ? status
-                        : pending
+                status: transactionPinStatus
             },
             {
                 title: 'Referee',
                 textII: 'Referee',
                 icon: <AddressSvg />,
                 statusReport: refereeStatus,
-                status: pending
+                status: refereeStatus === 'done' ? 'Done' : pending
             },
             {
                 title: 'Referee Form',
@@ -1043,7 +1129,7 @@ const AccountUpgrade = () => {
                 icon: <AddressSvg />,
                 statusReport: reffereeFormStatus,
                 status:
-                    reffereeFormStatus === 'APPROVED'
+                    reffereeFormStatus === 'done'
                         ? 'Done'
                         : reffereeFormStatus === 'notDone'
                         ? pending
@@ -1143,11 +1229,7 @@ const AccountUpgrade = () => {
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
-                status:
-                    addressVerificationSuc?.data.data.verificationStatus ===
-                    'SUCCESS'
-                        ? 'Done'
-                        : addressVerificationSuc?.data.data.verificationStatus
+                status: verifyStatus === true ? 'Done' : pending
             },
 
             {
@@ -1232,7 +1314,7 @@ const AccountUpgrade = () => {
                 textII: 'Referee',
                 icon: <AddressSvg />,
                 statusReport: refereeStatus,
-                status: pending
+                status: refereeStatus === 'done' ? 'Done' : pending
             },
             {
                 title: 'Referee Form',
@@ -1240,7 +1322,7 @@ const AccountUpgrade = () => {
                 icon: <AddressSvg />,
                 statusReport: reffereeFormStatus,
                 status:
-                    reffereeFormStatus === 'APPROVED'
+                    reffereeFormStatus === 'done'
                         ? 'Done'
                         : reffereeFormStatus === 'notDone'
                         ? pending
@@ -1257,7 +1339,7 @@ const AccountUpgrade = () => {
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
                         ? 'Done'
-                        : addressVerificationSuc?.data.data.verificationStatus
+                        : pending
             },
             {
                 title: 'Set Transaction Pin',
@@ -1365,17 +1447,46 @@ const AccountUpgrade = () => {
             {
                 title: 'CAC Documents',
                 textII: 'CAC Documents',
-                statusReport: mematStatus,
+                statusReport:
+                    mematStatus === 'notDone' &&
+                    co2Status === 'notDone' &&
+                    co7Status === 'notDone' &&
+                    cac1_Status === 'notDone' &&
+                    cac2_1Status === 'notDone'
+                        ? 'notDone'
+                        : mematStatus === 'APPROVED' &&
+                          co2Status === 'APPROVED' &&
+                          co7Status === 'APPROVED' &&
+                          cac1_Status === 'APPROVED' &&
+                          cac2_1Status === 'APPROVED'
+                        ? 'done'
+                        : null,
                 name: 'MEMART',
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
-                        ? mematStatus === 'done'
+                        ? mematStatus === 'done' &&
+                          co2Status === 'done' &&
+                          co7Status === 'done' &&
+                          cac1_Status === 'done' &&
+                          cac2_1Status === 'done'
                             ? review
-                            : mematStatus === 'notDone'
+                            : mematStatus === 'notDone' &&
+                              co2Status === 'notDone' &&
+                              co7Status === 'notDone' &&
+                              cac1_Status === 'notDone' &&
+                              cac2_1Status === 'notDone'
                             ? pending
-                            : mematStatus === 'comment'
+                            : mematStatus === 'comment' &&
+                              co2Status === 'comment' &&
+                              co7Status === 'comment' &&
+                              cac1_Status === 'comment' &&
+                              cac2_1Status === 'comment'
                             ? rejected
-                            : mematStatus === 'APPROVED'
+                            : mematStatus === 'APPROVED' &&
+                              co2Status === 'APPROVED' &&
+                              co7Status === 'APPROVED' &&
+                              cac1_Status === 'APPROVED' &&
+                              cac2_1Status === 'APPROVED'
                             ? 'Done'
                             : null
                         : pending
@@ -1395,7 +1506,7 @@ const AccountUpgrade = () => {
                             ? rejected
                             : tinStatus === 'APPROVED'
                             ? 'Done'
-                            : null
+                            : pending
                         : pending
             },
             {

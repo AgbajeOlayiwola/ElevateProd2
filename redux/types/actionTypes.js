@@ -308,6 +308,16 @@ export const resetPin = {
 
 //resetPassword action type ends
 
+//resetPassword action types
+
+export const checkStatus = {
+    CHECKSTATUS_LOAD_START: 'CHECKSTATUS_LOAD_START',
+    CHECKSTATUS_LOAD_SUCCESS: 'CHECKSTATUS_LOAD_SUCCESS',
+    CHECKSTATUS_LOAD_ERROR: 'CHECKSTATUS_LOAD_ERROR'
+};
+
+//resetPassword action type ends
+
 //bankStatement action types
 
 export const bankStatement = {

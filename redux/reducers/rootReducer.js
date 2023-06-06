@@ -100,6 +100,7 @@ import getComplaintReducer from './getCompaint.reducer';
 import setPrimaryAccountReducer from './setPrimaryAccount.reducer';
 import deleteAccountReducer from './deleteAccount.reducer';
 import requestPhysicalQrReducer from './requestPhysicalQr.reducer';
+import checkStatusReducer from './checkStatus.reducer';
 const appReducer = combineReducers({
     countryReducer: countryReducer,
     internationalCountryReducer: internationalCountryReducer,
@@ -205,6 +206,7 @@ const appReducer = combineReducers({
     getComplaintReducer: getComplaintReducer,
     setPrimaryAccountReducer: setPrimaryAccountReducer,
     deleteAccountReducer: deleteAccountReducer,
+    checkStatusReducer: checkStatusReducer,
     requestPhysicalQrReducer: requestPhysicalQrReducer
 });
 const rootReducer = (state, action) => {
