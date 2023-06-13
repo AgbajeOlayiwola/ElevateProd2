@@ -248,9 +248,9 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
         const account = localStorage.getItem('account');
         const accountDetails = JSON.parse(account);
         if (accountDetails?.profile !== undefined) {
-            setProfileInfo(accountDetails.profile);
-        } else if (accountDetails.user !== undefined) {
-            setProfileInfo(accountDetails.user.profile);
+            setProfileInfo(accountDetails?.profile);
+        } else if (accountDetails?.user !== undefined) {
+            setProfileInfo(accountDetails?.user?.profile);
         } else {
             setProfileInfo(accountDetails);
         }

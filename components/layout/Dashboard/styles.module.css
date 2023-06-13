@@ -51,4 +51,13 @@
     .dashCont {
         width: 100%;
     }
+
+.dashCont {
+    flex: 1 1;
+    background-color: #f5f6fa;
+    padding: 36px 32px 46px 36px;
+    height: 100vh;
+    overflow-y: scroll; -ms-overflow-style: none;
+        scrollbar-width: none; 
+}
 }

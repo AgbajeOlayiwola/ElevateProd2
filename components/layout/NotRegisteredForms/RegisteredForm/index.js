@@ -28,17 +28,6 @@ const RegisteredForm = ({
     const [switchs, setSwitch] = useState(true);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
-    // const dispatch = useDispatch();
-    // const { countries } = useSelector((state) => state.countryReducer);
-
-    // useEffect(() => {
-    //     dispatch(loadCountry());
-    // }, []);
-    // useEffect(() => {
-    //     if (countries !== null) {
-    //         setCountry(countries);
-    //     }
-    // }, [countries]);
 
     const router = useRouter();
 
@@ -54,15 +43,8 @@ const RegisteredForm = ({
         //console.log('false');
         setFormData({ ...formData, type: false });
     };
-    //console.log(
-    //     formData.type,
-    //     formData.rcnumber,
-    //     formData.tinNumber,
-    //     formData.bvNumber,
-    //     formData.phoneNumber,
-    //     formData.dateOfBirth
-    // );
-    //console.log(formData.flag);
+    let subtitle;
+
     const {
         register,
         handleSubmit,

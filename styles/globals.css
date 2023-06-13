@@ -170,3 +170,27 @@ button:hover {
 table {
     border-collapse: collapse;
 }
+.otherSpinnerWrapper{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 40;
+    left: 50;
+    background: #f5f6fa;
+    z-index: 99999999; 
+}
+.spinnerWrapper{
+    height: 90vh;
+    width: 90vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 40;
+    left: 50;
+    background: #f5f6fa;
+    z-index: 99999999;
+}

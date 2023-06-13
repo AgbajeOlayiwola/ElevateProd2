@@ -66,32 +66,32 @@ export const SidebarData = [
         // ]
     },
 
-    // {
-    //     title: 'Collections',
-    //     path: '/Admin/Collections',
-    //     // modal: 'show',
-    //     icon: <BsFillCollectionFill />,
-    //     iconActive: <BsFillCollectionFill style={{ color: '#69940d' }} />,
-    //     iconClosed: <RiIcons.RiArrowDownSLine />,
-    //     iconOpened: <RiIcons.RiArrowUpSLine />
-    // subNav: [
-    //     {
-    //         title: 'Collections',
-    //         path: '/Admin/Collections',
-    //         icon: <BiIcons.BiTransfer />
-    //     },
-    //     {
-    //         title: 'Payment',
-    //         path: '/Admin/Payment',
-    //         icon: <BiIcons.BiTransfer />
-    //     },
-    //     {
-    //         title: 'Reports',
-    //         path: '/Admin/Reports',
-    //         icon: <BiIcons.BiTransfer />
-    //     }
-    // ]
-    // },
+    {
+        title: 'Collections',
+        path: '/Admin/Collections',
+        // modal: 'show',
+        icon: <BsFillCollectionFill />,
+        iconActive: <BsFillCollectionFill style={{ color: '#69940d' }} />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+        // subNav: [
+        //     {
+        //         title: 'Collections',
+        //         path: '/Admin/Collections',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Payment',
+        //         path: '/Admin/Payment',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Reports',
+        //         path: '/Admin/Reports',
+        //         icon: <BiIcons.BiTransfer />
+        //     }
+        // ]
+    },
 
     {
         title: 'Transaction Reports',
@@ -119,32 +119,32 @@ export const SidebarData = [
         //     }
         // ]
     },
-    // {
-    //     title: 'Bank Statement',
-    //     path: '/Admin/BankStatement',
-    //     // modal: 'show',
-    //     icon: <BsPiggyBankFill />,
-    //     iconActive: <BsPiggyBankFill style={{ color: '#69940d' }} />,
-    //     iconClosed: <RiIcons.RiArrowDownSLine />,
-    //     iconOpened: <RiIcons.RiArrowUpSLine />
-    // subNav: [
-    //     {
-    //         title: 'Collections',
-    //         path: '/Admin/Collections',
-    //         icon: <BiIcons.BiTransfer />
-    //     },
-    //     {
-    //         title: 'Payment',
-    //         path: '/Admin/Payment',
-    //         icon: <BiIcons.BiTransfer />
-    //     },
-    //     {
-    //         title: 'Reports',
-    //         path: '/Admin/Reports',
-    //         icon: <BiIcons.BiTransfer />
-    //     }
-    // ]
-    // },
+    {
+        title: 'Bank Statement',
+        path: '/Admin/BankStatement',
+        // modal: 'show',
+        icon: <BsPiggyBankFill />,
+        iconActive: <BsPiggyBankFill style={{ color: '#69940d' }} />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+        // subNav: [
+        //     {
+        //         title: 'Collections',
+        //         path: '/Admin/Collections',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Payment',
+        //         path: '/Admin/Payment',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Reports',
+        //         path: '/Admin/Reports',
+        //         icon: <BiIcons.BiTransfer />
+        //     }
+        // ]
+    },
     // {
     //     title: 'Tools',
     //     path: '/Admin/Tools',
