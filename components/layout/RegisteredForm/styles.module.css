@@ -12,7 +12,9 @@
     max-width: 400px;
     margin: 0px auto;
 }
-
+.disabled{
+    background: grey;
+}
 .form div label {
     font-family: 'Inter', sans-serif;
     font-style: normal;

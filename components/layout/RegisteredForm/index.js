@@ -179,33 +179,35 @@ const ExistingMultiStep = () => {
                     />
                 );
 
-            case 2:
-                return (
-                    <div className={styles.livenes}>
-                        <Liveness
-                            action={() => {
-                                setLoads((prev) => !prev);
-                                router.push({
-                                    pathname:
-                                        '/Onboarding/ExistingProfileSetup',
-                                    query: { id: 3 }
-                                });
-                            }}
-                            cookie={cookie}
-                            loading={loading}
-                            setLoading={setLoading}
-                            // action={handleSubmitt}
-                        />
-                    </div>
-                );
+            // case 2:
+            //     return (
+            //         <div className={styles.livenes}>
+            //             <Liveness
+            //                 action={() => {
+            //                     setLoads((prev) => !prev);
+            //                     router.push({
+            //                         pathname:
+            //                             '/Onboarding/ExistingProfileSetup',
+            //                         query: { id: 3 }
+            //                     });
+            //                 }}
+            //                 cookie={cookie}
+            //                 loading={loading}
+            //                 setLoading={setLoading}
+            //                 // action={handleSubmitt}
+            //             />
+            //         </div>
+            //     );
 
-            case 3:
+            // case 3:
+            case 2:
                 return (
                     <StepThree
                         action={() => {
                             router.push({
                                 pathname: '/Onboarding/ExistingProfileSetup',
-                                query: { id: 2 }
+                                // query: { id: 2 }
+                                query: { id: 1 }
                             });
                         }}
                         handleSubmit={handleSubmit}
@@ -214,14 +216,16 @@ const ExistingMultiStep = () => {
                         mainAccount={newAccounts}
                     />
                 );
-            case 4:
+            // case 4:
+            case 3:
                 return (
                     <StepFour
                         title={pageType}
                         action={() => {
                             router.push({
                                 pathname: '/Onboarding/ExistingProfileSetup',
-                                query: { id: 3 }
+                                // query: { id: 3 }
+                                query: { id: 2 }
                             });
                             setPageType('');
                         }}
@@ -238,14 +242,14 @@ const ExistingMultiStep = () => {
         // setLoads((prev) => !prev);
         router.push({
             pathname: '/Onboarding/ExistingProfileSetup',
-            query: { id: 4 }
+            query: { id: 3 }
         });
         setFormData({ ...formData, type: 'true' });
     }
     function handleSubmitNew() {
         router.push({
             pathname: '/Onboarding/ExistingProfileSetup',
-            query: { id: 4 }
+            query: { id: 3 }
         });
         setPageType('New');
     }
@@ -271,7 +275,8 @@ const ExistingMultiStep = () => {
                 } else if (loginWith === null) {
                     router.push({
                         pathname: '/Onboarding/ExistingProfileSetup',
-                        query: { id: 3 }
+                        // query: { id: 3 }
+                        query: { id: 2 }
                     });
                     setFormData({ ...formData, type: 'true' });
                 }

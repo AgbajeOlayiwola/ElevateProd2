@@ -14,12 +14,15 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     useEffect(() => {
         const cookie = getCookie('cookieToken');
         axiosInstance
-            .get(`https://testvate.live${apiRoutes.accountStatus}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${cookie}`
+            .get(
+                `https://mysmeapp.ecobank.com:8443${apiRoutes.accountStatus}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${cookie}`
+                    }
                 }
-            })
+            )
             .then((response) => {
                 // console.log('Accoutn Status', response);
                 setAccountDone(response.data.data);

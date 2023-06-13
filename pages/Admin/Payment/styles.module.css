@@ -206,7 +206,13 @@ padding: 20px 15px;
 .NFCScanner button {
     margin-top: 0px;
 }
-
+@media screen and (max-width: 1366px) {
+.allTypes{
+    display: block;
+    justify-content: space-between;
+    gap: 30px;
+}
+}
 @media screen and (max-width: 1366px) {
     .balanceButtons {
         width: 40%;

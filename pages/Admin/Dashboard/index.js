@@ -348,7 +348,7 @@ const Dashboard = () => {
     }
     const copyAccountNumber = () => {
         console.log(acctInfoNum);
-        copyTextToClipboard(`Account Name - ${userProfileData.firstName}
+        copyTextToClipboard(`Account Name - ${userProfileData.lastName} ${userProfileData.firstName}
         Account No. - ${copyAcctInfo.accountNumber}
         Bank Name - Ecobank
         Swift Code - ${copyAcctInfo.accountSwiftCode}

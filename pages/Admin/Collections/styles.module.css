@@ -131,3 +131,12 @@ padding: 20px 15px;
     line-height: 29px;
     margin-right: 8px;
 }
+
+
+@media screen and (max-width: 1366px) {
+    .allTypes{
+        display: block;
+        justify-content: space-between;
+        gap: 30px;
+    }
+    }

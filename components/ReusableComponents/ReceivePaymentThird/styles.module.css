@@ -664,3 +664,35 @@ color:#000;
     text-align: center;
     background: #6CCF00;
 }
+@media screen and (max-width: 1098px) {
+    .secondBody {
+    width: 93%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 20px;
+    margin: 32px auto;
+    position: absolute;
+    top: 5%;
+    z-index: 10;
+    position: relative;
+    height: 80vh;
+    overflow: scroll;
+    }
+}
+@media screen and (max-width: 1098px) {
+    .showReciept{
+padding: 0px;
+    border-radius: 50px;
+    box-shadow: 0px 0px 27px 4px rgba(204, 204, 204, 0.2);
+    position: relative;
+    background: white;
+    position: absolute;
+    top: -76px;
+    left: -58px;
+    z-index: 19999;
+    display: flex;
+    flex-direction: column;
+    width: 415px;
+    gap: 20px;
+    }
+}

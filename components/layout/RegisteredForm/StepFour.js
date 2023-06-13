@@ -132,7 +132,11 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             businessType: businesses,
             referralCode: refferalCode,
             countryCode: '+234',
-            businessPhoneNumber: phoneNumer,
+            businessPhoneNumber: profileInfo.phoneNumber
+                ? profileInfo.phoneNumber
+                : userDetails
+                ? userDetails?.phoneNumber
+                : phoneNumber,
             street: streetName,
             state: localState,
             city: city,
@@ -282,7 +286,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                 <div className={styles.lastStep}>
                     <div className={styles.cardHeading}>
                         <ArrowBackSvg action={action} color="#102572" />
-                        <p>
+                        <p className={styles.error}>
                             {comperrorMessage ? comperrorMessage.message : null}
                         </p>
                         <div>
@@ -685,11 +689,11 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                         <div
                                             className={styles.existingUserCont}
                                         >
-                                            <p className={styles.error}>
-                                                {getRC?.data?.reason
-                                                    ? getRC?.data?.reason
-                                                    : null}
-                                            </p>
+                                            {getRC?.data?.reason ? (
+                                                <p className={styles.error}>
+                                                    getRC?.data?.reason
+                                                </p>
+                                            ) : null}
                                             <label>
                                                 Enter your RC /Business
                                                 Registration Number
@@ -748,82 +752,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                 <input type="text" required />
                                             </div>
                                         </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Enter your Business Phone Number
-                                            </label>
-                                            <div className={styles.phone}>
-                                                <div
-                                                    className={
-                                                        styles.phoneHeader
-                                                    }
-                                                >
-                                                    <span>
-                                                        <img
-                                                            src={
-                                                                countryNames
-                                                                    ?.flags.svg
-                                                            }
-                                                            alt=""
-                                                        />
-                                                    </span>
-                                                    {/* <p>
-                                                        {
-                                                            countryNames.baseCurrency
-                                                        }
-                                                    </p> */}
-                                                </div>
-                                                <div
-                                                    className={
-                                                        styles.phoneDetails
-                                                    }
-                                                >
-                                                    {/* <p>{countryNames.countryCode}</p> */}
-                                                    <input
-                                                        type="number"
-                                                        placeholder="812 345 6789"
-                                                        // {...register(
-                                                        //     'phoneNumber',
-                                                        //     {
-                                                        //         required:
-                                                        //             'Phone Number is required',
-                                                        //         minLength: {
-                                                        //             value: 9,
-                                                        //             message:
-                                                        //                 'Min length is 9'
-                                                        //         }
-                                                        //     }
-                                                        // )}
-                                                        onChange={(e) =>
-                                                            setPhoneNumber(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        value={
-                                                            profileInfo.phoneNumber
-                                                                ? profileInfo.phoneNumber
-                                                                : phoneNumber
-                                                        }
-                                                        disabled
-                                                        // onChange={(e) =>
-                                                        //     setPhoneNumber(
-                                                        //         e.target.value
-                                                        //     )
-                                                        // }
-                                                        // value={
-                                                        //     profileInfo.phoneNumber
-                                                        //         ? profileInfo.phoneNumber
-                                                        //         : phoneNumber
-                                                        // }
-                                                    />
-                                                </div>
-                                            </div>
-                                            <p className={styles.error}>
-                                                {errors.phoneNumber?.message}
-                                            </p>
-                                        </div>
+
                                         <div
                                             className={styles.existingUserCont}
                                         >
@@ -984,6 +913,82 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                     </ul>
                                                 )}
                                             </div>
+                                        </div>{' '}
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Enter your Business Phone Number
+                                            </label>
+                                            <div className={styles.phone}>
+                                                <div
+                                                    className={
+                                                        styles.phoneHeader
+                                                    }
+                                                >
+                                                    <span>
+                                                        <img
+                                                            src={
+                                                                countryNames
+                                                                    ?.flags.svg
+                                                            }
+                                                            alt=""
+                                                        />
+                                                    </span>
+                                                    {/* <p>
+                                                        {
+                                                            countryNames.baseCurrency
+                                                        }
+                                                    </p> */}
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.phoneDetails
+                                                    }
+                                                >
+                                                    {/* <p>{countryNames.countryCode}</p> */}
+                                                    <input
+                                                        type="number"
+                                                        placeholder="812 345 6789"
+                                                        // {...register(
+                                                        //     'phoneNumber',
+                                                        //     {
+                                                        //         required:
+                                                        //             'Phone Number is required',
+                                                        //         minLength: {
+                                                        //             value: 9,
+                                                        //             message:
+                                                        //                 'Min length is 9'
+                                                        //         }
+                                                        //     }
+                                                        // )}
+                                                        onChange={(e) =>
+                                                            setPhoneNumber(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        value={
+                                                            profileInfo.phoneNumber
+                                                                ? profileInfo.phoneNumber
+                                                                : phoneNumber
+                                                        }
+                                                        disabled
+                                                        // onChange={(e) =>
+                                                        //     setPhoneNumber(
+                                                        //         e.target.value
+                                                        //     )
+                                                        // }
+                                                        // value={
+                                                        //     profileInfo.phoneNumber
+                                                        //         ? profileInfo.phoneNumber
+                                                        //         : phoneNumber
+                                                        // }
+                                                    />
+                                                </div>
+                                            </div>
+                                            <p className={styles.error}>
+                                                {errors.phoneNumber?.message}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

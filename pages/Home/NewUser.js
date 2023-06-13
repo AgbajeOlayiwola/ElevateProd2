@@ -1236,7 +1236,7 @@ const NewUser = ({ selectCountry }) => {
             </div>
             <p className={styles.already}>
                 Already have an account?{' '}
-                <Link href="../Auth/Login">
+                <Link href="/Auth/Login">
                     <span>Sign in</span>
                 </Link>
             </p>
