@@ -1084,7 +1084,7 @@ const Profile = () => {
                                         value={
                                             RMDetails?.crm?.phone === null
                                                 ? 'No Phone Number'
-                                                : RMDetails?.crm.phone
+                                                : RMDetails?.crm?.phone
                                         }
                                     />
                                 </div>
@@ -1096,7 +1096,7 @@ const Profile = () => {
                                         value={
                                             RMDetails?.crm?.email === null
                                                 ? 'No Email'
-                                                : RMDetails?.crm.email
+                                                : RMDetails?.crm?.email
                                         }
                                     />
                                 </div>
@@ -2267,7 +2267,7 @@ const Profile = () => {
                                                     ) {
                                                         setText('Contact us');
                                                     } else if (
-                                                        RMDetails?.crm.name ===
+                                                        RMDetails?.crm?.name ===
                                                         null
                                                     ) {
                                                         setText('Contact us');

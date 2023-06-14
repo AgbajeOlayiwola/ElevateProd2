@@ -133,12 +133,18 @@ const Dashboard = () => {
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
     );
-    const { setPrimaryAccountSuccess, setPrimaryAccountErrorMessage } =
-        useSelector((state) => state.setPrimaryAccountReducer);
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
-    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
-        useSelector((state) => state.getDisputeCategoryReducer);
+    const {
+        setPrimaryAccountSuccess,
+        setPrimaryAccountErrorMessage
+    } = useSelector((state) => state.setPrimaryAccountReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategorySuccess,
+        getDisputCategoryErrorMessage
+    } = useSelector((state) => state.getDisputeCategoryReducer);
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
@@ -320,8 +326,9 @@ const Dashboard = () => {
                     return a + +b.transactionAmount;
                 }, 0);
             setTotalMMoney(formatter.format(one + two));
-            const newDate =
-                transactionHistory.transactions[0]?.transactionDate?.split('T');
+            const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
+                'T'
+            );
             if (newDate) {
                 if (newDate[0] == time) {
                     setDateState(true);
@@ -514,8 +521,9 @@ const Dashboard = () => {
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate =
-                                            item.transactionDate.split('T');
+                                        const newDate = item.transactionDate.split(
+                                            'T'
+                                        );
                                         return (
                                             newDate[0] >= rangeDate &&
                                             newDate[0] <= time
@@ -530,16 +538,16 @@ const Dashboard = () => {
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount =
-                                            formatter.format(
-                                                item.transactionAmount
-                                            );
+                                        const formattedAmount = formatter.format(
+                                            item.transactionAmount
+                                        );
                                         let newBeneficiary;
                                         if (item.receiversName === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary =
-                                                item?.receiversName?.split(' ');
+                                            newBeneficiary = item?.receiversName?.split(
+                                                ' '
+                                            );
                                         }
                                         // {
                                         //     //console.log(item);
@@ -717,7 +725,7 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                                 <div className={styles.recMak}>
-                                    {/* <RecievePaymentBtn /> */}
+                                    <RecievePaymentBtn />
                                     <MakePaymentBtn />
                                 </div>
                             </div>
@@ -885,8 +893,9 @@ const Dashboard = () => {
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate =
-                                            item.transactionDate.split('T');
+                                        const newDate = item.transactionDate.split(
+                                            'T'
+                                        );
                                         return item;
                                     })
                                     ?.map((item, index) => {
@@ -899,16 +908,16 @@ const Dashboard = () => {
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount =
-                                            formatter.format(
-                                                item.transactionAmount
-                                            );
+                                        const formattedAmount = formatter.format(
+                                            item.transactionAmount
+                                        );
                                         let newBeneficiary;
                                         if (item.receiver === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary =
-                                                item?.receiver?.split(' ');
+                                            newBeneficiary = item?.receiver?.split(
+                                                ' '
+                                            );
                                         }
                                         return (
                                             <div key={index}>
