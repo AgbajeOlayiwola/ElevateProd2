@@ -1,6 +1,7 @@
 import Lottie from 'react-lottie';
 import styles from './styles.module.css';
 import animationData from '../components/ReusableComponents/Lotties/error.json';
+import Link from 'next/link';
 function Error({ statusCode }) {
     const defaultOptions = {
         loop: true,
@@ -14,9 +15,14 @@ function Error({ statusCode }) {
     return (
         <p className={styles.Errors}>
             <Lottie options={defaultOptions} height={500} width={500} />
-            {statusCode
-                ? `An error ${statusCode} occurred on server`
-                : 'An error occurred on client'}
+            {statusCode ? (
+                `An error ${statusCode} occurred on server`
+            ) : (
+                <>
+                    <p>An error occurred on client&rsquo;s</p>
+                    <Link href="/Dashboard">Return To DashBoard</Link>
+                </>
+            )}
         </p>
     );
 }

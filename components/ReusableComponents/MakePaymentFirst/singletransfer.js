@@ -305,10 +305,9 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName =
-                                                      beneficiaries.beneficiaryName.split(
-                                                          ' '
-                                                      ))
+                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
+                                                      ' '
+                                                  ))
                                                 : null;
                                         }
                                         if (
@@ -429,7 +428,7 @@ const SingleTransfer = ({
                                         }
                                     })}
                                     value={accountNumber}
-                                    onInput={(e) => {
+                                    onChange={(e) => {
                                         setIsLoadinggg(true);
                                         setAccountNumber(e.target.value);
                                         if (e.target.value.length === 10) {
@@ -645,10 +644,9 @@ const SingleTransfer = ({
                                     .map((beneficiaries, index) => {
                                         {
                                             beneficiaries
-                                                ? (beneficiaryName =
-                                                      beneficiaries.beneficiaryName.split(
-                                                          ' '
-                                                      ))
+                                                ? (beneficiaryName = beneficiaries.beneficiaryName.split(
+                                                      ' '
+                                                  ))
                                                 : null;
                                         }
                                         if (

@@ -126,6 +126,17 @@
 .date {
     width: 20%;
 }
+.paginationBtns {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    margin: 0px;
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+
+
 @media screen and (max-width: 1098px) {
     .paginationBtns {
         display: flex;
