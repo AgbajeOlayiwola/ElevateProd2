@@ -378,7 +378,7 @@ const Login = () => {
                     );
                     router.push({
                         pathname: '/Onboarding/ExistingProfileSetup',
-                        query: { id: 2 }
+                        query: { id: 3 }
                     });
                 } else if (
                     user.data.user.profile.profileSetupStatus ===
