@@ -83,6 +83,7 @@
     color: #102572;
     margin: 0px;
     margin-bottom: 4px;
+    text-transform: capitalize;
 }
 
 .manageBeneSingle p {

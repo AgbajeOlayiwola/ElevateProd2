@@ -142,7 +142,6 @@ const BankStatments = () => {
         let balanceData;
         bankAccount?.filter((item) => {
             if (item.accountNumber === account) {
-                console.log('Test');
                 setId(item.accountId);
                 return (balanceData = {
                     accountId: item.accountId
@@ -252,6 +251,7 @@ const BankStatments = () => {
                         setStartDate('');
                         setSuccess(false);
                     }}
+                    error={getFullStatementerrorMessage.response.data.message}
                 />
             ) : null}
             {date ? (

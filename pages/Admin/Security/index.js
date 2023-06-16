@@ -206,7 +206,7 @@ const Security = () => {
                                 <label>New Transaction Pin</label>
                                 <div className={styles.divs}>
                                     <input
-                                        type={outType ? 'text' : 'password'}
+                                        type={outType ? 'password' : 'text'}
                                         placeholder="New Transaction Pin"
                                         {...register('newPin', {
                                             required: 'New Pin is Required'
@@ -279,7 +279,7 @@ const Security = () => {
                                 <label>New Password</label>
                                 <div className={styles.divs}>
                                     <input
-                                        type={outType ? 'text' : 'password'}
+                                        type={outType ? 'password' : 'text'}
                                         placeholder="New Password"
                                         {...register('newPassword', {
                                             required: 'New Password is Required'

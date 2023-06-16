@@ -60,10 +60,8 @@ const Payment = () => {
         (state) => state.transactionFeesReducer
     );
 
-    const {
-        internationalTransfer,
-        errorMessageinternationalTransfer
-    } = useSelector((state) => state.internationalTransferReducer);
+    const { internationalTransfer, errorMessageinternationalTransfer } =
+        useSelector((state) => state.internationalTransferReducer);
 
     const { verifyCurrency, errorMessageverifyCurrency } = useSelector(
         (state) => state.verifyCurrencyReducer
@@ -711,10 +709,11 @@ const Payment = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount: parseInt(
-                                                              e.Amount,
-                                                              10
-                                                          ).toString(),
+                                                          transactionAmount:
+                                                              parseInt(
+                                                                  e.Amount,
+                                                                  10
+                                                              ).toString(),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -909,8 +908,10 @@ const Payment = () => {
                                                 .toString()
                                                 .replaceAll(',', ''),
                                             accountId: senderDetails,
-                                            billerCode: airtimeNetData.billerDetail.billerCode.toString(),
-                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
+                                            billerCode:
+                                                airtimeNetData.billerDetail.billerCode.toString(),
+                                            billerId:
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             // productCode: airtimeNetData.name,
                                             productCode:
                                                 paymentDetails.airtimeCode,
@@ -944,7 +945,8 @@ const Payment = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId:
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
@@ -986,12 +988,16 @@ const Payment = () => {
                                 title="Bill Payment"
                                 beneName={
                                     bill === 'AIRTIME'
-                                        ? paymentDetails.phoneNumber
+                                        ? paymentDetails.phoneNumber === ''
+                                            ? paymentDetails.phoneNumberBene
+                                            : paymentDetails.phoneNumber
                                         : paymentDetails?.desiredPackage
                                 }
                                 accountNumber={
                                     bill === 'AIRTIME'
-                                        ? paymentDetails.phoneNumber
+                                        ? paymentDetails.phoneNumber === ''
+                                            ? paymentDetails.phoneNumberBene
+                                            : paymentDetails.phoneNumber
                                         : paymentDetails.paymentDescription
                                 }
                                 paymentType={paymentDetails.billerType}

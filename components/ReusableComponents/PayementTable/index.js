@@ -352,9 +352,6 @@ const PaymentTable = ({ title, test, page }) => {
                     })
                     ?.slice(pagesVisited, pagesVisited + usersPerPage)
                     ?.map((items, index) => {
-                        {
-                            console.log(items);
-                        }
                         return (
                             <TableDetail
                                 key={index}

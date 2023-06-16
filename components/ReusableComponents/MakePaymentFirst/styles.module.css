@@ -25,7 +25,6 @@
     z-index: 10;
 }
 
-
 .error {
     color: red;
     font-size: 12px;
@@ -103,10 +102,6 @@
     line-height: 17px;
     color: #3e3e3e;
     margin: 0px;
-}
-
-.beneficiary {
-    /* margin-bottom: 48px; */
 }
 
 .beneficiaryHeader {
@@ -234,6 +229,7 @@
     text-align: center;
     color: #a4a4a4;
     margin-top: 5px;
+    text-transform: capitalize;
 }
 
 .benebank {
@@ -905,17 +901,17 @@
     margin-top: 48px;
 }
 @media screen and (max-width: 1098px) {
-    .firstDiv{
-width: 95%;
-max-width: 781px;
-background-color: white;
-border-radius: 50px;
-margin: 32px auto;
-display: flex;
-position: absolute;
-top: 5%;
-left: 3%;
-height: 80vh;
-z-index: 10;
+    .firstDiv {
+        width: 95%;
+        max-width: 781px;
+        background-color: white;
+        border-radius: 50px;
+        margin: 32px auto;
+        display: flex;
+        position: absolute;
+        top: 5%;
+        left: 3%;
+        height: 80vh;
+        z-index: 10;
     }
 }
