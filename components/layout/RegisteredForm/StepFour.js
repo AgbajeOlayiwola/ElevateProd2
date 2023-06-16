@@ -31,6 +31,13 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     // const account = localStorage.getItem('meta');
     // const accountDetails = JSON.parse(account);
 
+    useEffect(() => {
+        const {
+            query: { pageType }
+        } = router;
+        setPageType({ pageType }.pageType);
+    });
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const { existingUserProfile, errorMessage } = useSelector(
@@ -87,12 +94,12 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const [fileName, setFileName] = useState('');
     const [regNo, setRegNo] = useState('');
     const [refferee, setRefferee] = useState();
+    const [pageType, setPageType] = useState('');
     //console.loglocalGoverment);
     const [phones, setPhones] = useState();
 
     //console.logformData.type);
     useEffect(() => {
-        console.log(getRC);
         if (getRC?.data?.dataFromCac?.companyName !== undefined) {
             setBusinessName(getRC?.data?.dataFromCac?.companyName);
         } else if (getRC?.data?.reason !== undefined) {
@@ -122,11 +129,10 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const accountDetails = JSON.parse(account);
     const user = localStorage.getItem('user');
     const userDetails = JSON.parse(user);
-    console.log(userDetails);
     const onSubmitNew = (data) => {
         setLoading((prev) => !prev);
         const userData = {
-            isRegistered: 'true',
+            isRegistered: 'false',
             businessName: businessName,
             businessCategory: business,
             businessType: businesses,
@@ -249,6 +255,14 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     }, []);
 
     useEffect(() => {
+        if (pageType === 'New') {
+            setFormData({ ...formData, type: 'false' });
+        } else {
+            setFormData({ ...formData, type: 'true' });
+        }
+    }, [formData.type]);
+
+    useEffect(() => {
         const account = localStorage.getItem('account');
         const accountDetails = JSON.parse(account);
         if (accountDetails?.profile !== undefined) {
@@ -264,7 +278,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
         }
     }, [businessCategories]);
     useEffect(() => {
-        if (title === 'New') {
+        if (pageType === 'New') {
             setBusinessName(
                 `${profileInfo?.lastName} ${profileInfo?.firstName}`
             );
@@ -295,7 +309,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                             </h3>
                         </div>
                     </div>
-                    {title === 'New' ? (
+                    {pageType === 'New' ? (
                         <div className={styles.lastContainer}>
                             <form onSubmit={handleSubmit(onSubmitNew)}>
                                 {error ? (
@@ -475,14 +489,14 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                         <img
                                                             src={
                                                                 countryNames
-                                                                    .flags.svg
+                                                                    ?.flags.svg
                                                             }
                                                             alt=""
                                                         />
                                                     </span>
                                                     <p>
                                                         {
-                                                            countryNames.baseCurrency
+                                                            countryNames?.baseCurrency
                                                         }
                                                     </p>
                                                 </div>
@@ -691,7 +705,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                         >
                                             {getRC?.data?.reason ? (
                                                 <p className={styles.error}>
-                                                    getRC?.data?.reason
+                                                    {getRC?.data?.reason}
                                                 </p>
                                             ) : null}
                                             <label>
