@@ -292,6 +292,9 @@
 .paginationActive a {
     color: white;
 }
+nextBtns{
+    background: red;
+}
 
 .TableDetailBody {
     display: flex;
