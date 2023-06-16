@@ -4,6 +4,8 @@
     align-items: center;
     width: 100%;
     justify-content: space-between;
+    z-index: 9001;
+    position: relative;
 }
 
 .imageName p {
