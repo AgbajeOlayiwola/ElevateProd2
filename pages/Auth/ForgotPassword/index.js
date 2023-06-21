@@ -80,7 +80,7 @@ const ExistingMultiStep = () => {
             push('./Login');
             setLoading(false);
         } else if (forgotPasswordResetErrorMessages !== null) {
-            setErrorMessage(forgotPasswordResetErrorMessages[0]);
+            setErrorMessage(forgotPasswordResetErrorMessages);
             setLoading(false);
         }
     }, [forgotPasswordReset, forgotPasswordResetErrorMessages]);
