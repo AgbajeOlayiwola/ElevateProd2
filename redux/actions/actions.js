@@ -213,8 +213,21 @@ export const resetPasswordLoadError = (errorMessage) => ({
 });
 export const loadresetPassword = (code) => (dispatch) => {
     dispatch(resetPasswordLoadStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
     axiosInstance
-        .patch(`${apiRoutes.resetPassword}`, code)
+        .patch(`${apiRoutes.resetPassword}`, code, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
         .then((response) =>
             dispatch(resetPasswordLoadSuccess(response.data.data))
         )

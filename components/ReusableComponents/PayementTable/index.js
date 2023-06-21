@@ -12,7 +12,7 @@ import ReactPaginate from 'react-paginate';
 import TransactionStatus from '../TransactionStatus';
 import Lottie from 'react-lottie';
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
-const PaymentTable = ({ title, test, page }) => {
+const PaymentTable = ({ title, page }) => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
     );
@@ -63,6 +63,7 @@ const PaymentTable = ({ title, test, page }) => {
             setNewestTableDetails([]);
             tableDetails.filter((item, index) => {
                 if (item.paymentDirection === 'CREDIT') {
+                    setNewestTableDetails([]);
                     setNewTableDetails((arr) => [...arr, item]);
                 }
             });
@@ -70,6 +71,7 @@ const PaymentTable = ({ title, test, page }) => {
             setNewestTableDetails([]);
             tableDetails.filter((item) => {
                 if (item.paymentDirection === 'DEBIT') {
+                    setNewestTableDetails([]);
                     setNewTableDetails((arr) => [...arr, item]);
                 }
             });
@@ -92,7 +94,7 @@ const PaymentTable = ({ title, test, page }) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getTransactionHistory(pageSrchIndex, numOfRecords));
-    }, [test === 0]);
+    }, []);
 
     useEffect(() => {
         dispatch(getDisputCategoryGen('Complaint'));
