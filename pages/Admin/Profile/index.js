@@ -137,10 +137,8 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
-    const {
-        postAirtimeBeneficiaries,
-        errorMessagepostAirtimeBeneficiaries
-    } = useSelector((state) => state.postAirtimeBeneficiariesReducer);
+    const { postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries } =
+        useSelector((state) => state.postAirtimeBeneficiariesReducer);
     const { fetchRM, fetchRMErrorMessages } = useSelector(
         (state) => state.fetchRMReducer
     );
@@ -762,8 +760,8 @@ const Profile = () => {
                                                         value={
                                                             deleteAccountEmail
                                                         }
-                                                        type="text"
-                                                        placeholder="Enter Delete Account"
+                                                        type="email"
+                                                        placeholder="Enter your Email"
                                                         {...register('delete', {
                                                             required:
                                                                 'Input is Required'
@@ -827,8 +825,8 @@ const Profile = () => {
                                                             name="deletePassword"
                                                             type={
                                                                 outType
-                                                                    ? 'text'
-                                                                    : 'password'
+                                                                    ? 'password'
+                                                                    : 'text'
                                                             }
                                                         />
                                                         <Visbility
@@ -1845,21 +1843,26 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details = {
-                                                                    accountNumber: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        accountNumber:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details = {
-                                                                    destinationBankCode:
-                                                                        e.target
-                                                                            .value,
-                                                                    accountNo: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        destinationBankCode:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        accountNo:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -2138,9 +2141,8 @@ const Profile = () => {
                                     ) : (
                                         allDisputes
                                             ?.filter((item) => {
-                                                const newDate = item.createAt.split(
-                                                    'T'
-                                                );
+                                                const newDate =
+                                                    item.createAt.split('T');
                                                 return item;
                                             })
                                             ?.map((item, index) => {

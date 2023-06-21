@@ -55,12 +55,19 @@ const AccountUpgradeSingle = ({
                         )}
                     </div>
                 </div>
-
-                <Tooltip anchorId={textII} content={content} />
                 <div className={styles.accountUpgradeSingleChecked}>
                     <AccountChecked statusInfo={statusInfo} />
 
-                    <p id={textII}>{status}</p>
+                    {content === null ? (
+                        <p>{status}</p>
+                    ) : (
+                        <>
+                            <Tooltip anchorId={textII} content={content} />
+                            <p id={textII} data-tooltip-content={content}>
+                                {status}
+                            </p>
+                        </>
+                    )}
                 </div>
             </div>
         </>

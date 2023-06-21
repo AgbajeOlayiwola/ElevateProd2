@@ -10,7 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { loadCountry } from '../../../../redux/actions/actions';
 import Head from 'next/head';
 import Loader from '../../../ReusableComponents/Loader';
-
+import { getRCDetails } from '../../../../redux/actions/actions';
+import Lottie from 'react-lottie';
+import socialdata from '../../../ReusableComponents/Lotties/loading.json';
 const RegisteredForm = ({
     formData,
     setFormData,
@@ -28,9 +30,24 @@ const RegisteredForm = ({
     const [switchs, setSwitch] = useState(true);
     const [bgcolor, setBgcolor] = useState(false);
     const [activeBtn, setActiveBtn] = useState(true);
-
+    const [businessName, setBusinessName] = useState('');
+    const dispatch = useDispatch();
     const router = useRouter();
+    const [getRcFisrst, setGetRCFirst] = useState(false);
+    const { getRC, getRCErrorMessage } = useSelector(
+        (state) => state.getRCReducer
+    );
 
+    useEffect(() => {
+        if (getRC?.data?.dataFromCac?.companyName !== undefined) {
+            setBusinessName(getRC?.data?.dataFromCac?.companyName);
+            setGetRCFirst(false);
+        } else if (getRC?.data?.reason !== undefined) {
+            setGetRCFirst(false);
+            console.log(getRC?.data?.reason);
+        }
+    }, [getRC, getRCErrorMessage]);
+    // ll
     const handleShowSecondStep = () => {
         setShowSecondStep(true);
         setShowFirstStep(false);
@@ -44,7 +61,14 @@ const RegisteredForm = ({
         setFormData({ ...formData, type: false });
     };
     let subtitle;
-
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     const {
         register,
         handleSubmit,
@@ -136,14 +160,51 @@ const RegisteredForm = ({
                                     ...formData,
                                     rcnumber: event.target.value
                                 });
-                                //if (event.target.value.length == 15)
-                                //  return false; //limits to 10 digit entry
-                                //setRcnumber(event?.target.value); //saving input to state
+
+                                if (event.target.value.length == 9) {
+                                    setGetRCFirst(true);
+                                    const data = {
+                                        registerationNumber: event.target.value
+                                    };
+                                    dispatch(getRCDetails(data));
+                                } else {
+                                    setBusinessName('');
+                                }
                             }}
                         />
+
                         <div className={styles.error}>
                             {errors.rc_number?.message}
                         </div>
+                        <InputWrapper>
+                            <Label>Business Name</Label>
+                        </InputWrapper>
+                        {getRC?.data?.reason ? (
+                            <p className={styles.error}>
+                                {getRC?.data?.reason}
+                            </p>
+                        ) : null}
+                        {getRcFisrst ? (
+                            <Lottie
+                                options={socialOptions}
+                                height={200}
+                                width={200}
+                            />
+                        ) : (
+                            <input
+                                type="text"
+                                placeholder={
+                                    getRcFisrst
+                                        ? 'Fetching'
+                                        : 'Enter Your Business Name'
+                                }
+                                value={businessName}
+                                onChange={(e) =>
+                                    setBusinessName(e.target.value)
+                                }
+                                disabled
+                            />
+                        )}
                         <InputWrapper>
                             <Label>Enter your TIN</Label>
                             <FormInput

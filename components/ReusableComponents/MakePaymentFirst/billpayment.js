@@ -31,7 +31,7 @@ const BillPayment = ({
     formData,
     setFormdata
 }) => {
-    const [network, setNetwork] = useState('MTN Nigeria');
+    const [network, setNetwork] = useState();
     const [networkData, setNetworkData] = useState({});
     const [beneActive, setBeneActive] = useState();
     // const [activeBtn, setActiveBtn] = useState(false);
@@ -218,26 +218,38 @@ const BillPayment = ({
                                             className={styles.beneficiarySingle}
                                             onClick={() => {
                                                 setBeneActive(account);
-                                                setNetwork(
-                                                    account.mobileNetwork
-                                                );
-                                                {
-                                                    airtimeNetworkData.networks?.filter(
-                                                        (e) => {
-                                                            if (
-                                                                e.name ===
-                                                                account.mobileNetwork
-                                                            ) {
-                                                                localStorage.setItem(
-                                                                    'Airtime',
-                                                                    JSON.stringify(
-                                                                        e
-                                                                    )
-                                                                );
-                                                            }
+                                                billerTypes.billerInfoList?.map(
+                                                    (item) => {
+                                                        if (
+                                                            item.billerName ===
+                                                            account.mobileNetwork
+                                                        ) {
+                                                            dispatch(
+                                                                loadbillerPlan(
+                                                                    item.billerCode
+                                                                )
+                                                            );
+                                                            setNetwork(item);
                                                         }
-                                                    );
-                                                }
+                                                    }
+                                                );
+                                                // {
+                                                //     airtimeNetworkData.networks?.filter(
+                                                //         (e) => {
+                                                //             if (
+                                                //                 e.name ===
+                                                //                 account.mobileNetwork
+                                                //             ) {
+                                                //                 localStorage.setItem(
+                                                //                     'Airtime',
+                                                //                     JSON.stringify(
+                                                //                         e
+                                                //                     )
+                                                //                 );
+                                                //             }
+                                                //         }
+                                                //     );
+                                                // }
                                             }}
                                         >
                                             <div
@@ -248,6 +260,9 @@ const BillPayment = ({
                                                 <BeneficiaryAvatarSvg />
                                             </div>
                                             <div>
+                                                <p className={styles.name}>
+                                                    {account.name}
+                                                </p>
                                                 <p className={styles.name}>
                                                     {account.phoneNumber}
                                                 </p>
@@ -299,33 +314,49 @@ const BillPayment = ({
                             </div>
                             <div className={styles.narration}>
                                 <label>Airtime Type</label>
-                                <select
-                                    name=""
-                                    id=""
-                                    {...register('billerTypes', {
-                                        required: 'Biller Type  is required'
-                                    })}
-                                    onChange={(e) => {
-                                        dispatch(
-                                            loadbillerPlan(e.target.value)
-                                        );
-                                        setBillerPlans();
-                                    }}
-                                >
-                                    <option value="">Select biller Type</option>
-                                    {billerTypes.billerInfoList?.map(
-                                        (accounts, index) => {
-                                            return (
-                                                <option
-                                                    value={accounts.billerCode}
-                                                    key={index}
-                                                >
-                                                    {accounts.billerName}
-                                                </option>
+                                {network ? (
+                                    <select
+                                        name=""
+                                        id=""
+                                        {...register('billerTypesBene')}
+                                    >
+                                        <option value={network.billerCode}>
+                                            {network.billerName}
+                                        </option>
+                                    </select>
+                                ) : (
+                                    <select
+                                        name=""
+                                        id=""
+                                        {...register('billerTypes', {
+                                            required: 'Biller Type  is required'
+                                        })}
+                                        onChange={(e) => {
+                                            dispatch(
+                                                loadbillerPlan(e.target.value)
                                             );
-                                        }
-                                    )}
-                                </select>
+                                            setBillerPlans();
+                                        }}
+                                    >
+                                        <option value="">
+                                            Select biller Type
+                                        </option>
+                                        {billerTypes.billerInfoList?.map(
+                                            (accounts, index) => {
+                                                return (
+                                                    <option
+                                                        value={
+                                                            accounts.billerCode
+                                                        }
+                                                        key={index}
+                                                    >
+                                                        {accounts.billerName}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
+                                    </select>
+                                )}
                                 <p className={styles.error}>
                                     {errors?.billerTypes?.message}
                                 </p>
