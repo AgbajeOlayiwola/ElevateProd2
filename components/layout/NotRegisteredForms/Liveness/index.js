@@ -61,13 +61,17 @@ const Liveness = ({ action, cookie }) => {
         }
 
         axios
-            .post(`https://testvate.live/authentication/facematch`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookies}`
+            .post(
+                `https://mysmeapp.ecobank.com:8443/authentication/facematch`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'X-Client-Type': 'web',
+                        Authorization: `Bearer ${cookies}`
+                    }
                 }
-            })
+            )
             .then((response) => {
                 setSuccess(response.data.message);
                 setLoading(false);
@@ -115,10 +119,9 @@ const Liveness = ({ action, cookie }) => {
                     ) : null}
                     <ButtonComp
                         onClick={
-                            // succes === 'facial verification successful'
-                            // ?
-                            action
-                            // : capture
+                            succes === 'facial verification successful'
+                                ? action
+                                : capture
                         }
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
