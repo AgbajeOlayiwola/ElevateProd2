@@ -44,6 +44,7 @@ const BillPayment = ({
     const [isLoadingg, setIsLoading] = useState(true);
 
     const [isLoadinggg, setIsLoadinggg] = useState(false);
+    const [bene, setBene] = useState(false);
     const dispatch = useDispatch();
     const { billerCategory } = useSelector(
         (state) => state.billerCategoryReducer
@@ -230,6 +231,7 @@ const BillPayment = ({
                                                                 )
                                                             );
                                                             setNetwork(item);
+                                                            setBene(true);
                                                         }
                                                     }
                                                 );
@@ -314,7 +316,7 @@ const BillPayment = ({
                             </div>
                             <div className={styles.narration}>
                                 <label>Airtime Type</label>
-                                {network ? (
+                                {bene ? (
                                     <select
                                         name=""
                                         id=""

@@ -179,9 +179,6 @@ const PaymentTypes = () => {
     }, [balanceEnquiry]);
     //where i need to work on
     useEffect(() => {
-        console.log(accountPrimarys);
-        console.log(bankAccounts);
-        console.log(formData.accountNum);
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
                 // setAcctNumber(accountPrimarys);
@@ -832,7 +829,6 @@ const PaymentTypes = () => {
                                 // }}
                                 airtimeAction={(data) => {
                                     setPaymentDetails(data);
-                                    console.log(data);
                                     setSenderDetails(data.sourceAccount);
                                     const payload = {
                                         accountId: data.sourceAccount,
