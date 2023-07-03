@@ -115,10 +115,10 @@ const Liveness = ({ action, cookie }) => {
                     ) : null}
                     <ButtonComp
                         onClick={
-                            // succes === 'facial verification successful'
-                            //     ?
+                            succes === 'facial verification successful'
+                                ?
                             action
-                            // : capture
+                            : capture
                         }
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
