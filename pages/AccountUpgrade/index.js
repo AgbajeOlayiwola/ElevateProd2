@@ -3418,7 +3418,7 @@ const AccountUpgrade = () => {
                                                             return '';
                                                         }
                                                     })
-                                                    .splice(0, 1)[0].status
+                                                    .splice(0, 1)[0]?.status
                                             }
                                         </p>
                                     </div>
@@ -3469,7 +3469,7 @@ const AccountUpgrade = () => {
                                                             return '';
                                                         }
                                                     })
-                                                    .splice(0, 1)[0].status
+                                                    .splice(0, 1)[0]?.status
                                             }
                                         </p>
                                     </div>
@@ -3519,7 +3519,7 @@ const AccountUpgrade = () => {
                                                             return '';
                                                         }
                                                     })
-                                                    .splice(0, 1)[0].status
+                                                    .splice(0, 1)[0]?.status
                                             }
                                         </p>
                                     </div>
@@ -3568,7 +3568,7 @@ const AccountUpgrade = () => {
                                                             return '';
                                                         }
                                                     })
-                                                    .splice(0, 1)[0].status
+                                                    .splice(0, 1)[0]?.status
                                             }
                                         </p>
                                     </div>
@@ -3621,7 +3621,7 @@ const AccountUpgrade = () => {
                                                             return '';
                                                         }
                                                     })
-                                                    .splice(0, 1)[0].status
+                                                    .splice(0, 1)[0]?.status
                                             }
                                         </p>
                                     </div>
