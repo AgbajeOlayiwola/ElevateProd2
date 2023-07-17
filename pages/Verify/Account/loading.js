@@ -130,12 +130,8 @@ const AccountLoading = () => {
             dispatch(newAccountStatusData());
         } else if (newAccountErrorMessage !== null) {
             setError(newAccountErrorMessage);
-            const interval = setInterval(() => {
-                dispatch(newAccountStatusData());
-            }, 30000);
-            return () => {
-                clearInterval(interval);
-            };
+
+            dispatch(newAccountStatusData());
         }
     }, [newAccount, newAccountErrorMessage]);
     useEffect(() => {
@@ -146,12 +142,8 @@ const AccountLoading = () => {
         ) {
             console.log('done');
             // if (count === 1) {
-            const interval = setInterval(() => {
-                dispatch(newAccountStatusData());
-            }, 30000);
-            return () => {
-                clearInterval(interval);
-            };
+            dispatch(newAccountStatusData());
+
             // }
             // else {
             //     router.push('/Verify/Waiting');
