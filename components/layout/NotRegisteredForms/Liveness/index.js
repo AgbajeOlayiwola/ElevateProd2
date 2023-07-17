@@ -61,13 +61,17 @@ const Liveness = ({ action, cookie }) => {
         }
 
         axios
-            .post(`https://testvate.live/authentication/facematch`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookies}`
+            .post(
+                `https://mysmeapp.ecobank.com:8443/authentication/facematch`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'X-Client-Type': 'web',
+                        Authorization: `Bearer ${cookies}`
+                    }
                 }
-            })
+            )
             .then((response) => {
                 setSuccess(response.data.message);
                 setLoading(false);
