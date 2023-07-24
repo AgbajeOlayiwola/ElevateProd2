@@ -39,3 +39,16 @@
 .relativity{
     position: relative;
 }
+
+
+@media screen and (max-width: 975px) {
+.transaId {
+    position: absolute;
+    padding: 20px;
+    /* height: 27%; */
+    background: white;
+    border-radius: 20px;
+    left: -130px;
+    bottom: 42px;
+}
+}
