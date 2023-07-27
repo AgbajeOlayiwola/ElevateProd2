@@ -126,26 +126,24 @@ const CorporateAccount = () => {
             .then((response) => {
                 //console.log'create New Account', response.data);
                 if (response.data.message === 'success') {
-                    setInterval(() => {
-                        axiosInstance
-                            .get(
-                                `https://mysmeapp.ecobank.com:8443/bank-account/status`,
-                                {
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-Client-Type': 'web',
-                                        Authorization: `Bearer ${cookie}`
-                                    }
+                    axiosInstance
+                        .get(
+                            `https://mysmeapp.ecobank.com:8443/bank-account/status`,
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-Client-Type': 'web',
+                                    Authorization: `Bearer ${cookie}`
                                 }
-                            )
-                            .then((response) => {
-                                //console.log'Accoutn Status', response);
-                                setAccountDone(response.data.message);
-                            })
-                            .catch((error) => {
-                                //console.logerror.response.data.message);
-                            });
-                    }, 10000);
+                            }
+                        )
+                        .then((response) => {
+                            //console.log'Accoutn Status', response);
+                            setAccountDone(response.data.message);
+                        })
+                        .catch((error) => {
+                            //console.logerror.response.data.message);
+                        });
                 }
             })
             .catch((error) => {
@@ -159,26 +157,24 @@ const CorporateAccount = () => {
                     //     'You already have an account with us. Please contact us for more information' ||
                     error
                 ) {
-                    setTimeout(() => {
-                        axiosInstance
-                            .get(
-                                `https://mysmeapp.ecobank.com:8443/bank-account/status`,
-                                {
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-Client-Type': 'web',
-                                        Authorization: `Bearer ${cookie}`
-                                    }
+                    axiosInstance
+                        .get(
+                            `https://mysmeapp.ecobank.com:8443/bank-account/status`,
+                            {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-Client-Type': 'web',
+                                    Authorization: `Bearer ${cookie}`
                                 }
-                            )
-                            .then((response) => {
-                                //console.log'Accoutn Status', response);
-                                setAccountDone(response.data.message);
-                            })
-                            .catch((error) => {
-                                //console.logerror.response.data.message);
-                            });
-                    }, 30000);
+                            }
+                        )
+                        .then((response) => {
+                            //console.log'Accoutn Status', response);
+                            setAccountDone(response.data.message);
+                        })
+                        .catch((error) => {
+                            //console.logerror.response.data.message);
+                        });
                 }
             });
     };
@@ -198,9 +194,7 @@ const CorporateAccount = () => {
             errorMes === 'Try Again' ||
             errorMes === 'Bank Account has not been created for this user'
         ) {
-            const interval = setInterval(() => {
-                dispatch(newAccountStatusData());
-            }, 30000);
+            dispatch(newAccountStatusData());
         }
 
         if (accountDone.message === 'success') {

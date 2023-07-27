@@ -56,8 +56,10 @@ const PaymentTypes = () => {
         (state) => state.transactionFeesReducer
     );
 
-    const { internationalTransfer, errorMessageinternationalTransfer } =
-        useSelector((state) => state.internationalTransferReducer);
+    const {
+        internationalTransfer,
+        errorMessageinternationalTransfer
+    } = useSelector((state) => state.internationalTransferReducer);
 
     const { verifyCurrency, errorMessageverifyCurrency } = useSelector(
         (state) => state.verifyCurrencyReducer
@@ -688,11 +690,10 @@ const PaymentTypes = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount:
-                                                              parseInt(
-                                                                  e.Amount,
-                                                                  10
-                                                              ).toString(),
+                                                          transactionAmount: parseInt(
+                                                              e.Amount,
+                                                              10
+                                                          ).toString(),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -886,10 +887,8 @@ const PaymentTypes = () => {
                                                 .toString()
                                                 .replaceAll(',', ''),
                                             accountId: senderDetails,
-                                            billerCode:
-                                                airtimeNetData.billerDetail.billerCode.toString(),
-                                            billerId:
-                                                airtimeNetData.billerDetail.billerID.toString(),
+                                            billerCode: airtimeNetData.billerDetail.billerCode.toString(),
+                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
                                             // productCode: airtimeNetData.name,
                                             productCode:
                                                 paymentDetails.airtimeCode,
@@ -923,8 +922,7 @@ const PaymentTypes = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId:
-                                                airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:

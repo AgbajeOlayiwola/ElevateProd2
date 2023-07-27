@@ -63,19 +63,17 @@ const Visbility = ({ typeSet, color, input }) => {
     } = useForm();
     const { verifyTransactionPinSuccess, verifyTransactionPinErrorMessage } =
         useSelector((state) => state.verifyTransactionPinReducer);
+
     const submitPin = (e) => {
-        e.preventDefault();
-        console.log('check');
+        // e.preventDefault();
         const data = {
             pin: ssnValues.join('')
         };
         dispatch(verifyTransactionPinGet(data));
-
-        console.log(verifyTransactionPinErrorMessage);
     };
     useEffect(() => {
-        console.log(verifyTransactionPinErrorMessage);
-        if (verifyTransactionPinSuccess) {
+        console.log(verifyTransactionPinSuccess);
+        if (verifyTransactionPinSuccess?.message === 'successful') {
             setVisible(true);
             setType(false);
             typeSet(type);
@@ -87,20 +85,46 @@ const Visbility = ({ typeSet, color, input }) => {
 
     return (
         <div className={styles.relativity}>
-            <span
-                className="material-symbols-outlined"
-                id={color !== 'green' ? styles.notGreen : styles.green}
-                style={{
-                    zIndex: '10',
-                    fontWeight: '300',
-                    fontSize: '21px',
-                    color: '#C6C6C6',
-                    cursor: 'pointer'
-                }}
-                onClick={visible ? visibilityToggleoff : visibilityToggle}
-            >
-                {visible ? 'visibility' : 'visibility_off'}
-            </span>
+            {input !== 'input' ? (
+                <>
+                    <span
+                        className="material-symbols-outlined"
+                        id={color !== 'green' ? styles.notGreen : styles.green}
+                        style={{
+                            zIndex: '10',
+                            fontWeight: '300',
+                            fontSize: '21px',
+                            color: '#C6C6C6',
+                            cursor: 'pointer'
+                        }}
+                        onClick={
+                            visible ? visibilityToggleoff : visibilityToggle
+                        }
+                    >
+                        {visible ? 'visibility' : 'visibility_off'}
+                    </span>
+                </>
+            ) : (
+                <>
+                    <span
+                        className="material-symbols-outlined"
+                        id={color !== 'green' ? styles.notGreen : styles.green}
+                        style={{
+                            zIndex: '10',
+                            fontWeight: '300',
+                            fontSize: '21px',
+                            color: '#C6C6C6',
+                            cursor: 'pointer'
+                        }}
+                        onClick={
+                            visible ? visibilityToggleoff : visibilityToggle
+                        }
+                    >
+                        {visible ? 'visibility' : 'visibility_off'}
+                    </span>
+                </>
+            )}
+
             {showTransId ? (
                 <OutsideClick
                     onClickOutside={() => {
@@ -160,13 +184,13 @@ const Visbility = ({ typeSet, color, input }) => {
                                 onInput={handleChange}
                             />
                         </div>
-                        <div onClick={submitPin}>
+                        <div>
                             <ButtonComp
-                                // onClick={submitPin}
+                                onClick={submitPin}
                                 disabled={activeBtn}
                                 active={activeBtn ? 'active' : 'inactive'}
                                 text="Confirm"
-                                type="submit"
+                                type="button"
                                 // err={isLoading}
                             />
                         </div>

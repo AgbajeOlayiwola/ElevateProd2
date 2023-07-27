@@ -30,8 +30,8 @@
 .imageInner {
     overflow: hidden;
     border-radius: 50%;
-    width: 268px;
-    height: 268px;
+    /* width: 268px; */
+    height: 43vh;
     margin: 0px auto;
     border: solid 20px #8a8888;
 }
@@ -81,5 +81,46 @@
     .cover {
         width: 95%;
         max-width: 100%;
+    }
+    .imageOuter {
+        overflow: hidden;
+        border-radius: 5%;
+        height: 43vh;
+        border: solid 20px #6ccf00;
+        transition: all 0.8s ease-in-out;
+    }
+    .imageOut {
+        width: 67%;
+        max-width: 400px;
+        margin: 0px auto;
+    }
+    .imageInner {
+        overflow: hidden;
+        border-radius: 5%;
+        width: 268px;
+        height: 268px;
+        margin: 0px auto;
+        border: solid 20px #8a8888;
+    }
+    .errorInner {
+        overflow: hidden;
+        border-radius: 5%;
+        height: 43vh;
+        border: solid 20px red;
+    }
+
+    .imageInnerActive {
+        overflow: hidden;
+        border-radius: 5%;
+        height: 43vh;
+        border: solid 20px #6ccf00;
+    }
+    .finish {
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 23px;
+        color: #005b82;
     }
 }
