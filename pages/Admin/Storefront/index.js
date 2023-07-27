@@ -108,95 +108,6 @@ const Storefront = () => {
         switch (page) {
             case 0:
                 return (
-                    <StorePopup overlay={true}>
-                        <img
-                            src="./Assets/Images/store.png"
-                            alt=""
-                            className={styles.homeImg}
-                        />
-                        <h2 className={styles.header}>
-                            Welcome to Ellevate Storefront
-                        </h2>
-                        <p className={styles.narration}>
-                            You need to setup your store, then you can begin to
-                            derive the best use from your store.
-                        </p>
-                        <button
-                            onClick={() => {
-                                setPage(page + 1);
-                            }}
-                        >
-                            Get Started
-                        </button>
-                    </StorePopup>
-                );
-            case 1:
-                return (
-                    <StorePopup overlay={true}>
-                        <h2 className={styles.title}>
-                            <span>
-                                <ArrowBackSvg
-                                    color="#102572"
-                                    action={() => {
-                                        setPage(page - 1);
-                                    }}
-                                />
-                            </span>
-                            Create Storefront
-                        </h2>
-                        <div className={styles.headerLogo}>
-                            <StoreIconSvg />
-                        </div>
-                        <p className={styles.logoText}>Tap to Upload Logo</p>
-                        <div className={styles.storeForm}>
-                            <form
-                                onSubmit={(e) => {
-                                    e.preventDefault();
-                                    setPage(page + 1);
-                                }}
-                            >
-                                <div className={styles.formGroup}>
-                                    <label>Store Name</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Enter Store Name"
-                                    />
-                                </div>
-                                <div className={styles.formGroup}>
-                                    <label>Storefront Link</label>
-                                    <input
-                                        type="text"
-                                        placeholder="ellevate.shop/"
-                                    />
-                                </div>
-                                <button type="submit">Create Storefront</button>
-                            </form>
-                        </div>
-                    </StorePopup>
-                );
-            case 2:
-                return (
-                    <StorePopup overlay={true}>
-                        <div className={styles.storeSuccess}>
-                            <SuccessCheckSvg />
-                        </div>
-                        <h2 className={styles.header}>
-                            Storefront Created Successfully
-                        </h2>
-                        <p className={styles.narration2}>
-                            Proceed to customize your Storefront
-                        </p>
-                        <button
-                            onClick={() => {
-                                setPage(page + 1);
-                            }}
-                        >
-                            Continue to Storefront
-                        </button>
-                    </StorePopup>
-                );
-            case 3:
-                return (
                     <div className={styles.storeBody}>
                         <div className={styles.storeBodyHeader}>
                             <div className={styles.tableFilter}>
@@ -258,7 +169,7 @@ const Storefront = () => {
                         </div>
                     </div>
                 );
-            case 4:
+            case 1:
                 return (
                     <ProfileLayout
                         head={
@@ -890,7 +801,7 @@ const Storefront = () => {
                         ) : null}
                     </ProfileLayout>
                 );
-            case 5:
+            case 2:
                 return (
                     <StorePopup overlay={true}>
                         <h2 className={styles.title}>
@@ -937,9 +848,9 @@ const Storefront = () => {
                         </div>
                     </StorePopup>
                 );
-            case 6:
+            case 3:
                 return <></>;
-            case 7:
+            case 4:
                 return (
                     <>
                         <div className={styles.previewHead}>
@@ -1243,23 +1154,23 @@ const Storefront = () => {
     //     }
     // };
     return (
-        <DashLayout
-            page={headTitle}
-            text={title}
-            action={() => {
-                setPage(page - 1);
-                setHeadTitle('Storefront');
-                setPreviewSingle(false);
-            }}
-            preview={preview}
-            previewSingle={previewSingle}
-            productAction={() => {
-                setPage(page - 3);
-                setPreview(false);
-            }}
-        >
-            {multi()}
-        </DashLayout>
+        <>{multi()}</>
+        // <DashLayout
+        //     page={headTitle}
+        //     text={title}
+        //     action={() => {
+        //         setPage(page - 1);
+        //         setHeadTitle('Storefront');
+        //         setPreviewSingle(false);
+        //     }}
+        //     preview={preview}
+        //     previewSingle={previewSingle}
+        //     productAction={() => {
+        //         setPage(page - 3);
+        //         setPreview(false);
+        //     }}
+        // >
+        // </DashLayout>
     );
 };
 
