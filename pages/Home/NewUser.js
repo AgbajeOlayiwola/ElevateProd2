@@ -305,7 +305,7 @@ const NewUser = ({ selectCountry }) => {
                         <div className={styles.divs}>
                             <input
                                 placeholder="Enter Password "
-                                type={outTyped ? 'password' : 'text'}
+                                type={outTyped ? 'text' : 'password'}
                                 onChange={handlePaswword}
                             />
                             <Visbility typeSet={typed} input="input" />

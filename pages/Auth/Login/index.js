@@ -547,7 +547,7 @@ const Login = () => {
                                     name="password"
                                     autoComplete="false"
                                     placeholder="Enter Your Password"
-                                    type={outType ? 'password' : 'text'}
+                                    type={outType ? 'text' : 'password'}
                                     className={styles.passwordInput}
                                     {...register('password', {
                                         required: 'Password is required'
