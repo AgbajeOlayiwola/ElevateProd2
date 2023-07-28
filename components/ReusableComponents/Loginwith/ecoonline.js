@@ -104,7 +104,7 @@ const Ecoonline = () => {
                                 required: 'Ecobank Online Password is Required'
                             })}
                             name="password"
-                            type={outType ? 'text' : 'password'}
+                            type={outType ? 'password' : 'text'}
                         />
                         <Visbility typeSet={types} input="input" />
                     </div>

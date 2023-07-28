@@ -183,7 +183,7 @@ const HomeMain = () => {
                                             'Omnilite Password is Required'
                                     })}
                                     name="omnilitePassword"
-                                    type={outType ? 'text' : 'password'}
+                                    type={outType ? 'password' : 'text'}
                                 />
                                 <Visbility typeSet={types} input="input" />
                             </div>
@@ -231,7 +231,7 @@ const HomeMain = () => {
                                             'Ecobank Online Password is Required'
                                     })}
                                     name="onlinePassword"
-                                    type={outType ? 'text' : 'password'}
+                                    type={outType ? 'password' : 'text'}
                                     value={ecoonlinePassword}
                                     onInput={(e) =>
                                         setEcoonlinePassword(e.target.value)
@@ -523,26 +523,24 @@ const HomeMain = () => {
     const cardTest = () => {
         // console.log(cardLogin);
         if (cardLoginS !== null) {
-            if (cardLoginS.message === 'success') {
-                // console.log(cardLogin);
-                // const data = {
-                //     email: omniliteData.data.user.email,
-                //     // accountNumber: omniliteData.data.user.profile.firstName,
-                //     fullName: omniliteData.data.user.profile.lastName,
-                //     phoneNumber: omniliteData.data.user.phoneNumber
-                // };
-                window.localStorage.setItem(
-                    'displayAccount',
-                    JSON.stringify(cardLoginS.data)
-                );
-                window.localStorage.setItem(
-                    'account',
-                    JSON.stringify(cardLoginS.data.user)
-                );
+            console.log(cardLoginS);
+            // const data = {
+            //     email: omniliteData.data.user.email,
+            //     // accountNumber: omniliteData.data.user.profile.firstName,
+            //     fullName: omniliteData.data.user.profile.lastName,
+            //     phoneNumber: omniliteData.data.user.phoneNumber
+            // };
+            // window.localStorage.setItem(
+            //     'displayAccount',
+            //     JSON.stringify(cardLoginS.data)
+            // );
+            // window.localStorage.setItem(
+            //     'account',
+            //     JSON.stringify(cardLoginS.data.user)
+            // );
 
-                router.push('/Onboarding/ExistingProfileSetup');
-            }
-        } else {
+            // router.push('/Onboarding/ExistingProfileSetup');
+        } else if (cardLoginerrorMessages !== null) {
             setLoading(false);
             setError(cardLoginerrorMessages);
             console.log(cardLoginerrorMessages);

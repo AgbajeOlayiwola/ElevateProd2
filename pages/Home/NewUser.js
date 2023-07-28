@@ -276,7 +276,7 @@ const NewUser = ({ selectCountry }) => {
                         <label htmlFor="">Create Password</label>
                         <div className={styles.divs}>
                             <input
-                                type={outType ? 'text' : 'password'}
+                                type={outType ? 'password' : 'text'}
                                 placeholder="Enter Password"
                                 onInput={handlePwd}
                             />
@@ -305,7 +305,7 @@ const NewUser = ({ selectCountry }) => {
                         <div className={styles.divs}>
                             <input
                                 placeholder="Enter Password "
-                                type={outTyped ? 'text' : 'password'}
+                                type={outTyped ? 'password' : 'text'}
                                 onChange={handlePaswword}
                             />
                             <Visbility typeSet={typed} input="input" />

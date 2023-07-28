@@ -286,26 +286,23 @@ const Login = () => {
     // };
     useEffect(() => {
         if (user) {
-            if (user?.statusCode === 200) {
-                if (
-                    user?.data?.user?.profile?.createdFromEcobankCred === false
-                ) {
+            if (user.statusCode === 200) {
+                if (user.data.user.profile.createdFromEcobankCred === false) {
                     if (
-                        user?.data?.user?.profile?.customerCategory ===
-                        'COMMERCIAL'
+                        user.data.user.profile.customerCategory === 'COMMERCIAL'
                     ) {
                         if (
-                            user?.data?.user?.profile?.profileSetupStatus ===
+                            user.data.user.profile.profileSetupStatus ===
                             'PROFILE_SETUP_COMPLETED'
                         ) {
                             router.push('../../Verify/CorportateAccount');
                         } else if (
-                            user?.data?.user?.profile?.profileSetupStatus ===
+                            user.data.user.profile.profileSetupStatus ===
                             'AWAITING_ACCOUNT_NUMBER'
                         ) {
                             router.push('../../Verify/CorportateAccount');
                         } else if (
-                            user?.data?.user?.profile?.profileSetupStatus ===
+                            user.data.user.profile.profileSetupStatus ===
                             'ACCOUNT_NUMBER_RETRIEVED'
                         ) {
                             console.log('here');
@@ -315,17 +312,17 @@ const Login = () => {
                         }
                     } else {
                         if (
-                            user?.data?.user?.profile?.profileSetupStatus ===
+                            user.data.user.profile.profileSetupStatus ===
                             'PROFILE_SETUP_COMPLETED'
                         ) {
                             router.push('../../Verify/Account/loading');
                         } else if (
-                            user?.data?.user?.profile?.profileSetupStatus ===
+                            user.data.user.profile.profileSetupStatus ===
                             'AWAITING_ACCOUNT_NUMBER'
                         ) {
                             router.push('../../Verify/Account/loading');
                         } else if (
-                            user?.data?.user?.profile?.profileSetupStatus ===
+                            user.data.user.profile.profileSetupStatus ===
                             'ACCOUNT_NUMBER_RETRIEVED'
                         ) {
                             router.push('../../Admin/Dashboard');
@@ -337,29 +334,29 @@ const Login = () => {
             }
         }
         if (user) {
-            if (user?.data?.user?.profile?.createdFromEcobankCred === true) {
+            if (user.data.user.profile.createdFromEcobankCred === true) {
                 if (
-                    user?.data?.user?.profile?.profileSetupStatus ===
+                    user.data.user.profile.profileSetupStatus ===
                     'PROFILE_SETUP_COMPLETED'
                 ) {
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
                     router.push('../../Admin/Dashboard');
                 } else if (
-                    user?.data?.user?.profile?.profileSetupStatus ===
+                    user.data.user.profile.profileSetupStatus ===
                     'PROFILE_SETUP'
                 ) {
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
@@ -368,14 +365,14 @@ const Login = () => {
                         query: { id: 2 }
                     });
                 } else if (
-                    user?.data?.user?.profile?.profileSetupStatus ===
+                    user.data.user.profile.profileSetupStatus ===
                     'LIVENESS_VERIFIED'
                 ) {
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
@@ -384,14 +381,14 @@ const Login = () => {
                         query: { id: 3 }
                     });
                 } else if (
-                    user?.data?.user?.profile?.profileSetupStatus ===
+                    user.data.user.profile.profileSetupStatus ===
                     'PROFILE_SETUP_AWAITING_OTP'
                 ) {
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
@@ -402,27 +399,27 @@ const Login = () => {
                     });
                 }
                 if (
-                    user?.data?.user?.profile?.profileSetupStatus ===
+                    user.data.user.profile.profileSetupStatus ===
                     'AWAITING_ACCOUNT_NUMBER'
                 ) {
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
                     router.push('../../Verify/CorportateAccount');
                 } else if (
-                    user?.data?.user?.profile?.profileSetupStatus ===
+                    user.data.user.profile.profileSetupStatus ===
                     'ACCOUNT_NUMBER_RETRIEVED'
                 ) {
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window?.localStorage.setItem(
+                    window.localStorage.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
@@ -547,7 +544,7 @@ const Login = () => {
                                     name="password"
                                     autoComplete="false"
                                     placeholder="Enter Your Password"
-                                    type={outType ? 'text' : 'password'}
+                                    type={outType ? 'password' : 'text'}
                                     className={styles.passwordInput}
                                     {...register('password', {
                                         required: 'Password is required'
