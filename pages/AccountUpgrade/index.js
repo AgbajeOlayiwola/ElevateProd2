@@ -169,12 +169,17 @@ const AccountUpgrade = () => {
     const [fileNameI, setFileNameI] = useState();
     const [fileII, setFileII] = useState(null);
     const [fileNameII, setFileNameII] = useState();
-    const [identificationDocumentFile, setIdentificationDocument] =
-        useState(null);
-    const [identificationDocumentFileName, setIdentificationDocumentName] =
-        useState('');
-    const [identificationBackDocument, setIdentificationBackDocument] =
-        useState(null);
+    const [identificationDocumentFile, setIdentificationDocument] = useState(
+        null
+    );
+    const [
+        identificationDocumentFileName,
+        setIdentificationDocumentName
+    ] = useState('');
+    const [
+        identificationBackDocument,
+        setIdentificationBackDocument
+    ] = useState(null);
     const [
         identificationBackDocumentFileName,
         setIdentificationBackDocumentFileName
