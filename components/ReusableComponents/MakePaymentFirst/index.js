@@ -29,7 +29,8 @@ const MakePaymentFirst = ({
     isLoading,
     payload,
     formData,
-    setFormdata
+    setFormdata,
+    backAction
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -112,6 +113,7 @@ const MakePaymentFirst = ({
                             airtimeAction={airtimeAction}
                             bankAccounts={bankAccount}
                             isLoading={isLoading}
+                            backAction={backAction}
                         />
                     )}
                 </div>

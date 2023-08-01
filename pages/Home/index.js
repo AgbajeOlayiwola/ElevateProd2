@@ -183,7 +183,7 @@ const HomeMain = () => {
                                             'Omnilite Password is Required'
                                     })}
                                     name="omnilitePassword"
-                                    type={outType ? 'password' : 'text'}
+                                    type={outType ? 'text' : 'password'}
                                 />
                                 <Visbility typeSet={types} input="input" />
                             </div>
@@ -231,7 +231,7 @@ const HomeMain = () => {
                                             'Ecobank Online Password is Required'
                                     })}
                                     name="onlinePassword"
-                                    type={outType ? 'password' : 'text'}
+                                    type={outType ? 'text' : 'password'}
                                     value={ecoonlinePassword}
                                     onInput={(e) =>
                                         setEcoonlinePassword(e.target.value)

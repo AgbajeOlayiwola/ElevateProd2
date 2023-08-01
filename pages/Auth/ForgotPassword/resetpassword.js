@@ -43,7 +43,7 @@ const ResetPassword = ({ submit, forgotPasswordErrorMessages, loading }) => {
                     <div className={styles.divs}>
                         <LockSvg />
                         <input
-                            type={outTypes ? 'password' : 'text'}
+                            type={outTypes ? 'text' : 'password'}
                             name="newPassword"
                             placeholder="Enter your Password"
                             {...register('newPassword', {
@@ -63,7 +63,7 @@ const ResetPassword = ({ submit, forgotPasswordErrorMessages, loading }) => {
                     <div className={styles.divs}>
                         <LockSvg />
                         <input
-                            type={outType ? 'password' : 'text'}
+                            type={outType ? 'text' : 'password'}
                             name="confnewPassword"
                             placeholder="Confirm your Password"
                             {...register('confnewPassword', {

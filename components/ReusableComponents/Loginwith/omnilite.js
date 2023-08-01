@@ -94,7 +94,7 @@ const Omnilite = () => {
                                 required: 'Password is Required'
                             })}
                             name="password"
-                            type={outType ? 'password' : 'text'}
+                            type={outType ? 'text' : 'password'}
                         />
                         <Visbility typeSet={types} input="input" />
                     </div>
