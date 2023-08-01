@@ -152,7 +152,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             newAccountErrorMessage ===
             'You already have an account with us. Please contact us for more information'
         ) {
-            router.push('/Succes');
+            router.push('/Success');
         }
 
         if (businessCategories !== null) {

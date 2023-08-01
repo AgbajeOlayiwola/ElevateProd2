@@ -151,7 +151,7 @@ const AccountLoading = () => {
         }
         if (accountStatuss !== null) {
             //console.log(accountStatus.messages, errorMessages);
-            router.push('/Succes');
+            router.push('/Success');
         }
     }, [errorMessages, accountStatuss]);
     useEffect(() => {

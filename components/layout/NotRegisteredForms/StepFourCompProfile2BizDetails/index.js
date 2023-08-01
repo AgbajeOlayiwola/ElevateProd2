@@ -166,7 +166,7 @@ const StepFourCompProfile2BizDetails = ({
         } else if (accountStatus.message === 'Try Again') {
             router.push('../Verify/Account/loading');
         } else if (accountStatus.message === 'SUCCESS') {
-            router.push('/Succes');
+            router.push('/Success');
         }
     };
 
@@ -494,7 +494,7 @@ const StepFourCompProfile2BizDetails = ({
                         </div>
                     </div>
                 </LastFieldAndButton>
-                {/* <Link href="/Succes"> */}
+                {/* <Link href="/Success"> */}
                 {/* <div>
                     <div className={styles.terms}>
                         <CircleSvg

@@ -961,7 +961,7 @@ const Profile = () => {
             //                             required: 'Password is Required'
             //                         })}
             //                         name="limitpassword"
-            //                         type={outType ? 'text' : 'password'}
+            //                         type={outType ?  'password' : 'text'}
             //                     />
             //                     <Visbility typeSet={types} />
             //                 </div>
@@ -1012,7 +1012,7 @@ const Profile = () => {
                                                 required: 'Password is Required'
                                             })}
                                             name="bvnPassword"
-                                            type={outType ? 'text' : 'password'}
+                                            type={outType ? 'password' : 'text'}
                                         />
                                         <Visbility
                                             typeSet={types}
@@ -1388,7 +1388,7 @@ const Profile = () => {
                                                 })}
                                                 name="transactionPin"
                                                 type={
-                                                    outPin ? 'text' : 'password'
+                                                    outPin ? 'password' : 'text'
                                                 }
                                             />
                                             <Visbility

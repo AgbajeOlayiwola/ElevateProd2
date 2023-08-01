@@ -85,7 +85,13 @@ function MyApp({ Component, pageProps, router }) {
         // <Layout>
         <>
             <Provider store={store}>
-                <DashLayout>
+                <DashLayout
+                    page={
+                        router.asPath === '/Admin/CreateStorefront'
+                            ? 'Create Storefront'
+                            : null
+                    }
+                >
                     {/* <AnimatePresence exitBeforeEnter>
                         <motion.div
                             key={router.route}

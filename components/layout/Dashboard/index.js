@@ -84,17 +84,19 @@ const DashLayout = ({
 
                     {!sideActive ? (
                         <div className={styles.dashCont}>
-                            <Navbar
-                                page={page}
-                                text={text}
-                                action={action}
-                                preview={preview}
-                                previewSingle={previewSingle}
-                                productAction={productAction}
-                                sideAction={() => {
-                                    setSideActive(true);
-                                }}
-                            />
+                            {page === 'Create Storefront' ? null : (
+                                <Navbar
+                                    page={page}
+                                    text={text}
+                                    action={action}
+                                    preview={preview}
+                                    previewSingle={previewSingle}
+                                    productAction={productAction}
+                                    sideAction={() => {
+                                        setSideActive(true);
+                                    }}
+                                />
+                            )}
                             {children}
                         </div>
                     ) : null}

@@ -112,7 +112,7 @@ const CorporateAccount = () => {
         }
         axiosInstance
             .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.corpNewUser}`,
+                `https://testvate.live${apiRoutes.corpNewUser}`,
 
                 accountData,
                 {
@@ -127,16 +127,13 @@ const CorporateAccount = () => {
                 //console.log'create New Account', response.data);
                 if (response.data.message === 'success') {
                     axiosInstance
-                        .get(
-                            `https://mysmeapp.ecobank.com:8443/bank-account/status`,
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-Client-Type': 'web',
-                                    Authorization: `Bearer ${cookie}`
-                                }
+                        .get(`https://testvate.live/bank-account/status`, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Client-Type': 'web',
+                                Authorization: `Bearer ${cookie}`
                             }
-                        )
+                        })
                         .then((response) => {
                             //console.log'Accoutn Status', response);
                             setAccountDone(response.data.message);
@@ -158,16 +155,13 @@ const CorporateAccount = () => {
                     error
                 ) {
                     axiosInstance
-                        .get(
-                            `https://mysmeapp.ecobank.com:8443/bank-account/status`,
-                            {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-Client-Type': 'web',
-                                    Authorization: `Bearer ${cookie}`
-                                }
+                        .get(`https://testvate.live/bank-account/status`, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Client-Type': 'web',
+                                Authorization: `Bearer ${cookie}`
                             }
-                        )
+                        })
                         .then((response) => {
                             //console.log'Accoutn Status', response);
                             setAccountDone(response.data.message);
@@ -181,7 +175,7 @@ const CorporateAccount = () => {
     //console.log(accountDone);
     useEffect(() => {
         if (accountDone === 'success') {
-            router.push('/Succes/CorpSuccess');
+            router.push('/Success/CorpSuccess');
         }
     }, [errorMes, accountDone]);
     useEffect(() => {
@@ -199,7 +193,7 @@ const CorporateAccount = () => {
 
         if (accountDone.message === 'success') {
             //console.logaccountStatus.messages, errorMessages);
-            router.push('/Succes');
+            router.push('/Success');
         }
 
         if (timer === '00:00:00') {

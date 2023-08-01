@@ -61,10 +61,8 @@ const Visbility = ({ typeSet, color, input }) => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-    const {
-        verifyTransactionPinSuccess,
-        verifyTransactionPinErrorMessage
-    } = useSelector((state) => state.verifyTransactionPinReducer);
+    const { verifyTransactionPinSuccess, verifyTransactionPinErrorMessage } =
+        useSelector((state) => state.verifyTransactionPinReducer);
 
     const submitPin = (e) => {
         // e.preventDefault();

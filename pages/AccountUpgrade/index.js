@@ -2843,7 +2843,7 @@ const AccountUpgrade = () => {
                             <label>Email Referee 2</label>
                             <input
                                 type="text"
-                                value={reffereeName2}
+                                value={reffereeEmail2}
                                 placeholder="Input Referee two's Email"
                                 onChange={(e) =>
                                     setReffereeEmail2(e.target.value)

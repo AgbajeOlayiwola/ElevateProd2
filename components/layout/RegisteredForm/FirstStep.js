@@ -61,18 +61,16 @@ const FirstStep = ({
         }
     };
     useEffect(() => {
-        if (ssnValues.length !== 1) {
+        if (ssnValues.length == 6) {
             setFormData({ ...formData, otp: ssnValues.join('') });
         }
     }, [ssnValues]);
     const ResetOtp = (e) => {
         setValue((ssnValues) => ['']);
-        // document.querySelector();
         const data = {
             userId: userId()
         };
         dispatch(resetOtpData(data));
-        //console.logresetOtp, resetOtpErrorMessages);
     };
     const clear = () => {
         setValue((ssnValues) => ['']);
