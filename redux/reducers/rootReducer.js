@@ -101,6 +101,12 @@ import setPrimaryAccountReducer from './setPrimaryAccount.reducer';
 import deleteAccountReducer from './deleteAccount.reducer';
 import requestPhysicalQrReducer from './requestPhysicalQr.reducer';
 import checkStatusReducer from './checkStatus.reducer';
+import validateCardNumberReducer from './validateCard.reducer';
+import validateAccountNumberReducer from './validateAccountNumber.reducer';
+import addOmniliteReducer from './addomniite.reducer';
+import addEcoOnlineReducer from './addEcoOnline.reducer';
+import addCardReducer from './addCard.reducer';
+import addAccountNumberReducer from './addAccountNumber.reducer';
 const appReducer = combineReducers({
     countryReducer: countryReducer,
     internationalCountryReducer: internationalCountryReducer,
@@ -207,7 +213,13 @@ const appReducer = combineReducers({
     setPrimaryAccountReducer: setPrimaryAccountReducer,
     deleteAccountReducer: deleteAccountReducer,
     checkStatusReducer: checkStatusReducer,
-    requestPhysicalQrReducer: requestPhysicalQrReducer
+    requestPhysicalQrReducer: requestPhysicalQrReducer,
+    validateCardNumberReducer: validateCardNumberReducer,
+    validateAccountNumberReducer: validateAccountNumberReducer,
+    addOmniliteReducer: addOmniliteReducer,
+    addEcoOnlineReducer: addEcoOnlineReducer,
+    addCardReducer: addCardReducer,
+    addAccountNumberReducer: addAccountNumberReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

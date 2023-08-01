@@ -101,7 +101,13 @@ import {
     getAllComplaintType,
     deleteAccountType,
     setPrimaryAccountType,
-    requestPhysicalQrType
+    requestPhysicalQrType,
+    addomniLiteType,
+    addecoOnlineType,
+    addAccountNumberType,
+    validateCardType,
+    validateAccountNumberType,
+    addCardType
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -4111,3 +4117,245 @@ export const checkStatusAction = (data) => (dispatch) => {
         });
 };
 //St primary account Action End
+
+//add omnilite account  Start
+export const addOmniliteStart = () => ({
+    type: addomniLiteType.OMNILITE_TYPE_START
+});
+
+export const addOmniliteSuccess = (addOmniliteSuccess) => ({
+    type: addomniLiteType.OMNILITE_TYPE_SUCCESS,
+    payload: addOmniliteSuccess
+});
+
+export const addOmniliteError = (addOmniliteErrorMessage) => ({
+    type: addomniLiteType.OMNILITE_TYPE_ERROR,
+    payload: addOmniliteErrorMessage
+});
+export const addOmniliteAction = (data) => (dispatch) => {
+    dispatch(addOmniliteStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .post(`${apiRoutes.addOmnilite}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(addOmniliteSuccess(response));
+        })
+        .catch((error) => {
+            dispatch(addOmniliteError(error?.response));
+        });
+};
+//add omnilite account End
+
+//add coonline account  Start
+export const addecoOnlineStart = () => ({
+    type: addecoOnlineType.ECO_ONLINE_TYPE_START
+});
+
+export const addecoOnlineSuccess = (addecoOnlineSuccess) => ({
+    type: addecoOnlineType.ECO_ONLINE_TYPE_SUCCESS,
+    payload: addecoOnlineSuccess
+});
+
+export const addecoOnlineError = (addecoOnlineErrorMessage) => ({
+    type: addecoOnlineType.ECO_ONLINE_TYPE_ERROR,
+    payload: addecoOnlineErrorMessage
+});
+export const addecoOnlineAction = (data) => (dispatch) => {
+    dispatch(addecoOnlineStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .post(`${apiRoutes.addEcoOnline}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(addecoOnlineSuccess(response));
+        })
+        .catch((error) => {
+            dispatch(addecoOnlineError(error?.response));
+        });
+};
+//add coonline account End
+
+//add account Number  Start
+export const addAccountStart = () => ({
+    type: addAccountNumberType.ACCOUNT_NUMBER_START
+});
+
+export const addAccountSuccess = (addAccountSuccess) => ({
+    type: addAccountNumberType.ACCOUNT_NUMBER_SUCCESS,
+    payload: addAccountSuccess
+});
+
+export const addAccountError = (addAccountErrorMessage) => ({
+    type: addAccountNumberType.ACCOUNT_NUMBER_ERROR,
+    payload: addAccountErrorMessage
+});
+export const addAccountAction = (data) => (dispatch) => {
+    dispatch(addAccountStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .post(`${apiRoutes.addEcoOnline}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(addAccountSuccess(response));
+        })
+        .catch((error) => {
+            dispatch(addAccountError(error?.response));
+        });
+};
+//add account number End
+
+//add card Start
+export const addCardStart = () => ({
+    type: addCardType.ADD_CARD_START
+});
+
+export const addCardSuccess = (addCardSuccess) => ({
+    type: addCardType.ADD_CARD_SUCCESS,
+    payload: addCardSuccess
+});
+
+export const addCardError = (addCardErrorMessage) => ({
+    type: addCardType.ADD_CARD_ERROR,
+    payload: addCardErrorMessage
+});
+export const addCardAction = (data) => (dispatch) => {
+    dispatch(addCardStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .post(`${apiRoutes.addEcoOnline}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(addCardSuccess(response));
+        })
+        .catch((error) => {
+            dispatch(addCardError(error?.response));
+        });
+};
+//add card End
+
+//add vlidate Account Number Start
+export const validateAccountNumberStart = () => ({
+    type: validateAccountNumberType.VALIDATE_ACCOUNT_NUMBER_START
+});
+
+export const validateAccountNumberSuccess = (validateAccountNumberSuccess) => ({
+    type: validateAccountNumberType.VALIDATE_ACCOUNT_NUMBER_SUCCESS,
+    payload: validateAccountNumberSuccess
+});
+
+export const validateAccountNumberError = (
+    validateAccountNumberErrorMessage
+) => ({
+    type: validateAccountNumberType.VALIDATE_ACCOUNT_NUMBER_ERROR,
+    payload: validateAccountNumberErrorMessage
+});
+export const validateAccountNumberAction = (data) => (dispatch) => {
+    dispatch(validateAccountNumberStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .post(`${apiRoutes.addEcoOnline}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(validateAccountNumberSuccess(response));
+        })
+        .catch((error) => {
+            dispatch(validateAccountNumberError(error?.response));
+        });
+};
+//add vlidate Account Number End
+
+//add validate Card Start
+export const validateCardStart = () => ({
+    type: validateCardType.VALIDATE_CARD_START
+});
+
+export const validateCardSuccess = (validateCardSuccess) => ({
+    type: validateCardType.VALIDATE_CARD_SUCCESS,
+    payload: validateCardSuccess
+});
+
+export const validateCardError = (validateCardErrorMessage) => ({
+    type: validateCardType.VALIDATE_CARD_ERROR,
+    payload: validateCardErrorMessage
+});
+export const validateCardAction = (data) => (dispatch) => {
+    dispatch(validateCardStart());
+    let cookie;
+
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .post(`${apiRoutes.addEcoOnline}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
+            }
+        })
+        .then((response) => {
+            dispatch(validateCardSuccess(response));
+        })
+        .catch((error) => {
+            dispatch(validateCardError(error?.response));
+        });
+};
+//add validate Card End

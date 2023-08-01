@@ -113,7 +113,19 @@ const deleteAccount = '/users/delete-account';
 const setPrimaryAccount = '/bank-account/primary';
 const requestPhysicalQr = '/qr-merchant/request-physical-qr';
 const checkStatus = '/account-upgrade/check-submitted';
+const addEcoOnline = '/bank-account/add/ecobank-online';
+const addOmnilite = '/bank-account/add/omnilite';
+const addAccountNumber = '/bank-account/add/account-number';
+const addCard = '/bank-account/add/account-number';
+const vlidateAccountNumber = '/bank-account/validate/add/account-number';
+const validateCard = '/bank-account/validate/add/card';
 export default {
+    validateCard,
+    vlidateAccountNumber,
+    addCard,
+    addAccountNumber,
+    addOmnilite,
+    addEcoOnline,
     getAllComplaint,
     trackComplaint,
     lodgeComplaint,
