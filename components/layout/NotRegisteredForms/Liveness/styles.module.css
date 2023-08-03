@@ -1,4 +1,4 @@
-.body {
+/* .body {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -27,14 +27,18 @@
     max-width: 400px;
     margin: 0px auto;
 }
-.imageInner div video {
+.imageInner div video,
+.errorInner div video,
+.imageOuter div video {
     width: 100%;
     box-sizing: border-box;
     padding: 0px;
     height: 100%;
 }
 
-.imageInner div {
+.imageInner div,
+.errorInner div,
+.imageOuter div {
     width: 100%;
     height: 100%;
 }
@@ -42,7 +46,7 @@
 .imageInner {
     overflow: hidden;
     border-radius: 50%;
-    /* width: 268px; */
+    width: 268px;
     height: 43vh;
     margin: 0px auto;
     border: solid 20px #8a8888;
@@ -50,7 +54,8 @@
 .errorInner {
     overflow: hidden;
     border-radius: 50%;
-    height: 43vh;
+    height: 45vh;
+    width: 100%;
     border: solid 20px red;
 }
 
@@ -132,5 +137,91 @@
         font-size: 14px;
         line-height: 23px;
         color: #005b82;
+    }
+} */
+
+.body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #c6c6c6;
+}
+
+.cover {
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 50px;
+    width: 40%;
+    max-width: 600px;
+    padding: 80px 0px;
+}
+.imageOuter {
+    overflow: hidden;
+    border-radius: 50%;
+    height: 43vh;
+    border: solid 20px #6ccf00;
+    transition: all 0.8s ease-in-out;
+}
+.imageOut {
+    width: 67%;
+    max-width: 400px;
+    margin: 0px auto;
+}
+.imageInner {
+    overflow: hidden;
+    border-radius: 50%;
+    /* width: 268px; */
+    height: 43vh;
+    margin: 0px auto;
+    border: solid 20px #8a8888;
+}
+.errorInner {
+    overflow: hidden;
+    border-radius: 50%;
+    height: 43vh;
+    border: solid 20px red;
+}
+
+.imageInnerActive {
+    overflow: hidden;
+    border-radius: 50%;
+    height: 43vh;
+    border: solid 20px #6ccf00;
+}
+.finish {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 23px;
+    color: #005b82;
+}
+
+.takeSelf {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    margin: 0px;
+    margin-bottom: 32px;
+    color: #005b82;
+}
+
+.cover button {
+    margin-top: 64px;
+}
+.matiButtonSetup {
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+}
+
+@media screen and (max-width: 600px) {
+    .cover {
+        width: 95%;
+        max-width: 100%;
     }
 }
