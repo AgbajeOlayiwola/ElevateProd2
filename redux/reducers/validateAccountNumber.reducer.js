@@ -18,13 +18,13 @@ const validateAccountNumberReducer = (
                 validateAccountNumberSuccess: null,
                 validateAccountNumberErrorMessage: null
             };
-        case addCardType.ADD_CARD_SUCCESS:
+        case validateAccountNumberType.ADD_CARD_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 validateAccountNumberSuccess: payload
             };
-        case addCardType.ADD_CARD_ERROR:
+        case validateAccountNumberType.ADD_CARD_ERROR:
             return {
                 ...state,
                 isLoading: false,

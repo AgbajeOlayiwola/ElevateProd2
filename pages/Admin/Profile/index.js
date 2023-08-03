@@ -1012,7 +1012,7 @@ const Profile = () => {
                                                 required: 'Password is Required'
                                             })}
                                             name="bvnPassword"
-                                            type={outType ? 'password' : 'text'}
+                                            type={outType ? 'text' : 'password'}
                                         />
                                         <Visbility
                                             typeSet={types}
@@ -1388,7 +1388,7 @@ const Profile = () => {
                                                 })}
                                                 name="transactionPin"
                                                 type={
-                                                    outPin ? 'password' : 'text'
+                                                    outPin ? 'text' : 'password'
                                                 }
                                             />
                                             <Visbility

@@ -29,7 +29,8 @@ const BillPayment = ({
     isLoading,
     bankAccounts,
     formData,
-    setFormdata
+    setFormdata,
+    backAction
 }) => {
     const [network, setNetwork] = useState();
     const [networkData, setNetworkData] = useState({});
@@ -40,6 +41,8 @@ const BillPayment = ({
     const [billerTypes, setBillerTypes] = useState([]);
     const [billerPlans, setBillerPlans] = useState();
     const [billerId, setBillerId] = useState('');
+    const [dest, setDest] = useState('');
+    const [amount, setAmount] = useState('');
     const [airtimebeneficiaries, setAirtimeBeneficiaries] = useState([]);
     const [isLoadingg, setIsLoading] = useState(true);
 
@@ -137,9 +140,6 @@ const BillPayment = ({
         <div>
             {firstTitle === 'Bill Payment' ? (
                 <>
-                    {/* <div className={styles.backIcon}>
-                        <ArrowBackSvg color="#102572" action={backAction} />
-                    </div> */}
                     <h2 className={styles.firstTitle}>{firstTitle}</h2>
 
                     {/* <div className={styles.beneficiary}>
@@ -512,7 +512,7 @@ const BillPayment = ({
                             </div> */}
                             <div className={styles.networkForm}>
                                 <div className={styles.formGroup}>
-                                    <label>Phone Number</label>{' '}
+                                    <label>Phone Number</label>
                                     {beneActive ? (
                                         <input
                                             {...register('phoneNumberBene')}
@@ -547,7 +547,24 @@ const BillPayment = ({
                                         {errors?.phoneNumber?.message}
                                     </p>
                                 </div>
-
+                                <div className={styles.formGroup}>
+                                    <label>Email </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Your Email"
+                                        name="email"
+                                        {...register('email', {
+                                            required: 'Email is required',
+                                            pattern: {
+                                                value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                                message: 'Invalid email address'
+                                            }
+                                        })}
+                                    />
+                                    <p className={styles.error}>
+                                        {errors?.email?.message}
+                                    </p>
+                                </div>
                                 <div className={styles.formGroup}>
                                     <label>Amount</label>
                                     <input
@@ -583,122 +600,12 @@ const BillPayment = ({
                         </form>
                     </div>
                 </>
-            ) : firstTitle === 'Data' ? (
+            ) : firstTitle === 'DATA' ? (
                 <>
-                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
-                    <div className={styles.body}>
-                        <form onSubmit={handleSubmit(dataAction)}>
-                            <div className={styles.source}>
-                                <h2>
-                                    Source <span>- Marvelous N******</span>
-                                </h2>
-                                <SourceSvg />
-                            </div>
-                            <div className={styles.networkCarrier}>
-                                <h2>Network</h2>
-                                <div className={styles.networkBody}>
-                                    <div
-                                        className={
-                                            network === 'mtn'
-                                                ? styles.networkActive
-                                                : styles.networkSingle
-                                        }
-                                        onClick={() => {
-                                            setNetwork('mtn');
-                                        }}
-                                    >
-                                        <div>
-                                            <img
-                                                src="../../Assets/Svgs/mtn.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        className={
-                                            network === 'airtel'
-                                                ? styles.networkActive
-                                                : styles.networkSingle
-                                        }
-                                        onClick={() => {
-                                            setNetwork('airtel');
-                                        }}
-                                    >
-                                        <div>
-                                            <img
-                                                src="../../Assets/Svgs/airtel.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        className={
-                                            network === 'glo'
-                                                ? styles.networkActive
-                                                : styles.networkSingle
-                                        }
-                                        onClick={() => {
-                                            setNetwork('glo');
-                                        }}
-                                    >
-                                        <div>
-                                            <img
-                                                src="../../Assets/Svgs/glo.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </div>
-                                    <div
-                                        className={
-                                            network === '9mobile'
-                                                ? styles.networkActive
-                                                : styles.networkSingle
-                                        }
-                                        onClick={() => {
-                                            setNetwork('9mobile');
-                                        }}
-                                    >
-                                        <div>
-                                            <img
-                                                src="../../Assets/Svgs/9mobile.svg"
-                                                alt=""
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.networkForm}>
-                                <div className={styles.formGroup}>
-                                    <label>Choose Plan</label>
-                                    <select name="" id="">
-                                        <option value="">Select Plan</option>
-                                    </select>
-                                </div>
-                                <div className={styles.formGroup}>
-                                    <label>Phone Number</label>
-                                    <input
-                                        type="text"
-                                        placeholder="0801 234 5678"
-                                    />
-                                </div>
-                                <div className={styles.formGroup}>
-                                    <label>Amount</label>
-                                    <input type="text" placeholder="0.00" />
-                                </div>
-                                <button>Get Data</button>{' '}
-                            </div>
-                            {/* <p className={styles.schedule}>
-                                Not paying now?{' '}
-                                <span onClick={scheduleLater}>
-                                    Schedule for Later
-                                </span>
-                            </p> */}
-                        </form>
+                    <div className={styles.backIcon}>
+                        <ArrowBackSvg color="#102572" action={backAction} />
+                        <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     </div>
-                </>
-            ) : firstTitle !== 'Bill Payment' ? (
-                <>
-                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
                     <div className={styles.body}>
                         <form onSubmit={handleSubmit(airtimeAction)}>
                             <div className={styles.narration}>
@@ -737,6 +644,245 @@ const BillPayment = ({
                                 </select>
                                 <p className={styles.error}>
                                     {errors?.sourceAccount?.message}
+                                </p>
+                            </div>
+                            <div className={styles.narration}>
+                                <label>Network</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    {...register('billerTypes', {
+                                        required: 'Biller Type  is required'
+                                    })}
+                                    onChange={(e) => {
+                                        dispatch(
+                                            loadbillerPlan(e.target.value)
+                                        );
+                                        setBillerPlans();
+                                        setIsLoadinggg(true);
+                                        setAmount('');
+                                    }}
+                                >
+                                    <option value="">Select Network</option>
+                                    {billerTypes.billerInfoList?.map(
+                                        (accounts, index) => {
+                                            return (
+                                                <option
+                                                    value={accounts.billerCode}
+                                                    key={index}
+                                                >
+                                                    {accounts.billerName}
+                                                </option>
+                                            );
+                                        }
+                                    )}
+                                </select>
+                                <p className={styles.error}>
+                                    {errors?.billerTypes?.message}
+                                </p>
+                            </div>
+                            {isLoadinggg ? (
+                                <Lottie
+                                    options={socialOptions}
+                                    height={200}
+                                    width={200}
+                                />
+                            ) : billerPlans ? (
+                                <div className={styles.narration}>
+                                    <label>Select Data Type</label>
+                                    <select
+                                        name="dataType"
+                                        id=""
+                                        {...register('dataType', {
+                                            required:
+                                                'Desired Package is required'
+                                        })}
+                                        onChange={(e) => {
+                                            billerPlans?.billerProductInfo?.map(
+                                                (item) => {
+                                                    if (
+                                                        item.productName ===
+                                                        e.target.value
+                                                    ) {
+                                                        localStorage.setItem(
+                                                            'DesiredPackage',
+                                                            JSON.stringify(item)
+                                                        );
+                                                        setAmount(
+                                                            e.target.value.split(
+                                                                'N'
+                                                            )
+                                                        );
+                                                    }
+                                                }
+                                            );
+                                        }}
+                                    >
+                                        <option value="">
+                                            Select Data Type
+                                        </option>
+                                        {billerPlans?.billerProductInfo?.map(
+                                            (item, index) => {
+                                                return (
+                                                    <option
+                                                        value={item.productName}
+                                                        key={index}
+                                                    >
+                                                        {item.productName}
+                                                    </option>
+                                                );
+                                            }
+                                        )}
+                                    </select>
+                                    <p className={styles.error}>
+                                        {errors?.dataType?.message}
+                                    </p>
+                                </div>
+                            ) : null}
+                            <div className={styles.networkForm}>
+                                <div className={styles.formGroup}>
+                                    <label>Phone Number</label>
+                                    {beneActive ? (
+                                        <input
+                                            {...register('phoneNumberBene')}
+                                            type="number"
+                                            value={beneActive.phoneNumber}
+                                        />
+                                    ) : !beneActive ? (
+                                        <input
+                                            type="text"
+                                            placeholder="0801 234 5678"
+                                            name="phoneNumber"
+                                            {...register('phoneNumber', {
+                                                required:
+                                                    'Phone Number is required',
+                                                minLength: {
+                                                    value: 11,
+                                                    message: 'Min length is 11'
+                                                },
+                                                maxLength: {
+                                                    value: 11,
+                                                    message: 'Max length is 11'
+                                                },
+                                                pattern: {
+                                                    value: /^[0-9]/i,
+                                                    message:
+                                                        'Phone Number can only be number '
+                                                }
+                                            })}
+                                        />
+                                    ) : null}
+                                    <p className={styles.error}>
+                                        {errors?.phoneNumber?.message}
+                                    </p>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Email </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Your Email"
+                                        name="email"
+                                        {...register('email', {
+                                            required: 'Email is required',
+                                            pattern: {
+                                                value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                                message: 'Invalid email address'
+                                            }
+                                        })}
+                                    />
+                                    <p className={styles.error}>
+                                        {errors?.email?.message}
+                                    </p>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Amount</label>
+                                    <input
+                                        type="text"
+                                        placeholder="0.00"
+                                        value={amount[1]}
+                                        name="amount"
+                                        {...register('amount')}
+                                        readOnly
+                                    />
+                                    <p className={styles.error}>
+                                        {errors?.amount?.message}
+                                    </p>
+                                </div>
+                                {isLoading ? (
+                                    <Loader />
+                                ) : (
+                                    <button type="submit">Get Data</button>
+                                )}
+                            </div>
+                            {/* <p className={styles.schedule}>
+                                Not paying now?{' '}
+                                <span onClick={scheduleLater}>
+                                    Schedule for Later
+                                </span>
+                            </p> */}
+                        </form>
+                    </div>
+                </>
+            ) : firstTitle !== 'Bill Payment' ? (
+                <>
+                    <div className={styles.backIcon}>
+                        <ArrowBackSvg color="#102572" action={backAction} />
+                        <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                    </div>
+                    <div className={styles.body}>
+                        <form onSubmit={handleSubmit(airtimeAction)}>
+                            <div className={styles.narration}>
+                                <label>Source Account</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    {...register('sourceAccount', {
+                                        required: 'Source Account is required'
+                                    })}
+                                    onInput={(event) => {
+                                        setFormdata({
+                                            ...formData,
+                                            accountNum: event.target.value
+                                        });
+                                    }}
+                                    // value={formData.accountNum}
+                                >
+                                    <option value="">
+                                        Select Account To Use
+                                    </option>
+                                    {bankAccounts?.map((accounts, index) => {
+                                        return (
+                                            <option
+                                                value={accounts.accountId}
+                                                key={index}
+                                            >
+                                                {`${
+                                                    accounts.accountNumber
+                                                } - ${formatter.format(
+                                                    accounts.accountBalance
+                                                )}`}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                                <p className={styles.error}>
+                                    {errors?.sourceAccount?.message}
+                                </p>
+                            </div>
+                            <div className={styles.narration}>
+                                <label>Destination Account</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    onChange={(e) => {
+                                        setDest(e.target.value);
+                                    }}
+                                >
+                                    <option value="Self">Self</option>
+                                    <option value="Third">Third Party</option>
+                                </select>
+                                <p className={styles.error}>
+                                    {errors?.billerTypes?.message}
                                 </p>
                             </div>
                             <div className={styles.narration}>
@@ -858,73 +1004,53 @@ const BillPayment = ({
                                     </div>
                                 </>
                             ) : null}
-
-                            {/* <div className={styles.networkCarrier}>
-                                <h2>Network</h2>
-                                <div className={styles.networkBody}>
-                                    {airtimeNetworkData.networks?.map(
-                                        (networks, index) => {
-                                            if (
-                                                networks.name === 'SOCHIENGMTN'
-                                            ) {
-                                                return null;
-                                            } else {
-                                                return (
-                                                    <div
-                                                        className={
-                                                            network ===
-                                                            networks.name
-                                                                ? styles.networkActive
-                                                                : styles.networkSingle
-                                                        }
-                                                        onClick={() => {
-                                                            setNetwork(
-                                                                networks.name
-                                                            );
-                                                            localStorage.setItem(
-                                                                'Airtime',
-                                                                JSON.stringify(
-                                                                    networks
-                                                                )
-                                                            );
-                                                        }}
-                                                        key={index}
-                                                    >
-                                                        <div>
-                                                            {networks.name ===
-                                                            'MTN Nigeria' ? (
-                                                                <img
-                                                                    src="../../Assets/Svgs/mtn.svg"
-                                                                    alt=""
-                                                                />
-                                                            ) : networks.name ===
-                                                              'Airtel Nigeria' ? (
-                                                                <img
-                                                                    src="../../Assets/Svgs/airtel.svg"
-                                                                    alt=""
-                                                                />
-                                                            ) : networks.name ===
-                                                              'GLO Nigeria' ? (
-                                                                <img
-                                                                    src="../../Assets/Svgs/glo.svg"
-                                                                    alt=""
-                                                                />
-                                                            ) : networks.name ===
-                                                              'Etisalat Nigeria' ? (
-                                                                <img
-                                                                    src="../../Assets/Svgs/9mobile.svg"
-                                                                    alt=""
-                                                                />
-                                                            ) : null}
-                                                        </div>
-                                                    </div>
-                                                );
+                            {dest === 'Third' ? (
+                                <div className={styles.formGroup}>
+                                    <label>Email </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Your Email"
+                                        name="billEmail"
+                                        {...register('billEmail', {
+                                            required: 'Email is required',
+                                            pattern: {
+                                                value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                                message: 'Invalid email address'
                                             }
-                                        }
-                                    )}
+                                        })}
+                                    />
+                                    <p className={styles.error}>
+                                        {errors?.billEmail?.message}
+                                    </p>
                                 </div>
-                            </div> */}
-
+                            ) : null}
+                            <div className={styles.formGroup}>
+                                <label>Phone Number</label>
+                                <input
+                                    type="text"
+                                    placeholder="0801 234 5678"
+                                    name="billPhoneNumber"
+                                    {...register('billPhoneNumber', {
+                                        required: 'Phone Number is required',
+                                        minLength: {
+                                            value: 11,
+                                            message: 'Min length is 11'
+                                        },
+                                        maxLength: {
+                                            value: 11,
+                                            message: 'Max length is 11'
+                                        },
+                                        pattern: {
+                                            value: /^[0-9]/i,
+                                            message:
+                                                'Phone Number can only be number '
+                                        }
+                                    })}
+                                />
+                                <p className={styles.error}>
+                                    {errors?.billPhoneNumber?.message}
+                                </p>
+                            </div>
                             <div className={styles.networkForm}>
                                 <div className={styles.formGroup}>
                                     <label>Amount</label>

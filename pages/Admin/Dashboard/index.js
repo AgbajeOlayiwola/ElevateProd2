@@ -52,6 +52,9 @@ import BulkTransfer2 from '../../../components/ReusableComponents/BulkTransfSvg/
 import BillTransfer from '../../../components/ReusableComponents/BillTransSvg';
 import BillSvg from '../../../components/ReusableComponents/ReusableSvgComponents/BillSvg';
 import { AiFillCheckCircle } from 'react-icons/ai';
+import Overlay from '../../../components/ReusableComponents/Overlay';
+import Addaccounts from '../../../components/ReusableComponents/Addaccounts';
+import CloseBtnSvg from '../../../components/ReusableComponents/ClosebtnSvg';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -370,6 +373,10 @@ const Dashboard = () => {
             .catch((err) => {
                 console.log(err);
             });
+    };
+    const [overlay, setOverlay] = useState(false);
+    const openAddAccountModal = () => {
+        setOverlay(true);
     };
     return (
         <div className={styles.statementCover}>
@@ -736,6 +743,19 @@ const Dashboard = () => {
 
                         <div className={styles.otherAccounts}>
                             <h2>Other Accounts</h2>
+                            <div
+                                className={styles.addAccount}
+                                onClick={openAddAccountModal}
+                            >
+                                +
+                            </div>
+                            <Overlay overlay={overlay}>
+                                <Addaccounts
+                                    close={() => {
+                                        setOverlay(false);
+                                    }}
+                                />
+                            </Overlay>
                             <div className={styles.accountsALl}>
                                 {bankAccounts?.map((accountNo, index) => {
                                     if (acctInfoNum === accountNo.accountNumber)
@@ -936,11 +956,17 @@ const Dashboard = () => {
                                                             <p>
                                                                 {newBeneficiary ===
                                                                 ''
-                                                                    ? ''
-                                                                    : newBeneficiary[1] ===
-                                                                      undefined
-                                                                    ? newBeneficiary[0]
-                                                                    : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                                    ? item.transactionType.replace(
+                                                                          '_',
+                                                                          ' '
+                                                                      ) ===
+                                                                      'BILL PAYMENT'
+                                                                        ? item.billerCode
+                                                                        : newBeneficiary[1] ===
+                                                                          undefined
+                                                                        ? newBeneficiary[0]
+                                                                        : `${newBeneficiary[0]} ${newBeneficiary[1]}`
+                                                                    : ''}
                                                             </p>
                                                         )}
                                                     </div>

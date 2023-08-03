@@ -56,10 +56,8 @@ const PaymentTypes = () => {
         (state) => state.transactionFeesReducer
     );
 
-    const {
-        internationalTransfer,
-        errorMessageinternationalTransfer
-    } = useSelector((state) => state.internationalTransferReducer);
+    const { internationalTransfer, errorMessageinternationalTransfer } =
+        useSelector((state) => state.internationalTransferReducer);
 
     const { verifyCurrency, errorMessageverifyCurrency } = useSelector(
         (state) => state.verifyCurrencyReducer
@@ -690,10 +688,11 @@ const PaymentTypes = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount: parseInt(
-                                                              e.Amount,
-                                                              10
-                                                          ).toString(),
+                                                          transactionAmount:
+                                                              parseInt(
+                                                                  e.Amount,
+                                                                  10
+                                                              ).toString(),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -817,6 +816,9 @@ const PaymentTypes = () => {
                     case 1:
                         return (
                             <MakePaymentFirst
+                                backAction={() => {
+                                    setCount(count - 1);
+                                }}
                                 formData={formData}
                                 setFormdata={setFormdata}
                                 overlay={overlay}
@@ -831,17 +833,22 @@ const PaymentTypes = () => {
                                 airtimeAction={(data) => {
                                     setPaymentDetails(data);
                                     setSenderDetails(data.sourceAccount);
-                                    const payload = {
-                                        accountId: data.sourceAccount,
-                                        billerCode: data.type,
-                                        transactionAmount: parseInt(
-                                            data.amount,
-                                            10
-                                        ),
-                                        transactionType: 'BILLPAY'
-                                    };
-                                    dispatch(getTransactionFees(payload));
-                                    setIsLoading(true);
+                                    if (bill === 'DATA') {
+                                        setCount((count) => count + 1);
+                                    } else {
+                                        const payload = {
+                                            accountId: data.sourceAccount,
+                                            billerCode: data.type,
+                                            transactionAmount: parseInt(
+                                                data.amount,
+                                                10
+                                            ),
+                                            transactionType: 'BILLPAY'
+                                        };
+                                        dispatch(getTransactionFees(payload));
+                                        setIsLoading(true);
+                                    }
+
                                     //console.logdata);
                                 }}
                                 // scheduleLater={() => {
@@ -861,11 +868,20 @@ const PaymentTypes = () => {
                                         ? paymentDetails.phoneNumber === ''
                                             ? paymentDetails.phoneNumberBene
                                             : paymentDetails.phoneNumber
+                                        : bill === 'DATA'
+                                        ? paymentDetails.phoneNumber
                                         : 'UTILITIES'
                                 }
                                 amount={
-                                    parseInt(paymentDetails.amount, 10) +
-                                    parseInt(transactionFee, 10)
+                                    bill === 'DATA'
+                                        ? parseInt(
+                                              paymentDetails.dataType.split(
+                                                  'N'
+                                              )[1],
+                                              10
+                                          )
+                                        : parseInt(paymentDetails.amount, 10) +
+                                          parseInt(transactionFee, 10)
                                 }
                                 title="Bills Payment"
                                 charges={transactionFee}
@@ -887,8 +903,10 @@ const PaymentTypes = () => {
                                                 .toString()
                                                 .replaceAll(',', ''),
                                             accountId: senderDetails,
-                                            billerCode: airtimeNetData.billerDetail.billerCode.toString(),
-                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
+                                            billerCode:
+                                                airtimeNetData.billerDetail.billerCode.toString(),
+                                            billerId:
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             // productCode: airtimeNetData.name,
                                             productCode:
                                                 paymentDetails.airtimeCode,
@@ -918,11 +936,16 @@ const PaymentTypes = () => {
                                                 .toString()
                                                 .replaceAll(',', ''),
                                             transactionAmount:
-                                                paymentDetails.amount,
+                                                bill === 'DATA'
+                                                    ? paymentDetails.dataType.split(
+                                                          'N'
+                                                      )[1]
+                                                    : paymentDetails.amount,
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId:
+                                                airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:

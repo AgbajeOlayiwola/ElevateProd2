@@ -206,7 +206,7 @@ const Security = () => {
                                 <label>New Transaction Pin</label>
                                 <div className={styles.divs}>
                                     <input
-                                        type={outType ? 'password' : 'text'}
+                                        type={outType ? 'text' : 'password'}
                                         placeholder="New Transaction Pin"
                                         {...register('newPin', {
                                             required: 'New Pin is Required'
@@ -224,7 +224,7 @@ const Security = () => {
                                 <label>Confirm Transaction Pin</label>
                                 <div className={styles.divs}>
                                     <input
-                                        type={outTyped ? 'password' : 'text'}
+                                        type={outTyped ? 'text' : 'password'}
                                         placeholder="Confirm Transaction Pin"
                                         {...register('confirmPin', {
                                             required: 'Confirm Pin is Required'
@@ -279,7 +279,7 @@ const Security = () => {
                                 <label>New Password</label>
                                 <div className={styles.divs}>
                                     <input
-                                        type={outType ? 'password' : 'text'}
+                                        type={outType ? 'text' : 'password'}
                                         placeholder="New Password"
                                         {...register('newPassword', {
                                             required: 'New Password is Required'
@@ -315,7 +315,7 @@ const Security = () => {
                                 <div className={styles.divs}>
                                     <input
                                         placeholder="Confirm Password "
-                                        type={outTyped ? 'password' : 'text'}
+                                        type={outTyped ? 'text' : 'password'}
                                         {...register('confirmPassword', {
                                             required:
                                                 'Confirm Password is Required'
