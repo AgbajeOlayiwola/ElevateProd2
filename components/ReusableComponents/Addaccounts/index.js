@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import { AiOutlineArrowRight } from 'react-icons/ai';
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai';
 import CloseBtnSvg from '../ClosebtnSvg';
+import AddOmnilite from './AddOmnilite';
+import AddCard from './AddCard';
+import AddEcoonline from './AddEcoonline';
+import AddAccountNumber from './AddAccountNumber';
 
 const Addaccounts = ({ close }) => {
     const [type, setType] = useState('All');
@@ -51,33 +55,25 @@ const Addaccounts = ({ close }) => {
             case 'Omnilite':
                 return (
                     <>
-                        <div className={styles.omniButton}>
-                            Omnilite <AiOutlineArrowRight />
-                        </div>
+                        <AddOmnilite />
                     </>
                 );
             case 'Card':
                 return (
                     <>
-                        <div className={styles.cardButton}>
-                            Card <AiOutlineArrowRight />
-                        </div>
+                        <AddCard />
                     </>
                 );
             case 'Ecoonline':
                 return (
                     <>
-                        <div className={styles.ecoButton}>
-                            Eco Online <AiOutlineArrowRight />
-                        </div>
+                        <AddEcoonline />
                     </>
                 );
             case 'Accountnumber':
                 return (
                     <>
-                        <div className={styles.acountButton}>
-                            Account Number <AiOutlineArrowRight />
-                        </div>
+                        <AddAccountNumber />
                     </>
                 );
             default:
@@ -122,10 +118,14 @@ const Addaccounts = ({ close }) => {
     return (
         <div className={styles.modalCover}>
             <div className={styles.accounts}>
-                <h2 className={styles.add}>Add Your account number</h2>{' '}
-                <span onClick={close}>
-                    <CloseBtnSvg />
+                <span className={styles.leftCancel}>
+                    <span onClick={close}>
+                        <CloseBtnSvg />
+                    </span>
+                    <AiOutlineArrowLeft onClick={() => setType('All')} />
                 </span>
+                <h2 className={styles.add}>Add Your account number</h2>
+                <br />
                 {componentSet()}
             </div>
         </div>
