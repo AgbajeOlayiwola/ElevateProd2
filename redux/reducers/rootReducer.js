@@ -101,6 +101,9 @@ import setPrimaryAccountReducer from './setPrimaryAccount.reducer';
 import deleteAccountReducer from './deleteAccount.reducer';
 import requestPhysicalQrReducer from './requestPhysicalQr.reducer';
 import checkStatusReducer from './checkStatus.reducer';
+import changeNumberReducer from './changeNumber.reducer';
+import getProfileImgReducer from './getProfileImg.reducer';
+
 const appReducer = combineReducers({
     countryReducer: countryReducer,
     internationalCountryReducer: internationalCountryReducer,
@@ -207,6 +210,8 @@ const appReducer = combineReducers({
     setPrimaryAccountReducer: setPrimaryAccountReducer,
     deleteAccountReducer: deleteAccountReducer,
     checkStatusReducer: checkStatusReducer,
+    changeNumberReducer,
+    getProfileImgReducer,
     requestPhysicalQrReducer: requestPhysicalQrReducer
 });
 const rootReducer = (state, action) => {

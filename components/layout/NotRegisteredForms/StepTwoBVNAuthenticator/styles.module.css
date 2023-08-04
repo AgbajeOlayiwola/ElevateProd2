@@ -135,8 +135,32 @@
     line-height: 15px;
     color: #3e3e3e;
     margin: 0px;
+    cursor: pointer;
+}
+
+.bvnHeading {
+    display: flex;
+    align-items: center;
     margin-top: 64px;
     margin-bottom: 16px;
+    justify-content: space-between;
+}
+
+.changePhone {
+    margin-top: 64px;
+}
+
+.changePhone input {
+    margin-bottom: 12px;
+}
+
+.changePhone button {
+    margin-top: 32px;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
 }
 
 @media screen and (max-width: 1186px) {

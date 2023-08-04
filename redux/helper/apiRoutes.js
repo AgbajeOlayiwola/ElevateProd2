@@ -113,6 +113,9 @@ const deleteAccount = '/users/delete-account';
 const setPrimaryAccount = '/bank-account/primary';
 const requestPhysicalQr = '/qr-merchant/request-physical-qr';
 const checkStatus = '/account-upgrade/check-submitted';
+const changePhone = '/users/phone/update';
+const getProfileImg = '/users/profile/image';
+
 export default {
     getAllComplaint,
     trackComplaint,
@@ -225,5 +228,7 @@ export default {
     deleteAccount,
     setPrimaryAccount,
     requestPhysicalQr,
-    checkStatus
+    checkStatus,
+    changePhone,
+    getProfileImg
 };

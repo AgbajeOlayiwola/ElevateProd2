@@ -17,21 +17,24 @@ const Navbar = ({
     preview,
     previewSingle,
     productAction,
-    sideAction
+    sideAction,
+    userProfile,
+    profileImg
 }) => {
     const router = useRouter();
-    const [userProfile, setUserProfile] = useState();
-    const [userProfileData, setUserProfileData] = useState();
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setUserProfile(window.localStorage.getItem('user'));
-        }
-    }, []);
-    useEffect(() => {
-        if (userProfile !== undefined) {
-            setUserProfileData(JSON.parse(userProfile));
-        }
-    }, [userProfile]);
+    // const [userProfile, setUserProfile] = useState();
+    // const [userProfileData, setUserProfileData] = useState();
+    // useEffect(() => {
+    //     if (typeof window !== 'undefined') {
+    //         setUserProfile(window.localStorage.getItem('user'));
+    //     }
+    // }, []);
+    // useEffect(() => {
+    //     if (userProfile !== undefined) {
+    //         setUserProfileData(JSON.parse(userProfile));
+    //     }
+    // }, [userProfile]);
+    // console.log(userProfileData);
     return (
         <nav className={styles.navigation}>
             {preview === true ? (
@@ -95,8 +98,8 @@ const Navbar = ({
                             <div className={styles.userName}>
                                 <h3 className={styles.name}>
                                     Welcome,
-                                    {userProfileData
-                                        ? userProfileData.profile.preferredName
+                                    {userProfile
+                                        ? userProfile.preferredName
                                         : null}{' '}
                                     👍🏼
                                 </h3>
@@ -153,9 +156,9 @@ const Navbar = ({
                             </div>
                             <Link href="/Admin/Profile">
                                 <div>
-                                    {userProfileData ? (
+                                    {profileImg ? (
                                         <img
-                                            src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
+                                            src={`data:image/png;base64,${profileImg.image}`}
                                             width="50"
                                             height="50"
                                         />

@@ -19,8 +19,13 @@ import {
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import Card from '../../NotRegisteredForms/Card';
 import OtpInput from '../../../ReusableComponents/Otpinput';
-import { resetOtpData, verifyOtp } from '../../../../redux/actions/actions';
+import {
+    resetOtpData,
+    verifyOtp,
+    changeNumberAction
+} from '../../../../redux/actions/actions';
 import { otp } from '../../../../redux/types/actionTypes';
+import Loader from '../../../ReusableComponents/Loader';
 
 const StepTwoBVNAuthenticator = ({
     handleShowThirdStep,
@@ -42,6 +47,9 @@ const StepTwoBVNAuthenticator = ({
 
     const { resetOtp, resetOtpErrorMessages } = useSelector(
         (state) => state.resetOtpReducer
+    );
+    const { changeNumber, changeNumberError } = useSelector(
+        (state) => state.changeNumberReducer
     );
 
     const [activeBtn, setActiveBtn] = useState(false);
@@ -96,6 +104,40 @@ const StepTwoBVNAuthenticator = ({
         setValue((ssnValues) => ['']);
     }, [resetOtp, resetOtpErrorMessages]);
 
+    const [phone, setPhone] = useState('otp');
+    const [newPhone, setNewPhone] = useState('otp');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
+
+    const submit = () => {
+        setError('');
+        setLoading(true);
+        const data = {
+            phoneNumber: newPhone
+        };
+
+        dispatch(changeNumberAction(data));
+    };
+
+    const changeTest = () => {
+        if (changeNumber !== null) {
+            setPhone('otp');
+            setLoading(false);
+        } else if (changeNumberError !== null) {
+            setError(changeNumberError);
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        changeTest();
+    }, [changeNumber, changeNumberError]);
+
     return (
         <div className={styles.bvnBody}>
             <div className={styles.cover}>
@@ -120,77 +162,130 @@ const StepTwoBVNAuthenticator = ({
                     {otpError ? (
                         <p className={styles.error}>{otpError}</p>
                     ) : null}
+                    {error ? <p className={styles.error}>{error[0]}</p> : null}
                     {resetOtpErrorMessages ? (
                         <p> {resetOtpErrorMessages.response.data.message}</p>
                     ) : resetOtpErrorMessages?.response?.data?.message ? (
                         <p>{resetOtp?.data.message}</p>
                     ) : null}
-                    <p className={styles.inp}>Input OTP</p>
-                    <form>
-                        <div className={styles.otpInps}>
-                            <input
-                                type="password"
-                                name="ssn-1"
-                                maxLength={1}
-                                onInput={handleOtpChange}
-                            />
-                            <input
-                                type="password"
-                                name="ssn-2"
-                                maxLength={1}
-                                onInput={handleOtpChange}
-                            />
-                            <input
-                                type="password"
-                                name="ssn-3"
-                                maxLength={1}
-                                onInput={handleOtpChange}
-                            />
-                            <input
-                                type="password"
-                                name="ssn-4"
-                                maxLength={1}
-                                onInput={handleOtpChange}
-                            />
-                            <input
-                                type="password"
-                                name="ssn-5"
-                                maxLength={1}
-                                onInput={handleOtpChange}
-                            />
-                            <input
-                                type="password"
-                                name="ssn-6"
-                                maxLength={1}
-                                onInput={handleOtpChange}
-                            />
+                    <div className={styles.bvnHeading}>
+                        <p
+                            className={styles.inp}
+                            onClick={() => {
+                                setPhone('otp');
+                            }}
+                        >
+                            Input OTP
+                        </p>
+                        <p
+                            className={styles.inp}
+                            onClick={() => {
+                                setPhone('phone');
+                            }}
+                        >
+                            Change Phone Number
+                        </p>
+                    </div>
+                    {phone === 'otp' ? (
+                        <form>
+                            <div className={styles.otpInps}>
+                                <input
+                                    type="password"
+                                    name="ssn-1"
+                                    maxLength={1}
+                                    onInput={handleOtpChange}
+                                />
+                                <input
+                                    type="password"
+                                    name="ssn-2"
+                                    maxLength={1}
+                                    onInput={handleOtpChange}
+                                />
+                                <input
+                                    type="password"
+                                    name="ssn-3"
+                                    maxLength={1}
+                                    onInput={handleOtpChange}
+                                />
+                                <input
+                                    type="password"
+                                    name="ssn-4"
+                                    maxLength={1}
+                                    onInput={handleOtpChange}
+                                />
+                                <input
+                                    type="password"
+                                    name="ssn-5"
+                                    maxLength={1}
+                                    onInput={handleOtpChange}
+                                />
+                                <input
+                                    type="password"
+                                    name="ssn-6"
+                                    maxLength={1}
+                                    onInput={handleOtpChange}
+                                />
+                            </div>
+                            <div className={styles.resendFlex}>
+                                <button
+                                    className={styles.resetOtp}
+                                    onClick={ResetOtp}
+                                    type="reset"
+                                >
+                                    Resend OTP
+                                </button>
+                                <button
+                                    onClick={clear}
+                                    className={styles.clr}
+                                    type="reset"
+                                >
+                                    Clear
+                                </button>
+                            </div>
+                        </form>
+                    ) : phone === 'phone' ? (
+                        <div className={styles.changePhone}>
+                            <form onSubmit={handleSubmit(submit)}>
+                                <input
+                                    type="text"
+                                    placeholder="Enter New Phone Number"
+                                    {...register('countryCode_number', {
+                                        required: 'Phone Number is required',
+                                        minLength: {
+                                            value: 10,
+                                            message: 'Min length is 10'
+                                        },
+                                        maxLength: {
+                                            value: 11,
+                                            message: 'Max length is 10'
+                                        }
+                                    })}
+                                    onInput={(e) => {
+                                        setNewPhone(e.target.value);
+                                    }}
+                                />
+                                <div className={styles.error}>
+                                    {errors.countryCode_number?.message}
+                                </div>
+                                {loading ? (
+                                    <Loader />
+                                ) : (
+                                    <button type="submit">Change</button>
+                                )}
+                            </form>
                         </div>
-                        <div className={styles.resendFlex}>
-                            <button
-                                className={styles.resetOtp}
-                                onClick={ResetOtp}
-                                type="reset"
-                            >
-                                Resend OTP
-                            </button>
-                            <button
-                                onClick={clear}
-                                className={styles.clr}
-                                type="reset"
-                            >
-                                Clear
-                            </button>
-                        </div>
-                    </form>
-                    <ButtonComp
-                        onClick={action}
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        // onClick={action}
-                        type="button"
-                        margin="80px 0px 0px 0px"
-                        text="Proceed"
-                    />
+                    ) : null}
+                    {phone === 'otp' ? (
+                        <ButtonComp
+                            onClick={action}
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            // onClick={action}
+                            type="button"
+                            margin="80px 0px 0px 0px"
+                            text="Proceed"
+                        />
+                    ) : null}
                 </div>
             </div>
         </div>
