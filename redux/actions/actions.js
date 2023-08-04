@@ -102,17 +102,12 @@ import {
     deleteAccountType,
     setPrimaryAccountType,
     requestPhysicalQrType,
-<<<<<<< HEAD
     addomniLiteType,
     addecoOnlineType,
     addAccountNumberType,
     validateCardType,
     validateAccountNumberType,
     addCardType
-=======
-    changeNumber,
-    getProfileImg
->>>>>>> 69fcfcd1bb15c86b81f83c9072d95741d71d49f4
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -1171,33 +1166,34 @@ export const transactionHistoryLoadError = (transactionHistoryerror) => ({
     type: transactionHistory.TRANSACTIONHISTORY_LOAD_ERROR,
     payload: transactionHistoryerror
 });
-export const getTransactionHistory =
-    (pageSrchIndex, numOfRecords) => (dispatch) => {
-        let cookie;
-        if (getCookie('cookieToken') == undefined) {
-            cookie = getCookie('existingToken');
-        } else {
-            cookie = getCookie('cookieToken');
-        }
-        dispatch(transactionHistoryLoadStart());
-        axiosInstance
-            .get(
-                `${apiRoutes.transactionHistory}?pageSearchIndex=${pageSrchIndex}&numberOfRecords=${numOfRecords}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Client-Type': 'web',
-                        Authorization: `Bearer ${cookie}`
-                    }
+export const getTransactionHistory = (pageSrchIndex, numOfRecords) => (
+    dispatch
+) => {
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    dispatch(transactionHistoryLoadStart());
+    axiosInstance
+        .get(
+            `${apiRoutes.transactionHistory}?pageSearchIndex=${pageSrchIndex}&numberOfRecords=${numOfRecords}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
-            .then((response) =>
-                dispatch(transactionHistoryLoadSuccess(response.data.data))
-            )
-            .catch((error) =>
-                dispatch(transactionHistoryLoadError(error?.message))
-            );
-    };
+            }
+        )
+        .then((response) =>
+            dispatch(transactionHistoryLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(transactionHistoryLoadError(error?.message))
+        );
+};
 
 //transactionHistory action end
 
@@ -1241,33 +1237,36 @@ export const transactionElevateLoadError = (transactionElevateerror) => ({
     type: transactionElevate.TRANSACTIONELEVATE_LOAD_ERROR,
     payload: transactionElevateerror
 });
-export const getTransactionElevate =
-    (pageSrchIndex, numOfRecords, transactionType) => (dispatch) => {
-        dispatch(transactionElevateLoadStart());
-        let cookie;
-        if (getCookie('cookieToken') == undefined) {
-            cookie = getCookie('existingToken');
-        } else {
-            cookie = getCookie('cookieToken');
-        }
-        axiosInstance
-            .get(
-                `${apiRoutes.transactionElevate}?pageSearchIndex=${pageSrchIndex}&numberOfRecords=${numOfRecords}&transactionType=${transactionType}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Client-Type': 'web',
-                        Authorization: `Bearer ${cookie}`
-                    }
+export const getTransactionElevate = (
+    pageSrchIndex,
+    numOfRecords,
+    transactionType
+) => (dispatch) => {
+    dispatch(transactionElevateLoadStart());
+    let cookie;
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .get(
+            `${apiRoutes.transactionElevate}?pageSearchIndex=${pageSrchIndex}&numberOfRecords=${numOfRecords}&transactionType=${transactionType}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
-            .then((response) =>
-                dispatch(transactionElevateLoadSuccess(response.data.data))
-            )
-            .catch((error) =>
-                dispatch(transactionElevateLoadError(error?.message))
-            );
-    };
+            }
+        )
+        .then((response) =>
+            dispatch(transactionElevateLoadSuccess(response.data.data))
+        )
+        .catch((error) =>
+            dispatch(transactionElevateLoadError(error?.message))
+        );
+};
 
 //transactionElevate action end
 
@@ -3091,38 +3090,37 @@ export const postEllevateProfilingError = (ellevateProfillingError) => ({
     type: postEllevateProfilling.POST_ELLEVATE_PROFILLING_ERROR,
     payload: ellevateProfillingError
 });
-export const postEllevateProfilingDetails =
-    (profileSetupItems) => (dispatch) => {
-        let cookie;
+export const postEllevateProfilingDetails = (profileSetupItems) => (
+    dispatch
+) => {
+    let cookie;
 
-        if (getCookie('cookieToken') == undefined) {
-            cookie = getCookie('existingToken');
-        } else {
-            cookie = getCookie('cookieToken');
-        }
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
 
-        // dispatch(accountNumberLoadStart());
-        axios
-            .post(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.postEllevateProfiling}`,
-                profileSetupItems,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Client-Type': 'web',
-                        Authorization: `Bearer ${cookie}`
-                    }
+    // dispatch(accountNumberLoadStart());
+    axios
+        .post(
+            `https://mysmeapp.ecobank.com:8443${apiRoutes.postEllevateProfiling}`,
+            profileSetupItems,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
-            .then((response) => {
-                dispatch(postEllevateProfilingSuccess(response.data.message));
-            })
-            .catch((error) =>
-                dispatch(
-                    postEllevateProfilingError(error?.response.data.message)
-                )
-            );
-    };
+            }
+        )
+        .then((response) => {
+            dispatch(postEllevateProfilingSuccess(response.data.message));
+        })
+        .catch((error) =>
+            dispatch(postEllevateProfilingError(error?.response.data.message))
+        );
+};
 //Ellevate Profiling end
 
 ////Vnin Profiling
@@ -3816,32 +3814,33 @@ export const getDisputCategorySubError = (
     type: disputSubCategoryType.DISPUTCATEGORYSUB_LOAD_ERROR,
     payload: getDisputCategoryErrorSubMessage
 });
-export const getDisputCategorySubGen =
-    (categoryType, disputeSubCategory) => (dispatch) => {
-        dispatch(getDisputCategorySubStart(disputeSubCategory));
-        let cookie;
+export const getDisputCategorySubGen = (categoryType, disputeSubCategory) => (
+    dispatch
+) => {
+    dispatch(getDisputCategorySubStart(disputeSubCategory));
+    let cookie;
 
-        if (getCookie('cookieToken') == undefined) {
-            cookie = getCookie('existingToken');
-        } else {
-            cookie = getCookie('cookieToken');
-        }
-        axiosInstance
-            .get(
-                `${apiRoutes.subComplaintCategories}?caseType=${disputeSubCategory}&caseCategory=${categoryType}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Client-Type': 'web',
-                        Authorization: `Bearer ${cookie}`
-                    }
+    if (getCookie('cookieToken') == undefined) {
+        cookie = getCookie('existingToken');
+    } else {
+        cookie = getCookie('cookieToken');
+    }
+    axiosInstance
+        .get(
+            `${apiRoutes.subComplaintCategories}?caseType=${disputeSubCategory}&caseCategory=${categoryType}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookie}`
                 }
-            )
-            .then((response) => {
-                dispatch(getDisputCategorySubSuccess(response.data.data));
-            })
-            .catch((error) => dispatch(getDisputCategorySubError(error)));
-    };
+            }
+        )
+        .then((response) => {
+            dispatch(getDisputCategorySubSuccess(response.data.data));
+        })
+        .catch((error) => dispatch(getDisputCategorySubError(error)));
+};
 
 //Get Dispute Type Info actions end
 
@@ -4168,22 +4167,22 @@ export const checkStatusAction = (data) => (dispatch) => {
 };
 //St primary account Action End
 
-//St primary account Action Statr
-export const changeNumberStart = () => ({
-    type: changeNumber.CHANGENUMBER_LOAD_START
+//add omnilite account  Start
+export const addOmniliteStart = () => ({
+    type: addomniLiteType.OMNILITE_TYPE_START
 });
 
-export const changeNumberSuccess = (changeNumberSuccess) => ({
-    type: changeNumber.CHANGENUMBER_LOAD_SUCCESS,
-    payload: changeNumberSuccess
+export const addOmniliteSuccess = (addOmniliteSuccess) => ({
+    type: addomniLiteType.OMNILITE_TYPE_SUCCESS,
+    payload: addOmniliteSuccess
 });
 
-export const changeNumberError = (changeNumberErrorMessage) => ({
-    type: changeNumber.CHANGENUMBER_LOAD_ERROR,
-    payload: changeNumberErrorMessage
+export const addOmniliteError = (addOmniliteErrorMessage) => ({
+    type: addomniLiteType.OMNILITE_TYPE_ERROR,
+    payload: addOmniliteErrorMessage
 });
-export const changeNumberAction = (data) => (dispatch) => {
-    dispatch(changeNumberStart());
+export const addOmniliteAction = (data) => (dispatch) => {
+    dispatch(addOmniliteStart());
     let cookie;
 
     if (getCookie('cookieToken') == undefined) {
@@ -4192,7 +4191,7 @@ export const changeNumberAction = (data) => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     axiosInstance
-        .post(`${apiRoutes.changePhone}`, data, {
+        .post(`${apiRoutes.addOmnilite}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -4200,30 +4199,30 @@ export const changeNumberAction = (data) => (dispatch) => {
             }
         })
         .then((response) => {
-            dispatch(changeNumberSuccess(response?.data));
+            dispatch(addOmniliteSuccess(response));
         })
         .catch((error) => {
-            dispatch(changeNumberError(error?.response?.data?.message));
+            dispatch(addOmniliteError(error?.response));
         });
 };
-//St primary account Action End
+//add omnilite account End
 
-//St primary account Action Statr
-export const getProfileImgStart = () => ({
-    type: getProfileImg.GETPROFILEIMG_LOAD_START
+//add coonline account  Start
+export const addecoOnlineStart = () => ({
+    type: addecoOnlineType.ECO_ONLINE_TYPE_START
 });
 
-export const getProfileImgSuccess = (getProfileImgSuccess) => ({
-    type: getProfileImg.GETPROFILEIMG_LOAD_SUCCESS,
-    payload: getProfileImgSuccess
+export const addecoOnlineSuccess = (addecoOnlineSuccess) => ({
+    type: addecoOnlineType.ECO_ONLINE_TYPE_SUCCESS,
+    payload: addecoOnlineSuccess
 });
 
-export const getProfileImgError = (getProfileImgErrorMessage) => ({
-    type: getProfileImg.GETPROFILEIMG_LOAD_ERROR,
-    payload: getProfileImgErrorMessage
+export const addecoOnlineError = (addecoOnlineErrorMessage) => ({
+    type: addecoOnlineType.ECO_ONLINE_TYPE_ERROR,
+    payload: addecoOnlineErrorMessage
 });
-export const getProfileImgAction = (data) => (dispatch) => {
-    dispatch(getProfileImgStart());
+export const addecoOnlineAction = (data) => (dispatch) => {
+    dispatch(addecoOnlineStart());
     let cookie;
 
     if (getCookie('cookieToken') == undefined) {
@@ -4232,7 +4231,7 @@ export const getProfileImgAction = (data) => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     axiosInstance
-        .get(`${apiRoutes.getProfileImg}`, {
+        .post(`${apiRoutes.addEcoOnline}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -4409,10 +4408,3 @@ export const validateCardAction = (data) => (dispatch) => {
         });
 };
 //add validate Card End
-//             dispatch(getProfileImgSuccess(response?.data));
-//         })
-//         .catch((error) => {
-//             dispatch(getProfileImgError(error?.response?.data?.message));
-//         });
-// };
-//St primary account Action End
