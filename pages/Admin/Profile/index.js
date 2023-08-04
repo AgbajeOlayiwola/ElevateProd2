@@ -50,7 +50,8 @@ import {
     postBeneficiariesData,
     postAirtimeNetwork,
     loadsetTransactionPin,
-    postAirtimeBeneficiariesData
+    postAirtimeBeneficiariesData,
+    getProfileImgAction
 } from '../../../redux/actions/actions';
 import { useForm } from 'react-hook-form';
 import Loader from '../../../components/ReusableComponents/Loader';
@@ -95,6 +96,7 @@ const Profile = () => {
     const [showinterEnquiry, setshowInterEnquiry] = useState(false);
     const [rafiki, setRafiki] = useState(false);
     const [active, setActive] = useState(false);
+    const [profileImg, setProfileImg] = useState('');
     const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const [copyAcctInfo, setCopyAcctInfo] = useState();
     const [alert, setAlert] = useState(false);
@@ -124,6 +126,9 @@ const Profile = () => {
         (state) => state.unfreezeTransactionsReducer
     );
     const { userProfile } = useSelector((state) => state.userProfileReducer);
+    const { getProfileImg } = useSelector(
+        (state) => state.getProfileImgReducer
+    );
     const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
     );
@@ -371,6 +376,7 @@ const Profile = () => {
         // dispatch(loadbank('ENG'));
         dispatch(postAirtimeNetwork());
         dispatch(bankAccountsData());
+        dispatch(getProfileImgAction());
     }, []);
     useEffect(() => {
         if (airtimeNetwork !== null) {
@@ -418,6 +424,11 @@ const Profile = () => {
             setFreeze(userProfile.freezeTransactions);
         }
     }, [userProfile]);
+    useEffect(() => {
+        if (getProfileImg !== null) {
+            setProfileImg(getProfileImg);
+        }
+    }, [getProfileImg]);
     useEffect(() => {
         if (deleteBeneficiaries !== null) {
             dispatch(getBeneficiariesData());
@@ -608,9 +619,9 @@ const Profile = () => {
                         <h2 className={styles.title}>View Profile</h2>
                         <div className={styles.profileBodyHead}>
                             <div className={styles.profileBodyHeadImg}>
-                                {!userProfileData.profileImg ? null : (
+                                {!profileImg.image ? null : (
                                     <Image
-                                        src={`data:image/png;base64,${userProfileData.profileImg}`}
+                                        src={`data:image/png;base64,${profileImg.image}`}
                                         width="100%"
                                         height="100%"
                                     />
@@ -2165,9 +2176,9 @@ const Profile = () => {
                     <>
                         <div className={styles.profileHeaderHead}>
                             <div className={styles.profileHeaderImg}>
-                                {!userProfileData.profileImg ? null : (
+                                {!profileImg.image ? null : (
                                     <Image
-                                        src={`data:image/png;base64,${userProfileData.profileImg}`}
+                                        src={`data:image/png;base64,${profileImg.image}`}
                                         width="100%"
                                         height="100%"
                                     />

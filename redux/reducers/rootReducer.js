@@ -107,6 +107,9 @@ import addOmniliteReducer from './addomniite.reducer';
 import addEcoOnlineReducer from './addEcoOnline.reducer';
 import addCardReducer from './addCard.reducer';
 import addAccountNumberReducer from './addAccountNumber.reducer';
+import changeNumberReducer from './changeNumber.reducer';
+import getProfileImgReducer from './getProfileImg.reducer';
+
 const appReducer = combineReducers({
     countryReducer: countryReducer,
     internationalCountryReducer: internationalCountryReducer,
@@ -219,7 +222,10 @@ const appReducer = combineReducers({
     addOmniliteReducer: addOmniliteReducer,
     addEcoOnlineReducer: addEcoOnlineReducer,
     addCardReducer: addCardReducer,
-    addAccountNumberReducer: addAccountNumberReducer
+    addAccountNumberReducer: addAccountNumberReducer,
+    changeNumberReducer,
+    getProfileImgReducer,
+    requestPhysicalQrReducer: requestPhysicalQrReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

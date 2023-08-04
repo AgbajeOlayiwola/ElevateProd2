@@ -119,6 +119,9 @@ const addAccountNumber = '/bank-account/add/account-number';
 const addCard = '/bank-account/add/account-number';
 const vlidateAccountNumber = '/bank-account/validate/add/account-number';
 const validateCard = '/bank-account/validate/add/card';
+const changePhone = '/users/phone/update';
+const getProfileImg = '/users/profile/image';
+
 export default {
     validateCard,
     vlidateAccountNumber,
@@ -237,5 +240,7 @@ export default {
     deleteAccount,
     setPrimaryAccount,
     requestPhysicalQr,
-    checkStatus
+    checkStatus,
+    changePhone,
+    getProfileImg
 };

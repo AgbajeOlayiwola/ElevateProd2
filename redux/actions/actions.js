@@ -102,12 +102,17 @@ import {
     deleteAccountType,
     setPrimaryAccountType,
     requestPhysicalQrType,
+<<<<<<< HEAD
     addomniLiteType,
     addecoOnlineType,
     addAccountNumberType,
     validateCardType,
     validateAccountNumberType,
     addCardType
+=======
+    changeNumber,
+    getProfileImg
+>>>>>>> 69fcfcd1bb15c86b81f83c9072d95741d71d49f4
 } from '../types/actionTypes';
 // import axiosInstance from '../helper/apiClient';
 import apiRoutes from '../helper/apiRoutes';
@@ -4163,22 +4168,22 @@ export const checkStatusAction = (data) => (dispatch) => {
 };
 //St primary account Action End
 
-//add omnilite account  Start
-export const addOmniliteStart = () => ({
-    type: addomniLiteType.OMNILITE_TYPE_START
+//St primary account Action Statr
+export const changeNumberStart = () => ({
+    type: changeNumber.CHANGENUMBER_LOAD_START
 });
 
-export const addOmniliteSuccess = (addOmniliteSuccess) => ({
-    type: addomniLiteType.OMNILITE_TYPE_SUCCESS,
-    payload: addOmniliteSuccess
+export const changeNumberSuccess = (changeNumberSuccess) => ({
+    type: changeNumber.CHANGENUMBER_LOAD_SUCCESS,
+    payload: changeNumberSuccess
 });
 
-export const addOmniliteError = (addOmniliteErrorMessage) => ({
-    type: addomniLiteType.OMNILITE_TYPE_ERROR,
-    payload: addOmniliteErrorMessage
+export const changeNumberError = (changeNumberErrorMessage) => ({
+    type: changeNumber.CHANGENUMBER_LOAD_ERROR,
+    payload: changeNumberErrorMessage
 });
-export const addOmniliteAction = (data) => (dispatch) => {
-    dispatch(addOmniliteStart());
+export const changeNumberAction = (data) => (dispatch) => {
+    dispatch(changeNumberStart());
     let cookie;
 
     if (getCookie('cookieToken') == undefined) {
@@ -4187,7 +4192,7 @@ export const addOmniliteAction = (data) => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     axiosInstance
-        .post(`${apiRoutes.addOmnilite}`, {
+        .post(`${apiRoutes.changePhone}`, data, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -4195,30 +4200,30 @@ export const addOmniliteAction = (data) => (dispatch) => {
             }
         })
         .then((response) => {
-            dispatch(addOmniliteSuccess(response));
+            dispatch(changeNumberSuccess(response?.data));
         })
         .catch((error) => {
-            dispatch(addOmniliteError(error?.response));
+            dispatch(changeNumberError(error?.response?.data?.message));
         });
 };
-//add omnilite account End
+//St primary account Action End
 
-//add coonline account  Start
-export const addecoOnlineStart = () => ({
-    type: addecoOnlineType.ECO_ONLINE_TYPE_START
+//St primary account Action Statr
+export const getProfileImgStart = () => ({
+    type: getProfileImg.GETPROFILEIMG_LOAD_START
 });
 
-export const addecoOnlineSuccess = (addecoOnlineSuccess) => ({
-    type: addecoOnlineType.ECO_ONLINE_TYPE_SUCCESS,
-    payload: addecoOnlineSuccess
+export const getProfileImgSuccess = (getProfileImgSuccess) => ({
+    type: getProfileImg.GETPROFILEIMG_LOAD_SUCCESS,
+    payload: getProfileImgSuccess
 });
 
-export const addecoOnlineError = (addecoOnlineErrorMessage) => ({
-    type: addecoOnlineType.ECO_ONLINE_TYPE_ERROR,
-    payload: addecoOnlineErrorMessage
+export const getProfileImgError = (getProfileImgErrorMessage) => ({
+    type: getProfileImg.GETPROFILEIMG_LOAD_ERROR,
+    payload: getProfileImgErrorMessage
 });
-export const addecoOnlineAction = (data) => (dispatch) => {
-    dispatch(addecoOnlineStart());
+export const getProfileImgAction = (data) => (dispatch) => {
+    dispatch(getProfileImgStart());
     let cookie;
 
     if (getCookie('cookieToken') == undefined) {
@@ -4227,7 +4232,7 @@ export const addecoOnlineAction = (data) => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     axiosInstance
-        .post(`${apiRoutes.addEcoOnline}`, {
+        .get(`${apiRoutes.getProfileImg}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -4404,3 +4409,10 @@ export const validateCardAction = (data) => (dispatch) => {
         });
 };
 //add validate Card End
+//             dispatch(getProfileImgSuccess(response?.data));
+//         })
+//         .catch((error) => {
+//             dispatch(getProfileImgError(error?.response?.data?.message));
+//         });
+// };
+//St primary account Action End

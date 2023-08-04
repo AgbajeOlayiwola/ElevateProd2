@@ -35,6 +35,20 @@ export const shareDocuments = {
     SHAREDOCUMENTS_LOAD_ERROR: 'SHAREDOCUMENTS_LOAD_ERROR'
 };
 //banks action types end
+//banks action types
+export const changeNumber = {
+    CHANGENUMBER_LOAD_START: 'CHANGENUMBER_LOAD_START',
+    CHANGENUMBER_LOAD_SUCCESS: 'CHANGENUMBER_LOAD_SUCCESS',
+    CHANGENUMBER_LOAD_ERROR: 'CHANGENUMBER_LOAD_ERROR'
+};
+//banks action types end
+//banks action types
+export const getProfileImg = {
+    GETPROFILEIMG_LOAD_START: 'GETPROFILEIMG_LOAD_START',
+    GETPROFILEIMG_LOAD_SUCCESS: 'GETPROFILEIMG_LOAD_SUCCESS',
+    GETPROFILEIMG_LOAD_ERROR: 'GETPROFILEIMG_LOAD_ERROR'
+};
+//banks action types end
 
 //banks action types
 export const logout = {
