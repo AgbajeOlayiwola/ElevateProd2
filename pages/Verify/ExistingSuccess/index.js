@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Success from '../../../components/ReusableComponents/Success';
 import { ButtonComp } from '../../../components';
 import { useDispatch, useSelector } from 'react-redux';
-import { bankAccountsData } from '../../../redux/actions/actions';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
 
 const ExistingSuccess = ({ handleShowSuccessStep }) => {
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const ExistingSuccess = ({ handleShowSuccessStep }) => {
     );
     useEffect(() => {
         dispatch(bankAccountsData());
-        //console.log(bankAccounts[0].accountNumber);
+        // //console.log(bankAccounts[0].accountNumber);
 
         setActNo(bankAccounts[0]?.accountNumber);
     }, [bankAccounts[0]?.accountNumber]);

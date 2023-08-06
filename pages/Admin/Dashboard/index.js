@@ -17,17 +17,7 @@ import { OtherAccounts } from '../../../components/ReusableComponents/Data';
 import MakePaymentBtn from '../../../components/ReusableComponents/MakePayment';
 import RecievePaymentBtn from '../../../components/ReusableComponents/RecievePaymnet';
 // import withAuth from '../../components/HOC/withAuth.js';
-import {
-    getBalanceEnquiry,
-    loadUserProfile,
-    loadAccountPrimary,
-    getTransactionElevate,
-    bankAccountsData,
-    getTransactionHistory,
-    getDisputCategOryTypeGen,
-    setPrimaryAccountAction,
-    getDisputCategoryGen
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
 import EcobankQRSvg from '../../../components/ReusableComponents/EcobankQRSvg';
@@ -55,6 +45,13 @@ import { AiFillCheckCircle } from 'react-icons/ai';
 import Overlay from '../../../components/ReusableComponents/Overlay';
 import Addaccounts from '../../../components/ReusableComponents/Addaccounts';
 import CloseBtnSvg from '../../../components/ReusableComponents/ClosebtnSvg';
+import { getBalanceEnquiry } from '../../../redux/actions/balanceEnquieryAction';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import { getTransactionHistory } from '../../../redux/actions/transactionHistoryAction';
+import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
+import { setPrimaryAccountAction } from '../../../redux/actions/setPrimaryAccountAction';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -264,11 +261,11 @@ const Dashboard = () => {
         // Set the current path value by looking at the browser's location object.
         storage.setItem('currentPath', globalThis.location.pathname);
         setPreviousRoute(prevPath);
-        //console.log(prevPath);
+        // //console.log(prevPath);
     }
 
     useEffect(() => {
-        // console.log(accountPrimarys);
+        //  //console.log(accountPrimarys);
         // setAcctNumm(accountPrimarys?.accountNumber);
         // const balanceData = {
         //     accountId: accountPrimarys?.accountId
@@ -293,7 +290,7 @@ const Dashboard = () => {
             setUserProfileData(userProfile);
         }
 
-        //console.log('upgrade check', accountUpgrade);
+        // //console.log('upgrade check', accountUpgrade);
     }, [userProfile, acctNum]);
 
     const current = new Date();
@@ -341,14 +338,14 @@ const Dashboard = () => {
             }
 
             // tableDetails.data?.map((item) => {
-            //     //console.log(item.transactionDate);
+            //     // //console.log(item.transactionDate);
             // });
         }
     }, [transactionHistory]);
-    // console.log(bankAccounts);
+    //  //console.log(bankAccounts);
 
     useEffect(() => {}, [pending, success, failed]);
-    //console.log(newDate[0]);
+    // //console.log(newDate[0]);
     async function copyTextToClipboard(text) {
         if ('clipboard' in navigator) {
             return await navigator.clipboard.writeText(text);
@@ -357,7 +354,7 @@ const Dashboard = () => {
         }
     }
     const copyAccountNumber = () => {
-        console.log(acctInfoNum);
+        //console.log(acctInfoNum);
         copyTextToClipboard(`Account Name - ${userProfileData.lastName} ${userProfileData.firstName}
         Account No. - ${copyAcctInfo.accountNumber}
         Bank Name - Ecobank
@@ -371,7 +368,7 @@ const Dashboard = () => {
                 }, 1500);
             })
             .catch((err) => {
-                console.log(err);
+                //console.log(err);
             });
     };
     const [overlay, setOverlay] = useState(false);
@@ -557,7 +554,7 @@ const Dashboard = () => {
                                             );
                                         }
                                         // {
-                                        //     //console.log(item);
+                                        //     // //console.log(item);
                                         // }
                                         return (
                                             <div key={index}>
@@ -919,7 +916,7 @@ const Dashboard = () => {
                                         return item;
                                     })
                                     ?.map((item, index) => {
-                                        // console.log(item);
+                                        //  //console.log(item);
                                         const formatter = new Intl.NumberFormat(
                                             'en-US',
                                             {

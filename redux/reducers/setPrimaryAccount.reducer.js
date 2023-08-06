@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const setPrimaryAccountReducer = (state = initialState, { type, payload }) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case setPrimaryAccountType.SET_PRIMARY_ACCOUNT_LOAD_START:
             return {

@@ -13,15 +13,7 @@ import Overlay from '../../../components/ReusableComponents/Overlay';
 import SchedulePayment from '../../../components/ReusableComponents/Schedulepayment';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { RWebShare } from 'react-web-share';
-import {
-    loadussdGen,
-    getBalanceEnquiry,
-    loadUserProfile,
-    loadAccountPrimary,
-    generateQrCodeDetails,
-    loadpaylinkGen,
-    getQrMerchantInfoGen
-} from '../../../redux/actions/actions';
+
 // import ChartDiv from './chartDivStyled';
 // import ChartContent from './chartContentStyled';
 import PaymentSingleBody from '../../../components/ReusableComponents/PaymentSingleBody';
@@ -40,6 +32,13 @@ import QrFirst from '../../../components/layout/QrData';
 import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
 import withAuth from '../../../components/HOC/withAuth';
 import RecievePaymentStatus from '../../../components/ReusableComponents/RecievePaymentStatus';
+import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import { getBalanceEnquiry } from '../../../redux/actions/balanceEnquieryAction';
+import { getQrMerchantInfoGen } from '../../../redux/actions/getQrMerchantAction';
+import { loadpaylinkGen } from '../../../redux/actions/paylinkAction';
+import { generateQrCodeDetails } from '../../../redux/actions/generateQrCodeAction';
+import { loadussdGen } from '../../../redux/actions/ussdGenAction';
 
 const Collections = () => {
     const router = useRouter();
@@ -146,11 +145,11 @@ const Collections = () => {
     }, [balanceEnquiry]);
     //where i need to work on
     useEffect(() => {
-        console.log(accountPrimarys);
-        console.log(bankAccounts);
-        console.log(formData.accountNum);
+        //console.log(accountPrimarys);
+        //console.log(bankAccounts);
+        //console.log(formData.accountNum);
         setSenderDetails(accountPrimarys);
-        console.log(senderDetails);
+        //console.log(senderDetails);
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
                 // setAcctNumber(accountPrimarys);
@@ -159,7 +158,7 @@ const Collections = () => {
                     accountId: bankAccounts[accountNo].accountId
                 };
                 setSenderDetails(accountPrimarys.accountId);
-                // console.log(senderDetails.accountId);
+                //  //console.log(senderDetails.accountId);
                 dispatch(getBalanceEnquiry(balanceData));
             } else {
                 setAcctNumber('Pending');
@@ -168,7 +167,7 @@ const Collections = () => {
     }, [formData.accountNum]);
     const ussdGenCheck = () => {
         if (ussdGen !== null) {
-            //console.logussdGen);
+            // //console.logussdGen);
             setRecieveLink(ussdGen.paymentReference);
             setTrack(ussdGen.transactionId);
             setCount((count) => count + 1);
@@ -182,14 +181,14 @@ const Collections = () => {
             // setCount((count) => count + 1);
             setIsLoading(false);
             setError(errorMessageussdGen.response.data.message);
-            console.log(error);
+            //console.log(error);
             // setStatus('error');
         }
     };
     const payLinkCheck = () => {
-        console.log(paylikSuccess);
+        //console.log(paylikSuccess);
         if (paylikSuccess !== null) {
-            console.log(paylikSuccess);
+            //console.log(paylikSuccess);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -205,7 +204,7 @@ const Collections = () => {
     }, [paylikSuccess, payLinkerrorMessage]);
     const qrCheck = () => {
         if (generateQrCodeSuccess !== null) {
-            console.log(generateQrCodeSuccess);
+            //console.log(generateQrCodeSuccess);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -221,11 +220,11 @@ const Collections = () => {
     }, [generateQrCodeSuccess, generateQrCodeError]);
     useEffect(() => {
         ussdGenCheck();
-        // console.log(error.response.data.message[0]);
+        //  //console.log(error.response.data.message[0]);
     }, [ussdGen, errorMessageussdGen]);
     // const ussdStatusCheck = () => {
     //     if (ussdStatus !== null) {
-    //         //console.logussdStatus);
+    //         // //console.logussdStatus);
     //         setCount((count) => count + 1);
     //         setIsLoading(false);
     //         // setStatus('success');
@@ -233,7 +232,7 @@ const Collections = () => {
     //         // setCount((count) => count + 1);
     //         setIsLoading(false);
     //         setError(errorMessageussdStatus);
-    //         console.log(error);
+    //          //console.log(error);
     //         // setStatus('error');
     //     }
     // };
@@ -276,7 +275,7 @@ const Collections = () => {
     }, [link]);
     const handleFormChange = (formTitle) => {
         if (userProfileData.hasSetTransactionPin === false) {
-            console.log(userProfileData.createdFromEcobankCred);
+            //console.log(userProfileData.createdFromEcobankCred);
             if (userProfileData.createdFromEcobankCred === false) {
                 router.push({
                     pathname: '/AccountUpgrade',
@@ -315,8 +314,8 @@ const Collections = () => {
             setErrorQr([]);
         }
     };
-    console.log(csvData);
-    console.log(sum);
+    //console.log(csvData);
+    //console.log(sum);
 
     useEffect(() => {
         setSum(
@@ -450,7 +449,7 @@ const Collections = () => {
                 }
             });
         }
-        console.log(formType);
+        //console.log(formType);
     }, [count]);
     const {
         getQrMerchnatInfoSuccess,
@@ -459,7 +458,7 @@ const Collections = () => {
     const [merchantInf, setMerchantInfo] = useState();
     useEffect(() => {
         dispatch(getQrMerchantInfoGen());
-        console.log(getQrMerchnatInfoSuccess);
+        //console.log(getQrMerchnatInfoSuccess);
     }, []);
     useEffect(() => {
         if (getQrMerchnatInfoSuccess != null) {
@@ -478,7 +477,7 @@ const Collections = () => {
                     //             buttonText="Generate Payment Link"
                     //             closeAction={handleClose}
                     //             action={(data) => {
-                    //                 //console.logdata);
+                    //                 // //console.logdata);
                     //                 setCount(count + 1);
                     //             }}
                     //             createLink={() => setCount(count + 2)}
@@ -499,7 +498,7 @@ const Collections = () => {
                                 buttonText="Generate Payment Link"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setPaymentDetails(data);
                                     const paylinkData = {
                                         allowPartialPayments: true,
@@ -525,7 +524,7 @@ const Collections = () => {
                                 overlay={overlay}
                                 title="Payment Link Generated"
                                 allLink={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 2);
                                 }}
                                 amountPaylink={paymentDetails.amount}
@@ -546,7 +545,7 @@ const Collections = () => {
                                 action={buttonHandleClose}
                                 buttonText="Send Paylink"
                                 closeAction={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count - 1);
                                 }}
                                 type="PAYMENT_LINK"
@@ -586,7 +585,7 @@ const Collections = () => {
                                 buttonText="Generate USSD Codes"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setPaymentDetails(data);
                                     const ussdData = {
                                         amount: parseInt(data?.amount, 10),
@@ -645,7 +644,7 @@ const Collections = () => {
                                 buttonText="Send Qr"
                                 type="USSD"
                                 closeAction={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count - 2);
                                 }}
                             />
@@ -658,7 +657,7 @@ const Collections = () => {
                                 action={handleClose}
                                 type="USSD"
                                 back={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(2);
                                 }}
                             />
@@ -671,7 +670,7 @@ const Collections = () => {
                             <QrFirst
                                 overlay={overlay}
                                 moveToNext={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 closeAction={buttonHandleClose}
@@ -686,7 +685,7 @@ const Collections = () => {
                                 buttonText="Generate Ecobank QR Codes"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     const generateQrCodeData = {
                                         amount: `${data.amount}`,
                                         productName: `${data.accountName}`,
@@ -714,7 +713,7 @@ const Collections = () => {
                                 merchantCode={merchantInf?.merchantCode}
                                 terminalId={merchantInf?.terminalId}
                                 allLink={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 share={() => {
@@ -735,7 +734,7 @@ const Collections = () => {
                                 buttonText="Send Qr"
                                 type="Qr"
                                 closeAction={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count - 1);
                                 }}
                             />
@@ -763,7 +762,7 @@ const Collections = () => {
                                 buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                             />

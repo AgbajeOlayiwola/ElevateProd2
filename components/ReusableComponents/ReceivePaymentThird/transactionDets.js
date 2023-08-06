@@ -4,13 +4,12 @@ import EditSvg from '../editSvg';
 import { MdCancel } from 'react-icons/md';
 import exportAsImage from '../../../utils/exportAsImage';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    getDisputCategoryGen,
-    getDisputCategorySubGen,
-    lodgeDisputeSubGen
-} from '../../../redux/actions/actions';
+
 import CloseBtnSvg from '../ClosebtnSvg';
 import Loader from '../Loader';
+import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
+import { getDisputCategorySubGen } from '../../../redux/actions/getSubDisputeCategoryAction';
+import { lodgeDisputeSubGen } from '../../../redux/actions/lodgeDisputeAction';
 const TransactionDets = ({
     paymentDirection,
     transactionAmmount,
@@ -59,14 +58,14 @@ const TransactionDets = ({
         setDisputeType(event.target.value);
         if (getDisputCategorySuccess) {
             setComplaintCategory(getDisputCategorySuccess);
-            console.log(getDisputCategorySuccess);
+            //console.log(getDisputCategorySuccess);
         }
     };
     const complainCateFunction = (event) => {
         dispatch(getDisputCategorySubGen(event.target.value, disputeType));
         setSelectedDisputeCategory(event.target.value);
         if (getDisputCategorySubSuccess) {
-            console.log(getDisputCategorySubSuccess);
+            //console.log(getDisputCategorySubSuccess);
         }
     };
     const complaintSubVateFunction = (event) => {
@@ -127,7 +126,7 @@ const TransactionDets = ({
     let newDate = dateTrans?.split('T');
     let newTranDate = dateTrans?.split('T');
 
-    // console.log(disputeType);
+    //  //console.log(disputeType);
     return (
         <div>
             <div className={styles.deadlines}>

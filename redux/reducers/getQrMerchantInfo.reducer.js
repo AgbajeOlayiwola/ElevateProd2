@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const getQrMerchantInfoReducer = (state = initialState, { type, payload }) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case qrMerchantInfo_Type.GET_QR_MRCHANTINFO_TYPES_START:
             return {

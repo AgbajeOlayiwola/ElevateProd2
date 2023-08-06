@@ -23,9 +23,8 @@ const LoadingScreen = () => {
     const router = useRouter();
     const [loaded, setLoaded] = useState(false);
     useEffect(() => {
-        const handleStart = (url) => (
-            url !== router.asPath && setLoaded(true), console.log('started')
-        );
+        const handleStart = (url) => url !== router.asPath && setLoaded(true);
+
         const handleComplete = (url) =>
             url === router.asPath && setLoaded(false);
 

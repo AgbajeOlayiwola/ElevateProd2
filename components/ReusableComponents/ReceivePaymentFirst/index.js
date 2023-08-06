@@ -7,8 +7,8 @@ import Overlay from '../Overlay';
 import CloseButton from '../CloseButtonSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import Loader from '../Loader';
-import { loadAccountPrimary } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
 // import axios from 'axios';
 
 const ReceivePaymentFirst = ({
@@ -31,7 +31,7 @@ const ReceivePaymentFirst = ({
     const dispatch = useDispatch();
     const myref = useRef();
     useEffect(() => {
-        console.log(error);
+        //console.log(error);
         dispatch(loadAccountPrimary());
         myref.current.scrollTo(0, 0);
         window.scrollTo(0, 0);
@@ -41,19 +41,19 @@ const ReceivePaymentFirst = ({
         //     );
         //     const countriesData = await countriesApi.json();
         //     setAmount(countriesData);
-        //     //console.log(countriesData);
+        //     // //console.log(countriesData);
         //     fetchCountryApi();
         // };
     }, []);
     useEffect(() => {
-        console.log(accountPrimarys);
+        //  //console.log(accountPrimarys);
     }, [accountPrimarys]);
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
-    //console.log(amount);
+    // //console.log(amount);
     const banks = [
         {
             bankName: 'GTBank',

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { businessCategoriesData } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './styles.module.css';
+import { businessCategoriesData } from '../../../redux/actions/businessCategoriesAction';
 
 const BusinessCategory = () => {
     const dispatch = useDispatch();

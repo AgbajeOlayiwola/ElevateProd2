@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import {
-    loadbillerCategory,
-    loadbillerType,
-    loadbillerPlan,
-    postAirtimeNetwork,
-    getAirtimeBeneficiariesData
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowRightSvg from '../ReusableSvgComponents/ArrowRightSvg';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
@@ -17,6 +11,10 @@ import Loader from '../Loader';
 import ArrowBackSvg from '../ArrowBackSvg';
 import Lottie from 'react-lottie';
 import socialdata from '../Lotties/loading.json';
+import { loadbillerCategory } from '../../../redux/actions/billareCategoryAction';
+import { getAirtimeBeneficiariesData } from '../../../redux/actions/getAirtimeBeneficiariesAction';
+import { loadbillerType } from '../../../redux/actions/billerTypeAction';
+import { loadbillerPlan } from '../../../redux/actions/billerPlanAction';
 
 const BillPayment = ({
     action,
@@ -78,7 +76,7 @@ const BillPayment = ({
                 localStorage.setItem('Airtime', JSON.stringify(networks));
             }
         });
-        //console.log(airtimeNetworkData);
+        // //console.log(airtimeNetworkData);
     }, [airtimeNetworkData]);
     useEffect(() => {
         if (getAirtimeBeneficiaries !== null) {
@@ -97,7 +95,7 @@ const BillPayment = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
-    //console.log(billerCategories);
+    // //console.log(billerCategories);
     const loadbillerTypeData = () => {
         if (firstTitle !== 'Bill Payment') {
             dispatch(loadbillerType(firstTitle));

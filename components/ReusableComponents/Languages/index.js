@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 import { set, useForm } from 'react-hook-form';
 import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadLanguageAsync } from '../../../redux/actions/actions';
+import { loadLanguageAsync } from '../../../redux/actions/languageAction';
 
 const Langauges = () => {
     const [languages, setLanguages] = useState([]);
@@ -24,7 +24,7 @@ const Langauges = () => {
             setLanguages(language);
         }
     }, [language]);
-    //console.log(language);
+    // //console.log(language);
     const {
         register,
         handleSubmit,

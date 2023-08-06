@@ -3,11 +3,11 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 import ButtonComp from '../Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { omniliteDataa } from '../../../redux/actions/actions';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Loader from '../Loader';
 import Visbility from '../Eyeysvg';
+import { omniliteDataa } from '../../../redux/actions/omniliteAction';
 // import { encrypt } from '../../../redux/helper/hash';
 
 const Omnilite = () => {
@@ -39,8 +39,8 @@ const Omnilite = () => {
     };
 
     const OmniliteTest = () => {
-        //console.logomnilite);
-        //console.logerrorMessage);
+        // //console.logomnilite);
+        // //console.logerrorMessage);
         if (errorMessage) {
             setError(errorMessage);
             setLoading(false);

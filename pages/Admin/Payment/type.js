@@ -10,18 +10,7 @@ import Overlay from '../../../components/ReusableComponents/Overlay';
 import SchedulePayment from '../../../components/ReusableComponents/Schedulepayment';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { RWebShare } from 'react-web-share';
-import {
-    postAirtime,
-    postInterBank,
-    getTransactionFees,
-    postBills,
-    getBalanceEnquiry,
-    getBulkTransfer,
-    loadUserProfile,
-    postBeneficiariesData,
-    loadAccountPrimary,
-    bankAccountsData
-} from '../../../redux/actions/actions';
+
 // import ChartDiv from './chartDivStyled';
 // import ChartContent from './chartContentStyled';
 import PaymentSingleBody from '../../../components/ReusableComponents/PaymentSingleBody';
@@ -30,6 +19,16 @@ import PaymentCard from '../../../components/ReusableComponents/PaymentCard';
 import { useRouter } from 'next/router';
 import { PaymentData } from '../../../components/ReusableComponents/Data';
 import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import { getBalanceEnquiry } from '../../../redux/actions/balanceEnquieryAction';
+import { getTransactionFees } from '../../../redux/actions/transactionFeesAction';
+import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
+import { postInterBank } from '../../../redux/actions/interBankTransferAction';
+import { getBulkTransfer } from '../../../redux/actions/bulkTransferAction';
+import { postAirtime } from '../../../redux/actions/airtimeAction';
+import { postBills } from '../../../redux/actions/billsAction';
 
 const PaymentTypes = () => {
     const router = useRouter();
@@ -56,8 +55,10 @@ const PaymentTypes = () => {
         (state) => state.transactionFeesReducer
     );
 
-    const { internationalTransfer, errorMessageinternationalTransfer } =
-        useSelector((state) => state.internationalTransferReducer);
+    const {
+        internationalTransfer,
+        errorMessageinternationalTransfer
+    } = useSelector((state) => state.internationalTransferReducer);
 
     const { verifyCurrency, errorMessageverifyCurrency } = useSelector(
         (state) => state.verifyCurrencyReducer
@@ -124,7 +125,7 @@ const PaymentTypes = () => {
     //     if (items) {
     //         setCsvData(items);
 
-    //         console.log(items);
+    //          //console.log(items);
     //     } else {
     //         // alert('Hello');
     //     }
@@ -145,7 +146,7 @@ const PaymentTypes = () => {
         dispatch(loadUserProfile());
     }, []);
     useEffect(() => {
-        console.log(accountPrimarys);
+        //console.log(accountPrimarys);
         if (userProfile !== null) {
             setUserProfileData(userProfile);
         }
@@ -186,7 +187,7 @@ const PaymentTypes = () => {
                 balanceData = {
                     accountId: bankAccounts[accountNo].accountId
                 };
-                // console.log(senderDetails.accountId);
+                //  //console.log(senderDetails.accountId);
                 dispatch(getBalanceEnquiry(balanceData));
             } else {
                 setAcctNumber('Pending');
@@ -195,7 +196,7 @@ const PaymentTypes = () => {
     }, [formData.accountNum]);
     const interBankCheck = () => {
         if (interBank !== null) {
-            //console.loginterBank);
+            // //console.loginterBank);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -211,7 +212,7 @@ const PaymentTypes = () => {
     }, [interBank, errorMessageInterBank]);
     const billsCheck = () => {
         if (bills !== null) {
-            //console.logbills);
+            // //console.logbills);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -243,7 +244,7 @@ const PaymentTypes = () => {
     }, [transactionFees, errorMessageTransactionFees]);
     const bulkcheck = () => {
         if (bulkTransfer !== null) {
-            //console.log(bulkTransfer);
+            // //console.log(bulkTransfer);
             if (bulkTransfer.failedTranscations.length !== 0) {
                 setCount((count) => count + 1);
                 setIsLoading(false);
@@ -270,12 +271,12 @@ const PaymentTypes = () => {
     }, [bulkTransfer, errorMessagebulkTransfer]);
     const airtimeCheck = () => {
         if (airtime !== null) {
-            //console.logairtime);
+            // //console.logairtime);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
         } else if (errorMessageAirtime !== null) {
-            //console.logerrorMessageAirtime);
+            // //console.logerrorMessageAirtime);
             setCount((count) => count + 1);
             setIsLoading(false);
             setError(errorMessageAirtime);
@@ -321,7 +322,7 @@ const PaymentTypes = () => {
     }, [link]);
     const handleFormChange = (formTitle) => {
         if (userProfileData.hasSetTransactionPin === false) {
-            console.log(userProfileData.createdFromEcobankCred);
+            //console.log(userProfileData.createdFromEcobankCred);
             if (userProfileData.createdFromEcobankCred === false) {
                 router.push({
                     pathname: '/AccountUpgrade',
@@ -380,9 +381,9 @@ const PaymentTypes = () => {
                                 closeAction={handleClose}
                                 buttonText="Next"
                                 othersaction={(data) => {
-                                    console.log(data);
+                                    //console.log(data);
                                     setSenderDetails(data.sourceAccount);
-                                    console.log(senderDetails);
+                                    //console.log(senderDetails);
                                     if (data.bankName === 'ECOBANK') {
                                         setEcobank(true);
                                         setCount(count + 1);
@@ -575,7 +576,7 @@ const PaymentTypes = () => {
                                 action={(data) => {
                                     setPaymentDetails(data);
                                     setSenderDetails(data.sourceAccount);
-                                    //console.log(data);
+                                    // //console.log(data);
                                     setCount(count + 1);
                                 }}
                             />
@@ -688,11 +689,10 @@ const PaymentTypes = () => {
                                                               e.BeneName,
                                                           destinationAccountNo:
                                                               e.AccountNo,
-                                                          transactionAmount:
-                                                              parseInt(
-                                                                  e.Amount,
-                                                                  10
-                                                              ).toString(),
+                                                          transactionAmount: parseInt(
+                                                              e.Amount,
+                                                              10
+                                                          ).toString(),
                                                           narration: e.narration
                                                       };
                                                   })
@@ -849,7 +849,7 @@ const PaymentTypes = () => {
                                         setIsLoading(true);
                                     }
 
-                                    //console.logdata);
+                                    // //console.logdata);
                                 }}
                                 // scheduleLater={() => {
                                 //     setCount(count + 3);
@@ -903,10 +903,8 @@ const PaymentTypes = () => {
                                                 .toString()
                                                 .replaceAll(',', ''),
                                             accountId: senderDetails,
-                                            billerCode:
-                                                airtimeNetData.billerDetail.billerCode.toString(),
-                                            billerId:
-                                                airtimeNetData.billerDetail.billerID.toString(),
+                                            billerCode: airtimeNetData.billerDetail.billerCode.toString(),
+                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
                                             // productCode: airtimeNetData.name,
                                             productCode:
                                                 paymentDetails.airtimeCode,
@@ -944,8 +942,7 @@ const PaymentTypes = () => {
                                             billerCode:
                                                 airtimeNetData.billerDetail
                                                     .billerCode,
-                                            billerId:
-                                                airtimeNetData.billerDetail.billerID.toString(),
+                                            billerId: airtimeNetData.billerDetail.billerID.toString(),
                                             productCode:
                                                 desiredPackageData.productCode,
                                             paymentDescription:
@@ -1034,7 +1031,7 @@ const PaymentTypes = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 action={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 scheduleLater={() => {
@@ -1053,7 +1050,7 @@ const PaymentTypes = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 secondAction={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 scheduleLater={() => {
@@ -1069,7 +1066,7 @@ const PaymentTypes = () => {
                                 overlay={overlay}
                                 closeAction={handleClose}
                                 transferAction={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                             />

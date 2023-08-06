@@ -34,7 +34,7 @@ const Navbar = ({
     //         setUserProfileData(JSON.parse(userProfile));
     //     }
     // }, [userProfile]);
-    // console.log(userProfileData);
+    //  //console.log(userProfileData);
     return (
         <nav className={styles.navigation}>
             {preview === true ? (

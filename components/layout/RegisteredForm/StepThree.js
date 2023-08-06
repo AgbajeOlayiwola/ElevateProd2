@@ -6,7 +6,7 @@ import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { useDispatch, useSelector } from 'react-redux';
-import { bankAccountsData } from '../../../redux/actions/actions';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
 
 const StepThree = ({
     action,
@@ -20,7 +20,7 @@ const StepThree = ({
     const account = localStorage.getItem('account');
 
     const accountDetails = JSON.parse(account);
-    console.log(accountDetails);
+    //  //console.log(accountDetails);
 
     useEffect(() => {
         const account = localStorage.getItem('account');

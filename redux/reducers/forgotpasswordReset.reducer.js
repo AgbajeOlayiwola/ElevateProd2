@@ -10,7 +10,7 @@ const forgotPasswordResetReducer = (
     state = initialState,
     { type, payload }
 ) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case forgotPasswordReset.FORGOT_PASSWORD_RESET_START:
             return {

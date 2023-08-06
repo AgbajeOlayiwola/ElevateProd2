@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import {
-    loadbank,
-    postInterBankEnquiry,
-    postIntraBankEnquiry
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import Loader from '../Loader';
 import Lottie from 'react-lottie';
 import socialdata from '../Lotties/loading.json';
+import { loadbank } from '../../../redux/actions/bankAction';
+import { postIntraBankEnquiry } from '../../../redux/actions/intraBankEnquieryAction';
+import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAction';
 const SingleTransfer = ({
     othersaction,
     firstTitle,
@@ -82,7 +81,7 @@ const SingleTransfer = ({
 
         let accountNumberDigits = accountNumber.split('');
 
-        //   //console.log("accountNumberDigits: ", accountNumberDigits);
+        //   // //console.log("accountNumberDigits: ", accountNumberDigits);
 
         let sum =
             accountNumberDigits[0] * 3 +
@@ -122,11 +121,11 @@ const SingleTransfer = ({
 
         let bankList = [];
         let bankDets = bankArray.split('~');
-        //   //console.log("bankDets", bankDets);
+        //   // //console.log("bankDets", bankDets);
 
         for (var bankdet of bankDets) {
             let split = bankdet.split(':');
-            //console.log('split', split);
+            // //console.log('split', split);
 
             if (isValidNUBAN(accountNo, split[1])) {
                 bankList.push({
@@ -921,11 +920,11 @@ const SingleTransfer = ({
                                                 ) {
                                                     let newBank = [];
                                                     newBank.splice(1, e);
-                                                    //console.log(newBank);
-                                                    //console.log(e);
+                                                    // //console.log(newBank);
+                                                    // //console.log(e);
                                                     setBank(newBank);
-                                                    //console.log(e);
-                                                    //console.log(bank);
+                                                    // //console.log(e);
+                                                    // //console.log(bank);
                                                 }
                                             });
                                         }}
@@ -945,7 +944,7 @@ const SingleTransfer = ({
                                 placeholder="Enter Amount"
                                 onInput={(e) => {
                                     const inputValue = e.target.value;
-                                    // console.log(
+                                    //  //console.log(
                                     //     parseInt(inputValue).toFixed(2)
                                     // );
                                     setAmount(inputValue);

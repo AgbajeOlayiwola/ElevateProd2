@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const SideBarHomeSvg = ({ fillColor }) => {
-    //console.logfillColor);
+    // //console.logfillColor);
     return (
         <>
             {fillColor ? (

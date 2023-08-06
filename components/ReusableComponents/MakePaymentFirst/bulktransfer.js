@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import {
-    loadbank,
-    postInterBankEnquiry,
-    postIntraBankEnquiry
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import PlusSvg from '../ReusableSvgComponents/PlusSvg';
 import Beneficiary from '../Beneficiary';
 import Loader from '../Loader';
+import { loadbank } from '../../../redux/actions/bankAction';
+import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAction';
+import { postIntraBankEnquiry } from '../../../redux/actions/intraBankEnquieryAction';
 
 const BulkTransfer = ({
     action,
@@ -52,7 +51,7 @@ const BulkTransfer = ({
 
         let accountNumberDigits = accountNumber.split('');
 
-        //   //console.log("accountNumberDigits: ", accountNumberDigits);
+        //   // //console.log("accountNumberDigits: ", accountNumberDigits);
 
         let sum =
             accountNumberDigits[0] * 3 +
@@ -81,11 +80,11 @@ const BulkTransfer = ({
 
         let bankList = [];
         let bankDets = bankArray.split('~');
-        //   //console.log("bankDets", bankDets);
+        //   // //console.log("bankDets", bankDets);
 
         for (var bankdet of bankDets) {
             let split = bankdet.split(':');
-            //console.log('split', split);
+            // //console.log('split', split);
 
             if (isValidNUBAN(accountNo, split[1])) {
                 bankList.push({
@@ -485,7 +484,7 @@ const BulkTransfer = ({
                                         type="file"
                                         accept=".csv, .xlsm"
                                         onChange={(e) => {
-                                            console.log(e.target.files[0]);
+                                            //  //console.log(e.target.files[0]);
                                             if (
                                                 e.target.files[0].name.split(
                                                     '.'
@@ -505,10 +504,9 @@ const BulkTransfer = ({
                                                         workbook.Sheets[
                                                             sheetName
                                                         ];
-                                                    const json =
-                                                        XLSX.utils.sheet_to_json(
-                                                            worksheet
-                                                        );
+                                                    const json = XLSX.utils.sheet_to_json(
+                                                        worksheet
+                                                    );
                                                     localStorage.setItem(
                                                         'csvData',
                                                         JSON.stringify(json)

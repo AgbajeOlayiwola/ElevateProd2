@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
-import {
-    bankAccountsData,
-    getBalanceEnquiry,
-    loadAccountPrimary,
-    loadUserProfile,
-    setPrimaryAccountAction
-} from '../../../redux/actions/actions';
+
 import Visbility from '../Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoMdCopy } from 'react-icons/io';
 import Slider from 'react-slick';
 import { AiFillCheckCircle } from 'react-icons/ai';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import { getBalanceEnquiry } from '../../../redux/actions/balanceEnquieryAction';
+import { setPrimaryAccountAction } from '../../../redux/actions/setPrimaryAccountAction';
 
 const settings = {
     dots: false,
@@ -116,7 +115,7 @@ const AccountsInfoCard = () => {
     }, [acctInfoNum]);
     useEffect(() => {
         // setSenderDetails(accountPrimarys);
-        console.log(senderDetails);
+        //  //console.log(senderDetails);
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
                 // setAcctNumber(accountPrimarys);
@@ -126,7 +125,7 @@ const AccountsInfoCard = () => {
                 };
                 // setSenderDetails(accountPrimarys.accountId);
                 if (bankAccounts[accountNo]) setAcctInfo(accountNo);
-                // console.log(senderDetails.accountId);
+                //  //console.log(senderDetails.accountId);
                 dispatch(getBalanceEnquiry(balanceData));
             } else {
                 setAcctNumber('Pending');
@@ -147,7 +146,7 @@ const AccountsInfoCard = () => {
         });
     }, [accountPrimarys, bankAccounts]);
     useEffect(() => {
-        // console.log(accountPrimarys);
+        //  //console.log(accountPrimarys);
         // setAcctNumm(accountPrimarys?.accountNumber);
         // const balanceData = {
         //     accountId: accountPrimarys?.accountId
@@ -192,7 +191,7 @@ const AccountsInfoCard = () => {
     const [isPrimar, setIsPrimary] = useState(false);
 
     useEffect(() => {
-        console.log(setPrimaryAccountSuccess);
+        //  //console.log(setPrimaryAccountSuccess);
     }, [accountPrimarys, bankAccounts, setPrimaryAccountSuccess]);
 
     const setAccountAsPrimary = () => {
@@ -220,7 +219,7 @@ const AccountsInfoCard = () => {
                 }, 1500);
             })
             .catch((err) => {
-                console.log(err);
+                //  //console.log(err);
             });
     };
     return (

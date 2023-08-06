@@ -12,14 +12,7 @@ import styles from './styles.module.css';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    loadCountry,
-    omniliteDataa,
-    accountNumberData,
-    ecobankOnlineData,
-    cardLoginData,
-    loadLanguageAsync
-} from '../../redux/actions/actions';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import Loader from '../../components/ReusableComponents/Loader';
@@ -33,6 +26,12 @@ import Modal from 'react-modal';
 import 'slick-carousel/slick/slick.css';
 import { Tooltip } from 'react-tooltip';
 import Logo from '../../components/ReusableComponents/ReusableSvgComponents/LogoSvg';
+import { loadLanguageAsync } from '../../redux/actions/languageAction';
+import { loadCountry } from '../../redux/actions/getCountriesAction';
+import { omniliteDataa } from '../../redux/actions/omniliteAction';
+import { ecobankOnlineData } from '../../redux/actions/ecobankOnlineAction';
+import { accountNumberData } from '../../redux/actions/accountNumberAction';
+import { cardLoginData } from '../../redux/actions/cardLoginAction';
 
 const customStyles = {
     content: {
@@ -119,7 +118,7 @@ const HomeMain = () => {
     const { cardLoginS, cardLoginerrorMessages } = useSelector(
         (state) => state.cardLoginReducer
     );
-    //console.logomniliteData);
+    // //console.logomniliteData);
     const { language } = useSelector((state) => state.languages);
 
     useEffect(() => {
@@ -352,7 +351,7 @@ const HomeMain = () => {
         }
     };
     const onSubmit = (data) => {
-        //console.logdata);
+        // //console.logdata);
         if (selectCountry === '') {
             setError('Choose a country');
         } else {
@@ -372,17 +371,14 @@ const HomeMain = () => {
                 password: data.omnilitePassword
             };
             dispatch(omniliteDataa(postData));
-            //console.log'new');
+            // //console.log'new');
         } else if (page === 1) {
             setLoading(true);
             const postData = {
                 username: ecoonlineUserName,
                 password: ecoonlinePassword
             };
-            //console.log'ecoOnlineData', ecoonlinePassword, ecoonlineUserName);
-            //console.logecobankOnline);
             dispatch(ecobankOnlineData(postData));
-            //console.logecobankOnline);
 
             //ecoBank Online Login End
 
@@ -429,11 +425,11 @@ const HomeMain = () => {
 
             dispatch(cardLoginData(postData));
         }
-        //console.logaccountNumbers);
+        // //console.logaccountNumbers);
     };
     const OmniliteTest = () => {
-        //console.logomniliteData);
-        //console.logerrorMessage);
+        // //console.logomniliteData);
+        // //console.logerrorMessage);
         if (errorMessage) {
             setError(errorMessage);
             setLoading(false);
@@ -460,7 +456,7 @@ const HomeMain = () => {
     }, [omniliteData, errorMessage]);
 
     const acctTest = () => {
-        //console.logaccountNumbers);
+        // //console.logaccountNumbers);
         // setLoading(true);
         if (errorMessages === 'Account already exists with the phone') {
             router.push('/Auth/Login');
@@ -521,9 +517,9 @@ const HomeMain = () => {
     };
 
     const cardTest = () => {
-        // console.log(cardLogin);
+        //  //console.log(cardLogin);
         if (cardLoginS !== null) {
-            console.log(cardLoginS);
+            //console.log(cardLoginS);
             // const data = {
             //     email: omniliteData.data.user.email,
             //     // accountNumber: omniliteData.data.user.profile.firstName,
@@ -538,21 +534,20 @@ const HomeMain = () => {
             //     'account',
             //     JSON.stringify(cardLoginS.data.user)
             // );
-
             // router.push('/Onboarding/ExistingProfileSetup');
         } else if (cardLoginerrorMessages !== null) {
             setLoading(false);
             setError(cardLoginerrorMessages);
-            console.log(cardLoginerrorMessages);
+            //console.log(cardLoginerrorMessages);
         }
     };
     useEffect(() => {
         cardTest();
-        console.log(cardLoginerrorMessages);
+        //console.log(cardLoginerrorMessages);
     }, [cardLoginS, cardLoginerrorMessages]);
 
     useEffect(() => {
-        //console.log(ecobankOnline, ecoOnlineErrorMessage);
+        // //console.log(ecobankOnline, ecoOnlineErrorMessage);
         ecoOnlineTest();
     }, [ecobankOnline, ecoOnlineErrorMessage]);
     const types = (type) => {

@@ -16,7 +16,7 @@ const QrInput = ({ type, data }) => {
         setQrData(`data:image/png;base64,${data}`?.split(' ')?.join(''));
     }, [data]);
 
-    console.log(qrData);
+    //  //console.log(qrData);
     return (
         <div className={styles.qrInp}>
             <Lottie options={defaultOptions} height={200} width={200} />

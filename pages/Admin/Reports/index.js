@@ -6,13 +6,13 @@ import { BsChevronDown } from 'react-icons/bs';
 import { AiOutlineSearch } from 'react-icons/ai';
 import ReportsData from '../../../components/ReusableComponents/ReportsData';
 import { BiFilter } from 'react-icons/bi';
-import {
-    // getTransactionElevate,
-    getTransactionHistory,
-    getMiniStatementGen,
-    // loadAccountPrimary,
-    loadbankStatement
-} from '../../../redux/actions/actions';
+// import {
+//     // getTransactionElevate,
+//     getTransactionHistory,
+//     getMiniStatementGen,
+//     // loadAccountPrimary,
+//     loadbankStatement
+// } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import StorePopup from '../../../components/ReusableComponents/StorePopup';
 import CloseButton from '../../../components/ReusableComponents/CloseButtonSvg';
@@ -78,10 +78,10 @@ const Report = () => {
     // useEffect(() => {
     // if (transactionElevate !== null) {
     //     setTableDetails(transactionElevate.transactions);
-    //     console.log(transactionElevate.transactions);
+    //      //console.log(transactionElevate.transactions);
     //     tableDetails?.filter((item) => {
     //         const newDate = item.transactionDate.split('T');
-    //         console.log(newDate[0], time);
+    //          //console.log(newDate[0], time);
     //         if (newDate[0] !== time) {
     //             setDateState(true);
     //         } else {
@@ -90,7 +90,7 @@ const Report = () => {
     //     });
 
     //     // tableDetails.data?.map((item) => {
-    //     //     //console.log(item.transactionDate);
+    //     //     // //console.log(item.transactionDate);
     //     // });
     // } else
     // if (transactionHistory !== null) {
@@ -104,7 +104,7 @@ const Report = () => {
     //     }
     // });
     // }
-    // console.log(transactionElevate);
+    //  //console.log(transactionElevate);
     // }, [transactionHistory]);
     // useEffect(() => {
     //     if (accountPrimarys !== null) {
@@ -123,7 +123,7 @@ const Report = () => {
     // useEffect(() => {
     //     if (bankStatement !== null) {
     //         setLoading(false);
-    //         console.log(bankStatement);
+    //          //console.log(bankStatement);
     //     } else if (errorMessagebankStatement !== null) {
     //         setLoading(false);
     //         setSuccess(true);

@@ -9,7 +9,7 @@
 //         setHeight(document.documentElement.scrollHeight);
 //     }, []);
 
-//     //console.log(height);
+//     // //console.log(height);
 //
 
 //     const mainOverlay = {
@@ -44,13 +44,11 @@ import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
 import Idle from 'react-idle';
 import { useRouter } from 'next/router';
-import {
-    logoutAction,
-    loadUserProfile,
-    getProfileImgAction
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import withAuth from '../../HOC/withAuth';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import { getProfileImgAction } from '../../../redux/actions/getProfileImageAction';
 const DashLayout = ({
     children,
     page,

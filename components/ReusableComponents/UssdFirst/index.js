@@ -26,7 +26,7 @@ const UssdFirst = ({ overlay, isLoading, action, closeAction, share }) => {
                 }, 1500);
             })
             .catch((err) => {
-                console.log(err);
+                //console.log(err);
             });
     };
     return (

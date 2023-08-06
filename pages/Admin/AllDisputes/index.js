@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Dashboard from '../../../components/layout/Dashboard';
 import { useDispatch, useSelector } from 'react-redux';
 import stylles from './styles.module.css';
-import { getAllComplaintGet } from '../../../redux/actions/actions';
 import Lottie from 'react-lottie';
 import socialdata from '../../../components/ReusableComponents/Lotties/loading.json';
 import styles from './styles.module.css';
+import { getAllComplaintGet } from '../../../redux/actions/getAllComplaintAction';
 
 const AllDisputes = () => {
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const AllDisputes = () => {
     }, []);
     useEffect(() => {
         if (getAllComplaintSuccess !== null) {
-            console.log(getAllComplaintSuccess);
+            //console.log(getAllComplaintSuccess);
             setAllDisputes(getAllComplaintSuccess?.data?.disputeRecord);
             setIsLoading(false);
         }
@@ -60,7 +60,7 @@ const AllDisputes = () => {
                         return item;
                     })
                     ?.map((item, index) => {
-                        console.log(item);
+                        //console.log(item);
                         return item;
                     })
             )}

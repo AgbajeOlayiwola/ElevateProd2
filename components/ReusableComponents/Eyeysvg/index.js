@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 import ButtonComp from '../Button';
 import StorePopup from '../StorePopup';
 import { useDispatch, useSelector } from 'react-redux';
-import { verifyTransactionPinGet } from '../../../redux/actions/actions';
 import OutsideClick from '../OutsideClick';
+import { verifyTransactionPinGet } from '../../../redux/actions/verifyTransactionPin';
 const Visbility = ({ typeSet, color, input }) => {
     const dispatch = useDispatch();
     const [type, setType] = useState(true);
@@ -45,7 +45,7 @@ const Visbility = ({ typeSet, color, input }) => {
                 );
                 setValue((prevValue) => [...prevValue, value]);
 
-                console.log(ssnValues);
+                //  //console.log(ssnValues);
 
                 // If found, focus the next field
                 if (nextSibling !== null) {
@@ -61,8 +61,10 @@ const Visbility = ({ typeSet, color, input }) => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-    const { verifyTransactionPinSuccess, verifyTransactionPinErrorMessage } =
-        useSelector((state) => state.verifyTransactionPinReducer);
+    const {
+        verifyTransactionPinSuccess,
+        verifyTransactionPinErrorMessage
+    } = useSelector((state) => state.verifyTransactionPinReducer);
 
     const submitPin = (e) => {
         // e.preventDefault();
@@ -72,7 +74,7 @@ const Visbility = ({ typeSet, color, input }) => {
         dispatch(verifyTransactionPinGet(data));
     };
     useEffect(() => {
-        console.log(verifyTransactionPinSuccess);
+        //  //console.log(verifyTransactionPinSuccess);
         if (verifyTransactionPinSuccess?.message === 'successful') {
             setVisible(true);
             setType(false);

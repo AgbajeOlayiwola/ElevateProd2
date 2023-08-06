@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const accountNumberReducer = (state = initialState, { type, payload }) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case accountNumber.ACCOUNTNUMBER_LOAD_START:
             return {

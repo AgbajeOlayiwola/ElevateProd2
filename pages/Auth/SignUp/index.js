@@ -7,10 +7,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
-import { createUserAction } from '../../../redux/actions/actions';
 import { encrypt } from '../../../redux/helper/hash';
 import validator from 'validator';
 import Loader from '../../../components/ReusableComponents/Loader';
+import { createUserAction } from '../../../redux/actions/createUserAction';
 
 const Signup = ({ type }) => {
     const router = useRouter();
@@ -100,7 +100,7 @@ const Signup = ({ type }) => {
                 affiliateCode: 'ENG'
             };
             setLoading(true);
-            //console.log(errorMessage);
+            // //console.log(errorMessage);
             dispatch(createUserAction(postData));
         } else {
             passwordMatch;
@@ -118,7 +118,7 @@ const Signup = ({ type }) => {
         sentSIgnUp();
     }, [errorMessage, user]);
 
-    //console.log(confPassword);
+    // //console.log(confPassword);
     return (
         <>
             <div className={styles.cover}>

@@ -45,7 +45,7 @@ const Liveness = ({ action }) => {
 
         var buf = _base64ToArrayBuffer(base64String);
 
-        //console.logbuf);
+        // //console.logbuf);
         var mimeType = 'image/jpeg';
         var file = new File([buf], 'userface-1828438.jpg', { type: mimeType });
 
@@ -71,11 +71,11 @@ const Liveness = ({ action }) => {
                 }
             )
             .then((response) => {
-                //console.logresponse.data.message);
+                // //console.logresponse.data.message);
                 setSuccess(response.data.message);
             })
             .catch((error) => {
-                //console.logerror.response.data.message);
+                // //console.logerror.response.data.message);
                 // setResErros(error.response.data.statusCode);
                 setError(error.response.data.message);
             });

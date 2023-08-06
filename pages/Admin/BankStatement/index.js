@@ -4,14 +4,7 @@ import DashLayout from '../../../components/layout/Dashboard';
 import StorePopup from '../../../components/ReusableComponents/StorePopup';
 import CloseButton from '../../../components/ReusableComponents/CloseButtonSvg';
 import ReactPaginate from 'react-paginate';
-import {
-    bankAccountsData,
-    getBalanceEnquiry,
-    loadAccountPrimary,
-    loadbankStatement,
-    getDisputCategOryTypeGen,
-    getFullStatementGen
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../../components/ReusableComponents/Loader';
 import html2canvas from 'html2canvas';
@@ -22,6 +15,12 @@ import socialdata from '../../../components/ReusableComponents/Lotties/loading.j
 import Lottie from 'react-lottie';
 import { FaDownload } from 'react-icons/fa';
 import withAuth from '../../../components/HOC/withAuth';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
+import { getDisputCategOryTypeGen } from '../../../redux/actions/getDisputeCategoryTypeAction';
+import { loadbankStatement } from '../../../redux/actions/bankStatementAction';
+import { getBalanceEnquiry } from '../../../redux/actions/balanceEnquieryAction';
+import { getFullStatementGen } from '../../../redux/actions/getFullStatementAction';
 
 const BankStatments = () => {
     const dispatch = useDispatch();
@@ -61,8 +60,10 @@ const BankStatments = () => {
         (state) => state.bankStatementReducer
     );
 
-    const { getFullStatementSuccess, getFullStatementerrorMessage } =
-        useSelector((state) => state.getFullStatementReducer);
+    const {
+        getFullStatementSuccess,
+        getFullStatementerrorMessage
+    } = useSelector((state) => state.getFullStatementReducer);
 
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
@@ -76,8 +77,10 @@ const BankStatments = () => {
         (state) => state.accountPrimaryReducer
     );
     const [isLoading, setIsLoading] = useState(true);
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -191,7 +194,7 @@ const BankStatments = () => {
         }
     }, [bankStatement, errorMessagebankStatement]);
     useEffect(() => {}, [inflow, outflow, tableDetails]);
-    // console.log(inflow);
+    //  //console.log(inflow);
 
     const filterCondition = (item, searchType) => {
         switch (searchType) {
@@ -360,8 +363,7 @@ const BankStatments = () => {
                                     userUnit: 'px'
                                 });
 
-                                const pdfWidth =
-                                    pdf.internal.pageSize.getWidth();
+                                const pdfWidth = pdf.internal.pageSize.getWidth();
                                 pdf.html(element, {
                                     html2canvas: {
                                         scale: 0.57,
@@ -507,8 +509,9 @@ const BankStatments = () => {
                             })
                             ?.slice(pagesVisited, pagesVisited + usersPerPage)
                             ?.map((items, index) => {
-                                const newDate =
-                                    items?.transactionTime?.split(' ');
+                                const newDate = items?.transactionTime?.split(
+                                    ' '
+                                );
                                 return (
                                     <div
                                         className={styles.TableDetailBody}

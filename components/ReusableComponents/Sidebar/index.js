@@ -13,8 +13,8 @@ import SideBarDrop from './sidebarcont';
 import Dropdownicon from './dropdownicon';
 import Innersubnav from './innersubnav';
 import { FaTimes } from 'react-icons/fa';
-import { logoutAction } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { logoutAction } from '../../../redux/actions/logOutAction';
 
 const Sidebar = ({ showSubnav }) => {
     const dispatch = useDispatch();
