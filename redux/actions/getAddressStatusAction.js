@@ -22,17 +22,14 @@ export const getAddressStatusDetails = () => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
 
-    axios
-        .get(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.addressVerification}`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .get(`${apiRoutes.addressVerification}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             // //console.logresponse.data.data);
             dispatch(getAddressStatusSuccess(response));

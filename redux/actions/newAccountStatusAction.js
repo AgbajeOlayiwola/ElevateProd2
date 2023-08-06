@@ -27,10 +27,10 @@ export const newAccountStatusData = () => (dispatch) => {
             }
         })
         .then((response) => {
-            dispatch(accountStatusLoadSuccess(response?.data));
+            dispatch(newAccountStatusLoadSuccess(response?.data));
         })
         .catch((error) =>
-            dispatch(accountStatusLoadError(error?.response?.data?.message))
+            dispatch(newAccountStatusLoadError(error?.response?.data?.message))
         );
 };
 

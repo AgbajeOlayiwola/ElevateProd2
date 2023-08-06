@@ -21,7 +21,7 @@ export const shareDocumentsData = () => (dispatch) => {
     dispatch(shareDocumentsLoadStart());
     const cookie = getCookie('cookieToken');
     axiosInstance
-        .get(`https://mysmeapp.ecobank.com:8443${apiRoutes.shareDocuments}`, {
+        .get(`${apiRoutes.shareDocuments}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Client-Type': 'web',
@@ -29,10 +29,10 @@ export const shareDocumentsData = () => (dispatch) => {
             }
         })
         .then((response) =>
-            dispatch(shareDocumentsLoadSuccess(response.data.data))
+            dispatch(shareDocumentsLoadSuccess(response?.data?.data))
         )
         .catch((error) =>
-            dispatch(shareDocumentsLoadError(error?.response.data.message))
+            dispatch(shareDocumentsLoadError(error?.response?.data?.message))
         );
 };
 //shareDocuments actions end

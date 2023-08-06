@@ -1,5 +1,6 @@
-import { deleteCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 import axiosInstance from '../helper/apiClient';
+import { logout } from '../types/actionTypes';
 //logout actions
 export const logoutLoadStart = () => ({
     type: logout.LOGOUT_START

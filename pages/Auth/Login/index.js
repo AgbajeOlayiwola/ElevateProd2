@@ -45,6 +45,15 @@ const Login = () => {
     const checkDataContent = (e) => {
         setEmail(e.target.value);
     };
+    const openModal = () => {
+        setError('');
+        setLoading((prev) => !prev);
+        const loginData = {
+            identifier,
+            password
+        };
+        dispatch(loginUserAction(loginData));
+    };
     useEffect(() => {
         if (user) {
             console.log(user);
@@ -99,7 +108,6 @@ const Login = () => {
             }
         }
         if (user) {
-            console.log(user);
             if (user?.data?.user?.profile?.createdFromEcobankCred === true) {
                 if (
                     user?.data?.user?.profile?.profileSetupStatus ===
@@ -201,15 +209,6 @@ const Login = () => {
     const types = (type) => {
         setOutType(type);
     };
-    function openModal() {
-        setError('');
-        setLoading((prev) => !prev);
-        const loginData = {
-            identifier,
-            password
-        };
-        dispatch(loginUserAction(loginData));
-    }
 
     return (
         <div className={styles.sectionCove}>

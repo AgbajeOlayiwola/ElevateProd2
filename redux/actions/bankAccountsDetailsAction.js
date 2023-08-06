@@ -25,7 +25,7 @@ export const bankAccountsData = () => (dispatch) => {
     } else {
         cookie = getCookie('cookieToken');
     }
-    dispatch(accountNumberLoadStart());
+    // dispatch(accountNumberLoadStart());
     axiosInstance
         .get(`https://mysmeapp.ecobank.com:8443${apiRoutes.banksAccounts}`, {
             headers: {
