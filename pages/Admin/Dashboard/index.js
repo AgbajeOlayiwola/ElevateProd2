@@ -933,11 +933,11 @@ const Dashboard = () => {
                                                                       ) ===
                                                                       'BILL PAYMENT'
                                                                         ? item.billerCode
-                                                                        : newBeneficiary[1] ===
-                                                                          undefined
-                                                                        ? newBeneficiary[0]
-                                                                        : `${newBeneficiary[0]} ${newBeneficiary[1]}`
-                                                                    : ''}
+                                                                        : ''
+                                                                    : newBeneficiary[1] ===
+                                                                      undefined
+                                                                    ? newBeneficiary[0]
+                                                                    : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
                                                             </p>
                                                         )}
                                                     </div>
