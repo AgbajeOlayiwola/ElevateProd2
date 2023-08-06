@@ -5,15 +5,13 @@ import styles from './styles.module.css';
 import moment from 'moment';
 import { of } from 'rxjs';
 import { groupBy, map, mergeMap, reduce, toArray } from 'rxjs/operators';
-import {
-    getDisputCategOryTypeGen,
-    getTransactionElevate,
-    getDisputCategoryGen
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionDets from './transactionDets';
 import Lottie from 'react-lottie';
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
+import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
+import { getTransactionElevate } from '../../../redux/actions/transactionEllevateAction';
 const ReceivePaymentThird = ({
     title,
     action,
@@ -41,10 +39,14 @@ const ReceivePaymentThird = ({
     const [isLoading, setIsLoading] = useState(true);
     const [transactionType, setTransactionType] = useState();
     const [currentDate, setCurrentDate] = useState();
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
-    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
-        useSelector((state) => state.getDisputeCategoryReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategorySuccess,
+        getDisputCategoryErrorMessage
+    } = useSelector((state) => state.getDisputeCategoryReducer);
     const [trans, setTrans] = useState(null);
     const socialOptions = {
         loop: true,
@@ -57,7 +59,7 @@ const ReceivePaymentThird = ({
 
     useEffect(() => {
         dispatch(getDisputCategoryGen('Complaint'));
-        console.log(getDisputCategOryTypeSuccess);
+        //console.log(getDisputCategOryTypeSuccess);
 
         if (title === 'View all Qr Links') {
             setTransactionType('QR_PAYMENT');
@@ -95,7 +97,7 @@ const ReceivePaymentThird = ({
     const [dispute, setDispute] = useState();
     useEffect(() => {
         setDispute(getDisputCategorySuccess);
-        console.log(dispute);
+        //console.log(dispute);
     }, [getDisputCategorySuccess]);
 
     useEffect(() => {
@@ -144,10 +146,9 @@ const ReceivePaymentThird = ({
                     groupBy((p) => p?.transactionDate?.split('T')[0]),
                     mergeMap((group$) =>
                         group$.pipe(
-                            reduce(
-                                (acc, cur) => [...acc, cur],
-                                [`${group$.key}`]
-                            )
+                            reduce((acc, cur) => [...acc, cur], [
+                                `${group$.key}`
+                            ])
                         )
                     ),
                     map((arr) => ({ date: arr[0], trans: arr.slice(1) })),
@@ -155,7 +156,7 @@ const ReceivePaymentThird = ({
                 )
                 .subscribe((p) => {
                     setTrans(p);
-                    console.log(trans);
+                    //console.log(trans);
                 });
         }
     }, [transactionElevate]);
@@ -190,7 +191,7 @@ const ReceivePaymentThird = ({
                         <section className={styles.sectionI}></section>
                         <div className={styles.Tpwh}>
                             <div>
-                                {/* {console.log(trans)} */}
+                                {/* { //console.log(trans)} */}
                                 {isLoading ? (
                                     <Lottie
                                         options={socialOptions}
@@ -216,21 +217,19 @@ const ReceivePaymentThird = ({
                                             <div>
                                                 {item?.trans?.map(
                                                     (data, index) => {
-                                                        const formatter =
-                                                            new Intl.NumberFormat(
-                                                                'en-US',
-                                                                {
-                                                                    style: 'currency',
-                                                                    currency:
-                                                                        'NGN',
-                                                                    currencyDisplay:
-                                                                        'narrowSymbol'
-                                                                }
-                                                            );
-                                                        const formattedAmount =
-                                                            formatter.format(
-                                                                data.transactionAmount
-                                                            );
+                                                        const formatter = new Intl.NumberFormat(
+                                                            'en-US',
+                                                            {
+                                                                style:
+                                                                    'currency',
+                                                                currency: 'NGN',
+                                                                currencyDisplay:
+                                                                    'narrowSymbol'
+                                                            }
+                                                        );
+                                                        const formattedAmount = formatter.format(
+                                                            data.transactionAmount
+                                                        );
                                                         return (
                                                             <div key={data.id}>
                                                                 <TransactionDets

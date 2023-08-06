@@ -20,7 +20,7 @@ const LoginWith = ({
     bankdets,
     type
 }) => {
-    //console.log(displayInput);
+    // //console.log(displayInput);
     const {
         register,
         handleSubmit,

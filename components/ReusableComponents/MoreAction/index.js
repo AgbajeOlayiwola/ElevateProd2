@@ -4,15 +4,13 @@ import EditSvg from '../editSvg';
 import { MdCancel } from 'react-icons/md';
 import exportAsImage from '../../../utils/exportAsImage';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    getDisputCategoryGen,
-    getDisputCategorySubGen,
-    lodgeDisputeSubGen
-} from '../../../redux/actions/actions';
+
 import OutsideClick from '../OutsideClick';
 import StorePopup from '../StorePopup';
 import CloseBtnSvg from '../ClosebtnSvg';
 import Loader from '../Loader';
+import { getDisputCategorySubGen } from '../../../redux/actions/getSubDisputeCategoryAction';
+import { lodgeDisputeSubGen } from '../../../redux/actions/lodgeDisputeAction';
 
 const MoreAction = ({
     isDirection,
@@ -42,15 +40,21 @@ const MoreAction = ({
     const [disputeType, setDisputeType] = useState();
     const [selectedDisputeType, setSelectedDisputeType] = useState();
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedDisputSubCategory, setSelectedDisputeSubCategory] =
-        useState();
+    const [
+        selectedDisputSubCategory,
+        setSelectedDisputeSubCategory
+    ] = useState();
     const [selectedDisputeCategory, setSelectedDisputeCategory] = useState();
     const [complaintCategory, setComplaintCategory] = useState();
     const exportRef = useRef();
-    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
-        useSelector((state) => state.getDisputeCategoryReducer);
-    const { getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage } =
-        useSelector((state) => state.getDisputeSubCategoryReducer);
+    const {
+        getDisputCategorySuccess,
+        getDisputCategoryErrorMessage
+    } = useSelector((state) => state.getDisputeCategoryReducer);
+    const {
+        getDisputCategorySubSuccess,
+        getDisputCategoryErrorSubMessage
+    } = useSelector((state) => state.getDisputeSubCategoryReducer);
     const { lodgeDisputeSuccess, lodgeDisputeErrorSubMessage } = useSelector(
         (state) => state.lodgeDisputeReducer
     );
@@ -58,13 +62,13 @@ const MoreAction = ({
     // useEffect(() => {
     //     if (getDisputCategorySuccess !== null) {
     //         setComplaintCategory(getDisputCategorySuccess);
-    //         console.log(getDisputCategorySuccess);
+    //          //console.log(getDisputCategorySuccess);
     //     }
     // }, [getDisputCategorySuccess, getDisputCategoryErrorMessage]);
     useEffect(() => {
         if (getDisputCategorySubSuccess !== null) {
             setSelectedDisputeSubCategory(getDisputCategorySubSuccess);
-            console.log(getDisputCategorySubSuccess);
+            //  //console.log(getDisputCategorySubSuccess);
         }
     }, [getDisputCategorySubSuccess, getDisputCategoryErrorSubMessage]);
 

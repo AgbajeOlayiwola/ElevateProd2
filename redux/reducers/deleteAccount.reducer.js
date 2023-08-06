@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const deleteAccountReducer = (state = initialState, { type, payload }) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case deleteAccountType.DELETEACCOUNT_LOAD_START:
             return {

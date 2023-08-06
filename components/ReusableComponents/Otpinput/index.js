@@ -21,7 +21,7 @@ const OtpInput = ({ otpFormData, setOtpFormData }) => {
                 );
                 setValue((prevValue) => [...prevValue, value]);
 
-                console.log(ssnValues);
+                //  //console.log(ssnValues);
 
                 // If found, focus the next field
                 if (nextSibling !== null) {

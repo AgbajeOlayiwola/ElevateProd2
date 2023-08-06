@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
-import {
-    bankAccountsData,
-    getBalanceEnquiry,
-    loadAccountPrimary,
-    loadUserProfile,
-    setPrimaryAccountAction
-} from '../../../redux/actions/actions';
+
 import Visbility from '../Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoMdCopy } from 'react-icons/io';
 import Slider from 'react-slick';
 import { AiFillCheckCircle } from 'react-icons/ai';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import { getBalanceEnquiry } from '../../../redux/actions/balanceEnquieryAction';
+import { setPrimaryAccountAction } from '../../../redux/actions/setPrimaryAccountAction';
 
 const settings = {
     dots: false,
@@ -38,10 +37,8 @@ const AccountsInfoCard = () => {
     const [accountBalanceTest, setAccountBalanceTest] = useState();
     const [setPrimaryAccount, setSetPrimaryAccount] = useState();
     const { userProfile } = useSelector((state) => state.userProfileReducer);
-    const {
-        setPrimaryAccountSuccess,
-        setPrimaryAccountErrorMessage
-    } = useSelector((state) => state.setPrimaryAccountReducer);
+    const { setPrimaryAccountSuccess, setPrimaryAccountErrorMessage } =
+        useSelector((state) => state.setPrimaryAccountReducer);
     const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
     );
@@ -83,7 +80,7 @@ const AccountsInfoCard = () => {
         balanceData = {
             accountId: accountPrimarys?.accountId
         };
-        dispatch(getBalanceEnquiry(balanceData));
+        // dispatch(getBalanceEnquiry(balanceData));
         if (balanceEnquiry) {
             setAccountBalanceTest(
                 formatter.format(balanceEnquiry?.availableBalance)
@@ -94,47 +91,46 @@ const AccountsInfoCard = () => {
         setAcctNumm(accountPrimarys?.accountNumber);
     }, [accountPrimarys]);
 
-    useEffect(() => {
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            // if (bankAccounts[accountNo].isPrimaryAccount === true) {
-            //     setAccountBalanceTest(bankAccounts[accountNo].accountBalance);
-            // }
+    // useEffect(() => {
+    //     Object.keys(bankAccounts)?.map((accountNo) => {
+    //         // if (bankAccounts[accountNo].isPrimaryAccount === true) {
+    //         //     setAccountBalanceTest(bankAccounts[accountNo].accountBalance);
+    //         // }
 
-            if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
-                // setAcctNumber(accountPrimarys);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                // setAccountBalanceTest(bankAccounts[accountNo].accountBalance);
-                // setSenderDetails(bankAccounts[accountNo].accountBalance);
-                dispatch(getBalanceEnquiry(balanceData));
-            } else {
-                setAcctNumber('Pending');
-            }
-        });
-    }, [acctInfoNum]);
+    //         if (bankAccounts[accountNo].accountNumber == acctInfoNum) {
+    //             // setAcctNumber(accountPrimarys);
+    //             let balanceData;
+    //             balanceData = {
+    //                 accountId: bankAccounts[accountNo].accountId
+    //             };
+    //             // setAccountBalanceTest(bankAccounts[accountNo].accountBalance);
+    //             // setSenderDetails(bankAccounts[accountNo].accountBalance);
+    //             dispatch(getBalanceEnquiry(balanceData));
+    //         } else {
+    //             setAcctNumber('Pending');
+    //         }
+    //     });
+    // }, [acctInfoNum]);
+    // useEffect(() => {
+    //     // setSenderDetails(accountPrimarys);
+    //     //  //console.log(senderDetails);
+    //     Object.keys(bankAccounts)?.map((accountNo) => {
+    //         if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
+    //             // setAcctNumber(accountPrimarys);
+    //             let balanceData;
+    //             balanceData = {
+    //                 accountId: bankAccounts[accountNo].accountId
+    //             };
+    //             // setSenderDetails(accountPrimarys.accountId);
+    //             if (bankAccounts[accountNo]) setAcctInfo(accountNo);
+    //             //  //console.log(senderDetails.accountId);
+    //             dispatch(getBalanceEnquiry(balanceData));
+    //         } else {
+    //             setAcctNumber('Pending');
+    //         }
+    //     });
+    // }, [formData.accountNum]);
     useEffect(() => {
-        // setSenderDetails(accountPrimarys);
-        console.log(senderDetails);
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
-                // setAcctNumber(accountPrimarys);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                // setSenderDetails(accountPrimarys.accountId);
-                if (bankAccounts[accountNo]) setAcctInfo(accountNo);
-                // console.log(senderDetails.accountId);
-                dispatch(getBalanceEnquiry(balanceData));
-            } else {
-                setAcctNumber('Pending');
-            }
-        });
-    }, [formData.accountNum]);
-    useEffect(() => {
-        setAcctNumm(accountPrimarys?.accountNumber);
         Object.keys(bankAccounts)?.map((accountNo) => {
             if (bankAccounts[accountNo].isPrimaryAccount === true) {
                 setCopyAcctInfo(bankAccounts[0]);
@@ -145,39 +141,39 @@ const AccountsInfoCard = () => {
                 dispatch(getBalanceEnquiry(balanceData));
             }
         });
-    }, [accountPrimarys, bankAccounts]);
-    useEffect(() => {
-        // console.log(accountPrimarys);
-        // setAcctNumm(accountPrimarys?.accountNumber);
-        // const balanceData = {
-        //     accountId: accountPrimarys?.accountId
-        // };
-        // dispatch(getBalanceEnquiry(balanceData));
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber === acctNum) {
-                // setAcctNumber(accountPrimarys);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                dispatch(getBalanceEnquiry(balanceData));
-            } else {
-                setAcctNumber('Pending');
-            }
-        });
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber === acctNum) {
-                setAcctNumber(accountPrimarys);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                dispatch(getBalanceEnquiry(balanceData));
-            } else {
-                setAcctNumber('Pending');
-            }
-        });
-    }, [acctNum]);
+    }, [bankAccounts]);
+    // useEffect(() => {
+    //     //  //console.log(accountPrimarys);
+    //     // setAcctNumm(accountPrimarys?.accountNumber);
+    //     // const balanceData = {
+    //     //     accountId: accountPrimarys?.accountId
+    //     // };
+    //     // dispatch(getBalanceEnquiry(balanceData));
+    //     Object.keys(bankAccounts)?.map((accountNo) => {
+    //         if (bankAccounts[accountNo].accountNumber === acctNum) {
+    //             // setAcctNumber(accountPrimarys);
+    //             let balanceData;
+    //             balanceData = {
+    //                 accountId: bankAccounts[accountNo].accountId
+    //             };
+    //             dispatch(getBalanceEnquiry(balanceData));
+    //         } else {
+    //             setAcctNumber('Pending');
+    //         }
+    //     });
+    //     Object.keys(bankAccounts)?.map((accountNo) => {
+    //         if (bankAccounts[accountNo].accountNumber === acctNum) {
+    //             setAcctNumber(accountPrimarys);
+    //             let balanceData;
+    //             balanceData = {
+    //                 accountId: bankAccounts[accountNo].accountId
+    //             };
+    //             dispatch(getBalanceEnquiry(balanceData));
+    //         } else {
+    //             setAcctNumber('Pending');
+    //         }
+    //     });
+    // }, [acctNum]);
     const types = (type) => {
         setOutType(type);
     };
@@ -192,7 +188,7 @@ const AccountsInfoCard = () => {
     const [isPrimar, setIsPrimary] = useState(false);
 
     useEffect(() => {
-        console.log(setPrimaryAccountSuccess);
+        //  //console.log(setPrimaryAccountSuccess);
     }, [accountPrimarys, bankAccounts, setPrimaryAccountSuccess]);
 
     const setAccountAsPrimary = () => {
@@ -220,7 +216,7 @@ const AccountsInfoCard = () => {
                 }, 1500);
             })
             .catch((err) => {
-                console.log(err);
+                //  //console.log(err);
             });
     };
     return (

@@ -3,11 +3,11 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 import ButtonComp from '../Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { accountNumberData } from '../../../redux/actions/actions';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Loader from '../Loader';
 import Modal from 'react-modal';
+import { accountNumberData } from '../../../redux/actions/accountNumberAction';
 
 const Ecoacct = () => {
     const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const Ecoacct = () => {
         dispatch(accountNumberData(postData));
     };
     const acctTest = () => {
-        //console.logerrorMessages);
+        // //console.logerrorMessages);
         if (errorMessages === 'Account already exists with the phone') {
             router.push('/Auth/Login');
         } else if (errorMessages) {

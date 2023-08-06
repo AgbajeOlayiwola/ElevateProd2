@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 
 const RecievePaylink = () => {
     const router = useRouter();
-    console.log(router);
+    //console.log(router);
     const [page, setPage] = useState('PaymentItem');
     const recievePaylinkComponenet = () => {
         switch (page) {

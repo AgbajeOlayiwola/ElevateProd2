@@ -7,14 +7,7 @@ import StepThreeCompleteProfile1 from './StepThreeCompleteProfile1';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    createProfileSetup,
-    verifyOtp,
-    loadCountry,
-    createBusProfileSetup,
-    CompProfile,
-    runVerifyOtp
-} from '../../../redux/actions/actions';
+
 import { Router, useRouter } from 'next/router';
 import Loader from '../../ReusableComponents/Loader';
 import Liveness from './Liveness';
@@ -24,6 +17,10 @@ import HomeSvg from '../../ReusableComponents/HomeSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { Scrollbars } from 'react-custom-scrollbars';
 import withAuth from '../../HOC/withAuth';
+import { loadCountry } from '../../../redux/actions/getCountriesAction';
+import { runVerifyOtp } from '../../../redux/actions/verifyBvnOtp';
+import { createBusProfileSetup } from '../../../redux/actions/businessProfileSetupAction';
+import { createProfileSetup } from '../../../redux/actions/profileSetupAction';
 const ProfileSetups = () => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
@@ -32,7 +29,7 @@ const ProfileSetups = () => {
     // Router.reload();
     // router.replace(router.asPath);
 
-    //console.log('register page', cookie);
+    // //console.log('register page', cookie);
 
     const [page, setPage] = useState(2);
     const [formData, setFormData] = useState({
@@ -66,7 +63,7 @@ const ProfileSetups = () => {
     }, []);
     useEffect(() => {
         if (countries !== null) {
-            //console.log(countries);
+            // //console.log(countries);
             countries.filter((item) => {
                 if (item.name === 'Nigeria') {
                     setFormData({
@@ -102,8 +99,8 @@ const ProfileSetups = () => {
     const { otpActData, otpErrorMessage } = useSelector(
         (state) => state.otpReducer
     );
-    //console.log(formData.emailData, newAccounts.user?.email);
-    //console.log(formData.emailData, newAccounts.email);
+    // //console.log(formData.emailData, newAccounts.user?.email);
+    // //console.log(formData.emailData, newAccounts.email);
 
     const handleOtp = () => {
         const otpData = {
@@ -117,7 +114,7 @@ const ProfileSetups = () => {
         if (otpErrorMessage) {
             setOtpError(otpErrorMessage.response.data.message);
         } else if (otpActData) {
-            // console.log('otpErrorI');
+            //  //console.log('otpErrorI');
             setPage(page + 1);
         }
     }, [otpErrorMessage, otpActData]);
@@ -168,11 +165,11 @@ const ProfileSetups = () => {
         }
     };
     // useEffect(() => {
-    //     //console.log(errorMessages, otpErrorMessages);
+    //     // //console.log(errorMessages, otpErrorMessages);
     // }, []);
 
     function regsiteredBus() {
-        console.log(formData.tinNumber);
+        //  //console.log(formData.tinNumber);
         setLoads((prev) => !prev);
         const businessProfileData = {
             bvnNumber: formData.bvNumber,
@@ -199,18 +196,18 @@ const ProfileSetups = () => {
         setErrorM('');
         setErrorI('');
         dispatch(createProfileSetup(profileData));
-        //console.log('lol');
+        // //console.log('lol');
     }
 
     useEffect(() => {
-        //console.log('new bvn:', bvnNin.message);
+        // //console.log('new bvn:', bvnNin.message);
         if (
             bvnNin === 'verification successful' ||
             errorMessages === 'you have already setup your profile'
         ) {
             setPage(page + 1);
         } else {
-            //console.log('move');
+            // //console.log('move');
             setErrorM(errorMessages);
             setErrorI(bvnError);
             setLoading(false);
@@ -220,7 +217,7 @@ const ProfileSetups = () => {
     // const handleSubmitt = () => {
     //     setPage(page + 1);
     // };
-    //console.log(errorM, errorI);
+    // //console.log(errorM, errorI);
 
     // useEffect(() => {
     //     if (bvnError && bvnErrorI) {

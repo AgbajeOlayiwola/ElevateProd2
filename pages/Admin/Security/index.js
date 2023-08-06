@@ -7,15 +7,14 @@ import CustomerSingle from '../../../components/ReusableComponents/CustomerSingl
 import EditProfileSvg from '../../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    loadresetPassword,
-    loadchangeTransactionPin
-} from '../../../redux/actions/actions';
+
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import Loader from '../../../components/ReusableComponents/Loader';
 import validator from 'validator';
 import { useEffect } from 'react';
 import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
+import { loadchangeTransactionPin } from '../../../redux/actions/changeTransactionPinAction';
+import { loadresetPassword } from '../../../redux/actions/resetPasswordAction';
 
 const Security = () => {
     const dispatch = useDispatch();
@@ -124,13 +123,13 @@ const Security = () => {
 
     const resetPinCheck = () => {
         if (changeTransactionPin !== null) {
-            //console.logchangeTransactionPin);
+            // //console.logchangeTransactionPin);
             setLoading(false);
             setMessage('Pin Changed Successfully');
             setStatusbar('success');
             setOutcome(true);
         } else if (changeTransactionPinError !== null) {
-            //console.logchangeTransactionPinError);
+            // //console.logchangeTransactionPinError);
             setLoading(false);
             setMessage(changeTransactionPinError);
             setOutcome(true);
@@ -160,13 +159,13 @@ const Security = () => {
 
     const resetPasswordCheck = () => {
         if (resetPassword !== null) {
-            //console.logresetPassword);
+            // //console.logresetPassword);
             setLoading(false);
             setMessage('Password Changed Successfully');
             setStatusbar('success');
             setOutcome(true);
         } else if (errorMessageresetPassword !== null) {
-            //console.logerrorMessageresetPassword);
+            // //console.logerrorMessageresetPassword);
             setLoading(false);
             setMessage(errorMessageresetPassword);
             setOutcome(true);

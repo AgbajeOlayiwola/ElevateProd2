@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../redux/helper/apiClient';
 import apiRoutes from '../../redux/helper/apiRoutes';
 import { getCookie } from 'cookies-next';
-import { loadAccountPrimary, logoutAction } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Idle from 'react-idle';
+import { logoutAction } from '../../redux/actions/logOutAction';
 const withAuth = (WrappedComponent) => {
     return (props) => {
         const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const withAuth = (WrappedComponent) => {
 
         const preloadCornify = () => {
             dispatch(logoutAction());
-            if (!localStorage.getItem('user')) {
+            if (!localStorage?.getItem('user')) {
                 router.replace('../Auth/Login');
             }
         };
@@ -27,7 +27,7 @@ const withAuth = (WrappedComponent) => {
             (state) => state.accountPrimaryReducer
         );
         // useEffect(() => {
-        //     console.log(accountPrimaryError);
+        //      //console.log(accountPrimaryError);
         //     if (accountPrimaryError?.data?.message === 'Unauthorized') {
         //         dispatch(logoutAction());
         //         if (!localStorage.getItem('user')) {
@@ -37,12 +37,19 @@ const withAuth = (WrappedComponent) => {
         // }, [accountPrimary, accountPrimaryError]);
 
         useEffect(() => {
-            if (localStorage.getItem('user')) {
+            if (localStorage?.getItem('user')) {
                 setAccessGranted(true);
             } else {
                 Router.replace('../Auth/Login');
                 setAccessGranted(false);
             }
+
+            // Cleanup function
+            return () => {
+                // Perform any cleanup actions here (if needed).
+                // For example, you could reset the state to its initial value:
+                setAccessGranted(false);
+            };
         }, []);
 
         if (accessGranted) {

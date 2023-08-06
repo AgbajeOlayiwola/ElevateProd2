@@ -17,17 +17,7 @@ import { OtherAccounts } from '../../../components/ReusableComponents/Data';
 import MakePaymentBtn from '../../../components/ReusableComponents/MakePayment';
 import RecievePaymentBtn from '../../../components/ReusableComponents/RecievePaymnet';
 // import withAuth from '../../components/HOC/withAuth.js';
-import {
-    getBalanceEnquiry,
-    loadUserProfile,
-    loadAccountPrimary,
-    getTransactionElevate,
-    bankAccountsData,
-    getTransactionHistory,
-    getDisputCategOryTypeGen,
-    setPrimaryAccountAction,
-    getDisputCategoryGen
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import TransactionSvg from '../../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
 import EcobankQRSvg from '../../../components/ReusableComponents/EcobankQRSvg';
@@ -52,6 +42,16 @@ import BulkTransfer2 from '../../../components/ReusableComponents/BulkTransfSvg/
 import BillTransfer from '../../../components/ReusableComponents/BillTransSvg';
 import BillSvg from '../../../components/ReusableComponents/ReusableSvgComponents/BillSvg';
 import { AiFillCheckCircle } from 'react-icons/ai';
+import Overlay from '../../../components/ReusableComponents/Overlay';
+import Addaccounts from '../../../components/ReusableComponents/Addaccounts';
+import CloseBtnSvg from '../../../components/ReusableComponents/ClosebtnSvg';
+import { getBalanceEnquiry } from '../../../redux/actions/balanceEnquieryAction';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import { getTransactionHistory } from '../../../redux/actions/transactionHistoryAction';
+import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
+import { setPrimaryAccountAction } from '../../../redux/actions/setPrimaryAccountAction';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -217,33 +217,6 @@ const Dashboard = () => {
         getDateXDaysAgo(2);
         dispatch(getDisputCategoryGen('Complaint'));
     }, []);
-    useEffect(() => {
-        setAcctNumm(accountPrimarys?.accountNumber);
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].isPrimaryAccount === true) {
-                setCopyAcctInfo(bankAccounts[0]);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                dispatch(getBalanceEnquiry(balanceData));
-            }
-        });
-    }, [accountPrimarys, bankAccounts]);
-    useEffect(() => {
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber === acctNum) {
-                setAcctNumber(accountPrimarys);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                dispatch(getBalanceEnquiry(balanceData));
-            } else {
-                setAcctNumber('Pending');
-            }
-        });
-    }, [acctNum]);
     const [previousRoute, setPreviousRoute] = useState('');
     useEffect(() => storePathValues, [router.asPath]);
     function storePathValues() {
@@ -255,37 +228,8 @@ const Dashboard = () => {
         // Set the current path value by looking at the browser's location object.
         storage.setItem('currentPath', globalThis.location.pathname);
         setPreviousRoute(prevPath);
-        //console.log(prevPath);
+        // //console.log(prevPath);
     }
-
-    useEffect(() => {
-        // console.log(accountPrimarys);
-        // setAcctNumm(accountPrimarys?.accountNumber);
-        // const balanceData = {
-        //     accountId: accountPrimarys?.accountId
-        // };
-        // dispatch(getBalanceEnquiry(balanceData));
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber === acctNum) {
-                setAcctNumber(accountPrimarys);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                dispatch(getBalanceEnquiry(balanceData));
-            } else {
-                setAcctNumber('Pending');
-            }
-        });
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-        }
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-        }
-
-        //console.log('upgrade check', accountUpgrade);
-    }, [userProfile, acctNum]);
 
     const current = new Date();
     const date = `${current.getFullYear()}-${
@@ -331,14 +275,14 @@ const Dashboard = () => {
             }
 
             // tableDetails.data?.map((item) => {
-            //     //console.log(item.transactionDate);
+            //     // //console.log(item.transactionDate);
             // });
         }
     }, [transactionHistory]);
-    // console.log(bankAccounts);
+    //  //console.log(bankAccounts);
 
     useEffect(() => {}, [pending, success, failed]);
-    //console.log(newDate[0]);
+    // //console.log(newDate[0]);
     async function copyTextToClipboard(text) {
         if ('clipboard' in navigator) {
             return await navigator.clipboard.writeText(text);
@@ -347,7 +291,7 @@ const Dashboard = () => {
         }
     }
     const copyAccountNumber = () => {
-        console.log(acctInfoNum);
+        //console.log(acctInfoNum);
         copyTextToClipboard(`Account Name - ${userProfileData.lastName} ${userProfileData.firstName}
         Account No. - ${copyAcctInfo.accountNumber}
         Bank Name - Ecobank
@@ -361,8 +305,12 @@ const Dashboard = () => {
                 }, 1500);
             })
             .catch((err) => {
-                console.log(err);
+                //console.log(err);
             });
+    };
+    const [overlay, setOverlay] = useState(false);
+    const openAddAccountModal = () => {
+        setOverlay(true);
     };
     return (
         <div className={styles.statementCover}>
@@ -542,7 +490,7 @@ const Dashboard = () => {
                                                 item?.receiversName?.split(' ');
                                         }
                                         // {
-                                        //     //console.log(item);
+                                        //     // //console.log(item);
                                         // }
                                         return (
                                             <div key={index}>
@@ -728,6 +676,19 @@ const Dashboard = () => {
 
                         <div className={styles.otherAccounts}>
                             <h2>Other Accounts</h2>
+                            <div
+                                className={styles.addAccount}
+                                onClick={openAddAccountModal}
+                            >
+                                +
+                            </div>
+                            <Overlay overlay={overlay}>
+                                <Addaccounts
+                                    close={() => {
+                                        setOverlay(false);
+                                    }}
+                                />
+                            </Overlay>
                             <div className={styles.accountsALl}>
                                 {bankAccounts?.map((accountNo, index) => {
                                     if (acctInfoNum === accountNo.accountNumber)
@@ -890,7 +851,7 @@ const Dashboard = () => {
                                         return item;
                                     })
                                     ?.map((item, index) => {
-                                        // console.log(item);
+                                        //  //console.log(item);
                                         const formatter = new Intl.NumberFormat(
                                             'en-US',
                                             {

@@ -498,7 +498,7 @@ export const login = {
     REGISTER_START: 'REGISTER_START',
     REGISTER_FAIL: 'REGISTER_FAIL',
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-    LOGIN_ERROR: 'LOGIN_ERROE',
+    LOGIN_ERROR: 'LOGIN_ERROR',
     SET_MESSAGE: 'SET_MESSAGE',
     CLEAR_MESSAGE: 'CLEAR_MESSAGE',
     LOGIN_FAIL: 'LOGIN_FAIL',
@@ -1018,3 +1018,57 @@ export const requestPhysicalQrType = {
 };
 
 //Request Physical Qr  action type end
+
+//add ecoOnline account type
+
+export const addecoOnlineType = {
+    ECO_ONLINE_TYPE_START: 'ECO_ONLINE_TYPE_START',
+    ECO_ONLINE_TYPE_SUCCESS: 'ECO_ONLINE_TYPE_SUCCESS',
+    ECO_ONLINE_TYPE_ERROR: 'ECO_ONLINE_TYPE_ERROR'
+};
+//add eco online account type
+
+//add omnilite account type
+
+export const addomniLiteType = {
+    OMNILITE_TYPE_START: 'OMNILITE_TYPE_START',
+    OMNILITE_TYPE_SUCCESS: 'OMNILITE_TYPE_SUCCESS',
+    OMNILITE_TYPE_ERROR: 'OMNILITE_TYPE_ERROR'
+};
+//add omnilite account type
+
+//add account number type
+
+export const addAccountNumberType = {
+    ACCOUNT_NUMBER_START: 'ACCOUNT_NUMBER_START',
+    ACCOUNT_NUMBER_SUCCESS: 'ACCOUNT_NUMBER_SUCCESS',
+    ACCOUNT_NUMBER_ERROR: 'ACCOUNT_NUMBER_ERROR'
+};
+//add account number type
+
+//add card type
+
+export const addCardType = {
+    ADD_CARD_START: 'ADD_CARD_START',
+    ADD_CARD_SUCCESS: 'ADD_CARD_SUCCESS',
+    ADD_CARD_ERROR: 'ADD_CARD_ERROR'
+};
+//add card type
+
+//add Validate Account numbertype
+
+export const validateAccountNumberType = {
+    VALIDATE_ACCOUNT_NUMBER_START: 'VALIDATE_ACCOUNT_NUMBER_START',
+    VALIDATE_ACCOUNT_NUMBER_SUCCESS: 'VALIDATE_ACCOUNT_NUMBER_SUCCESS',
+    VALIDATE_ACCOUNT_NUMBER_ERROR: 'VALIDATE_ACCOUNT_NUMBER_ERROR'
+};
+//add validate account number type
+
+//add Validate card type
+
+export const validateCardType = {
+    VALIDATE_CARD_START: 'VALIDATE_CARD_START',
+    VALIDATE_CARD_SUCCESS: 'VALIDATE_CARD_SUCCESS',
+    VALIDATE_CARD_ERROR: 'VALIDATE_CARD_ERROR'
+};
+//add validate Card type

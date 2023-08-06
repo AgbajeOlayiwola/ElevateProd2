@@ -44,7 +44,7 @@ const RegisteredForm = ({
             setGetRCFirst(false);
         } else if (getRC?.data?.reason !== undefined) {
             setGetRCFirst(false);
-            console.log(getRC?.data?.reason);
+            //  //console.log(getRC?.data?.reason);
         }
     }, [getRC, getRCErrorMessage]);
     // ll
@@ -53,11 +53,11 @@ const RegisteredForm = ({
         setShowFirstStep(false);
     };
     const handleRegistrationStatus = () => {
-        //console.log('true');
+        // //console.log('true');
         setFormData({ ...formData, type: true });
     };
     const switchRegistrationStatus = () => {
-        //console.log('false');
+        // //console.log('false');
         setFormData({ ...formData, type: false });
     };
     let subtitle;
@@ -76,27 +76,27 @@ const RegisteredForm = ({
     } = useForm();
 
     const onSubmit = async (data) => {
-        //console.log(data);
+        // //console.log(data);
     };
     const { isLoading, profile, errorMessages, bvnErrorI } = useSelector(
         (state) => state.profileSetup
     );
 
-    //console.log('error essage', otpErrorMessage);
+    // //console.log('error essage', otpErrorMessage);
     // useEffect(() => {
     //     setLoading((prev) => !prev);
     // }, [isLoading, profile, errorMessages]);
 
     // useEffect(() => {
-    //     //console.log('bvnError', bvnErrorI);
-    //     //console.log(errorMessages);
+    //     // //console.log('bvnError', bvnErrorI);
+    //     // //console.log(errorMessages);
     //     setErrorM(errorMessages);
 
     //     //change to no error messages boss
     //     if (!errorMessages) {
-    //         //console.log(errorMessages);
+    //         // //console.log(errorMessages);
     //     } else {
-    //         //console.log('moved');
+    //         // //console.log('moved');
     //     }
     // }, [errorMessages]);
 

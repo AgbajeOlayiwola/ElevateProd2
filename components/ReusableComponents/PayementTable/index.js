@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    getTransactionElevate,
-    getTransactionHistory,
-    getDisputCategOryTypeGen,
-    getDisputCategoryGen
-} from '../../../redux/actions/actions';
+
 import TableDetail from '../TableDetail';
 import styles from './styles.module.css';
 import ReactPaginate from 'react-paginate';
 import TransactionStatus from '../TransactionStatus';
 import Lottie from 'react-lottie';
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
+import { getTransactionHistory } from '../../../redux/actions/transactionHistoryAction';
+import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
 const PaymentTable = ({ title, page }) => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
@@ -19,11 +16,15 @@ const PaymentTable = ({ title, page }) => {
     const { transactionHistory, errorMessageTransactionHistory } = useSelector(
         (state) => state.transactionHistoryReducer
     );
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
 
-    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
-        useSelector((state) => state.getDisputeCategoryReducer);
+    const {
+        getDisputCategorySuccess,
+        getDisputCategoryErrorMessage
+    } = useSelector((state) => state.getDisputeCategoryReducer);
     const [pageSrchIndex, setPageSrchIndex] = useState(0);
     const [numOfRecords, setNumOfRecords] = useState(1000);
     const [tableDetails, setTableDetails] = useState([]);
@@ -104,7 +105,7 @@ const PaymentTable = ({ title, page }) => {
         if (transactionHistory !== null) {
             setNewestTableDetails([]);
             setTableDetails(transactionHistory.transactions);
-            //console.logtransactionElevate.transactions);
+            // //console.logtransactionElevate.transactions);
             if (transactionHistory !== null) {
                 setIsLoading(false);
             }

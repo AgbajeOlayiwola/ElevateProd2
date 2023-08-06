@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 export default function useSum() {
     const [sum, setSum] = useState(0);
-    console.log('Tesst');
+    //console.log('Tesst');
     return {
         sum,
         gatherSum: (data) => {

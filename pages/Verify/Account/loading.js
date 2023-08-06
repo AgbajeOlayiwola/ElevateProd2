@@ -7,15 +7,10 @@ import axiosInstance from '../../../redux/helper/apiClient';
 import apiRoutes from '../../../redux/helper/apiRoutes';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    accountStatusData,
-    CompProfile,
-    createNewUserAccount,
-    getNewUserAccountDetails,
-    newAccountStatusData,
-    logoutAction
-} from '../../../redux/actions/actions';
 import { IoMdGift } from 'react-icons/io';
+import { newAccountStatusData } from '../../../redux/actions/newAccountStatusAction';
+import { createNewUserAccount } from '../../../redux/actions/createNwUserAccountAction';
+import { logoutAction } from '../../../redux/actions/logOutAction';
 
 const AccountLoading = () => {
     const [accountInfo, setAccountInfo] = useState('');
@@ -140,7 +135,7 @@ const AccountLoading = () => {
             errorMessages === 'Try Again' ||
             errorMessages === 'Bank Account has not been created for this user'
         ) {
-            console.log('done');
+            //console.log('done');
             // if (count === 1) {
             dispatch(newAccountStatusData());
 
@@ -150,7 +145,7 @@ const AccountLoading = () => {
             // }
         }
         if (accountStatuss !== null) {
-            //console.log(accountStatus.messages, errorMessages);
+            // //console.log(accountStatus.messages, errorMessages);
             router.push('/Success');
         }
     }, [errorMessages, accountStatuss]);

@@ -6,24 +6,11 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    auth2FaCodeDetails,
-    loginUserAction,
-    resetOtpData
-} from '../../../redux/actions/actions';
-import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
 import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
-import LoginCircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LoginCircleSvg';
 import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
 import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
-import Modal from 'react-modal';
-import OtpInput from '../../../components/ReusableComponents/Otpinput';
-import { setCookies } from 'cookies-next';
-import Cookies from 'js-cookie';
-import StorePopup from '../../../components/ReusableComponents/StorePopup';
-import OutsideClick from '../../../components/ReusableComponents/OutsideClick';
-
+import { loginUserAction } from '../../../redux/actions/loginUserAction';
 // Number of input fields that make up SSN
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -43,12 +30,6 @@ const Login = () => {
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
     );
-    // const { auth2FaCodeSuccess, auth2FaCodeError } = useSelector(
-    //     (state) => state.auth2FaReducer
-    // );
-    // const { resetOtp, resetOtpErrorMessages } = useSelector(
-    //     (state) => state.resetOtpReducer
-    // );
 
     const {
         register,
@@ -56,14 +37,6 @@ const Login = () => {
         watch,
         formState: { errors }
     } = useForm();
-
-    // function isExcel(file) {
-    //     const fileType = file.type;
-    //     const fileName = file.name;
-    //     return (
-    //       fileType === "application/vnd.ms-excel" || // Microsoft Excel 97-2003    fileType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || // Microsoft Excel 2007 and later    fileType === "application/vnd.ms-excel.sheet.macroEnabled.12" || // Microsoft Excel 2007 and later with macros    fileType === "application/vnd.ms-excel.sheet.binary.macroEnabled.12" || // Microsoft Excel 97-2003 with macros    fileName.endsWith(".xls") || // Microsoft Excel 97-2003    fileName.endsWith(".xlsx") || // Microsoft Excel 2007 and later    fileName.endsWith(".xlsm") || // Microsoft Excel 2007 and later with macros    fileName.endsWith(".xlsb") // Microsoft Excel 97-2003 with macros  );
-    //   }
-
     //set password value
     const handlePwd = (e) => {
         setPassword(e.target.value);
@@ -72,257 +45,58 @@ const Login = () => {
     const checkDataContent = (e) => {
         setEmail(e.target.value);
     };
-    // const clear = (e) => {
-    //     setValue((ssnValues) => ['']);
-    // };
-    // const ResetOtp = (e) => {
-    //     setValue((ssnValues) => ['']);
-    //     const data = {
-    //         userId: user?.data?.user?.userId
-    //     };
-    //     dispatch(resetOtpData(data));
-    //     //console.logresetOtp, resetOtpErrorMessages);
-    // };
-    // const onSubmit = (data) => {
-    //     setError('');
-    //     setMloading((prev) => !prev);
-    //     const stringValues = ssnValues.join('');
-
-    //     console.log(stringValues);
-    //     const loginData = {
-    //         MFAToken: user?.data?._2FAToken,
-    //         otp: stringValues
-    //     };
-    //     dispatch(auth2FaCodeDetails(loginData));
-    //     // dispatch(createNewUserAccount());
-    // };
-    // useEffect(() => {
-    //     console.log(resetOtp);
-    //     // setValue((ssnValues) => ['']);
-    // }, [resetOtp, resetOtpErrorMessages]);
-
-    //console.log(user);
-    // const sentLogin = () => {
-    //     if (auth2FaCodeError !== null) {
-    //         console.log('here');
-    //         setError(auth2FaCodeError.data.message);
-    //         // console.log(auth2FaCodeError);
-    //         // setLoading(false);
-
-    //         setMloading((prev) => !prev);
-    //         // } else if (
-    //         //     newAccountErrorMessage ===
-    //         //     'You already have an account with us. Please contact us for more information'
-    //         // ) {
-    //         // router.push('/Admin/Dashboard');,
-    //         setNewUser(auth2FaCodeSuccess);
-    //     } else if (auth2FaCodeSuccess) {
-    //         console.log('here');
-    //         if (auth2FaCodeSuccess.data.statusCode === 200) {
-    //             if (
-    //                 auth2FaCodeSuccess.data.data.user.profile
-    //                     .createdFromEcobankCred === false
-    //             ) {
-    //                 if (
-    //                     auth2FaCodeSuccess.data.data.user.profile
-    //                         .customerCategory === 'COMMERCIAL'
-    //                 ) {
-    //                     console.log('here Commercial');
-    //                     if (
-    //                         auth2FaCodeSuccess.data.data.user.profile
-    //                             .profileSetupStatus ===
-    //                         'PROFILE_SETUP_COMPLETED'
-    //                     ) {
-    //                         router.push('../../Verify/CorportateAccount');
-    //                     } else if (
-    //                         auth2FaCodeSuccess.data.data.user.profile
-    //                             .profileSetupStatus ===
-    //                         'AWAITING_ACCOUNT_NUMBER'
-    //                     ) {
-    //                         router.push('../../Verify/CorportateAccount');
-    //                     } else if (
-    //                         auth2FaCodeSuccess.data.data.user.profile
-    //                             .profileSetupStatus ===
-    //                         'ACCOUNT_NUMBER_RETRIEVED'
-    //                     ) {
-    //                         console.log('here');
-    //                         router.push('../../Admin/Dashboard');
-    //                     } else {
-    //                         router.push('../../Onboarding/ProfileSetup');
-    //                     }
-    //                 } else {
-    //                     if (
-    //                         auth2FaCodeSuccess.data.data.user.profile
-    //                             .profileSetupStatus ===
-    //                         'PROFILE_SETUP_COMPLETED'
-    //                     ) {
-    //                         router.push('../../Verify/Account/loading');
-    //                     } else if (
-    //                         auth2FaCodeSuccess.data.data.user.profile
-    //                             .profileSetupStatus ===
-    //                         'AWAITING_ACCOUNT_NUMBER'
-    //                     ) {
-    //                         router.push('../../Verify/Account/loading');
-    //                     } else if (
-    //                         auth2FaCodeSuccess.data.data.user.profile
-    //                             .profileSetupStatus ===
-    //                         'ACCOUNT_NUMBER_RETRIEVED'
-    //                     ) {
-    //                         router.push('../../Admin/Dashboard');
-    //                     } else {
-    //                         router.push('../../Onboarding/ProfileSetup');
-    //                     }
-    //                 }
-    //             }
-
-    //             console.log('here Fals');
-    //         }
-    //         if (auth2FaCodeSuccess) {
-    //             if (
-    //                 auth2FaCodeSuccess.data.data.user.profile
-    //                     .createdFromEcobankCred === true
-    //             ) {
-    //                 if (
-    //                     auth2FaCodeSuccess.data.data.user.profile
-    //                         .profileSetupStatus === 'PROFILE_SETUP_COMPLETED'
-    //                 ) {
-    //                     window.localStorage.setItem(
-    //                         'displayAccount',
-    //                         JSON.stringify(auth2FaCodeSuccess.data.data.user)
-    //                     );
-    //                     window.localStorage.setItem(
-    //                         'account',
-    //                         JSON.stringify(
-    //                             auth2FaCodeSuccess.data.data.user.profile
-    //                         )
-    //                     );
-    //                     router.push('../../Admin/Dashboard');
-    //                 } else if (
-    //                     auth2FaCodeSuccess.data.data.user.profile
-    //                         .profileSetupStatus === 'PROFILE_SETUP'
-    //                 ) {
-    //                     window.localStorage.setItem(
-    //                         'displayAccount',
-    //                         JSON.stringify(auth2FaCodeSuccess.data.data.user)
-    //                     );
-    //                     window.localStorage.setItem(
-    //                         'account',
-    //                         JSON.stringify(
-    //                             auth2FaCodeSuccess.data.data.user.profile
-    //                         )
-    //                     );
-
-    //                     router.push({
-    //                         pathname: '/Onboarding/ExistingProfileSetup',
-    //                         query: { id: 2 }
-    //                     });
-    //                 } else if (
-    //                     user.data.user.profile.profileSetupStatus ===
-    //                     'LIVENESS_VERIFIED'
-    //                 ) {
-    //                     window.localStorage.setItem(
-    //                         'displayAccount',
-    //                         JSON.stringify(user.data.user)
-    //                     );
-    //                     window.localStorage.setItem(
-    //                         'account',
-    //                         JSON.stringify(user.data.user.profile)
-    //                     );
-    //                     router.push({
-    //                         pathname: '/Onboarding/ExistingProfileSetup',
-    //                         query: { id: 3 }
-    //                     });
-    //                 } else if (
-    //                     user.data.user.profile.profileSetupStatus ===
-    //                     'PROFILE_SETUP_AWAITING_OTP'
-    //                 ) {
-    //                     window.localStorage.setItem(
-    //                         'displayAccount',
-    //                         JSON.stringify(user.data.user)
-    //                     );
-    //                     window.localStorage.setItem(
-    //                         'account',
-    //                         JSON.stringify(user.data.user.profile)
-    //                     );
-    //                     router.push({
-    //                         pathname: '/Onboarding/ExistingProfileSetup',
-    //                         query: { id: 0 }
-    //                     });
-    //                 }
-    //                 if (
-    //                     auth2FaCodeSuccess.data.data.user.profile
-    //                         .profileSetupStatus === 'AWAITING_ACCOUNT_NUMBER'
-    //                 ) {
-    //                     window.localStorage.setItem(
-    //                         'displayAccount',
-    //                         JSON.stringify(auth2FaCodeSuccess.data.data.user)
-    //                     );
-    //                     window.localStorage.setItem(
-    //                         'account',
-    //                         JSON.stringify(
-    //                             auth2FaCodeSuccess.data.data.user.profile
-    //                         )
-    //                     );
-    //                     router.push('../../Verify/CorportateAccount');
-    //                 } else if (
-    //                     auth2FaCodeSuccess.data.data.user.profile
-    //                         .profileSetupStatus === 'ACCOUNT_NUMBER_RETRIEVED'
-    //                 ) {
-    //                     window.localStorage.setItem(
-    //                         'displayAccount',
-    //                         JSON.stringify(auth2FaCodeSuccess.data.data.user)
-    //                     );
-    //                     window.localStorage.setItem(
-    //                         'account',
-    //                         JSON.stringify(
-    //                             auth2FaCodeSuccess.data.data.user.profile
-    //                         )
-    //                     );
-    //                     router.push('../../Admin/Dashboard');
-    //                 }
-    //             }
-    //         }
-    //     }
-    // };
+    const openModal = () => {
+        setError('');
+        setLoading((prev) => !prev);
+        const loginData = {
+            identifier,
+            password
+        };
+        dispatch(loginUserAction(loginData));
+    };
     useEffect(() => {
         if (user) {
-            if (user.statusCode === 200) {
-                if (user.data.user.profile.createdFromEcobankCred === false) {
+            console.log(user);
+            if (user?.statusCode === 200) {
+                if (
+                    user?.data?.user?.profile?.createdFromEcobankCred === false
+                ) {
                     if (
-                        user.data.user.profile.customerCategory === 'COMMERCIAL'
+                        user?.data?.user?.profile?.customerCategory ===
+                        'COMMERCIAL'
                     ) {
                         if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'PROFILE_SETUP_COMPLETED'
                         ) {
                             router.push('../../Verify/CorportateAccount');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'AWAITING_ACCOUNT_NUMBER'
                         ) {
                             router.push('../../Verify/CorportateAccount');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'ACCOUNT_NUMBER_RETRIEVED'
                         ) {
-                            console.log('here');
+                            //console.log('here');
                             router.push('../../Admin/Dashboard');
                         } else {
                             router.push('../../Onboarding/ProfileSetup');
                         }
                     } else {
                         if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'PROFILE_SETUP_COMPLETED'
                         ) {
                             router.push('../../Verify/Account/loading');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'AWAITING_ACCOUNT_NUMBER'
                         ) {
                             router.push('../../Verify/Account/loading');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'ACCOUNT_NUMBER_RETRIEVED'
                         ) {
                             router.push('../../Admin/Dashboard');
@@ -334,16 +108,16 @@ const Login = () => {
             }
         }
         if (user) {
-            if (user.data.user.profile.createdFromEcobankCred === true) {
+            if (user?.data?.user?.profile?.createdFromEcobankCred === true) {
                 if (
-                    user.data.user.profile.profileSetupStatus ===
+                    user?.data?.user?.profile?.profileSetupStatus ===
                     'PROFILE_SETUP_COMPLETED'
                 ) {
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'displayAccount',
-                        JSON.stringify(user.data.user)
+                        JSON.stringify(user?.data?.user)
                     );
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
@@ -368,11 +142,11 @@ const Login = () => {
                     user.data.user.profile.profileSetupStatus ===
                     'LIVENESS_VERIFIED'
                 ) {
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
@@ -388,7 +162,7 @@ const Login = () => {
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
@@ -406,7 +180,7 @@ const Login = () => {
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
@@ -415,11 +189,11 @@ const Login = () => {
                     user.data.user.profile.profileSetupStatus ===
                     'ACCOUNT_NUMBER_RETRIEVED'
                 ) {
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
@@ -428,67 +202,13 @@ const Login = () => {
             }
         } else if (errorMessages !== null) {
             setmainError(errorMessages);
-            // setMloading((prev) => !prev);
             setLoading((prev) => !prev);
         }
     }, [user, errorMessages]);
 
-    // useEffect(() => {
-    //     sentLogin();
-    // }, [auth2FaCodeSuccess, auth2FaCodeError]);
-
     const types = (type) => {
         setOutType(type);
     };
-    function openModal() {
-        setError('');
-        setLoading((prev) => !prev);
-        const loginData = {
-            identifier,
-            password
-        };
-        dispatch(loginUserAction(loginData));
-    }
-
-    // function closeModal() {
-    //     setOverlay(false);
-    // }
-    //console.log(user);
-    //console.log(data); // watch input value by passing the name of it
-
-    // const numOfFields = 6;
-
-    // const [ssnValues, setValue] = useState(['']);
-
-    // // const useSSNFields = () => {
-
-    // const handleChange = (e) => {
-    //     const { maxLength, value, name } = e.target;
-    //     const [fieldName, fieldIndex] = name.split('-');
-
-    //     // Check if they hit the max character length
-    //     if (value.length >= maxLength) {
-    //         // Check if it's not the last input field
-    //         if (parseInt(fieldIndex, 10) <= 6) {
-    //             // Get the next input field
-    //             const nextSibling = document.querySelector(
-    //                 `input[name=ssn-${parseInt(fieldIndex, 10) + 1}]`
-    //             );
-    //             setValue((prevValue) => [...prevValue, value]);
-
-    //             console.log(ssnValues);
-
-    //             // If found, focus the next field
-    //             if (nextSibling !== null) {
-    //                 nextSibling.focus();
-    //             } else {
-    //             }
-    //         }
-    //     }
-    // };
-
-    // };
-    // const { handleChange } = useSSNFields();
 
     return (
         <div className={styles.sectionCove}>
@@ -577,235 +297,10 @@ const Login = () => {
                                 margin="0px 0 0 0"
                                 text="Login"
                                 type="submit"
-                                // onClick={openModal}
                             />
                         )}
-                        {/* <Modal
-                            isOpen={modalIsOpen}
-                            onAfterOpen={afterOpenModal}
-                            onRequestClose={closeModal}
-                            style={customStyles}
-                            contentLabel="Example Modal"
-                        >
-                            <h1 className={styles.errorX} onClick={closeModal}>
-                                X
-                            </h1>
-                            <h1 className={styles.errorX} onClick={closeModal}>
-                                Enter Otp Below
-                            </h1>
-                            {error ? (
-                                <h2 className={styles.error}>{error}</h2>
-                            ) : null}
-                            <div className={styles.otp}>
-                                <div className={styles.otpInn}>
-                                    <div className={styles.otpInps}>
-                                        <input
-                                            type="password"
-                                            name="ssn-1"
-                                            maxLength={1}
-                                            onChange={handleChange}
-                                        />
-                                        <input
-                                            type="password"
-                                            name="ssn-2"
-                                            maxLength={1}
-                                            onChange={handleChange}
-                                        />
-                                        <input
-                                            type="password"
-                                            name="ssn-3"
-                                            maxLength={1}
-                                            onChange={handleChange}
-                                        />
-                                        <input
-                                            type="password"
-                                            name="ssn-4"
-                                            maxLength={1}
-                                            onChange={handleChange}
-                                        />
-                                        <input
-                                            type="password"
-                                            name="ssn-5"
-                                            maxLength={1}
-                                            onChange={handleChange}
-                                        />
-                                        <input
-                                            type="password"
-                                            name="ssn-6"
-                                            maxLength={1}
-                                            onChange={handleChange}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            {mloading ? (
-                                <Loader />
-                            ) : (
-                                <ButtonComp
-                                    disabled={activeBtn}
-                                    active={activeBtn ? 'active' : 'inactive'}
-                                    text="Submit & Login"
-                                    type="submit"
-                                    // onClick={openModal}
-                                    onClick={onSubmit}
-                                    loads={mloading}
-                                    err={errorMessages}
-                                />
-                            )}
-                        </Modal> */}
                     </form>
-                    {/* <OutsideClick onClickOutside={closeModal}>
-                        <StorePopup overlay={overlay}>
-                            <div className={styles.otpDiv}>
-                                <form>
-                                    <h1
-                                        className={styles.errorX}
-                                        onClick={closeModal}
-                                    >
-                                        Enter OTP Below
-                                    </h1>
-                                    {error ? (
-                                        <h2 className={styles.error}>
-                                            {error}
-                                        </h2>
-                                    ) : null}
-                                    {resetOtpErrorMessages ? (
-                                        <p>
-                                            {' '}
-                                            {
-                                                resetOtpErrorMessages?.response
-                                                    ?.data?.message
-                                            }
-                                        </p>
-                                    ) : (
-                                        <p>{resetOtp?.data?.message}</p>
-                                    )}
-                                    <div className={styles.otp}>
-                                        <div className={styles.otpInn}>
-                                            <div className={styles.otpInps}>
-                                                <input
-                                                    type="password"
-                                                    name="ssn-1"
-                                                    maxLength={1}
-                                                    onInput={handleChange}
-                                                />
-                                                <input
-                                                    type="password"
-                                                    name="ssn-2"
-                                                    maxLength={1}
-                                                    onInput={handleChange}
-                                                />
-                                                <input
-                                                    type="password"
-                                                    name="ssn-3"
-                                                    maxLength={1}
-                                                    onInput={handleChange}
-                                                />
-                                                <input
-                                                    type="password"
-                                                    name="ssn-4"
-                                                    maxLength={1}
-                                                    onInput={handleChange}
-                                                />
-                                                <input
-                                                    type="password"
-                                                    name="ssn-5"
-                                                    maxLength={1}
-                                                    onInput={handleChange}
-                                                />
-                                                <input
-                                                    type="password"
-                                                    name="ssn-6"
-                                                    maxLength={1}
-                                                    onInput={handleChange}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.resendFlex}>
-                                        <button
-                                            className={styles.resetOtp}
-                                            onClick={ResetOtp}
-                                            type="reset"
-                                        >
-                                            Resend OTP
-                                        </button>
-                                        <button
-                                            onClick={clear}
-                                            className={styles.clr}
-                                            type="reset"
-                                        >
-                                            Clear
-                                        </button>
-                                    </div>
 
-                                    {mloading ? (
-                                        <Loader />
-                                    ) : (
-                                        <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            text="Submit & Login"
-                                            type="submit"
-                                            // onClick={openModal}
-                                            onClick={onSubmit}
-                                            loads={mloading}
-                                            err={errorMessages}
-                                        />
-                                    )}
-                                </form>
-                            </div>
-                        </StorePopup>
-                    </OutsideClick> */}
-                    {/* <p>
-                        <label>
-                            Tap to
-                            <input
-                                type="file"
-                                accept=".csv, .xlsm"
-                                onChange={(e) => {
-                                    if (
-                                        e.target.files[0].type ===
-                                        'application/vnd.ms-excel.sheet.macroenabled.12'
-                                    ) {
-                                        console.log(e.target.files[0].type);
-                                        const reader = new FileReader();
-                                        reader.onload = (e) => {
-                                            const data = e.target.result;
-                                            const workbook = XLSX.read(data, {
-                                                type: 'array'
-                                            });
-                                            const sheetName =
-                                                workbook.SheetNames[0];
-                                            const worksheet =
-                                                workbook.Sheets[sheetName];
-                                            const json = XLSX.utils.sheet_to_json(
-                                                worksheet
-                                            );
-                                            localStorage.setItem(
-                                                'csvData',
-                                                JSON.stringify(json)
-                                            );
-                                        };
-                                        reader.readAsArrayBuffer(
-                                            e.target.files[0]
-                                        );
-
-                                        localStorage.removeItem('number');
-                                        setCsvUpload(true);
-                                        setActiveBtn(true);
-                                    } else {
-                                        console.log('invalid file');
-                                    }
-                                }}
-                            />
-                            <span> Upload CSV File</span>
-                        </label>
-                    </p> */}
                     <div>
                         <p className={styles.accout}>
                             Don&apos;t have an account?

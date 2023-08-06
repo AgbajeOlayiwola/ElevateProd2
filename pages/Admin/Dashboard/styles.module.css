@@ -8,6 +8,25 @@
     display: flex;
     justify-content: space-between;
 }
+.addAccount{
+    background:#6bcf003a;
+    border-radius: 10px;
+    padding: 8px;
+    width: fit-content;
+    color: #6ccf00;
+    transition: all 0.2s ease-in-out;
+    font-size: 20px;
+}
+.addAccount:hover{
+    background:#6bcf003a;
+    border-radius: 10px;
+    padding: 10px;
+    transition: all 0.2s ease-in-out;
+    width: fit-content;
+    color: #6ccf00;
+    font-size: 20px;
+    cursor: pointer;
+}
 .accountNumbers {
     padding: 0px;
     background: no-repeat;

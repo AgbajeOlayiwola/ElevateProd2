@@ -19,13 +19,10 @@ import {
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import Card from '../../NotRegisteredForms/Card';
 import OtpInput from '../../../ReusableComponents/Otpinput';
-import {
-    resetOtpData,
-    verifyOtp,
-    changeNumberAction
-} from '../../../../redux/actions/actions';
-import { otp } from '../../../../redux/types/actionTypes';
+
 import Loader from '../../../ReusableComponents/Loader';
+import { resetOtpData } from '../../../../redux/actions/resetOtpAction';
+import { changeNumberAction } from '../../../../redux/actions/changeNumberAction';
 
 const StepTwoBVNAuthenticator = ({
     handleShowThirdStep,
@@ -40,7 +37,7 @@ const StepTwoBVNAuthenticator = ({
         let accounts = window.localStorage.getItem('user');
         var newAccounts = JSON.parse(accounts);
 
-        //console.log(newAccounts.user.email);
+        // //console.log(newAccounts.user.email);
     }
 
     const dispatch = useDispatch();
@@ -71,7 +68,7 @@ const StepTwoBVNAuthenticator = ({
                 );
                 setValue((prevValue) => [...prevValue, value]);
 
-                console.log(ssnValues);
+                //  //console.log(ssnValues);
 
                 // If found, focus the next field
                 if (nextSibling !== null) {
@@ -96,11 +93,11 @@ const StepTwoBVNAuthenticator = ({
             userId: newAccounts.userId
         };
         dispatch(resetOtpData(data));
-        //console.logresetOtp, resetOtpErrorMessages);
+        // //console.logresetOtp, resetOtpErrorMessages);
     };
 
     useEffect(() => {
-        console.log(resetOtp);
+        //  //console.log(resetOtp);
         setValue((ssnValues) => ['']);
     }, [resetOtp, resetOtpErrorMessages]);
 

@@ -6,11 +6,10 @@ import BillPayment from './billpayment';
 import SingleTransfer from './singletransfer';
 import Overlay from '../Overlay';
 import CloseButton from '../CloseButtonSvg';
-import {
-    bankAccountsData,
-    getBeneficiariesData
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import { getBeneficiariesData } from '../../../redux/actions/getBeneficiariesAction';
 
 const MakePaymentFirst = ({
     firstTitle,

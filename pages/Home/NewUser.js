@@ -3,7 +3,6 @@ import styles from './styles.module.css';
 import { ButtonComp } from '../../components';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUserAction } from '../../redux/actions/actions';
 import Link from 'next/link';
 import Loader from '../../components/ReusableComponents/Loader';
 import { encrypt } from '../../redux/helper/hash';
@@ -14,6 +13,7 @@ import InputTag from '../../components/ReusableComponents/Input';
 import Modal from 'react-modal';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+import { createUserAction } from '../../redux/actions/createUserAction';
 
 const customStyles = {
     content: {
@@ -150,7 +150,7 @@ const NewUser = ({ selectCountry }) => {
     };
     const userName = (e) => {
         setPname(e.target.value);
-        //console.logpName);
+        // //console.logpName);
     };
     // display Lofg in with end
     const types = (type) => {
@@ -166,7 +166,7 @@ const NewUser = ({ selectCountry }) => {
         formState: { errors }
     } = useForm();
     const onSubmit = (data) => {
-        //console.logdata);
+        // //console.logdata);
         if (selectCountry === '') {
             setError('Choose a country');
         } else {
@@ -190,14 +190,14 @@ const NewUser = ({ selectCountry }) => {
                 affiliateCode: 'ENG'
             };
             setLoading(true);
-            //console.logerrorMessage);
+            // //console.logerrorMessage);
             dispatch(createUserAction(postData));
         } else {
             passwordMatch;
         }
     };
     const sentSIgnUp = () => {
-        //console.logerrorMessage);
+        // //console.logerrorMessage);
         if (errorMessage !== null) {
             setError(errorMessage);
             setLoading(false);

@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const getRCReducer = (state = initialState, { type, payload }) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case getRC.GETRC_START:
             return {

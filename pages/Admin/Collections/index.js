@@ -1,45 +1,24 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import DashLayout from '../../components/layout/Dashboard';
-import MakePaymentFirst from '../../../components/ReusableComponents/MakePaymentFirst';
-import MakePaymentSecond from '../../../components/ReusableComponents/MakePaymentSecond';
 import PaymentTable from '../../../components/ReusableComponents/PayementTable';
-import PaymentSuccess from '../../../components/ReusableComponents/PaymentSuccess';
 import ReceivePaymentFirst from '../../../components/ReusableComponents/ReceivePaymentFirst';
 import ReceivePaymentSecond from '../../../components/ReusableComponents/ReceivePaymentSecond';
 import styles from './styles.module.css';
-import Image from 'next/image';
 import Overlay from '../../../components/ReusableComponents/Overlay';
-import SchedulePayment from '../../../components/ReusableComponents/Schedulepayment';
-import Visbility from '../../../components/ReusableComponents/Eyeysvg';
-import { RWebShare } from 'react-web-share';
-import {
-    loadussdGen,
-    getBalanceEnquiry,
-    loadUserProfile,
-    loadAccountPrimary,
-    generateQrCodeDetails,
-    loadpaylinkGen,
-    getQrMerchantInfoGen
-} from '../../../redux/actions/actions';
-// import ChartDiv from './chartDivStyled';
-// import ChartContent from './chartContentStyled';
 import PaymentSingleBody from '../../../components/ReusableComponents/PaymentSingleBody';
 import PaymentCard from '../../../components/ReusableComponents/PaymentCard';
-// import PaymentError from '../../../components/ReusableComponents/PaymentError';
 import { useRouter } from 'next/router';
 import { PaymentData } from '../../../components/ReusableComponents/Data';
-import CloseButton from '../../../components/ReusableComponents/CloseButtonSvg';
-import PaymentRepeat from '../../../components/ReusableComponents/PaymentRepeat';
 import ReceivePaymentThird from '../../../components/ReusableComponents/ReceivePaymentThird';
-import RecievePaymentShare from '../../../components/ReusableComponents/ReceivePaymentShare';
-import PaylinkStepOne from '../../../components/layout/Paylink/StepOne';
 import UssdFirst from '../../../components/ReusableComponents/UssdFirst';
 import Share from '../../../components/ReusableComponents/Share';
 import QrFirst from '../../../components/layout/QrData';
 import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
-import withAuth from '../../../components/HOC/withAuth';
 import RecievePaymentStatus from '../../../components/ReusableComponents/RecievePaymentStatus';
+import { getQrMerchantInfoGen } from '../../../redux/actions/getQrMerchantAction';
+import { loadpaylinkGen } from '../../../redux/actions/paylinkAction';
+import { generateQrCodeDetails } from '../../../redux/actions/generateQrCodeAction';
+import { loadussdGen } from '../../../redux/actions/ussdGenAction';
 
 const Collections = () => {
     const router = useRouter();
@@ -52,12 +31,7 @@ const Collections = () => {
     const { ussdStatus, errorMessageussdStatus } = useSelector(
         (state) => state.ussdStatusReducer
     );
-    const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
-        (state) => state.balanceEnquiryReducer
-    );
-    const { transactionFees, errorMessageTransactionFees } = useSelector(
-        (state) => state.transactionFeesReducer
-    );
+
     const { generateQrCodeSuccess, generateQrCodeError } = useSelector(
         (state) => state.generateQrInfo
     );
@@ -65,22 +39,17 @@ const Collections = () => {
         (state) => state.payLinkGenReducer
     );
 
-    const { userProfile } = useSelector((state) => state.userProfileReducer);
-    const { bankAccounts, bankAccountErrorMessages } = useSelector(
-        (state) => state.bankAccountsReducer
-    );
-
     const dispatch = useDispatch();
     const [formType, setFormType] = useState('');
-    const [formData, setFormdata] = useState({ accountNum: '' });
-    const [ecobank, setEcobank] = useState('true');
+    // const [formData, setFormdata] = useState({ accountNum: '' });
+    // const [ecobank, setEcobank] = useState('true');
     const [overlay, setOverlay] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [count, setCount] = useState(0);
     const [outType, setOutType] = useState();
     const [paymentDetails, setPaymentDetails] = useState({});
-    const [interEnquiry, setInterEnquiry] = useState({});
-    const [balance, setBalance] = useState('₦ 0.00');
+    // const [interEnquiry, setInterEnquiry] = useState({});
+    // const [balance, setBalance] = useState('₦ 0.00');
     const [sum, setSum] = useState(0);
     const [error, setError] = useState('');
     const [status, setStatus] = useState('');
@@ -88,9 +57,9 @@ const Collections = () => {
     const [track, setTrack] = useState('');
     const [csvData, setCsvData] = useState([]);
     const [recieveLink, setRecieveLink] = useState('');
-    const [senderDetails, setSenderDetails] = useState({});
+    // const [senderDetails, setSenderDetails] = useState({});
     const [userProfileData, setUserProfileData] = useState({});
-    const [acctNummber, setAcctNumber] = useState('');
+    // const [acctNummber, setAcctNumber] = useState('');
     const [codes, setCodes] = useState('');
     const [errorQr, setErrorQr] = useState('');
 
@@ -122,53 +91,57 @@ const Collections = () => {
         number = window.localStorage.getItem('number');
         numberofBene = JSON.parse(number);
     }
-    useEffect(() => {
-        dispatch(loadAccountPrimary());
-        dispatch(loadUserProfile());
-    }, []);
-    useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-        }
-    }, [userProfile]);
-    useEffect(() => {
-        if (balanceEnquiry !== null) {
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'NGN',
-                currencyDisplay: 'narrowSymbol'
-            });
-            const formattedAmount = formatter.format(
-                balanceEnquiry.availableBalance
-            );
-            setBalance(formattedAmount);
-        }
-    }, [balanceEnquiry]);
+    // useEffect(() => {
+    //     dispatch(loadAccountPrimary());
+    //     dispatch(loadUserProfile());
+    // }, []);
+    // useEffect(() => {
+    //     if (userProfile !== null) {
+    //         setUserProfileData(userProfile);
+    //     }
+    // }, [userProfile]);
+    // useEffect(() => {
+    //     if (balanceEnquiry !== null) {
+    //         const formatter = new Intl.NumberFormat('en-US', {
+    //             style: 'currency',
+    //             currency: 'NGN',
+    //             currencyDisplay: 'narrowSymbol'
+    //         });
+    //         const formattedAmount = formatter.format(
+    //             balanceEnquiry.availableBalance
+    //         );
+    //         setBalance(formattedAmount);
+    //     }
+    // }, [balanceEnquiry]);
     //where i need to work on
-    useEffect(() => {
-        console.log(accountPrimarys);
-        console.log(bankAccounts);
-        console.log(formData.accountNum);
-        setSenderDetails(accountPrimarys);
-        console.log(senderDetails);
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].accountNumber == formData.accountNum) {
-                // setAcctNumber(accountPrimarys);
-                let balanceData;
-                balanceData = {
-                    accountId: bankAccounts[accountNo].accountId
-                };
-                setSenderDetails(accountPrimarys.accountId);
-                // console.log(senderDetails.accountId);
-                dispatch(getBalanceEnquiry(balanceData));
-            } else {
-                setAcctNumber('Pending');
-            }
-        });
-    }, [formData.accountNum]);
+    // useEffect(() => {
+    //     //console.log(accountPrimarys);
+    //     //console.log(bankAccounts);
+    //     //console.log(formData.accountNum);
+    //     setSenderDetails(accountPrimarys);
+    //     if (bankAccounts !== null) {
+    //         //console.log(senderDetails);
+    //         Object.keys(bankAccounts)?.map((accountNo) => {
+    //             if (
+    //                 bankAccounts[accountNo].accountNumber == formData.accountNum
+    //             ) {
+    //                 // setAcctNumber(accountPrimarys);
+    //                 let balanceData;
+    //                 balanceData = {
+    //                     accountId: bankAccounts[accountNo].accountId
+    //                 };
+    //                 setSenderDetails(accountPrimarys.accountId);
+    //                 //  //console.log(senderDetails.accountId);
+    //                 dispatch(getBalanceEnquiry(balanceData));
+    //             } else {
+    //                 setAcctNumber('Pending');
+    //             }
+    //         });
+    //     }
+    // }, [bankAccounts]);
     const ussdGenCheck = () => {
         if (ussdGen !== null) {
-            //console.logussdGen);
+            // //console.logussdGen);
             setRecieveLink(ussdGen.paymentReference);
             setTrack(ussdGen.transactionId);
             setCount((count) => count + 1);
@@ -182,14 +155,14 @@ const Collections = () => {
             // setCount((count) => count + 1);
             setIsLoading(false);
             setError(errorMessageussdGen.response.data.message);
-            console.log(error);
+            //console.log(error);
             // setStatus('error');
         }
     };
     const payLinkCheck = () => {
-        console.log(paylikSuccess);
+        //console.log(paylikSuccess);
         if (paylikSuccess !== null) {
-            console.log(paylikSuccess);
+            //console.log(paylikSuccess);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -205,7 +178,7 @@ const Collections = () => {
     }, [paylikSuccess, payLinkerrorMessage]);
     const qrCheck = () => {
         if (generateQrCodeSuccess !== null) {
-            console.log(generateQrCodeSuccess);
+            //console.log(generateQrCodeSuccess);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -221,11 +194,11 @@ const Collections = () => {
     }, [generateQrCodeSuccess, generateQrCodeError]);
     useEffect(() => {
         ussdGenCheck();
-        // console.log(error.response.data.message[0]);
+        //  //console.log(error.response.data.message[0]);
     }, [ussdGen, errorMessageussdGen]);
     // const ussdStatusCheck = () => {
     //     if (ussdStatus !== null) {
-    //         //console.logussdStatus);
+    //         // //console.logussdStatus);
     //         setCount((count) => count + 1);
     //         setIsLoading(false);
     //         // setStatus('success');
@@ -233,7 +206,7 @@ const Collections = () => {
     //         // setCount((count) => count + 1);
     //         setIsLoading(false);
     //         setError(errorMessageussdStatus);
-    //         console.log(error);
+    //          //console.log(error);
     //         // setStatus('error');
     //     }
     // };
@@ -276,7 +249,7 @@ const Collections = () => {
     }, [link]);
     const handleFormChange = (formTitle) => {
         if (userProfileData.hasSetTransactionPin === false) {
-            console.log(userProfileData.createdFromEcobankCred);
+            //console.log(userProfileData.createdFromEcobankCred);
             if (userProfileData.createdFromEcobankCred === false) {
                 router.push({
                     pathname: '/AccountUpgrade',
@@ -315,8 +288,8 @@ const Collections = () => {
             setErrorQr([]);
         }
     };
-    console.log(csvData);
-    console.log(sum);
+    //console.log(csvData);
+    //console.log(sum);
 
     useEffect(() => {
         setSum(
@@ -450,16 +423,14 @@ const Collections = () => {
                 }
             });
         }
-        console.log(formType);
+        //console.log(formType);
     }, [count]);
-    const {
-        getQrMerchnatInfoSuccess,
-        getQrMerchnatInfoErrorMessage
-    } = useSelector((state) => state.getQrMerchantInfoReducermport);
+    const { getQrMerchnatInfoSuccess, getQrMerchnatInfoErrorMessage } =
+        useSelector((state) => state.getQrMerchantInfoReducermport);
     const [merchantInf, setMerchantInfo] = useState();
     useEffect(() => {
         dispatch(getQrMerchantInfoGen());
-        console.log(getQrMerchnatInfoSuccess);
+        //console.log(getQrMerchnatInfoSuccess);
     }, []);
     useEffect(() => {
         if (getQrMerchnatInfoSuccess != null) {
@@ -478,7 +449,7 @@ const Collections = () => {
                     //             buttonText="Generate Payment Link"
                     //             closeAction={handleClose}
                     //             action={(data) => {
-                    //                 //console.logdata);
+                    //                 // //console.logdata);
                     //                 setCount(count + 1);
                     //             }}
                     //             createLink={() => setCount(count + 2)}
@@ -499,7 +470,7 @@ const Collections = () => {
                                 buttonText="Generate Payment Link"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setPaymentDetails(data);
                                     const paylinkData = {
                                         allowPartialPayments: true,
@@ -525,7 +496,7 @@ const Collections = () => {
                                 overlay={overlay}
                                 title="Payment Link Generated"
                                 allLink={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 2);
                                 }}
                                 amountPaylink={paymentDetails.amount}
@@ -546,7 +517,7 @@ const Collections = () => {
                                 action={buttonHandleClose}
                                 buttonText="Send Paylink"
                                 closeAction={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count - 1);
                                 }}
                                 type="PAYMENT_LINK"
@@ -586,7 +557,7 @@ const Collections = () => {
                                 buttonText="Generate USSD Codes"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setPaymentDetails(data);
                                     const ussdData = {
                                         amount: parseInt(data?.amount, 10),
@@ -645,7 +616,7 @@ const Collections = () => {
                                 buttonText="Send Qr"
                                 type="USSD"
                                 closeAction={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count - 2);
                                 }}
                             />
@@ -658,7 +629,7 @@ const Collections = () => {
                                 action={handleClose}
                                 type="USSD"
                                 back={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(2);
                                 }}
                             />
@@ -671,7 +642,7 @@ const Collections = () => {
                             <QrFirst
                                 overlay={overlay}
                                 moveToNext={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 closeAction={buttonHandleClose}
@@ -686,7 +657,7 @@ const Collections = () => {
                                 buttonText="Generate Ecobank QR Codes"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     const generateQrCodeData = {
                                         amount: `${data.amount}`,
                                         productName: `${data.accountName}`,
@@ -714,7 +685,7 @@ const Collections = () => {
                                 merchantCode={merchantInf?.merchantCode}
                                 terminalId={merchantInf?.terminalId}
                                 allLink={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                                 share={() => {
@@ -735,7 +706,7 @@ const Collections = () => {
                                 buttonText="Send Qr"
                                 type="Qr"
                                 closeAction={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count - 1);
                                 }}
                             />
@@ -763,7 +734,7 @@ const Collections = () => {
                                 buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    //console.logdata);
+                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                             />

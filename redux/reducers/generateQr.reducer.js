@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const generateQrReducer = (state = initialState, { type, payload }) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case generateQrType.GENERATE_QR_START:
             return {

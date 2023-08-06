@@ -3,16 +3,7 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import ButtonComp from '../../ReusableComponents/Button';
-import {
-    existingUserProfileData,
-    createAccountData,
-    accountStatusData,
-    statesData,
-    businessCategoriesData,
-    CompleteBusinessProfile,
-    ExCreateBusProfileSetup,
-    getRCDetails
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
 import { useRouter } from 'next/router';
@@ -24,6 +15,11 @@ import CircleSvg from '../../ReusableComponents/ReusableSvgComponents/CircleSvg'
 import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
+import { CompleteBusinessProfile } from '../../../redux/actions/completeBusinessProfileAction';
+import { ExCreateBusProfileSetup } from '../../../redux/actions/existingUserBusinessProfileAction';
+import { statesData } from '../../../redux/actions/statesAction';
+import { businessCategoriesData } from '../../../redux/actions/businessCategoriesAction';
+import { getRCDetails } from '../../../redux/actions/getRcDetailsAction';
 
 const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const dispatch = useDispatch();
@@ -95,22 +91,22 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const [regNo, setRegNo] = useState('');
     const [refferee, setRefferee] = useState();
     const [pageType, setPageType] = useState('');
-    //console.loglocalGoverment);
+    // //console.loglocalGoverment);
     const [phones, setPhones] = useState();
 
-    //console.logformData.type);
+    // //console.logformData.type);
     useEffect(() => {
         if (getRC?.data?.dataFromCac?.companyName !== undefined) {
             setBusinessName(getRC?.data?.dataFromCac?.companyName);
         } else if (getRC?.data?.reason !== undefined) {
-            console.log(getRC?.data?.reason);
+            //  //console.log(getRC?.data?.reason);
         }
     }, [getRC, getRCErrorMessage]);
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        //console.logformData.type);
+        // //console.logformData.type);
     };
     const [phoneNumer, setPhoneNumer] = useState();
 
@@ -151,13 +147,13 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             // signature: ''
         };
         dispatch(CompleteBusinessProfile(userData));
-        //console.logexistingProfileSetupPay, existingProfileSetupError);
+        // //console.logexistingProfileSetupPay, existingProfileSetupError);
     };
     const profileTest = () => {
-        //console.log(compBusprofile, comperrorMessage);
+        // //console.log(compBusprofile, comperrorMessage);
         setLoading((prev) => !prev);
         if (compBusprofile) {
-            //console.logerrorMessages);
+            // //console.logerrorMessages);
             router.push('/Verify/ExistingSuccess');
         } else if (
             comperrorMessage.message === 'your have already setup your business'
@@ -191,15 +187,15 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             // signature: ''
         };
         dispatch(ExCreateBusProfileSetup(userData));
-        //console.log(existingProfileSetupPay, existingProfileSetupError);
+        // //console.log(existingProfileSetupPay, existingProfileSetupError);
     };
 
     useEffect(() => {
-        //console.log(existingProfileSetupPay, existingProfileSetupError);
+        // //console.log(existingProfileSetupPay, existingProfileSetupError);
         setLoading((prev) => !prev);
 
         if (existingProfileSetupPay) {
-            //console.log(existingProfileSetupPay, existingProfileSetupError);
+            // //console.log(existingProfileSetupPay, existingProfileSetupError);
             if (existingProfileSetupPay.data.message === 'Successful') {
                 if (formData.type !== 'true') {
                     router.push('/Verify/ExistingSuccess');
@@ -272,7 +268,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
         } else {
             setProfileInfo(accountDetails);
         }
-        //console.logprofileInfo);
+        // //console.logprofileInfo);
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
         }

@@ -2,12 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import Overlay from '../../ReusableComponents/Overlay';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    getQrMerchantInfoGen,
-    requestPhysicalQrAction
-} from '../../../redux/actions/actions';
+
 import exportAsImage from '../../../utils/exportAsImage';
 import CloseButton from '../../ReusableComponents/CloseButtonSvg';
+import { getQrMerchantInfoGen } from '../../../redux/actions/getQrMerchantAction';
+import { requestPhysicalQrAction } from '../../../redux/actions/getPhysicalQrAction';
 
 const QrFirst = ({ overlay, moveToNext, closeAction }) => {
     const {
@@ -20,7 +19,7 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
     } = useSelector((state) => state.requestPhysicalQrReducer);
 
     useEffect(() => {
-        console.log(requestPhysicalQrSuccess, requestPhysicalQrErrorMessage);
+        //  //console.log(requestPhysicalQrSuccess, requestPhysicalQrErrorMessage);
     }, [requestPhysicalQrSuccess, requestPhysicalQrErrorMessage]);
 
     const [merchantInf, setMerchantInfo] = useState();
@@ -28,7 +27,7 @@ const QrFirst = ({ overlay, moveToNext, closeAction }) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getQrMerchantInfoGen());
-        console.log(getQrMerchnatInfoSuccess);
+        //  //console.log(getQrMerchnatInfoSuccess);
     }, []);
     useEffect(() => {
         if (getQrMerchnatInfoSuccess != null) {

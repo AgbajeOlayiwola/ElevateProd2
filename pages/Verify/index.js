@@ -20,7 +20,7 @@ const Verify = () => {
 
     useEffect(() => {
         var token = query['token'];
-        //console.log'hello', token);
+        // //console.log'hello', token);
         if (!isReady) return;
         if (token) {
             axios
@@ -33,14 +33,14 @@ const Verify = () => {
                     }
                 )
                 .then((response) => {
-                    //console.logresponse.data.message);
+                    // //console.logresponse.data.message);
                     setRes(response.data.message);
                     if (response.data.message) {
                         router.push('/Auth/Login');
                     }
                 })
                 .catch((error) => {
-                    //console.logerror.response.data.statusCode);
+                    // //console.logerror.response.data.statusCode);
                     setResErros(error.response.data.statusCode);
                 });
         }

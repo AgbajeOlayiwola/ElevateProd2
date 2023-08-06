@@ -26,33 +26,8 @@ import Lottie from 'react-lottie';
 import animationData from '../../../components/ReusableComponents/Lotties/contact-us.json';
 import socialdata from '../../../components/ReusableComponents/Lotties/social-media-marketing.json';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    deleteAccountAction,
-    getAllComplaintGet,
-    logoutAction
-} from '../../../redux/actions/actions';
 import socialdataa from '../../../components/ReusableComponents/Lotties/loading.json';
-import {
-    getAirtimeBeneficiariesData,
-    deleteAirtimeBeneficiariesData,
-    getBeneficiariesData,
-    deleteBeneficiariesData,
-    loadViewBvn,
-    loadfreezeTransactions,
-    loadunfreezeTransactions,
-    loadUserProfile,
-    loadAccountPrimary,
-    postInterBankEnquiry,
-    postIntraBankEnquiry,
-    loadbank,
-    loadfetchRM,
-    bankAccountsData,
-    postBeneficiariesData,
-    postAirtimeNetwork,
-    loadsetTransactionPin,
-    postAirtimeBeneficiariesData,
-    getProfileImgAction
-} from '../../../redux/actions/actions';
+
 import { useForm } from 'react-hook-form';
 import Loader from '../../../components/ReusableComponents/Loader';
 import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
@@ -65,6 +40,24 @@ import StorePopup from '../../../components/ReusableComponents/StorePopup';
 import CloseBtnSvg from '../../../components/ReusableComponents/ClosebtnSvg';
 import { deleteCookie, getCookie } from 'cookies-next';
 import withAuth from '../../../components/HOC/withAuth';
+import { deleteAccountAction } from '../../../redux/actions/deleteAccountAction';
+import { getAllComplaintGet } from '../../../redux/actions/getAllComplaintAction';
+import { getBeneficiariesData } from '../../../redux/actions/getBeneficiariesAction';
+import { getAirtimeBeneficiariesData } from '../../../redux/actions/getAirtimeBeneficiariesAction';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
+import { postAirtimeNetwork } from '../../../redux/actions/airtimeNetworkAction';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import { getProfileImgAction } from '../../../redux/actions/getProfileImageAction';
+import { loadfetchRM } from '../../../redux/actions/fetRmAction';
+import { loadViewBvn } from '../../../redux/actions/viewBvnAction';
+import { loadsetTransactionPin } from '../../../redux/actions/setTransactionPinAction';
+import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
+import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAction';
+import { loadfreezeTransactions } from '../../../redux/actions/freezeTransactionAction';
+import { loadunfreezeTransactions } from '../../../redux/actions/unfreezeTransactionAction';
+import { deleteBeneficiariesData } from '../../../redux/actions/deleteBeneficiariesAction';
+import { deleteAirtimeBeneficiariesData } from '../../../redux/actions/deleteAirtimeBeneficiariesAction';
 const Profile = () => {
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(false);
@@ -142,8 +135,10 @@ const Profile = () => {
     const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
         (state) => state.postBeneficiariesReducer
     );
-    const { postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries } =
-        useSelector((state) => state.postAirtimeBeneficiariesReducer);
+    const {
+        postAirtimeBeneficiaries,
+        errorMessagepostAirtimeBeneficiaries
+    } = useSelector((state) => state.postAirtimeBeneficiariesReducer);
     const { fetchRM, fetchRMErrorMessages } = useSelector(
         (state) => state.fetchRMReducer
     );
@@ -187,9 +182,9 @@ const Profile = () => {
         });
     }, [bankAccounts]);
     useEffect(() => {
-        console.log(deleteAccountErrorMessage);
+        //console.log(deleteAccountErrorMessage);
         if (deleteAccountErrorMessage) {
-            console.log(deleteAccountErrorMessage);
+            //console.log(deleteAccountErrorMessage);
             setDeleteAccountError(deleteAccountErrorMessage?.data?.message);
         } else if (deleteAccountSuccess) {
             // dispatch(logoutAction());
@@ -214,7 +209,7 @@ const Profile = () => {
     }, []);
     useEffect(() => {
         if (getAllComplaintSuccess !== null) {
-            console.log(getAllComplaintSuccess);
+            //console.log(getAllComplaintSuccess);
             setAllDisputes(getAllComplaintSuccess?.data?.disputeRecord);
             setIsLoading(false);
         }
@@ -319,11 +314,11 @@ const Profile = () => {
 
         let bankList = [];
         let bankDets = bankArray.split('~');
-        //   //console.log("bankDets", bankDets);
+        //   // //console.log("bankDets", bankDets);
 
         for (var bankdet of bankDets) {
             let split = bankdet.split(':');
-            //console.log('split', split);
+            // //console.log('split', split);
 
             if (isValidNUBAN(accountNo, split[1])) {
                 bankList.push({
@@ -347,7 +342,7 @@ const Profile = () => {
 
         let accountNumberDigits = accountNumber.split('');
 
-        //   //console.log("accountNumberDigits: ", accountNumberDigits);
+        //   // //console.log("accountNumberDigits: ", accountNumberDigits);
 
         let sum =
             accountNumberDigits[0] * 3 +
@@ -564,7 +559,7 @@ const Profile = () => {
             });
         }
     }, []);
-    //console.log(countryNames.flags.svg);
+    // //console.log(countryNames.flags.svg);
     const types = (type) => {
         setOutType(type);
     };
@@ -585,7 +580,7 @@ const Profile = () => {
         setLink({ id }.id);
     }, []);
     const deleteAction = () => {
-        console.log('test');
+        //console.log('test');
     };
 
     useEffect(() => {
@@ -859,7 +854,6 @@ const Profile = () => {
                                                         styles.deleteButton
                                                     }
                                                 >
-                                                    {console.log(active)}
                                                     {loading ? (
                                                         <Loader />
                                                     ) : active ? (
@@ -1709,7 +1703,7 @@ const Profile = () => {
                                                 bankName: data.bankName,
                                                 bankCode: data.bankName
                                             };
-                                            //console.log(beneData);
+                                            // //console.log(beneData);
                                             dispatch(
                                                 postBeneficiariesData(beneData)
                                             );
@@ -1854,26 +1848,21 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details =
-                                                                    {
-                                                                        accountNumber:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    accountNumber: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details =
-                                                                    {
-                                                                        destinationBankCode:
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                        accountNo:
-                                                                            accountNumber
-                                                                    };
+                                                                const details = {
+                                                                    destinationBankCode:
+                                                                        e.target
+                                                                            .value,
+                                                                    accountNo: accountNumber
+                                                                };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -2006,7 +1995,7 @@ const Profile = () => {
                                                                 const inputValue =
                                                                     e.target
                                                                         .value;
-                                                                // console.log(
+                                                                //  //console.log(
                                                                 //     parseInt(inputValue).toFixed(2)
                                                                 // );
                                                                 // setAmount(parseInt(inputValue).toFixed(2));
@@ -2152,12 +2141,13 @@ const Profile = () => {
                                     ) : (
                                         allDisputes
                                             ?.filter((item) => {
-                                                const newDate =
-                                                    item.createAt.split('T');
+                                                const newDate = item.createAt.split(
+                                                    'T'
+                                                );
                                                 return item;
                                             })
                                             ?.map((item, index) => {
-                                                console.log(item);
+                                                //console.log(item);
                                                 return item;
                                             })
                                     )}

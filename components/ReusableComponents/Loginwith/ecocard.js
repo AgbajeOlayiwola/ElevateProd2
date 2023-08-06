@@ -3,11 +3,11 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 import ButtonComp from '../Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { cardLoginData } from '../../../redux/actions/actions';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Loader from '../Loader';
 import { encrypt, decrypt } from '../../../redux/helper/hash';
+import { cardLoginData } from '../../../redux/actions/cardLoginAction';
 
 const Ecocard = () => {
     const [outType, setOutType] = useState();
@@ -34,9 +34,9 @@ const Ecocard = () => {
         setLoading(true);
         let temp = data.expiryDate.split('/');
         let newTemp = temp[1] + temp[0];
-        //console.logencrypt(data.cardNumber));
-        //console.logencrypt(data.cvv));
-        //console.lognewTemp);
+        // //console.logencrypt(data.cardNumber));
+        // //console.logencrypt(data.cvv));
+        // //console.lognewTemp);
         const postData = {
             pan: encrypt(data.cardNumber),
             affiliateCode: 'ENG',
@@ -49,14 +49,14 @@ const Ecocard = () => {
         //     expiry: '2504',
         //     cvv: 'zbM3LuiyTI0='
         // };
-        //console.logdata);
+        // //console.logdata);
 
         dispatch(cardLoginData(postData));
     };
 
     const CardTest = () => {
-        //console.logcardLogin);
-        //console.logerrorMessage);
+        // //console.logcardLogin);
+        // //console.logerrorMessage);
         if (errorMessage) {
             setError(errorMessage);
             setLoading(false);
@@ -73,7 +73,7 @@ const Ecocard = () => {
                 JSON.stringify(cardLogin.data)
             );
             router.push('/Onboarding/ExistingProfileSetup');
-            //console.logcardLogin);
+            // //console.logcardLogin);
         }
     };
 

@@ -9,7 +9,6 @@ import Script from 'next/script';
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
-import { loadUserProfile } from '../../../../redux/actions/actions';
 const videoConstraints = {
     width: 390,
     height: 480,

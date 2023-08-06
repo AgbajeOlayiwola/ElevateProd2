@@ -3,15 +3,14 @@ import styles from './styles.module.css';
 import Link from 'next/link';
 import ButtonComp from '../Button';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    ecobankOnlineData,
-    accountNumberData
-} from '../../../redux/actions/actions';
+
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Loader from '../Loader';
 import { encrypt } from '../../../redux/helper/hash';
 import Visbility from '../Eyeysvg';
+import { ecobankOnlineData } from '../../../redux/actions/ecobankOnlineAction';
+import { accountNumberData } from '../../../redux/actions/accountNumberAction';
 
 const Ecoonline = () => {
     const router = useRouter();
@@ -45,8 +44,8 @@ const Ecoonline = () => {
     };
 
     const onlineTest = () => {
-        //console.log(ecobankOnline);
-        //console.log(errorMessage);
+        // //console.log(ecobankOnline);
+        // //console.log(errorMessage);
         if (errorMessage !== '') {
             setError(errorMessage);
             setLoading(false);
@@ -58,7 +57,7 @@ const Ecoonline = () => {
         }
     };
     const accountTest = () => {
-        //console.log(accountNumber);
+        // //console.log(accountNumber);
         if (accountNumber.message === 'SUCCESS') {
             window.localStorage.setItem(
                 'account',

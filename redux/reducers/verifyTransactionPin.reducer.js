@@ -10,7 +10,7 @@ const verifyTransactionPinReducer = (
     state = initialState,
     { type, payload }
 ) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case verifyTransactionPinType.VERIFY_TTRANSACTIONPIN_LOAD_START:
             return {

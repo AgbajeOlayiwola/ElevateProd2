@@ -18,7 +18,7 @@ const ButtonComp = ({
     err,
     loads
 }) => {
-    //console.log(disabled);
+    // //console.log(disabled);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {

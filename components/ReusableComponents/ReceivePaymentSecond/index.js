@@ -107,7 +107,7 @@ const ReceivePaymentSecond = ({
         setNewAmount(formattedAmount);
     }, []);
     useEffect(() => {
-        console.log(payLinkData);
+        //  //console.log(payLinkData);
         window.scrollTo(0, 0);
     }, []);
     const exportRef = useRef();
@@ -143,7 +143,7 @@ const ReceivePaymentSecond = ({
                 }, 1500);
             })
             .catch((err) => {
-                console.log(err);
+                 //console.log(err);
             });
     };
 
@@ -170,7 +170,7 @@ const ReceivePaymentSecond = ({
                 }, 1500);
             })
             .catch((err) => {
-                console.log(err);
+                 //console.log(err);
             });
     };
     const [qrUrlData, setQrUrlData] = useState(
@@ -193,7 +193,7 @@ const ReceivePaymentSecond = ({
                 }, 1500);
             })
             .catch((err) => {
-                console.log(err);
+                 //console.log(err);
             });
     };
     const formatter = new Intl.NumberFormat('en-US', {
