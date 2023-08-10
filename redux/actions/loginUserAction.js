@@ -34,7 +34,6 @@ export const loginUserAction = (loginData) => {
                     'user',
                     JSON.stringify(response.data?.data?.user)
                 );
-                console.log(response.data);
             })
             .catch((error) => {
                 dispatch(userLoadError(error?.response?.data?.message));

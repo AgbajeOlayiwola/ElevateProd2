@@ -156,6 +156,11 @@ const Dashboard = () => {
     }, [getDisputCategorySuccess]);
 
     useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
+    }, [userProfile]);
+    useEffect(() => {
         setAcctInfoNum(accountPrimarys?.accountNumber);
         let balanceData;
         balanceData = {
@@ -166,6 +171,18 @@ const Dashboard = () => {
         //     setAccountBalanceTest(balanceEnquiry?.availableBalance);
         // }
     }, [accountPrimarys]);
+    useEffect(() => {
+        Object.keys(bankAccounts)?.map((accountNo) => {
+            if (bankAccounts[accountNo].isPrimaryAccount === true) {
+                setCopyAcctInfo(bankAccounts[0]);
+                let balanceData;
+                balanceData = {
+                    accountId: bankAccounts[accountNo].accountId
+                };
+                dispatch(getBalanceEnquiry(balanceData));
+            }
+        });
+    }, [bankAccounts]);
     useEffect(() => {
         if (balanceEnquiry !== null) {
             const formattedAmount = formatter.format(

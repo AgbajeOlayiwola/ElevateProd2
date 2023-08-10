@@ -23,14 +23,13 @@ const settings = {
     autoplaySpeed: 2000,
     cssEase: 'linear'
 };
-const AccountsInfoCard = () => {
+const AccountsInfoCard = ({ userProfileData }) => {
     const dispatch = useDispatch();
 
     const [senderDetails, setSenderDetails] = useState({});
     const [acctNummber, setAcctNumber] = useState('');
     const [outType, setOutType] = useState();
     const [balance, setBalance] = useState('.....');
-    const [userProfileData, setUserProfileData] = useState({});
     const [formData, setFormdata] = useState({ accountNum: '' });
     const [isCopied, setIsCopied] = useState(false);
     const [accountNumberTest, setAccountNumberTest] = useState();
@@ -54,13 +53,7 @@ const AccountsInfoCard = () => {
     useEffect(() => {
         dispatch(bankAccountsData());
         dispatch(loadAccountPrimary());
-        dispatch(loadUserProfile());
     }, []);
-    useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-        }
-    }, [userProfile]);
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'NGN',

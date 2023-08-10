@@ -19,6 +19,7 @@ import { getQrMerchantInfoGen } from '../../../redux/actions/getQrMerchantAction
 import { loadpaylinkGen } from '../../../redux/actions/paylinkAction';
 import { generateQrCodeDetails } from '../../../redux/actions/generateQrCodeAction';
 import { loadussdGen } from '../../../redux/actions/ussdGenAction';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
 
 const Collections = () => {
     const router = useRouter();
@@ -38,6 +39,7 @@ const Collections = () => {
     const { paylikSuccess, payLinkerrorMessage } = useSelector(
         (state) => state.payLinkGenReducer
     );
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     const dispatch = useDispatch();
     const [formType, setFormType] = useState('');
@@ -63,6 +65,9 @@ const Collections = () => {
     const [codes, setCodes] = useState('');
     const [errorQr, setErrorQr] = useState('');
 
+    useEffect(() => {
+        dispatch(loadUserProfile());
+    }, []);
     let airtimeData;
     let airtimeNetData = {};
     if (typeof window !== 'undefined') {
@@ -84,6 +89,12 @@ const Collections = () => {
         }, 0);
         setSum(x);
     }, [count]);
+
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
+    }, [userProfile]);
 
     let number;
     let numberofBene = {};
@@ -809,7 +820,7 @@ const Collections = () => {
             )} */}
             <div className={styles.allTypes}>
                 <div className={styles.cov}>
-                    <AccountsInfoCard />
+                    <AccountsInfoCard userProfileData={userProfileData} />
                     {/* <div className={styles.balanceButtons}>
                             <div className={styles.first}>
                                 <p>Scheduled Payments</p>

@@ -17,6 +17,7 @@ import { postInterBank } from '../../../redux/actions/interBankTransferAction';
 import { getBulkTransfer } from '../../../redux/actions/bulkTransferAction';
 import { postAirtime } from '../../../redux/actions/airtimeAction';
 import { postBills } from '../../../redux/actions/billsAction';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
 
 const PaymentTypes = () => {
     const router = useRouter();
@@ -36,6 +37,8 @@ const PaymentTypes = () => {
     const { transactionFees, errorMessageTransactionFees } = useSelector(
         (state) => state.transactionFeesReducer
     );
+
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     // const { internationalTransfer, errorMessageinternationalTransfer } =
     //     useSelector((state) => state.internationalTransferReducer);
@@ -64,6 +67,10 @@ const PaymentTypes = () => {
     const [successfulTrans, setSuccessfulTrans] = useState([]);
     const [failedTrans, setFailedTrans] = useState([]);
     // const [acctNummber, setAcctNumber] = useState('');
+
+    useEffect(() => {
+        dispatch(loadUserProfile());
+    }, []);
 
     let airtimeData;
     let airtimeNetData = {};
@@ -198,6 +205,12 @@ const PaymentTypes = () => {
             setStatus('error');
         }
     };
+
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
+        }
+    }, [userProfile]);
     useEffect(() => {
         airtimeCheck();
     }, [airtime, errorMessageAirtime]);
@@ -249,6 +262,7 @@ const PaymentTypes = () => {
                     query: { id: 'Transaction Pin' }
                 });
             }
+            console.log('Test');
         } else if (userProfileData.hasSetTransactionPin === true) {
             setFormType(formTitle);
             setOverlay(true);
@@ -261,7 +275,6 @@ const PaymentTypes = () => {
         setIsLoading(false);
         setPaymentDetails({});
         setError([]);
-        setErrorQr([]);
     };
 
     const buttonHandleClose = () => {
@@ -270,7 +283,6 @@ const PaymentTypes = () => {
         setCount(0);
         setPaymentDetails({});
         setError([]);
-        setErrorQr([]);
     };
 
     useEffect(() => {
@@ -1055,7 +1067,7 @@ const PaymentTypes = () => {
             )} */}
             <div className={styles.allTypes}>
                 <div className={styles.cov}>
-                    <AccountsInfoCard />
+                    <AccountsInfoCard userProfileData={userProfileData} />
                     {/* <div className={styles.balanceButtons}>
                             <div className={styles.first}>
                                 <p>Scheduled Payments</p>
