@@ -52,32 +52,33 @@ import { loadUserProfile } from '../../../redux/actions/userProfileAction';
 import { getTransactionHistory } from '../../../redux/actions/transactionHistoryAction';
 import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
 import { setPrimaryAccountAction } from '../../../redux/actions/setPrimaryAccountAction';
-function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{
-                ...style,
-                display: 'block',
-                width: '63px',
-                fontSize: '35px',
-                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.31)'
-            }}
-            onClick={onClick}
-        />
-    );
-}
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: 'none', background: 'green' }}
-            onClick={onClick}
-        />
-    );
-}
+
+// function SampleNextArrow(props) {
+//     const { className, style, onClick } = props;
+//     return (
+//         <div
+//             className={className}
+//             style={{
+//                 ...style,
+//                 display: 'block',
+//                 width: '63px',
+//                 fontSize: '35px',
+//                 boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.31)'
+//             }}
+//             onClick={onClick}
+//         />
+//     );
+// }
+// function SamplePrevArrow(props) {
+//     const { className, style, onClick } = props;
+//     return (
+//         <div
+//             className={className}
+//             style={{ ...style, display: 'none', background: 'green' }}
+//             onClick={onClick}
+//         />
+//     );
+// }
 
 const settings = {
     dots: false,
@@ -105,7 +106,7 @@ const Dashboard = () => {
     let success = 0;
     let pending = 0;
     let failed = 0;
-    const [accountUpgrade, setAccountUpgrade] = useState(true);
+    // const [accountUpgrade, setAccountUpgrade] = useState(true);
     const [balance, setBalance] = useState('......');
     const [tableDetails, setTableDetails] = useState([]);
     const [userProfileData, setUserProfileData] = useState([]);
@@ -133,12 +134,18 @@ const Dashboard = () => {
     const { bankAccounts, bankAccountErrorMessages } = useSelector(
         (state) => state.bankAccountsReducer
     );
-    const { setPrimaryAccountSuccess, setPrimaryAccountErrorMessage } =
-        useSelector((state) => state.setPrimaryAccountReducer);
-    const { getDisputCategOryTypeSuccess, getDisputCategOryTypeErrorMessage } =
-        useSelector((state) => state.getDisputeTypeReducer);
-    const { getDisputCategorySuccess, getDisputCategoryErrorMessage } =
-        useSelector((state) => state.getDisputeCategoryReducer);
+    const {
+        setPrimaryAccountSuccess,
+        setPrimaryAccountErrorMessage
+    } = useSelector((state) => state.setPrimaryAccountReducer);
+    const {
+        getDisputCategOryTypeSuccess,
+        getDisputCategOryTypeErrorMessage
+    } = useSelector((state) => state.getDisputeTypeReducer);
+    const {
+        getDisputCategorySuccess,
+        getDisputCategoryErrorMessage
+    } = useSelector((state) => state.getDisputeCategoryReducer);
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
@@ -151,6 +158,7 @@ const Dashboard = () => {
     const [acctInfoNum, setAcctInfoNum] = useState();
     const [accountNumberTest, setAccountNumberTest] = useState();
     const [accountBalanceTest, setAccountBalanceTest] = useState();
+    const [overlay, setOverlay] = useState(false);
     useEffect(() => {
         setDisputes(getDisputCategorySuccess);
     }, [getDisputCategorySuccess]);
@@ -281,8 +289,9 @@ const Dashboard = () => {
                     return a + +b.transactionAmount;
                 }, 0);
             setTotalMMoney(formatter.format(one + two));
-            const newDate =
-                transactionHistory.transactions[0]?.transactionDate?.split('T');
+            const newDate = transactionHistory.transactions[0]?.transactionDate?.split(
+                'T'
+            );
             if (newDate) {
                 if (newDate[0] == time) {
                     setDateState(true);
@@ -325,10 +334,30 @@ const Dashboard = () => {
                 //console.log(err);
             });
     };
-    const [overlay, setOverlay] = useState(false);
+
     const openAddAccountModal = () => {
         setOverlay(true);
     };
+    // resize the screen
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
+
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        console.log(width);
+    };
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [width]);
+    // resize the screen
     return (
         <div className={styles.statementCover}>
             <Levelup account={userProfileData} />
@@ -410,60 +439,12 @@ const Dashboard = () => {
                                 <p className={styles.name}>Bulk Transfer</p>
                             </div>
                         </Link>
-                        {/* <Link
-                                href={{
-                                    pathname: '/Admin/Collections',
-                                    query: { id: 'Ecobank QR Only' }
-                                }}
-                            >
-                                <div className={styles.dinCLass}>
-                                    <div className={styles.svg}>
-                                        <EcobankQRSvg />
-                                    </div>
-                                    <p className={styles.name}>
-                                        Ecobank QR Code
-                                    </p>
-                                </div>
-                            </Link>
-                            <Link
-                                href={{
-                                    pathname: '/Admin/Collections',
-                                    query: { id: 'USSD only' }
-                                }}
-                            >
-                                <div className={styles.dinCLass}>
-                                    <div className={styles.svg}>
-                                        <Ussd />
-                                    </div>
-                                    <p className={styles.name}>USSD</p>
-                                </div>
-                            </Link> */}
                     </div>
                     <div className={styles.btmI}>
                         <div className={styles.btmItop}>
                             <h2 className={styles.transP}>
                                 Transactions Today
                             </h2>
-                            {/* <div className={styles.payEco}>
-                            <div className={styles.svgTxt}
-                                <div className={styles.svgCov}>
-                                    <Paylink2 />
-                                </div>
-                                <div>
-                                    <p className={styles.payp}>Paylink</p>
-                                    <h5 className={styles.h5}>₦24,000,000</h5>
-                                </div>
-                            </div>
-                            <div className={styles.svgTxt}>
-                                <div className={styles.svgCov}>
-                                    <EcobankQRSvg />
-                                </div>
-                                <div>
-                                    <p className={styles.ecop}>Ecobank QR</p>
-                                    <h5 className={styles.h5}>₦24,000,000</h5>
-                                </div>
-                            </div>
-                        </div> */}
 
                             {dateState === false ? (
                                 <div className={styles.transactionBody}>
@@ -479,8 +460,9 @@ const Dashboard = () => {
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate =
-                                            item.transactionDate.split('T');
+                                        const newDate = item.transactionDate.split(
+                                            'T'
+                                        );
                                         return (
                                             newDate[0] >= rangeDate &&
                                             newDate[0] <= time
@@ -495,16 +477,16 @@ const Dashboard = () => {
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount =
-                                            formatter.format(
-                                                item.transactionAmount
-                                            );
+                                        const formattedAmount = formatter.format(
+                                            item.transactionAmount
+                                        );
                                         let newBeneficiary;
                                         if (item.receiversName === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary =
-                                                item?.receiversName?.split(' ');
+                                            newBeneficiary = item?.receiversName?.split(
+                                                ' '
+                                            );
                                         }
                                         // {
                                         //     // //console.log(item);
@@ -705,6 +687,11 @@ const Dashboard = () => {
                                         setOverlay(false);
                                     }}
                                 />
+                                <Addaccounts
+                                    close={() => {
+                                        setOverlay(false);
+                                    }}
+                                />
                             </Overlay>
                             <div className={styles.accountsALl}>
                                 {bankAccounts?.map((accountNo, index) => {
@@ -863,8 +850,9 @@ const Dashboard = () => {
                             ) : (
                                 tableDetails
                                     ?.filter((item) => {
-                                        const newDate =
-                                            item.transactionDate.split('T');
+                                        const newDate = item.transactionDate.split(
+                                            'T'
+                                        );
                                         return item;
                                     })
                                     ?.map((item, index) => {
@@ -877,120 +865,269 @@ const Dashboard = () => {
                                                 currencyDisplay: 'narrowSymbol'
                                             }
                                         );
-                                        const formattedAmount =
-                                            formatter.format(
-                                                item.transactionAmount
-                                            );
+                                        const formattedAmount = formatter.format(
+                                            item.transactionAmount
+                                        );
                                         let newBeneficiary;
                                         if (item.receiver === null) {
                                             newBeneficiary = '';
                                         } else {
-                                            newBeneficiary =
-                                                item?.receiver?.split(' ');
+                                            newBeneficiary = item?.receiver?.split(
+                                                ' '
+                                            );
                                         }
                                         return (
-                                            <div key={index}>
-                                                <div
-                                                    className={
-                                                        styles.transaction
-                                                    }
-                                                >
-                                                    <div
-                                                        className={styles.names}
-                                                    >
-                                                        {item.paymentDirection ===
-                                                        'CREDIT' ? (
-                                                            <p>Self</p>
-                                                        ) : (
-                                                            <p>
-                                                                {newBeneficiary ===
-                                                                ''
-                                                                    ? item.transactionType.replace(
-                                                                          '_',
-                                                                          ' '
-                                                                      ) ===
-                                                                      'BILL PAYMENT'
-                                                                        ? item.billerCode
-                                                                        : ''
-                                                                    : newBeneficiary[1] ===
-                                                                      undefined
-                                                                    ? newBeneficiary[0]
-                                                                    : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                    <div
-                                                        className={styles.type}
-                                                    >
-                                                        <p>
-                                                            {item.transactionType.replace(
-                                                                '_',
-                                                                ' '
-                                                            )}
-                                                        </p>
-                                                    </div>
-                                                    <div
-                                                        className={styles.money}
-                                                    >
-                                                        <p>{formattedAmount}</p>
-                                                    </div>
-                                                    <div
-                                                        className={
-                                                            item.transactionStatus ===
-                                                            'PENDING'
-                                                                ? styles.pending
-                                                                : item.transactionStatus ===
-                                                                  'FAILED'
-                                                                ? styles.failed
-                                                                : styles.success
-                                                        }
-                                                    >
+                                            <>
+                                                {width >= 950 ? (
+                                                    <div key={index}>
                                                         <div
                                                             className={
-                                                                styles.statusColor
+                                                                styles.transaction
                                                             }
                                                         >
-                                                            <p>
-                                                                {
-                                                                    item.transactionStatus
+                                                            <div
+                                                                className={
+                                                                    styles.names
                                                                 }
-                                                            </p>
+                                                            >
+                                                                {item.paymentDirection ===
+                                                                'CREDIT' ? (
+                                                                    <p>Self</p>
+                                                                ) : (
+                                                                    <p>
+                                                                        {newBeneficiary ===
+                                                                        ''
+                                                                            ? item.transactionType.replace(
+                                                                                  '_',
+                                                                                  ' '
+                                                                              ) ===
+                                                                              'BILL PAYMENT'
+                                                                                ? item.billerCode
+                                                                                : ''
+                                                                            : newBeneficiary[1] ===
+                                                                              undefined
+                                                                            ? newBeneficiary[0]
+                                                                            : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                                    </p>
+                                                                )}
+                                                            </div>
+                                                            <div
+                                                                className={
+                                                                    styles.type
+                                                                }
+                                                            >
+                                                                <p>
+                                                                    {item.transactionType.replace(
+                                                                        '_',
+                                                                        ' '
+                                                                    )}
+                                                                </p>
+                                                            </div>
+                                                            <div
+                                                                className={
+                                                                    styles.money
+                                                                }
+                                                            >
+                                                                <p>
+                                                                    {
+                                                                        formattedAmount
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                            <div
+                                                                className={
+                                                                    item.transactionStatus ===
+                                                                    'PENDING'
+                                                                        ? styles.pending
+                                                                        : item.transactionStatus ===
+                                                                          'FAILED'
+                                                                        ? styles.failed
+                                                                        : styles.success
+                                                                }
+                                                            >
+                                                                <div
+                                                                    className={
+                                                                        styles.statusColor
+                                                                    }
+                                                                >
+                                                                    <p>
+                                                                        {
+                                                                            item.transactionStatus
+                                                                        }
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                className={
+                                                                    styles.more
+                                                                }
+                                                            >
+                                                                <MoreAction
+                                                                    isaccountId={
+                                                                        item.sourceAccountId
+                                                                    }
+                                                                    isDirection={
+                                                                        item.paymentDirection
+                                                                    }
+                                                                    transactionAmount={
+                                                                        formattedAmount
+                                                                    }
+                                                                    transactionStatus={
+                                                                        item.transactionStatus
+                                                                    }
+                                                                    transactionTitle={
+                                                                        item.transactionType
+                                                                    }
+                                                                    disputes={
+                                                                        disputes
+                                                                    }
+                                                                    narration={
+                                                                        item.narration
+                                                                    }
+                                                                    destinationBank={
+                                                                        item.receiver
+                                                                    }
+                                                                    dateTrans={
+                                                                        item.transactionDate
+                                                                    }
+                                                                />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div
-                                                        className={styles.more}
-                                                    >
-                                                        <MoreAction
-                                                            isaccountId={
-                                                                item.sourceAccountId
-                                                            }
-                                                            isDirection={
-                                                                item.paymentDirection
-                                                            }
-                                                            transactionAmount={
-                                                                formattedAmount
-                                                            }
-                                                            transactionStatus={
-                                                                item.transactionStatus
-                                                            }
-                                                            transactionTitle={
-                                                                item.transactionType
-                                                            }
-                                                            disputes={disputes}
-                                                            narration={
-                                                                item.narration
-                                                            }
-                                                            destinationBank={
-                                                                item.receiver
-                                                            }
-                                                            dateTrans={
-                                                                item.transactionDate
+                                                        <hr
+                                                            className={
+                                                                styles.hr
                                                             }
                                                         />
                                                     </div>
-                                                </div>
-                                                <hr className={styles.hr} />
-                                            </div>
+                                                ) : (
+                                                    <>
+                                                        <div
+                                                            className={
+                                                                styles.mobileTable
+                                                            }
+                                                        >
+                                                            <div>
+                                                                <div
+                                                                    className={
+                                                                        styles.typeMobile
+                                                                    }
+                                                                >
+                                                                    <p>
+                                                                        {item.transactionType.replace(
+                                                                            '_',
+                                                                            ' '
+                                                                        )}
+                                                                    </p>
+                                                                </div>
+                                                                <div>
+                                                                    {item.paymentDirection ===
+                                                                    'CREDIT' ? (
+                                                                        <p>
+                                                                            Self
+                                                                        </p>
+                                                                    ) : (
+                                                                        <p
+                                                                            className={
+                                                                                styles.mobileP
+                                                                            }
+                                                                        >
+                                                                            {newBeneficiary ===
+                                                                            ''
+                                                                                ? item.transactionType.replace(
+                                                                                      '_',
+                                                                                      ' '
+                                                                                  ) ===
+                                                                                  'BILL PAYMENT'
+                                                                                    ? item.billerCode
+                                                                                    : ''
+                                                                                : newBeneficiary[1] ===
+                                                                                  undefined
+                                                                                ? newBeneficiary[0]
+                                                                                : `${newBeneficiary[0]} ${newBeneficiary[1]}`}
+                                                                        </p>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                className={
+                                                                    styles.mobileStatus
+                                                                }
+                                                            >
+                                                                <div
+                                                                    className={
+                                                                        item.transactionStatus ===
+                                                                        'PENDING'
+                                                                            ? styles.pending
+                                                                            : item.transactionStatus ===
+                                                                              'FAILED'
+                                                                            ? styles.failed
+                                                                            : styles.success
+                                                                    }
+                                                                >
+                                                                    <div>
+                                                                        <div
+                                                                            className={
+                                                                                styles.statusColor
+                                                                            }
+                                                                        >
+                                                                            <p>
+                                                                                {
+                                                                                    item.transactionStatus
+                                                                                }
+                                                                            </p>
+                                                                        </div>
+                                                                        <div
+                                                                            className={
+                                                                                styles.money
+                                                                            }
+                                                                        >
+                                                                            <p>
+                                                                                {
+                                                                                    formattedAmount
+                                                                                }
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <MoreAction
+                                                                        isaccountId={
+                                                                            item.sourceAccountId
+                                                                        }
+                                                                        isDirection={
+                                                                            item.paymentDirection
+                                                                        }
+                                                                        transactionAmount={
+                                                                            formattedAmount
+                                                                        }
+                                                                        transactionStatus={
+                                                                            item.transactionStatus
+                                                                        }
+                                                                        transactionTitle={
+                                                                            item.transactionType
+                                                                        }
+                                                                        disputes={
+                                                                            disputes
+                                                                        }
+                                                                        narration={
+                                                                            item.narration
+                                                                        }
+                                                                        destinationBank={
+                                                                            item.receiver
+                                                                        }
+                                                                        dateTrans={
+                                                                            item.transactionDate
+                                                                        }
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr
+                                                            className={
+                                                                styles.hrMobile
+                                                            }
+                                                        />
+                                                    </>
+                                                )}
+                                            </>
                                         );
                                     })
                             )}

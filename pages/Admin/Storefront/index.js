@@ -38,6 +38,7 @@ const Storefront = () => {
     const [title, setTitle] = useState('');
     const [orderType, setOrderType] = useState('Open');
     const [headTitle, setHeadTitle] = useState('Storefront');
+
     const stores = [
         {
             storeName: 'Babatunde Stores',

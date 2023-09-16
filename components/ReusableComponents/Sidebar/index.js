@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -30,7 +30,24 @@ const Sidebar = ({ showSubnav }) => {
             router.replace('../Auth/Login');
         }
     };
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
 
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        console.log(width);
+    };
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [width]);
     // fillColor={router.pathname == '/Dashboard'}
 
     return (
@@ -76,6 +93,7 @@ const Sidebar = ({ showSubnav }) => {
                                                 ? styles.inActive
                                                 : styles.cont
                                         }
+                                        onClick={width > 950 ? '' : showSubnav}
                                     >
                                         <div className={styles.contWrapper}>
                                             <span className={styles.titleIcon}>
