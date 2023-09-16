@@ -23,7 +23,7 @@ export const postvnin = (vninItems) => (dispatch) => {
     }
 
     // dispatch(accountNumberLoadStart());
-    axios
+    axiosInstance
         .post(`https://mysmeapp.ecobank.com:8443${apiRoutes.vnin}`, vninItems, {
             headers: {
                 'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export const postvnin = (vninItems) => (dispatch) => {
         .then((response) => {
             setTimeout(() => {
                 if (response?.data?.message) {
-                    axios
+                    axiosInstance
                         .get(
                             `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyVNinAdd}`,
                             {

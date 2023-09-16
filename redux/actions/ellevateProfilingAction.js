@@ -25,18 +25,14 @@ export const postEllevateProfilingDetails = (profileSetupItems) => (
     }
 
     // dispatch(accountNumberLoadStart());
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.postEllevateProfiling}`,
-            profileSetupItems,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.postEllevateProfiling}`, profileSetupItems, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(postEllevateProfilingSuccess(response?.data?.message));
         })

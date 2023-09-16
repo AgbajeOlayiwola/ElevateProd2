@@ -3,10 +3,6 @@ import ButtonComp from '../../../ReusableComponents/Button';
 import { useForm } from 'react-hook-form';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-
-// import {
-
-// } from '../../RegisteredForm/styles.module';
 import {
     CardHeadingBVN,
     LeftHeading,
@@ -19,7 +15,6 @@ import {
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import Card from '../../NotRegisteredForms/Card';
 import OtpInput from '../../../ReusableComponents/Otpinput';
-
 import Loader from '../../../ReusableComponents/Loader';
 import { resetOtpData } from '../../../../redux/actions/resetOtpAction';
 import { changeNumberAction } from '../../../../redux/actions/changeNumberAction';
@@ -31,13 +26,10 @@ const StepTwoBVNAuthenticator = ({
     action,
     otpError
 }) => {
-    // const [progress, setProgress] = useState('50%');
     const [otps, setOtp] = useState([]);
     if (typeof window !== 'undefined') {
-        let accounts = window.localStorage.getItem('user');
+        let accounts = window?.localStorage?.getItem('user');
         var newAccounts = JSON.parse(accounts);
-
-        // //console.log(newAccounts.user.email);
     }
 
     const dispatch = useDispatch();
@@ -49,60 +41,54 @@ const StepTwoBVNAuthenticator = ({
         (state) => state.changeNumberReducer
     );
 
-    const [activeBtn, setActiveBtn] = useState(false);
+    const [activeBtn, setActiveBtn] = useState(true);
+    const otpLength = 6;
+    const [otpValues, setOtpValues] = useState(Array(otpLength).fill(''));
+    const otpInputs = useRef([]);
 
-    const numOfFields = 6;
+    const handleInputChange = (inputIndex, value) => {
+        const newOtpValues = [...otpValues];
+        newOtpValues[inputIndex] = value;
+        setOtpValues(newOtpValues);
 
-    const [ssnValues, setValue] = useState(['']);
-    const handleOtpChange = (e) => {
-        const { maxLength, value, name } = e.target;
-        const [fieldName, fieldIndex] = name.split('-');
+        // Concatenate the values to form the OTP string
+        const myOtp = newOtpValues.join('');
+        // console.log('OTP:', otpString);
 
-        // Check if they hit the max character length
-        if (value.length >= maxLength) {
-            // Check if it's not the last input field
-            if (parseInt(fieldIndex, 10) <= 6) {
-                // Get the next input field
-                const nextSibling = document.querySelector(
-                    `input[name=ssn-${parseInt(fieldIndex, 10) + 1}]`
-                );
-                setValue((prevValue) => [...prevValue, value]);
+        if (value && inputIndex > length - 1) {
+            const nextInput = otpInputs.current[inputIndex + 1];
+            if (nextInput) {
+                nextInput.focus(); // Move cursor to the next input if it exists
+            }
+        }
+        setFormData({ ...formData, otp: myOtp });
+    };
+    const handleInputKeyPress = (event, inputIndex) => {
+        if (event.key === 'Backspace' || event.key === 'Delete') {
+            event.preventDefault();
+            handleInputChange(inputIndex, '');
 
-                //  //console.log(ssnValues);
-
-                // If found, focus the next field
-                if (nextSibling !== null) {
-                    nextSibling.focus();
-                } else {
-                    setActiveBtn(true);
-                }
+            if (inputIndex > 0) {
+                otpInputs.current[inputIndex - 1].focus(); // Move cursor to the previous input
             }
         }
     };
-    useEffect(() => {
-        setFormData({ ...formData, otp: ssnValues.join('') });
-    }, [ssnValues]);
 
-    const clear = (e) => {
-        setValue((ssnValues) => ['']);
-    };
     const ResetOtp = (e) => {
         e.preventDefault();
-        setValue((ssnValues) => ['']);
         const data = {
-            userId: newAccounts.userId
+            userId: newAccounts?.userId
         };
         dispatch(resetOtpData(data));
-        // //console.logresetOtp, resetOtpErrorMessages);
     };
 
     useEffect(() => {
-        //  //console.log(resetOtp);
-        setValue((ssnValues) => ['']);
+        // setValue((ssnValues) => ['']);
     }, [resetOtp, resetOtpErrorMessages]);
 
     const [phone, setPhone] = useState('otp');
     const [newPhone, setNewPhone] = useState('otp');
+    const [countryCodes, setCountryCode] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const {
@@ -115,7 +101,8 @@ const StepTwoBVNAuthenticator = ({
         setError('');
         setLoading(true);
         const data = {
-            phoneNumber: newPhone
+            phoneNumber: newPhone,
+            countryCode: countryCodes
         };
 
         dispatch(changeNumberAction(data));
@@ -139,18 +126,8 @@ const StepTwoBVNAuthenticator = ({
         <div className={styles.bvnBody}>
             <div className={styles.cover}>
                 <div>
-                    {/* <ProfileCard width="50%" height="0"> */}
                     <CardHeadingBVN>
                         <LeftHeading>OTP Verification</LeftHeading>
-                        {/* <Progressbar
-                            bgcolor="#6CCF00"
-                            progressCount={progress}
-                            height={14}
-                            progWidth="100%"
-                        /> */}
-                        {/* <Imag 
-                    src="/width" 
-                    alt="lineImage" /> */}
                     </CardHeadingBVN>
                     <SmallInstructionText>
                         A one time Password has been sent to your registered
@@ -159,7 +136,7 @@ const StepTwoBVNAuthenticator = ({
                     {otpError ? (
                         <p className={styles.error}>{otpError}</p>
                     ) : null}
-                    {error ? <p className={styles.error}>{error[0]}</p> : null}
+                    {error ? <p className={styles.error}>{error}</p> : null}
                     {resetOtpErrorMessages ? (
                         <p> {resetOtpErrorMessages.response.data.message}</p>
                     ) : resetOtpErrorMessages?.response?.data?.message ? (
@@ -185,43 +162,32 @@ const StepTwoBVNAuthenticator = ({
                     </div>
                     {phone === 'otp' ? (
                         <form>
-                            <div className={styles.otpInps}>
-                                <input
-                                    type="password"
-                                    name="ssn-1"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-2"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-3"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-4"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-5"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-6"
-                                    maxLength={1}
-                                    onInput={handleOtpChange}
-                                />
+                            <div className={styles.newOtpInput}>
+                                {otpValues.map((value, index) => (
+                                    <>
+                                        <input
+                                            key={index}
+                                            type="password"
+                                            className="otp-input"
+                                            maxLength="1"
+                                            value={otpValues[index]}
+                                            onInput={(e) =>
+                                                handleInputChange(
+                                                    index,
+                                                    e.target.value
+                                                )
+                                            }
+                                            onKeyDown={(e) =>
+                                                handleInputKeyPress(e, index)
+                                            }
+                                            ref={(input) =>
+                                                (otpInputs.current[
+                                                    index
+                                                ] = input)
+                                            }
+                                        />
+                                    </>
+                                ))}
                             </div>
                             <div className={styles.resendFlex}>
                                 <button
@@ -231,11 +197,7 @@ const StepTwoBVNAuthenticator = ({
                                 >
                                     Resend OTP
                                 </button>
-                                <button
-                                    onClick={clear}
-                                    className={styles.clr}
-                                    type="reset"
-                                >
+                                <button className={styles.clr} type="reset">
                                     Clear
                                 </button>
                             </div>
@@ -243,24 +205,39 @@ const StepTwoBVNAuthenticator = ({
                     ) : phone === 'phone' ? (
                         <div className={styles.changePhone}>
                             <form onSubmit={handleSubmit(submit)}>
-                                <input
-                                    type="text"
-                                    placeholder="Enter New Phone Number"
-                                    {...register('countryCode_number', {
-                                        required: 'Phone Number is required',
-                                        minLength: {
-                                            value: 10,
-                                            message: 'Min length is 10'
-                                        },
-                                        maxLength: {
-                                            value: 11,
-                                            message: 'Max length is 10'
+                                <div className={styles.submit}>
+                                    <input
+                                        placeholder="+234"
+                                        type="number"
+                                        onChange={(e) =>
+                                            setCountryCode(e.target.value)
                                         }
-                                    })}
-                                    onInput={(e) => {
-                                        setNewPhone(e.target.value);
-                                    }}
-                                />
+                                    />
+                                    <input
+                                        type="number"
+                                        placeholder="Enter New Phone Number"
+                                        {...register('countryCode_number', {
+                                            required:
+                                                'Phone Number is required',
+                                            minLength: {
+                                                value: 10,
+                                                message: 'Min length is 10'
+                                            },
+                                            maxLength: {
+                                                value: 11,
+                                                message: 'Max length is 10'
+                                            }
+                                        })}
+                                        onInput={(e) => {
+                                            setNewPhone(e.target.value),
+                                                setFormData({
+                                                    ...formData,
+                                                    phoneNumber:
+                                                        event.target.value
+                                                });
+                                        }}
+                                    />
+                                </div>
                                 <div className={styles.error}>
                                     {errors.countryCode_number?.message}
                                 </div>
@@ -277,7 +254,6 @@ const StepTwoBVNAuthenticator = ({
                             onClick={action}
                             disabled={activeBtn}
                             active={activeBtn ? 'active' : 'inactive'}
-                            // onClick={action}
                             type="button"
                             margin="80px 0px 0px 0px"
                             text="Proceed"

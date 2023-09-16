@@ -13,19 +13,15 @@ export const auth2FaCodeError = (auth2FaCodeError) => ({
     payload: auth2FaCodeError
 });
 export const auth2FaCodeDetails = (auth2FaCodeData) => (dispatch) => {
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.auth2Fa}`,
-            auth2FaCodeData,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web'
-                    // withCredentials: true,
-                    // Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.auth2Fa}`, auth2FaCodeData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web'
+                // withCredentials: true,
+                // Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             localStorage?.setItem(
                 'user',

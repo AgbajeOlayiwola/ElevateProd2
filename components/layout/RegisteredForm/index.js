@@ -89,10 +89,10 @@ const ExistingMultiStep = () => {
     // //console.log(formData.emailData, newAccounts.user?.email);
     // //console.log(formData.emailData, newAccounts.email);
     const phonenumber = () => {
-        if (newAccounts.phoneNumber != undefined) {
-            return newAccounts.phoneNumber;
+        if (newAccounts?.phoneNumber != undefined) {
+            return newAccounts?.phoneNumber;
         } else {
-            return newAccounts.user.phoneNumber;
+            return newAccounts?.user?.phoneNumber;
         }
     };
     const handleOtp = () => {
@@ -105,7 +105,7 @@ const ExistingMultiStep = () => {
     const [otpError, setOtpError] = useState('');
     useEffect(() => {
         if (otpErrorMessage) {
-            setOtpError(otpErrorMessage.response.data.message);
+            setOtpError(otpErrorMessage?.response?.data?.message);
         } else if (otpActData) {
             //  //console.log('otpErrorI');
             router.push({

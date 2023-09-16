@@ -22,18 +22,14 @@ export const getTinDetails = (tinData) => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
 
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadTin}`,
-            tinData,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.uploadTin}`, tinData, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             // //console.logresponse.data.data);
             dispatch(getTinSuccess(response));

@@ -21,7 +21,7 @@ import { loadCountry } from '../../../redux/actions/getCountriesAction';
 import { runVerifyOtp } from '../../../redux/actions/verifyBvnOtp';
 import { createBusProfileSetup } from '../../../redux/actions/businessProfileSetupAction';
 import { createProfileSetup } from '../../../redux/actions/profileSetupAction';
-const ProfileSetups = () => {
+const ProfileSetups = ({ comingFrom }) => {
     const dispatch = useDispatch();
     const { countries } = useSelector((state) => state.countryReducer);
 
@@ -31,7 +31,31 @@ const ProfileSetups = () => {
 
     // //console.log('register page', cookie);
 
-    const [page, setPage] = useState(2);
+    const [page, setPage] = useState(0);
+
+    useEffect(() => {
+        // Get the current URL
+        const currentUrl = new URL(window.location.href);
+
+        // Get the "id" parameter from the URL
+        const idParam = currentUrl.searchParams.get('id');
+
+        if (idParam) {
+            // Do something with the idParam
+            // console.log('ID parameter found:', idParam);
+
+            // You can also convert the ID to a number if needed
+            const id = parseInt(idParam, 10);
+            setPage(id);
+
+            // Perform additional actions based on the ID
+            // For example, fetch data from an API using the ID
+            // or update the component state based on the ID
+        } else {
+            // console.log('No ID parameter found in the URL');
+        }
+    }, []);
+
     const [formData, setFormData] = useState({
         type: false,
         rcnumber: '',
@@ -125,6 +149,13 @@ const ProfileSetups = () => {
     } else {
         cookie = getCookie('cookieToken');
     }
+
+    useEffect(() => {
+        if (comingFrom === 'dashboard') {
+            setPage(3);
+        }
+    }, [comingFrom]);
+
     const conditionalComponent = () => {
         switch (page) {
             case 0:
@@ -229,14 +260,19 @@ const ProfileSetups = () => {
     //     }
     // }, [otpErrorMessage, bvnError, bvnErrorI]);
     let text;
-    {
-        page === 0
-            ? (text =
-                  'Input your BVN and open a Business Account in 3 minutes.')
-            : page === 3
-            ? (text = 'Checkout Priceless opportunities, Be ahead!')
-            : null;
-    }
+    useEffect(() => {
+        if (comingFrom !== 'dashboard') {
+            {
+                page === 0
+                    ? (text =
+                          'Input your BVN and open a Business Account in 3 minutes.')
+                    : page === 3
+                    ? (text = 'Checkout Priceless opportunities, Be ahead!')
+                    : null;
+            }
+        }
+    }, []);
+
     return (
         <>
             {page === 1 ? (
@@ -258,11 +294,23 @@ const ProfileSetups = () => {
                     setLoading={setLoading}
                 />
             ) : (
-                <div className={styles.sections}>
-                    <section className={styles.sectionI}>
-                        <ProfileSetupSide text={text} />
-                    </section>
-                    <section className={styles.sectionII}>
+                <div
+                    className={
+                        comingFrom === 'dashboard' ? null : styles.sections
+                    }
+                >
+                    {comingFrom === 'dashboard' ? null : (
+                        <section className={styles.sectionI}>
+                            <ProfileSetupSide text={text} />
+                        </section>
+                    )}
+                    <section
+                        className={
+                            comingFrom === 'dashboard'
+                                ? styles.dashProfileSetupSectionII
+                                : styles.sectionII
+                        }
+                    >
                         {page === 0 ? (
                             // <>
                             //     <p className={styles.error}>{errorI}</p> <br />
@@ -271,7 +319,6 @@ const ProfileSetups = () => {
                         ) : (
                             <></>
                         )}
-                        {/* {error ? <div className={styles.error}>{error}</div> : null} */}
                         {conditionalComponent()}
                     </section>
                 </div>
