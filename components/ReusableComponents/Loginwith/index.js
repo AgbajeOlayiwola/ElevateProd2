@@ -20,7 +20,7 @@ const LoginWith = ({
     bankdets,
     type
 }) => {
-    //console.log(displayInput);
+    // //console.log(displayInput);
     const {
         register,
         handleSubmit,
@@ -220,7 +220,7 @@ const LoginWith = ({
 //             placeholder={placeholderII}
 //             className={styles.passwordInput}
 //             required
-//             type={outType ? 'text' : 'password'}
+//             type={outType ?  'password' : 'text'}
 //             onChange={(e) => setCount(e.target.value.length)}
 //         />
 

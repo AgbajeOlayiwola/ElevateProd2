@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './styles.module.css';
 const PaymentSingleBody = ({
-    data: { icon, text },
+    data: { icon, text, summary },
     index,
     type,
     handleFormChange
@@ -10,6 +10,60 @@ const PaymentSingleBody = ({
     return (
         <>
             {text === 'FX Transfer' ? (
+                <div
+                    className={styles.paymentSingleBodyGrey}
+                    key={index}
+                    // onClick={() => handleFormChange(text.toLowerCase())}
+                    onMouseEnter={() => {
+                        setTime(true);
+                    }}
+                    onMouseLeave={() => {
+                        setTime(false);
+                    }}
+                >
+                    <div>
+                        <div className={styles.paymentSingleImg}>{icon}</div>
+                        <div className={styles.paymentSingleText}>
+                            <p
+                                className={
+                                    type == 'receive'
+                                        ? styles.receivePara
+                                        : styles.makePara
+                                }
+                            >
+                                {time ? 'Coming Soon' : text}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            ) : text === 'Paylink' ? (
+                <div
+                    className={styles.paymentSingleBodyGrey}
+                    key={index}
+                    // onClick={() => handleFormChange(text.toLowerCase())}
+                    onMouseEnter={() => {
+                        setTime(true);
+                    }}
+                    onMouseLeave={() => {
+                        setTime(false);
+                    }}
+                >
+                    <div>
+                        <div className={styles.paymentSingleImg}>{icon}</div>
+                        <div className={styles.paymentSingleText}>
+                            <p
+                                className={
+                                    type == 'receive'
+                                        ? styles.receivePara
+                                        : styles.makePara
+                                }
+                            >
+                                {time ? 'Coming Soon' : text}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            ) : text === 'Phone POS' ? (
                 <div
                     className={styles.paymentSingleBodyGrey}
                     key={index}
@@ -55,6 +109,7 @@ const PaymentSingleBody = ({
                                 {text}
                             </p>
                         </div>
+                        <p className={styles.summary}>{summary}</p>
                     </div>
                 </div>
             )}

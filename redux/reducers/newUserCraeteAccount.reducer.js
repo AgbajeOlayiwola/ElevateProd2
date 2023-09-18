@@ -10,7 +10,7 @@ const newUsercreateAccountReducer = (
     state = initialState,
     { type, payload }
 ) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case newUserCreateAccount.CREATE_NEW_ACCOUNT_LOAD_START:
             return {

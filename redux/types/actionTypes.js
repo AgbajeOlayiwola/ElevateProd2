@@ -35,6 +35,20 @@ export const shareDocuments = {
     SHAREDOCUMENTS_LOAD_ERROR: 'SHAREDOCUMENTS_LOAD_ERROR'
 };
 //banks action types end
+//banks action types
+export const changeNumber = {
+    CHANGENUMBER_LOAD_START: 'CHANGENUMBER_LOAD_START',
+    CHANGENUMBER_LOAD_SUCCESS: 'CHANGENUMBER_LOAD_SUCCESS',
+    CHANGENUMBER_LOAD_ERROR: 'CHANGENUMBER_LOAD_ERROR'
+};
+//banks action types end
+//banks action types
+export const getProfileImg = {
+    GETPROFILEIMG_LOAD_START: 'GETPROFILEIMG_LOAD_START',
+    GETPROFILEIMG_LOAD_SUCCESS: 'GETPROFILEIMG_LOAD_SUCCESS',
+    GETPROFILEIMG_LOAD_ERROR: 'GETPROFILEIMG_LOAD_ERROR'
+};
+//banks action types end
 
 //banks action types
 export const logout = {
@@ -298,6 +312,26 @@ export const resetPassword = {
 
 //resetPassword action type ends
 
+//resetPassword action types
+
+export const resetPin = {
+    RESETPIN_LOAD_START: 'RESETPIN_LOAD_START',
+    RESETPIN_LOAD_SUCCESS: 'RESETPIN_LOAD_SUCCESS',
+    RESETPIN_LOAD_ERROR: 'RESETPIN_LOAD_ERROR'
+};
+
+//resetPassword action type ends
+
+//resetPassword action types
+
+export const checkStatus = {
+    CHECKSTATUS_LOAD_START: 'CHECKSTATUS_LOAD_START',
+    CHECKSTATUS_LOAD_SUCCESS: 'CHECKSTATUS_LOAD_SUCCESS',
+    CHECKSTATUS_LOAD_ERROR: 'CHECKSTATUS_LOAD_ERROR'
+};
+
+//resetPassword action type ends
+
 //bankStatement action types
 
 export const bankStatement = {
@@ -464,7 +498,7 @@ export const login = {
     REGISTER_START: 'REGISTER_START',
     REGISTER_FAIL: 'REGISTER_FAIL',
     LOGIN_SUCCESS: 'LOGIN_SUCCESS',
-    LOGIN_ERROR: 'LOGIN_ERROE',
+    LOGIN_ERROR: 'LOGIN_ERROR',
     SET_MESSAGE: 'SET_MESSAGE',
     CLEAR_MESSAGE: 'CLEAR_MESSAGE',
     LOGIN_FAIL: 'LOGIN_FAIL',
@@ -534,7 +568,7 @@ export const accountPrimary = {
 
 //ot action type start
 
-export const otp = {
+export const otpType = {
     OTP_LOAD_START: 'OTP_LOAD_START',
     OTP_LOAD_SUCCESS: 'OTP_LOAD_SUCCESS',
     OTP_LOAD_ERROR: 'OTP_LOAD_ERROR'
@@ -816,3 +850,225 @@ export const generateQrType = {
     GENERATE_QR_ERROR: 'GENERATE_QR_ERROR'
 };
 //Generate Qr Type
+
+//Export auth2FA
+export const auth2Fa_Type = {
+    AUTH_2FA_START: 'AUTH_2FA_START',
+    AUTH_2FA_SUCCESS: 'AUTH_2FA_SUCCESS',
+    AUTH_2FA_ERROR: 'AUTH_2FA_ERROR'
+};
+//End Export Auth 2Fa
+
+//Export Paylink
+export const Paylink_Type = {
+    PAYLINK_START: 'PAYLINK_START',
+    PAYLINK_SUCCESS: 'PAYLINK_SUCCESS',
+    PAYLINK_ERROR: 'PAYLINK_ERROR'
+};
+//End Export Paylink
+
+//Export complaintType
+export const complaintType_Type = {
+    COMPLAINT_TYPE_START: 'COMPLAINT_TYPE_START',
+    COMPLAINT_TYPE_SUCCESS: 'COMPLAINT_TYPE_SUCCESS',
+    COMPLAINT_TYPE_ERROR: 'COMPLAINT_TYPE_ERROR'
+};
+//End Export commplaintType
+
+//Export complaintCategory
+export const complaintCategory_Type = {
+    COMPLAINT_CATEGORY_START: 'COMPLAINT_CATEGORY_START',
+    COMPLAINT_CATEGORY_SUCCESS: 'COMPLAINT_CATEGORY_SUCCESS',
+    COMPLAINT_CATEGORY_ERROR: 'COMPLAINT_CATEGORY_ERROR'
+};
+//End Export commplaintCategory
+
+//Export subComplaint
+export const subComplaint_Type = {
+    SUB_COMPLAINT_START: 'SUB_COMPLAINT_START',
+    SUB_COMPLAINT_SUCCESS: 'SUB_COMPLAINT_SUCCESS',
+    SUB_COMPLAINT_ERROR: 'SUB_COMPLAINT_ERROR'
+};
+//End Export subComplaint
+
+//Export getMiniStatement
+export const getMiniStatement_Type = {
+    GET_MINI_STATEMENT_START: 'GET_MINI_STATEMENT_START',
+    GET_MINI_STATEMENT_SUCCESS: 'GET_MINI_STATEMENT_SUCCESS',
+    GET_MINI_STATEMENT_ERROR: 'GET_MINI_STATEMENT_ERROR'
+};
+//End Export getMiniStatement
+
+//Export getFullSatement
+export const getFullStatement_Type = {
+    GET_FULL_STATEMENT_START: 'GET_FULL_STATEMENT_START',
+    GET_FULL_STATEMENT_SUCCESS: 'GET_FULL_STATEMENT_SUCCESS',
+    GET_FULL_STATEMENT_ERROR: 'GET_FULL_STATEMENT_ERROR'
+};
+//End Export getFullStatement
+
+//Export TrackComplaint
+export const TrackComplaint_Type = {
+    GET_TRACK_COMPLAINT_START: 'GET_TRACK_COMPLAINT_START',
+    GET_TRACK_COMPLAINT_SUCCESS: 'GET_TRACK_COMPLAINT_SUCCESS',
+    GET_TRACK_COMPLAINT_ERROR: 'GET_TRACK_COMPLAINT_ERROR'
+};
+//End Export gTrackComplaint
+
+//Export LodgeComplaint
+export const lodgeComplaint_Type = {
+    GET_LODGE_COMPLAINT_START: 'GET_LODGE_COMPLAINT_START',
+    GET_LODGE_COMPLAINT_SUCCESS: 'GET_LODGE_COMPLAINT_SUCCESS',
+    GET_LODGE_COMPLAINT_ERROR: 'GET_LODGE_COMPLAINT_ERROR'
+};
+//End Export Lodgeomplaint
+
+//Export complaintTypes
+export const complaintTypes_Type = {
+    GET_COMPLAINT_TYPES_START: 'GET_COMPLAINT_TYPES_START',
+    GET_COMPLAINT_TYPES_SUCCESS: 'GET_COMPLAINT_TYPES_SUCCESS',
+    GET_COMPLAINT_TYPES_ERROR: 'GET_COMPLAINT_TYPES_ERROR'
+};
+//End Export complaintType
+
+//Qr Merchant Info
+export const qrMerchantInfo_Type = {
+    GET_QR_MRCHANTINFO_TYPES_START: 'GET_QR_MRCHANTINFO_TYPES_START',
+    GET_QR_MRCHANTINFO_TYPES_SUCCESS: 'GET_QR_MRCHANTINFO_TYPES_SUCCESS',
+    GET_QR_MRCHANTINFO_TYPES_ERROR: 'GET_QR_MRCHANTINFO_TYPES_ERROR'
+};
+//End Export complaintType
+
+//disput Type action type start
+
+export const disputeType = {
+    DISPUTETYPE_LOAD_START: 'DISPUTETYPE_LOAD_START',
+    DISPUTETYPE_LOAD_SUCCESS: 'DISPUTETYPE_LOAD_SUCCESS',
+    DISPUTETYPE_LOAD_ERROR: 'DISPUTETYPE_LOAD_ERROR'
+};
+
+//dispute Type action type end
+
+//disput Type action type start
+
+export const disputCategoryType = {
+    DISPUTCATEGORY_LOAD_START: 'DISPUTCATEGORY_LOAD_START',
+    DISPUTCATEGORY_LOAD_SUCCESS: 'DISPUTCATEGORY_LOAD_SUCCESS',
+    DISPUTCATEGORY_LOAD_ERROR: 'DISPUTCATEGORY_LOAD_ERROR'
+};
+
+//dispute Type action type end
+
+//disput Type action type start
+
+export const disputSubCategoryType = {
+    DISPUTCATEGORYSUB_LOAD_START: 'DISPUTCATEGORYSUB_LOAD_START',
+    DISPUTCATEGORYSUB_LOAD_SUCCESS: 'DISPUTCATEGORYSUB_LOAD_SUCCESS',
+    DISPUTCATEGORYSUB_LOAD_ERROR: 'DISPUTCATEGORYSUB_LOAD_ERROR'
+};
+
+//dispute Type action type end
+
+//Verify transactionpin action type start
+
+export const verifyTransactionPinType = {
+    VERIFY_TTRANSACTIONPIN_LOAD_START: 'VERIFY_TRANSACTIONPIN_LOAD_START',
+    VERIFY_TRANSACTIONPIN_LOAD_SUCCESS: 'VERIFY_TRANSACTIONPIN_LOAD_SUCCESS',
+    VERIFY_TRANSACTIONPIN_LOAD_ERROR: 'VERIFY_TRANSACTIONPIN_LOAD_ERROR'
+};
+
+//Verify transactionpin action type end
+
+//Get Complaint action type start
+
+export const getAllComplaintType = {
+    GET_ALL_COMPLAINT_LOAD_START: 'GET_ALL_COMPLAINT_LOAD_START',
+    GET_ALL_COMPLAINT_LOAD_SUCCESS: 'GET_ALL_COMPLAINT_LOAD_SUCCESS',
+    GET_ALL_COMPLAINT_LOAD_ERROR: 'GET_ALL_COMPLAINT_LOAD_ERROR'
+};
+
+//Get Complaint action type end
+
+//Delete Account action type start
+
+export const deleteAccountType = {
+    DELETEACCOUNT_LOAD_START: 'DELETEACCOUNT_LOAD_START',
+    DELETEACCOUNT_LOAD_SUCCESS: 'DELETEACCOUNT_LOAD_SUCCESS',
+    DELETEACCOUNT_LOAD_ERROR: 'DELETEACCOUNT_LOAD_ERROR'
+};
+
+//Delet Account action type end
+
+//Set Primary Account action type start
+
+export const setPrimaryAccountType = {
+    SET_PRIMARY_ACCOUNT_LOAD_START: 'SET_PRIMARY_ACCOUNT_LOAD_START',
+    SET_PRIMARY_ACCOUNT_LOAD_SUCCESS: 'SET_PRIMARY_ACCOUNT_LOAD_SUCCESS',
+    SET_PRIMARY_ACCOUNT_LOAD_ERROR: 'SET_PRIMARY_ACCOUNT_LOAD_ERROR'
+};
+
+//Set Primary Account action type end
+
+//Request Physical Qr action type start
+
+export const requestPhysicalQrType = {
+    REQUEST_PHYSICAL_QR_LOAD_START: 'REQUEST_PHYSICAL_QR_LOAD_START',
+    REQUEST_PHYSICAL_QR_LOAD_SUCCESS: 'REQUEST_PHYSICAL_QR_LOAD_SUCCESS',
+    REQUEST_PHYSICAL_QR_LOAD_ERROR: 'REQUEST_PHYSICAL_QR_LOAD_ERROR'
+};
+
+//Request Physical Qr  action type end
+
+//add ecoOnline account type
+
+export const addecoOnlineType = {
+    ECO_ONLINE_TYPE_START: 'ECO_ONLINE_TYPE_START',
+    ECO_ONLINE_TYPE_SUCCESS: 'ECO_ONLINE_TYPE_SUCCESS',
+    ECO_ONLINE_TYPE_ERROR: 'ECO_ONLINE_TYPE_ERROR'
+};
+//add eco online account type
+
+//add omnilite account type
+
+export const addomniLiteType = {
+    OMNILITE_TYPE_START: 'OMNILITE_TYPE_START',
+    OMNILITE_TYPE_SUCCESS: 'OMNILITE_TYPE_SUCCESS',
+    OMNILITE_TYPE_ERROR: 'OMNILITE_TYPE_ERROR'
+};
+//add omnilite account type
+
+//add account number type
+
+export const addAccountNumberType = {
+    ACCOUNT_NUMBER_START: 'ACCOUNT_NUMBER_START',
+    ACCOUNT_NUMBER_SUCCESS: 'ACCOUNT_NUMBER_SUCCESS',
+    ACCOUNT_NUMBER_ERROR: 'ACCOUNT_NUMBER_ERROR'
+};
+//add account number type
+
+//add card type
+
+export const addCardType = {
+    ADD_CARD_START: 'ADD_CARD_START',
+    ADD_CARD_SUCCESS: 'ADD_CARD_SUCCESS',
+    ADD_CARD_ERROR: 'ADD_CARD_ERROR'
+};
+//add card type
+
+//add Validate Account numbertype
+
+export const validateAccountNumberType = {
+    VALIDATE_ACCOUNT_NUMBER_START: 'VALIDATE_ACCOUNT_NUMBER_START',
+    VALIDATE_ACCOUNT_NUMBER_SUCCESS: 'VALIDATE_ACCOUNT_NUMBER_SUCCESS',
+    VALIDATE_ACCOUNT_NUMBER_ERROR: 'VALIDATE_ACCOUNT_NUMBER_ERROR'
+};
+//add validate account number type
+
+//add Validate card type
+
+export const validateCardType = {
+    VALIDATE_CARD_START: 'VALIDATE_CARD_START',
+    VALIDATE_CARD_SUCCESS: 'VALIDATE_CARD_SUCCESS',
+    VALIDATE_CARD_ERROR: 'VALIDATE_CARD_ERROR'
+};
+//add validate Card type

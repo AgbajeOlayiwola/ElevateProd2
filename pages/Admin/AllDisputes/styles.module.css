@@ -1,0 +1,59 @@
+.statementCover {
+    height: fit-content;
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 15px;
+    padding: 20px 15px;
+}
+
+.TableDetailHeader {
+    display: flex;
+    width: 100%;
+    background: #f5f6fa;
+    border-radius: 4px;
+    padding: 10px 0px 10px 24px;
+    align-items: center;
+}
+
+.TableDetailHeader p {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #3e3e3e;
+    line-height: 17px;
+    text-align: left;
+}
+
+.beneficiary {
+    width: 15%;
+}
+
+.type {
+    width: 13%;
+}
+
+.amount {
+    width: 12%;
+}
+
+.status {
+    width: 14%;
+}
+
+.more {
+    width: 30%;
+}
+
+.date {
+    width: 14%;
+}
+.nodisputes{
+    text-align: center;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+.nodisputesHeading{
+    margin-bottom: 30px;
+}

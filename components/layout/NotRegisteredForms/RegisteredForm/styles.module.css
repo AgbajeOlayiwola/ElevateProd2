@@ -28,7 +28,14 @@
 .formWrapper {
     height: 75vh;
     overflow: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
+.formWrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+
 
 /* .formWrapper::-webkit-scrollbar {
     display: none;

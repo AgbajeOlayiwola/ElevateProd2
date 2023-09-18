@@ -13,7 +13,9 @@ const ProfileSingle = ({
     return (
         <div
             className={
-                activeText === profileText
+                profileText === 'Delete Account'
+                    ? styles.profileSingleDelete
+                    : activeText === profileText
                     ? styles.profileSingleActive
                     : styles.profileSingle
             }

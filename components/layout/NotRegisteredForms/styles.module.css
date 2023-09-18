@@ -27,10 +27,9 @@
 }
 
 .sectionII {
-    padding: 120px 40px;
+    padding: 160px 0px;
     max-width: 682px;
     width: 53%;
-    
 }
 
 @media screen and (max-width: 1186px) {

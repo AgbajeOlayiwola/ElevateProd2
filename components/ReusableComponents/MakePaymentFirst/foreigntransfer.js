@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import {
-    loadbank,
-    loadinternationalCountry,
-    getVerifyCurrency
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Beneficiary from '../Beneficiary';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
+import { loadinternationalCountry } from '../../../redux/actions/internationalCountryAction';
+import { loadbank } from '../../../redux/actions/bankAction';
+import { getVerifyCurrency } from '../../../redux/actions/verifyCurrencyAction';
 
 const ForeignTransfer = ({
     secondAction,
@@ -54,7 +53,7 @@ const ForeignTransfer = ({
     }, [banks]);
     useEffect(() => {
         if (verifyCurrency !== null) {
-            //console.logverifyCurrency.currencies);
+            // //console.logverifyCurrency.currencies);
             setCurrency(verifyCurrency.currencies.currencies);
         }
     }, [verifyCurrency]);

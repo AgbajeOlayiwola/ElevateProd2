@@ -27,11 +27,12 @@ import PaymentActiveSvg from '../ReusableSvgComponents/PaymentActiveSvg';
 import ToolsActiveSvg from '../ReusableSvgComponents/toolsActiveSvg';
 import StorefrontActiveSvg from '../ReusableSvgComponents/StorefrontActiveSvg';
 import SettingsActiveSvg from '../ReusableSvgComponents/SettingsActiveSvg';
-
+import { BsFillCollectionFill, BsPiggyBankFill } from 'react-icons/bs';
+import { HiBanknotes } from 'react-icons/hi';
 export const SidebarData = [
     {
         title: 'Dashboard',
-        path: '/Dashboard',
+        path: '/Admin/Dashboard',
         icon: <DashboardSvg fill="none" stroke="black" />,
         iconActive: <DashboardSvg fill="#6CCF00" stroke="none" />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
@@ -40,16 +41,113 @@ export const SidebarData = [
 
     {
         title: 'Payment',
-        path: '/Payment',
-        modal: 'show',
+        path: '/Admin/Payment',
+        // modal: 'show',
         icon: <PaymentSvg />,
         iconActive: <PaymentActiveSvg />,
         iconClosed: <RiIcons.RiArrowDownSLine />,
         iconOpened: <RiIcons.RiArrowUpSLine />
+        // subNav: [
+        //     {
+        //         title: 'Collections',
+        //         path: '/CAdmin/ollections',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Payment',
+        //         path: '/Admin/Payment',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Reports',
+        //         path: '/Admin/Reports',
+        //         icon: <BiIcons.BiTransfer />
+        //     }
+        // ]
+    },
+
+    {
+        title: 'Collections',
+        path: '/Admin/Collections',
+        // modal: 'show',
+        icon: <BsFillCollectionFill />,
+        iconActive: <BsFillCollectionFill style={{ color: '#69940d' }} />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+        // subNav: [
+        //     {
+        //         title: 'Collections',
+        //         path: '/Admin/Collections',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Payment',
+        //         path: '/Admin/Payment',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Reports',
+        //         path: '/Admin/Reports',
+        //         icon: <BiIcons.BiTransfer />
+        //     }
+        // ]
+    },
+
+    {
+        title: 'Transaction Reports',
+        path: '/Admin/Reports',
+        // modal: 'show',
+        icon: <PaymentSvg />,
+        iconActive: <PaymentActiveSvg />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+        // subNav: [
+        //     {
+        //         title: 'Collections',
+        //         path: '/Admin/Collections',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Payment',
+        //         path: '/Admin/Payment',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Reports',
+        //         path: '/Admin/Reports',
+        //         icon: <BiIcons.BiTransfer />
+        //     }
+        // ]
+    },
+    {
+        title: 'Bank Statement',
+        path: '/Admin/BankStatement',
+        // modal: 'show',
+        icon: <BsPiggyBankFill />,
+        iconActive: <BsPiggyBankFill style={{ color: '#69940d' }} />,
+        iconClosed: <RiIcons.RiArrowDownSLine />,
+        iconOpened: <RiIcons.RiArrowUpSLine />
+        // subNav: [
+        //     {
+        //         title: 'Collections',
+        //         path: '/Admin/Collections',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Payment',
+        //         path: '/Admin/Payment',
+        //         icon: <BiIcons.BiTransfer />
+        //     },
+        //     {
+        //         title: 'Reports',
+        //         path: '/Admin/Reports',
+        //         icon: <BiIcons.BiTransfer />
+        //     }
+        // ]
     },
     // {
     //     title: 'Tools',
-    //     path: '/Tools',
+    //     path: '/Admin/Tools',
     //     icon: <ToolSvg />,
     //     iconActive: <ToolsActiveSvg />,
     //     iconClosed: <RiIcons.RiArrowDownSLine />,
@@ -57,42 +155,42 @@ export const SidebarData = [
     //     subNav: [
     //         {
     //             title: 'Analysis',
-    //             path: '/Analysis',
+    //             path: '/Admin/Analysis',
     //             icon: <BiIcons.BiTransfer />
     //         },
     //         {
     //             title: 'Inventory',
-    //             path: '/Inventory',
+    //             path: '/Admin/Inventory',
     //             icon: <BulkTransfer />
     //         },
     //         {
     //             title: 'e invoice',
-    //             path: '/invoice',
+    //             path: '/Admin/invoice',
     //             icon: <NairaSvg />
     //         },
     //         {
     //             title: 'Others',
-    //             path: '/others',
+    //             path: '/Admin/others',
     //             icon: <FaIcons.FaHandHoldingUsd />
     //         }
     //     ]
     // },
     // {
     //     title: 'Storefront',
-    //     path: '/Storefront',
+    //     path: '/Admin/Storefront',
     //     icon: <StorefrontSvg />,
     //     iconActive: <StorefrontActiveSvg />,
     //     iconClosed: <RiIcons.RiArrowDownSLine />,
     //     iconOpened: <RiIcons.RiArrowUpSLine />
     // },
-    {
-        title: 'Dispute ',
-        path: '/Dispute',
-        icon: <StorefrontSvg />,
-        iconActive: <StorefrontActiveSvg />,
-        iconClosed: <RiIcons.RiArrowDownSLine />,
-        iconOpened: <RiIcons.RiArrowUpSLine />
-    },
+    // {
+    //     title: 'Dispute ',
+    //     path: '/Admin/Dispute',
+    //     icon: <StorefrontSvg />,
+    //     iconActive: <StorefrontActiveSvg />,
+    //     iconClosed: <RiIcons.RiArrowDownSLine />,
+    //     iconOpened: <RiIcons.RiArrowUpSLine />
+    // },
 
     {
         title: 'Settings',
@@ -104,24 +202,24 @@ export const SidebarData = [
         subNav: [
             {
                 title: 'Profile Management',
-                path: '/Profile',
+                path: '/Admin/Profile',
                 icon: <BiIcons.BiTransfer />
             },
-            {
-                title: 'Customer Care Service',
-                path: '/Customer',
-                icon: <BulkTransfer />
-            },
+            // {
+            //     title: 'Customer Care Service',
+            //     path: '/Customer',
+            //     icon: <BulkTransfer />
+            // },
             {
                 title: 'Security',
-                path: '/Security',
+                path: '/Admin/Security',
                 icon: <NairaSvg />
-            },
-            {
-                title: 'Legal Terms & Conditions',
-                path: '/Legal',
-                icon: <FaIcons.FaHandHoldingUsd />
             }
+            // {
+            //     title: 'Legal Terms & Conditions',
+            //     path: '/Legal',
+            //     icon: <FaIcons.FaHandHoldingUsd />
+            // }
         ]
     }
 ];
@@ -177,21 +275,21 @@ export const RecievePayment = [
         path: 'Ecobank QR only',
         icon: <BiIcons.BiScan />
     },
-    {
-        title: 'By Phone POS',
-        path: 'Phone POS',
-        icon: <HiIcons.HiOutlineCreditCard />
-    },
+    // {
+    //     title: 'By Phone POS',
+    //     path: 'Phone POS',
+    //     icon: <HiIcons.HiOutlineCreditCard />
+    // },
     {
         title: 'USSD',
         path: 'USSD only',
         icon: <StarSharp />
-    },
-    {
-        title: 'Paylink',
-        path: 'Paylink',
-        icon: <BiIcons.BiLinkAlt />
     }
+    // {
+    //     title: 'Paylink',
+    //     path: 'Paylink',
+    //     icon: <BiIcons.BiLinkAlt />
+    // }
 ];
 
 export const MakePayment = [
@@ -232,15 +330,18 @@ export const PaymentData = {
     make: [
         {
             icon: <BillTransfer />,
-            text: 'Bills Payment'
+            text: 'Bills Payment',
+            summary: 'Pay for your TV bills, electricity e.t.c'
         },
         {
             icon: <SingleTrans />,
-            text: 'Single Transfer'
+            text: 'Single Transfer',
+            summary: 'Send money to any nigerian bank'
         },
         {
             icon: <BulkTransfer2 />,
-            text: 'Bulk Transfer'
+            text: 'Bulk Transfer',
+            summary: 'Send money to multiple nigerian banks at once'
         },
 
         {
@@ -251,19 +352,23 @@ export const PaymentData = {
     receive: [
         {
             icon: <EcobankQRSvg />,
-            text: 'Ecobank QR Only'
-        },
-        {
-            icon: <MposSvg2 />,
-            text: 'Phone POS'
-        },
-        {
-            icon: <Ussd />,
-            text: 'USSD only'
+            text: 'Ecobank QR Only',
+            summary: 'Recieve payment using your phone camera'
         },
         {
             icon: <Paylink2 />,
-            text: 'Paylink'
+            text: 'Paylink',
+            summary: 'Pay for your TV bills, electricity e.t.c'
+        },
+        {
+            icon: <Ussd />,
+            text: 'USSD only',
+            summary: 'Pay for your TV bills, electricity e.t.c'
+        },
+        {
+            icon: <MposSvg2 />,
+            text: 'Phone POS',
+            summary: 'Pay for your TV bills, electricity e.t.c'
         }
     ]
 };

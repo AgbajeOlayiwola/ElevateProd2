@@ -1,4 +1,6 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Work+Sans:wght@300;500;800;900&display=swap');
+
 :root {
     --global-button-padding: 1.2rem 0rem 1.2rem 0rem;
     /* --global-button-padding: 1.2rem 12.568rem 1.2rem 12.568rem; */
@@ -20,15 +22,32 @@
 body {
     margin: 0;
     padding: 0;
-    background: #F5F6FA;
 }
 @font-face {
     font-family: 'inter';
-    src: url('/Assets/Fonts/Inter/Inter-VariableFont_slnt,wght.ttf');
+    src: url('/Assets/Fonts/Inter/Inter-Regular.ttf');
     font-weight: 500;
     font-style: normal;
-    }
-    /* @font-face {
+}
+@font-face {
+    font-family: 'inter';
+    src: url('/Assets/Fonts/Inter/Inter-SemiBold.ttf');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'inter';
+    src: url('/Assets/Fonts/Inter/Inter-Bold.ttf');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'inter';
+    src: url('/Assets/Fonts/Inter/Inter-Medium.ttf');
+    font-weight: 500;
+    font-style: normal;
+}
+/* @font-face {
       font-family: 'Neue Power Trial';
       src: url('/Assets/Font/NeuePowerTrial/NeuePowerTrial-Regular.ttf');
       font-weight: 500;
@@ -105,10 +124,11 @@ input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #dcdcdc;
     opacity: 1; /* Firefox */
-  }
+}
 button {
     padding: var(--global-button-padding);
     color: var(--global-button-color);
@@ -146,4 +166,31 @@ button:hover {
     line-height: 19px;
     text-align: center;
     color: #ffffff;
+}
+table {
+    border-collapse: collapse;
+}
+.otherSpinnerWrapper{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 40;
+    left: 50;
+    background: #f5f6fa;
+    z-index: 99999999; 
+}
+.spinnerWrapper{
+    height: 100vh;
+    width: 90vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 50;
+    background: #f5f6fa;
+    z-index: 1000;
 }

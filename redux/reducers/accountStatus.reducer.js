@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const accountStatusReducer = (state = initialState, { type, payload }) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case accountStatus.ACCOUNTSTATUS_LOAD_START:
             return {

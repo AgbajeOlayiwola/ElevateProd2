@@ -5,7 +5,34 @@
     font-family: 'Inter', sans-serif;
     line-height: 17px;
 }
-
+.PaymentSingle div:nth-child(1){
+    background: #90E8001A !important;
+    width: 100%;
+}
+.PaymentSingle div:nth-child(2){
+    background: #BA00E80D !important;
+    width: 100%;
+}
+.PaymentSingle div:nth-child(2) div{
+    background: none !important;
+}
+.PaymentSingle div:nth-child(1) div{
+    background: none !important;
+}
+.PaymentSingle div:nth-child(3){
+    background: #D5F7E5 !important;
+    width: 100%;
+}
+.PaymentSingle div:nth-child(3) div{
+    background: none !important;
+}
+.PaymentSingle div:nth-child(4) {
+    background: none !important;
+    width: 100%;
+}
+.PaymentSingle div:nth-child(4) div{
+    background: none !important;
+}
 .make {
     color: #102572;
     font-size: 14px;
@@ -17,15 +44,17 @@
 .paymentTypeCont {
     padding: 24px 32px;
     background-color: #fff;
-    width: 49%;
+    width: 100%;
     border-radius: 16px;
 }
 
 .PaymentSingle {
-    display: flex;
+    display: grid;
+    grid-template-columns: 40% 40%;
     width: 100%;
-    justify-content: space-between;
     margin-top: 16px;
+    flex-wrap: wrap;
+    gap: 30px;
 }
 
 @media screen and (max-width: 1301px) {

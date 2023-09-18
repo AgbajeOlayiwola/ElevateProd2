@@ -9,7 +9,6 @@ import Script from 'next/script';
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
-import { loadUserProfile } from '../../../../redux/actions/actions';
 const videoConstraints = {
     width: 390,
     height: 480,
@@ -26,7 +25,7 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ action }) => {
+const Liveness = ({ action, cookie }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const webcamRef = React.useRef(null);
     const [imgSrc, setImgSrc] = React.useState(null);
@@ -48,22 +47,24 @@ const Liveness = ({ action }) => {
         var file = new File([buf], 'userface-1828438.jpg', { type: mimeType });
 
         var formData = new FormData();
-
         formData.append('userFace', file);
-
-        let cookie;
-
-        if (getCookie('cookieToken') == undefined) {
-            cookie = getCookie('existingToken');
+        let cookies;
+        if (cookie === '') {
+            if (getCookie('cookieToken') == undefined) {
+                cookies = getCookie('existingToken');
+            } else {
+                cookies = getCookie('cookieToken');
+            }
         } else {
-            cookie = getCookie('cookieToken');
+            cookies = cookie;
         }
+
         axios
-            //  .post(`192.168.41.82/authentication/facematch`, formData, {
-            .post(`https://testvate.live/authentication/facematch`, formData, {
+            .post(`http://178.128.174.252/authentication/facematch`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${cookie}`
+                    'X-Client-Type': 'web',
+                    Authorization: `Bearer ${cookies}`
                 }
             })
             .then((response) => {
@@ -72,6 +73,7 @@ const Liveness = ({ action }) => {
                 setLoads(false);
             })
             .catch((error) => {
+                // setSuccess(error.response.data.message);
                 setError(error.response.data.message);
                 setLoading(false);
                 setLoads(false);
@@ -107,25 +109,27 @@ const Liveness = ({ action }) => {
                             />
                         </div>
                     </div>
+                    {loading ? (
+                        <p>Hold on your face is been verified!!!!</p>
+                    ) : null}
+                    <ButtonComp
+                        onClick={
+                            succes === 'facial verification successful'
+                                ? action
+                                : capture
+                        }
+                        disabled={activeBtn}
+                        active={activeBtn ? 'active' : 'inactive'}
+                        type="button"
+                        text={
+                            succes === 'facial verification successful'
+                                ? 'Continue'
+                                : 'Snap'
+                        }
+                        err={succes}
+                        loads={loads}
+                    />
                 </div>
-                {loading ? <p>Hold on your face is been verified!!!!</p> : null}
-                <ButtonComp
-                    onClick={
-                        succes === 'facial verification successful'
-                            ? action
-                            : capture
-                    }
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    type="button"
-                    text={
-                        succes === 'facial verification successful'
-                            ? 'Continue'
-                            : 'Snap'
-                    }
-                    err={succes}
-                    loads={loads}
-                />
             </div>
         </div>
     );

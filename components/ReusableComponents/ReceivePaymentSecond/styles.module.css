@@ -5,11 +5,55 @@
     border-radius: 20px;
     margin: 32px auto;
     position: absolute;
+    height: 80vh;
+    overflow: scroll;
     top: 5%;
     left: 33%;
     z-index: 10;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
+.createdQr{
+    width: 60%;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.secondBody::-webkit-scrollbar {
+    display: none;
+}
+.paylinkvalidTill{
+    display: flex;
+    gap: 30px;
+    padding-top: 20px;
+    font-size: 14px;
+    /* padding-bottom: 20px; */
+    /* border-bottom: 1px solid #dbdbdb; */
+    border-top: 1px solid #dbdbdb;
+}
+.qrData{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #dbdbdb;
+}
+.qrData div p{
+    cursor: pointer;
+    font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 15px;
+/* identical to box height */
 
+
+color: #455A64;
+}
+.download {
+    color: #529b03;
+    cursor: pointer;
+}
 .secondCont {
     width: 67%;
     margin: 4px auto 64px;
@@ -31,9 +75,10 @@
     font-weight: 700;
     font-size: 20px;
     line-height: 30px;
+    margin-bottom: 38px;
     color: #005b82;
     font-family: 'Inter', sans-serif;
-    margin-bottom: 4px;
+    /* margin-bottom: 4px; */
 }
 
 .secondCont .intro {
@@ -44,18 +89,59 @@
     font-family: 'Inter', sans-serif;
     margin-bottom: 32px;
 }
+.copyBtn {
+    position: absolute;
 
+    right: 30px;
+}
+.inputBordr {
+    border: none !important;
+}
 .secondCopy {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     background-color: #f8f8f8;
-    padding: 16px 24px;
+    padding: 5px 24px;
+    padding-right: 57px;
     margin-bottom: 60px;
     border-radius: 12px;
+    overflow: scroll;
+    position: relative;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
 
+.secondBody::-webkit-scrollbar {
+    display: none;
+}
+.secondCopyII {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+    background-color: #f8f8f8;
+    padding: 16px 24px;
+    padding-right: 57px;
+    margin-bottom: 60px;
+    border-radius: 12px;
+    overflow: scroll;
+    position: relative;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.validTill{
+    display: flex;
+    gap: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dbdbdb;
+    border-top: 1px solid #dbdbdb;
+}
+.secondCopyII::-webkit-scrollbar {
+    display: none;
+}
 .secondCopyCode {
     display: flex;
     justify-content: space-between;
@@ -85,7 +171,14 @@
     font-weight: 500;
     line-height: 15px;
 }
-
+.secondCopyII p {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 17px;
+    color: #3e3e3e;
+    font-family: 'Inter', sans-serif;
+    margin: 0px;
+}
 .secondCopy p {
     font-weight: 700;
     font-size: 12px;
@@ -93,6 +186,16 @@
     color: #3e3e3e;
     font-family: 'Inter', sans-serif;
     margin: 0px;
+}
+.secondCopyII button {
+    width: 31px;
+    background-color: transparent;
+    color: #529b03;
+    margin-top: 0px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    padding: 0px;
 }
 
 .secondCopy button {
@@ -255,10 +358,6 @@
     cursor: pointer;
 }
 
-.secondCont button {
-    margin-top: 0px;
-}
-
 .NFC {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
@@ -266,4 +365,20 @@
     line-height: 22px;
     color: #3e3e3e;
     margin: 32px 0px;
+}
+@media screen and (max-width: 1098px) {
+    .secondBody {
+    width: 93%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 20px;
+    margin: 32px auto;
+    position: absolute;
+    left: 0%;
+    top: 5%;
+    z-index: 10;
+    position: relative;
+    height: 80vh;
+    overflow: scroll;
+    }
 }

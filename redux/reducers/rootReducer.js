@@ -85,6 +85,30 @@ import uploadRefereeFileReducer from './uploadrefereefile.reducer';
 import cacDocUploadReducer from './cacdocument.reducer';
 import qrInfoReducer from './qrInfo.reducer';
 import paymentQrReducer from './paymentQr.reducer';
+import auth2FaReducer from './auth2Fa.reducer';
+import generateQrInfo from './generateQr.reducer';
+import payLinkGenReducer from './paylinkGen.reducer';
+import getMiniStatementReducer from './getMinistatement.reducer';
+import getFullStatementReducer from './getFullstatement.reducer';
+import getQrMerchantInfoReducermport from './getQrMerchantInfo.reducer';
+import getDisputeTypeReducer from './getDisputeType.reducer';
+import getDisputeCategoryReducer from './getDisputeCategory.reducer';
+import getDisputeSubCategoryReducer from './getDisputSubCategory.reducer';
+import lodgeDisputeReducer from './lodgeDispute.reducer';
+import verifyTransactionPinReducer from './verifyTransactionPin.reducer';
+import getComplaintReducer from './getCompaint.reducer';
+import setPrimaryAccountReducer from './setPrimaryAccount.reducer';
+import deleteAccountReducer from './deleteAccount.reducer';
+import requestPhysicalQrReducer from './requestPhysicalQr.reducer';
+import checkStatusReducer from './checkStatus.reducer';
+import validateCardNumberReducer from './validateCard.reducer';
+import validateAccountNumberReducer from './validateAccountNumber.reducer';
+import addOmniliteReducer from './addomniite.reducer';
+import addEcoOnlineReducer from './addEcoOnline.reducer';
+import addCardReducer from './addCard.reducer';
+import addAccountNumberReducer from './addAccountNumber.reducer';
+import changeNumberReducer from './changeNumber.reducer';
+import getProfileImgReducer from './getProfileImg.reducer';
 
 const appReducer = combineReducers({
     countryReducer: countryReducer,
@@ -120,7 +144,7 @@ const appReducer = combineReducers({
     logoutReducer: logoutReducer,
     registered: registerReducer,
     profile: profileReducer,
-    otp: otpReducer,
+    otpReducer: otpReducer,
     profileSetup: profileSetupReducer,
     omniliteReducer: omniliteReducer,
     getRCReducer: getRCReducer,
@@ -176,7 +200,32 @@ const appReducer = combineReducers({
     uploadRefereeFileReducer: uploadRefereeFileReducer,
     cacDocUploadReducer: cacDocUploadReducer,
     qrInfoReducer: qrInfoReducer,
-    paymentQrReducer: paymentQrReducer
+    paymentQrReducer: paymentQrReducer,
+    auth2FaReducer: auth2FaReducer,
+    generateQrInfo: generateQrInfo,
+    payLinkGenReducer: payLinkGenReducer,
+    getMiniStatementReducer: getMiniStatementReducer,
+    getFullStatementReducer: getFullStatementReducer,
+    getQrMerchantInfoReducermport: getQrMerchantInfoReducermport,
+    getDisputeTypeReducer: getDisputeTypeReducer,
+    getDisputeCategoryReducer: getDisputeCategoryReducer,
+    getDisputeSubCategoryReducer: getDisputeSubCategoryReducer,
+    lodgeDisputeReducer: lodgeDisputeReducer,
+    verifyTransactionPinReducer: verifyTransactionPinReducer,
+    getComplaintReducer: getComplaintReducer,
+    setPrimaryAccountReducer: setPrimaryAccountReducer,
+    deleteAccountReducer: deleteAccountReducer,
+    checkStatusReducer: checkStatusReducer,
+    requestPhysicalQrReducer: requestPhysicalQrReducer,
+    validateCardNumberReducer: validateCardNumberReducer,
+    validateAccountNumberReducer: validateAccountNumberReducer,
+    addOmniliteReducer: addOmniliteReducer,
+    addEcoOnlineReducer: addEcoOnlineReducer,
+    addCardReducer: addCardReducer,
+    addAccountNumberReducer: addAccountNumberReducer,
+    changeNumberReducer,
+    getProfileImgReducer,
+    requestPhysicalQrReducer: requestPhysicalQrReducer
 });
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_START') {

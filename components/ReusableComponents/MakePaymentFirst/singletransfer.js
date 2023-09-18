@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import {
-    loadbank,
-    postInterBankEnquiry,
-    postIntraBankEnquiry
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
 import Loader from '../Loader';
-
+import Lottie from 'react-lottie';
+import socialdata from '../Lotties/loading.json';
+import { loadbank } from '../../../redux/actions/bankAction';
+import { postIntraBankEnquiry } from '../../../redux/actions/intraBankEnquieryAction';
+import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAction';
 const SingleTransfer = ({
     othersaction,
     firstTitle,
@@ -28,13 +28,18 @@ const SingleTransfer = ({
     );
     const [bank, setBank] = useState([]);
     const [apibank, setApiBank] = useState([]);
+    const [errorInterBank, setErrorInterBank] = useState('');
+    const [errorIntraBank, setErrorIntraBank] = useState('');
     const [beneActive, setBeneActive] = useState();
     const [showInterEnquiry, setshowInterEnquiry] = useState(false);
+    const [newBeneficiaries, setNewBeneficiaries] = useState([]);
+    const [newBeneficiarieso, setNewBeneficiarieso] = useState([]);
     // const [inputType, setinputType] = useState(true);
     const [interEnquiry, setInterEnquiry] = useState('');
     const [accountName, setAccountName] = useState(
         payload.accountName !== '' ? payload.accountName : ''
     );
+    const [isLoadinggg, setIsLoadinggg] = useState(false);
     const [accountNumber, setAccountNumber] = useState(
         payload.accountNumber !== ''
             ? payload.accountNumber
@@ -76,7 +81,7 @@ const SingleTransfer = ({
 
         let accountNumberDigits = accountNumber.split('');
 
-        //   //console.log("accountNumberDigits: ", accountNumberDigits);
+        //   // //console.log("accountNumberDigits: ", accountNumberDigits);
 
         let sum =
             accountNumberDigits[0] * 3 +
@@ -97,18 +102,30 @@ const SingleTransfer = ({
 
         return checkDigit == accountNumberDigits[12];
     };
-
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        currencyDisplay: 'narrowSymbol'
+    });
     const getAllBanksByAccount = (accountNo) => {
         //NOTE, This can be fetched from the Database
         let bankArray = `ACCESS BANK:044:000014:999044~ACCESS BANK:063:000005:999044~Citi Bank:023:000009:CITI-ACC~Fidelity Bank:070:000007:FIDELITY-ACC~First Bank of Nigeria:011:000016:FIRST-ACC~First City Monument Bank:214:000003:FCMB-ACC~GT Bank Plc:058:000013:GUARANTY-ACC~Heritage:030:000020:HERITAGE-ACC~POLARIS BANK:076:000008:POLARIS~Stanbic IBTC Bank:221:000012:STANBIC-IBTC-ACC~Standard Chartered:068:000021:STANDARD-CHARTERED~Sterling Bank:232:000001:STERLING-ACC~Union Bank:032:000018:UNION-ACC~United Bank for Africa:033:000004:UNITED-ACC~Unity Bank:215:000011:UNITY-ACC~Wema Bank:035:000017:WEMA-ACC~Zenith Bank:057:000015:ZENITH-ACC~Sun Trust Account:100:000022:SUNTRUST-ACC`;
 
         let bankList = [];
         let bankDets = bankArray.split('~');
-        //   //console.log("bankDets", bankDets);
+        //   // //console.log("bankDets", bankDets);
 
         for (var bankdet of bankDets) {
             let split = bankdet.split(':');
-            //console.log('split', split);
+            // //console.log('split', split);
 
             if (isValidNUBAN(accountNo, split[1])) {
                 bankList.push({
@@ -136,8 +153,11 @@ const SingleTransfer = ({
         if (interBankEnquiry !== null) {
             setInterEnquiry(interBankEnquiry);
             setshowInterEnquiry(true);
+            setIsLoadinggg(false);
         } else if (errorMessageInterBankEnquiry !== null) {
-            alert(errorMessageInterBankEnquiry);
+            setErrorInterBank(errorMessageInterBankEnquiry);
+            setshowInterEnquiry(true);
+            setIsLoadinggg(false);
         }
     };
     useEffect(() => {
@@ -147,8 +167,10 @@ const SingleTransfer = ({
     const intraBankEnquiryCheck = () => {
         if (intraBankEnquiry !== null) {
             setInterEnquiry(intraBankEnquiry);
+            setIsLoadinggg(false);
         } else if (errorMessageIntraBankEnquiry !== null) {
-            alert(errorMessageIntraBankEnquiry);
+            setErrorIntraBank(errorMessageIntraBankEnquiry);
+            setIsLoadinggg(false);
         }
     };
     useEffect(() => {
@@ -157,6 +179,25 @@ const SingleTransfer = ({
     useEffect(() => {
         dispatch(loadbank('ENG'));
     }, []);
+
+    useEffect(() => {
+        setNewBeneficiarieso([]);
+        setNewBeneficiaries([]);
+        if (type === 'Other') {
+            beneficiaries.beneficiaries?.filter((item) => {
+                if (item.bankName !== 'ECOBANK') {
+                    setNewBeneficiarieso((arr) => [...arr, item]);
+                }
+            });
+        }
+        if (type === 'Ecobank') {
+            beneficiaries.beneficiaries?.filter((item) => {
+                if (item.bankName === 'ECOBANK') {
+                    setNewBeneficiaries((arr) => [...arr, item]);
+                }
+            });
+        }
+    }, [beneficiaries, type]);
     // useEffect(() => {
     //     if (banks !== null) {
     //         setApiBank(banks);
@@ -235,14 +276,20 @@ const SingleTransfer = ({
                                 />
                             </div>
                         </div>
-                        <div className={styles.beneficiaryBody}>
-                            {!beneficiaries.beneficiaries?.length ? (
+                        <div
+                            className={
+                                !newBeneficiaries?.length
+                                    ? styles.beneficiaryBodyNo
+                                    : styles.beneficiaryBody
+                            }
+                        >
+                            {!newBeneficiaries?.length ? (
                                 <h2>
                                     You do not have any Beneficiaries at the
                                     Moment
                                 </h2>
                             ) : (
-                                beneficiaries.beneficiaries
+                                newBeneficiaries
                                     ?.filter((item) => {
                                         if (search === '') {
                                             return item;
@@ -322,7 +369,9 @@ const SingleTransfer = ({
                             <select
                                 name=""
                                 id=""
-                                {...register('sourceAccount')}
+                                {...register('sourceAccount', {
+                                    required: 'Source Account is required'
+                                })}
                                 onInput={(event) => {
                                     setFormdata({
                                         ...formData,
@@ -335,14 +384,21 @@ const SingleTransfer = ({
                                 {bankAccounts?.map((accounts, index) => {
                                     return (
                                         <option
-                                            value={accounts.accountNumber}
+                                            value={accounts.accountId}
                                             key={index}
                                         >
-                                            {accounts.accountNumber}
+                                            {`${
+                                                accounts.accountNumber
+                                            } - ${formatter.format(
+                                                accounts.accountBalance
+                                            )}`}
                                         </option>
                                     );
                                 })}
                             </select>
+                            <p className={styles.error}>
+                                {errors?.sourceAccount?.message}
+                            </p>
                         </div>
                         <div className={styles.narration}>
                             <label> Account Number</label>
@@ -371,7 +427,8 @@ const SingleTransfer = ({
                                         }
                                     })}
                                     value={accountNumber}
-                                    onInput={(e) => {
+                                    onChange={(e) => {
+                                        setIsLoadinggg(true);
                                         setAccountNumber(e.target.value);
                                         if (e.target.value.length === 10) {
                                             const details = {
@@ -396,7 +453,13 @@ const SingleTransfer = ({
                                 {errors?.accountNumber?.message}
                             </p>
                         </div>
-                        {beneActive ? (
+                        {isLoadinggg ? (
+                            <Lottie
+                                options={socialOptions}
+                                height={100}
+                                width={100}
+                            />
+                        ) : beneActive ? (
                             <div className={styles.narration}>
                                 <label> Account Name</label>
                                 <input
@@ -432,8 +495,13 @@ const SingleTransfer = ({
                                             name="accountName"
                                         />
                                         <p className={styles.error}>
-                                            {errors?.accountNumber?.message}
+                                            {errors?.accountName?.message}
                                         </p>
+                                        {errorIntraBank ? (
+                                            <p className={styles.error}>
+                                                errorIntraBank
+                                            </p>
+                                        ) : null}
                                     </div>
                                 ) : null}
                             </>
@@ -473,9 +541,12 @@ const SingleTransfer = ({
                                 })}
                                 value={amount}
                                 type="text"
-                                placeholder="5,000,000,000.00"
+                                placeholder="Enter Amount"
                                 onInput={(e) => {
-                                    setAmount(e.target.value);
+                                    const inputValue = e.target.value;
+
+                                    setAmount(inputValue);
+                                    // setAmount(`${inputValue}.OO`);
                                     if (e?.target.value.length === 0) {
                                         setActiveBtn(false);
                                     } else if (e?.target.value.length > 0) {
@@ -510,21 +581,6 @@ const SingleTransfer = ({
                                 {errors?.narration?.message}
                             </p>
                         </div>
-                        {beneActive ? null : (
-                            <div className={styles.saveBene}>
-                                <label className={styles.beneCheck}>
-                                    <input
-                                        type="checkbox"
-                                        name="beneficiary"
-                                        {...register('beneficiary')}
-                                    />
-                                    <span>
-                                        <i></i>
-                                    </span>
-                                </label>
-                                <p>Save Beneficiary</p>
-                            </div>
-                        )}
 
                         {isLoading ? (
                             <Loader />
@@ -559,14 +615,20 @@ const SingleTransfer = ({
                                 />
                             </div>
                         </div>
-                        <div className={styles.beneficiaryBody}>
-                            {!beneficiaries.beneficiaries?.length ? (
+                        <div
+                            className={
+                                !newBeneficiarieso?.length
+                                    ? styles.beneficiaryBodyNo
+                                    : styles.beneficiaryBody
+                            }
+                        >
+                            {!newBeneficiarieso?.length ? (
                                 <h2>
                                     You do not have any Beneficiaries at the
                                     Moment
                                 </h2>
                             ) : (
-                                beneficiaries.beneficiaries
+                                newBeneficiarieso
                                     ?.filter((item) => {
                                         if (search === '') {
                                             return item;
@@ -599,6 +661,7 @@ const SingleTransfer = ({
                                                         setBeneActive(
                                                             beneficiaries
                                                         );
+                                                        setIsLoadinggg(false);
                                                     }}
                                                 >
                                                     <div
@@ -640,13 +703,14 @@ const SingleTransfer = ({
                             value={type}
                             className={styles.displayNone}
                         />
-
                         <div className={styles.narration}>
                             <label>Source Account</label>
                             <select
                                 name=""
                                 id=""
-                                {...register('sourceAccount')}
+                                {...register('sourceAccount', {
+                                    required: 'Source Account is required'
+                                })}
                                 onInput={(event) => {
                                     setFormdata({
                                         ...formData,
@@ -656,18 +720,24 @@ const SingleTransfer = ({
                                 // value={formData.accountNum}
                             >
                                 <option value="">Select Account To Use</option>
-                                <option>Select Account To Use</option>
                                 {bankAccounts?.map((accounts, index) => {
                                     return (
                                         <option
-                                            value={accounts.accountNumber}
+                                            value={accounts.accountId}
                                             key={index}
                                         >
-                                            {accounts.accountNumber}
+                                            {`${
+                                                accounts.accountNumber
+                                            } - ${formatter.format(
+                                                accounts.accountBalance
+                                            )}`}
                                         </option>
                                     );
                                 })}
                             </select>
+                            <p className={styles.error}>
+                                {errors?.sourceAccount?.message}
+                            </p>
                         </div>
                         <div className={styles.narration}>
                             <label> Account Number</label>
@@ -718,48 +788,6 @@ const SingleTransfer = ({
                                 {errors?.accountNumber?.message}
                             </p>
                         </div>
-                        {beneActive ? (
-                            <div className={styles.narration}>
-                                <label> Account Name</label>
-                                <input
-                                    {...register('accountName')}
-                                    type="text"
-                                    value={beneActive.beneficiaryName}
-                                />
-                                <p className={styles.error}>
-                                    {errors?.accountName?.message}
-                                </p>
-                            </div>
-                        ) : Object.keys(payload).length !== 0 ? (
-                            <div className={styles.narration}>
-                                <label> Account Name</label>
-                                <input
-                                    {...register('accountName')}
-                                    type="text"
-                                    value={accountName}
-                                />
-                                <p className={styles.error}>
-                                    {errors?.accountName?.message}
-                                </p>
-                            </div>
-                        ) : (
-                            <>
-                                {showInterEnquiry ? (
-                                    <div className={styles.narration}>
-                                        <label> Account Name</label>
-                                        <input
-                                            {...register('accountName')}
-                                            type="text"
-                                            value={interEnquiry.accountName}
-                                        />
-                                        <p className={styles.error}>
-                                            {errors?.accountNumber?.message}
-                                        </p>
-                                    </div>
-                                ) : null}
-                            </>
-                        )}
-
                         <div className={styles.narration}>
                             <label>Choose Bank</label>
                             {beneActive ? (
@@ -779,6 +807,7 @@ const SingleTransfer = ({
                                         })}
                                         name="bankName"
                                         onChange={(e) => {
+                                            setIsLoadinggg(true);
                                             const details = {
                                                 destinationBankCode:
                                                     e.target.value,
@@ -809,7 +838,72 @@ const SingleTransfer = ({
                                             );
                                         })}
                                     </select>
-                                    {/* <input
+                                    <p className={styles.error}>
+                                        {errors?.bankName?.message}
+                                    </p>
+                                </>
+                            )}
+
+                            {errors.bankName && (
+                                <p className={styles.error}>
+                                    {errors?.bankName?.message}
+                                </p>
+                            )}
+                        </div>{' '}
+                        {isLoadinggg ? (
+                            <Lottie
+                                options={socialOptions}
+                                height={100}
+                                width={100}
+                            />
+                        ) : beneActive !== undefined ? (
+                            <div className={styles.narration}>
+                                <label> Account Name</label>
+                                <input
+                                    {...register('accountName')}
+                                    type="text"
+                                    value={beneActive?.beneficiaryName}
+                                />
+                                <p className={styles.error}>
+                                    {errors?.accountName?.message}
+                                </p>
+                            </div>
+                        ) : Object.keys(payload).length !== 0 ? (
+                            <div className={styles.narration}>
+                                <label> Account Name</label>
+                                <input
+                                    {...register('accountName')}
+                                    type="text"
+                                    value={accountName}
+                                    readOnly
+                                />
+                                <p className={styles.error}>
+                                    {errors?.accountName?.message}
+                                </p>
+                            </div>
+                        ) : (
+                            <>
+                                {showInterEnquiry ? (
+                                    <div className={styles.narration}>
+                                        <label> Account Name</label>
+                                        <input
+                                            {...register('accountName')}
+                                            type="text"
+                                            value={interEnquiry.accountName}
+                                        />
+                                        <p className={styles.error}>
+                                            {errors?.accountName?.message}
+                                        </p>
+                                        {errorInterBank ? (
+                                            <p className={styles.error}>
+                                                errorInterBank
+                                            </p>
+                                        ) : null}
+                                    </div>
+                                ) : null}
+                            </>
+                        )}
+                        {/* <input
                                         type="text"
                                         name=""
                                         id=""
@@ -826,24 +920,15 @@ const SingleTransfer = ({
                                                 ) {
                                                     let newBank = [];
                                                     newBank.splice(1, e);
-                                                    //console.log(newBank);
-                                                    //console.log(e);
+                                                    // //console.log(newBank);
+                                                    // //console.log(e);
                                                     setBank(newBank);
-                                                    //console.log(e);
-                                                    //console.log(bank);
+                                                    // //console.log(e);
+                                                    // //console.log(bank);
                                                 }
                                             });
                                         }}
                                     /> */}
-                                </>
-                            )}
-
-                            {errors.bankName && (
-                                <p className={styles.error}>
-                                    {errors?.bankName?.message}
-                                </p>
-                            )}
-                        </div>
                         <div className={styles.narration}>
                             <label>Enter Amount</label>
                             <input
@@ -856,12 +941,17 @@ const SingleTransfer = ({
                                 })}
                                 value={amount}
                                 type="text"
-                                placeholder="5,000,000,000.00"
+                                placeholder="Enter Amount"
                                 onInput={(e) => {
-                                    setAmount(e.target.value);
-                                    if (e?.target.value.length === 0) {
+                                    const inputValue = e.target.value;
+                                    //  //console.log(
+                                    //     parseInt(inputValue).toFixed(2)
+                                    // );
+                                    setAmount(inputValue);
+                                    // setAmount(parseInt(inputValue).toFixed(2));
+                                    if (inputValue.length === 0) {
                                         setActiveBtn(false);
-                                    } else if (e?.target.value.length > 0) {
+                                    } else if (inputValue.length > 0) {
                                         setActiveBtn(true);
                                     }
                                 }}
@@ -893,22 +983,6 @@ const SingleTransfer = ({
                                 {errors?.narration?.message}
                             </p>
                         </div>
-                        {beneActive ? null : (
-                            <div className={styles.saveBene}>
-                                <label className={styles.beneCheck}>
-                                    <input
-                                        type="checkbox"
-                                        name="beneficiary"
-                                        {...register('beneficiary')}
-                                    />
-                                    <span>
-                                        <i></i>
-                                    </span>
-                                </label>
-                                <p>Save Beneficiary</p>
-                            </div>
-                        )}
-
                         {isLoading ? (
                             <Loader />
                         ) : (

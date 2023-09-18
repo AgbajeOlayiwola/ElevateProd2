@@ -9,7 +9,7 @@
 //         setHeight(document.documentElement.scrollHeight);
 //     }, []);
 
-//     //console.log(height);
+//     // //console.log(height);
 //
 
 //     const mainOverlay = {
@@ -44,8 +44,11 @@ import { Navbar, Sidebar } from '../../index';
 import styles from './styles.module.css';
 import Idle from 'react-idle';
 import { useRouter } from 'next/router';
-import { logoutAction } from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
+import withAuth from '../../HOC/withAuth';
+import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import { getProfileImgAction } from '../../../redux/actions/getProfileImageAction';
 const DashLayout = ({
     children,
     page,
@@ -56,52 +59,79 @@ const DashLayout = ({
     productAction
 }) => {
     const [sideActive, setSideActive] = useState(false);
-    const [cornifyLoaded, setCornifyLoaded] = useState('');
-    const router = useRouter();
+    const [profileImg, setProfileImg] = useState('');
+    const [userProfileData, setUserProfileData] = useState([]);
     const dispatch = useDispatch();
-    const preloadCornify = () => {
-        dispatch(logoutAction());
-        if (!localStorage.getItem('user')) {
-            router.replace('../Auth/Login');
+    const { userProfile } = useSelector((state) => state.userProfileReducer);
+    const { getProfileImg } = useSelector(
+        (state) => state.getProfileImgReducer
+    );
+    useEffect(() => {
+        dispatch(loadUserProfile());
+        dispatch(getProfileImgAction());
+    }, []);
+    useEffect(() => {
+        if (userProfile !== null) {
+            setUserProfileData(userProfile);
         }
-    };
+    }, [userProfile]);
+    useEffect(() => {
+        if (getProfileImg !== null) {
+            setProfileImg(getProfileImg);
+        }
+    }, [getProfileImg]);
+    const router = useRouter();
     return (
-        <div className={styles.dash}>
-            <div className={sideActive ? styles.sidebar : styles.sidebarActive}>
-                <Sidebar
-                    showSubnav={() => {
-                        setSideActive(false);
-                    }}
-                />
-            </div>
-            <Idle
-                timeout={300000}
-                onChange={({ idle }) => {
-                    if (idle) {
-                        preloadCornify();
-                    }
-                }}
-            />
-
-            {!sideActive ? (
-                <div className={styles.dashCont}>
-                    <Navbar
-                        page={page}
-                        text={text}
-                        action={action}
-                        preview={preview}
-                        previewSingle={previewSingle}
-                        productAction={productAction}
-                        sideAction={() => {
-                            setSideActive(true);
+        <>
+            {router.pathname.includes('Admin') ? (
+                <div className={styles.dash}>
+                    <div
+                        className={
+                            sideActive ? styles.sidebar : styles.sidebarActive
+                        }
+                    >
+                        <Sidebar
+                            showSubnav={() => {
+                                setSideActive(false);
+                            }}
+                        />
+                    </div>
+                    {/* <Idle
+                        timeout={300000}
+                        onChange={({ idle }) => {
+                            if (idle) {
+                                preloadCornify();
+                            }
                         }}
-                    />
-                    {children}
+                    /> */}
+
+                    {!sideActive ? (
+                        <div className={styles.dashCont}>
+                            {page === 'Create Storefront' ? null : (
+                                <Navbar
+                                    page={page}
+                                    text={text}
+                                    action={action}
+                                    preview={preview}
+                                    previewSingle={previewSingle}
+                                    productAction={productAction}
+                                    sideAction={() => {
+                                        setSideActive(true);
+                                    }}
+                                    profileImg={profileImg}
+                                    userProfile={userProfileData}
+                                />
+                            )}
+                            {children}
+                        </div>
+                    ) : null}
                 </div>
-            ) : null}
-        </div>
+            ) : (
+                <> {children}</>
+            )}
+        </>
     );
 };
 
-// export default withAuth(DashLayout);
 export default DashLayout;
+// export default DashLayout;

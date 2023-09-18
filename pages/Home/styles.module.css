@@ -1,3 +1,8 @@
+.homeContainer {
+    width: 100%;
+    background-color: white;
+}
+
 .homeBody {
     display: flex;
     height: 100vh;
@@ -67,15 +72,21 @@
 }
 
 .secondSection {
-    padding: 100px 0px;
+    padding: 200px 0px;
     max-width: 682px;
     width: 53%;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.secondSection::-webkit-scrollbar {
+    display: none;
 }
 
 .secondSectionHeader {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .secondSectionHeaderText {
@@ -111,7 +122,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-top: 32px;
+    margin-top: 64px;
     border-bottom: 1px solid #ebebeb;
     padding-bottom: 32px;
 }
@@ -140,12 +151,19 @@
     font-size: 14px;
     line-height: 17px;
     color: #3e3e3e;
+    background: #f4f4f4;
+    border-radius: 8px;
+    border: 0px;
 }
 
 .homeForm {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    margin-top: 32px;
+}
+
+.homeForm:last-child {
     margin-top: 24px;
 }
 
@@ -158,6 +176,12 @@
     color: #7a7978;
     display: block;
     margin-bottom: 8px;
+}
+
+.homeForm input {
+    background: #f4f4f4;
+    /* border: 1px solid rgba(108, 207, 0, 0.31); */
+    border-radius: 8px;
 }
 
 .divs {
@@ -292,6 +316,10 @@
     margin-bottom: 24px;
 }
 
+.existingForm > div:last-child {
+    margin-bottom: 0px;
+}
+
 .show {
     display: flex;
     transition: all 0.5s ease-in-out;
@@ -311,15 +339,6 @@
 }
 .exp {
     width: 50%;
-}
-
-.form {
-    height: 50vh;
-    overflow-y: scroll;
-}
-
-.form::-webkit-scrollbar {
-    display: none;
 }
 
 .idInput {
@@ -481,10 +500,15 @@
     /* width: 50%; */
     flex: 1;
     /* height: 100vh; */
-    /* overflow: scroll; */
+    overflow: scroll;
     align-items: center;
     display: flex;
     justify-content: center;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.sectionII::-webkit-scrollbar {
+    display: none;
 }
 .bottom {
     margin-top: 3rem;
@@ -941,10 +965,10 @@
         overflow-y: unset;
     } */
 }
-.termms{
-    width: 12%;
+.termms {
+    width: 20px;
 }
-.alreadyTC{
+.alreadyTC {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -952,18 +976,21 @@
     line-height: 17px;
     margin: 0px;
     margin-top: 24px;
-    color: #3e3e3e; 
+    color: #3e3e3e;
+    display: flex;
+    align-items: center;
 }
 .alreadyTC span {
     font-weight: 700;
     color: #102572;
     cursor: pointer;
+    margin-left: 4px;
 }
-.headerDiv{
+.headerDiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.errorX{
+.errorX {
     cursor: pointer;
 }

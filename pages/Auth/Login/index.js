@@ -6,36 +6,37 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUserAction } from '../../../redux/actions/actions';
-import { encrypt } from '../../../redux/helper/hash';
 import Loader from '../../../components/ReusableComponents/Loader';
 import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
-import LoginCircleSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LoginCircleSvg';
 import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
 import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
-
+import { loginUserAction } from '../../../redux/actions/loginUserAction';
+// Number of input fields that make up SSN
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [overlay, setOverlay] = useState(false);
     const [newUser, setNewUser] = useState();
     const [circle, setCircle] = useState(false);
     const [error, setError] = useState('');
+    const [mainError, setmainError] = useState('');
     const [identifier, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [outType, setOutType] = useState();
+    const [mloading, setMloading] = useState(false);
     const dispatch = useDispatch();
     const router = useRouter();
 
     const { isLoading, user, errorMessages } = useSelector(
         (state) => state.auth
     );
+
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors }
     } = useForm();
-
     //set password value
     const handlePwd = (e) => {
         setPassword(e.target.value);
@@ -44,8 +45,7 @@ const Login = () => {
     const checkDataContent = (e) => {
         setEmail(e.target.value);
     };
-
-    const onSubmit = (data) => {
+    const openModal = () => {
         setError('');
         setLoading((prev) => !prev);
         const loginData = {
@@ -53,80 +53,75 @@ const Login = () => {
             password
         };
         dispatch(loginUserAction(loginData));
-        // dispatch(createNewUserAccount());
     };
-    //console.log(user);
-    const sentLogin = () => {
-        if (errorMessages !== null) {
-            setError(errorMessages);
-            // setLoading(false);
-            setLoading((prev) => !prev);
-            // } else if (
-            //     newAccountErrorMessage ===
-            //     'You already have an account with us. Please contact us for more information'
-            // ) {
-            // router.push('/Dashboard');,
-        } else if (user !== null) {
-            setNewUser(user);
-            if (user.statusCode === 200) {
-                if (user.data.user.profile.createdFromEcobankCred === false) {
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+            if (user?.statusCode === 200) {
+                if (
+                    user?.data?.user?.profile?.createdFromEcobankCred === false
+                ) {
                     if (
-                        user.data.user.profile.customerCategory == 'COMMERCIAL'
+                        user?.data?.user?.profile?.customerCategory ===
+                        'COMMERCIAL'
                     ) {
                         if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'PROFILE_SETUP_COMPLETED'
                         ) {
                             router.push('../../Verify/CorportateAccount');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'AWAITING_ACCOUNT_NUMBER'
                         ) {
                             router.push('../../Verify/CorportateAccount');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'ACCOUNT_NUMBER_RETRIEVED'
                         ) {
-                            router.push('../../Dashboard');
+                            //console.log('here');
+                            router.push('../../Admin/Dashboard');
                         } else {
                             router.push('../../Onboarding/ProfileSetup');
                         }
                     } else {
                         if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'PROFILE_SETUP_COMPLETED'
                         ) {
                             router.push('../../Verify/Account/loading');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'AWAITING_ACCOUNT_NUMBER'
                         ) {
                             router.push('../../Verify/Account/loading');
                         } else if (
-                            user.data.user.profile.profileSetupStatus ===
+                            user?.data?.user?.profile?.profileSetupStatus ===
                             'ACCOUNT_NUMBER_RETRIEVED'
                         ) {
-                            router.push('../../Dashboard');
+                            router.push('../../Admin/Dashboard');
                         } else {
                             router.push('../../Onboarding/ProfileSetup');
                         }
                     }
                 }
             }
-            if (user.data.user.profile.createdFromEcobankCred === true) {
+        }
+        if (user) {
+            if (user?.data?.user?.profile?.createdFromEcobankCred === true) {
                 if (
-                    user.data.user.profile.profileSetupStatus ===
+                    user?.data?.user?.profile?.profileSetupStatus ===
                     'PROFILE_SETUP_COMPLETED'
                 ) {
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'displayAccount',
-                        JSON.stringify(user.data.user)
+                        JSON.stringify(user?.data?.user)
                     );
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
-                    router.push('../../Dashboard');
+                    router.push('../../Admin/Dashboard');
                 } else if (
                     user.data.user.profile.profileSetupStatus ===
                     'PROFILE_SETUP'
@@ -139,7 +134,43 @@ const Login = () => {
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
-                    router.push('/Onboarding/ExistingProfileSetup');
+                    router.push({
+                        pathname: '/Onboarding/ExistingProfileSetup',
+                        query: { id: 2 }
+                    });
+                } else if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'LIVENESS_VERIFIED'
+                ) {
+                    window?.localStorage?.setItem(
+                        'displayAccount',
+                        JSON.stringify(user.data.user)
+                    );
+                    window?.localStorage?.setItem(
+                        'account',
+                        JSON.stringify(user.data.user.profile)
+                    );
+                    router.push({
+                        pathname: '/Onboarding/ExistingProfileSetup',
+                        query: { id: 3 }
+                    });
+                } else if (
+                    user.data.user.profile.profileSetupStatus ===
+                    'PROFILE_SETUP_AWAITING_OTP'
+                ) {
+                    window.localStorage.setItem(
+                        'displayAccount',
+                        JSON.stringify(user.data.user)
+                    );
+                    window?.localStorage?.setItem(
+                        'account',
+                        JSON.stringify(user.data.user.profile)
+                    );
+
+                    router.push({
+                        pathname: '/Onboarding/ExistingProfileSetup',
+                        query: { id: 0 }
+                    });
                 }
                 if (
                     user.data.user.profile.profileSetupStatus ===
@@ -149,7 +180,7 @@ const Login = () => {
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
@@ -158,28 +189,26 @@ const Login = () => {
                     user.data.user.profile.profileSetupStatus ===
                     'ACCOUNT_NUMBER_RETRIEVED'
                 ) {
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'displayAccount',
                         JSON.stringify(user.data.user)
                     );
-                    window.localStorage.setItem(
+                    window?.localStorage?.setItem(
                         'account',
                         JSON.stringify(user.data.user.profile)
                     );
-                    router.push('../../Dashboard');
+                    router.push('../../Admin/Dashboard');
                 }
             }
+        } else if (errorMessages !== null) {
+            setmainError(errorMessages);
+            setLoading((prev) => !prev);
         }
-    };
-    useEffect(() => {
-        sentLogin();
-    }, [errorMessages, user]);
+    }, [user, errorMessages]);
 
     const types = (type) => {
         setOutType(type);
     };
-    //console.log(user);
-    //console.log(data); // watch input value by passing the name of it
 
     return (
         <div className={styles.sectionCove}>
@@ -195,9 +224,11 @@ const Login = () => {
                             Kindly enter your details to Login.
                         </p>
                     </div>
-                    {error ? <h2 className={styles.error}>{error}</h2> : null}
+                    {mainError ? (
+                        <h2 className={styles.error}>{mainError}</h2>
+                    ) : null}
                     <form
-                        onSubmit={handleSubmit(onSubmit)}
+                        onSubmit={handleSubmit(openModal)}
                         className={styles.form}
                     >
                         <div className={styles.loginForm}>
@@ -219,9 +250,11 @@ const Login = () => {
                                     onInput={checkDataContent}
                                 />
                             </div>
-                            <p className={styles.errors}>
-                                {errors.email?.message}
-                            </p>
+                            {errors.email?.message ? (
+                                <p className={styles.errors}>
+                                    {errors.email?.message}
+                                </p>
+                            ) : null}
                         </div>
                         <div className={styles.loginForm}>
                             <label>Password </label>
@@ -229,6 +262,7 @@ const Login = () => {
                                 <LockSvg />
                                 <input
                                     name="password"
+                                    autoComplete="false"
                                     placeholder="Enter Your Password"
                                     type={outType ? 'text' : 'password'}
                                     className={styles.passwordInput}
@@ -237,11 +271,13 @@ const Login = () => {
                                     })}
                                     onInput={handlePwd}
                                 />
-                                <Visbility typeSet={types} />
+                                <Visbility typeSet={types} input="input" />
                             </div>
-                            <p className={styles.errors}>
-                                {errors?.password?.message}
-                            </p>
+                            {errors?.password?.message ? (
+                                <p className={styles.errors}>
+                                    {errors?.password?.message}
+                                </p>
+                            ) : null}
                         </div>
                         <div className={styles.remForg}>
                             <div>
@@ -264,6 +300,7 @@ const Login = () => {
                             />
                         )}
                     </form>
+
                     <div>
                         <p className={styles.accout}>
                             Don&apos;t have an account?

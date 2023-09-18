@@ -6,15 +6,42 @@ import Progressbar from '../../ReusableComponents/Progressbar';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { useDispatch, useSelector } from 'react-redux';
-import { bankAccountsData } from '../../../redux/actions/actions';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
 
-const StepThree = ({ action, handleSubmit, handleSubmitNew, countryNames }) => {
+const StepThree = ({
+    action,
+    handleSubmit,
+    handleSubmitNew,
+    countryNames,
+    mainAccount
+}) => {
     const dispatch = useDispatch();
     const [profileInfo, setProfileInfo] = useState([]);
     const account = localStorage.getItem('account');
+
     const accountDetails = JSON.parse(account);
+    //  //console.log(accountDetails);
+
+    useEffect(() => {
+        const account = localStorage.getItem('account');
+        const accountDetails = JSON.parse(account);
+        if (accountDetails?.profile !== undefined) {
+            setProfileInfo(accountDetails?.profile);
+        } else if (accountDetails?.user !== undefined) {
+            setProfileInfo(accountDetails?.user.profile);
+        } else {
+            setProfileInfo(accountDetails);
+        }
+    }, []);
 
     const [isRegistered, setIsRegistered] = useState(false);
+    const [active, setActive] = useState(false);
+
+    useEffect(() => {
+        if (countryNames) {
+            setActive(true);
+        }
+    }, [countryNames]);
 
     const [progress, setProgress] = useState('50%');
     const [bgcolor, setBgcolor] = useState(false);
@@ -41,11 +68,6 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew, countryNames }) => {
     );
     useEffect(() => {
         dispatch(bankAccountsData());
-        if (accountDetails?.profile !== undefined) {
-            setProfileInfo(accountDetails.profile);
-        } else if (accountDetails?.user !== undefined) {
-            setProfileInfo(accountDetails.user.profile);
-        }
     }, []);
 
     const [activeBtn, setActiveBtn] = useState(true);
@@ -100,7 +122,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew, countryNames }) => {
                                     className={styles.textInput}
                                     required
                                     readOnly
-                                    value={`${profileInfo.lastName}  ${profileInfo.firstName}`}
+                                    value={`${profileInfo?.lastName}  ${profileInfo?.firstName}`}
                                 />
                             </div>
                             <div>
@@ -120,7 +142,7 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew, countryNames }) => {
                                         <input
                                             type="number"
                                             placeholder="812 345 6789"
-                                            value={profileInfo.phoneNumber}
+                                            value={profileInfo?.phoneNumber}
                                         />
                                     </div>
                                 </div>
@@ -136,7 +158,11 @@ const StepThree = ({ action, handleSubmit, handleSubmitNew, countryNames }) => {
                                 </select>
                             </div>
                         </div>
-                        <button onClick={handleSubmitNew}>
+                        <button
+                            disabled={active ? false : true}
+                            className={active ? null : styles.disabled}
+                            onClick={handleSubmitNew}
+                        >
                             Click to use this Account
                         </button>
                         <p onClick={handleSubmit} className={styles.open}>

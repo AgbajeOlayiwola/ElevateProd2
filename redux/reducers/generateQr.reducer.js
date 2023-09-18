@@ -1,25 +1,20 @@
-import {
-    accountNumber,
-    generateQrType,
-    paymentQrType,
-    qrInfoType
-} from '../types/actionTypes';
+import { generateQrType } from '../types/actionTypes';
 
 const initialState = {
     isLoading: false,
-    generateQrCodeSuccess: [],
-    generateQrCodeError: ''
+    generateQrCodeSuccess: null,
+    generateQrCodeError: null
 };
 
 const generateQrReducer = (state = initialState, { type, payload }) => {
-    //console.log(payload);÷ss
+    // //console.log(payload);÷ss
     switch (type) {
         case generateQrType.GENERATE_QR_START:
             return {
                 ...state,
                 isLoading: true,
-                generateQrCodeSuccess: [],
-                generateQrCodeError: ''
+                generateQrCodeSuccess: null,
+                generateQrCodeError: null
             };
         case generateQrType.GENERATE_QR_SUCCESS:
             return {

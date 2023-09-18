@@ -6,11 +6,10 @@ import BillPayment from './billpayment';
 import SingleTransfer from './singletransfer';
 import Overlay from '../Overlay';
 import CloseButton from '../CloseButtonSvg';
-import {
-    bankAccountsData,
-    getBeneficiariesData
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
+import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import { getBeneficiariesData } from '../../../redux/actions/getBeneficiariesAction';
 
 const MakePaymentFirst = ({
     firstTitle,
@@ -29,7 +28,8 @@ const MakePaymentFirst = ({
     isLoading,
     payload,
     formData,
-    setFormdata
+    setFormdata,
+    backAction
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -58,6 +58,24 @@ const MakePaymentFirst = ({
             setBeneficiaries(getBeneficiaries);
         }
     }, [getBeneficiaries]);
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
+
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        console.log(width);
+    };
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [width]);
     return (
         <Overlay overlay={overlay}>
             <div className={styles.firstDiv} ref={myref}>
@@ -112,20 +130,31 @@ const MakePaymentFirst = ({
                             airtimeAction={airtimeAction}
                             bankAccounts={bankAccount}
                             isLoading={isLoading}
+                            backAction={backAction}
                         />
                     )}
                 </div>
                 <div>
-                    <img
-                        src="../../Assets/Images/bluemoney.png"
-                        alt=""
-                        className={styles.greenImg}
-                    />
-                    <CloseButton
-                        action={closeAction}
-                        classes={styles.closebtn}
-                        color="white"
-                    />
+                    {width > 950 ? (
+                        <div>
+                            <img
+                                src="../../Assets/Images/bluemoney.png"
+                                alt=""
+                                className={styles.greenImg}
+                            />
+                            <CloseButton
+                                action={closeAction}
+                                classes={styles.closebtn}
+                                color="white"
+                            />
+                        </div>
+                    ) : (
+                        <CloseButton
+                            action={closeAction}
+                            classes={styles.closebtn}
+                            color="grey"
+                        />
+                    )}
                 </div>
             </div>
         </Overlay>

@@ -7,7 +7,9 @@
     display: flex;
     position: absolute;
     top: 5%;
-    left: 33%;
+    left: 25%;
+    height: 80vh;
+
     z-index: 10;
 }
 
@@ -34,6 +36,7 @@
 
 .firstBody {
     width: 70%;
+    overflow: scroll;
 }
 
 .firstBody > div {
@@ -147,4 +150,58 @@
     font-weight: 700;
     cursor: pointer;
     color: #102572;
+}
+
+.share {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 32px;
+}
+
+.share span {
+    font-weight: 600;
+    color: #5f8903;
+    cursor: pointer;
+}
+@media screen and (max-width: 1098px) {
+    .firstDiv{
+width: 95%;
+max-width: 781px;
+background-color: white;
+border-radius: 50px;
+margin: 32px auto;
+display: flex;
+position: absolute;
+top: 5%;
+left: 3%;
+height: 80vh;
+z-index: 10;
+    }
+    .firstBody {
+        width: 100%;
+        overflow: scroll;
+    }
+    .firstBody h2 {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 29px;
+        color: #102572;
+        font-family: 'Inter', sans-serif;
+        margin: 0px;
+        /* margin-bottom: 32px; */
+    }
+    .formGroup input, .formGroup textarea {
+        width: 100%;
+        background: #f8f8f8;
+        border: 1px solid #dbdbdb;
+        border-radius: 12px;
+        color: #3e3e3e;
+        font-size: 14px;
+        font-family: 'Inter', sans-serif;
+        padding: 11px;
+        margin: 0px;
+    }
 }

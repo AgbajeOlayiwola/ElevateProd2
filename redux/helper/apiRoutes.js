@@ -14,10 +14,11 @@ const intraBankEnquiry = '/bank-account/intra-bank/info';
 const interBankEnquiry = '/bank-account/inter-bank/info';
 const balanceEnquiry = '/bank-account/balance';
 const accountPrimary = '/bank-account/primary';
-const transactionHistory = '/account/transaction';
+const transactionHistory = '/transactions/filter';
+// const allTransactions = 'accountPrimarys?.accountNumber'
 const setTransactionPin = '/account-upgrade/transaction-pin/set';
-const changeTransactionPin = '/users/transaction-pin';
-const transactionElevate = '/transactions';
+const changeTransactionPin = '/users/transaction-pin/change';
+const transactionElevate = '/transactions/filter';
 const bulkTransfer = '/payment/bulk-transfer';
 const verifyBank = '/payment/international-transfer/validate-bank';
 const verifyCurrency = '/payment/international-tranfer/allowed-currency';
@@ -29,12 +30,13 @@ const deleteAirtimeBeneficiaries = '/phone-number-beneficiaries/delete/';
 const ussdGen = '/payment/ussd/generate';
 const ussdStatus = '/payment/ussd/status';
 const register = '/authentication/register';
-const login = '/authentication/login';
+const login = '/authentication/v1/login';
+// const login = '/authentication/login';
 const newProfileSetup = '/auth/profile-setup';
 const userProfile = '/users/profile';
 const profileSetupBus = '/authentication/profile-setup/registered-business';
 const profileSetup = '/authentication/profile-setup/unregistered-business ';
-const verifyOtp = '/verification/verify/otp';
+const verifyOtp = '/authentication/otp/verify';
 const verifyStatusBus = '/document-verification/registered-business';
 const verifyDob = '/verification/verify/dob';
 const authProfile = '/document-verification/user-doc';
@@ -67,9 +69,10 @@ const uploadBoardRes = '/account-upgrade/board-resolution/upload';
 const forgotPassword = '/authentication/forget-password';
 const forgotPasswordReset = '/authentication/reset-password';
 const resetOtp = '/authentication/otp/re-send';
+const resetPin = '/users/transaction-pin/reset';
 const viewBvn = '/users/bvn/view';
 const resetPassword = '/users/password';
-const bankStatement = '/bank-account/statement';
+const bankStatement = '/transactions';
 const freezeTransactions = '/users/freeze-transactions';
 const unfreezeTransactions = '/users/unfreeze-transactions';
 const businessNameCac = '/business/name';
@@ -90,7 +93,48 @@ const cacDocumentUpload = '/account-upgrade/cac-document/upload';
 const paymentQr = '/payment/qr';
 const generateQr = '/payment/qr/generate';
 const qrInfo = '/payment/qr/generate';
+const auth2Fa = '/authentication/login/2FA';
+const paymentLink = '/payment/payment-link/create';
+const complaintType = '/dispute-management/get-complaint-types';
+const complaintCategory = '/dispute-management/get-complaint-categories';
+const subcomplaint = '/dispute-management/get-complaint-sub-categories';
+const getMiniStatemnt = '/bank-account/statement/mini';
+const getFullStatement = '/bank-account/statement/full';
+const trackComplaint = '/dispute-management/track-complaint';
+const lodgeComplaint = '/dispute-management/lodge-complaint';
+const complaintTypes = '/dispute-management/get-complaint-types';
+const complaintCategories = '/dispute-management/get-complaint-categories';
+const subComplaintCategories =
+    '/dispute-management/get-complaint-sub-categories';
+const qrMerchantInfo = '/payment/qr/merchant-info';
+const verifyTransactionPin = '/users/transaction-pin/verify';
+const getAllComplaint = '/dispute-management/records';
+const deleteAccount = '/users/delete-account';
+const setPrimaryAccount = '/bank-account/primary';
+const requestPhysicalQr = '/qr-merchant/request-physical-qr';
+const checkStatus = '/account-upgrade/check-submitted';
+const addEcoOnline = '/bank-account/add/ecobank-online';
+const addOmnilite = '/bank-account/add/omnilite';
+const addAccountNumber = '/bank-account/add/account-number';
+const addCard = '/bank-account/add/account-number';
+const vlidateAccountNumber = '/bank-account/validate/add/account-number';
+const validateCard = '/bank-account/validate/add/card';
+const changePhone = '/users/phone/update';
+const getProfileImg = '/users/profile/image';
+
 export default {
+    validateCard,
+    vlidateAccountNumber,
+    addCard,
+    addAccountNumber,
+    addOmnilite,
+    addEcoOnline,
+    getAllComplaint,
+    trackComplaint,
+    lodgeComplaint,
+    complaintCategories,
+    subComplaintCategories,
+    complaintTypes,
     getBanks,
     getCountries,
     getBillerCategories,
@@ -181,5 +225,22 @@ export default {
     cacDocumentUpload,
     paymentQr,
     generateQr,
-    qrInfo
+    qrInfo,
+    auth2Fa,
+    paymentLink,
+    complaintType,
+    complaintCategory,
+    subcomplaint,
+    getMiniStatemnt,
+    getFullStatement,
+    qrMerchantInfo,
+    lodgeComplaint,
+    resetPin,
+    verifyTransactionPin,
+    deleteAccount,
+    setPrimaryAccount,
+    requestPhysicalQr,
+    checkStatus,
+    changePhone,
+    getProfileImg
 };

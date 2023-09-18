@@ -9,7 +9,6 @@ import Script from 'next/script';
 import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
-import { loadUserProfile } from '../../../../redux/actions/actions';
 const videoConstraints = {
     width: 390,
     height: 480,
@@ -60,12 +59,16 @@ const Liveness = ({ action }) => {
         }
         axios
             //  .post(`192.168.41.82/authentication/facematch`, formData, {
-            .post(`https://testvate.live/authentication/facematch`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${cookie}`
+            .post(
+                `https://mysmeapp.ecobank.com:8443/authentication/facematch`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${cookie}`
+                    }
                 }
-            })
+            )
             .then((response) => {
                 setSuccess(response.data.message);
                 setLoading(false);

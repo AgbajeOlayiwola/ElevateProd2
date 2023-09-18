@@ -1,0 +1,364 @@
+.collectionChart {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px 65px;
+}
+.collectionCHartDiv {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 9px;
+}
+.collectionChartTop {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+.chartH1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+    color: #69940d;
+}
+.collectionChart div div p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height, or 115% */
+
+    color: #3e3e3e;
+}
+.charts {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.green {
+    background: #3a5207;
+    width: 100%;
+    height: 14px;
+}
+.greenI {
+    background: #69940d;
+    width: 100%;
+    height: 14px;
+}
+.greenII {
+    background: #6ccf00;
+    width: 100%;
+    height: 14px;
+}
+.greenIII {
+    background: #c4d344;
+    width: 100%;
+    height: 14px;
+}
+.greenIdiv h1 span {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */
+
+    color: #3a5207;
+}
+.greenIdiv h1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */
+}
+.greenIIdiv h1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */
+}
+.greenIIdiv h1 span {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */
+    color: #69940d;
+}
+.greenIIIdiv h1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */
+}
+.greenIIIdiv h1 span {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */
+    color: #6ccf00;
+}
+.greenIVdiv h1 span {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */
+    color: #c4d344;
+}
+.greenIVdiv h1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* or 115% */
+}
+.greenIdiv {
+    width: 20%;
+}
+.greenIIdiv {
+    width: 30%;
+}
+.greenIIIdiv {
+    width: 50%;
+}
+.greenIVdiv {
+    width: 15%;
+}
+.allTrans {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0px;
+    color: #102572;
+}
+.filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.filterFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f8f8;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+}
+.filterFlex div {
+    padding: 16px 32px;
+    cursor: pointer;
+}
+
+.filterFlex div:hover {
+    background: #6ccf00;
+    border-radius: 12px;
+}
+
+.filterFlex div p {
+    margin: 0px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #a5a5a5;
+}
+
+.filterFlex div:hover p {
+    color: white;
+}
+.collectionsTable {
+    background: #fff;
+    padding: 0px 32px;
+    margin-top: 0.99px;
+}
+.active {
+    background: #6ccf00;
+    border-radius: 12px;
+}
+.active p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #ffffff !important;
+}
+.generate {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 16px;
+}
+
+.generateHead {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    cursor: pointer;
+}
+
+.formGroup {
+    margin-top: 24px;
+}
+
+.formGroup label {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: block;
+    margin-bottom: 8px;
+    color: #7a7978;
+}
+
+.formGroup input {
+    background: #f4f4f4;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3e3e3e;
+}
+.down {
+    background: #7fbb01;
+    border-radius: 12px;
+    padding: 16px;
+    color: #fff;
+}
+.down p {
+    margin: 0px;
+}
+.gene p {
+    margin: 0px;
+    color: #7fbb01;
+}
+.gene {
+    background: #ffffff;
+    border: 1px solid #7fbb01;
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+}
+.srch {
+    padding: 11px 38px;
+    border: 1px solid #dae1ff;
+    border-radius: 16px;
+}
+.searches {
+    display: flex;
+    margin-top: 29px;
+    gap: 16px;
+}
+
+.searches select {
+    width: 123px;
+    margin: 0px;
+    background-color: #005b82;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    padding: 8px 16px;
+    margin-left: 16px;
+    color: white;
+    border: none;
+    background-image: url(/Assets/Svgs/Vector\ 26.svg);
+    background-position-x: 74%;
+    background-position-y: 55%;
+    background-repeat: no-repeat;
+}
+
+.filterDiv {
+    background: #06374b;
+    border-radius: 16px;
+    padding: 12px 22px;
+    color: #fff;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+.filterDiv p {
+    margin: 0px;
+}
+.searchInp {
+    display: flex;
+    align-items: center;
+}
+.sarchIcon {
+    margin-right: -29px;
+    /* height: 30px; */
+    font-size: 20px;
+    z-index: 2;
+}
+.table {
+    width: 100%;
+    margin-top: 25px;
+}
+.table thead {
+    background: #f5f6fa;
+    border-radius: 16px;
+    margin-bottom: 24px;
+}
+.table tr th div p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    text-align: start;
+
+    color: #3e3e3e;
+}
+.theadTop {
+    border-bottom-left-radius: 16px;
+    border-top-left-radius: 16px;
+    padding-left: 14px;
+    width: 40%;
+}
+.theadBtm {
+    border-bottom-right-radius: 16px;
+    border-top-right-radius: 16px;
+}
+.collctionh1 h1 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #102572;
+}
+.collctionh1 {
+    margin-bottom: 50px;
+}

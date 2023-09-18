@@ -8,14 +8,17 @@ import StepFour from './StepFour';
 import Link from 'next/link';
 import styles from './styles.module.css';
 import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticator';
-import {
-    existingUserProfileData,
-    loadCountry
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Liveness from '../NotRegisteredForms/Liveness';
+import { useRouter } from 'next/router';
+import withAuth from '../../HOC/withAuth';
+import { runVerifyOtp } from '../../../redux/actions/verifyBvnOtp';
+import { existingUserProfileData } from '../../../redux/actions/existingProfileAction';
+import { loadCountry } from '../../../redux/actions/getCountriesAction';
 
 const ExistingMultiStep = () => {
+    const router = useRouter();
     const [page, setPage] = useState(0);
     const [pageType, setPageType] = useState('');
     const [country, setCountry] = useState();
@@ -27,15 +30,27 @@ const ExistingMultiStep = () => {
     const { countries } = useSelector((state) => state.countryReducer);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
+        otp: [''],
         type: 'false',
         userId: '',
         emailData: '',
         password: '',
         confPassword: ''
     });
+    const { otpActData, otpErrorMessage } = useSelector(
+        (state) => state.otpReducer
+    );
+    const [cookie, setCookies] = useState('');
     useEffect(() => {
         dispatch(loadCountry());
     }, []);
+    useEffect(() => {
+        const {
+            query: { id }
+        } = router;
+        setPage(parseInt({ id }.id));
+    });
+    useEffect(() => {}, [page]);
     useEffect(() => {
         if (countries !== null) {
             countries.filter((item) => {
@@ -43,6 +58,13 @@ const ExistingMultiStep = () => {
                     setCountry(item);
                 }
             });
+        }
+        if (typeof window !== 'undefined') {
+            let accounts = window.localStorage.getItem('account');
+            var newAccounts = JSON.parse(accounts);
+            let loginWith = localStorage.getItem('LoginWith');
+            // //console.log(loginWith);
+            //  //console.log(newAccounts);
         }
     }, [countries]);
     const [setType, typeset] = useState('false');
@@ -60,23 +82,59 @@ const ExistingMultiStep = () => {
         let accounts = window.localStorage.getItem('account');
         var newAccounts = JSON.parse(accounts);
         let loginWith = localStorage.getItem('LoginWith');
-        //console.log(loginWith);
-        //console.log(newAccounts.user.email);
+        // //console.log(loginWith);
+        // //console.log(newAccounts.user.email);
     }
-    //console.log(formData.emailData, newAccounts.user?.email);
-    //console.log(formData.emailData, newAccounts.email);
+
+    // //console.log(formData.emailData, newAccounts.user?.email);
+    // //console.log(formData.emailData, newAccounts.email);
+    const phonenumber = () => {
+        if (newAccounts?.phoneNumber != undefined) {
+            return newAccounts?.phoneNumber;
+        } else {
+            return newAccounts?.user?.phoneNumber;
+        }
+    };
+    const handleOtp = () => {
+        const otpData = {
+            phoneNumber: phonenumber(),
+            otp: formData.otp
+        };
+        dispatch(runVerifyOtp(otpData));
+    };
+    const [otpError, setOtpError] = useState('');
+    useEffect(() => {
+        if (otpErrorMessage) {
+            setOtpError(otpErrorMessage?.response?.data?.message);
+        } else if (otpActData) {
+            //  //console.log('otpErrorI');
+            router.push({
+                pathname: '/Onboarding/ExistingProfileSetup',
+                query: { id: 1 }
+            });
+        }
+    }, [otpErrorMessage, otpActData]);
+
+    //  //console.log(page);
 
     const conditionalComponent = () => {
         switch (page) {
             case 0:
-                return <FirstStep action={handleSubmit} />;
+                return (
+                    <FirstStep
+                        formData={formData}
+                        setFormData={setFormData}
+                        action={handleOtp}
+                        otpError={otpError}
+                    />
+                );
             case 1:
                 return (
                     <SecondStep
                         errorMessage={errorMessage}
                         loads={loads}
                         move={() => {
-                            //console.log(formData.emailData);
+                            // //console.log(formData.emailData);
                             let userEmail;
                             if (
                                 newAccounts?.email !== null &&
@@ -91,16 +149,16 @@ const ExistingMultiStep = () => {
                             } else {
                                 userEmail = formData.emailData;
                             }
-                            //console.log(newAccounts.email);
-                            //console.log(newAccounts.user);
-                            //console.log(formData.emailData);
+                            // //console.log(newAccounts.email);
+                            // //console.log(newAccounts.user);
+                            // //console.log(formData.emailData);
                             const userData = {
                                 userId: formData.userId,
                                 email: userEmail,
                                 password: formData.password,
                                 confirmPassword: formData.confPassword
                             };
-                            //console.log(userData);
+                            // //console.log(userData);
                             dispatch(existingUserProfileData(userData));
                             // setLoading((prev) => !prev);
                             setLoads((prev) => !prev);
@@ -108,7 +166,10 @@ const ExistingMultiStep = () => {
                         formData={formData}
                         setFormData={setFormData}
                         action={() => {
-                            setPage(page - 1);
+                            router.push({
+                                pathname: '/Onboarding/ExistingProfileSetup',
+                                query: { id: 0 }
+                            });
                         }}
                         loading={loading}
                         setLoading={setLoading}
@@ -122,8 +183,13 @@ const ExistingMultiStep = () => {
                         <Liveness
                             action={() => {
                                 setLoads((prev) => !prev);
-                                setPage(page + 1);
+                                router.push({
+                                    pathname:
+                                        '/Onboarding/ExistingProfileSetup',
+                                    query: { id: 3 }
+                                });
                             }}
+                            cookie={cookie}
                             loading={loading}
                             setLoading={setLoading}
                             // action={handleSubmitt}
@@ -135,11 +201,15 @@ const ExistingMultiStep = () => {
                 return (
                     <StepThree
                         action={() => {
-                            setPage(page - 1);
+                            router.push({
+                                pathname: '/Onboarding/ExistingProfileSetup',
+                                query: { id: 2 }
+                            });
                         }}
                         handleSubmit={handleSubmit}
                         handleSubmitNew={handleSubmitNew}
                         countryNames={country}
+                        mainAccount={newAccounts}
                     />
                 );
             case 4:
@@ -147,7 +217,10 @@ const ExistingMultiStep = () => {
                     <StepFour
                         title={pageType}
                         action={() => {
-                            setPage(page - 1);
+                            router.push({
+                                pathname: '/Onboarding/ExistingProfileSetup',
+                                query: { id: 3 }
+                            });
                             setPageType('');
                         }}
                         formData={formData}
@@ -161,27 +234,43 @@ const ExistingMultiStep = () => {
     };
     function handleSubmit() {
         // setLoads((prev) => !prev);
-        setPage(page + 1);
+        router.push({
+            pathname: '/Onboarding/ExistingProfileSetup',
+            query: { id: 4 }
+        });
         setFormData({ ...formData, type: 'true' });
     }
     function handleSubmitNew() {
-        setPage(page + 1);
-        setPageType('New');
+        router.push({
+            pathname: '/Onboarding/ExistingProfileSetup',
+            query: { id: 4, pageType: 'New' }
+        });
+        setFormData({ ...formData, type: 'false' });
     }
+
     useEffect(() => {
-        //console.log('new bvn:', bvnNin.message);
+        // //console.log('new bvn:', bvnNin.message);
         if (existingUserProfilee.data) {
+            setCookies(existingUserProfilee.data.data.token);
             if (
                 existingUserProfilee.data.message ==
-                'Profile setup Intialization completed'
+                    'Profile setup Intialization completed' ||
+                errorMessage?.response?.data?.message ===
+                    'An account already exists with this email, if you have already setup your profile with this email just login'
             ) {
                 let loginWith = localStorage.getItem('LoginWith');
                 if (loginWith !== null) {
-                    // console.log(loginWith);
-                    setPage(page + 1);
+                    //  //console.log(loginWith);
+                    router.push({
+                        pathname: '/Onboarding/ExistingProfileSetup',
+                        query: { id: 2 }
+                    });
                     setFormData({ ...formData, type: 'true' });
                 } else if (loginWith === null) {
-                    setPage(page + 2);
+                    router.push({
+                        pathname: '/Onboarding/ExistingProfileSetup',
+                        query: { id: 3 }
+                    });
                     setFormData({ ...formData, type: 'true' });
                 }
             }

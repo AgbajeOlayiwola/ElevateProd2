@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import ButtonComp from '../Button';
 import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
-import {
-    loadbank,
-    postInterBankEnquiry,
-    postIntraBankEnquiry
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import SourceSvg from '../ReusableSvgComponents/SourceSvg';
 import PlusSvg from '../ReusableSvgComponents/PlusSvg';
 import Beneficiary from '../Beneficiary';
 import Loader from '../Loader';
+import { loadbank } from '../../../redux/actions/bankAction';
+import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAction';
+import { postIntraBankEnquiry } from '../../../redux/actions/intraBankEnquieryAction';
 
 const BulkTransfer = ({
     action,
@@ -25,6 +24,7 @@ const BulkTransfer = ({
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [diffAmount, setDiffAmount] = useState(false);
+    const [fileError, setFileError] = useState('');
     const [csvUpload, setCsvUpload] = useState(false);
     const [csv, setCsv] = useState();
     const [interEnquiry, setInterEnquiry] = useState([]);
@@ -51,7 +51,7 @@ const BulkTransfer = ({
 
         let accountNumberDigits = accountNumber.split('');
 
-        //   //console.log("accountNumberDigits: ", accountNumberDigits);
+        //   // //console.log("accountNumberDigits: ", accountNumberDigits);
 
         let sum =
             accountNumberDigits[0] * 3 +
@@ -72,6 +72,7 @@ const BulkTransfer = ({
 
         return checkDigit == accountNumberDigits[12];
     };
+    useEffect(() => {}, []);
 
     const getAllBanksByAccount = (accountNo) => {
         //NOTE, This can be fetched from the Database
@@ -79,11 +80,11 @@ const BulkTransfer = ({
 
         let bankList = [];
         let bankDets = bankArray.split('~');
-        //   //console.log("bankDets", bankDets);
+        //   // //console.log("bankDets", bankDets);
 
         for (var bankdet of bankDets) {
             let split = bankdet.split(':');
-            //console.log('split', split);
+            // //console.log('split', split);
 
             if (isValidNUBAN(accountNo, split[1])) {
                 bankList.push({
@@ -151,6 +152,11 @@ const BulkTransfer = ({
         handleSubmit,
         formState: { errors }
     } = useForm();
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        currencyDisplay: 'narrowSymbol'
+    });
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
@@ -160,7 +166,9 @@ const BulkTransfer = ({
                     <label className={styles.bulkLabel}>Source Account</label>
                     <select
                         name="sourceAccount"
-                        {...register('sourceAccount')}
+                        {...register('sourceAccount', {
+                            required: 'Source Account is required'
+                        })}
                         onInput={(event) => {
                             setFormdata({
                                 ...formData,
@@ -175,15 +183,19 @@ const BulkTransfer = ({
                             </option> */}
                         {bankAccounts?.map((accounts, index) => {
                             return (
-                                <option
-                                    value={accounts.accountNumber}
-                                    key={index}
-                                >
-                                    {accounts.accountNumber}
+                                <option value={accounts.accountId} key={index}>
+                                    {`${
+                                        accounts.accountNumber
+                                    } - ${formatter.format(
+                                        accounts.accountBalance
+                                    )}`}
                                 </option>
                             );
                         })}
                     </select>
+                    <p className={styles.error}>
+                        {errors?.sourceAccount?.message}
+                    </p>
                 </div>
                 <p className={styles.beneTitle}>Beneficiary Details</p>
                 {csvUpload ? (
@@ -191,6 +203,7 @@ const BulkTransfer = ({
                 ) : (
                     number?.map((e, index) => {
                         const fieldName = `details[${index}]`;
+                        // let `amount${index}` = 0;
                         return (
                             <div key={index}>
                                 <div className={styles.addedFormCont}>
@@ -323,6 +336,7 @@ const BulkTransfer = ({
                                         value={e?.number?.accountName}
                                         name={`${fieldName}.accountName`}
                                         disabled
+                                        required
                                     />
                                     <p className={styles.error}>
                                         {errors?.accountNumber?.message}
@@ -468,8 +482,14 @@ const BulkTransfer = ({
                                     Tap to
                                     <input
                                         type="file"
+                                        accept=".csv, .xlsm"
                                         onChange={(e) => {
-                                            if (e.target.files) {
+                                            //  //console.log(e.target.files[0]);
+                                            if (
+                                                e.target.files[0].name.split(
+                                                    '.'
+                                                )[1] === 'xlsm'
+                                            ) {
                                                 const reader = new FileReader();
                                                 reader.onload = (e) => {
                                                     const data =
@@ -484,10 +504,9 @@ const BulkTransfer = ({
                                                         workbook.Sheets[
                                                             sheetName
                                                         ];
-                                                    const json =
-                                                        XLSX.utils.sheet_to_json(
-                                                            worksheet
-                                                        );
+                                                    const json = XLSX.utils.sheet_to_json(
+                                                        worksheet
+                                                    );
                                                     localStorage.setItem(
                                                         'csvData',
                                                         JSON.stringify(json)
@@ -502,12 +521,17 @@ const BulkTransfer = ({
                                                 );
                                                 setCsvUpload(true);
                                                 setActiveBtn(true);
+                                            } else {
+                                                setFileError(
+                                                    'File Uploaded is Not CsV'
+                                                );
                                             }
                                         }}
                                     />
                                     <span> Upload CSV File</span>
                                 </label>
                             </p>
+                            <p>{fileError}</p>
                             <p>
                                 <a
                                     href="../../../Assets/CSV.xlsm"

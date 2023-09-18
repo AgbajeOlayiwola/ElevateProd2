@@ -1,0 +1,232 @@
+.overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.closeBtn {
+    display: flex;
+    justify-content: flex-end;
+}
+.closeCont {
+    display: flex;
+    justify-content: flex-end;
+}
+.qrDecal{
+    display: flex;
+    justify-content: space-between;
+    border-radius: 12px;
+    border: solid 1px #d3d3d3;
+    align-items: center;
+    padding: 10px;
+}
+
+.beneCheck {
+    position: relative;
+    width: 48px;
+    height: 18px;
+    cursor: pointer;
+    margin-bottom: 0px !important;
+}
+
+.beneCheck input {
+    position: absolute;
+    z-index: 1;
+    width: unset;
+    display: none;
+}
+
+.beneCheck span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0px;
+    background: #eceef4;
+    border-radius: 100px;
+    transition: 0.5s;
+}
+
+.beneCheck span i {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #dfdfdf;
+    bottom: -2px;
+    top: -2px;
+    left: -4px;
+    transition: 0.5s;
+}
+
+.beneChecked {
+    position: relative;
+    width: 48px;
+    height: 18px;
+    cursor: pointer;
+    margin-bottom: 0px !important;
+}
+
+.beneChecked input {
+    position: absolute;
+    z-index: 1;
+    width: unset;
+    display: none;
+}
+
+.beneChecked span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0px;
+    background: #eceef4;
+    border-radius: 100px;
+    transition: 0.5s;
+}
+
+.beneChecked span i {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #dfdfdf;
+    bottom: -2px;
+    top: -2px;
+    left: -4px;
+    transition: 0.5s;
+}
+
+.beneChecked span i {
+    left: 24px;
+}
+
+.beneChecked span {
+    background-color: #6ccf00;
+}
+
+.cver {
+    padding: 64px 100px;
+    width: 39%;
+    background: white;
+    border: 1px solid rgba(219, 219, 219, 0.6);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    height: 80vh;
+    overflow: scroll;
+    max-height: 804px;
+}
+.cver h1 {
+    font-family: 'Inter';
+    margin: 0px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+    color: #005b82;
+}
+.topMost {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    flex-direction: column;
+}
+.topMost p {
+    font-family: 'Inter';
+    margin: 0px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #b5b5b5;
+}
+
+.error {
+    color: red;
+    font-size: 16px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 55%;
+    margin-top: 1rem;
+    font-size: 'inter';
+    text-transform: capitalize;
+}
+
+.qrMain {
+    padding: 17px 122px;
+    background: #f8f8f8;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.ids {
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 44px;
+    border-top: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb;
+}
+.ids p:nth-child(1) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    /* identical to box height */
+
+    color: #455a64;
+}
+.ids p:nth-child(2) {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+
+    color: #455a64;
+}
+.tap {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+
+    color: #3e3e3e;
+}
+.tapSpan {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    cursor: pointer;
+    color: #5f8903;
+    text-decoration: underline;
+}
+@media screen and (max-width: 1098px) {
+    .cver {
+        padding: 64px 100px;
+        width: 93%;
+        background: white;
+        border: 1px solid rgba(219, 219, 219, 0.6);
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
+        height: 80vh;
+        overflow: scroll;
+        max-height: 804px;
+    }
+}

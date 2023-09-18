@@ -13,7 +13,7 @@ const AccountChecked = ({ statusInfo }) => {
                 d="M15 30.6797C23.2843 30.6797 30 23.964 30 15.6797C30 7.39542 23.2843 0.679688 15 0.679688C6.71573 0.679688 0 7.39542 0 15.6797C0 23.964 6.71573 30.6797 15 30.6797Z"
                 fill={
                     statusInfo === 'notDone'
-                        ? '#DBDBDB'
+                        ? '#6ccf00'
                         : statusInfo === 'done'
                         ? '#6ccf00'
                         : statusInfo === 'comment'

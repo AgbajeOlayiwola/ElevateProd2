@@ -8,6 +8,7 @@ import SearchButtonSvg from '../../ReusableComponents/ReusableSvgComponents/Sear
 import CartSvg from '../../ReusableComponents/ReusableSvgComponents/CartSvg';
 import { FaBars } from 'react-icons/fa';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const Navbar = ({
     page,
@@ -16,20 +17,24 @@ const Navbar = ({
     preview,
     previewSingle,
     productAction,
-    sideAction
+    sideAction,
+    userProfile,
+    profileImg
 }) => {
-    const [userProfile, setUserProfile] = useState();
-    const [userProfileData, setUserProfileData] = useState();
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setUserProfile(window.localStorage.getItem('user'));
-        }
-    }, []);
-    useEffect(() => {
-        if (userProfile !== undefined) {
-            setUserProfileData(JSON.parse(userProfile));
-        }
-    }, [userProfile]);
+    const router = useRouter();
+    // const [userProfile, setUserProfile] = useState();
+    // const [userProfileData, setUserProfileData] = useState();
+    // useEffect(() => {
+    //     if (typeof window !== 'undefined') {
+    //         setUserProfile(window.localStorage.getItem('user'));
+    //     }
+    // }, []);
+    // useEffect(() => {
+    //     if (userProfile !== undefined) {
+    //         setUserProfileData(JSON.parse(userProfile));
+    //     }
+    // }, [userProfile]);
+    //  //console.log(userProfileData);
     return (
         <nav className={styles.navigation}>
             {preview === true ? (
@@ -89,12 +94,12 @@ const Navbar = ({
                 <>
                     <FaBars onClick={sideAction} className={styles.bars} />
                     <div className={styles.imageName}>
-                        {page === 'Dashboard' ? (
+                        {router.pathname === '/Admin/Dashboard' ? (
                             <div className={styles.userName}>
                                 <h3 className={styles.name}>
                                     Welcome,
-                                    {userProfileData
-                                        ? userProfileData.profile.preferredName
+                                    {userProfile
+                                        ? userProfile.preferredName
                                         : null}{' '}
                                     👍🏼
                                 </h3>
@@ -120,10 +125,19 @@ const Navbar = ({
                                 </span>
                                 {text}
                             </h2>
-                        ) : (
-                            <h2 className={styles.name}>{page}</h2>
-                        )}
+                        ) : router.pathname == '/Admin/Payment' ? (
+                            <h2 className={styles.name}>Payment</h2>
+                        ) : router.pathname == '/Admin/Security' ? (
+                            <h2 className={styles.name}>Security</h2>
+                        ) : router.pathname == '/Admin/Reports' ? (
+                            <h2 className={styles.name}>Transaction Reports</h2>
+                        ) : router.pathname == '/Admin/Collections' ? (
+                            <h2 className={styles.name}>Collections</h2>
+                        ) : router.pathname == '/Admin/BankStatement' ? (
+                            <h2 className={styles.name}>Bank Statement</h2>
+                        ) : null}
                     </div>
+
                     <div className={styles.rightNav}>
                         {page === 'Payments' ? null : (
                             <form>
@@ -140,11 +154,11 @@ const Navbar = ({
                             <div className={styles.notification}>
                                 <NotificationsSvg />
                             </div>
-                            <Link href="/Profile">
+                            <Link href="/Admin/Profile">
                                 <div>
-                                    {userProfileData ? (
+                                    {profileImg ? (
                                         <img
-                                            src={`data:image/png;base64,${userProfileData.profile.profileImg}`}
+                                            src={`data:image/png;base64,${profileImg.image}`}
                                             width="50"
                                             height="50"
                                         />

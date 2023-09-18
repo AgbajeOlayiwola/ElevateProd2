@@ -4,11 +4,10 @@ import styles from './styles.module.css';
 import EmailSent from './emailsent';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    forgotPasswordData,
-    forgotPasswordResetData
-} from '../../../redux/actions/actions';
+
 import ResetPassword from './resetpassword';
+import { forgotPasswordResetData } from '../../../redux/actions/forgotPasswordResetAction';
+import { forgotPasswordData } from '../../../redux/actions/forgotPasswordAction';
 
 const ExistingMultiStep = () => {
     const [page, setPage] = useState(0);
@@ -70,17 +69,17 @@ const ExistingMultiStep = () => {
             setPage(page + 1);
             setLoading(false);
         } else if (forgotPasswordErrorMessages !== '') {
-            //console.log(forgotPasswordErrorMessages);
+            // //console.log(forgotPasswordErrorMessages);
             setLoading(false);
         }
     }, [forgotPassword, forgotPasswordErrorMessages]);
     useEffect(() => {
-        //console.log(forgotPasswordReset);
+        // //console.log(forgotPasswordReset);
         if (forgotPasswordReset !== null) {
             push('./Login');
             setLoading(false);
         } else if (forgotPasswordResetErrorMessages !== null) {
-            setErrorMessage(forgotPasswordResetErrorMessages[0]);
+            setErrorMessage(forgotPasswordResetErrorMessages);
             setLoading(false);
         }
     }, [forgotPasswordReset, forgotPasswordResetErrorMessages]);

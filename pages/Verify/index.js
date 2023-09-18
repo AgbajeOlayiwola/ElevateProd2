@@ -20,22 +20,27 @@ const Verify = () => {
 
     useEffect(() => {
         var token = query['token'];
-        //console.log'hello', token);
+        // //console.log'hello', token);
         if (!isReady) return;
         if (token) {
             axios
                 .get(
-                    `https://testvate.liveauthentication/email-verification/${token}`
+                    `https://mysmeapp.ecobank.com:8443/authentication/email-verification/${token}`,
+                    {
+                        headers: {
+                            'X-Client-Type': 'web'
+                        }
+                    }
                 )
                 .then((response) => {
-                    //console.logresponse.data.message);
+                    // //console.logresponse.data.message);
                     setRes(response.data.message);
                     if (response.data.message) {
                         router.push('/Auth/Login');
                     }
                 })
                 .catch((error) => {
-                    //console.logerror.response.data.statusCode);
+                    // //console.logerror.response.data.statusCode);
                     setResErros(error.response.data.statusCode);
                 });
         }

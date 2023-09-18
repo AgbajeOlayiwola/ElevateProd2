@@ -25,11 +25,12 @@
 }
 
 .dashCont {
-    flex: 1;
+    flex: 1 1;
     background-color: #f5f6fa;
-    padding: 36px 32px 46px 32px;
+    padding: 36px 32px 46px 316px;
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: scroll; -ms-overflow-style: none;
+        scrollbar-width: none; 
 }
 
 .dashCont::-webkit-scrollbar {
@@ -50,4 +51,13 @@
     .dashCont {
         width: 100%;
     }
+
+.dashCont {
+    flex: 1 1;
+    background-color: #f5f6fa;
+    padding: 36px 32px 46px 36px;
+    height: 100vh;
+    overflow-y: scroll; -ms-overflow-style: none;
+        scrollbar-width: none; 
+}
 }

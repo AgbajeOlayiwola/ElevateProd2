@@ -3,16 +3,7 @@ import styles from './styles.module.css';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import ButtonComp from '../../ReusableComponents/Button';
-import {
-    existingUserProfileData,
-    createAccountData,
-    accountStatusData,
-    statesData,
-    businessCategoriesData,
-    CompleteBusinessProfile,
-    ExCreateBusProfileSetup,
-    getRCDetails
-} from '../../../redux/actions/actions';
+
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../ReusableComponents/Loader';
 import { useRouter } from 'next/router';
@@ -24,12 +15,24 @@ import CircleSvg from '../../ReusableComponents/ReusableSvgComponents/CircleSvg'
 import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
+import { CompleteBusinessProfile } from '../../../redux/actions/completeBusinessProfileAction';
+import { ExCreateBusProfileSetup } from '../../../redux/actions/existingUserBusinessProfileAction';
+import { statesData } from '../../../redux/actions/statesAction';
+import { businessCategoriesData } from '../../../redux/actions/businessCategoriesAction';
+import { getRCDetails } from '../../../redux/actions/getRcDetailsAction';
 
 const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const dispatch = useDispatch();
     const router = useRouter();
     // const account = localStorage.getItem('meta');
     // const accountDetails = JSON.parse(account);
+
+    useEffect(() => {
+        const {
+            query: { pageType }
+        } = router;
+        setPageType({ pageType }.pageType);
+    });
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -87,40 +90,55 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const [fileName, setFileName] = useState('');
     const [regNo, setRegNo] = useState('');
     const [refferee, setRefferee] = useState();
-    //console.loglocalGoverment);
+    const [pageType, setPageType] = useState('');
+    // //console.loglocalGoverment);
     const [phones, setPhones] = useState();
 
-    //console.logformData.type);
+    // //console.logformData.type);
     useEffect(() => {
-        if (getRC !== null) {
-            setBusinessName(getRC.companyName);
+        if (getRC?.data?.dataFromCac?.companyName !== undefined) {
+            setBusinessName(getRC?.data?.dataFromCac?.companyName);
+        } else if (getRC?.data?.reason !== undefined) {
+            //  //console.log(getRC?.data?.reason);
         }
     }, [getRC, getRCErrorMessage]);
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        //console.logformData.type);
+        // //console.logformData.type);
     };
+    const [phoneNumer, setPhoneNumer] = useState();
+
     useEffect(() => {
         if (window.typeof !== 'undefined') {
             setPhones(JSON.parse(window.localStorage.getItem('account')));
+        }
+        if (userDetails) {
+            setPhoneNumer(userDetails.phoneNumber);
+        } else if (profileInfo) {
+            setPhoneNumer(profileInfo.phoneNumber);
         }
     }, []);
     const [profileInfo, setProfileInfo] = useState([]);
     const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
-
+    const user = localStorage.getItem('user');
+    const userDetails = JSON.parse(user);
     const onSubmitNew = (data) => {
         setLoading((prev) => !prev);
         const userData = {
-            isRegistered: 'true',
+            isRegistered: 'false',
             businessName: businessName,
             businessCategory: business,
             businessType: businesses,
             referralCode: refferalCode,
             countryCode: '+234',
-            businessPhoneNumber: profileInfo.phoneNumber,
+            businessPhoneNumber: profileInfo.phoneNumber
+                ? profileInfo.phoneNumber
+                : userDetails
+                ? userDetails?.phoneNumber
+                : phoneNumber,
             street: streetName,
             state: localState,
             city: city,
@@ -129,13 +147,13 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             // signature: ''
         };
         dispatch(CompleteBusinessProfile(userData));
-        //console.logexistingProfileSetupPay, existingProfileSetupError);
+        // //console.logexistingProfileSetupPay, existingProfileSetupError);
     };
     const profileTest = () => {
-        //console.log(compBusprofile, comperrorMessage);
+        // //console.log(compBusprofile, comperrorMessage);
         setLoading((prev) => !prev);
         if (compBusprofile) {
-            //console.logerrorMessages);
+            // //console.logerrorMessages);
             router.push('/Verify/ExistingSuccess');
         } else if (
             comperrorMessage.message === 'your have already setup your business'
@@ -160,7 +178,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             businessType: businesses,
             referralCode: refferalCode,
             countryCode: '+234',
-            businessPhoneNumber: profileInfo.phoneNumber,
+            businessPhoneNumber: phoneNumer,
             street: streetName,
             state: localState,
             city: city,
@@ -169,15 +187,15 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             // signature: ''
         };
         dispatch(ExCreateBusProfileSetup(userData));
-        //console.log(existingProfileSetupPay, existingProfileSetupError);
+        // //console.log(existingProfileSetupPay, existingProfileSetupError);
     };
 
     useEffect(() => {
-        //console.log(existingProfileSetupPay, existingProfileSetupError);
+        // //console.log(existingProfileSetupPay, existingProfileSetupError);
         setLoading((prev) => !prev);
 
         if (existingProfileSetupPay) {
-            //console.log(existingProfileSetupPay, existingProfileSetupError);
+            // //console.log(existingProfileSetupPay, existingProfileSetupError);
             if (existingProfileSetupPay.data.message === 'Successful') {
                 if (formData.type !== 'true') {
                     router.push('/Verify/ExistingSuccess');
@@ -233,18 +251,30 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     }, []);
 
     useEffect(() => {
-        if (accountDetails.profile !== undefined) {
+        if (pageType === 'New') {
+            setFormData({ ...formData, type: 'false' });
+        } else {
+            setFormData({ ...formData, type: 'true' });
+        }
+    }, [formData.type]);
+
+    useEffect(() => {
+        const account = localStorage.getItem('account');
+        const accountDetails = JSON.parse(account);
+        if (accountDetails?.profile !== undefined) {
             setProfileInfo(accountDetails.profile);
         } else if (accountDetails.user !== undefined) {
             setProfileInfo(accountDetails.user.profile);
+        } else {
+            setProfileInfo(accountDetails);
         }
-        //console.logprofileInfo);
+        // //console.logprofileInfo);
         if (businessCategories !== null) {
             setBusinessCategory(businessCategories);
         }
     }, [businessCategories]);
     useEffect(() => {
-        if (title === 'New') {
+        if (pageType === 'New') {
             setBusinessName(
                 `${profileInfo?.lastName} ${profileInfo?.firstName}`
             );
@@ -266,7 +296,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                 <div className={styles.lastStep}>
                     <div className={styles.cardHeading}>
                         <ArrowBackSvg action={action} color="#102572" />
-                        <p>
+                        <p className={styles.error}>
                             {comperrorMessage ? comperrorMessage.message : null}
                         </p>
                         <div>
@@ -275,7 +305,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                             </h3>
                         </div>
                     </div>
-                    {title === 'New' ? (
+                    {pageType === 'New' ? (
                         <div className={styles.lastContainer}>
                             <form onSubmit={handleSubmit(onSubmitNew)}>
                                 {error ? (
@@ -455,14 +485,14 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                         <img
                                                             src={
                                                                 countryNames
-                                                                    .flags.svg
+                                                                    ?.flags.svg
                                                             }
                                                             alt=""
                                                         />
                                                     </span>
                                                     <p>
                                                         {
-                                                            countryNames.baseCurrency
+                                                            countryNames?.baseCurrency
                                                         }
                                                     </p>
                                                 </div>
@@ -491,7 +521,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                         //     }
                                                         // )}
                                                         // value={phoneNumber}
-                                                        onChange={(e) =>
+                                                        onInput={(e) =>
                                                             setPhoneNumber(
                                                                 e.target.value
                                                             )
@@ -499,6 +529,8 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                         value={
                                                             profileInfo.phoneNumber
                                                                 ? profileInfo.phoneNumber
+                                                                : userDetails
+                                                                ? userDetails?.phoneNumber
                                                                 : phoneNumber
                                                         }
                                                         disabled
@@ -667,7 +699,11 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                         <div
                                             className={styles.existingUserCont}
                                         >
-                                            {/* {getCacNameError?getCacNameError.response.data.message:null} */}
+                                            {getRC?.data?.reason ? (
+                                                <p className={styles.error}>
+                                                    {getRC?.data?.reason}
+                                                </p>
+                                            ) : null}
                                             <label>
                                                 Enter your RC /Business
                                                 Registration Number
@@ -726,82 +762,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                 <input type="text" required />
                                             </div>
                                         </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Enter your Business Phone Number
-                                            </label>
-                                            <div className={styles.phone}>
-                                                <div
-                                                    className={
-                                                        styles.phoneHeader
-                                                    }
-                                                >
-                                                    <span>
-                                                        <img
-                                                            src={
-                                                                countryNames
-                                                                    .flags.svg
-                                                            }
-                                                            alt=""
-                                                        />
-                                                    </span>
-                                                    {/* <p>
-                                                        {
-                                                            countryNames.baseCurrency
-                                                        }
-                                                    </p> */}
-                                                </div>
-                                                <div
-                                                    className={
-                                                        styles.phoneDetails
-                                                    }
-                                                >
-                                                    {/* <p>{countryNames.countryCode}</p> */}
-                                                    <input
-                                                        type="number"
-                                                        placeholder="812 345 6789"
-                                                        // {...register(
-                                                        //     'phoneNumber',
-                                                        //     {
-                                                        //         required:
-                                                        //             'Phone Number is required',
-                                                        //         minLength: {
-                                                        //             value: 9,
-                                                        //             message:
-                                                        //                 'Min length is 9'
-                                                        //         }
-                                                        //     }
-                                                        // )}
-                                                        onChange={(e) =>
-                                                            setPhoneNumber(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        value={
-                                                            profileInfo.phoneNumber
-                                                                ? profileInfo.phoneNumber
-                                                                : phoneNumber
-                                                        }
-                                                        disabled
-                                                        // onChange={(e) =>
-                                                        //     setPhoneNumber(
-                                                        //         e.target.value
-                                                        //     )
-                                                        // }
-                                                        // value={
-                                                        //     profileInfo.phoneNumber
-                                                        //         ? profileInfo.phoneNumber
-                                                        //         : phoneNumber
-                                                        // }
-                                                    />
-                                                </div>
-                                            </div>
-                                            <p className={styles.error}>
-                                                {errors.phoneNumber?.message}
-                                            </p>
-                                        </div>
+
                                         <div
                                             className={styles.existingUserCont}
                                         >
@@ -962,6 +923,82 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                     </ul>
                                                 )}
                                             </div>
+                                        </div>{' '}
+                                        <div
+                                            className={styles.existingUserCont}
+                                        >
+                                            <label>
+                                                Enter your Business Phone Number
+                                            </label>
+                                            <div className={styles.phone}>
+                                                <div
+                                                    className={
+                                                        styles.phoneHeader
+                                                    }
+                                                >
+                                                    <span>
+                                                        <img
+                                                            src={
+                                                                countryNames
+                                                                    ?.flags.svg
+                                                            }
+                                                            alt=""
+                                                        />
+                                                    </span>
+                                                    {/* <p>
+                                                        {
+                                                            countryNames.baseCurrency
+                                                        }
+                                                    </p> */}
+                                                </div>
+                                                <div
+                                                    className={
+                                                        styles.phoneDetails
+                                                    }
+                                                >
+                                                    {/* <p>{countryNames.countryCode}</p> */}
+                                                    <input
+                                                        type="number"
+                                                        placeholder="812 345 6789"
+                                                        // {...register(
+                                                        //     'phoneNumber',
+                                                        //     {
+                                                        //         required:
+                                                        //             'Phone Number is required',
+                                                        //         minLength: {
+                                                        //             value: 9,
+                                                        //             message:
+                                                        //                 'Min length is 9'
+                                                        //         }
+                                                        //     }
+                                                        // )}
+                                                        onChange={(e) =>
+                                                            setPhoneNumber(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        value={
+                                                            profileInfo.phoneNumber
+                                                                ? profileInfo.phoneNumber
+                                                                : phoneNumber
+                                                        }
+                                                        disabled
+                                                        // onChange={(e) =>
+                                                        //     setPhoneNumber(
+                                                        //         e.target.value
+                                                        //     )
+                                                        // }
+                                                        // value={
+                                                        //     profileInfo.phoneNumber
+                                                        //         ? profileInfo.phoneNumber
+                                                        //         : phoneNumber
+                                                        // }
+                                                    />
+                                                </div>
+                                            </div>
+                                            <p className={styles.error}>
+                                                {errors.phoneNumber?.message}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

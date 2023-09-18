@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -13,8 +13,8 @@ import SideBarDrop from './sidebarcont';
 import Dropdownicon from './dropdownicon';
 import Innersubnav from './innersubnav';
 import { FaTimes } from 'react-icons/fa';
-import { logoutAction } from '../../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { logoutAction } from '../../../redux/actions/logOutAction';
 
 const Sidebar = ({ showSubnav }) => {
     const dispatch = useDispatch();
@@ -30,7 +30,24 @@ const Sidebar = ({ showSubnav }) => {
             router.replace('../Auth/Login');
         }
     };
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
 
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        console.log(width);
+    };
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [width]);
     // fillColor={router.pathname == '/Dashboard'}
 
     return (
@@ -39,9 +56,11 @@ const Sidebar = ({ showSubnav }) => {
                 <FaTimes />
             </div>
             <div className={styles.top}>
-                <div className={styles.ellevate}>
-                    <ElevateLogo />
-                </div>
+                <Link href="/Admin/Dashboard">
+                    <div className={styles.ellevate}>
+                        <ElevateLogo />
+                    </div>
+                </Link>
                 <div className={styles.track}>
                     {SidebarData.map((item, index) => {
                         if (item.subNav) {
@@ -59,35 +78,33 @@ const Sidebar = ({ showSubnav }) => {
                             );
                         } else {
                             return (
-                                <div
-                                    key={index}
-                                    className={
-                                        router.pathname === item.path
-                                            ? styles.inActive
-                                            : styles.cont
+                                <Link
+                                    href={
+                                        router.pathname !== item.path
+                                            ? item.path
+                                            : '#'
                                     }
+                                    className={styles.title}
                                 >
-                                    <div className={styles.contWrapper}>
-                                        <span className={styles.titleIcon}>
-                                            {router.pathname === item.path
-                                                ? item.iconActive
-                                                : item.icon}
-                                        </span>
-                                        <div>
-                                            <a
-                                                href={
-                                                    router.pathname !==
-                                                    item.path
-                                                        ? item.path
-                                                        : null
-                                                }
-                                                className={styles.title}
-                                            >
-                                                {item.title}
-                                            </a>
+                                    <div
+                                        key={index}
+                                        className={
+                                            router.pathname === item.path
+                                                ? styles.inActive
+                                                : styles.cont
+                                        }
+                                        onClick={width > 950 ? '' : showSubnav}
+                                    >
+                                        <div className={styles.contWrapper}>
+                                            <span className={styles.titleIcon}>
+                                                {router.pathname === item.path
+                                                    ? item.iconActive
+                                                    : item.icon}
+                                            </span>
+                                            <div>{item.title}</div>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             );
                         }
                     })}

@@ -1,0 +1,46 @@
+.modalCover{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.date{
+    display: flex;
+    justify-content: space-between;
+    gap:20px;
+}
+.leftCancel{    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    align-items: center;
+    }
+    .leftCancel svg{
+        cursor: pointer;
+    }
+.accounts{
+    border-radius: 25px;
+    background: white;
+    overflow: scroll;
+    padding: 10px 20px;
+    width: 30%;
+    height: 60%;
+}
+.add{
+    display: flex;
+    justify-content: center;
+}
+/* .omniButton{
+  
+}
+.ecoButton{
+
+} */
+.accounts div{
+    margin-top: 50px;
+    padding: 20px 25px;
+    background-color: #6bcf0050;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}

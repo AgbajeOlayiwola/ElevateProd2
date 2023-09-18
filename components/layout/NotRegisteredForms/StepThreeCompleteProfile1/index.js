@@ -7,16 +7,7 @@ import Card from '../../NotRegisteredForms/Card';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    businessCategoriesData,
-    CompleteBusinessProfile,
-    CompProfile,
-    createNewCorpUserAccount,
-    createNewUserAccount,
-    loadUserProfile,
-    statesData,
-    type
-} from '../../../../redux/actions/actions';
+
 import { useRouter } from 'next/router';
 import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
@@ -24,6 +15,11 @@ import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import { getCookie } from 'cookies-next';
 import Loader from '../../../ReusableComponents/Loader';
+import { statesData } from '../../../../redux/actions/statesAction';
+import { CompProfile } from '../../../../redux/actions/completeProfile';
+import { loadUserProfile } from '../../../../redux/actions/userProfileAction';
+import { businessCategoriesData } from '../../../../redux/actions/businessCategoriesAction';
+import { CompleteBusinessProfile } from '../../../../redux/actions/completeBusinessProfileAction';
 const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // const [progress, setProgress] = useState('75%');
     const [title, setTitle] = useState('Basic');
@@ -81,10 +77,10 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
     const router = useRouter();
     const saveFile = (e) => {
-        //console.log(e.target.files[0]);
+        // //console.log(e.target.files[0]);
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
-        //console.log(file);
+        // //console.log(file);
     };
     useEffect(() => {
         dispatch(statesData());
@@ -146,13 +142,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     }, [profileCont]);
     useEffect(() => {
         if (newAccount?.message === 'success') {
-            //console.log(errorMessages);
+            // //console.log(errorMessages);
             router.push('/Verify/Account/loading');
         } else if (
             newAccountErrorMessage ===
             'You already have an account with us. Please contact us for more information'
         ) {
-            router.push('/Succes');
+            router.push('/Success');
         }
 
         if (businessCategories !== null) {
@@ -167,7 +163,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         });
     }, [business]);
 
-    // if (gender === 'm') //console.log(profileCont);
+    // if (gender === 'm') // //console.log(profileCont);
 
     const {
         register,
@@ -176,7 +172,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         formState: { errors }
     } = useForm();
 
-    //console.log(type);
+    // //console.log(type);
 
     // const uploadFile = async (e) => {
     //   const formData = new FormData();
@@ -187,9 +183,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     //       "http://localhost:3000/upload",
     //       formData
     //     );
-    //     //console.log(res);
+    //     // //console.log(res);
     //   } catch (ex) {
-    //     //console.log(ex);
+    //     // //console.log(ex);
     //   }
     // };
 
@@ -210,7 +206,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             refereeCode: formData.referralCode,
             signature: file
         };
-        //console.log(commpleteProfileData);
+        // //console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
 
@@ -231,18 +227,18 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             refereeCode: '',
             signature: file
         };
-        //console.log(commpleteProfileData);
+        // //console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
     };
 
     useEffect(() => {
         setLoading(false);
-        //console.log(compBusprofile);
+        // //console.log(compBusprofile);
         if (compBusprofile) {
             if (
                 compBusprofile.message === 'Successful' ||
                 comperrorMessage.message ===
-                    'your have already setup your business'
+                    'You have already setup your business'
             ) {
                 profile.data?.map((item) => {
                     if (type === true) {
@@ -255,7 +251,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         }
     }, [newAccount, comperrorMessage]);
     const basicAction = () => {
-        //console.log(business);
+        // //console.log(business);
         if (business === '' && businesses === '') {
             setBusinessError(true);
             setBusinessTypeError(true);
@@ -267,8 +263,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     };
 
     const [activeBtn, setActiveBtn] = useState(true);
-    //console.log(test);
-    //console.log(type);
+    // //console.log(test);
+    // //console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
@@ -286,7 +282,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                             progWidth="27%"
                         /> */}
             </div>
-            <p className={styles.error}> {newAccountErrorMessage}</p>
+            {newAccountErrorMessage ? (
+                <p className={styles.error}> {newAccountErrorMessage}</p>
+            ) : null}
             {/* The small card that wraps the form */}
             <div className={styles.businessCont}>
                 <ButtonWrapper>
@@ -337,7 +335,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                 </div>
                                 {/* {alluserData[1].documentData.map(
                                     (usersData, index) => {
-                                        //console.log(alluserData);
+                                        // //console.log(alluserData);
                                         return <></>;
                                     }
                                 )} */}
@@ -359,249 +357,211 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                 </div>
                             </div>
                             <div className={styles.formCont}>
-                                <div className={styles.formCont}>
-                                    <div className={styles.formGroup}>
-                                        <div className={styles.singleFormGroup}>
-                                            <label>Enter Business Name</label>
-                                            <input
-                                                type="text"
-                                                placeholder="Enter Business Full Name"
-                                                value={formData.bussinessName}
-                                                onInput={(event) => {
-                                                    setFormData({
-                                                        ...formData,
-                                                        bussinessName:
-                                                            event.target.value
-                                                    });
+                                <div className={styles.formGroup}>
+                                    <div className={styles.singleFormGroup}>
+                                        <label>Enter Business Name</label>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter Business Full Name"
+                                            value={formData.bussinessName}
+                                            onInput={(event) => {
+                                                setFormData({
+                                                    ...formData,
+                                                    bussinessName:
+                                                        event.target.value
+                                                });
+                                            }}
+                                            disabled
+                                        />
+
+                                        <p className={styles.error}>
+                                            {errors.businessName?.message}
+                                        </p>
+                                    </div>
+                                    <div className={styles.singleFormGroup}>
+                                        <label>
+                                            Select your Business Category
+                                        </label>
+
+                                        <div className={styles.businessCat}>
+                                            <div
+                                                className={
+                                                    styles.businessCategories
+                                                }
+                                                onClick={() => {
+                                                    setBusinessTest(
+                                                        !businessTest
+                                                    );
                                                 }}
-                                                disabled
-                                            />
-
-                                            <p className={styles.error}>
-                                                {errors.businessName?.message}
-                                            </p>
-                                        </div>
-                                        <div className={styles.singleFormGroup}>
-                                            <label>
-                                                Select your Business Category
-                                            </label>
-
-                                            <div className={styles.businessCat}>
-                                                <div
-                                                    className={
-                                                        styles.businessCategories
-                                                    }
-                                                    onClick={() => {
-                                                        setBusinessTest(
-                                                            !businessTest
-                                                        );
-                                                    }}
-                                                >
-                                                    <SearchSvg color="#005B82" />
-                                                    {business ? (
-                                                        <p>{business}</p>
-                                                    ) : (
-                                                        <p>
-                                                            Search Business
-                                                            Category
-                                                        </p>
-                                                    )}
-
-                                                    <DropdownSvg />
-                                                </div>
-                                                {businessTest && (
-                                                    <ul
-                                                        className={
-                                                            styles.businessGroup
-                                                        }
-                                                    >
-                                                        {Object.keys(
-                                                            businessCategory
-                                                        )?.map(
-                                                            (
-                                                                business,
-                                                                index
-                                                            ) => {
-                                                                return (
-                                                                    <li
-                                                                        value={
-                                                                            business
-                                                                        }
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        onClick={() => {
-                                                                            setBusiness(
-                                                                                business
-                                                                            );
-                                                                            setBusinessTest(
-                                                                                false
-                                                                            );
-                                                                            setBusinessError(
-                                                                                false
-                                                                            );
-                                                                        }}
-                                                                    >
-                                                                        {
-                                                                            business
-                                                                        }
-                                                                    </li>
-                                                                );
-                                                            }
-                                                        )}
-                                                    </ul>
+                                            >
+                                                <SearchSvg color="#005B82" />
+                                                {business ? (
+                                                    <p>{business}</p>
+                                                ) : (
+                                                    <p>
+                                                        Search Business Category
+                                                    </p>
                                                 )}
+
+                                                <DropdownSvg />
                                             </div>
-                                            {businessError ? (
+                                            {businessTest && (
+                                                <ul
+                                                    className={
+                                                        styles.businessGroup
+                                                    }
+                                                >
+                                                    {Object.keys(
+                                                        businessCategory
+                                                    )?.map(
+                                                        (business, index) => {
+                                                            return (
+                                                                <li
+                                                                    value={
+                                                                        business
+                                                                    }
+                                                                    key={index}
+                                                                    onClick={() => {
+                                                                        setBusiness(
+                                                                            business
+                                                                        );
+                                                                        setBusinessTest(
+                                                                            false
+                                                                        );
+                                                                        setBusinessError(
+                                                                            false
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    {business}
+                                                                </li>
+                                                            );
+                                                        }
+                                                    )}
+                                                </ul>
+                                            )}
+                                        </div>
+                                        {businessError ? (
+                                            <p className={styles.error}>
+                                                Busuness Category is Required
+                                            </p>
+                                        ) : null}
+                                    </div>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <div className={styles.singleFormGroup}>
+                                        <label>
+                                            Enter your Business Phone Number
+                                        </label>
+                                        <div className={styles.phone}>
+                                            <div className={styles.phoneHeader}>
+                                                <span>
+                                                    <img
+                                                        src={formData.flag}
+                                                        alt=""
+                                                    />
+                                                </span>
+                                                <p>{formData.baseCurrency}</p>
+                                            </div>
+                                            <div
+                                                className={styles.phoneDetails}
+                                            >
+                                                <p>{formData.countryCode}</p>
+                                                <input
+                                                    type="number"
+                                                    placeholder="812 345 6789"
+                                                    // {...register(
+                                                    //     'countryCode_number',
+                                                    //     {
+                                                    //         required:
+                                                    //             'Phone number is required',
+                                                    //         minLength: {
+                                                    //             value: 9,
+                                                    //             message:
+                                                    //                 'Min length is 9'
+                                                    //         }
+                                                    //     }
+                                                    // )}
+                                                    value={formData.phoneNumber}
+                                                    onInput={(event) => {
+                                                        setFormData({
+                                                            ...formData,
+                                                            phoneNumber:
+                                                                event.target
+                                                                    .value
+                                                        });
+                                                    }}
+                                                    disabled
+                                                />
+                                            </div>
+                                        </div>
+                                        <p className={styles.error}>
+                                            {errors.countryCode_number?.message}
+                                        </p>
+                                    </div>
+                                    <div className={styles.singleFormGroup}>
+                                        <label>Select your Business Type</label>
+                                        <div className={styles.businessCat}>
+                                            <div
+                                                className={
+                                                    styles.businessCategories
+                                                }
+                                                onClick={() => {
+                                                    setBusinessText(
+                                                        !businessText
+                                                    );
+                                                }}
+                                            >
+                                                <SearchSvg color="#005B82" />
+                                                {businesses ? (
+                                                    <p>{businesses}</p>
+                                                ) : (
+                                                    <p>Search Business Type</p>
+                                                )}
+
+                                                <DropdownSvg />
+                                            </div>
+                                            {businessText && (
+                                                <ul
+                                                    className={
+                                                        styles.businessGroup
+                                                    }
+                                                >
+                                                    {businessType?.map(
+                                                        (business, index) => {
+                                                            return (
+                                                                <li
+                                                                    value={
+                                                                        business
+                                                                    }
+                                                                    key={index}
+                                                                    onClick={() => {
+                                                                        setBusinesses(
+                                                                            business
+                                                                        );
+                                                                        setBusinessText(
+                                                                            false
+                                                                        );
+                                                                        setBusinessTypeError(
+                                                                            false
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    {business}
+                                                                </li>
+                                                            );
+                                                        }
+                                                    )}
+                                                </ul>
+                                            )}
+                                            {businessTypeError ? (
                                                 <p className={styles.error}>
-                                                    Busuness Category is
-                                                    Required
+                                                    Busuness Type is Required
                                                 </p>
                                             ) : null}
                                         </div>
                                     </div>
-                                    <div className={styles.formGroup}>
-                                        <div className={styles.singleFormGroup}>
-                                            <label>
-                                                Enter your Business Phone Number
-                                            </label>
-                                            <div className={styles.phone}>
-                                                <div
-                                                    className={
-                                                        styles.phoneHeader
-                                                    }
-                                                >
-                                                    <span>
-                                                        <img
-                                                            src={formData.flag}
-                                                            alt=""
-                                                        />
-                                                    </span>
-                                                    <p>
-                                                        {formData.baseCurrency}
-                                                    </p>
-                                                </div>
-                                                <div
-                                                    className={
-                                                        styles.phoneDetails
-                                                    }
-                                                >
-                                                    <p>
-                                                        {formData.countryCode}
-                                                    </p>
-                                                    <input
-                                                        type="number"
-                                                        placeholder="812 345 6789"
-                                                        // {...register(
-                                                        //     'countryCode_number',
-                                                        //     {
-                                                        //         required:
-                                                        //             'Phone number is required',
-                                                        //         minLength: {
-                                                        //             value: 9,
-                                                        //             message:
-                                                        //                 'Min length is 9'
-                                                        //         }
-                                                        //     }
-                                                        // )}
-                                                        value={
-                                                            formData.phoneNumber
-                                                        }
-                                                        onInput={(event) => {
-                                                            setFormData({
-                                                                ...formData,
-                                                                phoneNumber:
-                                                                    event.target
-                                                                        .value
-                                                            });
-                                                        }}
-                                                        disabled
-                                                    />
-                                                </div>
-                                            </div>
-                                            <p className={styles.error}>
-                                                {
-                                                    errors.countryCode_number
-                                                        ?.message
-                                                }
-                                            </p>
-                                        </div>
-                                        <div className={styles.singleFormGroup}>
-                                            <label>
-                                                Select your Business Type
-                                            </label>
-                                            <div className={styles.businessCat}>
-                                                <div
-                                                    className={
-                                                        styles.businessCategories
-                                                    }
-                                                    onClick={() => {
-                                                        setBusinessText(
-                                                            !businessText
-                                                        );
-                                                    }}
-                                                >
-                                                    <SearchSvg color="#005B82" />
-                                                    {businesses ? (
-                                                        <p>{businesses}</p>
-                                                    ) : (
-                                                        <p>
-                                                            Search Business Type
-                                                        </p>
-                                                    )}
-
-                                                    <DropdownSvg />
-                                                </div>
-                                                {businessText && (
-                                                    <ul
-                                                        className={
-                                                            styles.businessGroup
-                                                        }
-                                                    >
-                                                        {businessType?.map(
-                                                            (
-                                                                business,
-                                                                index
-                                                            ) => {
-                                                                return (
-                                                                    <li
-                                                                        value={
-                                                                            business
-                                                                        }
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        onClick={() => {
-                                                                            setBusinesses(
-                                                                                business
-                                                                            );
-                                                                            setBusinessText(
-                                                                                false
-                                                                            );
-                                                                            setBusinessTypeError(
-                                                                                false
-                                                                            );
-                                                                        }}
-                                                                    >
-                                                                        {
-                                                                            business
-                                                                        }
-                                                                    </li>
-                                                                );
-                                                            }
-                                                        )}
-                                                    </ul>
-                                                )}
-                                                {businessTypeError ? (
-                                                    <p className={styles.error}>
-                                                        Busuness Type is
-                                                        Required
-                                                    </p>
-                                                ) : null}
-                                            </div>
-                                        </div>
-                                        <button type="submit">Next</button>
-                                    </div>
+                                    <button type="submit">Next</button>
                                 </div>
                             </div>
                         </form>

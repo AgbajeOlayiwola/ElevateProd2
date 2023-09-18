@@ -8,12 +8,24 @@ const PopupStyle = styled.div`
     max-width: 600px;
     background-color: white;
     border-radius: 20px;
-    margin: 32px auto;
+    margin: 0px auto;
     display: flex;
     position: absolute;
     top: 10%;
-    left: 30%;
+    left: 33%;
     z-index: 10;
+    @media screen and (max-width: 1098px) {
+        width: 94%;
+        max-width: 600px;
+        background-color: white;
+        border-radius: 20px;
+        margin: 0px auto;
+        display: flex;
+        position: absolute;
+        top: 10%;
+        left: 3%;
+        z-index: 10;
+    }
 `;
 
 const Popup = ({ children, overlay, action, title }) => {

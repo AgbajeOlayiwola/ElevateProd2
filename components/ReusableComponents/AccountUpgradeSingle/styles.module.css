@@ -6,12 +6,15 @@
     justify-content: space-between;
     margin-top: 24px;
     border-bottom: 2px solid #f6f6f6;
+    cursor: pointer;
 }
 
 .accountUpgradeSingle:hover {
     background: #f5f6fa;
 }
-
+.moreInfo{
+    color: #E7C161 !important;
+}
 .accountUpgradeSingleText {
     width: 50%;
 }
@@ -38,12 +41,16 @@
 .accountUpgradeSingleText div {
     display: flex;
 }
-
+.downLine{
+    font-size: 20px;
+}
 .accountUpgradeSingleText h2 {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
+    display: flex;
+    align-items: center;
     line-height: 17px;
     color: #303030;
     margin: 0px;
@@ -60,6 +67,7 @@
     color: #455a64;
     margin: 0px;
     margin-right: 8px;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 606px) {

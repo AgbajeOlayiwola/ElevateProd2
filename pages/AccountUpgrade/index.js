@@ -14,28 +14,10 @@ import { useEffect } from 'react';
 import Iframe from 'react-iframe';
 import Modal from 'react-modal';
 import Link from 'next/link';
+import Lottie from 'react-lottie';
+import socialdata from '../../components/ReusableComponents/Lotties/loading.json';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    cacData,
-    identificationDocData,
-    memartData,
-    scmulData,
-    uploadUtilityData,
-    statesData,
-    loadsetTransactionPin,
-    loadUserProfile,
-    uploadRefFormData,
-    shareDocumentsData,
-    pushDocumentsData,
-    postEllevateProfilingDetails,
-    loadprofilingQuestions,
-    postvnin,
-    getAddressStatusDetails,
-    getReffereeDetails,
-    getTinDetails,
-    getUploadReffereeDetails,
-    getCacDocumentDetails
-} from '../../redux/actions/actions';
+
 import 'react-tooltip/dist/react-tooltip.css';
 import { useForm } from 'react-hook-form';
 import Loader from '../../components/ReusableComponents/Loader';
@@ -43,6 +25,25 @@ import Visbility from '../../components/ReusableComponents/Eyeysvg';
 import PaymentSuccess from '../../components/ReusableComponents/PopupStyle';
 import { ButtonComp } from '../../components';
 import { Tooltip } from 'react-tooltip';
+import withAuth from '../../components/HOC/withAuth';
+import { loadsetTransactionPin } from '../../redux/actions/setTransactionPinAction';
+import { getTinDetails } from '../../redux/actions/tinAction';
+import { checkStatusAction } from '../../redux/actions/checkStatusAction';
+import { getAddressStatusDetails } from '../../redux/actions/getAddressStatusAction';
+import { loadUserProfile } from '../../redux/actions/userProfileAction';
+import { shareDocumentsData } from '../../redux/actions/shareDocumentAction';
+import { loadprofilingQuestions } from '../../redux/actions/profilingQuestionAction';
+import { cacData } from '../../redux/actions/uploadCacDocumentAction';
+import { getUploadReffereeDetails } from '../../redux/actions/getUploadRefereeDetailsAction';
+import { getReffereeDetails } from '../../redux/actions/getRefereeDetailsAction';
+import { getCacDocumentDetails } from '../../redux/actions/cacDocumentAction';
+import { uploadUtilityData } from '../../redux/actions/uploadUtilityAction';
+import { postvnin } from '../../redux/actions/vninAction';
+import { identificationDocData } from '../../redux/actions/uploadIdDocumentAction';
+import { uploadRefFormData } from '../../redux/actions/uploadRefFormAction';
+import { statesData } from '../../redux/actions/statesAction';
+import { pushDocumentsData } from '../../redux/actions/pushDocumentAction';
+import { postEllevateProfilingDetails } from '../../redux/actions/ellevateProfilingAction';
 
 const customStyles = {
     content: {
@@ -113,29 +114,49 @@ const AccountUpgrade = () => {
     const [review, setReview] = useState('In Review');
     const [rejected, setRejected] = useState('Rejected');
     const [status, setStatus] = useState('Done');
-    const [verifyStatus, setVerifyStatus] = useState('notDone');
-    const [transactionPinStatus, setTransactionPinStatus] = useState('notDone');
+    const [verifyStatus, setVerifyStatus] = useState('');
+    const [verifyComment, setVerifyComment] = useState('');
+    const [transactionPinStatus, setTransactionPinStatus] = useState('');
     const [reffereeEmailI, setReffereeEmailI] = useState('');
-    // const [vninStatus, setVninStatus] = useState('notDone');
+    const [isLoading, setIsLoading] = useState(false);
+    // const [vninStatus, setVninStatus] = useState('');
     const [virtualNin, setVirtualNin] = useState('');
-    const [elevateStatus, setElevateStatus] = useState('notDone');
-    const [utilityStatus, setUtilityStatus] = useState('notDone');
+    const [elevateStatus, setElevateStatus] = useState('');
+    const [utilityStatus, setUtilityStatus] = useState('');
+    const [utilityComment, setUtilityComment] = useState('');
     const [utilitytype, setUtilityType] = useState('');
-    const [idCardStatus, setidCardStatus] = useState('notDone');
-    const [profillingStatus, setProfillingStatus] = useState('notDone');
-    const [vninStatus, setVninStatus] = useState('notDone');
-    const [documentStatus, setDocumentStatus] = useState('notDone');
-    const [refereeStatus, setRefereeStatus] = useState('notDone');
-    const [cacStatus, setCacStatus] = useState('notDone');
-    const [tinStatus, setTinStatus] = useState('notDone');
+    const [idCardStatus, setidCardStatus] = useState('');
+    const [idCardComment, setidCardComment] = useState('');
+    const [profillingStatus, setProfillingStatus] = useState('');
+    const [vninStatus, setVninStatus] = useState('');
+    const [documentStatus, setDocumentStatus] = useState('');
+    const [refereeStatus, setRefereeStatus] = useState('');
+    const [cacStatus, setCacStatus] = useState('');
+    const [cacComment, setCacComment] = useState('');
+    const [cacDocStatus, setCacDocStatus] = useState('');
+    const [tinStatus, setTinStatus] = useState('');
     const [cacNumber, setCacNumber] = useState('');
-    const [scumlStatus, setScumlStatus] = useState('notDone');
-    const [mematStatus, setMematStatus] = useState('notDone');
+    const [co2Status, setCo2Status] = useState('');
+    const [co2Comment, setCo2Comment] = useState('');
+    const [cac2_1Status, setCac2_1Status] = useState('');
+    const [cac2_1Comment, setCac2_1Comment] = useState('');
+    const [cac1_Status, setCac1_1Status] = useState('');
+    const [cac1_Comment, setCac1_1Comment] = useState('');
+    const [co7Status, setCo7Status] = useState('');
+    const [co7Comment, setCo7Comment] = useState('');
+    const [scumlStatus, setScumlStatus] = useState('');
+    const [scumlComment, setScumlComment] = useState('');
+    const [mematStatus, setMematStatus] = useState('');
+    const [mematComment, setMematComment] = useState('');
     const [meansOfIdentification, setMeansOfIdentifiction] = useState('');
     const [idNumber, setIdNumber] = useState('');
     const [elevateData, setElevateData] = useState();
     const [IDType, setIDType] = useState('');
     const [reffereeEmail, setReffereeEmail] = useState('');
+    const [refereeName1, setRefereeName1] = useState('');
+    const [reffereeName2, setReffereeName2] = useState('');
+    const [refereeEmail1, setRefereeEmail1] = useState('');
+    const [reffereeEmail2, setReffereeEmail2] = useState('');
     const [link, setLink] = useState('');
     const [reffereeStatus, setReffereeStatus] = useState('');
     const [reffereeFormStatus, setReffereeFormStatus] = useState('');
@@ -173,6 +194,7 @@ const AccountUpgrade = () => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [questions, setQuestions] = useState();
     const [base64Code, setBase64Code] = useState('');
+    const [errorActive, setErrorActive] = useState('');
     const [backBase64Code, setBackBase64Code] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const [corporateAccount, setCorporateAccount] = useState();
@@ -222,6 +244,9 @@ const AccountUpgrade = () => {
     const { identification, identificationErrorMessages } = useSelector(
         (state) => state.documentIdentificationReducer
     );
+    const { checkStatus, errorMessageCheck } = useSelector(
+        (state) => state.checkStatusReducer
+    );
     const { ellevateProfilingSeccess, ellevateProfillingError } = useSelector(
         (state) => state.postEllevateReducer
     );
@@ -238,8 +263,87 @@ const AccountUpgrade = () => {
 
     const { userProfile } = useSelector((state) => state.userProfileReducer);
 
+    useEffect(() => {
+        if (
+            userProfileData.createdFromEcobankCred === true &&
+            userProfileData.customerCategory === 'INDIVIDUAL'
+        ) {
+            if (elevateStatus === 'done') {
+                setActive(true);
+            }
+        }
+        if (
+            userProfileData.createdFromEcobankCred === true &&
+            userProfileData.customerCategory === 'COMMERCIAL'
+        ) {
+            if (
+                userProfile?.hasDoneVNINVerification === true &&
+                addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS' &&
+                userProfile?.hasSetTransactionPin === true &&
+                refereeStatus === 'notDone' &&
+                utilityStatus === 'notDone' &&
+                idCardStatus === 'notDone' &&
+                userProfile?.hasDoneEllevateProfiling === true
+            ) {
+                setActive(true);
+            }
+        }
+        if (text === 'INDIVIDUAL') {
+            if (
+                userProfile?.hasDoneVNINVerification === true &&
+                addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS' &&
+                userProfile?.hasSetTransactionPin === true &&
+                utilityStatus === 'notDone' &&
+                idCardStatus === 'notDone' &&
+                userProfile?.hasDoneEllevateProfiling === true
+            ) {
+                setActive(true);
+            }
+        }
+
+        if (text === 'COMMERCIAL') {
+            if (
+                userProfile?.hasDoneVNINVerification === true &&
+                refereeStatus === 'notDone' &&
+                addressVerificationSuc?.data.data.verificationStatus ===
+                    'SUCCESS' &&
+                userProfile?.hasSetTransactionPin === true &&
+                idCardStatus === 'notDone' &&
+                userProfile?.hasDoneEllevateProfiling === true &&
+                utilityStatus === 'notDone' &&
+                cacStatus === 'notDone' &&
+                mematStatus === 'notDone' &&
+                tinStatus === 'notDone' &&
+                // tinStatus === 'notDone' &&
+                scumlStatus === 'notDone'
+            ) {
+                setActive(true);
+            }
+        }
+    }, [
+        ellevateProfilingSeccess,
+        userProfile,
+        addressVerificationSuc,
+        scmul,
+        tinSuccess,
+        CacDocumentSuccess,
+        identification,
+        utilityUpload,
+        UploadreffereeSuccess
+    ]);
+
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
+    const socialOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: socialdata,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
     const dispatch = useDispatch();
     const {
         register,
@@ -248,7 +352,7 @@ const AccountUpgrade = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        //console.logdata);
+        // //console.logdata);
         setLoading(true);
         dispatch(loadsetTransactionPin(data));
     };
@@ -257,7 +361,7 @@ const AccountUpgrade = () => {
             setUserProfileData(userProfile);
         }
 
-        //console.log('upgrade check', accountUpgrade);
+        // //console.log('upgrade check', accountUpgrade);
     }, [userProfile]);
     useEffect(() => {
         setMessage('');
@@ -274,8 +378,19 @@ const AccountUpgrade = () => {
             setTitle('First');
         }
     }, [link]);
-    //console.log(link);
+    // //console.log(link);
+    const moveToDash = () => {
+        setIsLoading(true);
+        router.push('../Admin/Dashboard');
+    };
 
+    const tinRegistration = () => {
+        setLoading(true);
+        const data = {
+            tin: tinNumber
+        };
+        dispatch(getTinDetails(data));
+    };
     const transactionPin = () => {
         if (setTransactionPin !== null) {
             setMessage('Transaction Pin Set Successfully');
@@ -295,6 +410,7 @@ const AccountUpgrade = () => {
         transactionPin();
     }, [setTransactionPin, setTransactionPinError]);
     useEffect(() => {
+        dispatch(checkStatusAction());
         dispatch(getAddressStatusDetails());
         dispatch(loadUserProfile());
         dispatch(shareDocumentsData());
@@ -302,38 +418,84 @@ const AccountUpgrade = () => {
     }, []);
 
     useEffect(() => {
+        if (profilingQuestions !== null) {
+            setQuestions(profilingQuestions);
+        }
+    }, [profilingQuestions]);
+    useEffect(() => {
+        if (checkStatus !== null) {
+            if (checkStatus.data.noneDocumentSubmissions.tin === true) {
+                setTinStatus('done');
+            }
+            if (
+                checkStatus.data.noneDocumentSubmissions.addressVerification ===
+                true
+            ) {
+                setVerifyStatus('notDone');
+            }
+            if (
+                checkStatus.data.noneDocumentSubmissions
+                    .hasDoneEllevateProfiling === true
+            ) {
+                setElevateStatus('notDone');
+            }
+            if (
+                checkStatus.data.noneDocumentSubmissions
+                    .hasSetTransactionPin === true
+            ) {
+                setTransactionPinStatus('notDone');
+            }
+            if (
+                checkStatus.data.noneDocumentSubmissions.vNinVerification ===
+                true
+            ) {
+                setVninStatus('notDone');
+            }
+
+            checkStatus.data.documentSubmission?.map((item) => {
+                if (item.IDENTIFICATION === true) {
+                    setidCardStatus('notDone');
+                }
+
+                if (item.SCUML === true) {
+                    setScumlStatus('notDone');
+                }
+
+                if (
+                    item.CAC === true &&
+                    item.CO2 === true &&
+                    item.CO7 === true &&
+                    item.CAC1_1 === true &&
+                    item.CAC2_1 === true &&
+                    item.MEMART === true &&
+                    tinStatus === 'notDone' &&
+                    item.SCUML === true
+                ) {
+                    setDocumentStatus('notDone');
+                }
+            });
+        }
+    }, [checkStatus]);
+    useEffect(() => {
         if (userProfile !== null) {
             if (userProfile?.idDocumentVerificationStatus === 'verified') {
                 setidCardStatus('done');
             }
-
+            if (userProfile?.sentReferenceForms === true) {
+                setRefereeStatus('done');
+            }
             setText(userProfile.customerCategory);
             setCorporateAccount(userProfile.hasRegisteredBusiness);
             setStreetName(userProfile.address);
             setCity(userProfile.city);
             setState(userProfile.state);
             setLocalGovernmane(userProfile.lga);
-
-            if (userProfile.hasSetTransactionPin === true) {
-                setTransactionPinStatus('done');
-            }
-            if (userProfile.hasDoneVNINVerification === true) {
-                setVninStatus('done');
-            }
-            if (userProfile?.hasDoneEllevateProfiling === true) {
-                setElevateStatus('done');
-            }
         }
-        //console.log(userProfile);
+        // //console.log(userProfile);
     }, [userProfile]);
     useEffect(() => {
-        if (profilingQuestions !== null) {
-            setQuestions(profilingQuestions);
-        }
-    }, [profilingQuestions]);
-    useEffect(() => {
         if (shareDocuments !== null) {
-            // console.log(shareDocuments);
+            //  //console.log(shareDocuments);
 
             shareDocuments?.map((document) => {
                 if (document.documentType === 'UTILITY') {
@@ -343,9 +505,12 @@ const AccountUpgrade = () => {
                         setUtilityStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setUtilityStatus(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setUtilityStatus('notDone');
                     } else {
                         setUtilityStatus('done');
                     }
+                    setUtilityComment(document.comment);
                 } else if (document.documentType === 'CAC') {
                     if (document.status === 'REJECTED') {
                         setCacStatus('comment');
@@ -354,15 +519,70 @@ const AccountUpgrade = () => {
                     } else {
                         setCacStatus('done');
                     }
+                    setCacComment(document.comment);
                 } else if (document.documentType === 'MEMART') {
                     if (document.status === 'REJECTED') {
                         setMematStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setMematStatus(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setMematStatus('notDone');
                     } else {
                         setMematStatus('done');
                     }
+
+                    setMematComment(document.comment);
+                } else if (document.documentType === 'CO2') {
+                    if (document.status === 'REJECTED') {
+                        setCo2Status('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setCo2Status(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setCo2Status('notDone');
+                    } else {
+                        setCo2Status('done');
+                    }
+
+                    setCo2Comment(document.comment);
+                } else if (document.documentType === 'CO7') {
+                    if (document.status === 'REJECTED') {
+                        setCo7Status('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setCo7Status(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setCo7Status('notDone');
+                    } else {
+                        setCo7Status('done');
+                    }
+
+                    setCo7Comment(document.comment);
+                } else if (document.documentType === 'CAC1_1') {
+                    if (document.status === 'REJECTED') {
+                        setCac1_1Status('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setCac1_1Status(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setCac1_1Status('notDone');
+                    } else {
+                        setCac1_1Status('done');
+                    }
+
+                    setCac1_1Comment(document.comment);
+                } else if (document.documentType === 'CAC2_1') {
+                    if (document.status === 'REJECTED') {
+                        setCac2_1Status('comment');
+                    } else if (document.status === 'APPROVED') {
+                        setCac2_1Status(document.status);
+                    } else if (document.status === 'PENDING') {
+                        setCac2_1Status('notDone');
+                    } else {
+                        setCac2_1Status('done');
+                    }
+
+                    setCac2_1Comment(document.comment);
                 } else if (document.documentType === 'SCUML') {
+                    const test = document.absoluteUrl.split('/');
+                    setScmulFileName(test[test.length - 1]);
                     if (document.status === 'REJECTED') {
                         setScumlStatus('comment');
                     } else if (document.status === 'APPROVED') {
@@ -370,14 +590,17 @@ const AccountUpgrade = () => {
                     } else {
                         setScumlStatus('done');
                     }
-                } else if (document.documentType === 'REFERENCE_FORM') {
+
+                    setScumlComment(document.comment);
+                } else if (document.documentType === 'REFERENCE_FORM_1') {
                     if (document.status === 'REJECTED') {
                         setRefereeStatus('comment');
                     } else if (document.status === 'APPROVED') {
-                        setRefereeStatus(document.status);
                         setReffereeFormStatus('done');
+                    } else if (document.status === 'PENDING') {
+                        setReffereeFormStatus('notDone');
                     } else {
-                        setRefereeStatus('done');
+                        setReffereeFormStatus('done');
                     }
                 } else if (document.documentType === 'IDENTIFICATION') {
                     const test = document.absoluteUrl.split('/');
@@ -391,14 +614,14 @@ const AccountUpgrade = () => {
                         setidCardStatus('comment');
                     } else if (document.status === 'APPROVED') {
                         setidCardStatus('done');
-                    } else if (document.status === 'PENDING') {
-                        setidCardStatus('notDone');
                     }
+
+                    setidCardComment(document.comment);
                 }
             });
         }
     }, [shareDocuments]);
-    //console.loguserProfile);
+    // //console.loguserProfile);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -411,7 +634,7 @@ const AccountUpgrade = () => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
 
-        //console.logfile);
+        // //console.logfile);
     };
     const cacRegistration = () => {
         setLoading(true);
@@ -430,13 +653,29 @@ const AccountUpgrade = () => {
             setLoading(false);
             setCacStatus('done');
         } else if (cacErrorMessages !== null) {
-            // console.log(cacErrorMessages);
+            //  //console.log(cacErrorMessages);
             setMessage(cacErrorMessages.data.message);
             setStatusbar('error');
             setOutcome(true);
             setLoading(false);
         }
     }, [cac, cacErrorMessages]);
+
+    useEffect(() => {
+        if (tinSuccess !== null) {
+            setMessage('TIN uploaded Successfully');
+            setStatusbar('success');
+            setOutcome(true);
+            setLoading(false);
+            setTinStatus('done');
+        } else if (tinError !== null) {
+            //console.log(tinError);
+            // setMessage(cacErrorMessages.data.message);
+            setStatusbar('error');
+            setOutcome(true);
+            setLoading(false);
+        }
+    }, [tinSuccess, tinError]);
     useEffect(() => {
         if (pushDocuments !== null) {
             setMessage(' Uploaded Successfully');
@@ -458,25 +697,30 @@ const AccountUpgrade = () => {
     const saveRefFile = (e) => {
         setFileI(e.target.files[0]);
         setFileNameI(e.target.files[0].name);
-        // console.log(e.target.files[0]);
+        //  //console.log(e.target.files[0]);
     };
     const saveRefFileI = (e) => {
-        //console.log(e.target.files[0]);
+        // //console.log(e.target.files[0]);
+
         setFileII(e.target.files[0]);
         setFileNameII(e.target.files[0].name);
-        //console.log(file);
+        // //console.log(file);
     };
 
     const refereeFileUpload = () => {
         setLoading(true);
         const uploadrefereeData = {
+            nameOfForm1Filler: refereeName1,
+            emailOfForm1Filler: refereeEmail1,
             form1: fileI,
+            nameOfForm2Filler: reffereeName2,
+            emailOfForm2Filler: reffereeEmail2,
             form2: fileII
         };
         dispatch(getUploadReffereeDetails(uploadrefereeData));
     };
     useEffect(() => {
-        // console.log(UploadreffereeError);
+        //  //console.log(UploadreffereeError);
 
         if (UploadreffereeSuccess !== null) {
             setMessage('Referee Form Uploaded');
@@ -485,7 +729,7 @@ const AccountUpgrade = () => {
             setLoading(false);
             setScumlStatus('done');
         } else if (UploadreffereeError !== null) {
-            //console.log(scmulErrorMessages);
+            // //console.log(scmulErrorMessages);
             setMessage(UploadreffereeError.data.message);
             setStatusbar('error');
             setOutcome(true);
@@ -499,16 +743,14 @@ const AccountUpgrade = () => {
         dispatch(getReffereeDetails(refereeData));
     };
     useEffect(() => {
-        console.log(reffereeError, reffereeSuccess);
-
         if (reffereeSuccess !== null) {
             setMessage('Referee Email is sent');
             setStatusbar('success');
             setOutcome(true);
             setLoading(false);
-            setScumlStatus('done');
+            setRefereeStatus('done');
         } else if (reffereeError !== null) {
-            //console.log(scmulErrorMessages);
+            // //console.log(scmulErrorMessages);
             setMessage(reffereeError.data.message);
             setStatusbar('error');
             setOutcome(true);
@@ -526,7 +768,7 @@ const AccountUpgrade = () => {
     //         form2: fileII
     //     };
     //     dispatch(getUploadReffereeDetails(uploadrefereeData));
-    //     console.log();
+    //      //console.log();
     //Refferee Upload End
 
     //SMUL Certyificate
@@ -550,7 +792,7 @@ const AccountUpgrade = () => {
             ('IdentificationDocument');
             setScumlStatus('done');
         } else if (scmulErrorMessages !== null) {
-            //console.log(scmulErrorMessages);
+            // //console.log(scmulErrorMessages);
             setMessage(scmulErrorMessages);
             setStatusbar('error');
             setOutcome(true);
@@ -584,7 +826,8 @@ const AccountUpgrade = () => {
         setMemtFile(e.target.files[0]);
         setMemtFileName(e.target.files[0].name);
     };
-    //console.logco2file);
+    const [active, setActive] = useState(false);
+    // //console.logco2file);
     const cacDocumentUpload = () => {
         const cacDocData = {
             co2: co2file,
@@ -593,10 +836,11 @@ const AccountUpgrade = () => {
             cac2_1: cac2File,
             memart: memtFile
         };
+        setLoading(true);
         dispatch(getCacDocumentDetails(cacDocData));
     };
     useEffect(() => {
-        // console.log(CacDocumentSuccess, CacDocumentError);
+        //  //console.log(CacDocumentSuccess, CacDocumentError);
         if (CacDocumentSuccess !== null) {
             setMessage('Cac Document Updated Successfully');
             setStatusbar('success');
@@ -604,7 +848,7 @@ const AccountUpgrade = () => {
             setLoading(false);
             setScumlStatus('done');
         } else if (CacDocumentError !== null) {
-            //console.log(scmulErrorMessages);
+            // //console.log(scmulErrorMessages);
             setMessage(tinError.data.message);
             setStatusbar('error');
             setOutcome(true);
@@ -628,7 +872,7 @@ const AccountUpgrade = () => {
             utilityDocument: utilityFile
         };
         dispatch(uploadUtilityData(utilityThingd));
-        //console.log'state', localState, localGovernment, utilityFile);
+        // //console.log'state', localState, localGovernment, utilityFile);
     };
     useEffect(() => {
         if (utilityUpload !== null) {
@@ -644,8 +888,8 @@ const AccountUpgrade = () => {
             setOutcome(true);
             setLoading(false);
         }
-        //console.logutilityUpload);
-        //console.logutilityUplodaErrorMessages);
+        // //console.logutilityUpload);
+        // //console.logutilityUplodaErrorMessages);
     }, [utilityUpload, utilityUplodaErrorMessages]);
     //Utility Upload End
     const virtualNinSend = () => {
@@ -658,7 +902,7 @@ const AccountUpgrade = () => {
     };
     useEffect(() => {
         if (vninMSeccess) {
-            // console.log(vninMSeccess);
+            //  //console.log(vninMSeccess);
             if (vninMSeccess.data.isCredentialsValid == true) {
                 setMessage(vninMSeccess?.message);
                 setStatusbar('success');
@@ -673,8 +917,8 @@ const AccountUpgrade = () => {
                 setLoading(false);
             }
         }
-        //console.logutilityUpload);
-        //console.logutilityUplodaErrorMessages);
+        // //console.logutilityUpload);
+        // //console.logutilityUplodaErrorMessages);
     }, [vninMSeccess, vninMError]);
 
     //Identification Upload
@@ -706,12 +950,12 @@ const AccountUpgrade = () => {
     };
     const onLoads = (fileStrings) => {
         setBackBase64Code(fileStrings);
-        // console.log('Back', backBase64Code);
+        //  //console.log('Back', backBase64Code);
     };
 
     const onLoad = (fileString) => {
         setBase64Code(fileString);
-        // console.log(base64Code);
+        //  //console.log(base64Code);
     };
     const IdentificationyUpload = () => {
         setLoading(true);
@@ -776,13 +1020,11 @@ const AccountUpgrade = () => {
 
     // Verify your Address
     useEffect(() => {
-        console.log(addressVerificationSuc?.data.data.verificationStatus);
         if (addressVerificationSuc) {
             if (
                 addressVerificationSuc.data.data.verificationStatus ===
                 'SUCCESS'
             ) {
-                setVerifyStatus('Done');
                 setMessage('Address Verification Successful');
                 setStatusbar('success');
                 // setOutcome(true);
@@ -797,6 +1039,11 @@ const AccountUpgrade = () => {
                 // setStatusbar('error');
                 setOutcome(false);
                 setLoading(false);
+            } else if (
+                addressVerificationSuc.data.data.verificationStatus === 'FAILED'
+            ) {
+                setVerifyStatus('comment');
+                setVerifyComment('Try Again');
             }
         }
     }, [addressVerificationSuc, addressVerificationsError]);
@@ -823,7 +1070,7 @@ const AccountUpgrade = () => {
             setLoading(false);
         }
     }, [identification, identificationErrorMessages]);
-    //console.logidentificationErrorMessages);
+    // //console.logidentificationErrorMessages);
 
     //Identification Upload End
 
@@ -838,7 +1085,7 @@ const AccountUpgrade = () => {
         const emailToshareData = {
             emailsToShare: [refoneemail, refoneno]
         };
-        //console.logemailToshareData);
+        // //console.logemailToshareData);
         dispatch(uploadRefFormData(emailToshareData));
     };
 
@@ -852,9 +1099,11 @@ const AccountUpgrade = () => {
                 textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
+                name: 'Profilling',
+                comment: null,
                 status:
                     elevateStatus === 'done'
-                        ? review
+                        ? 'Done'
                         : elevateStatus === 'notDone'
                         ? pending
                         : null
@@ -866,6 +1115,8 @@ const AccountUpgrade = () => {
                 textII: 'VirtualNIN',
                 icon: <IdCard />,
                 statusReport: vninStatus,
+                name: 'Virtual',
+                comment: null,
                 status:
                     userProfile?.hasDoneVNINVerification === true
                         ? status
@@ -876,6 +1127,8 @@ const AccountUpgrade = () => {
                 textII: 'Documments',
                 icon: <AddressSvg />,
                 statusReport: documentStatus,
+                name: 'Documents',
+                comment: null,
                 status: pending
             },
             {
@@ -883,40 +1136,48 @@ const AccountUpgrade = () => {
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
+                name: 'Verify',
+                comment: verifyComment,
                 status:
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
-                        ? addressVerificationSuc.data.data.verificationStatus
-                        : addressVerificationSuc?.data.data.verificationStatus
+                        ? 'Done'
+                        : addressVerificationSuc?.data.data
+                              .verificationStatus === 'FAILED'
+                        ? 'Failed'
+                        : pending
             },
             {
                 title: 'Set Transaction Pin',
                 textII: 'TransactionPin',
                 icon: <SignatureRuleSvg />,
                 statusReport: transactionPinStatus,
-                status:
-                    userProfile?.hasSetTransactionPin === true
-                        ? status
-                        : pending
+                name: 'Transaction Pin',
+                comment: null,
+                status: transactionPinStatus
             },
             {
                 title: 'Referee',
                 textII: 'Referee',
                 icon: <AddressSvg />,
-                statusReport: reffereeStatus,
-                status: pending
+                statusReport: refereeStatus,
+                name: 'Referee',
+                comment: null,
+                status: refereeStatus === 'done' ? 'Done' : pending
             },
             {
                 title: 'Referee Form',
                 textII: 'Referee Form',
                 icon: <AddressSvg />,
                 statusReport: reffereeFormStatus,
+                name: 'Referees',
+                comment: null,
                 status:
-                    refereeStatus === 'APPROVED'
-                        ? 'Approved'
-                        : refereeStatus === 'notDone'
+                    reffereeFormStatus === 'done'
+                        ? 'Done'
+                        : reffereeFormStatus === 'notDone'
                         ? pending
-                        : refereeStatus === 'comment'
+                        : reffereeFormStatus === 'comment'
                         ? rejected
                         : 'pending'
             },
@@ -928,6 +1189,7 @@ const AccountUpgrade = () => {
                 icon: <BillSvg />,
                 statusReport: utilityStatus,
                 name: 'UTILITY',
+                comment: utilityComment,
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
                         ? utilityStatus === 'done'
@@ -937,7 +1199,7 @@ const AccountUpgrade = () => {
                             : utilityStatus === 'comment'
                             ? rejected
                             : utilityStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             },
@@ -947,18 +1209,19 @@ const AccountUpgrade = () => {
                 icon: <IdCard />,
                 statusReport: idCardStatus,
                 name: 'IDENTIFICATION',
+                comment: idCardComment,
                 status:
-                    userProfile?.idDocumentVerificationStatus === 'verified'
+                    userProfile?.hasSubmitedDocumentsForReview === true
                         ? idCardStatus === 'done'
-                            ? 'Approved'
+                            ? 'Done'
                             : idCardStatus === 'notDone'
-                            ? userProfile?.idDocumentVerificationStatus
+                            ? pending
                             : idCardStatus === 'comment'
                             ? rejected
                             : idCardStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
-                        : userProfile?.idDocumentVerificationStatus
+                        : pending
             },
             // {
             //     title: 'Directors',
@@ -986,9 +1249,11 @@ const AccountUpgrade = () => {
                 textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
+                name: 'Profilling',
+                comment: null,
                 status:
                     userProfile?.hasDoneEllevateProfiling === true
-                        ? status
+                        ? 'Done'
                         : pending
             }
             // {
@@ -1002,6 +1267,8 @@ const AccountUpgrade = () => {
                 textII: 'VirtualNIN',
                 icon: <IdCard />,
                 statusReport: vninStatus,
+                name: 'Virtual',
+                comment: null,
                 status:
                     userProfile?.hasDoneVNINVerification === true
                         ? status
@@ -1012,11 +1279,16 @@ const AccountUpgrade = () => {
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
+                name: 'Verify',
+                comment: verifyComment,
                 status:
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
-                        ? addressVerificationSuc.data.data.verificationStatus
-                        : addressVerificationSuc?.data.data.verificationStatus
+                        ? 'Done'
+                        : addressVerificationSuc?.data.data
+                              .verificationStatus === 'FAILED'
+                        ? 'Failed'
+                        : pending
             },
 
             {
@@ -1024,6 +1296,8 @@ const AccountUpgrade = () => {
                 textII: 'SetTransactionPin',
                 icon: <SignatureRuleSvg />,
                 statusReport: transactionPinStatus,
+                name: 'Transaction',
+                comment: null,
                 status:
                     userProfile?.hasSetTransactionPin === true
                         ? status
@@ -1035,16 +1309,17 @@ const AccountUpgrade = () => {
                 icon: <BillSvg />,
                 statusReport: utilityStatus,
                 name: 'UTILITY',
+                comment: utilityComment,
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
                         ? utilityStatus === 'done'
-                            ? 'Approved'
+                            ? 'Done'
                             : utilityStatus === 'notDone'
                             ? pending
                             : utilityStatus === 'comment'
                             ? rejected
                             : utilityStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             },
@@ -1054,27 +1329,30 @@ const AccountUpgrade = () => {
                 icon: <IdCard />,
                 statusReport: idCardStatus,
                 name: 'IDENTIFICATION',
+                comment: idCardComment,
                 status:
-                    userProfile?.idDocumentVerificationStatus === 'verified'
+                    userProfile?.hasSubmitedDocumentsForReview === true
                         ? idCardStatus === 'done'
-                            ? 'Approved'
+                            ? 'Done'
                             : idCardStatus === 'notDone'
-                            ? userProfile?.idDocumentVerificationStatus
+                            ? pending
                             : idCardStatus === 'comment'
                             ? rejected
                             : idCardStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
-                        : userProfile?.idDocumentVerificationStatus
+                        : pending
             },
             {
                 title: 'Ellevate Profiling',
                 textII: 'EllevateProfilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
+                name: 'Profilling',
+                comment: null,
                 status:
                     userProfile?.hasDoneEllevateProfiling === true
-                        ? status
+                        ? 'Done'
                         : pending
             }
         ],
@@ -1084,6 +1362,8 @@ const AccountUpgrade = () => {
                 textII: 'VirtualNIN',
                 icon: <IdCard />,
                 statusReport: vninStatus,
+                name: 'Virtual',
+                comment: null,
                 status:
                     userProfile?.hasDoneVNINVerification === true
                         ? status
@@ -1093,6 +1373,8 @@ const AccountUpgrade = () => {
                 title: 'Documents',
                 textII: 'Documments',
                 icon: <AddressSvg />,
+                name: 'Documents',
+                comment: null,
                 statusReport: documentStatus,
                 status: pending
             },
@@ -1100,20 +1382,24 @@ const AccountUpgrade = () => {
                 title: 'Referee',
                 textII: 'Referee',
                 icon: <AddressSvg />,
-                statusReport: reffereeStatus,
-                status: pending
+                statusReport: refereeStatus,
+                name: 'Referee',
+                comment: null,
+                status: refereeStatus === 'done' ? 'Done' : pending
             },
             {
                 title: 'Referee Form',
                 textII: 'Referee Form',
                 icon: <AddressSvg />,
                 statusReport: reffereeFormStatus,
+                name: 'Referees',
+                comment: null,
                 status:
-                    refereeStatus === 'APPROVED'
-                        ? 'Approved'
-                        : refereeStatus === 'notDone'
+                    reffereeFormStatus === 'done'
+                        ? 'Done'
+                        : reffereeFormStatus === 'notDone'
                         ? pending
-                        : refereeStatus === 'comment'
+                        : reffereeFormStatus === 'comment'
                         ? rejected
                         : 'pending'
             },
@@ -1122,17 +1408,24 @@ const AccountUpgrade = () => {
                 textII: 'VerifyAddress',
                 icon: <AddressSvg />,
                 statusReport: verifyStatus,
+                name: 'Verify',
+                comment: verifyComment,
                 status:
                     addressVerificationSuc?.data.data.verificationStatus ===
                     'SUCCESS'
-                        ? addressVerificationSuc.data.data.verificationStatus
-                        : addressVerificationSuc?.data.data.verificationStatus
+                        ? 'Done'
+                        : addressVerificationSuc?.data.data
+                              .verificationStatus === 'FAILED'
+                        ? 'Failed'
+                        : pending
             },
             {
                 title: 'Set Transaction Pin',
                 textII: 'TransactionPin',
                 icon: <SignatureRuleSvg />,
                 statusReport: transactionPinStatus,
+                name: 'Transaction',
+                comment: null,
                 status:
                     userProfile?.hasSetTransactionPin === true
                         ? status
@@ -1144,6 +1437,7 @@ const AccountUpgrade = () => {
                 icon: <BillSvg />,
                 statusReport: utilityStatus,
                 name: 'UTILITY',
+                comment: utilityComment,
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
                         ? utilityStatus === 'done'
@@ -1153,7 +1447,7 @@ const AccountUpgrade = () => {
                             : utilityStatus === 'comment'
                             ? rejected
                             : utilityStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             },
@@ -1163,18 +1457,19 @@ const AccountUpgrade = () => {
                 icon: <IdCard />,
                 statusReport: idCardStatus,
                 name: 'IDENTIFICATION',
+                comment: idCardComment,
                 status:
-                    userProfile?.idDocumentVerificationStatus === 'verified'
+                    userProfile?.hasSubmitedDocumentsForReview === true
                         ? idCardStatus === 'done'
-                            ? 'Approved'
+                            ? 'Done'
                             : idCardStatus === 'notDone'
-                            ? userProfile?.idDocumentVerificationStatus
+                            ? pending
                             : idCardStatus === 'comment'
                             ? rejected
                             : idCardStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
-                        : userProfile?.idDocumentVerificationStatus
+                        : pending
             },
             // {
             //     title: 'Directors',
@@ -1202,9 +1497,11 @@ const AccountUpgrade = () => {
                 textII: 'Profilling',
                 icon: <IdCard />,
                 statusReport: elevateStatus,
+                name: 'Profilling',
+                comment: null,
                 status:
                     userProfile?.hasDoneEllevateProfiling === true
-                        ? status
+                        ? 'Done'
                         : pending
             }
             // {
@@ -1218,6 +1515,7 @@ const AccountUpgrade = () => {
                 textII: 'CACREG',
                 statusReport: cacStatus,
                 name: 'CAC',
+                comment: cacComment,
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
                         ? cacStatus === 'done'
@@ -1227,25 +1525,54 @@ const AccountUpgrade = () => {
                             : cacStatus === 'comment'
                             ? rejected
                             : cacStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             },
             {
                 title: 'CAC Documents',
                 textII: 'CAC Documents',
-                statusReport: mematStatus,
+                statusReport:
+                    mematStatus === 'notDone' &&
+                    co2Status === 'notDone' &&
+                    co7Status === 'notDone' &&
+                    cac1_Status === 'notDone' &&
+                    cac2_1Status === 'notDone'
+                        ? 'notDone'
+                        : mematStatus === 'APPROVED' &&
+                          co2Status === 'APPROVED' &&
+                          co7Status === 'APPROVED' &&
+                          cac1_Status === 'APPROVED' &&
+                          cac2_1Status === 'APPROVED'
+                        ? 'done'
+                        : null,
                 name: 'MEMART',
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
-                        ? mematStatus === 'done'
+                        ? mematStatus === 'done' &&
+                          co2Status === 'done' &&
+                          co7Status === 'done' &&
+                          cac1_Status === 'done' &&
+                          cac2_1Status === 'done'
                             ? review
-                            : mematStatus === 'notDone'
+                            : mematStatus === 'notDone' &&
+                              co2Status === 'notDone' &&
+                              co7Status === 'notDone' &&
+                              cac1_Status === 'notDone' &&
+                              cac2_1Status === 'notDone'
                             ? pending
-                            : mematStatus === 'comment'
+                            : mematStatus === 'comment' &&
+                              co2Status === 'comment' &&
+                              co7Status === 'comment' &&
+                              cac1_Status === 'comment' &&
+                              cac2_1Status === 'comment'
                             ? rejected
-                            : mematStatus === 'APPROVED'
-                            ? 'Approved'
+                            : mematStatus === 'APPROVED' &&
+                              co2Status === 'APPROVED' &&
+                              co7Status === 'APPROVED' &&
+                              cac1_Status === 'APPROVED' &&
+                              cac2_1Status === 'APPROVED'
+                            ? 'Done'
                             : null
                         : pending
             },
@@ -1263,8 +1590,8 @@ const AccountUpgrade = () => {
                             : tinStatus === 'comment'
                             ? rejected
                             : tinStatus === 'APPROVED'
-                            ? 'Approved'
-                            : null
+                            ? 'Done'
+                            : pending
                         : pending
             },
             {
@@ -1272,6 +1599,7 @@ const AccountUpgrade = () => {
                 textII: 'SCMULREG',
                 statusReport: scumlStatus,
                 name: 'SCUML',
+                comment: scumlComment,
                 status:
                     userProfile?.hasSubmitedDocumentsForReview === true
                         ? scumlStatus === 'done'
@@ -1281,13 +1609,13 @@ const AccountUpgrade = () => {
                             : scumlStatus === 'comment'
                             ? rejected
                             : scumlStatus === 'APPROVED'
-                            ? 'Approved'
+                            ? 'Done'
                             : null
                         : pending
             }
         ]
     };
-    // console.log(pending);
+    //  //console.log(pending);
 
     useEffect(() => {}, [shareDocuments]);
 
@@ -1342,7 +1670,7 @@ const AccountUpgrade = () => {
                                 : null
                         }
                         action={() => {
-                            router.push('./Dashboard');
+                            router.push('./Admin/Dashboard');
                         }}
                     >
                         <div className={styles.currentLevel}>
@@ -1374,29 +1702,36 @@ const AccountUpgrade = () => {
                         userProfileData.customerCategory === 'INDIVIDUAL'
                             ? AccountUpgradeData.existing.map((item, index) => {
                                   return (
-                                      <AccountUpgradeSingle
-                                          statusInfo={item.statusReport}
-                                          textII={item.textII}
-                                          content={shareDocuments?.map(
-                                              (items) => {
-                                                  if (
-                                                      items.documentType ===
-                                                      item.title
-                                                  ) {
-                                                      return items.comment;
-                                                  } else {
-                                                      return '';
+                                      <>
+                                          <AccountUpgradeSingle
+                                              statusInfo={item.statusReport}
+                                              textII={item.textII}
+                                              content={item.comment}
+                                              icon={item.icon}
+                                              text={item.title}
+                                              key={index}
+                                              status={item.status}
+                                              action={() => {
+                                                  if (item.status === 'Done')
+                                                      setErrorActive(
+                                                          item.title
+                                                      );
+                                                  else {
+                                                      setTitle(item.title);
                                                   }
-                                              }
-                                          )}
-                                          icon={item.icon}
-                                          text={item.title}
-                                          key={index}
-                                          status={item.status}
-                                          action={() => {
-                                              setTitle(item.title);
-                                          }}
-                                      />
+                                              }}
+                                          />
+                                          {errorActive === item.title ? (
+                                              <>
+                                                  <p className={styles.error}>
+                                                      Already Completed
+                                                  </p>
+                                                  {setTimeout(() => {
+                                                      setErrorActive('');
+                                                  }, 1500)}
+                                              </>
+                                          ) : null}
+                                      </>
                                   );
                               })
                             : userProfileData.createdFromEcobankCred === true &&
@@ -1439,15 +1774,48 @@ const AccountUpgrade = () => {
                                                                             key={
                                                                                 index
                                                                             }
+                                                                            content={
+                                                                                item.comment
+                                                                            }
                                                                             statusInfo={
                                                                                 item.statusReport
                                                                             }
                                                                             action={() => {
-                                                                                setTitle(
-                                                                                    item.title
-                                                                                );
+                                                                                if (
+                                                                                    item.status ===
+                                                                                    'Done'
+                                                                                )
+                                                                                    setErrorActive(
+                                                                                        item.title
+                                                                                    );
+                                                                                else {
+                                                                                    setTitle(
+                                                                                        item.title
+                                                                                    );
+                                                                                }
                                                                             }}
                                                                         />
+                                                                        {errorActive ===
+                                                                        item.title ? (
+                                                                            <>
+                                                                                <p
+                                                                                    className={
+                                                                                        styles.error
+                                                                                    }
+                                                                                >
+                                                                                    Already
+                                                                                    Completed
+                                                                                </p>
+                                                                                {setTimeout(
+                                                                                    () => {
+                                                                                        setErrorActive(
+                                                                                            ''
+                                                                                        );
+                                                                                    },
+                                                                                    1500
+                                                                                )}
+                                                                            </>
+                                                                        ) : null}
                                                                     </>
                                                                 );
                                                             }
@@ -1457,29 +1825,50 @@ const AccountUpgrade = () => {
                                           );
                                       } else {
                                           return (
-                                              <AccountUpgradeSingle
-                                                  textII={item.textII}
-                                                  content={shareDocuments?.map(
-                                                      (items) => {
-                                                          if (
-                                                              items.documentType ===
-                                                              item.name
-                                                          ) {
-                                                              return items.comment;
-                                                          } else {
-                                                              return '';
-                                                          }
+                                              <>
+                                                  <AccountUpgradeSingle
+                                                      textII={item.textII}
+                                                      content={item.comment}
+                                                      statusInfo={
+                                                          item.statusReport
                                                       }
-                                                  )}
-                                                  statusInfo={item.statusReport}
-                                                  icon={item.icon}
-                                                  text={item.title}
-                                                  key={index}
-                                                  status={item.status}
-                                                  action={() => {
-                                                      setTitle(item.title);
-                                                  }}
-                                              />
+                                                      icon={item.icon}
+                                                      text={item.title}
+                                                      key={index}
+                                                      status={item.status}
+                                                      action={() => {
+                                                          if (
+                                                              item.status ===
+                                                              'Done'
+                                                          )
+                                                              setErrorActive(
+                                                                  item.title
+                                                              );
+                                                          else {
+                                                              setTitle(
+                                                                  item.title
+                                                              );
+                                                          }
+                                                      }}
+                                                  />
+                                                  {errorActive ===
+                                                  item.title ? (
+                                                      <>
+                                                          <p
+                                                              className={
+                                                                  styles.error
+                                                              }
+                                                          >
+                                                              Already Completed
+                                                          </p>
+                                                          {setTimeout(() => {
+                                                              setErrorActive(
+                                                                  ''
+                                                              );
+                                                          }, 1500)}
+                                                      </>
+                                                  ) : null}
+                                              </>
                                           );
                                       }
                                   }
@@ -1489,29 +1878,50 @@ const AccountUpgrade = () => {
                                   (item, index) => {
                                       return (
                                           <>
-                                              <AccountUpgradeSingle
-                                                  statusInfo={item.statusReport}
-                                                  textII={item.textII}
-                                                  content={shareDocuments?.map(
-                                                      (items) => {
-                                                          if (
-                                                              items.documentType ===
-                                                              item.name
-                                                          ) {
-                                                              return items.comment;
-                                                          } else {
-                                                              return '';
-                                                          }
+                                              <>
+                                                  <AccountUpgradeSingle
+                                                      statusInfo={
+                                                          item.statusReport
                                                       }
-                                                  )}
-                                                  icon={item.icon}
-                                                  text={item.title}
-                                                  key={index}
-                                                  status={item.status}
-                                                  action={() => {
-                                                      setTitle(item.title);
-                                                  }}
-                                              />
+                                                      textII={item.textII}
+                                                      content={item.comment}
+                                                      icon={item.icon}
+                                                      text={item.title}
+                                                      key={index}
+                                                      status={item.status}
+                                                      action={() => {
+                                                          if (
+                                                              item.status ===
+                                                              'Done'
+                                                          )
+                                                              setErrorActive(
+                                                                  item.title
+                                                              );
+                                                          else {
+                                                              setTitle(
+                                                                  item.title
+                                                              );
+                                                          }
+                                                      }}
+                                                  />
+                                                  {errorActive ===
+                                                  item.title ? (
+                                                      <>
+                                                          <p
+                                                              className={
+                                                                  styles.error
+                                                              }
+                                                          >
+                                                              Already Completed
+                                                          </p>
+                                                          {setTimeout(() => {
+                                                              setErrorActive(
+                                                                  ''
+                                                              );
+                                                          }, 1500)}
+                                                      </>
+                                                  ) : null}
+                                              </>
                                               {document
                                                   ? AccountUpgradeData.document.map(
                                                         (item, index) => {
@@ -1534,11 +1944,41 @@ const AccountUpgrade = () => {
                                                                             item.statusReport
                                                                         }
                                                                         action={() => {
-                                                                            setTitle(
-                                                                                item.title
-                                                                            );
+                                                                            if (
+                                                                                item.status ===
+                                                                                'Done'
+                                                                            )
+                                                                                setErrorActive(
+                                                                                    item.title
+                                                                                );
+                                                                            else {
+                                                                                setTitle(
+                                                                                    item.title
+                                                                                );
+                                                                            }
                                                                         }}
                                                                     />
+                                                                    {errorActive ===
+                                                                    item.title ? (
+                                                                        <>
+                                                                            <p
+                                                                                className={
+                                                                                    styles.error
+                                                                                }
+                                                                            >
+                                                                                Already
+                                                                                Completed
+                                                                            </p>
+                                                                            {setTimeout(
+                                                                                () => {
+                                                                                    setErrorActive(
+                                                                                        ''
+                                                                                    );
+                                                                                },
+                                                                                1500
+                                                                            )}
+                                                                        </>
+                                                                    ) : null}
                                                                 </>
                                                             );
                                                         }
@@ -1587,15 +2027,48 @@ const AccountUpgrade = () => {
                                                                             key={
                                                                                 index
                                                                             }
+                                                                            content={
+                                                                                item.comment
+                                                                            }
                                                                             statusInfo={
                                                                                 item.statusReport
                                                                             }
                                                                             action={() => {
-                                                                                setTitle(
-                                                                                    item.title
-                                                                                );
+                                                                                if (
+                                                                                    item.status ===
+                                                                                    'Done'
+                                                                                )
+                                                                                    setErrorActive(
+                                                                                        item.title
+                                                                                    );
+                                                                                else {
+                                                                                    setTitle(
+                                                                                        item.title
+                                                                                    );
+                                                                                }
                                                                             }}
                                                                         />
+                                                                        {errorActive ===
+                                                                        item.title ? (
+                                                                            <>
+                                                                                <p
+                                                                                    className={
+                                                                                        styles.error
+                                                                                    }
+                                                                                >
+                                                                                    Already
+                                                                                    Completed
+                                                                                </p>
+                                                                                {setTimeout(
+                                                                                    () => {
+                                                                                        setErrorActive(
+                                                                                            ''
+                                                                                        );
+                                                                                    },
+                                                                                    1500
+                                                                                )}
+                                                                            </>
+                                                                        ) : null}
                                                                     </>
                                                                 );
                                                             }
@@ -1605,35 +2078,65 @@ const AccountUpgrade = () => {
                                           );
                                       } else {
                                           return (
-                                              <AccountUpgradeSingle
-                                                  textII={item.textII}
-                                                  content={shareDocuments?.map(
-                                                      (items) => {
-                                                          if (
-                                                              items.documentType ===
-                                                              item.name
-                                                          ) {
-                                                              return items.comment;
-                                                          } else {
-                                                              return '';
-                                                          }
+                                              <>
+                                                  <AccountUpgradeSingle
+                                                      textII={item.textII}
+                                                      content={item.comment}
+                                                      statusInfo={
+                                                          item.statusReport
                                                       }
-                                                  )}
-                                                  statusInfo={item.statusReport}
-                                                  icon={item.icon}
-                                                  text={item.title}
-                                                  key={index}
-                                                  status={item.status}
-                                                  action={() => {
-                                                      setTitle(item.title);
-                                                  }}
-                                              />
+                                                      icon={item.icon}
+                                                      text={item.title}
+                                                      key={index}
+                                                      status={item.status}
+                                                      action={() => {
+                                                          if (
+                                                              item.status ===
+                                                              'Done'
+                                                          )
+                                                              setErrorActive(
+                                                                  item.title
+                                                              );
+                                                          else {
+                                                              setTitle(
+                                                                  item.title
+                                                              );
+                                                          }
+                                                      }}
+                                                  />
+                                                  {errorActive ===
+                                                  item.title ? (
+                                                      <>
+                                                          <p
+                                                              className={
+                                                                  styles.error
+                                                              }
+                                                          >
+                                                              Already Completed
+                                                          </p>
+                                                          {setTimeout(() => {
+                                                              setErrorActive(
+                                                                  ''
+                                                              );
+                                                          }, 1500)}
+                                                      </>
+                                                  ) : null}
+                                              </>
                                           );
                                       }
                                   }
                               )
                             : null}
 
+                        {isLoading ? (
+                            <div className={styles.lottie}>
+                                <Lottie
+                                    options={socialOptions}
+                                    height={200}
+                                    width={200}
+                                />
+                            </div>
+                        ) : null}
                         {loading ? (
                             <Loader />
                         ) : (
@@ -1643,15 +2146,32 @@ const AccountUpgrade = () => {
                             //     active={activeBtn ? 'active' : 'inactive'}
                             //     type="submit"
                             // />
-                            <button
-                                className={styles.buttonDone}
-                                onClick={() => {
-                                    setLoading(true);
-                                    dispatch(pushDocumentsData());
-                                }}
-                            >
-                                Done
-                            </button>
+
+                            <div className={styles.relativeBtn}>
+                                <button
+                                    className={styles.buttonDone}
+                                    onClick={() => {
+                                        dispatch(pushDocumentsData());
+                                        moveToDash();
+                                    }}
+                                >
+                                    Save And Continue Later
+                                </button>
+                                <button
+                                    className={
+                                        active
+                                            ? styles.buttonDone
+                                            : styles.inactive
+                                    }
+                                    disabled={active ? null : true}
+                                    onClick={() => {
+                                        setLoading(true);
+                                        dispatch(pushDocumentsData());
+                                    }}
+                                >
+                                    Submit
+                                </button>
+                            </div>
                         )}
                     </AccountUpgradeComponent>
                 );
@@ -1694,7 +2214,7 @@ const AccountUpgrade = () => {
                                             />
                                         </div>
                                     </div>
-                                    {/* {console.log(landMark)} */}
+                                    {/* { //console.log(landMark)} */}
                                     <div className={styles.midCont}>
                                         <div className={styles.addressGroup}>
                                             <label>State</label>
@@ -1705,7 +2225,7 @@ const AccountUpgrade = () => {
                                                     setState(
                                                         event.target.value
                                                     );
-                                                    //console.log(selstate);
+                                                    // //console.log(selstate);
                                                 }}
                                             >
                                                 <option value="">
@@ -1792,7 +2312,7 @@ const AccountUpgrade = () => {
                                                     ? localGovernment?.map(
                                                           (item, index) => {
                                                               //   {
-                                                              //       //console.log(
+                                                              //       // //console.log(
                                                               //           item
                                                               //       );
                                                               //   }
@@ -1819,7 +2339,7 @@ const AccountUpgrade = () => {
                                 </div>
                             </div>
                             {/* <Link
-                                href={`https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark=${landMark}&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=${userProfile?.phoneNumber}`}
+                                href={`https://ecodigitalavr.comono.io/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark=${landMark}&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP_WEB&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=${userProfile?.phoneNumber}`}
                             >
                                 Links
                             </Link> */}
@@ -1855,7 +2375,7 @@ const AccountUpgrade = () => {
 
                                 <Iframe
                                     src={
-                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark=${landMark}&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=+234${userProfile?.phoneNumber}`
+                                        `https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=${userProfile.profileId}&customerName=${userProfile?.preferredName}&customerEmail=${userProfile?.email}&branchCode=800&segmentId=CDS&address=${streetName}&landmark=${landMark}&state=${selstate}&lga=${localGovernmane}&createdBy=SME_APP_WEB&customerImage&Latitude=${latitude}&Longitude=${longitude}&phoneNumber=+234${userProfile?.phoneNumber}`
                                         // {
                                         // pathname:
                                         // 'https://ecocomonoreact.azurewebsites.net/customer-details/?workitemId=AO-095734358976187628-CO&customerName=Test Customer&customerEmail=boluwatobi@gmail.com&branchCode=A02&segmentId=ADB&address=25 pilot crescent off bode thomas surulere&landmark&state=LA&lga=LA020&createdBy=RealMg&customerImage&Latitude=6.4886218&Longitude=3.3567333'
@@ -1933,7 +2453,7 @@ const AccountUpgrade = () => {
                                     id=""
                                     onChange={(event) => {
                                         setUtilityType(event.target.value);
-                                        //console.logselstate);
+                                        // //console.logselstate);
                                     }}
                                 >
                                     <option value="NEPA_BILL">
@@ -2000,7 +2520,7 @@ const AccountUpgrade = () => {
                                                     setState(
                                                         event.target.value
                                                     );
-                                                    //console.logselstate);
+                                                    // //console.logselstate);
                                                 }}
                                             >
                                                 <option value={selstate}>
@@ -2220,7 +2740,7 @@ const AccountUpgrade = () => {
                                 <input
                                     type="text"
                                     value={reffereeEmail}
-                                    placeholder="Input Referee Emai"
+                                    placeholder="Input Referee Email"
                                     onChange={(e) =>
                                         setReffereeEmail(e.target.value)
                                     }
@@ -2234,7 +2754,7 @@ const AccountUpgrade = () => {
                                 <input
                                     type="text"
                                     value={reffereeEmailI}
-                                    placeholder="Input Referee Emai"
+                                    placeholder="Input Referee Email"
                                     onChange={(e) =>
                                         setReffereeEmailI(e.target.value)
                                     }
@@ -2266,6 +2786,29 @@ const AccountUpgrade = () => {
                         }}
                         title="Input Referee Details"
                     >
+                        <div className={styles.addressGroup}>
+                            <label>Name Referee 1</label>
+                            <input
+                                type="text"
+                                value={refereeName1}
+                                placeholder="Input Referee one's Name"
+                                onChange={(e) =>
+                                    setRefereeName1(e.target.value)
+                                }
+                            />
+                        </div>
+                        <div className={styles.addressGroup}>
+                            <label>Email Referee 1</label>
+                            <input
+                                type="text"
+                                value={refereeEmail1}
+                                placeholder="Input Referee one's Email"
+                                onChange={(e) =>
+                                    setRefereeEmail1(e.target.value)
+                                }
+                            />
+                        </div>
+
                         <div className={styles.signatureGroup}>
                             <p>Input Referee Document</p>
                             <div className={styles.signatureFormGroup}>
@@ -2280,6 +2823,29 @@ const AccountUpgrade = () => {
                                     Upload
                                 </label>
                             </div>
+                        </div>
+                        <div className={styles.addressGroup}>
+                            <label>Name Referee 2</label>
+                            <input
+                                type="text"
+                                value={reffereeName2}
+                                placeholder="Input Referee two's Name"
+                                onChange={(e) =>
+                                    setReffereeName2(e.target.value)
+                                }
+                            />
+                        </div>
+
+                        <div className={styles.addressGroup}>
+                            <label>Email Referee 2</label>
+                            <input
+                                type="text"
+                                value={reffereeEmail2}
+                                placeholder="Input Referee two's Email"
+                                onChange={(e) =>
+                                    setReffereeEmail2(e.target.value)
+                                }
+                            />
                         </div>
 
                         <div className={styles.signatureGroup}>
@@ -2328,7 +2894,7 @@ const AccountUpgrade = () => {
                         <>
                             <div className={styles.ellevateCopy}>
                                 <p>
-                                    Ellevate offers a range of solutions to
+                                    SMEApp offers a range of solutions to
                                     women-owned businesses to grow their
                                     enterprise. It supports companies making
                                     women focused products and businesses with
@@ -2412,7 +2978,7 @@ const AccountUpgrade = () => {
                                                     //     setProfileItemm(item)
                                                     // }
                                                 />
-                                                {/* {console.log(profileItemm)} */}
+                                                {/* { //console.log(profileItemm)} */}
                                                 <label>{item}</label>
                                             </div>
                                         );
@@ -2751,7 +3317,7 @@ const AccountUpgrade = () => {
                             <input
                                 type="text"
                                 onChange={(e) => setTinNumber(e.target.value)}
-                                placeholder="Enter  Your Tin"
+                                placeholder="********-***"
                             />
                         </div>
                         {loading ? (
@@ -2844,7 +3410,7 @@ const AccountUpgrade = () => {
                                             return (
                                                 <Tooltip
                                                     anchorId="co2"
-                                                    content={items.comment}
+                                                    content={items?.comment}
                                                 />
                                             );
                                         } else {
@@ -2854,17 +3420,22 @@ const AccountUpgrade = () => {
                                     <div className={styles.statuses}>
                                         <p>Upload CO2</p>
 
-                                        {shareDocuments?.map((items) => {
-                                            if (items.documentType === 'CO2') {
-                                                return (
-                                                    <p id="co2">
-                                                        {items.status}
-                                                    </p>
-                                                );
-                                            } else {
-                                                return '';
+                                        <p id="co2">
+                                            {
+                                                shareDocuments
+                                                    ?.filter((items) => {
+                                                        if (
+                                                            items.documentType ===
+                                                            'CO2'
+                                                        ) {
+                                                            return items;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    })
+                                                    .splice(0, 1)[0]?.status
                                             }
-                                        })}
+                                        </p>
                                     </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
@@ -2890,7 +3461,7 @@ const AccountUpgrade = () => {
                                             return (
                                                 <Tooltip
                                                     anchorId="co7"
-                                                    content={items.comment}
+                                                    content={items?.comment}
                                                 />
                                             );
                                         } else {
@@ -2900,17 +3471,22 @@ const AccountUpgrade = () => {
                                     <div className={styles.statuses}>
                                         <p>Upload CO7</p>
 
-                                        {shareDocuments?.map((items) => {
-                                            if (items.documentType === 'CO7') {
-                                                return (
-                                                    <p id="co7">
-                                                        {items.status}
-                                                    </p>
-                                                );
-                                            } else {
-                                                return '';
+                                        <p id="co7">
+                                            {
+                                                shareDocuments
+                                                    ?.filter((items) => {
+                                                        if (
+                                                            items.documentType ===
+                                                            'CO7'
+                                                        ) {
+                                                            return items;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    })
+                                                    .splice(0, 1)[0]?.status
                                             }
-                                        })}
+                                        </p>
                                     </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
@@ -2931,11 +3507,11 @@ const AccountUpgrade = () => {
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
                                     {shareDocuments?.map((items) => {
-                                        if (items.documentType === 'CAC1.1') {
+                                        if (items.documentType === 'CAC1_1') {
                                             return (
                                                 <Tooltip
                                                     anchorId="cac11"
-                                                    content={items.comment}
+                                                    content={items?.comment}
                                                 />
                                             );
                                         } else {
@@ -2945,19 +3521,22 @@ const AccountUpgrade = () => {
                                     <div className={styles.statuses}>
                                         <p>Upload CAC 1.1</p>
 
-                                        {shareDocuments?.map((items) => {
-                                            if (
-                                                items.documentType === 'CAC1.1'
-                                            ) {
-                                                return (
-                                                    <p id="cac11">
-                                                        {items.status}
-                                                    </p>
-                                                );
-                                            } else {
-                                                return '';
+                                        <p id="cac11">
+                                            {
+                                                shareDocuments
+                                                    ?.filter((items) => {
+                                                        if (
+                                                            items.documentType ===
+                                                            'CAC1_1'
+                                                        ) {
+                                                            return items;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    })
+                                                    .splice(0, 1)[0]?.status
                                             }
-                                        })}
+                                        </p>
                                     </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
@@ -2978,11 +3557,11 @@ const AccountUpgrade = () => {
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
                                     {shareDocuments?.map((items) => {
-                                        if (items.documentType === 'CAC2.1') {
+                                        if (items.documentType === 'CAC2_1') {
                                             return (
                                                 <Tooltip
                                                     anchorId="cac21"
-                                                    content={items.comment}
+                                                    content={items?.comment}
                                                 />
                                             );
                                         } else {
@@ -2991,20 +3570,22 @@ const AccountUpgrade = () => {
                                     })}
                                     <div className={styles.statuses}>
                                         <p>Upload CAC 2.1</p>
-
-                                        {shareDocuments?.map((items) => {
-                                            if (
-                                                items.documentType === 'CAC2.1'
-                                            ) {
-                                                return (
-                                                    <p id="cac21">
-                                                        {items.status}
-                                                    </p>
-                                                );
-                                            } else {
-                                                return '';
+                                        <p id="cac21">
+                                            {
+                                                shareDocuments
+                                                    ?.filter((items) => {
+                                                        if (
+                                                            items.documentType ===
+                                                            'CAC2_1'
+                                                        ) {
+                                                            return items;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    })
+                                                    .splice(0, 1)[0]?.status
                                             }
-                                        })}
+                                        </p>
                                     </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
@@ -3025,11 +3606,11 @@ const AccountUpgrade = () => {
                             <div className={styles.signature}>
                                 <div className={styles.signatureGroup}>
                                     {shareDocuments?.map((items) => {
-                                        if (items.documentType === 'memat') {
+                                        if (items.documentType === 'MEMART') {
                                             return (
                                                 <Tooltip
                                                     anchorId="memat"
-                                                    content={items.comment}
+                                                    content={items?.comment}
                                                 />
                                             );
                                         } else {
@@ -3042,20 +3623,22 @@ const AccountUpgrade = () => {
                                             Memorandum and Articles of
                                             Association (MEMART)
                                         </p>
-
-                                        {shareDocuments?.map((items) => {
-                                            if (
-                                                items.documentType === 'CAC2.1'
-                                            ) {
-                                                return (
-                                                    <p id="memat">
-                                                        {items.status}
-                                                    </p>
-                                                );
-                                            } else {
-                                                return '';
+                                        <p id="memat">
+                                            {
+                                                shareDocuments
+                                                    ?.filter((items) => {
+                                                        if (
+                                                            items.documentType ===
+                                                            'MEMART'
+                                                        ) {
+                                                            return items;
+                                                        } else {
+                                                            return '';
+                                                        }
+                                                    })
+                                                    .splice(0, 1)[0]?.status
                                             }
-                                        })}
+                                        </p>
                                     </div>
                                     <div className={styles.signatureFormGroup}>
                                         <p>
@@ -3110,6 +3693,14 @@ const AccountUpgrade = () => {
                         <div className={styles.directorsBody}>
                             <h2>Reference 1</h2>
                             <div className={styles.directorsGroup}>
+                                <label>Full Name</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Full Name"
+                                />
+                            </div>
+                            <div className={styles.directorsGroup}>
                                 <label>Email</label>
                                 <input
                                     type="text"
@@ -3121,17 +3712,17 @@ const AccountUpgrade = () => {
                                     }
                                 />
                             </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Phone Number</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    placeholder="Enter Phone Number"
-                                />
-                            </div>
                         </div>
                         <div className={styles.directorsBody}>
                             <h2>Reference 2</h2>
+                            <div className={styles.directorsGroup}>
+                                <label>Full Name</label>
+                                <input
+                                    type="text"
+                                    name=""
+                                    placeholder="Enter Full Name"
+                                />
+                            </div>
                             <div className={styles.directorsGroup}>
                                 <label>Email</label>
                                 <input
@@ -3142,14 +3733,6 @@ const AccountUpgrade = () => {
                                     onChange={(e) =>
                                         setRefoneNo(e.target.value)
                                     }
-                                />
-                            </div>
-                            <div className={styles.directorsGroup}>
-                                <label>Phone Number</label>
-                                <input
-                                    type="text"
-                                    name=""
-                                    placeholder="Enter Phone Number"
                                 />
                             </div>
                         </div>
@@ -3201,7 +3784,10 @@ const AccountUpgrade = () => {
                                             })}
                                             placeholder="Enter Transaction Pin"
                                         />
-                                        <Visbility typeSet={types} />
+                                        <Visbility
+                                            typeSet={types}
+                                            input="input"
+                                        />
                                     </div>
                                     <p className={styles.error}>
                                         {errors.transactionPin?.message}
@@ -3220,7 +3806,10 @@ const AccountUpgrade = () => {
                                             })}
                                             placeholder="Enter Password"
                                         />
-                                        <Visbility typeSet={typed} />
+                                        <Visbility
+                                            typeSet={typed}
+                                            input="input"
+                                        />
                                     </div>
                                     <p className={styles.error}>
                                         {errors.password?.message}
@@ -3260,7 +3849,7 @@ const AccountUpgrade = () => {
     };
 
     return (
-        <>
+        <div className={styles.relativeServie}>
             {outcome ? (
                 <PaymentSuccess
                     body={message}
@@ -3284,8 +3873,8 @@ const AccountUpgrade = () => {
                 />
             ) : null}
             {multiStep()}
-        </>
+        </div>
     );
 };
 
-export default AccountUpgrade;
+export default withAuth(AccountUpgrade);

@@ -7,15 +7,10 @@ import axiosInstance from '../../../redux/helper/apiClient';
 import apiRoutes from '../../../redux/helper/apiRoutes';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    accountStatusData,
-    CompProfile,
-    createNewUserAccount,
-    getNewUserAccountDetails,
-    newAccountStatusData,
-    logoutAction
-} from '../../../redux/actions/actions';
 import { IoMdGift } from 'react-icons/io';
+import { newAccountStatusData } from '../../../redux/actions/newAccountStatusAction';
+import { createNewUserAccount } from '../../../redux/actions/createNwUserAccountAction';
+import { logoutAction } from '../../../redux/actions/logOutAction';
 
 const AccountLoading = () => {
     const [accountInfo, setAccountInfo] = useState('');
@@ -130,6 +125,8 @@ const AccountLoading = () => {
             dispatch(newAccountStatusData());
         } else if (newAccountErrorMessage !== null) {
             setError(newAccountErrorMessage);
+
+            dispatch(newAccountStatusData());
         }
     }, [newAccount, newAccountErrorMessage]);
     useEffect(() => {
@@ -138,22 +135,21 @@ const AccountLoading = () => {
             errorMessages === 'Try Again' ||
             errorMessages === 'Bank Account has not been created for this user'
         ) {
+            //console.log('done');
             // if (count === 1) {
-            const interval = setInterval(() => {
-                dispatch(newAccountStatusData());
-            }, 30000);
-            // return () => {
-            //     clearInterval(interval);
-            // };
+            dispatch(newAccountStatusData());
+
             // }
             // else {
             //     router.push('/Verify/Waiting');
             // }
         }
         if (accountStatuss !== null) {
-            //console.log(accountStatus.messages, errorMessages);
-            router.push('/Succes');
+            // //console.log(accountStatus.messages, errorMessages);
+            router.push('/Success');
         }
+    }, [errorMessages, accountStatuss]);
+    useEffect(() => {
         if (timer === '00:00:00') {
             dispatch(logoutAction());
             if (!localStorage.getItem('user')) {
@@ -169,7 +165,7 @@ const AccountLoading = () => {
         //         'Your account creatio is taking a while, once its completed an email will be sent to you'
         //     );
         // }, 60000);
-    }, [errorMessages, accountStatuss, timer]);
+    }, [timer]);
 
     return (
         <>
@@ -185,7 +181,7 @@ const AccountLoading = () => {
                         ) : timer <= '00:00:10' ? (
                             <div>
                                 <p className={styles.error}>{timer}</p>
-                                <p>{accountWait}</p>
+                                <p className={styles.error}>{accountWait}</p>
                             </div>
                         ) : (
                             <>

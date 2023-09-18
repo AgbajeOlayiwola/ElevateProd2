@@ -1,0 +1,62 @@
+.tbody {
+    border-bottom: 2px solid #f6f6f6;
+}
+
+.staus p {
+    margin: 0px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #00b94a;
+}
+.staus {
+    padding: 4px;
+    text-align: center;
+    background: rgba(0, 185, 74, 0.19);
+    border-radius: 2px;
+}
+.name p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    line-height: 19px;
+
+    color: #102572 !important;
+}
+.num p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #69940d !important;
+}
+.tbody tr td p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    color: #2f2f2f;
+}
+
+.status {
+    color: #ff2e00 !important;
+}
+
+.pending {
+    color: #ceb407 !important;
+}
+
+.success {
+    color: #5dbe3f !important;
+}

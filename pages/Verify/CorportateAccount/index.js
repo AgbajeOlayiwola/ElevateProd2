@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 import axiosInstance from '../../../redux/helper/apiClient';
 import apiRoutes from '../../../redux/helper/apiRoutes';
-import { logoutAction } from '../../../redux/actions/actions';
+import { logoutAction } from '../../../redux/actions/logOutAction';
+import { newAccountStatusData } from '../../../redux/actions/newAccountStatusAction';
 
 const CorporateAccount = () => {
     const [accountInfo, setAccountInfo] = useState('');
@@ -112,38 +113,42 @@ const CorporateAccount = () => {
         }
         axiosInstance
             .post(
-                `https://testvate.live${apiRoutes.corpNewUser}`,
+                `https://mysmeapp.ecobank.com:8443${apiRoutes.corpNewUser}`,
+
                 accountData,
                 {
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-Client-Type': 'web',
                         Authorization: `Bearer ${cookie}`
                     }
                 }
             )
             .then((response) => {
-                //console.log'create New Account', response.data);
+                // //console.log'create New Account', response.data);
                 if (response.data.message === 'success') {
-                    setInterval(() => {
-                        axiosInstance
-                            .get(`https://testvate.livebank-account/status`, {
+                    axiosInstance
+                        .get(
+                            `https://mysmeapp.ecobank.com:8443/bank-account/status`,
+                            {
                                 headers: {
                                     'Content-Type': 'application/json',
+                                    'X-Client-Type': 'web',
                                     Authorization: `Bearer ${cookie}`
                                 }
-                            })
-                            .then((response) => {
-                                //console.log'Accoutn Status', response);
-                                setAccountDone(response.data.message);
-                            })
-                            .catch((error) => {
-                                //console.logerror.response.data.message);
-                            });
-                    }, 10000);
+                            }
+                        )
+                        .then((response) => {
+                            // //console.log'Accoutn Status', response);
+                            setAccountDone(response.data.message);
+                        })
+                        .catch((error) => {
+                            // //console.logerror.response.data.message);
+                        });
                 }
             })
             .catch((error) => {
-                //console.log
+                // //console.log
                 // 'create new account Error:',
                 // error.response.data.message
                 // );
@@ -153,29 +158,31 @@ const CorporateAccount = () => {
                     //     'You already have an account with us. Please contact us for more information' ||
                     error
                 ) {
-                    setInterval(() => {
-                        axiosInstance
-                            .get(`https://testvate.livebank-account/status`, {
+                    axiosInstance
+                        .get(
+                            `https://mysmeapp.ecobank.com:8443/bank-account/status`,
+                            {
                                 headers: {
                                     'Content-Type': 'application/json',
+                                    'X-Client-Type': 'web',
                                     Authorization: `Bearer ${cookie}`
                                 }
-                            })
-                            .then((response) => {
-                                //console.log'Accoutn Status', response);
-                                setAccountDone(response.data.message);
-                            })
-                            .catch((error) => {
-                                //console.logerror.response.data.message);
-                            });
-                    }, 30000);
+                            }
+                        )
+                        .then((response) => {
+                            // //console.log'Accoutn Status', response);
+                            setAccountDone(response.data.message);
+                        })
+                        .catch((error) => {
+                            // //console.logerror.response.data.message);
+                        });
                 }
             });
     };
-    //console.log(accountDone);
+    // //console.log(accountDone);
     useEffect(() => {
         if (accountDone === 'success') {
-            router.push('/Succes/CorpSuccess');
+            router.push('/Success/CorpSuccess');
         }
     }, [errorMes, accountDone]);
     useEffect(() => {
@@ -188,14 +195,12 @@ const CorporateAccount = () => {
             errorMes === 'Try Again' ||
             errorMes === 'Bank Account has not been created for this user'
         ) {
-            setTimeout(() => {
-                dispatch(newAccountStatusData());
-            }, 10000);
+            dispatch(newAccountStatusData());
         }
 
         if (accountDone.message === 'success') {
-            //console.logaccountStatus.messages, errorMessages);
-            router.push('/Succes');
+            // //console.logaccountStatus.messages, errorMessages);
+            router.push('/Success');
         }
 
         if (timer === '00:00:00') {

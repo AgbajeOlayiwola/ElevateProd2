@@ -20,7 +20,7 @@ const Levelup = ({ account }) => {
                     </p>
                 </div>
             </div>
-            <Link href="./AccountUpgrade">
+            <Link href="/AccountUpgrade">
                 <button>
                     {account.customerCategory === 'INDIVIDUAL'
                         ? 'Upgrade Account'

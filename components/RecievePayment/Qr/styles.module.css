@@ -1,0 +1,11 @@
+.qrInp{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+.qrInp div{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}

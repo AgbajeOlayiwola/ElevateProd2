@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBeneficiariesData } from '../../../redux/actions/actions';
 import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
+import { getBeneficiariesData } from '../../../redux/actions/getBeneficiariesAction';
 
 const Beneficiary = ({ action }) => {
     const { getBeneficiaries } = useSelector(
@@ -55,10 +55,9 @@ const Beneficiary = ({ action }) => {
                         .map((beneficiaries, index) => {
                             {
                                 beneficiaries
-                                    ? (beneficiaryName =
-                                          beneficiaries.beneficiaryName.split(
-                                              ' '
-                                          ))
+                                    ? (beneficiaryName = beneficiaries.beneficiaryName.split(
+                                          ' '
+                                      ))
                                     : null;
                             }
                             return (

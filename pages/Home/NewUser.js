@@ -3,7 +3,6 @@ import styles from './styles.module.css';
 import { ButtonComp } from '../../components';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUserAction } from '../../redux/actions/actions';
 import Link from 'next/link';
 import Loader from '../../components/ReusableComponents/Loader';
 import { encrypt } from '../../redux/helper/hash';
@@ -14,6 +13,7 @@ import InputTag from '../../components/ReusableComponents/Input';
 import Modal from 'react-modal';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
+import { createUserAction } from '../../redux/actions/createUserAction';
 
 const customStyles = {
     content: {
@@ -25,7 +25,8 @@ const customStyles = {
         width: '40vw',
         color: '#3e3e3e',
         marginRight: '-50%',
-        transform: 'translate(-50%, -50%)'
+        transform: 'translate(-50%, -50%)',
+        zIndex: 999999
     }
 };
 
@@ -149,7 +150,7 @@ const NewUser = ({ selectCountry }) => {
     };
     const userName = (e) => {
         setPname(e.target.value);
-        //console.logpName);
+        // //console.logpName);
     };
     // display Lofg in with end
     const types = (type) => {
@@ -165,7 +166,7 @@ const NewUser = ({ selectCountry }) => {
         formState: { errors }
     } = useForm();
     const onSubmit = (data) => {
-        //console.logdata);
+        // //console.logdata);
         if (selectCountry === '') {
             setError('Choose a country');
         } else {
@@ -189,14 +190,14 @@ const NewUser = ({ selectCountry }) => {
                 affiliateCode: 'ENG'
             };
             setLoading(true);
-            //console.logerrorMessage);
+            // //console.logerrorMessage);
             dispatch(createUserAction(postData));
         } else {
             passwordMatch;
         }
     };
     const sentSIgnUp = () => {
-        //console.logerrorMessage);
+        // //console.logerrorMessage);
         if (errorMessage !== null) {
             setError(errorMessage);
             setLoading(false);
@@ -211,29 +212,31 @@ const NewUser = ({ selectCountry }) => {
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             {error ? <p className={styles.error}>{error}</p> : null}
             <Tooltip anchorId="my-element" />
-            <div className={styles.homeForm}>
-                <div className={styles.secondSectionMidCountry}>
-                    <label
-                        htmlFor=""
-                        id="my-element"
-                        data-tooltip-content="This is the name you will be known on the app with"
-                    >
-                        Preferred user name/alias
-                    </label>
-                    <input
-                        type="text"
-                        {...register('userName', {
-                            required: 'Preferred user name/alias  is required',
-                            pattern: {
-                                value: /^[A-Za-z ]+$/i,
-                                message: 'Only Alphabelts allowed'
-                            }
-                        })}
-                        onInput={userName}
-                        value={preferredName}
-                        placeholder="Preferred user name/alias"
-                    />
-                    {/* <InputTag
+            <div>
+                <div className={styles.homeForm}>
+                    <div className={styles.secondSectionMidCountry}>
+                        <label
+                            htmlFor=""
+                            id="my-element"
+                            data-tooltip-content="This is the name you will be known on the app with"
+                        >
+                            Preferred user name/alias
+                        </label>
+                        <input
+                            type="text"
+                            {...register('userName', {
+                                required:
+                                    'Preferred user name/alias  is required',
+                                pattern: {
+                                    value: /^[A-Za-z ]+$/i,
+                                    message: 'Only Alphabelts allowed'
+                                }
+                            })}
+                            onInput={userName}
+                            value={preferredName}
+                            placeholder="Preferred user name/alias"
+                        />
+                        {/* <InputTag
                         label="Preferred Name"
                         placeholder="Preferred Name"
                         type="text"
@@ -244,101 +247,106 @@ const NewUser = ({ selectCountry }) => {
                         value={preferredName}
                         action={userName}
                     /> */}
-                    {errors.userName ? (
-                        <p className={styles.error}>
-                            {errors.userName?.message}
-                        </p>
-                    ) : null}
-                </div>
-                <div className={styles.secondSectionMidYes}>
-                    <label htmlFor="">Email Address</label>
-                    <input
-                        type="email"
-                        {...register('email', {
-                            required: 'Email is required',
-                            pattern: {
-                                value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                message: 'Invalid email address'
-                            }
-                        })}
-                        onInput={handleEmail}
-                        value={email}
-                        placeholder="Enter your Email"
-                    />
-                    <p className={styles.error}>{errors.email?.message}</p>
-                </div>
-            </div>
-            <div className={styles.homeForm}>
-                <div className={styles.secondSectionMidCountry}>
-                    <label htmlFor="">Create Password</label>
-                    <div className={styles.divs}>
-                        <input
-                            type={outType ? 'text' : 'password'}
-                            placeholder="Enter Password"
-                            onInput={handlePwd}
-                        />
-                        <Visbility typeSet={types} />
+                        {errors.userName ? (
+                            <p className={styles.error}>
+                                {errors.userName?.message}
+                            </p>
+                        ) : null}
                     </div>
-                    {errorMessages === '' ? null : (
-                        <div className={styles.errorCont}>
-                            <div
-                                className={
-                                    errorMessages === 'Strong'
-                                        ? styles.strong
-                                        : errorMessages === 'Medium'
-                                        ? styles.medium
-                                        : errorMessages === 'Weak'
-                                        ? styles.errors
-                                        : styles.strong
+                    <div className={styles.secondSectionMidYes}>
+                        <label htmlFor="">Email Address</label>
+                        <input
+                            type="email"
+                            {...register('email', {
+                                required: 'Email is required',
+                                pattern: {
+                                    value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                    message: 'Invalid email address'
                                 }
-                            >
-                                <p>{errorMessages}</p>
-                            </div>
-                        </div>
-                    )}
-                </div>
-                <div className={styles.secondSectionMidYes}>
-                    <label htmlFor="">Confirm Password</label>
-                    <div className={styles.divs}>
-                        <input
-                            placeholder="Enter Password "
-                            type={outTyped ? 'text' : 'password'}
-                            onChange={handlePaswword}
+                            })}
+                            onInput={handleEmail}
+                            value={email}
+                            placeholder="Enter your Email"
                         />
-                        <Visbility typeSet={typed} />
+                        <p className={styles.error}>{errors.email?.message}</p>
                     </div>
-                    {password == confirmPassword ? null : (
-                        <>
-                            <p className={styles.error}>{passwordMatch}</p>
-                            <div className={styles.sameErroSize}>
-                                <p
+                </div>
+                <div className={styles.homeForm}>
+                    <div className={styles.secondSectionMidCountry}>
+                        <label htmlFor="">Create Password</label>
+                        <div className={styles.divs}>
+                            <input
+                                type={outType ? 'text' : 'password'}
+                                placeholder="Enter Password"
+                                onInput={handlePwd}
+                            />
+                            <Visbility typeSet={types} input="input" />
+                        </div>
+                        {errorMessages === '' ? null : (
+                            <div className={styles.errorCont}>
+                                <div
                                     className={
-                                        numbers ? styles.success : styles.error
+                                        errorMessages === 'Strong'
+                                            ? styles.strong
+                                            : errorMessages === 'Medium'
+                                            ? styles.medium
+                                            : errorMessages === 'Weak'
+                                            ? styles.errors
+                                            : styles.strong
                                     }
                                 >
-                                    Password should contain atleast 1 number
-                                </p>
-                                <p
-                                    className={
-                                        symbol ? styles.success : styles.error
-                                    }
-                                >
-                                    Password should contain at least 1 special
-                                    character
-                                </p>
-                                <p
-                                    className={
-                                        uppercase
-                                            ? styles.success
-                                            : styles.error
-                                    }
-                                >
-                                    Password should contain at least 1 Uppercase
-                                    character
-                                </p>
+                                    <p>{errorMessages}</p>
+                                </div>
                             </div>
-                        </>
-                    )}
+                        )}
+                    </div>
+                    <div className={styles.secondSectionMidYes}>
+                        <label htmlFor="">Confirm Password</label>
+                        <div className={styles.divs}>
+                            <input
+                                placeholder="Enter Password "
+                                type={outTyped ? 'text' : 'password'}
+                                onChange={handlePaswword}
+                            />
+                            <Visbility typeSet={typed} input="input" />
+                        </div>
+                        {password == confirmPassword ? null : (
+                            <>
+                                <p className={styles.error}>{passwordMatch}</p>
+                                <div className={styles.sameErroSize}>
+                                    <p
+                                        className={
+                                            numbers
+                                                ? styles.success
+                                                : styles.error
+                                        }
+                                    >
+                                        Password should contain atleast 1 number
+                                    </p>
+                                    <p
+                                        className={
+                                            symbol
+                                                ? styles.success
+                                                : styles.error
+                                        }
+                                    >
+                                        Password should contain at least 1
+                                        special character
+                                    </p>
+                                    <p
+                                        className={
+                                            uppercase
+                                                ? styles.success
+                                                : styles.error
+                                        }
+                                    >
+                                        Password should contain at least 1
+                                        Uppercase character
+                                    </p>
+                                </div>
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
             <Modal
@@ -1205,18 +1213,18 @@ const NewUser = ({ selectCountry }) => {
                     </div>
                 </ul>
             </Modal>
+            <p className={styles.alreadyTC}>
+                <input
+                    type="radio"
+                    onChange={() => setActiveBtn(true)}
+                    className={styles.termms}
+                />
+                I agree with ellevate app{' '}
+                <span className={styles.termsBtn} onClick={openModal}>
+                    <span>Terms and Conditions</span>
+                </span>
+            </p>
             <div className={styles.secondSectionMidCountry}>
-                <p className={styles.alreadyTC}>
-                    <input
-                        type="radio"
-                        onChange={() => setActiveBtn(true)}
-                        className={styles.termms}
-                    />
-                    I agree with ellevate app{' '}
-                    <span className={styles.termsBtn} onClick={openModal}>
-                        <span>Terms and Conditions</span>
-                    </span>
-                </p>
                 <ButtonComp
                     disabled={activeBtn}
                     active={activeBtn ? 'active' : 'inactive'}
@@ -1225,14 +1233,13 @@ const NewUser = ({ selectCountry }) => {
                     loads={loads}
                     err={errorMessage}
                 />
-
-                <p className={styles.already}>
-                    Already have an account?{' '}
-                    <Link href="../Auth/Login">
-                        <span>Sign in</span>
-                    </Link>
-                </p>
             </div>
+            <p className={styles.already}>
+                Already have an account?{' '}
+                <Link href="/Auth/Login">
+                    <span>Sign in</span>
+                </Link>
+            </p>
         </form>
     );
 };

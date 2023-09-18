@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Link from 'next/link';
-import { CompProfile, statesData } from '../../redux/actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { CompProfile } from '../../redux/actions/completeProfile';
+import { statesData } from '../../redux/actions/statesAction';
 
 const VerifyAddress = () => {
     const dispatch = useDispatch();
@@ -24,13 +25,13 @@ const VerifyAddress = () => {
             setLongitude(position.coords.longitude);
         });
     }, []);
-    //console.logaddress);
+    // //console.logaddress);
     const { profile } = useSelector((state) => state.profile);
     useEffect(() => {
         dispatch(CompProfile());
     }, []);
     const newAccountTest1 = () => {
-        //console.logdetails);
+        // //console.logdetails);
         if (profile !== null) {
             setDetails(profile.data);
         }

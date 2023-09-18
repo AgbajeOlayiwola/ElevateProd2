@@ -29,19 +29,17 @@ import {
 import styles from './styles.module.css';
 import Progressbar from '../../../ReusableComponents/Progressbar';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    businessCategoriesData,
-    CompleteBusinessProfile,
-    CompProfile,
-    createNewCorpUserAccount,
-    createNewUserAccount,
-    statesData
-} from '../../../../redux/actions/actions';
+
 import { useRouter } from 'next/router';
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import CircleSvg from '../../../ReusableComponents/ReusableSvgComponents/CircleSvg';
 import BusinessCategory from '../../../ReusableComponents/BusinessCategory';
+import { CompleteBusinessProfile } from '../../../../redux/actions/completeBusinessProfileAction';
+import { createNewUserAccount } from '../../../../redux/actions/createNwUserAccountAction';
+import { createNewCorpUserAccount } from '../../../../redux/actions/createNewCorporateUserAction';
+import { businessCategoriesData } from '../../../../redux/actions/businessCategoriesAction';
+import { statesData } from '../../../../redux/actions/statesAction';
 const StepFourCompProfile2BizDetails = ({
     handleShowSuccessStep,
     formData,
@@ -57,7 +55,7 @@ const StepFourCompProfile2BizDetails = ({
     } = useForm();
 
     // const sendOTP = (data) => {
-    //     //console.log(data);
+    //     // //console.log(data);
     // };
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
@@ -101,7 +99,7 @@ const StepFourCompProfile2BizDetails = ({
             city: formData.city,
             lga: formData.localGoverment
         };
-        //console.log(commpleteProfileData);
+        // //console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         const accountData = {
@@ -122,7 +120,7 @@ const StepFourCompProfile2BizDetails = ({
             city: formData.city,
             lga: formData.localGoverment
         };
-        //console.log(commpleteProfileData);
+        // //console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         const accountData = {
@@ -144,7 +142,7 @@ const StepFourCompProfile2BizDetails = ({
             city: formData.city,
             lga: formData.localGoverment
         };
-        //console.log(commpleteProfileData);
+        // //console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         const accountData = {
@@ -161,12 +159,12 @@ const StepFourCompProfile2BizDetails = ({
             newAccountErrorMessage ===
                 'You already have an account with us. Please contact us for more information'
         ) {
-            //console.log(errorMessages);
+            // //console.log(errorMessages);
             router.push('../Verify/Account/loading');
         } else if (accountStatus.message === 'Try Again') {
             router.push('../Verify/Account/loading');
         } else if (accountStatus.message === 'SUCCESS') {
-            router.push('/Succes');
+            router.push('/Success');
         }
     };
 
@@ -187,7 +185,7 @@ const StepFourCompProfile2BizDetails = ({
         });
 
         // setProfileCont(profile.data);
-        //console.log(profileCont.isBusinessRegistered);
+        // //console.log(profileCont.isBusinessRegistered);
         // createCorp();
     }, [business, profile]);
 
@@ -229,7 +227,7 @@ const StepFourCompProfile2BizDetails = ({
             city: formData.city,
             lga: formData.localGoverment
         };
-        //console.log(commpleteProfileData);
+        // //console.log(commpleteProfileData);
         dispatch(CompleteBusinessProfile(commpleteProfileData));
 
         const accountData = {
@@ -239,10 +237,10 @@ const StepFourCompProfile2BizDetails = ({
         axiosInstance
             .post(`${apiRoutes.corpNewUser}`, accountData)
             .then((response) => {
-                //console.log('create New Account', response.data);
+                // //console.log('create New Account', response.data);
             })
             .catch((error) => {
-                //console.log(
+                // //console.log(
                 //     'create new account Error:',
                 //     error.response.data.message
                 // );
@@ -494,7 +492,7 @@ const StepFourCompProfile2BizDetails = ({
                         </div>
                     </div>
                 </LastFieldAndButton>
-                {/* <Link href="/Succes"> */}
+                {/* <Link href="/Success"> */}
                 {/* <div>
                     <div className={styles.terms}>
                         <CircleSvg
