@@ -39,7 +39,6 @@ const RegisteredForm = ({
     );
 
     useEffect(() => {
-        setGetRCFirst(false);
         if (getRC?.data?.dataFromCac?.companyName !== undefined) {
             setBusinessName(getRC?.data?.dataFromCac?.companyName);
             setGetRCFirst(false);
