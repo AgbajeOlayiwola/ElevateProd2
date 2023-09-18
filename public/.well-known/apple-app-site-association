@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "FX5Z9W2984.com.ecobank.ellevate",
+        "paths": [
+          "/*"
+        ]
+      }
+    ]
+  }
+}
