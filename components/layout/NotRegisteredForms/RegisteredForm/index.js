@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { loadCountry } from '../../../../redux/actions/actions';
 import Head from 'next/head';
 import Loader from '../../../ReusableComponents/Loader';
-import { getRCDetails } from '../../../../redux/actions/actions';
+import { getRCDetails } from '../../../../redux/actions/getRcDetailsAction';
 import Lottie from 'react-lottie';
 import socialdata from '../../../ReusableComponents/Lotties/loading.json';
 const RegisteredForm = ({
@@ -39,6 +39,7 @@ const RegisteredForm = ({
     );
 
     useEffect(() => {
+        setGetRCFirst(false);
         if (getRC?.data?.dataFromCac?.companyName !== undefined) {
             setBusinessName(getRC?.data?.dataFromCac?.companyName);
             setGetRCFirst(false);
@@ -161,12 +162,15 @@ const RegisteredForm = ({
                                     rcnumber: event.target.value
                                 });
 
-                                if (event.target.value.length == 9) {
+                                if (event.target.value.length >= 3) {
                                     setGetRCFirst(true);
-                                    const data = {
-                                        registerationNumber: event.target.value
-                                    };
-                                    dispatch(getRCDetails(data));
+                                    setTimeout(() => {
+                                        const data = {
+                                            registerationNumber:
+                                                event.target.value
+                                        };
+                                        dispatch(getRCDetails(data));
+                                    }, 3000); // 3000 milliseconds = 3 seconds
                                 } else {
                                     setBusinessName('');
                                 }
