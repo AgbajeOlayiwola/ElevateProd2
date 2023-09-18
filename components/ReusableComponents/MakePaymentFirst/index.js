@@ -58,6 +58,24 @@ const MakePaymentFirst = ({
             setBeneficiaries(getBeneficiaries);
         }
     }, [getBeneficiaries]);
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
+
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        console.log(width);
+    };
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [width]);
     return (
         <Overlay overlay={overlay}>
             <div className={styles.firstDiv} ref={myref}>
@@ -117,16 +135,26 @@ const MakePaymentFirst = ({
                     )}
                 </div>
                 <div>
-                    <img
-                        src="../../Assets/Images/bluemoney.png"
-                        alt=""
-                        className={styles.greenImg}
-                    />
-                    <CloseButton
-                        action={closeAction}
-                        classes={styles.closebtn}
-                        color="white"
-                    />
+                    {width > 950 ? (
+                        <div>
+                            <img
+                                src="../../Assets/Images/bluemoney.png"
+                                alt=""
+                                className={styles.greenImg}
+                            />
+                            <CloseButton
+                                action={closeAction}
+                                classes={styles.closebtn}
+                                color="white"
+                            />
+                        </div>
+                    ) : (
+                        <CloseButton
+                            action={closeAction}
+                            classes={styles.closebtn}
+                            color="grey"
+                        />
+                    )}
                 </div>
             </div>
         </Overlay>

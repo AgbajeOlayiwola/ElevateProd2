@@ -928,4 +928,18 @@
     height: 80vh;
     overflow: scroll;
     }
+    .successcont {
+        width: 92%;
+        max-width: 500px;
+        background: #fefefe;
+        border: 1px solid rgba(219, 219, 219, 0.6);
+        /* border-radius: 50px; */
+        margin: 32px auto;
+        /* display: flex; */
+        position: absolute;
+        padding: 0px;
+        top: 3%;
+        left: 4%;
+        z-index: 10;
+    }
 }

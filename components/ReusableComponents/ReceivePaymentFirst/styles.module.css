@@ -179,4 +179,29 @@ left: 3%;
 height: 80vh;
 z-index: 10;
     }
+    .firstBody {
+        width: 100%;
+        overflow: scroll;
+    }
+    .firstBody h2 {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 29px;
+        color: #102572;
+        font-family: 'Inter', sans-serif;
+        margin: 0px;
+        /* margin-bottom: 32px; */
+    }
+    .formGroup input, .formGroup textarea {
+        width: 100%;
+        background: #f8f8f8;
+        border: 1px solid #dbdbdb;
+        border-radius: 12px;
+        color: #3e3e3e;
+        font-size: 14px;
+        font-family: 'Inter', sans-serif;
+        padding: 11px;
+        margin: 0px;
+    }
 }

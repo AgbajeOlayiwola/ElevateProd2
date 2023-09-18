@@ -32,7 +32,7 @@ const BankStatments = () => {
     });
     const usersPerPage = 15;
     const pagesVisited = pageNumber * usersPerPage;
-    const pageCount = Math.ceil(tableDetails.length / usersPerPage);
+    const pageCount = Math.ceil(tableDetails?.length / usersPerPage);
 
     const [date, setDate] = useState(false);
     const [success, setSuccess] = useState(false);
