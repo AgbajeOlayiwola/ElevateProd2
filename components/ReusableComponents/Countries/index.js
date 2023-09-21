@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
+import Loader from '../Loader';
 
 const Countriess = ({
     countryState,
@@ -10,13 +11,17 @@ const Countriess = ({
     error,
     setSelectCountry,
     setError,
-    setCountryState
+    setCountryState,
+    isLoading
 }) => {
     return (
         <>
             <div className={styles.selectCont}>
-                <div className={styles.selectCountry} onClick={displayCountry}>
-                    {selectCountry ? (
+                <div
+                    className={styles.selectCountry}
+                    onClick={() => !isLoading && displayCountry()}
+                >
+                    {selectCountry && !isLoading ? (
                         <div>
                             <div className={styles.flagDiv}>
                                 <div className={styles.flags}>
@@ -36,32 +41,38 @@ const Countriess = ({
                             <img src="/../../Assets/Svgs/dropdownSvg.svg" />
                             {/* </div> */}
                         </div>
-                    ) : (
-                        <>
-                            <p>Choose Country</p>
-                        </>
-                    )}
+                    ) : null}
+                    {!selectCountry && !isLoading ? (
+                        <p>Choose Country</p>
+                    ) : null}
+                    {isLoading && <Loader />}
                 </div>
+
                 {countryState && (
                     <ul className={styles.selectOption}>
-                        {countrys.map((item, index) => {
+                        {countrys?.map((item, index) => {
                             return (
                                 <li
                                     key={index}
                                     onClick={() => {
-                                        if (item.name !== 'Nigeria') {
-                                            setError(
-                                                'This App is  available in Nigeria currently'
-                                            );
-                                            setCountryState(false);
-                                        } else {
+                                        if (item?.name) {
                                             setSelectCountry(item);
-
                                             setCountryState(false);
+                                            localStorage.setItem(
+                                                'affiliateCode',
+                                                item?.affiliateCode
+                                            );
+                                            if (
+                                                localStorage.getItem(
+                                                    'affiliateCode'
+                                                )
+                                            ) {
+                                                localStorage.setItem(
+                                                    'affiliateCode',
+                                                    item?.affiliateCode
+                                                );
+                                            }
                                         }
-                                        // if (error !== '') {
-                                        //     setError('');
-                                        // }
                                     }}
                                 >
                                     <img
@@ -79,37 +90,6 @@ const Countriess = ({
                     </ul>
                 )}
             </div>
-
-            {/* <select
-                                    className={styles.select}
-                                    {...register('countriess', {
-                                        required:
-                                            'Destination Country is Required'
-                                    })}
-                                    name="countriess"
-                                >
-                                    <option value="">Choose Country</option>
-                                    {countrys.map((item, index) => {
-                                        // //console.logitem.nme);
-                                        return (
-                                        <StyledOption
-                                            key={index}
-                                            value={item.name}
-                                        >
-                                            <span>
-                                                <img
-                                                    src="../../Assets/Images/bluemoney.png"
-                                                    alt=""
-                                                />
-                                            </span>{' '}
-                                            {item.name}
-                                        </StyledOption>
-                                        );
-                                    })}
-                                </select>
-
-                                */}
-            {/* {error ? <p className={styles.error}>{error}</p> : null} */}
         </>
     );
 };

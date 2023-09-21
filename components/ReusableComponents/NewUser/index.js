@@ -1,0 +1,339 @@
+import React, { useEffect, useState } from 'react';
+import styles from './styles.module.css';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
+import validator from 'validator';
+import { useRouter } from 'next/router';
+import Modal from 'react-modal';
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
+import ButtonComp from '../Button';
+import Visbility from '../Eyeysvg';
+import TermsConditions from '../TermmsConditions';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import { useCreateAccountMutation } from '../../../redux/api/authApi';
+import { setProfile } from '../../../redux/slices/profile';
+
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        height: '70vh',
+        width: '40vw',
+        color: '#3e3e3e',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        zIndex: 999999
+    }
+};
+
+const NewUser = ({ selectCountry }) => {
+    let subtitle;
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const [error, setError] = useState('');
+    const [errorMessages, setErrorMessages] = useState('');
+    const [preferredName, setPname] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [count, setCount] = useState([]);
+    const [outType, setOutType] = useState();
+    const [outTyped, setOutTyped] = useState();
+    const [activeBtn, setActiveBtn] = useState(false);
+    const [passwordMatch, setPasswordMatch] = useState('');
+    const [symbol, setSymbol] = useState(false);
+    const [uppercase, setUppercase] = useState(false);
+    const [numbers, setNumbers] = useState(false);
+    const [loads, setLoads] = useState(false);
+
+    // display Lofg in with end
+    const types = (type) => {
+        setOutType(type);
+    };
+    const typed = (type) => {
+        setOutTyped(type);
+    };
+    const [
+        createAccount,
+        {
+            data: createAccountData,
+            isLoading: createAccountLoad,
+            isSuccess: createAccountSuccess,
+            isError: createAccountFalse,
+            error: createAccountErr,
+            reset: createAccountReset
+        }
+    ] = useCreateAccountMutation();
+
+    const handleProceed = async (val) => {
+        await dispatch(setProfile(val?.data));
+        router.push('/Verify');
+    };
+
+    useEffect(() => {
+        if (createAccountSuccess) {
+            handleProceed(createAccountData);
+            setLoading(false);
+        }
+    }, [createAccountSuccess]);
+
+    const initSchema = yup.object().shape({
+        confirm_password: yup
+            .string()
+            .required('Please confirm password')
+            .oneOf([yup.ref('password'), null], 'Passwords must match'),
+        email: yup
+            .string()
+            .trim()
+            .email('Enter a valid email')
+            .required('Email is required'),
+        password: yup.string().required('Please enter your password'),
+        // .matches(
+        //     /^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#\$%\^&\*])(?=.{8,})/,
+        //     'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+        // ),
+        preferredName: yup.string().required('Preffered name is required')
+    });
+
+    const initialValues = {
+        email: '',
+        password: '',
+        preferredName: ''
+    };
+
+    const onSubmit = (data) => {
+        if (selectCountry === '') {
+            setError('Choose a country');
+        } else {
+            window.localStorage.setItem(
+                'country',
+                JSON.stringify(selectCountry)
+            );
+        }
+        setError('');
+        if (
+            password === confirmPassword &&
+            symbol === true &&
+            numbers === true
+        ) {
+            setLoads((prev) => !prev);
+
+            // //console.logerrorMessage);
+        } else {
+            passwordMatch;
+        }
+    };
+
+    return (
+        <>
+            <Formik
+                validationSchema={initSchema}
+                initialValues={initialValues}
+                // validateOnChange={true}
+                onSubmit={(values, { setSubmitting }) => {
+                    createAccount(values);
+                    setLoading(true);
+                    setSubmitting(false);
+                }}
+            >
+                {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    setFieldValue,
+                    handleSubmit
+                }) => (
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                        <p className={styles.error}>
+                            {createAccountErr
+                                ? createAccountErr?.data?.message
+                                : null}
+                        </p>
+                        <Tooltip anchorId="my-element" />
+                        <div>
+                            <div className={styles.homeForm}>
+                                <div className={styles.secondSectionMidCountry}>
+                                    <label
+                                        htmlFor="preferredName"
+                                        id="my-element"
+                                        data-tooltip-content="This is the name you will be known on the app with"
+                                    >
+                                        Preferred user name/alias
+                                    </label>
+                                    <input
+                                        onChange={(e) =>
+                                            setFieldValue(
+                                                'preferredName',
+                                                e.target.value
+                                            )
+                                        }
+                                        type="text"
+                                        name="preferredName"
+                                        placeholder="Preferred user name/alias"
+                                    />
+                                    <p className={styles.error}>
+                                        {errors ? (
+                                            <>{errors?.preferredName}</>
+                                        ) : null}
+                                    </p>
+                                </div>
+
+                                <div className={styles.secondSectionMidYes}>
+                                    <label htmlFor="">Email Address</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        onChange={(e) =>
+                                            setFieldValue(
+                                                'email',
+                                                e.target.value
+                                            )
+                                        }
+                                        placeholder="Enter your Email"
+                                    />
+                                    <p className={styles.error}>
+                                        {errors ? <>{errors?.email}</> : null}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className={styles.homeForm}>
+                                <div className={styles.secondSectionMidCountry}>
+                                    <label htmlFor="">Create Password</label>
+                                    <div className={styles.divs}>
+                                        <input
+                                            type={outType ? 'text' : 'password'}
+                                            placeholder="Enter Password"
+                                            name="password"
+                                            onChange={(e) =>
+                                                setFieldValue(
+                                                    'password',
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                        <Visbility
+                                            typeSet={types}
+                                            input="input"
+                                        />
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors ? (
+                                            <>{errors?.password}</>
+                                        ) : null}
+                                    </p>
+                                </div>
+                                <div className={styles.secondSectionMidYes}>
+                                    <label htmlFor="">Confirm Password</label>
+                                    <div className={styles.divs}>
+                                        <input
+                                            placeholder="Enter Password "
+                                            type={
+                                                outTyped ? 'text' : 'password'
+                                            }
+                                            name="confirm_password"
+                                            onChange={(e) =>
+                                                setFieldValue(
+                                                    'confirm_password',
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                        <Visbility
+                                            typeSet={typed}
+                                            input="input"
+                                        />
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors ? (
+                                            <>{errors?.confirm_password}</>
+                                        ) : null}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <Modal
+                            isOpen={modalIsOpen}
+                            onAfterOpen={afterOpenModal}
+                            onRequestClose={closeModal}
+                            style={customStyles}
+                            contentLabel="Example Modal"
+                        >
+                            <ul>
+                                <div className={styles.headerDiv}>
+                                    <h2
+                                        ref={(_subtitle) =>
+                                            (subtitle = _subtitle)
+                                        }
+                                    >
+                                        GLOBAL ACCOUNT TERMS AND CONDITIONS DEC
+                                        2022
+                                    </h2>
+                                    <h1
+                                        className={styles.errorX}
+                                        onClick={closeModal}
+                                    >
+                                        X
+                                    </h1>
+                                </div>
+
+                                <TermsConditions />
+                            </ul>
+                        </Modal>
+                        <p className={styles.alreadyTC}>
+                            <input
+                                type="radio"
+                                onChange={() => setActiveBtn(true)}
+                                className={styles.termms}
+                            />
+                            I agree with ellevate app{' '}
+                            <span
+                                className={styles.termsBtn}
+                                onClick={openModal}
+                            >
+                                <span>Terms and Conditions</span>
+                            </span>
+                        </p>
+                        <div className={styles.secondSectionMidCountry}>
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text="Create account"
+                                type="submit"
+                                loads={createAccountLoad}
+                            />
+                        </div>
+                        <p className={styles.already}>
+                            Already have an account?{' '}
+                            <Link href="/Auth/Login">
+                                <span>Sign in</span>
+                            </Link>
+                        </p>
+                    </form>
+                )}
+            </Formik>
+        </>
+    );
+};
+export default NewUser;

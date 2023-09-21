@@ -1397,3 +1397,71 @@ export const dateData = [
         cash: '2000'
     }
 ];
+export const affiliateCountries = [
+    {
+        name: 'Nigeria',
+        affiliateCode: 'ENG',
+        baseCurrency: 'NGN',
+        countryCode: '234',
+        flags: {
+            svg: 'https://flagcdn.com/ng.svg',
+            png: 'https://flagcdn.com/w320/ng.png'
+        },
+        labaleId: 'Bvn Number',
+        label: 'Bvn Number'
+    },
+    {
+        name: 'Cameroon',
+        affiliateCode: 'ECM',
+        baseCurrency: 'XAF',
+        countryCode: '237',
+        flags: {
+            svg: 'https://flagcdn.com/cm.svg',
+            png: 'https://flagcdn.com/w320/cm.png'
+        }
+    },
+    {
+        name: 'Kenya',
+        affiliateCode: 'EKE',
+        baseCurrency: 'KES',
+        countryCode: '254',
+        flags: {
+            svg: 'https://flagcdn.com/ke.svg',
+            png: 'https://flagcdn.com/w320/ke.png'
+        },
+        labaleId: 'Kenya ID number',
+        label: 'Kenya ID number'
+    },
+    {
+        name: 'Ghana',
+        affiliateCode: 'EGH',
+        baseCurrency: 'GHS',
+        countryCode: '233',
+        flags: {
+            svg: 'https://flagcdn.com/gh.svg',
+            png: 'https://flagcdn.com/w320/gh.png'
+        },
+        labaleId: 'Ghana ID number',
+        label: 'Ghana ID number'
+    },
+    {
+        name: "Cote d'Ivoire",
+        affiliateCode: 'ECI',
+        baseCurrency: 'XOF',
+        countryCode: '225',
+        flags: {
+            svg: 'https://flagcdn.com/ci.svg',
+            png: 'https://flagcdn.com/w320/ci.png'
+        }
+    },
+    {
+        name: 'Zimbabwe',
+        affiliateCode: 'EZW',
+        baseCurrency: 'ZML',
+        countryCode: '263',
+        flags: {
+            svg: 'https://flagcdn.com/zw.svg',
+            png: 'https://flagcdn.com/w320/zw.png'
+        }
+    }
+];

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Signup from '../../../pages/Auth/SignUp';
+import Signup from '../../../pages/Home/index';
 import styles from './styles.module.css';
 import Overlay from '../Overlay';
 import { useForm } from 'react-hook-form';
 import ButtonComp from '../Button';
-import StorePopup from '../StorePopup';
 import { useDispatch, useSelector } from 'react-redux';
 import OutsideClick from '../OutsideClick';
-import { verifyTransactionPinGet } from '../../../redux/actions/verifyTransactionPin';
 const Visbility = ({ typeSet, color, input }) => {
     const dispatch = useDispatch();
     const [type, setType] = useState(true);
@@ -61,29 +59,13 @@ const Visbility = ({ typeSet, color, input }) => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-    const {
-        verifyTransactionPinSuccess,
-        verifyTransactionPinErrorMessage
-    } = useSelector((state) => state.verifyTransactionPinReducer);
 
     const submitPin = (e) => {
         // e.preventDefault();
         const data = {
             pin: ssnValues.join('')
         };
-        dispatch(verifyTransactionPinGet(data));
     };
-    useEffect(() => {
-        //  //console.log(verifyTransactionPinSuccess);
-        if (verifyTransactionPinSuccess?.message === 'successful') {
-            setVisible(true);
-            setType(false);
-            typeSet(type);
-            setShowtransId(false);
-        } else {
-            setTransactionPinResponse(verifyTransactionPinErrorMessage);
-        }
-    }, [verifyTransactionPinErrorMessage, verifyTransactionPinSuccess]);
 
     return (
         <div className={styles.relativity}>

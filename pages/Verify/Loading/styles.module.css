@@ -16,7 +16,17 @@
     border-radius: 50px;
     padding: 80px 0px;
 }
-
+.error{
+    font-size: 14px;
+    color: red;
+}
+.resendEmail{
+    text-align: center;
+}
+.resendEmail > p{
+    color: #005b82;
+    cursor: pointer;
+}
 .body {
     text-align: center;
     width: 55%;

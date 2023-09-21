@@ -14,8 +14,6 @@ import Dropdownicon from './dropdownicon';
 import Innersubnav from './innersubnav';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutAction } from '../../../redux/actions/logOutAction';
-
 const Sidebar = ({ showSubnav }) => {
     const dispatch = useDispatch();
     // const { logout } = useSelector((state) => state.logoutReducer);
@@ -25,7 +23,6 @@ const Sidebar = ({ showSubnav }) => {
     const [subNavTitle, setSubNavTitle] = useState('');
 
     const handleLogOut = () => {
-        dispatch(logoutAction());
         if (!localStorage.getItem('user')) {
             router.replace('../Auth/Login');
         }

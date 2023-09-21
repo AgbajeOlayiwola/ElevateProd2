@@ -1,15 +1,14 @@
-import { Layout } from '../components';
 import React, { useEffect, useState } from 'react';
 import '../styles/globals.css';
-
 import { AnimatePresence, motion } from 'framer-motion';
-import { wrapper, store } from '../store';
-import { Provider } from 'react-redux';
 import DashLayout from '../components/layout/Dashboard';
 import { useRouter } from 'next/router';
 import Loader from '../components/ReusableComponents/Loader';
 import socialdata from '../components/ReusableComponents/Lotties/loading.json';
 import Lottie from 'react-lottie';
+// import persistStore from 'redux-persist/es/persistStore';
+import { Providers } from '../redux/provider';
+import store from '../redux/store/store';
 
 const LoadingScreen = () => {
     const socialOptions = {
@@ -53,6 +52,7 @@ const LoadingScreen = () => {
         )
     );
 };
+// let persistor = persistStore(store);
 
 function MyApp({ Component, pageProps, router }) {
     const variants = {
@@ -61,6 +61,7 @@ function MyApp({ Component, pageProps, router }) {
         exit: { opacity: 0, x: 0, y: -200 }
     };
     const [previous, setPrevious] = useState();
+
     // if (
     //     typeof window !== 'undefined' &&
     //     typeof window.navigator !== 'undefined' &&
@@ -83,7 +84,7 @@ function MyApp({ Component, pageProps, router }) {
     return (
         // <Layout>
         <>
-            <Provider store={store}>
+            <Providers>
                 <DashLayout
                     page={
                         router.asPath === '/Admin/CreateStorefront'
@@ -108,7 +109,7 @@ function MyApp({ Component, pageProps, router }) {
                     {/* </motion.div>
                     </AnimatePresence> */}
                 </DashLayout>
-            </Provider>
+            </Providers>
         </>
         // </Layout>
     );
