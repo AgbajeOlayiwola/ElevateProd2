@@ -1,0 +1,17 @@
+.smeApp{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 59px;
+    padding-bottom: 68px;
+}
+.smeAppPow{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logos{
+    display: flex;
+    align-items: center;
+    gap: 45px;
+}

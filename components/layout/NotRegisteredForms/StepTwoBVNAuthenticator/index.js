@@ -18,6 +18,12 @@ import OtpInput from '../../../ReusableComponents/Otpinput';
 import Loader from '../../../ReusableComponents/Loader';
 import { resetOtpData } from '../../../../redux/actions/resetOtpAction';
 import { changeNumberAction } from '../../../../redux/actions/changeNumberAction';
+import { Formik } from 'formik';
+import { useUpdatePhoneMutation } from '../../../../redux/api/usersApi';
+import {
+    useResendOtpMutation,
+    useVerifySmsOtpMutation
+} from '../../../../redux/api/authApi';
 
 const StepTwoBVNAuthenticator = ({
     handleShowThirdStep,
@@ -26,26 +32,15 @@ const StepTwoBVNAuthenticator = ({
     action,
     otpError
 }) => {
-    const [otps, setOtp] = useState([]);
     if (typeof window !== 'undefined') {
         let accounts = window?.localStorage?.getItem('user');
         var newAccounts = JSON.parse(accounts);
     }
 
-    const dispatch = useDispatch();
-
-    const { resetOtp, resetOtpErrorMessages } = useSelector(
-        (state) => state.resetOtpReducer
-    );
-    const { changeNumber, changeNumberError } = useSelector(
-        (state) => state.changeNumberReducer
-    );
-
-    const [activeBtn, setActiveBtn] = useState(true);
     const otpLength = 6;
     const [otpValues, setOtpValues] = useState(Array(otpLength).fill(''));
     const otpInputs = useRef([]);
-
+    const [otpData, setOtpData] = useState('');
     const handleInputChange = (inputIndex, value) => {
         const newOtpValues = [...otpValues];
         newOtpValues[inputIndex] = value;
@@ -61,7 +56,7 @@ const StepTwoBVNAuthenticator = ({
                 nextInput.focus(); // Move cursor to the next input if it exists
             }
         }
-        setFormData({ ...formData, otp: myOtp });
+        setOtpData(myOtp);
     };
     const handleInputKeyPress = (event, inputIndex) => {
         if (event.key === 'Backspace' || event.key === 'Delete') {
@@ -73,55 +68,49 @@ const StepTwoBVNAuthenticator = ({
             }
         }
     };
-
-    const ResetOtp = (e) => {
-        e.preventDefault();
-        const data = {
-            userId: newAccounts?.userId
-        };
-        dispatch(resetOtpData(data));
-    };
-
-    useEffect(() => {
-        // setValue((ssnValues) => ['']);
-    }, [resetOtp, resetOtpErrorMessages]);
-
     const [phone, setPhone] = useState('otp');
-    const [newPhone, setNewPhone] = useState('otp');
-    const [countryCodes, setCountryCode] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
 
-    const submit = () => {
-        setError('');
-        setLoading(true);
-        const data = {
-            phoneNumber: newPhone,
-            countryCode: countryCodes
-        };
-
-        dispatch(changeNumberAction(data));
-    };
-
-    const changeTest = () => {
-        if (changeNumber !== null) {
-            setPhone('otp');
-            setLoading(false);
-        } else if (changeNumberError !== null) {
-            setError(changeNumberError);
-            setLoading(false);
+    const [
+        updatePhone,
+        {
+            data: updatePhoneData,
+            isLoading: updatePhoneLoad,
+            isSuccess: updatePhoneSuccess,
+            isError: updatePhoneFalse,
+            error: updatePhoneErr,
+            reset: updatePhoneReset
         }
+    ] = useUpdatePhoneMutation();
+    const [
+        verifySmsOtp,
+        {
+            data: verifySmsOtpData,
+            isLoading: verifySmsOtpLoad,
+            isSuccess: verifySmsOtpSuccess,
+            isError: verifySmsOtpFalse,
+            error: verifySmsOtpErr,
+            reset: verifySmsOtpReset
+        }
+    ] = useVerifySmsOtpMutation();
+    const [
+        resendOtp,
+        {
+            data: resendOtpData,
+            isLoading: resendOtpLoad,
+            isSuccess: resendOtpSuccess,
+            isError: resendOtpFalse,
+            error: resendOtpErr,
+            reset: resendOtpReset
+        }
+    ] = useResendOtpMutation();
+    const clicked = (e) => {
+        e.preventDefault();
+        console.log('clicked');
+        const data = {
+            otp: otpData
+        };
+        verifySmsOtp(data);
     };
-
-    useEffect(() => {
-        changeTest();
-    }, [changeNumber, changeNumberError]);
-
     return (
         <div className={styles.bvnBody}>
             <div className={styles.cover}>
@@ -133,15 +122,7 @@ const StepTwoBVNAuthenticator = ({
                         A one time Password has been sent to your registered
                         phone number please enter digits below.
                     </SmallInstructionText>
-                    {otpError ? (
-                        <p className={styles.error}>{otpError}</p>
-                    ) : null}
-                    {error ? <p className={styles.error}>{error}</p> : null}
-                    {resetOtpErrorMessages ? (
-                        <p> {resetOtpErrorMessages.response.data.message}</p>
-                    ) : resetOtpErrorMessages?.response?.data?.message ? (
-                        <p>{resetOtp?.data.message}</p>
-                    ) : null}
+
                     <div className={styles.bvnHeading}>
                         <p
                             className={styles.inp}
@@ -192,19 +173,15 @@ const StepTwoBVNAuthenticator = ({
                             <div className={styles.resendFlex}>
                                 <button
                                     className={styles.resetOtp}
-                                    onClick={ResetOtp}
                                     type="reset"
                                 >
                                     Resend OTP
-                                </button>
-                                <button className={styles.clr} type="reset">
-                                    Clear
                                 </button>
                             </div>
                         </form>
                     ) : phone === 'phone' ? (
                         <div className={styles.changePhone}>
-                            <form onSubmit={handleSubmit(submit)}>
+                            <form>
                                 <div className={styles.submit}>
                                     <input
                                         placeholder="+234"
@@ -216,47 +193,19 @@ const StepTwoBVNAuthenticator = ({
                                     <input
                                         type="number"
                                         placeholder="Enter New Phone Number"
-                                        {...register('countryCode_number', {
-                                            required:
-                                                'Phone Number is required',
-                                            minLength: {
-                                                value: 10,
-                                                message: 'Min length is 10'
-                                            },
-                                            maxLength: {
-                                                value: 11,
-                                                message: 'Max length is 10'
-                                            }
-                                        })}
-                                        onInput={(e) => {
-                                            setNewPhone(e.target.value),
-                                                setFormData({
-                                                    ...formData,
-                                                    phoneNumber:
-                                                        event.target.value
-                                                });
-                                        }}
                                     />
                                 </div>
-                                <div className={styles.error}>
-                                    {errors.countryCode_number?.message}
-                                </div>
-                                {loading ? (
-                                    <Loader />
-                                ) : (
-                                    <button type="submit">Change</button>
-                                )}
+
+                                <button type="submit">Change</button>
                             </form>
                         </div>
                     ) : null}
                     {phone === 'otp' ? (
                         <ButtonComp
-                            onClick={action}
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            type="button"
-                            margin="80px 0px 0px 0px"
-                            text="Proceed"
+                            onClick={clicked}
+                            text="Verify Otp"
+                            active={'active'}
+                            loads={verifySmsOtpLoad}
                         />
                     ) : null}
                 </div>

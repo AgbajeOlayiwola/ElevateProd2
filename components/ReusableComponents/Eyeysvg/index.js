@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Signup from '../../../pages/Home/index';
 import styles from './styles.module.css';
-import Overlay from '../Overlay';
 import { useForm } from 'react-hook-form';
 import ButtonComp from '../Button';
 import { useDispatch, useSelector } from 'react-redux';

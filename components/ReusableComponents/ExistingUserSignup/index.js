@@ -22,7 +22,11 @@ const customStyles = {
         transform: 'translate(-50%, -50%)'
     }
 };
-const ExistingProfileSetup = () => {
+const ExistingProfileSetup = ({
+    selectCountry,
+    selectedOption,
+    onSelectChange
+}) => {
     const [omnilit, setOmnilite] = useState(true);
     const [activeBtn, setActiveBtn] = useState(false);
     const [page, setPage] = useState(0);
@@ -167,8 +171,19 @@ const ExistingProfileSetup = () => {
             default:
         }
     };
+    const handleChange = (event) => {
+        const newOption = event.target.value;
+        onSelectChange(newOption); // Call the callback function in the parent component
+    };
     return (
         <>
+            <div className={styles.secondSectionMidYes}>
+                <label htmlFor="">Do you have an Ecobank Account?</label>
+                <select onChange={handleChange} value={selectedOption}>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
             <form className={styles.form}>
                 <div className={styles.existingUser}>
                     <div className={styles.existingUserHeader}>

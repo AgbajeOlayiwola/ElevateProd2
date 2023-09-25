@@ -5,7 +5,10 @@
     align-items: center;
     height: 100vh;
 }
-
+.newOtpInput{
+    display: flex;
+    gap: 15px;
+}
 .verifyPopup {
     width: 38%;
     margin: 0px auto;
@@ -24,13 +27,18 @@
     text-align: center;
 }
 .resendEmail > p{
-    color: #005b82;
+    color: #A5A5A5;  
     cursor: pointer;
+}
+.resendEmail p > span{
+    color: #102572 ;
+    font-weight: 700;
+    text-decoration: underline;
 }
 .body {
     text-align: center;
-    width: 55%;
-    max-width: 313px;
+    width: 70%;
+    /* max-width: 313px; */
     margin: 0px auto;
 }
 .verifyEmail {

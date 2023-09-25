@@ -29,6 +29,14 @@ import StorefrontActiveSvg from '../ReusableSvgComponents/StorefrontActiveSvg';
 import SettingsActiveSvg from '../ReusableSvgComponents/SettingsActiveSvg';
 import { BsFillCollectionFill, BsPiggyBankFill } from 'react-icons/bs';
 import { HiBanknotes } from 'react-icons/hi';
+import DigitalAccountSvg from '../DigitalAccountSvg';
+import EasyPaymentSvg from '../EasyPaymentSvg';
+import PaymentCollectionSvg from '../PaymentCollection';
+import QuickLoans from '../QuickLoans';
+import StoreFront from '../StoreFront';
+import EInvoicingSvg from '../EInvoicing';
+import InventorySvg from '../InventorySvg';
+import AnalyticsSvg from '../AnalyticsSvg';
 export const SidebarData = [
     {
         title: 'Dashboard',
@@ -1463,5 +1471,75 @@ export const affiliateCountries = [
             svg: 'https://flagcdn.com/zw.svg',
             png: 'https://flagcdn.com/w320/zw.png'
         }
+    }
+];
+
+export const improveData = [
+    {
+        svg: <DigitalAccountSvg />,
+        header: 'Digital Account  ',
+        content:
+            'Streamlined process for quick and efficient account opening and management.'
+    },
+    {
+        svg: <EasyPaymentSvg />,
+        header: 'Easy Payments ',
+        content:
+            'Effortlessly make payments for services, bills and financial obligations.'
+    },
+    {
+        svg: <PaymentCollectionSvg />,
+        header: 'Payment Collections',
+        content:
+            'Multi-channel tools for optimised revenue collections and monitoring.'
+    },
+    {
+        svg: <QuickLoans />,
+        header: 'Quick Loans',
+        content:
+            'Get quick loans to fuel your business growth, productivity and financial progress.'
+    },
+    {
+        svg: <StoreFront />,
+        header: 'Storefront',
+        content:
+            'Digital storefront: Showcase, sell, and manage products effortlessly on-the-go.'
+    },
+    {
+        svg: <EInvoicingSvg />,
+        header: 'e-Invoicing',
+        content:
+            'Digital e-invoicing for streamlined billing, receipts issuance and faster transactions.  '
+    },
+    {
+        svg: <InventorySvg />,
+        header: 'Inventory ',
+        content:
+            'Optimise inventory with precision. Manage, track, and forecast seamlessly. '
+    },
+    {
+        svg: <AnalyticsSvg />,
+        header: 'Analytics',
+        content:
+            'Boost your business strategy with data-driven insights and  analytics.'
+    }
+];
+
+export const language = [
+    {
+        title: 'ENGLISH',
+        language: 'en'
+    },
+    {
+        title: 'SPANISH',
+        language: 'es'
+    },
+    {
+        title: 'FRENCH',
+        language: 'fr'
+    },
+    {
+        title: 'PORTUGUESE',
+        language: 'pt'
     }
 ];

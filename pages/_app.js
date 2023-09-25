@@ -8,7 +8,8 @@ import socialdata from '../components/ReusableComponents/Lotties/loading.json';
 import Lottie from 'react-lottie';
 // import persistStore from 'redux-persist/es/persistStore';
 import { Providers } from '../redux/provider';
-import store from '../redux/store/store';
+import { persistor } from '../redux/provider/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const LoadingScreen = () => {
     const socialOptions = {
@@ -85,14 +86,15 @@ function MyApp({ Component, pageProps, router }) {
         // <Layout>
         <>
             <Providers>
-                <DashLayout
-                    page={
-                        router.asPath === '/Admin/CreateStorefront'
-                            ? 'Create Storefront'
-                            : null
-                    }
-                >
-                    {/* <AnimatePresence exitBeforeEnter>
+                <PersistGate loading={null} persistor={persistor}>
+                    <DashLayout
+                        page={
+                            router.asPath === '/Admin/CreateStorefront'
+                                ? 'Create Storefront'
+                                : null
+                        }
+                    >
+                        {/* <AnimatePresence exitBeforeEnter>
                         <motion.div
                             key={router.route}
                             variants={variants} // Pass the variant object into Framer Motion
@@ -102,13 +104,15 @@ function MyApp({ Component, pageProps, router }) {
                             transition={{ type: 'linear' }} // Set the transition to linear
                             className=""
                         > */}
-                    {router.pathname.includes('Admin') ? (
-                        <LoadingScreen />
-                    ) : null}
-                    <Component {...pageProps} />
-                    {/* </motion.div>
+                        {router.pathname.includes('Admin') ? (
+                            <LoadingScreen />
+                        ) : null}
+
+                        <Component {...pageProps} />
+                        {/* </motion.div>
                     </AnimatePresence> */}
-                </DashLayout>
+                    </DashLayout>
+                </PersistGate>
             </Providers>
         </>
         // </Layout>

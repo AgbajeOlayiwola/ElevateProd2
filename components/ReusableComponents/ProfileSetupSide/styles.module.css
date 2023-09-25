@@ -6,7 +6,7 @@
 }
 
 .green {
-    background: #396805;
+    background: rgba(0, 0, 0, 0.21);
     border-radius: 60px;
     transform: rotate(180deg);
     border-top-right-radius: 0px;
@@ -14,19 +14,20 @@
     transform: skew(0deg, -7deg);
     width: 100%;
     margin-top: -20%;
-    height: 23vh;
+    height: 62vh;
+    border-bottom-left-radius: 0px;
 }
 
 .grey {
-    background: #303030;
+    background: rgba(0, 0, 0, 0.80);
     border-radius: 60px;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
     margin-top: 2%;
     width: 100%;
     transform: skew(0deg, -7deg);
-    height: 110vh;
-    overflow: hidden;
+    height: 59vh;
+    border-top-left-radius: 0px;
 }
 
 .content {

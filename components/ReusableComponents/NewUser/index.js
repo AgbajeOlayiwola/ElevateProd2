@@ -31,7 +31,7 @@ const customStyles = {
     }
 };
 
-const NewUser = ({ selectCountry }) => {
+const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
     let subtitle;
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -145,8 +145,19 @@ const NewUser = ({ selectCountry }) => {
         }
     };
 
+    const handleChange = (event) => {
+        const newOption = event.target.value;
+        onSelectChange(newOption); // Call the callback function in the parent component
+    };
     return (
         <>
+            <div className={styles.secondSectionMidYes}>
+                <label htmlFor="">Do you have an Ecobank Account?</label>
+                <select onChange={handleChange} value={selectedOption}>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select>
+            </div>
             <Formik
                 validationSchema={initSchema}
                 initialValues={initialValues}
@@ -154,6 +165,7 @@ const NewUser = ({ selectCountry }) => {
                 onSubmit={(values, { setSubmitting }) => {
                     createAccount(values);
                     setLoading(true);
+                    localStorage.setItem('email', values?.email);
                     setSubmitting(false);
                 }}
             >

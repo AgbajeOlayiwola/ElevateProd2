@@ -21,17 +21,12 @@ import { loadCountry } from '../../../redux/actions/getCountriesAction';
 import { runVerifyOtp } from '../../../redux/actions/verifyBvnOtp';
 import { createBusProfileSetup } from '../../../redux/actions/businessProfileSetupAction';
 import { createProfileSetup } from '../../../redux/actions/profileSetupAction';
+import { affiliateCountries } from '../../ReusableComponents/Data';
 const ProfileSetups = ({ comingFrom }) => {
     const dispatch = useDispatch();
-    const { countries } = useSelector((state) => state.countryReducer);
-
     const router = useRouter();
-    // Router.reload();
-    // router.replace(router.asPath);
 
-    // //console.log('register page', cookie);
-
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         // Get the current URL
@@ -42,7 +37,7 @@ const ProfileSetups = ({ comingFrom }) => {
 
         if (idParam) {
             // Do something with the idParam
-            // console.log('ID parameter found:', idParam);
+            console.log('ID parameter found:', idParam);
 
             // You can also convert the ID to a number if needed
             const id = parseInt(idParam, 10);
@@ -52,103 +47,50 @@ const ProfileSetups = ({ comingFrom }) => {
             // For example, fetch data from an API using the ID
             // or update the component state based on the ID
         } else {
-            // console.log('No ID parameter found in the URL');
+            console.log('No ID parameter found in the URL');
         }
     }, []);
 
     const [formData, setFormData] = useState({
         type: false,
-        rcnumber: '',
-        otp: '',
-        tinNumber: '',
-        bvNumber: '',
-        ninNumber: '',
-        phoneNumber: '',
         countryCode: '',
         flag: '',
         baseCurrency: '',
-        dateOfBirth: '',
-        bvnOtp: '',
-        gender: '',
-        bussinessName: '',
-        bussinessName: '',
-        businessType: '',
-        streetName: '',
-        localGoverment: 'lga',
-        city: '',
-        state: '',
-        custCategory: 'Individual',
-        referralCode: '',
-        signatory: 1
+        inputLabelId: '',
+        inputLabel: ''
     });
     const [loads, setLoads] = useState(false);
+
     useEffect(() => {
-        dispatch(loadCountry());
+        const affiliate = localStorage.getItem('affiliateCode');
+        const countryData = affiliateCountries.filter(
+            (country) => country.affiliateCode === affiliate
+        );
+        console.log(countryData);
+
+        // Use forEach to update state for each countryData item
+        countryData.forEach((country, index) => {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                inputLabel: country?.label,
+                inputLabelId: country?.labelId,
+                countryCode: country?.countryCode,
+                flag: country?.flags?.svg,
+                baseCurrency: country?.baseCurrency
+            }));
+        });
     }, []);
-    useEffect(() => {
-        if (countries !== null) {
-            // //console.log(countries);
-            countries.filter((item) => {
-                if (item.name === 'Nigeria') {
-                    setFormData({
-                        ...formData,
-                        countryCode: item.countryCode,
-                        flag: item.flags.svg,
-                        baseCurrency: item.baseCurrency
-                    });
-                }
-            });
-        }
-    }, [countries]);
-    const [activeBtn, setActiveBtn] = useState(true);
-    const {
-        isLoading,
-        profile,
-        errorMessages,
-        bvnError,
-        bvnErrorI,
-        bvnErrorII,
-        bvnErrorIII,
-        bvnNin
-    } = useSelector((state) => state.profileSetup);
+
     const types = (type) => {
         setOutType(type);
     };
     const [errorM, setErrorM] = useState('');
     const [errorI, setErrorI] = useState('');
-    const [errorII, setErrorII] = useState('');
-    const [errorIII, setErrorIII] = useState('');
+
+    const [affiliateLoading, setAffiliateLoading] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState([]);
-    const { otpActData, otpErrorMessage } = useSelector(
-        (state) => state.otpReducer
-    );
-    // //console.log(formData.emailData, newAccounts.user?.email);
-    // //console.log(formData.emailData, newAccounts.email);
 
-    const handleOtp = () => {
-        const otpData = {
-            phoneNumber: formData.countryCode + formData.phoneNumber,
-            otp: formData.otp
-        };
-        dispatch(runVerifyOtp(otpData));
-    };
     const [otpError, setOtpError] = useState('');
-    useEffect(() => {
-        if (otpErrorMessage) {
-            setOtpError(otpErrorMessage.response.data.message);
-        } else if (otpActData) {
-            //  //console.log('otpErrorI');
-            setPage(page + 1);
-        }
-    }, [otpErrorMessage, otpActData]);
-
-    let cookie;
-    if (getCookie('cookieToken') == undefined) {
-        cookie = getCookie('existingToken');
-    } else {
-        cookie = getCookie('cookieToken');
-    }
 
     useEffect(() => {
         if (comingFrom === 'dashboard') {
@@ -161,16 +103,9 @@ const ProfileSetups = ({ comingFrom }) => {
             case 0:
                 return (
                     <RegisteredForm
-                        errorM={errorM}
-                        errorI={errorI}
                         formData={formData}
-                        bvnError={bvnError}
                         setFormData={setFormData}
-                        action={handleSubmit}
-                        actionI={regsiteredBus}
-                        loading={loading}
-                        setLoading={setLoading}
-                        loads={loads}
+                        nextStep={() => setPage(1)}
                     />
                 );
             case 3:
@@ -215,50 +150,6 @@ const ProfileSetups = ({ comingFrom }) => {
         dispatch(createBusProfileSetup(businessProfileData));
     }
 
-    function handleSubmit() {
-        setLoads((prev) => !prev);
-        const profileData = {
-            bvnNumber: formData.bvNumber,
-            phoneNumber: formData.phoneNumber,
-            countryCode: formData.countryCode,
-            dateOfBirth: formData.dateOfBirth
-        };
-        setLoading(true);
-        setErrorM('');
-        setErrorI('');
-        dispatch(createProfileSetup(profileData));
-        // //console.log('lol');
-    }
-
-    useEffect(() => {
-        // //console.log('new bvn:', bvnNin.message);
-        if (
-            bvnNin === 'verification successful' ||
-            errorMessages === 'you have already setup your profile'
-        ) {
-            setPage(page + 1);
-        } else {
-            // //console.log('move');
-            setErrorM(errorMessages);
-            setErrorI(bvnError);
-            setLoading(false);
-        }
-    }, [bvnNin, errorMessages]);
-
-    // const handleSubmitt = () => {
-    //     setPage(page + 1);
-    // };
-    // //console.log(errorM, errorI);
-
-    // useEffect(() => {
-    //     if (bvnError && bvnErrorI) {
-    //         setPage(page - 1);
-    //         setErrorM(bvnError);
-    //         setErrorI(bvnErrorI);
-    //     } else if (!otpErrorMessage && !bvnError && !bvnErrorI) {
-    //         setPage(page + 1);
-    //     }
-    // }, [otpErrorMessage, bvnError, bvnErrorI]);
     let text;
     useEffect(() => {
         if (comingFrom !== 'dashboard') {
@@ -276,22 +167,15 @@ const ProfileSetups = ({ comingFrom }) => {
     return (
         <>
             {page === 1 ? (
+                <Liveness />
+            ) : page === 2 ? (
                 <StepTwoBVNAuthenticator
                     formData={formData}
                     setFormData={setFormData}
                     // setPage={page+1}
                     page={page}
-                    action={handleOtp}
+                    action={() => setPage(page + 1)}
                     otpError={otpError}
-                />
-            ) : page === 2 ? (
-                <Liveness
-                    action={() => {
-                        setPage(page + 1);
-                    }}
-                    cookie={cookie}
-                    loading={loading}
-                    setLoading={setLoading}
                 />
             ) : (
                 <div
@@ -311,14 +195,7 @@ const ProfileSetups = ({ comingFrom }) => {
                                 : styles.sectionII
                         }
                     >
-                        {page === 0 ? (
-                            // <>
-                            //     <p className={styles.error}>{errorI}</p> <br />
-                            // </>
-                            <></>
-                        ) : (
-                            <></>
-                        )}
+                        {page === 0 ? <></> : <></>}
                         {conditionalComponent()}
                     </section>
                 </div>
@@ -327,4 +204,4 @@ const ProfileSetups = ({ comingFrom }) => {
     );
 };
 
-export default withAuth(ProfileSetups);
+export default ProfileSetups;

@@ -4,6 +4,7 @@ import { authApi } from '../api/authApi';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineReducers } from 'redux';
 import profileReducer from '../slices/profile';
+import languageReducer from '../slices/language';
 import {
     persistReducer,
     FLUSH,
@@ -11,24 +12,30 @@ import {
     PERSIST,
     PURGE,
     REGISTER,
-    REHYDRATE
+    REHYDRATE,
+    persistStore
 } from 'redux-persist';
 
 import storage from 'redux-persist/lib/storage';
+import { docsApi } from '../api/docsApi';
+import { usersApi } from '../api/usersApi';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
-    profile: profileReducer
+    [docsApi.reducerPath]: docsApi.reducer,
+    [usersApi.reducerPath]: usersApi.reducer,
+    profile: profileReducer,
+    language: languageReducer
 });
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: []
+    whitelist: ['language']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-const store = configureStore({
+export const store = configureStore({
     reducer: persistedReducer,
     devTools: process.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddleware) =>
@@ -48,5 +55,4 @@ const store = configureStore({
 
 export const useAppDispatch = () => useDispatch();
 setupListeners(store.dispatch);
-
-export default store;
+export const persistor = persistStore(store);

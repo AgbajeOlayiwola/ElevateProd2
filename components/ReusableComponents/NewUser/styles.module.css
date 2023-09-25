@@ -140,10 +140,20 @@
 
 .secondSectionMidCountry,
 .secondSectionMidYes {
-    width: 43%;
-    max-width: 296px;
+    width: 100%;
+    /* max-width: 296px; */
 }
-
+.secondSectionMidYes select{
+    margin-top: 20px;
+}
+.secondSectionMidYes label{
+    color: #3E3E3E;
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
 .secondSectionMidYes select {
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -158,9 +168,11 @@
 
 .homeForm {
     display: flex;
+    flex-direction: column;
     width: 100%;
     justify-content: space-between;
     margin-top: 32px;
+    gap: 16px;
 }
 
 .homeForm:last-child {
@@ -788,7 +800,7 @@
 
     .secondSectionMidCountry,
     .secondSectionMidYes {
-        width: 48%;
+        width: 100%;
     }
 
     .existingUser {
@@ -976,6 +988,7 @@
     line-height: 17px;
     margin: 0px;
     margin-top: 24px;
+    margin-bottom: 50px;
     color: #3e3e3e;
     display: flex;
     align-items: center;

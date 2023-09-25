@@ -1,0 +1,68 @@
+.noborderbutton{
+    border-radius: 10px;
+    background: #7EB542;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 16px 47px;
+    transition: all ease-in-out 0.5s;
+}
+.noborderbutton:hover{
+    border-radius: 10px;
+border: 1px solid #7EB542;
+background: #FFF;
+padding: 16px 47px;
+cursor: pointer;
+color: #7EB542;
+transition: all ease-in-out 0.5s;
+}
+.noborderbutton:hover p{
+    color: #7EB542;
+}
+
+.noborderbutton p{
+    margin: 0px;
+    color: #FFF;
+text-align: center;
+font-feature-settings: 'clig' off, 'liga' off;
+font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 600;
+line-height: 20px; /* 166.667% */
+letter-spacing: 2px;
+text-transform: uppercase;
+}
+.borderbutton{
+    border-radius: 10px;
+border: 1px solid #7EB542;
+background: #FFF;
+padding: 16px 75px;
+transition: all ease-in-out 0.5s;
+}
+
+.borderbutton p{
+    margin: 0px;
+    color: #7EB542;
+    text-align: center;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all ease-in-out 0.5s;
+
+}
+.borderbutton:hover{
+    border-radius: 10px;
+    cursor: pointer;
+    background: #7EB542;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 16px 75px;
+    transition: all ease-in-out 0.5s;
+}
+.borderbutton:hover p{
+    color: #FFF; 
+    transition: all ease-in-out 0.5s;
+}

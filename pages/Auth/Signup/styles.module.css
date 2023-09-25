@@ -7,14 +7,21 @@
     display: flex;
     height: 100vh;
     overflow: hidden;
-    width: 85%;
-    max-width: 1283px;
     margin: 0px auto;
-    justify-content: space-between;
 }
-
+.secondSide{
+    width: 70%;
+    padding-bottom: 58px;
+    height: 100%;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.secondSide::-webkit-scrollbar {
+    display: none;
+}
 .green {
-    background: #396805;
+    background: rgba(0, 0, 0, 0.21);
     border-radius: 60px;
     transform: rotate(180deg);
     border-top-right-radius: 0px;
@@ -22,19 +29,23 @@
     transform: skew(0deg, -7deg);
     width: 100%;
     margin-top: -20%;
-    height: 23vh;
+    height: 62vh;
+    border-bottom-left-radius: 0px;
 }
-
+.contentWrapper img{
+    height: 100vh;
+    width: 100vw;
+}
 .grey {
-    background: #303030;
+    background: rgba(0, 0, 0, 0.80);
     border-radius: 60px;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
     margin-top: 2%;
     width: 100%;
     transform: skew(0deg, -7deg);
-    height: 110vh;
-    overflow: hidden;
+    height: 59vh;
+    border-top-left-radius: 0px;
 }
 
 .contentWrapper {
@@ -58,11 +69,22 @@
 }
 
 .firstSection {
-    width: 37%;
-    max-width: 470px;
+    width: 50%;
+    /* max-width: 470px; */
     position: relative;
+    background-image: url('/Assets/Images/signupbg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-
+.lang{
+    width: 30%;
+}
+.logoAndLanguage{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+}
 .firstSection img {
     width: 100%;
     height: 100%;
@@ -72,11 +94,14 @@
 }
 
 .secondSection {
-    padding: 200px 0px;
+padding-top: 60px;
     max-width: 682px;
     width: 53%;
     height: 100vh;
     overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+
 }
 
 .secondSection::-webkit-scrollbar {
@@ -94,13 +119,12 @@
 }
 
 .secondSectionHeader h2 {
-    font-family: 'Inter', sans-serif;
-    margin: 0px;
+    color: #005B82;
+    font-family: Inter;
+    font-size: 36px;
     font-style: normal;
     font-weight: 700;
-    font-size: 24px;
-    line-height: 33px;
-    color: #102572;
+    line-height: normal;
 }
 
 .secondSectionHeader p {
@@ -236,19 +260,21 @@
 }
 
 .strong {
-    background-color: green;
-    color: white;
+ 
+    background: #396805;
+    border-radius: 60px;
+    transform: rotate(180deg);
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    transform: skew(0deg, -7deg);
     width: 100%;
-    text-align: center;
-    font-size: 12px;
-    font-family: 'Inter', sans-serif;
-    border-radius: 12px;
-    padding: 1px 0px;
-    transition: 2s all ease;
+    margin-top: -20%;
+    height: 55vh;
+
 }
 
 .secondSection button {
-    margin-top: 48px;
+    margin-top: 0px;
 }
 
 .already {

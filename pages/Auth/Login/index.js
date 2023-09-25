@@ -355,7 +355,7 @@ const Login = () => {
                         <p className={styles.accout}>
                             Don&apos;t have an account?
                             <span>
-                                <Link href="/Home"> Sign up</Link>
+                                <Link href="/Auth/Signup"> Sign up</Link>
                             </span>
                         </p>
                     </div>
