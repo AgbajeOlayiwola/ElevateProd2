@@ -14,6 +14,7 @@ import { getRCDetails } from '../../../../redux/actions/getRcDetailsAction';
 import Lottie from 'react-lottie';
 import socialdata from '../../../ReusableComponents/Lotties/loading.json';
 import { Formik } from 'formik';
+import { useSearchRCMutation } from '../../../../redux/api/cacApi';
 const RegisteredForm = ({ formData, setFormData, nextStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [businessName, setBusinessName] = useState('');
@@ -47,6 +48,27 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
         phoneNumber: '',
         date: ''
     };
+    const [callRc, setCallRc] = useState('');
+    searchRC;
+    const [
+        searchRC,
+        {
+            data: searchRCData,
+            isLoading: searchRCLoad,
+            isSuccess: searchRCSuccess,
+            isError: searchRCFalse,
+            error: searchRCErr,
+            reset: searchRCReset
+        }
+    ] = useSearchRCMutation();
+    useEffect(() => {
+        if (callRc?.length > 2) {
+            searchRC({
+                registrationNumber: callRc
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [callRc]);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.cardHeading}>
@@ -114,12 +136,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                     type="text"
                                     placeholder="Your Business Registration number"
                                     name="rcNumber"
-                                    onChange={(e) =>
-                                        setFieldValue(
-                                            'rcNumber',
-                                            e.target.value
-                                        )
-                                    }
+                                    onChange={(e) => setCallRc(e.target.value)}
                                 />
 
                                 <InputWrapper>

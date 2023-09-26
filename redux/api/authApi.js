@@ -7,7 +7,7 @@ import {
 import { RootState } from 'store';
 
 // const baseUrl = 'https://dpmfb-prod-app-srvr-01.azurewebsites.net/api/v1';
-const baseUrl = 'https://wfz3gcz0-8081.uks1.devtunnels.ms/v1/api/';
+const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-service/';
 if (typeof window !== 'undefined') {
     const affiliate = localStorage.getItem('affiliateCode');
 }
@@ -16,26 +16,30 @@ export const authApi = createApi({
     reducerPath: 'onboardingApi',
     baseQuery: fetchBaseQuery({
         baseUrl,
+        credentials: 'same-origin',
         prepareHeaders: (headers, { getState }) => {
             const token = getState().profile?.token;
-            headers.set('Accept', 'application/json');
-            headers.set('Content-Type', 'application/json');
-            headers.set(
-                'x-affiliate-code',
-                localStorage.getItem('affiliateCode')
-            );
+            // headers.set('accept', 'application/json');
+            // headers.set(('Access-Control-Allow-Origin', '*'));
+            headers.set('content-type', 'application/json');
+            headers.set('x-affiliate-code', 'ENG');
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
             return headers;
         }
     }),
+
     endpoints: (builder) => ({
         createAccount: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'auth/register',
-                    method: 'post',
+                    url: '/register',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-affiliate-code': 'ENG'
+                    },
                     body
                 };
             }
@@ -44,7 +48,7 @@ export const authApi = createApi({
         loginAccount: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'auth/login',
+                    url: '/login',
                     method: 'post',
                     body
                 };
@@ -54,7 +58,7 @@ export const authApi = createApi({
         resendOtp: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'auth/resend-otp',
+                    url: '/resend-otp',
                     method: 'post',
                     body
                 };
@@ -63,7 +67,7 @@ export const authApi = createApi({
         verifySmsOtp: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'auth/verify-otp',
+                    url: '/verify-otp',
                     method: 'post',
                     body
                 };
@@ -72,7 +76,7 @@ export const authApi = createApi({
         verifyEmail: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'auth/verify-email',
+                    url: '/verify-email',
                     method: 'post',
                     body
                 };
@@ -81,7 +85,7 @@ export const authApi = createApi({
         resendEmail: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'auth/resend-verification',
+                    url: '/resend-verification',
                     method: 'post',
                     body
                 };
@@ -90,7 +94,7 @@ export const authApi = createApi({
         resetPassword: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'auth/reset-password',
+                    url: '/reset-password',
                     method: 'post',
                     body
                 };
@@ -99,7 +103,7 @@ export const authApi = createApi({
         forgotPassword: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'auth/forgot-password',
+                    url: '/forgot-password',
                     method: 'post',
                     body
                 };
@@ -109,7 +113,7 @@ export const authApi = createApi({
         profileSetupUnregisteredBusiness: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'auth/profile-setup/unregistered-business',
+                    url: '/unregistered-business',
                     method: 'post',
                     body
                 };
@@ -119,11 +123,61 @@ export const authApi = createApi({
         profileSetupEcoAuth: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'auth/profile-setup/eco-auth',
+                    url: '/eco-auth',
                     method: 'post',
                     body
                 };
             }
+        }),
+        endpoints: (builder) => ({
+            searchRC: builder.mutation({
+                query: (body) => {
+                    return {
+                        url: 'business-name',
+                        method: 'post',
+                        body
+                    };
+                }
+            })
+        }),
+        endpoints: (builder) => ({
+            faceMatch: builder.mutation({
+                query: (body) => {
+                    return {
+                        url: 'facematch-with-bvn',
+                        method: 'post',
+                        body
+                    };
+                }
+            }),
+            getCAC: builder.mutation({
+                query: (body) => {
+                    return {
+                        url:
+                            'smeapp-document-verification-service/cac-verification',
+                        method: 'post'
+                    };
+                }
+            }),
+            profileSetUpRegisteredBusiness: builder.mutation({
+                query: (body) => {
+                    return {
+                        url:
+                            'smeapp-register-business/authentication/profile-setup/registered-business',
+                        method: 'post'
+                    };
+                }
+            }),
+            profileSetUpUnregisteredBusiness: builder.mutation({
+                query: (body) => {
+                    return {
+                        url:
+                            'smeapp-profile-unregister-business/authentication/profile-setup/registered-business',
+                        method: 'post',
+                        body
+                    };
+                }
+            })
         })
     })
 });

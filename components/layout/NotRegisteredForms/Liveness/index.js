@@ -10,7 +10,10 @@ import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
 import { Formik } from 'formik';
-import { useFaceMatchMutation } from '../../../../redux/api/docsApi';
+import {
+    useFaceMatchMutation,
+    useProfileSetUpRegisteredBusinessMutation
+} from '../../../../redux/api/docsApi';
 const videoConstraints = {
     width: 390,
     height: 480,
@@ -27,7 +30,7 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ action, cookie }) => {
+const Liveness = ({ formData }) => {
     const webcamRef = React.useRef(null);
     const [succes, setSuccess] = useState('');
     const [image, setImage] = useState(
@@ -49,25 +52,72 @@ const Liveness = ({ action, cookie }) => {
             reset: faceMatchReset
         }
     ] = useFaceMatchMutation();
+    const [
+        profileSetUpRegisteredBusiness,
+        {
+            data: profileSetUpRegisteredBusinessData,
+            isLoading: profileSetUpRegisteredBusinessLoad,
+            isSuccess: profileSetUpRegisteredBusinessSuccess,
+            isError: profileSetUpRegisteredBusinessFalse,
+            error: profileSetUpRegisteredBusinessErr,
+            reset: profileSetUpRegisteredBusinessReset
+        }
+    ] = useProfileSetUpRegisteredBusinessMutation();
+    const [
+        profileSetUpUnregisteredBusiness,
+        {
+            data: profileSetUpUnregisteredBusinessData,
+            isLoading: profileSetUpUnregisteredBusinessLoad,
+            isSuccess: profileSetUpUnregisteredBusinessSuccess,
+            isError: profileSetUpUnregisteredBusinessFalse,
+            error: profileSetUpUnregisteredBusinessErr,
+            reset: profileSetUpUnregisteredBusinessReset
+        }
+    ] = useProfileSetUpRegisteredBusinessMutation();
     const faceMtch = () => {
         if (localStorage.getItem('regprofilesetupdata')) {
-            const storedData = localStorage.getItem('regprofilesetupdata');
+            const storedData = localStorage.getItem('profilesetupdata');
+            const profileSetupData = JSON.parse(storedData);
             const faceMMatchData = {
-                image: image,
-                bvn: storedData?.bvn
+                userFaceBase64: image,
+                bvn: profileSetupData?.bvn
             };
             // Perform a facial match with the data
             faceMatch(faceMMatchData);
         } else {
             const storedData = localStorage.getItem('profilesetupdata');
+            const profileSetupData = JSON.parse(storedData);
             const faceMMatchData = {
-                image: image,
-                bvn: storedData?.bvn
+                userFaceBase64: image,
+                bvn: profileSetupData?.bvn
             };
             // Perform a facial match with the data
             faceMatch(faceMMatchData);
         }
     };
+    useEffect(() => {
+        if (faceMatchSuccess) {
+            if (localStorage.getItem('regprofilesetupdata')) {
+                const data = {
+                    bvnNumber: '22441298309',
+                    phoneNumber: `${formData?.countryCode}${profileSetupData?.phoneNumber}`,
+                    countryCode: 'NG',
+                    taxNumber: '126378883',
+                    registrationNumber: 'RC1229464'
+                };
+                profileSetUpRegisteredBusiness(data);
+            } else if (localStorage.getItem('profilesetupdata')) {
+                const storedData = localStorage.getItem('profilesetupdata');
+                const profileSetupData = JSON.parse(storedData);
+                const data = {
+                    bvnNumber: profileSetupData?.bvn,
+                    phoneNumber: `${formData?.countryCode}${profileSetupData?.phoneNumber}`
+                };
+                profileSetUpUnregisteredBusiness(data);
+            }
+        }
+    }, [faceMatchSuccess]);
+
     return (
         <div className={styles.body}>
             <div className={styles.cover}>

@@ -19,10 +19,12 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { docsApi } from '../api/docsApi';
 import { usersApi } from '../api/usersApi';
+import { cacApi } from '../api/cacApi';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [cacApi.reducerPath]: cacApi.reducer,
     profile: profileReducer,
     language: languageReducer
 });
@@ -30,7 +32,7 @@ const reducers = combineReducers({
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['language']
+    whitelist: ['language', 'profile']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

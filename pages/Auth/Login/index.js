@@ -14,6 +14,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useLoginAccountMutation } from '../../../redux/api/authApi';
 import { affiliateCountries } from '../../../components/ReusableComponents/Data';
+import { setProfile } from '../../../redux/slices/profile';
 // Number of input fields that make up SSN
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -65,7 +66,7 @@ const Login = () => {
     };
     useEffect(() => {
         if (loginAccountSuccess) {
-            handleProceed(createAccountData);
+            handleProceed(loginAccountData);
             setLoading(false);
         }
     }, [loginAccountSuccess]);

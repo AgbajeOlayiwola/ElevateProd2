@@ -7,7 +7,8 @@ import {
 import { RootState } from 'store';
 
 // const baseUrl = 'https://dpmfb-prod-app-srvr-01.azurewebsites.net/api/v1';
-const baseUrl = 'https://eidev.ecobank.com:7505/';
+const baseUrl =
+    'https://eidev.ecobank.com:7505/smeapp-document-verification-service';
 if (typeof window !== 'undefined') {
     const affiliate = localStorage.getItem('affiliateCode');
 }
@@ -34,8 +35,7 @@ export const docsApi = createApi({
         faceMatch: builder.mutation({
             query: (body) => {
                 return {
-                    url:
-                        'smeapp-document-verification-service/facematch-with-bvn',
+                    url: 'facematch-with-bvn',
                     method: 'post',
                     body
                 };
@@ -44,37 +44,12 @@ export const docsApi = createApi({
         getCAC: builder.mutation({
             query: (body) => {
                 return {
-                    url:
-                        'smeapp-document-verification-service/cac-verification',
+                    url: 'cac-verification',
                     method: 'post'
-                };
-            }
-        }),
-        profileSetUpRegisteredBusiness: builder.mutation({
-            query: (body) => {
-                return {
-                    url:
-                        'smeapp-register-business/authentication/profile-setup/registered-business',
-                    method: 'post'
-                };
-            }
-        }),
-        profileSetUpUnregisteredBusiness: builder.mutation({
-            query: (body) => {
-                return {
-                    url:
-                        'smeapp-profile-unregister-business/authentication/profile-setup/registered-business',
-                    method: 'post',
-                    body
                 };
             }
         })
     })
 });
 
-export const {
-    useFaceMatchMutation,
-    useGetCACMutation,
-    useProfileSetUpRegisteredBusinessMutation,
-    useProfileSetUpUnregisteredBusinessMutation
-} = docsApi;
+export const { useFaceMatchMutation, useGetCACMutation } = docsApi;

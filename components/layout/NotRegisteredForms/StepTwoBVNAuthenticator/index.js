@@ -103,6 +103,10 @@ const StepTwoBVNAuthenticator = ({
             reset: resendOtpReset
         }
     ] = useResendOtpMutation();
+    const handleResendOtp = (e) => {
+        e.preventDefault();
+        resendOtp();
+    };
     const clicked = (e) => {
         e.preventDefault();
         console.log('clicked');
@@ -141,6 +145,13 @@ const StepTwoBVNAuthenticator = ({
                             Change Phone Number
                         </p>
                     </div>
+                    <p className={styles.error}>
+                        {verifySmsOtpErr?.data?.message}
+                    </p>
+                    <p className={styles.error}>
+                        {' '}
+                        {resendOtpErr?.data?.message}
+                    </p>
                     {phone === 'otp' ? (
                         <form>
                             <div className={styles.newOtpInput}>
@@ -174,6 +185,7 @@ const StepTwoBVNAuthenticator = ({
                                 <button
                                     className={styles.resetOtp}
                                     type="reset"
+                                    onClick={handleResendOtp}
                                 >
                                     Resend OTP
                                 </button>
@@ -202,6 +214,7 @@ const StepTwoBVNAuthenticator = ({
                     ) : null}
                     {phone === 'otp' ? (
                         <ButtonComp
+                            disabled={true}
                             onClick={clicked}
                             text="Verify Otp"
                             active={'active'}

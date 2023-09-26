@@ -22,11 +22,12 @@ import { runVerifyOtp } from '../../../redux/actions/verifyBvnOtp';
 import { createBusProfileSetup } from '../../../redux/actions/businessProfileSetupAction';
 import { createProfileSetup } from '../../../redux/actions/profileSetupAction';
 import { affiliateCountries } from '../../ReusableComponents/Data';
+import OnboardingProfileSetupSide from '../../ReusableComponents/OnboardingProfileSetupSide';
 const ProfileSetups = ({ comingFrom }) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
 
     useEffect(() => {
         // Get the current URL
@@ -167,7 +168,7 @@ const ProfileSetups = ({ comingFrom }) => {
     return (
         <>
             {page === 1 ? (
-                <Liveness />
+                <Liveness formData={formData} setFormData={setFormData} />
             ) : page === 2 ? (
                 <StepTwoBVNAuthenticator
                     formData={formData}
@@ -185,7 +186,7 @@ const ProfileSetups = ({ comingFrom }) => {
                 >
                     {comingFrom === 'dashboard' ? null : (
                         <section className={styles.sectionI}>
-                            <ProfileSetupSide text={text} />
+                            <OnboardingProfileSetupSide text={text} />
                         </section>
                     )}
                     <section
