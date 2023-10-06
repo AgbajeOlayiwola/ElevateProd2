@@ -5,96 +5,76 @@ import {
     fetchBaseQuery
 } from '@reduxjs/toolkit/dist/query/react';
 import { RootState } from 'store';
-
-// const baseUrl = 'https://dpmfb-prod-app-srvr-01.azurewebsites.net/api/v1';
+// const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-auth/v1/api/auth/';
 const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-service/';
-if (typeof window !== 'undefined') {
-    const affiliate = localStorage.getItem('affiliateCode');
-}
 
 export const authApi = createApi({
-    reducerPath: 'onboardingApi',
+    reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
         baseUrl,
         credentials: 'same-origin',
+        // mode: 'no-cors',
+
         prepareHeaders: (headers, { getState }) => {
             const token = getState().profile?.token;
-            // headers.set('accept', 'application/json');
-            // headers.set(('Access-Control-Allow-Origin', '*'));
-            headers.set('content-type', 'application/json');
-            headers.set('x-affiliate-code', 'ENG');
+            headers.set('Accept', 'application/json'),
+                headers.set('Content-Type', 'application/json'); // Set Content-Type here
+            // Add other allowed headers here
+            headers.set(
+                'x-affiliate-code',
+                localStorage.getItem('affiliateCode')
+            );
+
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
             return headers;
         }
     }),
+    // Add the middleware to your API
 
     endpoints: (builder) => ({
-        createAccount: builder.mutation({
-            query: (body) => {
-                return {
-                    url: '/register',
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-affiliate-code': 'ENG'
-                    },
-                    body
-                };
-            }
-        }),
-
         loginAccount: builder.mutation({
             query: (body) => {
                 return {
-                    url: '/login',
-                    method: 'post',
+                    url: 'login',
+                    method: 'POST',
                     body
+                };
+            }
+        }),
+        getAccountNo: builder.mutation({
+            query: () => {
+                return {
+                    url: 'get-account-no',
+                    method: 'POST',
+                    body: {}
+                };
+            }
+        }),
+        getAccountStatus: builder.mutation({
+            query: () => {
+                return {
+                    url: 'get-account-status',
+                    method: 'POST',
+                    body: {}
                 };
             }
         }),
 
-        resendOtp: builder.mutation({
+        register: builder.mutation({
             query: (body) => {
                 return {
-                    url: '/resend-otp',
+                    url: 'register',
                     method: 'post',
                     body
                 };
             }
         }),
-        verifySmsOtp: builder.mutation({
+        profileSetUpUnregisteredBusiness: builder.mutation({
             query: (body) => {
                 return {
-                    url: '/verify-otp',
-                    method: 'post',
-                    body
-                };
-            }
-        }),
-        verifyEmail: builder.mutation({
-            query: (body) => {
-                return {
-                    url: '/verify-email',
-                    method: 'post',
-                    body
-                };
-            }
-        }),
-        resendEmail: builder.mutation({
-            query: (body) => {
-                return {
-                    url: '/resend-verification',
-                    method: 'post',
-                    body
-                };
-            }
-        }),
-        resetPassword: builder.mutation({
-            query: (body) => {
-                return {
-                    url: '/reset-password',
+                    url: 'unregistered-business',
                     method: 'post',
                     body
                 };
@@ -103,96 +83,427 @@ export const authApi = createApi({
         forgotPassword: builder.mutation({
             query: (body) => {
                 return {
-                    url: '/forgot-password',
+                    url: 'forgot-password',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        resetPassword: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'reset-password',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        resendEmailOtp: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'resend-verification',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        verifyEmail: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'verify-email',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        verifyOtp: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'verify-otp',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        resendOtp: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'resend-otp',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        registeredSetup: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'registered-business',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        unregisteredSetup: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'unregistered-business',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        facematch: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'facematch-with-bvn',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getCAC: builder.mutation({
+            query: () => {
+                return {
+                    url: 'cac-verification',
+                    method: 'post',
+                    body: {
+                        registrationNumber: ''
+                    }
+                };
+            }
+        }),
+        getCategories: builder.mutation({
+            query: () => {
+                return {
+                    url: 'business-categories',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        searchRC: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'business-name',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        businessSetup: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'business-setup',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        updatePhone: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'user-update-phone',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getProfile: builder.mutation({
+            query: () => {
+                return {
+                    url: 'user-profile',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        vninVerification: builder.mutation({
+            query: () => {
+                return {
+                    url: 'vNin-verification',
+                    method: 'post'
+                };
+            }
+        }),
+        ninVerification: builder.mutation({
+            query: () => {
+                return {
+                    url: 'nin-verification',
+                    method: 'post'
+                };
+            }
+        }),
+        tinVerification: builder.mutation({
+            query: () => {
+                return {
+                    url: 'tin-verification',
+                    method: 'post'
+                };
+            }
+        }),
+        bvnVerification: builder.mutation({
+            query: () => {
+                return {
+                    url: 'bvn-verification',
+                    method: 'post'
+                };
+            }
+        }),
+        documentVerification: builder.mutation({
+            query: () => {
+                return {
+                    url: 'document-verification',
+                    method: 'post'
+                };
+            }
+        }),
+        singleTransfer: builder.mutation({
+            query: () => {
+                return {
+                    url: 'single-transfer',
+                    method: 'post'
+                };
+            }
+        }),
+        bulkTransfer: builder.mutation({
+            query: () => {
+                return {
+                    url: 'bulk-transfer',
+                    method: 'post'
+                };
+            }
+        }),
+        billerPayment: builder.mutation({
+            query: () => {
+                return {
+                    url: 'biller-payment',
+                    method: 'post'
+                };
+            }
+        }),
+        billerValidation: builder.mutation({
+            query: () => {
+                return {
+                    url: 'biller-validation',
+                    method: 'post'
+                };
+            }
+        }),
+        billerDetails: builder.mutation({
+            query: () => {
+                return {
+                    url: 'biller-details',
+                    method: 'post'
+                };
+            }
+        }),
+        airNetworks: builder.mutation({
+            query: () => {
+                return {
+                    url: 'airtime-topup-networks',
+                    method: 'post'
+                };
+            }
+        }),
+        mobiNetworks: builder.mutation({
+            query: () => {
+                return {
+                    url: 'mobilemoney-networks',
+                    method: 'post'
+                };
+            }
+        }),
+        billerCategories: builder.mutation({
+            query: () => {
+                return {
+                    url: 'biller-categories',
+                    method: 'post'
+                };
+            }
+        }),
+        billers: builder.mutation({
+            query: () => {
+                return {
+                    url: 'billers',
+                    method: 'post'
+                };
+            }
+        }),
+        airtimeTopup: builder.mutation({
+            query: () => {
+                return {
+                    url: 'airtime-topup',
+                    method: 'post'
+                };
+            }
+        }),
+        mobileMoney: builder.mutation({
+            query: () => {
+                return {
+                    url: 'mobilemoney',
+                    method: 'post'
+                };
+            }
+        }),
+        acctInquiry: builder.mutation({
+            query: () => {
+                return {
+                    url: 'account-inquiry',
+                    method: 'post'
+                };
+            }
+        }),
+        createIAcct: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-individual-account',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        createCAcct: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'corporate-account-creation',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        registerAccountNumber: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'register-account-number',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        registerCard: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'card-register',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        authOmnilite: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'auth-omnilite',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        authEcobank: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'auth-ecobank-online',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getMoreAccountNumberDetails: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'account-details',
                     method: 'post',
                     body
                 };
             }
         }),
 
-        profileSetupUnregisteredBusiness: builder.mutation({
+        resendExisitingOtp: builder.mutation({
             query: (body) => {
                 return {
-                    url: '/unregistered-business',
+                    url: 'existing-resend-otp',
                     method: 'post',
                     body
                 };
             }
         }),
 
-        profileSetupEcoAuth: builder.mutation({
+        verifyExistingOtp: builder.mutation({
             query: (body) => {
                 return {
-                    url: '/eco-auth',
+                    url: 'existing-verify-otp',
                     method: 'post',
                     body
                 };
             }
         }),
-        endpoints: (builder) => ({
-            searchRC: builder.mutation({
-                query: (body) => {
-                    return {
-                        url: 'business-name',
-                        method: 'post',
-                        body
-                    };
-                }
-            })
+        createExistingUserProfile: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'create-user-profile',
+                    method: 'post',
+                    body
+                };
+            }
         }),
-        endpoints: (builder) => ({
-            faceMatch: builder.mutation({
-                query: (body) => {
-                    return {
-                        url: 'facematch-with-bvn',
-                        method: 'post',
-                        body
-                    };
-                }
-            }),
-            getCAC: builder.mutation({
-                query: (body) => {
-                    return {
-                        url:
-                            'smeapp-document-verification-service/cac-verification',
-                        method: 'post'
-                    };
-                }
-            }),
-            profileSetUpRegisteredBusiness: builder.mutation({
-                query: (body) => {
-                    return {
-                        url:
-                            'smeapp-register-business/authentication/profile-setup/registered-business',
-                        method: 'post'
-                    };
-                }
-            }),
-            profileSetUpUnregisteredBusiness: builder.mutation({
-                query: (body) => {
-                    return {
-                        url:
-                            'smeapp-profile-unregister-business/authentication/profile-setup/registered-business',
-                        method: 'post',
-                        body
-                    };
-                }
-            })
+        faceMatchWithoutBvn: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'facematch',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
-    useBusinessSetupMutation,
-    useCreateAccountMutation,
-    useForgotPasswordMutation,
+    useFaceMatchWithoutBvnMutation,
+    useSearchRCMutation,
+    useGetAccountNoMutation,
+    useCreateExistingUserProfileMutation,
+    useResendExisitingOtpMutation,
+    useVerifyExistingOtpMutation,
+    useGetMoreAccountNumberDetailsMutation,
+    useAuthEcobankMutation,
+    useAuthOmniliteMutation,
+    useRegisterAccountNumberMutation,
+    useRegisterCardMutation,
+    useDocumentVerificationMutation,
+    useBvnVerificationMutation,
+    useNinVerificationMutation,
+    useTinVerificationMutation,
     useLoginAccountMutation,
-    useProfileSetupEcoAuthMutation,
-    useProfileSetupUnregisteredBusinessMutation,
-    useResendEmailMutation,
-    useResendOtpMutation,
+    useVninVerificationMutation,
+    useForgotPasswordMutation,
     useResetPasswordMutation,
+    useGetCategoriesMutation,
+    useResendEmailOtpMutation,
+    useVerifyEmailMutation,
+    useVerifyOtpMutation,
+    useFacematchMutation,
+    useGetCACMutation,
+    useResendOtpMutation,
+    useRegisterMutation,
+    useRegisteredSetupMutation,
     useUpdatePhoneMutation,
-    useVerifySmsOtpMutation,
-    useVerifyEmailMutation
+    useGetProfileMutation,
+    useUnregisteredSetupMutation,
+    useSingleTransferMutation,
+    useBulkTransferMutation,
+    useBillerPaymentMutation,
+    useBillerValidationMutation,
+    useBillerDetailsMutation,
+    useAirNetworksMutation,
+    useBillerCategoriesMutation,
+    useBillersMutation,
+    useAirtimeTopupMutation,
+    useMobileMoneyMutation,
+    useMobiNetworksMutation,
+    useAcctInquiryMutation,
+    useProfileSetUpUnregisteredBusinessMutation,
+    useBusinessSetupMutation,
+    useCreateIAcctMutation,
+    useCreateCAcctMutation,
+    useGetAccountStatusMutation
 } = authApi;

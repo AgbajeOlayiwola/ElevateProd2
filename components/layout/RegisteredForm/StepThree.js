@@ -7,21 +7,20 @@ import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import { useDispatch, useSelector } from 'react-redux';
 import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
+import { useGetAccountNoMutation } from '../../../redux/api/authApi';
 
 const StepThree = ({
     action,
     handleSubmit,
     handleSubmitNew,
     countryNames,
-    mainAccount
+    formData,
+    setFormData
 }) => {
     const dispatch = useDispatch();
     const [profileInfo, setProfileInfo] = useState([]);
     const account = localStorage.getItem('account');
-
     const accountDetails = JSON.parse(account);
-    //  //console.log(accountDetails);
-
     useEffect(() => {
         const account = localStorage.getItem('account');
         const accountDetails = JSON.parse(account);
@@ -42,35 +41,24 @@ const StepThree = ({
             setActive(true);
         }
     }, [countryNames]);
+    const { moreAccountNumberDetails } = useSelector((store) => store);
+    console.log(moreAccountNumberDetails);
+    const [
+        getAccountNo,
+        {
+            data: getAccountNoData,
+            isLoading: getAccountNoLoad,
+            isSuccess: getAccountNoSuccess,
+            isError: getAccountNoFalse,
+            error: getAccountNoErr,
+            reset: getAccountNoReset
+        }
+    ] = useGetAccountNoMutation();
 
-    const [progress, setProgress] = useState('50%');
-    const [bgcolor, setBgcolor] = useState(false);
-
-    const [bcolor, setBColor] = useState(false);
-
-    const handleRegistrationStatus = () => {
-        setIsRegistered(true);
-        setBgcolor(true);
-    };
-    const switchRegistrationStatus = () => {
-        setIsRegistered(false);
-        setBgcolor(false);
-    };
-    const handleBusiness = () => {
-        setBColor(false);
-    };
-    const handleBusinessTog = () => {
-        setBColor(true);
-    };
-
-    const { bankAccounts, errorMessage } = useSelector(
-        (state) => state.bankAccountsReducer
-    );
     useEffect(() => {
-        dispatch(bankAccountsData());
+        getAccountNo(null);
     }, []);
 
-    const [activeBtn, setActiveBtn] = useState(true);
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
@@ -78,11 +66,11 @@ const StepThree = ({
             </section>
             <section className={styles.sectionII}>
                 <div className={styles.secondStepForm}>
-                    <p className={styles.email}>
+                    {/* <p className={styles.email}>
                         An Email has been sent to your email account,Please
                         check your inbox and verify your email before
                         continuing.
-                    </p>
+                    </p> */}
                     <div className={styles.cardHeading}>
                         <ArrowBackSvg action={action} color="#102572" />
                         <div>
@@ -93,26 +81,17 @@ const StepThree = ({
                     </div>
                     <div className={styles.formWrapper}>
                         <div className={styles.formInner}>
-                            {/* {accountDetails.email === null ? null : (
-                                <div>
-                                    <label>Email </label>
-                                    <input
-                                        placeholder="Enter Your Email"
-                                        className={styles.textInput}
-                                        required
-                                        readOnly
-                                        value={accountDetails.email}
-                                    />
-                                </div>
-                            )} */}
                             <div>
                                 <label>Account Number </label>
                                 <input
                                     placeholder="Fetching Account Number ...."
                                     className={styles.textInput}
+                                    value={
+                                        moreAccountNumberDetails?.accounts
+                                            ?.accountNumber
+                                    }
                                     required
                                     readOnly
-                                    value={bankAccounts[0]?.accountNumber}
                                 />
                             </div>
                             <div>
@@ -120,9 +99,12 @@ const StepThree = ({
                                 <input
                                     placeholder="Full Name"
                                     className={styles.textInput}
+                                    value={
+                                        moreAccountNumberDetails?.accounts
+                                            ?.accountName
+                                    }
                                     required
                                     readOnly
-                                    value={`${profileInfo?.lastName}  ${profileInfo?.firstName}`}
                                 />
                             </div>
                             <div>
@@ -130,39 +112,43 @@ const StepThree = ({
                                 <div className={styles.phone}>
                                     <div className={styles.phoneHeader}>
                                         <span>
-                                            <img
-                                                src={countryNames?.flags.svg}
-                                                alt=""
-                                            />
+                                            <img src={formData?.flag} alt="" />
                                         </span>
-                                        <p>{countryNames?.baseCurrency}</p>
+                                        <p>{formData?.baseCurrency}</p>
                                     </div>
                                     <div className={styles.phoneDetails}>
+                                        <p> +{formData?.countryCode}</p>
                                         {/* <p>{countryNames?.countryCode}</p> */}
                                         <input
                                             type="number"
+                                            value={moreAccountNumberDetails?.accounts?.mobileNos.replace(
+                                                '234',
+                                                ''
+                                            )}
                                             placeholder="812 345 6789"
-                                            value={profileInfo?.phoneNumber}
                                         />
                                     </div>
                                 </div>
                             </div>
-                            <div
+                            {/* <div
                                 className={styles.genBtm}
                                 style={{ marginBottom: '0px' }}
                             >
                                 <label> Gender </label>
-                                <select name="" id="">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                <select name="" id="" readOnly>
+                                    <option value="Male">
+                                        {moreAccountNumberDetails?.accounts
+                                            ?.gender === 'M'
+                                            ? 'Male'
+                                            : moreAccountNumberDetails?.accounts
+                                                  ?.gender === 'F'
+                                            ? 'Female'
+                                            : null}
+                                    </option>
                                 </select>
-                            </div>
+                            </div> */}
                         </div>
-                        <button
-                            disabled={active ? false : true}
-                            className={active ? null : styles.disabled}
-                            onClick={handleSubmitNew}
-                        >
+                        <button disabled={false} onClick={handleSubmitNew}>
                             Click to use this Account
                         </button>
                         <p onClick={handleSubmit} className={styles.open}>

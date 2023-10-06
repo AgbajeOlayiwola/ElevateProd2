@@ -1,33 +1,22 @@
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect, useRef } from 'react';
-import StepFiveSuccessPage from '../../../components/layout/NotRegisteredForms/StepFiveSucceesPage';
-import FailedModal from '../../../components/ReusableComponents/FailedModal';
-import axiosInstance from '../../../redux/helper/apiClient';
-import apiRoutes from '../../../redux/helper/apiRoutes';
 import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { IoMdGift } from 'react-icons/io';
-import { newAccountStatusData } from '../../../redux/actions/newAccountStatusAction';
 import { createNewUserAccount } from '../../../redux/actions/createNwUserAccountAction';
 import { logoutAction } from '../../../redux/actions/logOutAction';
+import Loader from '../../../components/ReusableComponents/Loader';
+import {
+    useCreateCAcctMutation,
+    useCreateIAcctMutation
+} from '../../../redux/api/authApi';
 
 const AccountLoading = () => {
-    const [accountInfo, setAccountInfo] = useState('');
-    const [profileCont, setProfileCont] = useState([]);
     const [accountWait, setAccountWait] = useState();
-    const [errorT, setError] = useState();
-    const { accountStatuss, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
 
     const router = useRouter();
 
     const dispatch = useDispatch();
 
-    const { newAccount, newAccountErrorMessage } = useSelector(
-        (state) => state.newUserAccountDets
-    );
     // We need ref in this, because we are dealing
     // with JS setInterval to keep track of it and
     // stop it when needed
@@ -97,75 +86,20 @@ const AccountLoading = () => {
     useEffect(() => {
         clearTimer(getDeadTime());
     }, []);
-
-    // Another way to call the clearTimer() to start
-    // the countdown is via action event from the
-    // button first we create function to be called
-    // by the button
-    // const onClickReset = () => {
-    //     clearTimer(getDeadTime());
-    // };
-
     const [count, setCount] = useState(0);
-    const newUserAccountt = () => {
-        const accountData = {
-            affiliateCode: 'ENG',
-            currency: 'NGN'
-        };
-        dispatch(createNewUserAccount(accountData));
-    };
-    useEffect(() => {
-        newUserAccountt();
-    }, []);
-    // useEffect(() => {
-    //     setCount(count + 1);
-    // }, [errorMessages]);
-    useEffect(() => {
-        if (newAccount !== null) {
-            dispatch(newAccountStatusData());
-        } else if (newAccountErrorMessage !== null) {
-            setError(newAccountErrorMessage);
 
-            dispatch(newAccountStatusData());
-        }
-    }, [newAccount, newAccountErrorMessage]);
-    useEffect(() => {
-        if (
-            errorMessages === 'Pending Creation, Try Again' ||
-            errorMessages === 'Try Again' ||
-            errorMessages === 'Bank Account has not been created for this user'
-        ) {
-            //console.log('done');
-            // if (count === 1) {
-            dispatch(newAccountStatusData());
-
-            // }
-            // else {
-            //     router.push('/Verify/Waiting');
-            // }
-        }
-        if (accountStatuss !== null) {
-            // //console.log(accountStatus.messages, errorMessages);
-            router.push('/Success');
-        }
-    }, [errorMessages, accountStatuss]);
     useEffect(() => {
         if (timer === '00:00:00') {
             dispatch(logoutAction());
             if (!localStorage.getItem('user')) {
-                router.replace('/Auth/Login');
+                // router.replace('/Auth/Login');
             }
         }
         if (timer === '00:00:10') {
             setAccountWait('Your Account Number will be sent to your Email');
         }
-
-        // setTimeout(() => {
-        //     setError(
-        //         'Your account creatio is taking a while, once its completed an email will be sent to you'
-        //     );
-        // }, 60000);
     }, [timer]);
+    const [error, setError] = useState();
 
     return (
         <>
@@ -173,9 +107,9 @@ const AccountLoading = () => {
             <div className={styles.cover}>
                 <div className={styles.covInn}>
                     <div className={styles.load}>
-                        {errorT ? (
+                        {error ? (
                             <div className={styles.error}>
-                                <h2 className={styles.error}>{errorT}</h2>
+                                <h2 className={styles.error}>{error}</h2>
                                 <br />
                             </div>
                         ) : timer <= '00:00:10' ? (
@@ -185,33 +119,7 @@ const AccountLoading = () => {
                             </div>
                         ) : (
                             <>
-                                <svg
-                                    width="59"
-                                    height="15"
-                                    viewBox="0 0 59 15"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className={styles.svg}
-                                >
-                                    <circle
-                                        cx="7.5"
-                                        cy="7.25684"
-                                        r="7"
-                                        fill="#6CCF00"
-                                    />
-                                    <circle
-                                        cx="29.5"
-                                        cy="7.25684"
-                                        r="7"
-                                        fill="#6CCF00"
-                                    />
-                                    <circle
-                                        cx="51.5"
-                                        cy="7.25684"
-                                        r="7"
-                                        fill="#6CCF00"
-                                    />
-                                </svg>
+                                <Loader />
                                 <p className={styles.kindly}>
                                     Kindly wait while the system fetches your
                                     account number, this will take a moment.

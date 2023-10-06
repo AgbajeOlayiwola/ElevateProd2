@@ -54,3 +54,23 @@ background: #7EB542;
     margin-bottom: 53px;
     margin-top: 22px;
 }
+@media screen and (max-width: 1098px) {
+    .hero{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 28px;
+    align-items: center;
+    margin-top: 80px;
+    }
+    .sideOne {
+        width: 80%;
+        max-width: 479px;
+    }
+    .buttons{
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-direction: column;
+    }
+}

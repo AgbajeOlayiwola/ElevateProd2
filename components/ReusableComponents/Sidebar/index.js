@@ -14,6 +14,10 @@ import Dropdownicon from './dropdownicon';
 import Innersubnav from './innersubnav';
 import { FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { clearProfile } from '../../../redux/slices/profile';
+import { clearfaceMatchDetails } from '../../../redux/slices/facematchSlice';
+import { clearMoreAccountNumberDetails } from '../../../redux/slices/moreAccountNumberDetails';
+import { clearAccountNumber } from '../../../redux/slices/accountNumberSlice';
 const Sidebar = ({ showSubnav }) => {
     const dispatch = useDispatch();
     // const { logout } = useSelector((state) => state.logoutReducer);
@@ -22,11 +26,19 @@ const Sidebar = ({ showSubnav }) => {
     const [Nav, setNav] = useState(false);
     const [subNavTitle, setSubNavTitle] = useState('');
 
-    const handleLogOut = () => {
-        if (!localStorage.getItem('user')) {
-            router.replace('../Auth/Login');
-        }
+    const handleLogOut = async () => {
+        // Clear local storage
+        await localStorage.clear();
+
+        // Dispatch actions to clear Redux state
+        await dispatch(clearProfile());
+        await dispatch(clearfaceMatchDetails());
+        await dispatch(clearMoreAccountNumberDetails());
+        await dispatch(clearAccountNumber());
+        // Redirect the user to the login page (you may use React Router for this)
+        router.push('/Auth/Login');
     };
+
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 

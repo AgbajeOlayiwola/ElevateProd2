@@ -5,6 +5,11 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineReducers } from 'redux';
 import profileReducer from '../slices/profile';
 import languageReducer from '../slices/language';
+import existingUserDetailsReducer from '../slices/existingUserData';
+import moreAccountNumberDetailsReducer from '../slices/moreAccountNumberDetails';
+import pinnedReducer from '../slices/pinned';
+import accountNumberReducer from '../slices/accountNumberSlice';
+import faceMatchDetailsReducr from '../slices/facematchSlice';
 import {
     persistReducer,
     FLUSH,
@@ -15,7 +20,6 @@ import {
     REHYDRATE,
     persistStore
 } from 'redux-persist';
-
 import storage from 'redux-persist/lib/storage';
 import { docsApi } from '../api/docsApi';
 import { usersApi } from '../api/usersApi';
@@ -26,13 +30,26 @@ const reducers = combineReducers({
     [usersApi.reducerPath]: usersApi.reducer,
     [cacApi.reducerPath]: cacApi.reducer,
     profile: profileReducer,
-    language: languageReducer
+    language: languageReducer,
+    existingUserDetails: existingUserDetailsReducer,
+    moreAccountNumberDetails: moreAccountNumberDetailsReducer,
+    pinned: pinnedReducer,
+    accountNumber: accountNumberReducer,
+    faceMatchDetails: faceMatchDetailsReducr
 });
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['language', 'profile']
+    whitelist: [
+        'language',
+        'profile',
+        'existingUserDetails',
+        'moreAccountNumberDetails',
+        'pinned',
+        'accountNumber',
+        'faceMatchDetails'
+    ]
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -52,7 +69,7 @@ export const store = configureStore({
                     REGISTER
                 ]
             }
-        }).concat(authApi.middleware)
+        }).concat(authApi.middleware, docsApi.middleware, cacApi.middleware)
 });
 
 export const useAppDispatch = () => useDispatch();

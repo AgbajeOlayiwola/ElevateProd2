@@ -15,60 +15,28 @@ import CircleSvg from '../../ReusableComponents/ReusableSvgComponents/CircleSvg'
 import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
-import { CompleteBusinessProfile } from '../../../redux/actions/completeBusinessProfileAction';
-import { ExCreateBusProfileSetup } from '../../../redux/actions/existingUserBusinessProfileAction';
-import { statesData } from '../../../redux/actions/statesAction';
-import { businessCategoriesData } from '../../../redux/actions/businessCategoriesAction';
-import { getRCDetails } from '../../../redux/actions/getRcDetailsAction';
+import {
+    useBusinessSetupMutation,
+    useCreateCAcctMutation,
+    useGetAccountStatusMutation,
+    useGetCategoriesMutation,
+    useSearchRCMutation
+} from '../../../redux/api/authApi';
+import { lgasArr } from '../../ReusableComponents/Data';
+import Loading from '../../../pages/Verify/Loading';
+import { setAccountNumber } from '../../../redux/slices/accountNumberSlice';
 
 const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const dispatch = useDispatch();
     const router = useRouter();
-    // const account = localStorage.getItem('meta');
-    // const accountDetails = JSON.parse(account);
-
     useEffect(() => {
         const {
             query: { pageType }
         } = router;
         setPageType({ pageType }.pageType);
     });
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const { existingUserProfile, errorMessage } = useSelector(
-        (state) => state.existingUserProfileReducer
-    );
-
-    const {
-        cacName,
-        cacNameError,
-        getCacName,
-        getCacNameError,
-        existingProfileSetupPay,
-        existingProfileSetupError
-    } = useSelector((state) => state.existReducer);
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
-    const { createAccount, errorData } = useSelector(
-        (state) => state.createAccountReducer
-    );
-    const { businessCategories, errorDatas } = useSelector(
-        (state) => state.businessCategoriesReducer
-    );
-    const { compBusprofile, comperrorMessage } = useSelector(
-        (state) => state.completeBusinessprofileReducer
-    );
-    const { getRC, getRCErrorMessage } = useSelector(
-        (state) => state.getRCReducer
-    );
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
     const [businessCategory, setBusinessCategory] = useState([]);
     const [businessType, setBusinessType] = useState([]);
     const [business, setBusiness] = useState('');
@@ -77,31 +45,26 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
     const [getRCFirst, setGetRCFirst] = useState(false);
-    const { states } = useSelector((state) => state.statesReducer);
     const [businessName, setBusinessName] = useState('');
     const [refferalCode, setRefferalCode] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [streetName, setStreetName] = useState('');
     const [state, setState] = useState('');
     const [city, setCity] = useState('');
+    const [lga, setLga] = useState('');
     const [localGoverment, setLocalGoverment] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedBusiness, setSelectedBusiness] = useState(null);
     const [localState, setLocalState] = useState('');
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState('');
     const [regNo, setRegNo] = useState('');
     const [refferee, setRefferee] = useState();
     const [pageType, setPageType] = useState('');
-    // //console.loglocalGoverment);
     const [phones, setPhones] = useState();
+    const [bussinestCate, setBusinessCate] = useState();
+    const [selectedBusinessType, setSelectedBusinessType] = useState();
 
-    // //console.logformData.type);
-    useEffect(() => {
-        if (getRC?.data?.dataFromCac?.companyName !== undefined) {
-            setBusinessName(getRC?.data?.dataFromCac?.companyName);
-        } else if (getRC?.data?.reason !== undefined) {
-            //  //console.log(getRC?.data?.reason);
-        }
-    }, [getRC, getRCErrorMessage]);
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
@@ -110,117 +73,11 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     };
     const [phoneNumer, setPhoneNumer] = useState();
 
-    useEffect(() => {
-        if (window.typeof !== 'undefined') {
-            setPhones(JSON.parse(window.localStorage.getItem('account')));
-        }
-        if (userDetails) {
-            setPhoneNumer(userDetails.phoneNumber);
-        } else if (profileInfo) {
-            setPhoneNumer(profileInfo.phoneNumber);
-        }
-    }, []);
     const [profileInfo, setProfileInfo] = useState([]);
     const account = localStorage.getItem('account');
     const accountDetails = JSON.parse(account);
     const user = localStorage.getItem('user');
     const userDetails = JSON.parse(user);
-    const onSubmitNew = (data) => {
-        setLoading((prev) => !prev);
-        const userData = {
-            isRegistered: 'false',
-            businessName: businessName,
-            businessCategory: business,
-            businessType: businesses,
-            referralCode: refferalCode,
-            countryCode: '+234',
-            businessPhoneNumber: profileInfo.phoneNumber
-                ? profileInfo.phoneNumber
-                : userDetails
-                ? userDetails?.phoneNumber
-                : phoneNumber,
-            street: streetName,
-            state: localState,
-            city: city,
-            lga: localGoverment,
-            refereeCode: refferalCode
-            // signature: ''
-        };
-        dispatch(CompleteBusinessProfile(userData));
-        // //console.logexistingProfileSetupPay, existingProfileSetupError);
-    };
-    const profileTest = () => {
-        // //console.log(compBusprofile, comperrorMessage);
-        setLoading((prev) => !prev);
-        if (compBusprofile) {
-            // //console.logerrorMessages);
-            router.push('/Verify/ExistingSuccess');
-        } else if (
-            comperrorMessage.message === 'your have already setup your business'
-        ) {
-            router.push('/Verify/ExistingSuccess');
-        }
-
-        if (businessCategories !== null) {
-            setBusinessCategory(businessCategories);
-        }
-    };
-    useEffect(() => {
-        profileTest();
-    }, [compBusprofile, comperrorMessage]);
-
-    const onSubmit = (data) => {
-        const userData = {
-            registerationNumber: regNo,
-            isRegistered: 'true',
-            businessName: businessName,
-            businessCategory: business,
-            businessType: businesses,
-            referralCode: refferalCode,
-            countryCode: '+234',
-            businessPhoneNumber: phoneNumer,
-            street: streetName,
-            state: localState,
-            city: city,
-            lga: localGoverment,
-            refereeCode: refferalCode
-            // signature: ''
-        };
-        dispatch(ExCreateBusProfileSetup(userData));
-        // //console.log(existingProfileSetupPay, existingProfileSetupError);
-    };
-
-    useEffect(() => {
-        // //console.log(existingProfileSetupPay, existingProfileSetupError);
-        setLoading((prev) => !prev);
-
-        if (existingProfileSetupPay) {
-            // //console.log(existingProfileSetupPay, existingProfileSetupError);
-            if (existingProfileSetupPay.data.message === 'Successful') {
-                if (formData.type !== 'true') {
-                    router.push('/Verify/ExistingSuccess');
-                } else {
-                    router.push('/Verify/CorportateAccount');
-                }
-            }
-        } else if (existingProfileSetupError) {
-            if (
-                existingProfileSetupError.response.data.message ===
-                'your have already setup your business'
-            ) {
-                if (formData.type !== 'true') {
-                    router.push('/Verify/ExistingSuccess');
-                } else {
-                    router.push('/Verify/CorportateAccount');
-                }
-            }
-        }
-    }, [
-        existingProfileSetupPay,
-        existingProfileSetupError,
-        compBusprofile,
-        comperrorMessage
-    ]);
 
     const types = (type) => {
         setOutType(type);
@@ -228,17 +85,63 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [location, setLocation] = useState([]);
 
-    useEffect(() => {
-        dispatch(statesData());
-    }, []);
-    const newStates = () => {
-        if (states !== null) {
-            setLocation(states);
+    const [
+        getCategories,
+        {
+            data: getCategoriesData,
+            isLoading: getCategoriesLoad,
+            isSuccess: getCategoriesSuccess,
+            isError: getCategoriesFalse,
+            error: getCategoriesErr,
+            reset: getCategoriesReset
         }
-    };
-    useEffect(() => {
-        newStates();
-    }, [states]);
+    ] = useGetCategoriesMutation();
+    const [
+        businessSetup,
+        {
+            data: businessSetupData,
+            isLoading: businessSetupLoad,
+            isSuccess: businessSetupSuccess,
+            isError: businessSetupFalse,
+            error: businessSetupErr,
+            reset: businessSetupReset
+        }
+    ] = useBusinessSetupMutation();
+    const [
+        createCAcct,
+        {
+            data: createCAcctData,
+            isLoading: createCAcctLoad,
+            isSuccess: createCAcctSuccess,
+            isError: createCAcctFalse,
+            error: createCAcctErr,
+            reset: createCAcctReset
+        }
+    ] = useCreateCAcctMutation();
+    const [
+        searchRC,
+        {
+            data: searchRCData,
+            isLoading: searchRCLoad,
+            isSuccess: searchRCSuccess,
+            isError: searchRCFalse,
+            error: searchRCErr,
+            reset: searchRCReset
+        }
+    ] = useSearchRCMutation();
+
+    const [
+        getAccountStatus,
+        {
+            data: getAccountStatusData,
+            isLoading: getAccountStatusLoad,
+            isSuccess: getAccountStatusSuccess,
+            isError: getAccountStatusFalse,
+            error: getAccountStatusErr,
+            reset: getAccountStatusReset
+        }
+    ] = useGetAccountStatusMutation();
+
     useEffect(() => {
         location?.filter((item) => {
             if (item.state === localState) {
@@ -246,9 +149,6 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             }
         });
     }, [localState]);
-    useEffect(() => {
-        dispatch(businessCategoriesData());
-    }, []);
 
     useEffect(() => {
         if (pageType === 'New') {
@@ -257,36 +157,114 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             setFormData({ ...formData, type: 'true' });
         }
     }, [formData.type]);
-
     useEffect(() => {
-        const account = localStorage.getItem('account');
-        const accountDetails = JSON.parse(account);
-        if (accountDetails?.profile !== undefined) {
-            setProfileInfo(accountDetails.profile);
-        } else if (accountDetails.user !== undefined) {
-            setProfileInfo(accountDetails.user.profile);
-        } else {
-            setProfileInfo(accountDetails);
+        if (selectedCategory) {
+            setBusinessType(getCategoriesData?.data[selectedCategory]);
         }
-        // //console.logprofileInfo);
-        if (businessCategories !== null) {
-            setBusinessCategory(businessCategories);
-        }
-    }, [businessCategories]);
+    }, [selectedCategory]);
     useEffect(() => {
-        if (pageType === 'New') {
-            setBusinessName(
-                `${profileInfo?.lastName} ${profileInfo?.firstName}`
-            );
-        }
-    }, [profileInfo]);
-    useEffect(() => {
-        Object.keys(businessCategory)?.filter((item) => {
-            if (item === business) {
-                setBusinessType(businessCategory[item]);
+        lgasArr?.filter((item) => {
+            if (item.state === localState) {
+                setLocalGovernment(item.lgas);
             }
         });
-    }, [business]);
+    }, [localState]);
+
+    useEffect(() => {
+        getCategories(null);
+    }, []);
+
+    useEffect(() => {
+        if (getCategoriesSuccess) {
+            const mainCategories = Object.keys(getCategoriesData.data);
+            setBusinessCate(mainCategories);
+        }
+    }, [getCategoriesSuccess]);
+    const handleCategoryClick = (val) => {
+        setSelectedCategory(val);
+        setSelectedBusiness(null); // Reset selected business when a new category is selected
+    };
+    const handleBusinessTypeClick = (val) => {
+        setSelectedBusinessType(val);
+    };
+    const { existingUserDetails } = useSelector((store) => store);
+    const { moreAccountNumberDetails } = useSelector((store) => store);
+
+    const createBusiness = (e) => {
+        e.preventDefault();
+        const data = {
+            isRegistered: false,
+            registerationNumber: '',
+            phoneNumber: moreAccountNumberDetails?.accounts?.mobileNos,
+            businessName: businessName,
+            bussinessCategory: selectedCategory,
+            businessType: selectedBusinessType,
+            city: city,
+            state: localState,
+            lga: localGoverment,
+            refferalCode: refferalCode,
+            isExisting: true
+        };
+        businessSetup(data);
+    };
+
+    const createAnewBusinessAccount = (e) => {
+        e.preventDefault();
+        const data = {
+            isRegistered: true,
+            registerationNumber: callRc,
+            phoneNumber: moreAccountNumberDetails?.accounts?.mobileNos,
+            businessName:
+                searchRCData?.data?.name ||
+                moreAccountNumberDetails?.accounts?.accountName,
+            bussinessCategory: selectedCategory,
+            businessType: selectedBusinessType,
+            city: city,
+            state: localState,
+            lga: localGoverment,
+            refferalCode: refferalCode,
+            isExisting: true
+        };
+        businessSetup(data);
+    };
+    useEffect(() => {
+        if (businessSetupData && pageType !== 'New') {
+            const data = {
+                affiliateCode: 'ENG',
+                currency: 'NGN'
+            };
+            createCAcct(data);
+        } else if (businessSetupData && pageType === 'New') {
+            dispatch(
+                setAccountNumber(
+                    moreAccountNumberDetails?.accounts?.accountNumber
+                )
+            );
+            router.push('/Success');
+        }
+    }, [businessSetupSuccess]);
+    useEffect(() => {
+        if (createCAcctData) {
+            getAccountStatus();
+        }
+    }, [createCAcctSuccess]);
+    useEffect(() => {
+        if (getAccountStatusData) {
+            dispatch(setAccountNumber(getAccountStatusData?.data?.trackerRef));
+            router.push('/Success');
+        }
+    }, [getAccountStatusSuccess]);
+
+    const [callRc, setCallRc] = useState('');
+
+    useEffect(() => {
+        if (callRc?.length > 2) {
+            searchRC({
+                registrationNumber: callRc
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [callRc]);
     return (
         <div className={styles.body}>
             <section className={styles.sectionI}>
@@ -296,9 +274,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                 <div className={styles.lastStep}>
                     <div className={styles.cardHeading}>
                         <ArrowBackSvg action={action} color="#102572" />
-                        <p className={styles.error}>
-                            {comperrorMessage ? comperrorMessage.message : null}
-                        </p>
+                        <p className={styles.error}></p>
                         <div>
                             <h3 className={styles.LeftHeading}>
                                 Complete your Profile
@@ -307,17 +283,8 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                     </div>
                     {pageType === 'New' ? (
                         <div className={styles.lastContainer}>
-                            <form onSubmit={handleSubmit(onSubmitNew)}>
-                                {error ? (
-                                    <p className={styles.error}>{error}</p>
-                                ) : null}
+                            <form>
                                 <div className={styles.existingUserHead}>
-                                    {/* <div className={styles.existingUserCont}>
-                                        <label>TIN </label>
-                                        <div className={styles.addressNumber}>
-                                            <input type="text" required />
-                                        </div>
-                                    </div> */}
                                     <div className={styles.existingUserSingle}>
                                         <div
                                             className={styles.existingUserCont}
@@ -332,7 +299,6 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                         e.target.value
                                                     )
                                                 }
-                                                disabled
                                             />
                                         </div>
                                         <div
@@ -353,8 +319,10 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                     }}
                                                 >
                                                     <SearchSvg color="#005B82" />
-                                                    {business ? (
-                                                        <p>{business}</p>
+                                                    {selectedCategory ? (
+                                                        <p>
+                                                            {selectedCategory}
+                                                        </p>
                                                     ) : (
                                                         <p>
                                                             Search Business
@@ -370,39 +338,42 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                             styles.businessGroup
                                                         }
                                                     >
-                                                        {Object.keys(
-                                                            businessCategory
-                                                        )?.map(
-                                                            (
-                                                                business,
-                                                                index
-                                                            ) => {
-                                                                return (
-                                                                    <li
-                                                                        value={
-                                                                            business
-                                                                        }
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        onClick={() => {
-                                                                            setBusiness(
-                                                                                business
-                                                                            );
-                                                                            setBusinessTest(
-                                                                                false
-                                                                            );
-                                                                        }}
-                                                                    >
-                                                                        {
-                                                                            business
-                                                                        }
-                                                                    </li>
-                                                                );
-                                                            }
-                                                        )}
+                                                        {bussinestCate
+                                                            ? bussinestCate?.map(
+                                                                  (
+                                                                      category,
+                                                                      index
+                                                                  ) => {
+                                                                      return (
+                                                                          <li
+                                                                              key={
+                                                                                  index
+                                                                              }
+                                                                              onClick={() => {
+                                                                                  handleCategoryClick(
+                                                                                      category
+                                                                                  ),
+                                                                                      setBusinessTest(
+                                                                                          !businessTest
+                                                                                      );
+                                                                              }}
+                                                                          >
+                                                                              {
+                                                                                  category
+                                                                              }
+                                                                          </li>
+                                                                      );
+                                                                  }
+                                                              )
+                                                            : null}
                                                     </ul>
                                                 )}
+                                                {!selectedCategory ? (
+                                                    <p className={styles.error}>
+                                                        Please Select a business
+                                                        category
+                                                    </p>
+                                                ) : null}
                                             </div>
                                         </div>
                                         <div
@@ -420,12 +391,6 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                 <input
                                                     type="text"
                                                     placeholder="Enter Street Name"
-                                                    value={streetName}
-                                                    onChange={(e) =>
-                                                        setStreetName(
-                                                            e.target.value
-                                                        )
-                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -451,21 +416,25 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                               return (
                                                                   <option
                                                                       value={
-                                                                          item.lgaName
+                                                                          item
                                                                       }
                                                                       key={
                                                                           index
                                                                       }
                                                                   >
-                                                                      {
-                                                                          item.lgaName
-                                                                      }
+                                                                      {item}
                                                                   </option>
                                                               );
                                                           }
                                                       )
                                                     : null}
                                             </select>
+                                            {!lga ? (
+                                                <p className={styles.error}>
+                                                    Please Select a local
+                                                    government
+                                                </p>
+                                            ) : null}
                                         </div>
                                     </div>
                                     <div className={styles.existingUserSingle}>
@@ -483,17 +452,12 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                 >
                                                     <span>
                                                         <img
-                                                            src={
-                                                                countryNames
-                                                                    ?.flags.svg
-                                                            }
+                                                            src={formData?.flag}
                                                             alt=""
                                                         />
                                                     </span>
                                                     <p>
-                                                        {
-                                                            countryNames?.baseCurrency
-                                                        }
+                                                        {formData?.baseCurrency}
                                                     </p>
                                                 </div>
                                                 <div
@@ -501,39 +465,17 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                         styles.phoneDetails
                                                     }
                                                 >
-                                                    {/* <p>{countryNames.countryCode}</p> */}
+                                                    <p>
+                                                        {formData?.countryCode}
+                                                    </p>
                                                     <input
                                                         type="number"
                                                         placeholder="812 345 6789"
-                                                        // value={
-                                                        //     phones.phoneNumber
-                                                        // }
-                                                        // {...register(
-                                                        //     'countryCode_number',
-                                                        //     {
-                                                        //         required:
-                                                        //             'Phone Number is required',
-                                                        //         minLength: {
-                                                        //             value: 9,
-                                                        //             message:
-                                                        //                 'Min length is 9'
-                                                        //         }
-                                                        //     }
-                                                        // )}
-                                                        // value={phoneNumber}
-                                                        onInput={(e) =>
-                                                            setPhoneNumber(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        value={
-                                                            profileInfo.phoneNumber
-                                                                ? profileInfo.phoneNumber
-                                                                : userDetails
-                                                                ? userDetails?.phoneNumber
-                                                                : phoneNumber
-                                                        }
-                                                        disabled
+                                                        value={moreAccountNumberDetails?.accounts?.mobileNos.replace(
+                                                            '234',
+                                                            ''
+                                                        )}
+                                                        readOnly
                                                     />
                                                 </div>
                                             </div>
@@ -556,14 +498,17 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                     }}
                                                 >
                                                     <SearchSvg color="#005B82" />
-                                                    {businesses ? (
-                                                        <p>{businesses}</p>
+                                                    {selectedBusinessType ? (
+                                                        <p>
+                                                            {
+                                                                selectedBusinessType
+                                                            }
+                                                        </p>
                                                     ) : (
                                                         <p>
                                                             Search Business Type
                                                         </p>
                                                     )}
-
                                                     <DropdownSvg />
                                                 </div>
                                                 {businessText && (
@@ -576,33 +521,30 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                             (
                                                                 business,
                                                                 index
-                                                            ) => {
-                                                                return (
-                                                                    <li
-                                                                        value={
+                                                            ) => (
+                                                                <li
+                                                                    key={index}
+                                                                    onClick={() => {
+                                                                        handleBusinessTypeClick(
                                                                             business
-                                                                        }
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        onClick={() => {
-                                                                            setBusinesses(
-                                                                                business
-                                                                            );
+                                                                        ),
                                                                             setBusinessText(
-                                                                                false
+                                                                                !businessText
                                                                             );
-                                                                        }}
-                                                                    >
-                                                                        {
-                                                                            business
-                                                                        }
-                                                                    </li>
-                                                                );
-                                                            }
+                                                                    }}
+                                                                >
+                                                                    {business}
+                                                                </li>
+                                                            )
                                                         )}
                                                     </ul>
                                                 )}
+                                                {!selectedBusinessType ? (
+                                                    <p className={styles.error}>
+                                                        Please Select a business
+                                                        type
+                                                    </p>
+                                                ) : null}
                                             </div>
                                         </div>
                                         <div
@@ -617,21 +559,22 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                 }}
                                             >
                                                 <option>Select State</option>
-                                                {location?.map(
-                                                    (item, index) => {
-                                                        return (
-                                                            <option
-                                                                value={
-                                                                    item.state
-                                                                }
-                                                                key={index}
-                                                            >
-                                                                {item.state}
-                                                            </option>
-                                                        );
-                                                    }
-                                                )}
+                                                {lgasArr.map((item, index) => {
+                                                    return (
+                                                        <option
+                                                            value={item.state}
+                                                            key={index}
+                                                        >
+                                                            {item.state}
+                                                        </option>
+                                                    );
+                                                })}
                                             </select>
+                                            {!localState ? (
+                                                <p className={styles.error}>
+                                                    Please Select a state
+                                                </p>
+                                            ) : null}
                                         </div>
                                         <div
                                             className={styles.existingUserCont}
@@ -653,7 +596,6 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                     <label>
                                         Enter Referal Code <i>(optional)</i>{' '}
                                     </label>
-                                    {errors.email?.message}
                                     <input
                                         placeholder="Enter  Code"
                                         className={styles.textInput}
@@ -668,42 +610,22 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                         active={
                                             activeBtn ? 'active' : 'inactive'
                                         }
-                                        loads={loading}
-                                        err={comperrorMessage}
-                                        text="Save and Continue"
+                                        text="New Account"
                                         type="submit"
-                                        // onClick={handleShowFourthStep}
+                                        loads={businessSetupLoad}
+                                        onClick={createBusiness}
                                     />
                                 </div>
-                                {/* <div>
-                                    <div className={styles.terms}>
-                                        <CircleSvg
-                                            action={() => {
-                                                setActiveBtn(!activeBtn);
-                                            }}
-                                            circleStatus={activeBtn}
-                                        />
-                                        <label>
-                                            I agree with Ellevate App
-                                            <span>Terms and Conditions</span>
-                                        </label>
-                                    </div>
-                                </div> */}
                             </form>
                         </div>
                     ) : (
                         <div className={styles.lastContainer}>
-                            <form onSubmit={handleSubmit(onSubmit)}>
+                            <form>
                                 <div className={styles.existingUserHead}>
                                     <div className={styles.existingUserSingle}>
                                         <div
                                             className={styles.existingUserCont}
                                         >
-                                            {getRC?.data?.reason ? (
-                                                <p className={styles.error}>
-                                                    {getRC?.data?.reason}
-                                                </p>
-                                            ) : null}
                                             <label>
                                                 Enter your RC /Business
                                                 Registration Number
@@ -712,44 +634,10 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                 type="text"
                                                 placeholder="Your RC Number"
                                                 name="rcNumber"
-                                                {...register('rcNumber', {
-                                                    required:
-                                                        'RC Number is required',
-                                                    minLength: {
-                                                        message:
-                                                            'Min length is 10'
-                                                    },
-                                                    pattern: {
-                                                        value: /^[A-Za-z0-9 ]+$/i,
-                                                        message:
-                                                            'Only Alphabelts/Number allowed'
-                                                    }
-                                                })}
-                                                onChange={(e) => {
-                                                    setRegNo(e.target.value);
-                                                    if (
-                                                        e.target.value
-                                                            .length === 9
-                                                    ) {
-                                                        setGetRCFirst(true);
-                                                        const data = {
-                                                            registerationNumber:
-                                                                e.target.value
-                                                        };
-                                                        dispatch(
-                                                            getRCDetails(data)
-                                                        );
-                                                    } else {
-                                                        setBusinessName('');
-                                                        setGetRCFirst(false);
-                                                    }
-                                                }}
-                                                value={regNo}
+                                                onChange={(e) =>
+                                                    setCallRc(e.target.value)
+                                                }
                                             />
-
-                                            <p className={styles.error}>
-                                                {errors.rcNumber?.message}
-                                            </p>
                                         </div>
 
                                         <div
@@ -781,14 +669,17 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                     }}
                                                 >
                                                     <SearchSvg color="#005B82" />
-                                                    {businesses ? (
-                                                        <p>{businesses}</p>
+                                                    {selectedBusinessType ? (
+                                                        <p>
+                                                            {
+                                                                selectedBusinessType
+                                                            }
+                                                        </p>
                                                     ) : (
                                                         <p>
                                                             Search Business Type
                                                         </p>
                                                     )}
-
                                                     <DropdownSvg />
                                                 </div>
                                                 {businessText && (
@@ -801,38 +692,35 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                             (
                                                                 business,
                                                                 index
-                                                            ) => {
-                                                                return (
-                                                                    <li
-                                                                        value={
+                                                            ) => (
+                                                                <li
+                                                                    key={index}
+                                                                    onClick={() => {
+                                                                        handleBusinessTypeClick(
                                                                             business
-                                                                        }
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        onClick={() => {
-                                                                            setBusinesses(
-                                                                                business
-                                                                            );
+                                                                        ),
                                                                             setBusinessText(
-                                                                                false
+                                                                                !businessText
                                                                             );
-                                                                        }}
-                                                                    >
-                                                                        {
-                                                                            business
-                                                                        }
-                                                                    </li>
-                                                                );
-                                                            }
+                                                                    }}
+                                                                >
+                                                                    {business}
+                                                                </li>
+                                                            )
                                                         )}
                                                     </ul>
                                                 )}
+                                                {!selectedBusinessType ? (
+                                                    <p className={styles.error}>
+                                                        Please Select a business
+                                                        type
+                                                    </p>
+                                                ) : null}
                                             </div>
                                         </div>
                                     </div>
                                     <div className={styles.existingUserSingle}>
-                                        <div
+                                        {/* <div
                                             className={styles.existingUserCont}
                                         >
                                             <label>
@@ -840,20 +728,16 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                             </label>
                                             <input
                                                 type="text"
-                                                placeholder={
-                                                    getRCFirst
-                                                        ? 'Fetching'
-                                                        : 'Enter Your Business Name'
-                                                }
-                                                value={businessName}
-                                                onChange={(e) =>
-                                                    setBusinessName(
-                                                        e.target.value
+                                                value={
+                                                    searchRCLoad ? (
+                                                        <Loading />
+                                                    ) : (
+                                                        'namd'
                                                     )
                                                 }
                                                 disabled
                                             />
-                                        </div>
+                                        </div> */}
                                         <div
                                             className={styles.existingUserCont}
                                         >
@@ -872,8 +756,10 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                     }}
                                                 >
                                                     <SearchSvg color="#005B82" />
-                                                    {business ? (
-                                                        <p>{business}</p>
+                                                    {selectedCategory ? (
+                                                        <p>
+                                                            {selectedCategory}
+                                                        </p>
                                                     ) : (
                                                         <p>
                                                             Search Business
@@ -889,39 +775,42 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                             styles.businessGroup
                                                         }
                                                     >
-                                                        {Object.keys(
-                                                            businessCategory
-                                                        )?.map(
-                                                            (
-                                                                business,
-                                                                index
-                                                            ) => {
-                                                                return (
-                                                                    <li
-                                                                        value={
-                                                                            business
-                                                                        }
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        onClick={() => {
-                                                                            setBusiness(
-                                                                                business
-                                                                            );
-                                                                            setBusinessTest(
-                                                                                false
-                                                                            );
-                                                                        }}
-                                                                    >
-                                                                        {
-                                                                            business
-                                                                        }
-                                                                    </li>
-                                                                );
-                                                            }
-                                                        )}
+                                                        {bussinestCate
+                                                            ? bussinestCate?.map(
+                                                                  (
+                                                                      category,
+                                                                      index
+                                                                  ) => {
+                                                                      return (
+                                                                          <li
+                                                                              key={
+                                                                                  index
+                                                                              }
+                                                                              onClick={() => {
+                                                                                  handleCategoryClick(
+                                                                                      category
+                                                                                  ),
+                                                                                      setBusinessTest(
+                                                                                          !businessTest
+                                                                                      );
+                                                                              }}
+                                                                          >
+                                                                              {
+                                                                                  category
+                                                                              }
+                                                                          </li>
+                                                                      );
+                                                                  }
+                                                              )
+                                                            : null}
                                                     </ul>
                                                 )}
+                                                {!selectedCategory ? (
+                                                    <p className={styles.error}>
+                                                        Please Select a business
+                                                        category
+                                                    </p>
+                                                ) : null}
                                             </div>
                                         </div>{' '}
                                         <div
@@ -938,67 +827,34 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                 >
                                                     <span>
                                                         <img
-                                                            src={
-                                                                countryNames
-                                                                    ?.flags.svg
-                                                            }
+                                                            src={formData?.flag}
                                                             alt=""
                                                         />
                                                     </span>
-                                                    {/* <p>
-                                                        {
-                                                            countryNames.baseCurrency
-                                                        }
-                                                    </p> */}
+                                                    <p>
+                                                        {formData?.baseCurrency}
+                                                    </p>
                                                 </div>
                                                 <div
                                                     className={
                                                         styles.phoneDetails
                                                     }
                                                 >
-                                                    {/* <p>{countryNames.countryCode}</p> */}
+                                                    <p>
+                                                        {' '}
+                                                        +{formData?.countryCode}
+                                                    </p>
                                                     <input
                                                         type="number"
                                                         placeholder="812 345 6789"
-                                                        // {...register(
-                                                        //     'phoneNumber',
-                                                        //     {
-                                                        //         required:
-                                                        //             'Phone Number is required',
-                                                        //         minLength: {
-                                                        //             value: 9,
-                                                        //             message:
-                                                        //                 'Min length is 9'
-                                                        //         }
-                                                        //     }
-                                                        // )}
-                                                        onChange={(e) =>
-                                                            setPhoneNumber(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        value={
-                                                            profileInfo.phoneNumber
-                                                                ? profileInfo.phoneNumber
-                                                                : phoneNumber
-                                                        }
-                                                        disabled
-                                                        // onChange={(e) =>
-                                                        //     setPhoneNumber(
-                                                        //         e.target.value
-                                                        //     )
-                                                        // }
-                                                        // value={
-                                                        //     profileInfo.phoneNumber
-                                                        //         ? profileInfo.phoneNumber
-                                                        //         : phoneNumber
-                                                        // }
+                                                        value={moreAccountNumberDetails?.accounts?.mobileNos.replace(
+                                                            '234',
+                                                            ''
+                                                        )}
+                                                        readOnly
                                                     />
                                                 </div>
                                             </div>
-                                            <p className={styles.error}>
-                                                {errors.phoneNumber?.message}
-                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -1019,12 +875,6 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                 <input
                                                     type="text"
                                                     placeholder="Enter Street Name"
-                                                    value={streetName}
-                                                    onChange={(e) =>
-                                                        setStreetName(
-                                                            e.target.value
-                                                        )
-                                                    }
                                                 />
                                             </div>
                                         </div>
@@ -1035,11 +885,9 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                 Local Government Area (LGA)
                                             </label>
                                             <select
-                                                onChange={(e) => {
-                                                    setLocalGoverment(
-                                                        e.target.value
-                                                    );
-                                                }}
+                                                onChange={(e) =>
+                                                    setLga(e.target.value)
+                                                }
                                             >
                                                 <option value="">
                                                     Select Local Government
@@ -1050,15 +898,13 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                               return (
                                                                   <option
                                                                       value={
-                                                                          item.lgaName
+                                                                          item
                                                                       }
                                                                       key={
                                                                           index
                                                                       }
                                                                   >
-                                                                      {
-                                                                          item.lgaName
-                                                                      }
+                                                                      {item}
                                                                   </option>
                                                               );
                                                           }
@@ -1080,21 +926,22 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                                 }}
                                             >
                                                 <option>Select State</option>
-                                                {location?.map(
-                                                    (item, index) => {
-                                                        return (
-                                                            <option
-                                                                value={
-                                                                    item.state
-                                                                }
-                                                                key={index}
-                                                            >
-                                                                {item.state}
-                                                            </option>
-                                                        );
-                                                    }
-                                                )}
+                                                {lgasArr.map((item, index) => {
+                                                    return (
+                                                        <option
+                                                            value={item.state}
+                                                            key={index}
+                                                        >
+                                                            {item.state}
+                                                        </option>
+                                                    );
+                                                })}
                                             </select>
+                                            {!localState ? (
+                                                <p className={styles.error}>
+                                                    Please Select a state
+                                                </p>
+                                            ) : null}
                                         </div>
                                         <div
                                             className={styles.existingUserCont}
@@ -1116,7 +963,6 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                     <label>
                                         Enter Referal Code <i>(optional)</i>{' '}
                                     </label>
-                                    {errors.email?.message}
                                     <input
                                         placeholder="Enter  Code"
                                         className={styles.textInput}
@@ -1132,11 +978,13 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                             activeBtn ? 'active' : 'inactive'
                                         }
                                         text="Save and Continue"
+                                        onClick={createAnewBusinessAccount}
+                                        loads={
+                                            getAccountStatusLoad ||
+                                            createCAcctLoad ||
+                                            businessSetupLoad
+                                        }
                                         type="submit"
-                                        loads={loading}
-                                        err={existingProfileSetupError}
-                                        // onClick={handleShowSuccessStep}
-                                        // onClick={handleShowFourthStep}
                                     />
                                 </div>
                             </form>

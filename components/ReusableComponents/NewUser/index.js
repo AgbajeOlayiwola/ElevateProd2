@@ -13,7 +13,7 @@ import Visbility from '../Eyeysvg';
 import TermsConditions from '../TermmsConditions';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { useCreateAccountMutation } from '../../../redux/api/authApi';
+import { useRegisterMutation } from '../../../redux/api/authApi';
 import { setProfile } from '../../../redux/slices/profile';
 
 const customStyles = {
@@ -75,16 +75,16 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
         setOutTyped(type);
     };
     const [
-        createAccount,
+        register,
         {
-            data: createAccountData,
-            isLoading: createAccountLoad,
-            isSuccess: createAccountSuccess,
-            isError: createAccountFalse,
-            error: createAccountErr,
-            reset: createAccountReset
+            data: registerData,
+            isLoading: registerLoad,
+            isSuccess: registerSuccess,
+            isError: registerFalse,
+            error: registerErr,
+            reset: registerReset
         }
-    ] = useCreateAccountMutation();
+    ] = useRegisterMutation();
 
     const handleProceed = async (val) => {
         await dispatch(setProfile(val?.data));
@@ -92,11 +92,11 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
     };
 
     useEffect(() => {
-        if (createAccountSuccess) {
-            handleProceed(createAccountData);
+        if (registerSuccess) {
+            handleProceed(registerData);
             setLoading(false);
         }
-    }, [createAccountSuccess]);
+    }, [registerSuccess]);
 
     const initSchema = yup.object().shape({
         confirm_password: yup
@@ -122,29 +122,6 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
         preferredName: ''
     };
 
-    const onSubmit = (data) => {
-        if (selectCountry === '') {
-            setError('Choose a country');
-        } else {
-            window.localStorage.setItem(
-                'country',
-                JSON.stringify(selectCountry)
-            );
-        }
-        setError('');
-        if (
-            password === confirmPassword &&
-            symbol === true &&
-            numbers === true
-        ) {
-            setLoads((prev) => !prev);
-
-            // //console.logerrorMessage);
-        } else {
-            passwordMatch;
-        }
-    };
-
     const handleChange = (event) => {
         const newOption = event.target.value;
         onSelectChange(newOption); // Call the callback function in the parent component
@@ -163,7 +140,8 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
                 initialValues={initialValues}
                 // validateOnChange={true}
                 onSubmit={(values, { setSubmitting }) => {
-                    createAccount(values);
+                    console.log('click');
+                    register(values);
                     setLoading(true);
                     localStorage.setItem('email', values?.email);
                     setSubmitting(false);
@@ -179,9 +157,7 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
                 }) => (
                     <form onSubmit={handleSubmit} className={styles.form}>
                         <p className={styles.error}>
-                            {createAccountErr
-                                ? createAccountErr?.data?.message
-                                : null}
+                            {registerErr ? registerErr?.data?.message : null}
                         </p>
                         <Tooltip anchorId="my-element" />
                         <div>
@@ -333,7 +309,7 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
                                 active={activeBtn ? 'active' : 'inactive'}
                                 text="Create account"
                                 type="submit"
-                                loads={createAccountLoad}
+                                loads={registerLoad}
                             />
                         </div>
                         <p className={styles.already}>

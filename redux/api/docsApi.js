@@ -13,12 +13,12 @@ if (typeof window !== 'undefined') {
 }
 
 export const docsApi = createApi({
-    reducerPath: 'onboardingApi',
+    reducerPath: 'docsApi',
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers, { getState }) => {
             const token = getState().profile?.token;
-            headers.set('Accept', 'application/json');
+            // headers.set('Accept', 'application/json');
             headers.set('Content-Type', 'application/json');
             headers.set(
                 'x-affiliate-code',
@@ -55,15 +55,6 @@ export const docsApi = createApi({
                 return {
                     url:
                         'smeapp-register-business/authentication/profile-setup/registered-business',
-                    method: 'post'
-                };
-            }
-        }),
-        profileSetUpUnregisteredBusiness: builder.mutation({
-            query: (body) => {
-                return {
-                    url:
-                        'smeapp-profile-unregister-business/authentication/profile-setup/registered-business',
                     method: 'post',
                     body
                 };
@@ -75,6 +66,5 @@ export const docsApi = createApi({
 export const {
     useFaceMatchMutation,
     useGetCACMutation,
-    useProfileSetUpRegisteredBusinessMutation,
-    useProfileSetUpUnregisteredBusinessMutation
+    useProfileSetUpRegisteredBusinessMutation
 } = docsApi;

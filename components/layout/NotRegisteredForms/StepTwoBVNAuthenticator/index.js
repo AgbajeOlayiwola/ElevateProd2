@@ -19,9 +19,10 @@ import Loader from '../../../ReusableComponents/Loader';
 import { resetOtpData } from '../../../../redux/actions/resetOtpAction';
 import { changeNumberAction } from '../../../../redux/actions/changeNumberAction';
 import { Formik } from 'formik';
-import { useUpdatePhoneMutation } from '../../../../redux/api/usersApi';
 import {
+    useUpdatePhoneMutation,
     useResendOtpMutation,
+    useVerifyOtpMutation,
     useVerifySmsOtpMutation
 } from '../../../../redux/api/authApi';
 
@@ -30,8 +31,14 @@ const StepTwoBVNAuthenticator = ({
     setFormData,
     formData,
     action,
-    otpError
+    otpError,
+    type
 }) => {
+    const { profile } = useSelector((store) => store);
+    useEffect(() => {
+        console.log(profile);
+    }, []);
+
     if (typeof window !== 'undefined') {
         let accounts = window?.localStorage?.getItem('user');
         var newAccounts = JSON.parse(accounts);
@@ -69,7 +76,7 @@ const StepTwoBVNAuthenticator = ({
         }
     };
     const [phone, setPhone] = useState('otp');
-
+    const [newPhone, setNewPhone] = useState('');
     const [
         updatePhone,
         {
@@ -82,16 +89,16 @@ const StepTwoBVNAuthenticator = ({
         }
     ] = useUpdatePhoneMutation();
     const [
-        verifySmsOtp,
+        verifyOtp,
         {
-            data: verifySmsOtpData,
-            isLoading: verifySmsOtpLoad,
-            isSuccess: verifySmsOtpSuccess,
-            isError: verifySmsOtpFalse,
-            error: verifySmsOtpErr,
-            reset: verifySmsOtpReset
+            data: verifyOtpData,
+            isLoading: verifyOtpLoad,
+            isSuccess: verifyOtpSuccess,
+            isError: verifyOtpFalse,
+            error: verifyOtpErr,
+            reset: verifyOtpReset
         }
-    ] = useVerifySmsOtpMutation();
+    ] = useVerifyOtpMutation();
     const [
         resendOtp,
         {
@@ -105,7 +112,9 @@ const StepTwoBVNAuthenticator = ({
     ] = useResendOtpMutation();
     const handleResendOtp = (e) => {
         e.preventDefault();
-        resendOtp();
+        resendOtp({
+            userId: profile?.user?.user_id
+        });
     };
     const clicked = (e) => {
         e.preventDefault();
@@ -113,7 +122,15 @@ const StepTwoBVNAuthenticator = ({
         const data = {
             otp: otpData
         };
-        verifySmsOtp(data);
+        verifyOtp(data);
+    };
+    const handlePhoneChange = (e) => {
+        e.preventDefault();
+        console.log('clicked');
+        const data = {
+            phoneNumber: `${formData?.countryCode}${newPhone}`
+        };
+        updatePhone(data);
     };
     return (
         <div className={styles.bvnBody}>
@@ -146,7 +163,7 @@ const StepTwoBVNAuthenticator = ({
                         </p>
                     </div>
                     <p className={styles.error}>
-                        {verifySmsOtpErr?.data?.message}
+                        {verifyOtpErr?.data?.message}
                     </p>
                     <p className={styles.error}>
                         {' '}
@@ -181,10 +198,11 @@ const StepTwoBVNAuthenticator = ({
                                     </>
                                 ))}
                             </div>
+
                             <div className={styles.resendFlex}>
+                                {resendOtpSuccess ? <p>OTP sent</p> : null}
                                 <button
                                     className={styles.resetOtp}
-                                    type="reset"
                                     onClick={handleResendOtp}
                                 >
                                     Resend OTP
@@ -193,23 +211,27 @@ const StepTwoBVNAuthenticator = ({
                         </form>
                     ) : phone === 'phone' ? (
                         <div className={styles.changePhone}>
-                            <form>
-                                <div className={styles.submit}>
-                                    <input
-                                        placeholder="+234"
-                                        type="number"
-                                        onChange={(e) =>
-                                            setCountryCode(e.target.value)
-                                        }
-                                    />
-                                    <input
-                                        type="number"
-                                        placeholder="Enter New Phone Number"
-                                    />
+                            <div className={styles.submit}>
+                                <div className={styles.countryCode}>
+                                    <p> {`+${formData?.countryCode}`}</p>
                                 </div>
 
-                                <button type="submit">Change</button>
-                            </form>
+                                <input
+                                    type="number"
+                                    value={newPhone}
+                                    onChange={(e) =>
+                                        setNewPhone(e.target.value)
+                                    }
+                                    placeholder="Enter New Phone Number"
+                                />
+                            </div>
+                            <ButtonComp
+                                disabled={true}
+                                text="Change Phone Number"
+                                active={'active'}
+                                loads={updatePhoneLoad}
+                                onClick={handlePhoneChange}
+                            />
                         </div>
                     ) : null}
                     {phone === 'otp' ? (
@@ -218,7 +240,7 @@ const StepTwoBVNAuthenticator = ({
                             onClick={clicked}
                             text="Verify Otp"
                             active={'active'}
-                            loads={verifySmsOtpLoad}
+                            loads={verifyOtpLoad}
                         />
                     ) : null}
                 </div>

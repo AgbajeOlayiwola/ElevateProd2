@@ -6,6 +6,21 @@
     align-items: center;
     background: #c6c6c6;
 }
+.countryCode{
+    display: flex;
+    background: #f3f3f3;
+    color: #263775;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 10px;
+    height: 52px;
+    border: 1px solid #c6c6c6;
+}
+.countryCode p{
+    margin: 0px;
+}
 .submit{
     display: flex;
 }

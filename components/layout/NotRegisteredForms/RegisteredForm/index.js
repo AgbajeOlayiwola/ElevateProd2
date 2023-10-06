@@ -15,6 +15,10 @@ import Lottie from 'react-lottie';
 import socialdata from '../../../ReusableComponents/Lotties/loading.json';
 import { Formik } from 'formik';
 import { useSearchRCMutation } from '../../../../redux/api/cacApi';
+import {
+    useProfileSetUpUnregisteredBusinessMutation,
+    useRegisteredSetupMutation
+} from '../../../../redux/api/authApi';
 const RegisteredForm = ({ formData, setFormData, nextStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [businessName, setBusinessName] = useState('');
@@ -61,14 +65,65 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
             reset: searchRCReset
         }
     ] = useSearchRCMutation();
+    const [
+        registeredSetup,
+        {
+            data: registeredSetupData,
+            isLoading: registeredSetupLoad,
+            isSuccess: registeredSetupSuccess,
+            isError: registeredSetupFalse,
+            error: registeredSetupErr,
+            reset: registeredSetupReset
+        }
+    ] = useRegisteredSetupMutation();
+    const [
+        profileSetUpUnregisteredBusiness,
+        {
+            data: profileSetUpUnregisteredBusinessData,
+            isLoading: profileSetUpUnregisteredBusinessLoad,
+            isSuccess: profileSetUpUnregisteredBusinessSuccess,
+            isError: profileSetUpUnregisteredBusinessFalse,
+            error: profileSetUpUnregisteredBusinessErr,
+            reset: profileSetUpUnregisteredBusinessReset
+        }
+    ] = useProfileSetUpUnregisteredBusinessMutation();
     useEffect(() => {
         if (callRc?.length > 2) {
             searchRC({
                 registrationNumber: callRc
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [callRc]);
+    const registerUser = (value) => {
+        if ((formData.type == true) === true) {
+            const data = {
+                idNumber: value?.bvn,
+                phoneNumber: `${formData?.countryCode}${value?.phoneNumber}`,
+                // taxNumber: '126378883',
+                registrationNumber: callRc
+            };
+            registeredSetup(data);
+        } else {
+            const data = {
+                idNumber: value?.bvn,
+                phoneNumber: `${formData?.countryCode}${value?.phoneNumber}`
+            };
+            profileSetUpUnregisteredBusiness(data);
+        }
+    };
+    // console.log(type);
+
+    useEffect(() => {
+        if (registeredSetupData) {
+            nextStep();
+        }
+    }, [registeredSetupSuccess]);
+
+    useEffect(() => {
+        if (profileSetUpUnregisteredBusinessData) {
+            nextStep();
+        }
+    }, [profileSetUpUnregisteredBusinessSuccess]);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.cardHeading}>
@@ -100,7 +155,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                         // validateOnChange={true}
                         onSubmit={(values, { setSubmitting }) => {
                             const data = {
-                                rcNumber: values?.rcNumber,
+                                rcNumber: callRc,
                                 tin: values?.tin,
                                 bvn: values?.bvn,
                                 phoneNumber: values?.phoneNumber,
@@ -110,10 +165,11 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                 'regprofilesetupdata',
                                 JSON.stringify(data)
                             );
+                            registerUser(values);
 
-                            if (localStorage.getItem('regprofilesetupdata')) {
-                                nextStep();
-                            }
+                            // if (localStorage.getItem('regprofilesetupdata')) {
+                            //     nextStep();
+                            // }
                             setSubmitting(false);
                         }}
                     >
@@ -143,7 +199,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                     <Label>Business Name</Label>
                                 </InputWrapper>
 
-                                <input
+                                {/* <input
                                     type="text"
                                     placeholder={
                                         getRcFisrst
@@ -155,7 +211,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                         setBusinessName(e.target.value)
                                     }
                                     disabled
-                                />
+                                /> */}
 
                                 <InputWrapper>
                                     <Label>Enter your TIN</Label>
@@ -209,7 +265,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                         </div>
                                     </div>
                                 </InputWrapper>
-                                <InputWrapper>
+                                {/* <InputWrapper>
                                     <Label>Date of Birth</Label>
                                     <input
                                         type="date"
@@ -223,12 +279,13 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                             )
                                         }
                                     />
-                                </InputWrapper>
+                                </InputWrapper> */}
                                 <ButtonComp
                                     disabled={activeBtn}
                                     active={activeBtn ? 'active' : 'inactive'}
                                     type="submit"
                                     text={'Next'}
+                                    loads={registeredSetupLoad}
                                 />
                             </form>
                         )}
@@ -251,9 +308,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                 'profilesetupdata',
                                 JSON.stringify(data)
                             );
-                            if (localStorage.getItem('profilesetupdata')) {
-                                nextStep();
-                            }
+                            registerUser(values);
                             setSubmitting(false);
                         }}
                     >
@@ -306,7 +361,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                         </div>
                                     </div>
                                 </InputWrapper>
-                                <InputWrapper>
+                                {/* <InputWrapper>
                                     <Label>Date of Birth</Label>
                                     <input
                                         type="date"
@@ -320,13 +375,14 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                             )
                                         }
                                     />
-                                </InputWrapper>
+                                </InputWrapper> */}
                                 {/* {loading ? <Loader /> : null} */}
                                 <ButtonComp
                                     disabled={activeBtn}
                                     active={activeBtn ? 'active' : 'inactive'}
                                     type="submit"
                                     text={'Next'}
+                                    loads={profileSetUpUnregisteredBusinessLoad}
                                 />
                             </form>
                         )}

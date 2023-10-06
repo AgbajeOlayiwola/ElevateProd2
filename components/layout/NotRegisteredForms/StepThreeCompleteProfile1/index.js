@@ -20,272 +20,282 @@ import { CompProfile } from '../../../../redux/actions/completeProfile';
 import { loadUserProfile } from '../../../../redux/actions/userProfileAction';
 import { businessCategoriesData } from '../../../../redux/actions/businessCategoriesAction';
 import { CompleteBusinessProfile } from '../../../../redux/actions/completeBusinessProfileAction';
+import {
+    useBusinessSetupMutation,
+    useCreateCAcctMutation,
+    useCreateIAcctMutation,
+    useGetAccountStatusMutation,
+    useGetCategoriesMutation,
+    useGetProfileMutation
+} from '../../../../redux/api/authApi';
+import { lgasArr } from '../../../ReusableComponents/Data';
+import { setAccountNumber } from '../../../../redux/slices/accountNumberSlice';
 const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
-    // const [progress, setProgress] = useState('75%');
+    // local states;
     const [title, setTitle] = useState('Basic');
     const [bgcolor, setBgcolor] = useState(false);
-    const [profileCont, setProfileCont] = useState([]);
-    const [businessProfile, setBusinessProfile] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    const handleShowFourthStep = () => {
-        setSwitchs((prev) => !prev);
-        setBgcolor((prevState) => !prevState);
-    };
-    const dispatch = useDispatch();
-
-    const [checker, setChecker] = useState();
     const [localState, setLocalState] = useState('');
+    const [profileCont, setProfileCont] = useState([]);
     const [localGovernment, setLocalGovernment] = useState('');
+    const [lga, setLga] = useState('');
     const [location, setLocation] = useState([]);
-    const [gender, setGender] = useState('');
-    const [businessCategory, setBusinessCategory] = useState([]);
-    const [businessType, setBusinessType] = useState([]);
     const [business, setBusiness] = useState('');
+    const [businessType, setBusinessType] = useState([]);
+    const [selectedBusinessType, setSelectedBusinessType] = useState();
     const [businesses, setBusinesses] = useState('');
     const [businessTest, setBusinessTest] = useState(false);
     const [businessText, setBusinessText] = useState(false);
-    const [businessError, setBusinessError] = useState(false);
-    const [businessTypeError, setBusinessTypeError] = useState(false);
-    const [errorMes, setErrorMes] = useState();
-    const [file, setFile] = useState(null);
+    const [bussinestCate, setBusinessCate] = useState();
     const [fileName, setFileName] = useState('');
-    const [userProfiles, setUserProfiles] = useState('');
-    const [alluserData, setAllUserData] = useState('');
-    const { compBusprofile, comperrorMessage } = useSelector(
-        (state) => state.completeBusProfileReducer
-    );
-    const { profile, errorMessage } = useSelector((state) => state.profile);
-
-    const { newCorpAccount, newCorpAccountErrorMMessage } = useSelector(
-        (state) => state.newuserCorpAccount
-    );
-    const { businessCategories, errorDatas } = useSelector(
-        (state) => state.businessCategoriesReducer
-    );
-    const { states } = useSelector((state) => state.statesReducer);
-    const { accountStatus, errorMessages } = useSelector(
-        (state) => state.accountStatusReducer
-    );
-    const { newAccount, newAccountErrorMessage } = useSelector(
-        (state) => state.newUserAccountDets
-    );
-
-    const { isLoading, userProfile } = useSelector(
-        (state) => state.userProfileReducer
-    );
-
-    const router = useRouter();
-    const saveFile = (e) => {
-        // //console.log(e.target.files[0]);
-        setFile(e.target.files[0]);
-        setFileName(e.target.files[0].name);
-        // //console.log(file);
-    };
-    useEffect(() => {
-        dispatch(statesData());
-    }, []);
-    const newStates = () => {
-        if (states !== null) {
-            setLocation(states);
+    const [profile, setProfile] = useState('');
+    const [activeBtn, setActiveBtn] = useState(true);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedBusiness, setSelectedBusiness] = useState(null);
+    const [bName, setBName] = useState();
+    const [city, setCity] = useState();
+    const [address, setAddress] = useState();
+    const [refferalCode, setRefferalCode] = useState();
+    const [relaod, setReload] = useState(false);
+    const [formError, setFormError] = useState(false);
+    //
+    const [
+        getProfile,
+        {
+            data: getProfileData,
+            isLoading: getProfileLoad,
+            isSuccess: getProfileSuccess,
+            isError: getProfileFalse,
+            error: getProfileErr,
+            reset: getProfileReset
         }
-    };
+    ] = useGetProfileMutation();
+    const [
+        getCategories,
+        {
+            data: getCategoriesData,
+            isLoading: getCategoriesLoad,
+            isSuccess: getCategoriesSuccess,
+            isError: getCategoriesFalse,
+            error: getCategoriesErr,
+            reset: getCategoriesReset
+        }
+    ] = useGetCategoriesMutation();
+
+    const [
+        businessSetup,
+        {
+            data: businessSetupData,
+            isLoading: businessSetupLoad,
+            isSuccess: businessSetupSuccess,
+            isError: businessSetupFalse,
+            error: businessSetupErr,
+            reset: businessSetupReset
+        }
+    ] = useBusinessSetupMutation();
+    const [
+        createIAcct,
+        {
+            data: createIAcctData,
+            isLoading: createIAcctLoad,
+            isSuccess: createIAcctSuccess,
+            isError: createIAcctFalse,
+            error: createIAcctErr,
+            reset: createIAcctReset
+        }
+    ] = useCreateIAcctMutation();
+    const [
+        createCAcct,
+        {
+            data: createCAcctData,
+            isLoading: createCAcctLoad,
+            isSuccess: createCAcctSuccess,
+            isError: createCAcctFalse,
+            error: createCAcctErr,
+            reset: createCAcctReset
+        }
+    ] = useCreateCAcctMutation();
+    const [
+        getAccountStatus,
+        {
+            data: getAccountStatusData,
+            isLoading: getAccountStatusLoad,
+            isSuccess: getAccountStatusSuccess,
+            isError: getAccountStatusFalse,
+            error: getAccountStatusErr,
+            reset: getAccountStatusReset
+        }
+    ] = useGetAccountStatusMutation();
+    const dispatch = useDispatch();
     useEffect(() => {
-        newStates();
-    }, [states]);
+        if (selectedCategory) {
+            setBusinessType(getCategoriesData?.data[selectedCategory]);
+        }
+    }, [selectedCategory]);
     useEffect(() => {
-        location?.filter((item) => {
+        lgasArr?.filter((item) => {
             if (item.state === localState) {
-                setLocalGovernment(item.localGoverment);
+                setLocalGovernment(item.lgas);
             }
         });
     }, [localState]);
 
-    // useEffect(() => {
-
-    // }, [businessProfile]);
-    const [relaod, setReload] = useState(false);
-
     useEffect(() => {
-        dispatch(CompProfile());
-        dispatch(loadUserProfile());
-        dispatch(businessCategoriesData());
+        if (businessSetupData) {
+            if (localStorage.getItem('regprofilesetupdata') && type === false) {
+                createCAcct();
+            } else {
+                const data = {
+                    affiliateCode: 'ENG',
+                    currency: 'NGN'
+                };
+                createIAcct(data);
+            }
+        }
+    }, [businessSetupSuccess]);
+    useEffect(() => {
+        getProfile(null);
+        getCategories(null);
     }, []);
 
     useEffect(() => {
-        if (profile) {
-            if (type === true) {
-                profile.data?.map((item) => {
-                    if (item.documentType === 'CAC') {
-                        setFormData({
-                            ...formData,
-                            bussinessName: item.documentData.companyName
-                        });
-                        setBusinessProfile(item.documentData.companyName);
-                    }
-                });
-            }
+        if (getProfileSuccess) {
+            setProfile(getProfileData);
+            console.log(getProfileData);
         }
-    }, [profile]);
+    }, [getProfileSuccess]);
+
     useEffect(() => {
-        if (userProfile) {
-            setProfileCont(userProfile);
+        if (getCategoriesSuccess) {
+            const mainCategories = Object.keys(getCategoriesData.data);
+            // Set the state for BusinessCate
+            setBusinessCate(mainCategories);
         }
-    }, [userProfile]);
+    }, [getCategoriesSuccess]);
     useEffect(() => {
-        if (type === false) {
-            setFormData({
-                ...formData,
-                bussinessName: `${profileCont?.lastName} ${profileCont?.firstName}`
-            });
+        const storedData = localStorage.getItem('profilesetupdata');
+        const profileSetupData = JSON.parse(storedData);
+        //attach rc name to local storage on liveness test
+        if (profileSetupData?.rcName) {
+            setBName(profileSetupData?.rcNamw);
         }
-    }, [profileCont]);
-    useEffect(() => {
-        if (newAccount?.message === 'success') {
-            // //console.log(errorMessages);
-            router.push('/Verify/Account/loading');
-        } else if (
-            newAccountErrorMessage ===
-            'You already have an account with us. Please contact us for more information'
+    }, [getProfileSuccess, bName]);
+
+    const router = useRouter();
+
+    const nextPage = (e) => {
+        e.preventDefault();
+        setTitle('Other');
+    };
+    const gtBname = () => {
+        if (bName) {
+            return bName;
+        } else {
+            return `${profile?.user?.lastName} ${profile?.user?.firstName}`;
+        }
+    };
+    const [base64String, setBase64String] = useState();
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                const uploadedBase64String = event.target.result;
+                setBase64String(uploadedBase64String); // Store base64 string in state
+                setFileName(file.name); // Store file name in state
+            };
+
+            reader.readAsDataURL(file);
+        }
+    };
+    const validateForm = () => {
+        let isValid = true;
+
+        // Validate signature
+        if (
+            profile?.user == undefined ||
+            address?.length <= 0 ||
+            city?.length <= 0 ||
+            !base64String
         ) {
+            setFormError(true);
+            isValid = false;
+        }
+
+        return isValid;
+    };
+    const handleSubmitIII = (e) => {
+        e.preventDefault();
+        const isValid = validateForm();
+        if (isValid) {
+            const data = {
+                isRegistered: type,
+                businessName: gtBname(),
+                businessPhoneNumber: profile?.user?.phoneNumber,
+                businessType: selectedBusinessType,
+                businessCategory: selectedCategory,
+                street: address,
+                state: localState,
+                city: city,
+                lga: lga,
+                dateIncorporated: null,
+                countryCode: formData?.countryCode,
+                refereeCode: refferalCode,
+                signature: base64String
+            };
+            businessSetup(data);
+        }
+    };
+
+    const basicAction = () => {};
+    useEffect(() => {
+        if (businessSetupSuccess && type === false) {
+            const data = {
+                affiliateCode: 'ENG',
+                currency: 'NGN'
+            };
+            createIAcct(data);
+        } else if (businessSetupSuccess && type === true) {
+            const data = {
+                affiliateCode: 'ENG',
+                currency: 'NGN'
+            };
+            createCAcct(data);
+        }
+    }, [businessSetupSuccess]);
+    const handleCategoryClick = (val) => {
+        setSelectedCategory(val);
+        setSelectedBusiness(null); // Reset selected business when a new category is selected
+    };
+    const handleBusinessTypeClick = (val) => {
+        setSelectedBusinessType(val);
+    };
+    useEffect(() => {
+        if (createCAcctSuccess) {
+            getAccountStatus();
+        }
+    }, [createCAcctSuccess]);
+    useEffect(() => {
+        if (createIAcctSuccess) {
+            getAccountStatus();
+        }
+    }, [createIAcctSuccess]);
+    useEffect(() => {
+        if (getAccountStatusData) {
+            dispatch(setAccountNumber(getAccountStatusData?.data?.trackerRef));
             router.push('/Success');
         }
+    }, [getAccountStatusSuccess]);
 
-        if (businessCategories !== null) {
-            setBusinessCategory(businessCategories);
-        }
-    }, [businessCategories, newAccountErrorMessage, newAccount]);
-    useEffect(() => {
-        Object.keys(businessCategory)?.filter((item) => {
-            if (item === business) {
-                setBusinessType(businessCategory[item]);
-            }
-        });
-    }, [business]);
-
-    // if (gender === 'm') // //console.log(profileCont);
-
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors }
-    } = useForm();
-
-    // //console.log(type);
-
-    // const uploadFile = async (e) => {
-    //   const formData = new FormData();
-    //   formData.append("file", file);
-    //   formData.append("fileName", fileName);
-    //   try {
-    //     const res = await axios.post(
-    //       "http://localhost:3000/upload",
-    //       formData
-    //     );
-    //     // //console.log(res);
-    //   } catch (ex) {
-    //     // //console.log(ex);
-    //   }
-    // };
-
-    const handleSubmitIII = () => {
-        setLoading(true);
-        const commpleteProfileData = {
-            isRegistered: type,
-            businessName: formData.bussinessName,
-            businessCategory: business,
-            businessType: businesses,
-            referralCode: formData.referralCode,
-            countryCode: '+234',
-            businessPhoneNumber: formData.phoneNumber,
-            street: formData.streetName,
-            state: formData.state,
-            city: formData.city,
-            lga: formData.localGoverment,
-            refereeCode: formData.referralCode,
-            signature: file
-        };
-        // //console.log(commpleteProfileData);
-        dispatch(CompleteBusinessProfile(commpleteProfileData));
-    };
-
-    const handleSubmitReg = () => {
-        setLoading(true);
-        const commpleteProfileData = {
-            isRegistered: type,
-            businessName: formData.bussinessName,
-            businessCategory: business,
-            businessType: businesses,
-            referralCode: formData.refferalCode,
-            countryCode: '+234',
-            businessPhoneNumber: formData.phoneNumber,
-            street: formData.streetName,
-            state: formData.state,
-            city: formData.city,
-            lga: formData.localGoverment,
-            refereeCode: '',
-            signature: file
-        };
-        // //console.log(commpleteProfileData);
-        dispatch(CompleteBusinessProfile(commpleteProfileData));
-    };
-
-    useEffect(() => {
-        setLoading(false);
-        // //console.log(compBusprofile);
-        if (compBusprofile) {
-            if (
-                compBusprofile.message === 'Successful' ||
-                comperrorMessage.message ===
-                    'You have already setup your business'
-            ) {
-                profile.data?.map((item) => {
-                    if (type === true) {
-                        router.push('/Verify/CorportateAccount');
-                    } else if (type === false) {
-                        router.push('/Verify/Account/loading');
-                    }
-                });
-            }
-        }
-    }, [newAccount, comperrorMessage]);
-    const basicAction = () => {
-        // //console.log(business);
-        if (business === '' && businesses === '') {
-            setBusinessError(true);
-            setBusinessTypeError(true);
-        } else if (businesses === '') {
-            setBusinessTypeError(true);
-        } else {
-            setTitle('Other');
-        }
-    };
-
-    const [activeBtn, setActiveBtn] = useState(true);
-    // //console.log(test);
-    // //console.log(type);
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.prog}>
                 <CardHeadingBVN>
                     <LeftHeading>Complete your Profile</LeftHeading>
-                    {/* <Imag 
-                    src="/width" 
-                    alt="lineImage" /> */}
                 </CardHeadingBVN>
-
-                {/* <Progressbar
-                            bgcolor="#6CCF00"
-                            progressCount={progress}
-                            height={14}
-                            progWidth="27%"
-                        /> */}
             </div>
-            {newAccountErrorMessage ? (
-                <p className={styles.error}> {newAccountErrorMessage}</p>
-            ) : null}
-            {/* The small card that wraps the form */}
+
             <div className={styles.businessCont}>
                 <ButtonWrapper>
                     <div
@@ -319,15 +329,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                 </ButtonWrapper>
                 <>
                     {title === 'Basic' ? (
-                        <form onSubmit={handleSubmit(basicAction)}>
+                        <>
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroups}>
                                     <label>Enter Full Name</label>
                                     <input
                                         type="text"
                                         value={
-                                            profileCont.lastName !== undefined
-                                                ? `${profileCont.lastName} ${profileCont.firstName}`
+                                            getProfileData
+                                                ? `${getProfileData?.user?.lastName} ${getProfileData?.user?.firstName}`
                                                 : 'Full Name'
                                         }
                                         disabled
@@ -335,25 +345,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                 </div>
                                 {/* {alluserData[1].documentData.map(
                                     (usersData, index) => {
-                                        // //console.log(alluserData);
                                         return <></>;
                                     }
                                 )} */}
                                 <div className={styles.formGroup}>
                                     <label>Select your Gender</label>
-                                    <select
-                                        name=""
-                                        id=""
-                                        {...register('gender', {
-                                            required: 'Gender is required'
-                                        })}
-                                    >
+                                    <select name="" id="">
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
-                                    <p className={styles.error}>
-                                        {errors.gender?.message}
-                                    </p>
                                 </div>
                             </div>
                             <div className={styles.formCont}>
@@ -363,20 +363,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         <input
                                             type="text"
                                             placeholder="Enter Business Full Name"
-                                            value={formData.bussinessName}
-                                            onInput={(event) => {
-                                                setFormData({
-                                                    ...formData,
-                                                    bussinessName:
-                                                        event.target.value
-                                                });
-                                            }}
+                                            value={
+                                                bName
+                                                    ? bName
+                                                    : `${getProfileData?.user?.lastName} ${getProfileData?.user?.firstName}`
+                                            }
                                             disabled
                                         />
-
-                                        <p className={styles.error}>
-                                            {errors.businessName?.message}
-                                        </p>
                                     </div>
                                     <div className={styles.singleFormGroup}>
                                         <label>
@@ -395,8 +388,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 }}
                                             >
                                                 <SearchSvg color="#005B82" />
-                                                {business ? (
-                                                    <p>{business}</p>
+                                                {selectedCategory ? (
+                                                    <p>{selectedCategory}</p>
                                                 ) : (
                                                     <p>
                                                         Search Business Category
@@ -411,41 +404,43 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                         styles.businessGroup
                                                     }
                                                 >
-                                                    {Object.keys(
-                                                        businessCategory
-                                                    )?.map(
-                                                        (business, index) => {
-                                                            return (
-                                                                <li
-                                                                    value={
-                                                                        business
-                                                                    }
-                                                                    key={index}
-                                                                    onClick={() => {
-                                                                        setBusiness(
-                                                                            business
-                                                                        );
-                                                                        setBusinessTest(
-                                                                            false
-                                                                        );
-                                                                        setBusinessError(
-                                                                            false
-                                                                        );
-                                                                    }}
-                                                                >
-                                                                    {business}
-                                                                </li>
-                                                            );
-                                                        }
-                                                    )}
+                                                    {bussinestCate
+                                                        ? bussinestCate?.map(
+                                                              (
+                                                                  category,
+                                                                  index
+                                                              ) => {
+                                                                  return (
+                                                                      <li
+                                                                          key={
+                                                                              index
+                                                                          }
+                                                                          onClick={() => {
+                                                                              handleCategoryClick(
+                                                                                  category
+                                                                              ),
+                                                                                  setBusinessTest(
+                                                                                      !businessTest
+                                                                                  );
+                                                                          }}
+                                                                      >
+                                                                          {
+                                                                              category
+                                                                          }
+                                                                      </li>
+                                                                  );
+                                                              }
+                                                          )
+                                                        : null}
                                                 </ul>
                                             )}
+                                            {!selectedCategory ? (
+                                                <p className={styles.error}>
+                                                    Please Select a business
+                                                    category
+                                                </p>
+                                            ) : null}
                                         </div>
-                                        {businessError ? (
-                                            <p className={styles.error}>
-                                                Busuness Category is Required
-                                            </p>
-                                        ) : null}
                                     </div>
                                 </div>
                                 <div className={styles.formGroup}>
@@ -470,34 +465,14 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 <input
                                                     type="number"
                                                     placeholder="812 345 6789"
-                                                    // {...register(
-                                                    //     'countryCode_number',
-                                                    //     {
-                                                    //         required:
-                                                    //             'Phone number is required',
-                                                    //         minLength: {
-                                                    //             value: 9,
-                                                    //             message:
-                                                    //                 'Min length is 9'
-                                                    //         }
-                                                    //     }
-                                                    // )}
-                                                    value={formData.phoneNumber}
-                                                    onInput={(event) => {
-                                                        setFormData({
-                                                            ...formData,
-                                                            phoneNumber:
-                                                                event.target
-                                                                    .value
-                                                        });
-                                                    }}
+                                                    value={
+                                                        getProfileData?.user
+                                                            ?.phoneNumber
+                                                    }
                                                     disabled
                                                 />
                                             </div>
                                         </div>
-                                        <p className={styles.error}>
-                                            {errors.countryCode_number?.message}
-                                        </p>
                                     </div>
                                     <div className={styles.singleFormGroup}>
                                         <label>Select your Business Type</label>
@@ -513,8 +488,10 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 }}
                                             >
                                                 <SearchSvg color="#005B82" />
-                                                {businesses ? (
-                                                    <p>{businesses}</p>
+                                                {selectedBusinessType ? (
+                                                    <p>
+                                                        {selectedBusinessType}
+                                                    </p>
                                                 ) : (
                                                     <p>Search Business Type</p>
                                                 )}
@@ -528,56 +505,46 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                     }
                                                 >
                                                     {businessType?.map(
-                                                        (business, index) => {
-                                                            return (
-                                                                <li
-                                                                    value={
+                                                        (business, index) => (
+                                                            <li
+                                                                key={index}
+                                                                onClick={() => {
+                                                                    handleBusinessTypeClick(
                                                                         business
-                                                                    }
-                                                                    key={index}
-                                                                    onClick={() => {
-                                                                        setBusinesses(
-                                                                            business
-                                                                        );
+                                                                    ),
                                                                         setBusinessText(
-                                                                            false
+                                                                            !businessText
                                                                         );
-                                                                        setBusinessTypeError(
-                                                                            false
-                                                                        );
-                                                                    }}
-                                                                >
-                                                                    {business}
-                                                                </li>
-                                                            );
-                                                        }
+                                                                }}
+                                                            >
+                                                                {business}
+                                                            </li>
+                                                        )
                                                     )}
                                                 </ul>
                                             )}
-                                            {businessTypeError ? (
+                                            {!selectedBusinessType ? (
                                                 <p className={styles.error}>
-                                                    Busuness Type is Required
+                                                    Please Select a business
+                                                    type
                                                 </p>
                                             ) : null}
                                         </div>
                                     </div>
-                                    <button type="submit">Next</button>
+                                    <button type="submit" onClick={nextPage}>
+                                        Next
+                                    </button>
                                 </div>
                             </div>
-                        </form>
+                        </>
                     ) : (
-                        <form
-                            onSubmit={handleSubmit(
-                                type === true
-                                    ? handleSubmitReg
-                                    : handleSubmitIII
-                            )}
-                        >
-                            <p className={styles.error}>
-                                {comperrorMessage
-                                    ? comperrorMessage.message
-                                    : null}
-                            </p>
+                        <>
+                            {formError ? (
+                                <p className={styles.error}>
+                                    {' '}
+                                    Please fill all The forms
+                                </p>
+                            ) : null}
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroup}>
                                     <div>
@@ -591,22 +558,12 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter Street Name"
-                                                {...register('streetName', {
-                                                    required:
-                                                        'Street Name is required'
-                                                })}
-                                                onInput={(event) => {
-                                                    setFormData({
-                                                        ...formData,
-                                                        streetName:
-                                                            event.target.value
-                                                    });
-                                                }}
+                                                value={address}
+                                                onChange={(e) =>
+                                                    setAddress(e.target.value)
+                                                }
                                             />
                                         </div>
-                                        <p className={styles.error}>
-                                            {errors.streetName?.message}
-                                        </p>
                                     </div>
                                     <div className={styles.singleFormGroup}>
                                         <label>
@@ -615,17 +572,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         <select
                                             name=""
                                             id=""
-                                            {...register('localGoverment', {
-                                                required:
-                                                    'Local Government is required'
-                                            })}
-                                            onInput={(event) => {
-                                                setFormData({
-                                                    ...formData,
-                                                    localGoverment:
-                                                        event.target.value
-                                                });
-                                            }}
+                                            onChange={(e) =>
+                                                setLga(e.target.value)
+                                            }
                                         >
                                             <option value="">Select LGA</option>
                                             {localGovernment
@@ -633,21 +582,21 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                       (item, index) => {
                                                           return (
                                                               <option
-                                                                  value={
-                                                                      item.lgaName
-                                                                  }
+                                                                  value={item}
                                                                   key={index}
                                                               >
-                                                                  {item.lgaName}
+                                                                  {item}
                                                               </option>
                                                           );
                                                       }
                                                   )
                                                 : null}
                                         </select>
-                                        <p className={styles.error}>
-                                            {errors.localGoverment?.message}
-                                        </p>
+                                        {!lga ? (
+                                            <p className={styles.error}>
+                                                Please Select a local government
+                                            </p>
+                                        ) : null}
                                     </div>
                                 </div>
                                 <div className={styles.formGroup}>
@@ -661,24 +610,17 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         <select
                                             name=""
                                             id=""
-                                            {...register('state', {
-                                                required: 'State is required'
-                                            })}
                                             value={formData.state}
-                                            onInput={(event) => {
+                                            onChange={(event) =>
                                                 setLocalState(
                                                     event.target.value
-                                                );
-                                                setFormData({
-                                                    ...formData,
-                                                    state: event.target.value
-                                                });
-                                            }}
+                                                )
+                                            }
                                         >
                                             <option value="">
                                                 Select State
                                             </option>
-                                            {location.map((item, index) => {
+                                            {lgasArr.map((item, index) => {
                                                 return (
                                                     <option
                                                         value={item.state}
@@ -689,30 +631,29 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 );
                                             })}
                                         </select>
-                                        <p className={styles.error}>
-                                            {errors.state?.message}
-                                        </p>
+
+                                        {!localState ? (
+                                            <p className={styles.error}>
+                                                Please Select a state
+                                            </p>
+                                        ) : null}
                                     </div>
                                     <div className={styles.singleFormGroup}>
                                         <label>City/Town</label>
                                         <input
                                             type="text"
+                                            value={city}
+                                            onChange={(e) =>
+                                                setCity(e.target.value)
+                                            }
                                             placeholder="Enter City/Town"
-                                            {...register('city', {
-                                                required:
-                                                    'City/Town is required'
-                                            })}
-                                            onInput={(event) => {
-                                                setFormData({
-                                                    ...formData,
-                                                    city: event.target.value
-                                                });
-                                            }}
                                         />
-                                        <p className={styles.error}>
-                                            {errors.city?.message}
-                                        </p>
                                     </div>
+                                    {city?.length <= 0 ? (
+                                        <p className={styles.error}>
+                                            Please Fill In city
+                                        </p>
+                                    ) : null}
                                 </div>
                             </div>
                             <div className={styles.formCont}>
@@ -724,45 +665,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         </label>
                                         <input
                                             type="text"
+                                            value={refferalCode}
+                                            onChange={(e) =>
+                                                setRefferalCode(e.target.value)
+                                            }
                                             placeholder="Enter Code"
-                                            onChange={(event) => {
-                                                setFormData({
-                                                    ...formData,
-                                                    referralCode:
-                                                        event.target.value
-                                                });
-                                            }}
                                         />
                                     </div>
-                                    {/* {loading ? <Loader /> : null} */}
-                                    {/* {profileCont.isBusinessRegistered ===
-                                    true ? (
-                                        <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            text="Save & Continue"
-                                            type="button"
-                                            onClick={handleSubmitReg}
-                                            // onClick={handleShowFourthStep}
-                                        />
-                                    ) : (
-                                        <ButtonComp
-                                            disabled={activeBtn}
-                                            active={
-                                                activeBtn
-                                                    ? 'active'
-                                                    : 'inactive'
-                                            }
-                                            text="Save & Continue"
-                                            type="button"
-                                            onClick={handleSubmitIII}
-                                            // onClick={handleShowFourthStep}
-                                        />
-                                    )} */}
 
                                     <ButtonComp
                                         disabled={activeBtn}
@@ -771,8 +680,13 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         }
                                         text="Save & Continue"
                                         type="submit"
-                                        loads={loading}
-                                        err={comperrorMessage}
+                                        onClick={handleSubmitIII}
+                                        loads={
+                                            businessSetupLoad ||
+                                            createCAcctLoad ||
+                                            createIAcctLoad ||
+                                            getAccountStatusLoad
+                                        }
                                     />
                                 </div>
                                 <div className={styles.formGroup}>
@@ -788,8 +702,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 Upload
                                                 <input
                                                     type="file"
-                                                    placeholder="Enter Code"
-                                                    onChange={saveFile}
+                                                    onChange={handleImageUpload}
                                                     accept="image/png, image/jpeg, application/pdf"
                                                 />
                                             </label>
@@ -797,7 +710,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </>
                     )}
                 </>
             </div>

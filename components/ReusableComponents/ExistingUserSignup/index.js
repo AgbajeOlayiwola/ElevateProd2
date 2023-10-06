@@ -8,6 +8,18 @@ import Modal from 'react-modal';
 import ButtonComp from '../Button';
 import TermsConditions from '../TermmsConditions';
 import Link from 'next/link';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import {
+    useAuthEcobankMutation,
+    useAuthOmniliteMutation,
+    useGetMoreAccountNumberDetailsMutation,
+    useRegisterAccountNumberMutation,
+    useRegisterCardMutation
+} from '../../../redux/api/authApi';
+import { useRouter } from 'next/router';
+import { setExistingUserDetails } from '../../../redux/slices/existingUserData';
+import { useDispatch } from 'react-redux';
 
 const customStyles = {
     content: {
@@ -28,25 +40,28 @@ const ExistingProfileSetup = ({
     onSelectChange
 }) => {
     const [omnilit, setOmnilite] = useState(true);
-    const [activeBtn, setActiveBtn] = useState(false);
-    const [page, setPage] = useState(0);
-    const [ecobank, setEcobank] = useState(false);
-    const [outType, setOutType] = useState();
+    const [loading, setLoading] = useState(false);
     const [acct, setAcct] = useState(false);
     const [card, setCard] = useState(false);
+    const [ecobank, setEcobank] = useState(false);
+    const [activeBtn, setActiveBtn] = useState(false);
+    const [omniliteUsername, setOmniliteUsername] = useState('');
+    const [omnilitePassword, setOmnilitePassword] = useState();
     const [ecoonlineUserName, setEconlineUsername] = useState();
     const [ecoonlinePassword, setEcoonlinePassword] = useState();
     const [accountNo, setAccountNo] = useState();
     const [cardPan, setCardPanMatch] = useState('');
-    const [loading, setLoading] = useState(false);
     const [cardExp, setCardExp] = useState('');
     const [cvv, setCVV] = useState('');
-    let subtitle;
+    const [page, setPage] = useState(0);
+    const [outType, setOutType] = useState();
     const [modalIsOpen, setIsOpen] = React.useState(false);
-
+    const dispatch = useDispatch();
+    let subtitle;
     function openModal() {
         setIsOpen(true);
     }
+    const router = useRouter();
 
     function afterOpenModal() {
         // references are now sync'd and can be accessed.
@@ -59,6 +74,51 @@ const ExistingProfileSetup = ({
     const types = (type) => {
         setOutType(type);
     };
+    const [
+        registerAccountNumber,
+        {
+            data: registerAccountNumberData,
+            isLoading: registerAccountNumberLoad,
+            isSuccess: registerAccountNumberSuccess,
+            isError: registerAccountNumberFalse,
+            error: registerAccountNumberErr,
+            reset: registerAccountNumberReset
+        }
+    ] = useRegisterAccountNumberMutation();
+    const [
+        registerCard,
+        {
+            data: registerCardData,
+            isLoading: registerCardLoad,
+            isSuccess: registerCardSuccess,
+            isError: registerCardFalse,
+            error: registerCardErr,
+            reset: registerCardReset
+        }
+    ] = useRegisterCardMutation();
+    const [
+        authOmnilite,
+        {
+            data: authOmniliteData,
+            isLoading: authOmniliteLoad,
+            isSuccess: authOmniliteSuccess,
+            isError: authOmniliteFalse,
+            error: authOmniliteErr,
+            reset: authOmniliteReset
+        }
+    ] = useAuthOmniliteMutation();
+    const [
+        authEcobank,
+        {
+            data: authEcobankData,
+            isLoading: authEcobankLoad,
+            isSuccess: authEcobankSuccess,
+            isError: authEcobankFalse,
+            error: authEcobankErr,
+            reset: authEcobankReset
+        }
+    ] = useAuthEcobankMutation();
+
     const conditionalComponent = () => {
         switch (page) {
             case 0:
@@ -71,6 +131,10 @@ const ExistingProfileSetup = ({
                                 type="text"
                                 className={styles.idInput}
                                 name="omniliteUsername"
+                                value={omniliteUsername}
+                                onChange={(e) =>
+                                    setOmniliteUsername(e.target.value)
+                                }
                             />
                         </div>
                         <div>
@@ -79,7 +143,11 @@ const ExistingProfileSetup = ({
                                 <input
                                     placeholder="Omnilite Password"
                                     className={styles.idInput}
+                                    value={omnilitePassword}
                                     name="omnilitePassword"
+                                    onChange={(e) =>
+                                        setOmnilitePassword(e.target.value)
+                                    }
                                     type={outType ? 'text' : 'password'}
                                 />
                                 <Visbility typeSet={types} input="input" />
@@ -96,6 +164,10 @@ const ExistingProfileSetup = ({
                                 placeholder="Ecobank Online Username"
                                 type="text"
                                 className={styles.idInput}
+                                value={ecoonlineUserName}
+                                onChange={(e) =>
+                                    setEconlineUsername(e.target.value)
+                                }
                                 name="onlineUsername"
                             />
                         </div>
@@ -106,7 +178,11 @@ const ExistingProfileSetup = ({
                                     placeholder="Ecobank Online Password"
                                     className={styles.idInput}
                                     name="onlinePassword"
+                                    value={ecoonlinePassword}
                                     type={outType ? 'text' : 'password'}
+                                    onChange={(e) =>
+                                        setEcoonlinePassword(e.target.value)
+                                    }
                                 />
                                 <Visbility typeSet={types} input="input" />
                             </div>
@@ -122,7 +198,9 @@ const ExistingProfileSetup = ({
                                 placeholder="123*******62"
                                 type="text"
                                 className={styles.idInput}
+                                value={accountNo}
                                 name="accountNumber"
+                                onChange={(e) => setAccountNo(e.target.value)}
                             />
                         </div>
                     </div>
@@ -135,8 +213,12 @@ const ExistingProfileSetup = ({
                             <input
                                 placeholder="Ecobank Card number"
                                 className={styles.idInput}
+                                value={cardPan}
                                 type="number"
                                 name="cardNumber"
+                                onChange={(e) =>
+                                    setCardPanMatch(e.target.value)
+                                }
                             />
                         </div>
                         <div className={styles.expCvv}>
@@ -149,6 +231,9 @@ const ExistingProfileSetup = ({
                                         type="text"
                                         name="expiryDate"
                                         value={cardExp}
+                                        onChange={(e) =>
+                                            setCardExp(e.target.value)
+                                        }
                                         maxLength="5"
                                     />
                                 </div>
@@ -160,7 +245,9 @@ const ExistingProfileSetup = ({
                                         placeholder="CVV"
                                         className={styles.passwordInput}
                                         maxLength="3"
-                                        type="password"
+                                        type="number"
+                                        value={cvv}
+                                        onChange={(e) => setCVV(e.target.value)}
                                         name="cvv"
                                     />
                                 </div>
@@ -169,6 +256,79 @@ const ExistingProfileSetup = ({
                     </div>
                 );
             default:
+        }
+    };
+    useEffect(() => {
+        if (registerAccountNumberData) {
+            dispatch(setExistingUserDetails(registerAccountNumberData));
+            router.push('/Onboarding/ExistingProfileSetup');
+            localStorage.setItem('loginWith', 'accountNumber');
+        }
+    }, [registerAccountNumberSuccess]);
+
+    useEffect(() => {
+        if (authOmniliteSuccess || authEcobankSuccess) {
+            const getData = authOmniliteData?.data || authEcobankData?.data;
+            const model = {
+                statusCode: 200,
+                message: 'success',
+                data: {
+                    phone: null,
+                    mobileNos: getData?.originalMsisdn,
+                    pndStatus: 'N',
+                    pncStatus: 'N',
+                    dormantStatus: 'N',
+                    frozenStatus: 'N',
+                    blockedStatus: 'N',
+                    currencyCode: 'NGN',
+                    dob: getData?.dateOfBirth,
+                    bvn: '',
+                    accountNumber: getData?.accounts
+                        ?.map((obj) => obj?.accountNumber)
+                        ?.join(', ')
+                }
+            };
+            dispatch(
+                setExistingUserDetails(
+                    authOmniliteData?.data || authEcobankData?.data
+                )
+            );
+            router.push('/Onboarding/ExistingProfileSetup');
+        }
+    }, [authOmniliteSuccess, authEcobankSuccess]);
+
+    useEffect(() => {
+        if (registerCardData) {
+            dispatch(setExistingUserDetails(registerCardData));
+            router.push('/Onboarding/ExistingProfileSetup');
+        }
+    }, [registerCardSuccess]);
+    const submitForms = (e) => {
+        e.preventDefault();
+        if (page === 0) {
+            const data = {
+                username: omniliteUsername,
+                password: omnilitePassword
+            };
+            authOmnilite(data);
+        } else if (page === 1) {
+            const data = {
+                username: ecoonlineUserName,
+                password: ecoonlinePassword
+            };
+            authEcobank(data);
+        } else if (page === 2) {
+            const data = {
+                accountNo: accountNo
+            };
+            registerAccountNumber(data);
+        } else if (page === 3) {
+            const data = {
+                pan: cardPan,
+                expiry: cardExp,
+                cvv: cvv
+            };
+            registerCard(data);
         }
     };
     const handleChange = (event) => {
@@ -184,6 +344,21 @@ const ExistingProfileSetup = ({
                     <option value="Yes">Yes</option>
                 </select>
             </div>
+            {registerAccountNumberErr ? (
+                <p className={styles.error}>
+                    {registerAccountNumberErr?.data?.message}
+                </p>
+            ) : null}
+            {registerCardErr ? (
+                <p className={styles.error}>{registerCardErr?.data?.message}</p>
+            ) : null}
+            {authOmniliteErr ? (
+                <p className={styles.error}>{authOmniliteErr?.data?.message}</p>
+            ) : null}
+            {authEcobankErr ? (
+                <p className={styles.error}>{authEcobankErr?.data?.message}</p>
+            ) : null}
+
             <form className={styles.form}>
                 <div className={styles.existingUser}>
                     <div className={styles.existingUserHeader}>
@@ -351,7 +526,13 @@ const ExistingProfileSetup = ({
                         active={activeBtn ? 'active' : 'inactive'}
                         text="Create account"
                         type="submit"
-                        loads={loading}
+                        onClick={submitForms}
+                        loads={
+                            registerAccountNumberLoad ||
+                            registerCardLoad ||
+                            authOmniliteLoad ||
+                            authEcobankLoad
+                        }
                     />
                 </div>
                 <p className={styles.already}>

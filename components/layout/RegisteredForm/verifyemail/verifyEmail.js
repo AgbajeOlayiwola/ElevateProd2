@@ -1,19 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ButtonComp, Messagesvg } from '../../../components';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './styles.module.css';
-import { useRouter } from 'next/router';
 import {
-    useResendEmailMutation,
     useResendEmailOtpMutation,
-    useVerifyEmailMutation,
-    useVerifySmsOtpMutation
-} from '../../../redux/api/authApi';
-import VerifyEmailSvg from '../../../components/ReusableComponents/VerifyEmailSvg';
-import OtpInput from '../../../components/ReusableComponents/Otpinput';
-import { Formik } from 'formik';
+    useVerifyEmailMutation
+} from '../../../../redux/api/authApi';
 import { useDispatch } from 'react-redux';
-import { setProfile } from '../../../redux/slices/profile';
-const Loading = () => {
+import { useRouter } from 'next/router';
+import ButtonComp from '../../../ReusableComponents/Button';
+import VerifyEmailSvg from '../../../ReusableComponents/VerifyEmailSvg';
+import ProfileSetupSide from '../../../ReusableComponents/ProfileSetupSide';
+import { setProfile } from '../../../../redux/slices/profile';
+
+const VerifyEmail = ({ nextStep }) => {
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
     const [
@@ -73,8 +71,7 @@ const Loading = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const handleProceed = async (val) => {
-        await dispatch(setProfile(val?.data));
-        router.push('/Onboarding/ProfileSetup');
+        nextStep();
     };
 
     useEffect(() => {
@@ -92,11 +89,13 @@ const Loading = () => {
         console.log(data);
         verifyEmail(data);
     };
-
     return (
         <div className={styles.verifyCov}>
-            <div className={styles.verifyPopup}>
-                <div className={styles.body}>
+            <section className={styles.sectionI}>
+                <ProfileSetupSide text="Checkout Priceless opportunities Be ahead" />
+            </section>
+            <div className={styles.verCovOuter}>
+                <div className={styles.verybody}>
                     <VerifyEmailSvg />
 
                     <form onSubmit={handleSubmit}>
@@ -182,4 +181,4 @@ const Loading = () => {
     );
 };
 
-export default Loading;
+export default VerifyEmail;

@@ -13,7 +13,7 @@ if (typeof window !== 'undefined') {
 }
 
 export const cacApi = createApi({
-    reducerPath: 'onboardingApi',
+    reducerPath: 'cacApi',
     baseQuery: fetchBaseQuery({
         baseUrl,
         prepareHeaders: (headers, { getState }) => {
@@ -34,7 +34,7 @@ export const cacApi = createApi({
         searchRC: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'business/name',
+                    url: 'business-name',
                     method: 'post',
                     body
                 };

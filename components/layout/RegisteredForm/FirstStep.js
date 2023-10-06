@@ -7,35 +7,17 @@ import styles from './styles.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetOtpData } from '../../../redux/actions/resetOtpAction';
 import { useRouter } from 'next/router';
-const FirstStep = ({
-    handleSubmit,
-    action,
-    loads,
-    setFormData,
-    formData,
-    otpError
-}) => {
+import {
+    useResendExisitingOtpMutation,
+    useVerifyExistingOtpMutation
+} from '../../../redux/api/authApi';
+import Loader from '../../ReusableComponents/Loader';
+const FirstStep = ({ setFormData, formData, action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
-    const { resetOtp, resetOtpErrorMessages } = useSelector(
-        (state) => state.resetOtpReducer
-    );
-
+    const [typedOtp, setSetypedOtp] = useState('');
+    const { existingUserDetails } = useSelector((store) => store);
     const dispatch = useDispatch();
     const router = useRouter();
-    if (typeof window !== 'undefined') {
-        let accounts = window.localStorage.getItem('account');
-        var newAccounts = JSON.parse(accounts);
-        let loginWith = localStorage.getItem('LoginWith');
-        // //console.log(loginWith);
-        // //console.log(newAccounts.user.email);
-    }
-    const userId = () => {
-        if (newAccounts.userId != undefined) {
-            return newAccounts.userId;
-        } else {
-            return newAccounts.user.userId;
-        }
-    };
     const otpLength = 6;
     const [otpValues, setOtpValues] = useState(Array(otpLength).fill(''));
     const otpInputs = useRef([]);
@@ -54,9 +36,35 @@ const FirstStep = ({
                 nextInput.focus(); // Move cursor to the next input if it exists
             }
         }
-
-        setFormData({ ...formData, otp: myOtp });
+        setSetypedOtp(myOtp);
     };
+    const [
+        verifyExistingOtp,
+        {
+            data: verifyExistingOtpData,
+            isLoading: verifyExistingOtpLoad,
+            isSuccess: verifyExistingOtpSuccess,
+            isError: verifyExistingOtpFalse,
+            error: verifyExistingOtpErr,
+            reset: verifyExistingOtpReset
+        }
+    ] = useVerifyExistingOtpMutation();
+    const [
+        resendExisitingOtp,
+        {
+            data: resendExisitingOtpData,
+            isLoading: resendExisitingOtpLoad,
+            isSuccess: resendExisitingOtpSuccess,
+            isError: resendExisitingOtpFalse,
+            error: resendExisitingOtpErr,
+            reset: resendExisitingOtpReset
+        }
+    ] = useResendExisitingOtpMutation();
+    useEffect(() => {
+        if (verifyExistingOtpSuccess) {
+            action();
+        }
+    }, [verifyExistingOtpSuccess]);
     const handleInputKeyPress = (event, inputIndex) => {
         if (event.key === 'Backspace' || event.key === 'Delete') {
             event.preventDefault();
@@ -67,30 +75,33 @@ const FirstStep = ({
             }
         }
     };
-    const ResetOtp = (e) => {
-        const data = {
-            userId: userId()
-        };
-        dispatch(resetOtpData(data));
-    };
 
-    // useEffect(() => {
-    //     setOtpString('');
-    // }, [resetOtp, resetOtpErrorMessages]);
+    const verifyOtp = (e) => {
+        e.preventDefault();
+        const data = {
+            phoneNumber: '2348136292202',
+            otp: typedOtp
+        };
+        verifyExistingOtp(data);
+    };
+    const ResetOtp = (e) => {
+        e.preventDefault();
+        resendExisitingOtp({
+            phoneNumber: '2348136292202'
+        });
+    };
 
     return (
         <div className={styles.bodys}>
             <section className={styles.sections}>
                 <div className={styles.existingBody}>
                     <h1 className={styles.header}>OTP Verification</h1>
-                    {otpError ? (
-                        <p className={styles.error}>{otpError}</p>
+                    {verifyExistingOtpErr ? (
+                        <p className={styles.error}>Unable to Verify OTP</p>
                     ) : null}
-                    {resetOtpErrorMessages ? (
-                        <p>{resetOtpErrorMessages.response.data.message}</p>
-                    ) : (
-                        <p>{resetOtp?.data.message}</p>
-                    )}
+                    {resendExisitingOtpErr ? (
+                        <p className={styles.error}>Unable to send OTP</p>
+                    ) : null}
 
                     <p className={styles.p}>
                         A one time Password has been sent to your registered
@@ -119,24 +130,20 @@ const FirstStep = ({
                         </div>
 
                         <div className={styles.resendFlex}>
-                            <p onClick={ResetOtp}>Resend OTP</p>
-
-                            <button
-                                // onClick={clear}
-                                style={{ cursor: 'pointer' }}
-                                className={styles.clr}
-                                type="reset"
-                            >
-                                Clear
-                            </button>
+                            {resendExisitingOtpLoad ? (
+                                <Loader />
+                            ) : (
+                                <p onClick={ResetOtp}>Resend OTP</p>
+                            )}
                         </div>
                     </form>
                     <ButtonComp
                         disabled={activeBtn}
                         active={activeBtn ? 'active' : 'inactive'}
-                        onClick={action}
+                        onClick={verifyOtp}
                         type="submit"
                         text="Proceed"
+                        loads={verifyExistingOtpLoad}
                     />
                 </div>
             </section>

@@ -168,14 +168,16 @@ const ProfileSetups = ({ comingFrom }) => {
     return (
         <>
             {page === 1 ? (
-                <Liveness formData={formData} setFormData={setFormData} />
+                <Liveness
+                    nextStep={() => setPage(2)}
+                    type={formData.type}
+                    formData={formData}
+                    setFormData={setFormData}
+                />
             ) : page === 2 ? (
                 <StepTwoBVNAuthenticator
                     formData={formData}
                     setFormData={setFormData}
-                    // setPage={page+1}
-                    page={page}
-                    action={() => setPage(page + 1)}
                     otpError={otpError}
                 />
             ) : (

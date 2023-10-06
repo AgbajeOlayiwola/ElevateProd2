@@ -1,52 +1,38 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-
-    async headers() {
-        return [
-            {
-                // matching all API routes
-                source: '/api/:path*',
-                headers: [
-                    { key: 'Access-Control-Allow-Credentials', value: 'true' },
-                    { key: 'Access-Control-Allow-Origin', value: '*' }, // replace this your actual origin
-                    {
-                        key: 'Access-Control-Allow-Methods',
-                        value: 'GET,DELETE,PATCH,POST,PUT'
-                    },
-                    {
-                        key: 'Access-Control-Allow-Headers',
-                        value:
-                            'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-                    }
-                ]
-            }
-        ];
-    }
-};
-module.exports = {
-    distDir: 'build',
-    headers: () => [
-        {
-            source: '/:path*',
-            headers: [
-                {
-                    key: 'Cache-Control',
-                    value: 'no-store'
-                }
-            ]
+    productionBrowserSourceMaps: true,
+    swcMinify: false,
+    compiler: {
+        removeConsole: true
+    },
+    output: 'standalone',
+    // pageExtensions: ["page.tsx", "page.ts", "page.jsx", "page.js"],
+    publicRuntimeConfig: {
+        processEnv: Object.fromEntries(
+            Object.entries(process.env).filter(([key]) =>
+                key.includes('NEXT_PUBLIC_')
+            )
+        )
+    },
+    webpack: (config, { isServer }) => {
+        if (!isServer) {
+            config.resolve.fallback.fs = false;
+            config.resolve.fallback.tls = false;
+            config.resolve.fallback.net = false;
+            config.resolve.fallback.child_process = false;
         }
-    ],
-    poweredByHeader: false
+        return config;
+    },
+    future: {
+        webpack5: true
+    },
+    fallback: {
+        fs: false,
+        tls: false,
+        net: false,
+        child_process: false
+    }
 };
 
 module.exports = nextConfig;
-
-module.exports = {
-    // https://github.com/vercel/next.js/issues/21079
-    // Remove this workaround whenever the issue is fixed
-    // images: {
-    //     loader: 'imgix',
-    //     path: ''
-    // }
-};

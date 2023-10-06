@@ -10,10 +10,13 @@ import { getCookie } from 'cookies-next';
 import axios from 'axios';
 import Loader from '../../../ReusableComponents/Loader';
 import { Formik } from 'formik';
+
 import {
-    useFaceMatchMutation,
-    useProfileSetUpRegisteredBusinessMutation
-} from '../../../../redux/api/docsApi';
+    useFaceMatchWithoutBvnMutation,
+    useFacematchMutation,
+    useProfileSetUpUnregisteredBusinessMutation,
+    useRegisteredSetupMutation
+} from '../../../../redux/api/authApi';
 const videoConstraints = {
     width: 390,
     height: 480,
@@ -30,7 +33,7 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ formData }) => {
+const Liveness = ({ formData, type, nextStep }) => {
     const webcamRef = React.useRef(null);
     const [succes, setSuccess] = useState('');
     const [image, setImage] = useState(
@@ -51,72 +54,70 @@ const Liveness = ({ formData }) => {
             error: faceMatchErr,
             reset: faceMatchReset
         }
-    ] = useFaceMatchMutation();
+    ] = useFacematchMutation();
     const [
-        profileSetUpRegisteredBusiness,
+        faceMatchWithoutBvn,
         {
-            data: profileSetUpRegisteredBusinessData,
-            isLoading: profileSetUpRegisteredBusinessLoad,
-            isSuccess: profileSetUpRegisteredBusinessSuccess,
-            isError: profileSetUpRegisteredBusinessFalse,
-            error: profileSetUpRegisteredBusinessErr,
-            reset: profileSetUpRegisteredBusinessReset
+            data: faceMatchWithoutBvnData,
+            isLoading: faceMatchWithoutBvnLoad,
+            isSuccess: faceMatchWithoutBvnSuccess,
+            isError: faceMatchWithoutBvnFalse,
+            error: faceMatchWithoutBvnErr,
+            reset: faceMatchWithoutBvnReset
         }
-    ] = useProfileSetUpRegisteredBusinessMutation();
-    const [
-        profileSetUpUnregisteredBusiness,
-        {
-            data: profileSetUpUnregisteredBusinessData,
-            isLoading: profileSetUpUnregisteredBusinessLoad,
-            isSuccess: profileSetUpUnregisteredBusinessSuccess,
-            isError: profileSetUpUnregisteredBusinessFalse,
-            error: profileSetUpUnregisteredBusinessErr,
-            reset: profileSetUpUnregisteredBusinessReset
-        }
-    ] = useProfileSetUpRegisteredBusinessMutation();
+    ] = useFaceMatchWithoutBvnMutation();
+
+    // console.log(affiliatData);
     const faceMtch = () => {
-        if (localStorage.getItem('regprofilesetupdata')) {
-            const storedData = localStorage.getItem('profilesetupdata');
-            const profileSetupData = JSON.parse(storedData);
-            const faceMMatchData = {
-                userFaceBase64: image,
-                bvn: profileSetupData?.bvn
-            };
-            // Perform a facial match with the data
-            faceMatch(faceMMatchData);
-        } else {
-            const storedData = localStorage.getItem('profilesetupdata');
-            const profileSetupData = JSON.parse(storedData);
-            const faceMMatchData = {
-                userFaceBase64: image,
-                bvn: profileSetupData?.bvn
-            };
-            // Perform a facial match with the data
-            faceMatch(faceMMatchData);
-        }
-    };
-    useEffect(() => {
-        if (faceMatchSuccess) {
+        const affiliatData = localStorage.getItem('affiliateCode');
+        if (affiliatData === 'ENG') {
             if (localStorage.getItem('regprofilesetupdata')) {
-                const data = {
-                    bvnNumber: '22441298309',
-                    phoneNumber: `${formData?.countryCode}${profileSetupData?.phoneNumber}`,
-                    countryCode: 'NG',
-                    taxNumber: '126378883',
-                    registrationNumber: 'RC1229464'
-                };
-                profileSetUpRegisteredBusiness(data);
-            } else if (localStorage.getItem('profilesetupdata')) {
                 const storedData = localStorage.getItem('profilesetupdata');
                 const profileSetupData = JSON.parse(storedData);
-                const data = {
-                    bvnNumber: profileSetupData?.bvn,
-                    phoneNumber: `${formData?.countryCode}${profileSetupData?.phoneNumber}`
+                const faceMMatchData = {
+                    userFaceBase64: image,
+                    bvn: profileSetupData?.bvn
                 };
-                profileSetUpUnregisteredBusiness(data);
+                // Perform a facial match with the data
+                faceMatch(faceMMatchData);
+            } else {
+                const storedData = localStorage.getItem('profilesetupdata');
+                const profileSetupData = JSON.parse(storedData);
+                const faceMMatchData = {
+                    userFaceBase64: image,
+                    bvn: profileSetupData?.bvn
+                };
+                // Perform a facial match with the data
+                faceMatch(faceMMatchData);
+            }
+        } else {
+            if (localStorage.getItem('regprofilesetupdata')) {
+                const storedData = localStorage.getItem('profilesetupdata');
+                const profileSetupData = JSON.parse(storedData);
+                const faceMMatchData = {
+                    userFaceBase64: image,
+                    idNumber: profileSetupData?.bvn
+                };
+                // Perform a facial match with the data
+                faceMatchWithoutBvn(faceMMatchData);
+            } else {
+                const storedData = localStorage.getItem('profilesetupdata');
+                const profileSetupData = JSON.parse(storedData);
+                const faceMMatchData = {
+                    userFaceBase64: image,
+                    idNumber: profileSetupData?.bvn
+                };
+                // Perform a facial match with the data
+                faceMatchWithoutBvn(faceMMatchData);
             }
         }
-    }, [faceMatchSuccess]);
+    };
+
+    useEffect(() => {
+        if (faceMatchSuccess || faceMatchWithoutBvnSuccess) {
+            nextStep();
+        }
+    }, [faceMatchSuccess, faceMatchWithoutBvnSuccess]);
 
     return (
         <div className={styles.body}>
@@ -124,11 +125,6 @@ const Liveness = ({ formData }) => {
                 <div className={styles.imageOut}>
                     <Formik
                         onSubmit={(values, { setSubmitting }) => {
-                            // Check if there's a 'regprofilesetupdata' in localStorage
-
-                            // Continue with other form submission logic if needed
-
-                            // You should call setSubmitting(false) to indicate that form submission is complete
                             setSubmitting(false);
                         }}
                     >
@@ -150,13 +146,19 @@ const Liveness = ({ formData }) => {
                                         face to verify your identity.
                                     </p>
 
+                                    {faceMatchErr ? (
+                                        <p className={styles.error}>
+                                            {faceMatchErr.data.message}
+                                        </p>
+                                    ) : null}
                                     <div
                                         className={
                                             succes ===
                                             'facial verification successful'
                                                 ? // succes === 'success'
                                                   styles.imageOuter
-                                                : faceMatchErr
+                                                : faceMatchErr ||
+                                                  faceMatchWithoutBvnErr
                                                 ? styles.errorInner
                                                 : styles.imageInner
                                         }
@@ -181,6 +183,9 @@ const Liveness = ({ formData }) => {
                                     // }
                                     onClick={faceMtch}
                                     type="button"
+                                    loads={
+                                        faceMatchLoad || faceMatchWithoutBvnLoad
+                                    }
                                     text={
                                         succes ===
                                         'facial verification successful'

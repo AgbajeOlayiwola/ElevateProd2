@@ -7,31 +7,14 @@ import Success from '../../../ReusableComponents/Success';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
 import axiosInstance from '../../../../redux/helper/apiClient';
 import { setCookie, getCookie } from 'cookies-next';
+import { useSelector } from 'react-redux';
 
 const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [accountDone, setAccountDone] = useState('');
-    useEffect(() => {
-        const cookie = getCookie('cookieToken');
-        axiosInstance
-            .get(
-                `https://mysmeapp.ecobank.com:8443${apiRoutes.accountStatus}`,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${cookie}`
-                    }
-                }
-            )
-            .then((response) => {
-                //  //console.log('Accoutn Status', response);
-                setAccountDone(response.data.data);
-            })
-            .catch((error) => {
-                // //console.log(error.response.data.message);
-            });
-    }, []);
-    //  //console.log(accountDone);
+    const { moreAccountNumberDetails } = useSelector((store) => store);
+    const { accountNumber } = useSelector((store) => store);
+
     return (
         <div className={styles.cover}>
             <>
@@ -43,8 +26,7 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                         Your Business account is ready!
                     </h2>
                     <h3>
-                        Your Account Number is{' '}
-                        <span>{accountDone.accountNumber}</span>
+                        Your Account Number is <span>{accountNumber}</span>
                     </h3>
                     <Link href="/Admin/Dashboard">
                         <ButtonComp

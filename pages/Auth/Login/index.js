@@ -15,6 +15,7 @@ import * as yup from 'yup';
 import { useLoginAccountMutation } from '../../../redux/api/authApi';
 import { affiliateCountries } from '../../../components/ReusableComponents/Data';
 import { setProfile } from '../../../redux/slices/profile';
+import { setPinned } from '../../../redux/slices/pinned';
 // Number of input fields that make up SSN
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -46,7 +47,12 @@ const Login = () => {
         }
     ] = useLoginAccountMutation();
     useEffect(() => {
+        console.log(loginAccountSuccess, loginAccountData, loginAccountErr);
+    }, [loginAccountSuccess, loginAccountErr, loginAccountData]);
+
+    useEffect(() => {
         localStorage.setItem('affiliateCode', selectCountry?.affiliateCode);
+        console.log(loginAccountErr);
     }, []);
     const initSchema = yup.object().shape({
         email: yup
@@ -60,168 +66,131 @@ const Login = () => {
         email: '',
         password: ''
     };
-    const handleProceed = async (val) => {
+    const handleNavIn = async (val) => {
         await dispatch(setProfile(val?.data));
-        router.push('/Onboarding/ProfileSetup');
+        router.push('/Admin/Dashboard');
     };
+
     useEffect(() => {
         if (loginAccountSuccess) {
-            handleProceed(loginAccountData);
-            setLoading(false);
+            console.log(
+                loginAccountData?.data?.user?.hasVerifiedEmail,
+                'loaded up'
+            );
+
+            dispatch(setProfile(loginAccountData));
+            if (loginAccountData?.data?.user?.hasSetTransactionPin === 'N') {
+                dispatch(setPinned(false));
+                dispatch(setProfile(loginAccountData?.data));
+            } else if (
+                loginAccountData?.data?.user?.hasSetTransactionPin === 'Y'
+            ) {
+                dispatch(setPinned(true));
+                dispatch(setProfile(loginAccountData?.data));
+            }
+            if (loginAccountData?.data?.user?.hasVerifiedEmail === 'N') {
+                dispatch(setProfile(loginAccountData?.data));
+                router.push({
+                    pathname: '/Verify',
+                    query: { id: 4 }
+                });
+            } else if (
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'REGISTERED' &&
+                loginAccountData?.data?.user?.createdFromEcobankCred === 'N'
+            ) {
+                dispatch(setProfile(loginAccountData?.data));
+                router.push({
+                    pathname: '/Onboarding/ProfileSetup',
+                    query: { id: 0 }
+                });
+            } else if (
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'PROFILE_SETUP_AWAITING_OTP' &&
+                loginAccountData?.data?.user?.createdFromEcobankCred === 'N'
+            ) {
+                dispatch(setProfile(loginAccountData?.data));
+                router.push({
+                    pathname: '/Onboarding/ProfileSetup',
+                    query: { id: 2 }
+                });
+            } else if (
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'LIVENESS_VERIFIED' &&
+                loginAccountData?.data?.user?.createdFromEcobankCred === 'Y'
+            ) {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'EcoData' }]
+                });
+            } else if (
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'LIVENESS_VERIFIED' &&
+                loginAccountData?.data?.user?.createdFromEcobankCred === 'N' &&
+                loginAccountData?.data?.user?.phoneNumber === null
+            ) {
+                dispatch(setProfile(loginAccountData?.data));
+                router.push({
+                    pathname: '/Onboarding/ProfileSetup',
+                    query: { id: 0 }
+                });
+            } else if (
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'LIVENESS_VERIFIED' &&
+                loginAccountData?.data?.user?.createdFromEcobankCred === 'N' &&
+                loginAccountData?.data?.user?.phoneNumber !== null
+            ) {
+                dispatch(setProfile(loginAccountData?.data));
+                router.push({
+                    pathname: '/Onboarding/ProfileSetup',
+                    query: { id: 3 }
+                });
+            } else if (
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'REGISTERED' &&
+                loginAccountData?.data?.user?.createdFromEcobankCred === 'Y'
+            ) {
+                dispatch(setProfile(loginAccountData?.data));
+                router.push({
+                    pathname: '/Onboarding/ExistingProfileSetup',
+                    query: { id: 4 }
+                });
+            }
+            // else if (
+            //     loginAccountData?.user?.profileSetupStatus ===
+            //         'PROFILE_SETUP' &&
+            //     loginAccountData?.user?.createdFromEcobankCred === 'Y'
+            // ) {
+            //     router.push({
+            //         pathname: '/Onboarding/ExistingProfileSetup',
+            //         query: { id: 1}
+            //     });
+            // }
+            // else if (
+            //     loginAccountData?.user?.profileSetupStatus ===
+            //         'PROFILE_SETUP' &&
+            //     loginAccountData?.user?.createdFromEcobankCred === 'N'
+            // ) {
+            //     navigation.reset({
+            //         index: 0,
+            //         routes: [{ name: 'SelfieScreen' }]
+            //     });
+            // }
+            if (
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'ACCOUNT_NUMBER_RETRIEVED' ||
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'PROFILE_SETUP_COMPLETED' ||
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'ACCOUNT_CREATED' ||
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'AWAITING_ACCOUNT_NUMBER'
+            ) {
+                handleNavIn(loginAccountData);
+            }
+            console.log(loginAccountData, 'check check');
         }
     }, [loginAccountSuccess]);
-
-    // useEffect(() => {
-    //     if (user) {
-    //         console.log(user);
-    //         if (user?.statusCode === 200) {
-    //             if (
-    //                 user?.data?.user?.profile?.createdFromEcobankCred === false
-    //             ) {
-    //                 if (
-    //                     user?.data?.user?.profile?.customerCategory ===
-    //                     'COMMERCIAL'
-    //                 ) {
-    //                     if (
-    //                         user?.data?.user?.profile?.profileSetupStatus ===
-    //                         'PROFILE_SETUP_COMPLETED'
-    //                     ) {
-    //                         router.push('../../Verify/CorportateAccount');
-    //                     } else if (
-    //                         user?.data?.user?.profile?.profileSetupStatus ===
-    //                         'AWAITING_ACCOUNT_NUMBER'
-    //                     ) {
-    //                         router.push('../../Verify/CorportateAccount');
-    //                     } else if (
-    //                         user?.data?.user?.profile?.profileSetupStatus ===
-    //                         'ACCOUNT_NUMBER_RETRIEVED'
-    //                     ) {
-    //                         //console.log('here');
-    //                         router.push('../../Admin/Dashboard');
-    //                     } else {
-    //                         router.push('../../Onboarding/ProfileSetup');
-    //                     }
-    //                 } else {
-    //                     if (
-    //                         user?.data?.user?.profile?.profileSetupStatus ===
-    //                         'PROFILE_SETUP_COMPLETED'
-    //                     ) {
-    //                         router.push('../../Verify/Account/loading');
-    //                     } else if (
-    //                         user?.data?.user?.profile?.profileSetupStatus ===
-    //                         'AWAITING_ACCOUNT_NUMBER'
-    //                     ) {
-    //                         router.push('../../Verify/Account/loading');
-    //                     } else if (
-    //                         user?.data?.user?.profile?.profileSetupStatus ===
-    //                         'ACCOUNT_NUMBER_RETRIEVED'
-    //                     ) {
-    //                         router.push('../../Admin/Dashboard');
-    //                     } else {
-    //                         router.push('../../Onboarding/ProfileSetup');
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     if (user) {
-    //         if (user?.data?.user?.profile?.createdFromEcobankCred === true) {
-    //             if (
-    //                 user?.data?.user?.profile?.profileSetupStatus ===
-    //                 'PROFILE_SETUP_COMPLETED'
-    //             ) {
-    //                 window?.localStorage?.setItem(
-    //                     'displayAccount',
-    //                     JSON.stringify(user?.data?.user)
-    //                 );
-    //                 window?.localStorage?.setItem(
-    //                     'account',
-    //                     JSON.stringify(user.data.user.profile)
-    //                 );
-    //                 router.push('../../Admin/Dashboard');
-    //             } else if (
-    //                 user.data.user.profile.profileSetupStatus ===
-    //                 'PROFILE_SETUP'
-    //             ) {
-    //                 window.localStorage.setItem(
-    //                     'displayAccount',
-    //                     JSON.stringify(user.data.user)
-    //                 );
-    //                 window.localStorage.setItem(
-    //                     'account',
-    //                     JSON.stringify(user.data.user.profile)
-    //                 );
-    //                 router.push({
-    //                     pathname: '/Onboarding/ExistingProfileSetup',
-    //                     query: { id: 2 }
-    //                 });
-    //             } else if (
-    //                 user.data.user.profile.profileSetupStatus ===
-    //                 'LIVENESS_VERIFIED'
-    //             ) {
-    //                 window?.localStorage?.setItem(
-    //                     'displayAccount',
-    //                     JSON.stringify(user.data.user)
-    //                 );
-    //                 window?.localStorage?.setItem(
-    //                     'account',
-    //                     JSON.stringify(user.data.user.profile)
-    //                 );
-    //                 router.push({
-    //                     pathname: '/Onboarding/ExistingProfileSetup',
-    //                     query: { id: 3 }
-    //                 });
-    //             } else if (
-    //                 user.data.user.profile.profileSetupStatus ===
-    //                 'PROFILE_SETUP_AWAITING_OTP'
-    //             ) {
-    //                 window.localStorage.setItem(
-    //                     'displayAccount',
-    //                     JSON.stringify(user.data.user)
-    //                 );
-    //                 window?.localStorage?.setItem(
-    //                     'account',
-    //                     JSON.stringify(user.data.user.profile)
-    //                 );
-
-    //                 router.push({
-    //                     pathname: '/Onboarding/ExistingProfileSetup',
-    //                     query: { id: 0 }
-    //                 });
-    //             }
-    //             if (
-    //                 user.data.user.profile.profileSetupStatus ===
-    //                 'AWAITING_ACCOUNT_NUMBER'
-    //             ) {
-    //                 window.localStorage.setItem(
-    //                     'displayAccount',
-    //                     JSON.stringify(user.data.user)
-    //                 );
-    //                 window?.localStorage?.setItem(
-    //                     'account',
-    //                     JSON.stringify(user.data.user.profile)
-    //                 );
-    //                 router.push('../../Verify/CorportateAccount');
-    //             } else if (
-    //                 user.data.user.profile.profileSetupStatus ===
-    //                 'ACCOUNT_NUMBER_RETRIEVED'
-    //             ) {
-    //                 window?.localStorage?.setItem(
-    //                     'displayAccount',
-    //                     JSON.stringify(user.data.user)
-    //                 );
-    //                 window?.localStorage?.setItem(
-    //                     'account',
-    //                     JSON.stringify(user.data.user.profile)
-    //                 );
-    //                 router.push('../../Admin/Dashboard');
-    //             }
-    //         }
-    //     } else if (errorMessages !== null) {
-    //         setmainError(errorMessages);
-    //         setLoading((prev) => !prev);
-    //     }
-    // }, []);
 
     const types = (type) => {
         setOutType(type);
