@@ -1,21 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles.module.css';
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import ButtonComp from '../../../ReusableComponents/Button';
-import Webcam from 'react-webcam';
-import Head from 'next/head';
-import Script from 'next/script';
-import { getCookie } from 'cookies-next';
-import axios from 'axios';
-import Loader from '../../../ReusableComponents/Loader';
 import { Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
+import Webcam from 'react-webcam';
+import ButtonComp from '../../../ReusableComponents/Button';
+import styles from './styles.module.css';
 
 import {
     useFaceMatchWithoutBvnMutation,
-    useFacematchMutation,
-    useProfileSetUpUnregisteredBusinessMutation,
-    useRegisteredSetupMutation
+    useFacematchMutation
 } from '../../../../redux/api/authApi';
 const videoConstraints = {
     width: 390,
@@ -171,6 +162,11 @@ const Liveness = ({ formData, type, nextStep }) => {
                                         />
                                     </div>
                                 </div>
+                                {faceMatchLoad ? (
+                                    <p>
+                                        Hold On Your Face Is Being Verified.....
+                                    </p>
+                                ) : null}
 
                                 <ButtonComp
                                     active={'active'}

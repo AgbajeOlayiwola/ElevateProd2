@@ -1,25 +1,12 @@
-import React, { useState, useEffect, useSyncExternalStore } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import ButtonComp from '../../../ReusableComponents/Button';
-import { useForm } from 'react-hook-form';
-import { CardHeadingBVN, LeftHeading, ButtonWrapper } from './styles.module';
+import { ButtonWrapper, CardHeadingBVN, LeftHeading } from './styles.module';
 import styles from './styles.module.css';
-import Card from '../../NotRegisteredForms/Card';
-import Progressbar from '../../../ReusableComponents/Progressbar';
-import StepFourCompProfile2BizDetails from '../StepFourCompProfile2BizDetails';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
-import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
-import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
-import axiosInstance from '../../../../redux/helper/apiClient';
-import apiRoutes from '../../../../redux/helper/apiRoutes';
-import { getCookie } from 'cookies-next';
-import Loader from '../../../ReusableComponents/Loader';
-import { statesData } from '../../../../redux/actions/statesAction';
-import { CompProfile } from '../../../../redux/actions/completeProfile';
-import { loadUserProfile } from '../../../../redux/actions/userProfileAction';
-import { businessCategoriesData } from '../../../../redux/actions/businessCategoriesAction';
-import { CompleteBusinessProfile } from '../../../../redux/actions/completeBusinessProfileAction';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     useBusinessSetupMutation,
     useCreateCAcctMutation,
@@ -28,8 +15,10 @@ import {
     useGetCategoriesMutation,
     useGetProfileMutation
 } from '../../../../redux/api/authApi';
-import { lgasArr } from '../../../ReusableComponents/Data';
 import { setAccountNumber } from '../../../../redux/slices/accountNumberSlice';
+import { lgasArr } from '../../../ReusableComponents/Data';
+import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
+import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // local states;
     const [title, setTitle] = useState('Basic');
@@ -287,9 +276,31 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             router.push('/Success');
         }
     }, [getAccountStatusSuccess]);
+    const showToastMessage = () => {
+        toast.error('Thre was ann error creating business', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (businessSetupErr) {
+            showToastMessage();
+        }
+    }, [businessSetupErr]);
 
+    const showToastSuccessMessage = () => {
+        toast.success('Account Creation Underway.', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (businessSetupSuccess) {
+            showToastSuccessMessage();
+        }
+    }, [businessSetupSuccess]);
+    const affiliate = localStorage.getItem('affiliateCode');
     return (
         <div className={styles.bodyWrapper}>
+            <ToastContainer />
             <div className={styles.prog}>
                 <CardHeadingBVN>
                     <LeftHeading>Complete your Profile</LeftHeading>

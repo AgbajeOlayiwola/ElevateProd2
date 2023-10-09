@@ -1,10 +1,4 @@
-import {
-    BaseQueryFn,
-    createApi,
-    FetchArgs,
-    fetchBaseQuery
-} from '@reduxjs/toolkit/dist/query/react';
-import { RootState } from 'store';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 // const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-auth/v1/api/auth/';
 const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-service/';
 
@@ -445,10 +439,37 @@ export const authApi = createApi({
                 };
             }
         }),
+        getAcctBals: builder.mutation({
+            query: () => {
+                return {
+                    url: 'get-account-balance',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
         faceMatchWithoutBvn: builder.mutation({
             query: (body) => {
                 return {
                     url: 'facematch',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        paymentbanklist: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'payment-banklist',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        accountInquiry: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'account-inquiry',
                     method: 'post',
                     body
                 };
@@ -458,6 +479,9 @@ export const authApi = createApi({
 });
 
 export const {
+    useAccountInquiryMutation,
+    usePaymentbanklistMutation,
+    useGetAcctBalsMutation,
     useFaceMatchWithoutBvnMutation,
     useSearchRCMutation,
     useGetAccountNoMutation,

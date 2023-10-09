@@ -1,29 +1,30 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/dist/query/react';
-import { authApi } from '../api/authApi';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { combineReducers } from 'redux';
-import profileReducer from '../slices/profile';
-import languageReducer from '../slices/language';
-import existingUserDetailsReducer from '../slices/existingUserData';
-import moreAccountNumberDetailsReducer from '../slices/moreAccountNumberDetails';
-import pinnedReducer from '../slices/pinned';
-import accountNumberReducer from '../slices/accountNumberSlice';
-import faceMatchDetailsReducr from '../slices/facematchSlice';
 import {
-    persistReducer,
     FLUSH,
     PAUSE,
     PERSIST,
     PURGE,
     REGISTER,
     REHYDRATE,
+    persistReducer,
     persistStore
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { authApi } from '../api/authApi';
+import { cacApi } from '../api/cacApi';
 import { docsApi } from '../api/docsApi';
 import { usersApi } from '../api/usersApi';
-import { cacApi } from '../api/cacApi';
+import accountNumberReducer from '../slices/accountNumberSlice';
+import allAccountInfoReducr from '../slices/allAccountInfoSlice';
+import existingUserDetailsReducer from '../slices/existingUserData';
+import faceMatchDetailsReducr from '../slices/facematchSlice';
+import languageReducer from '../slices/language';
+import moreAccountNumberDetailsReducer from '../slices/moreAccountNumberDetails';
+import pinnedReducer from '../slices/pinned';
+import profileReducer from '../slices/profile';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
@@ -35,7 +36,8 @@ const reducers = combineReducers({
     moreAccountNumberDetails: moreAccountNumberDetailsReducer,
     pinned: pinnedReducer,
     accountNumber: accountNumberReducer,
-    faceMatchDetails: faceMatchDetailsReducr
+    faceMatchDetails: faceMatchDetailsReducr,
+    allAccountInfo: allAccountInfoReducr
 });
 
 const persistConfig = {
@@ -48,7 +50,8 @@ const persistConfig = {
         'moreAccountNumberDetails',
         'pinned',
         'accountNumber',
-        'faceMatchDetails'
+        'faceMatchDetails',
+        'allAccountInfo'
     ]
 };
 

@@ -1,24 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ButtonComp from '../../../ReusableComponents/Button';
 // import { RegisteredCardWrapper } from './styles.module';
-import { useForm } from 'react-hook-form';
-import { Label, input, InputWrapper } from './styles.module';
-import Progressbar from '../../../ReusableComponents/Progressbar';
-import styles from './styles.module.css';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { InputWrapper, Label } from './styles.module';
+import styles from './styles.module.css';
 // import { loadCountry } from '../../../../redux/actions/actions';
-import Head from 'next/head';
-import Loader from '../../../ReusableComponents/Loader';
-import { getRCDetails } from '../../../../redux/actions/getRcDetailsAction';
-import Lottie from 'react-lottie';
-import socialdata from '../../../ReusableComponents/Lotties/loading.json';
 import { Formik } from 'formik';
-import { useSearchRCMutation } from '../../../../redux/api/cacApi';
 import {
     useProfileSetUpUnregisteredBusinessMutation,
     useRegisteredSetupMutation
 } from '../../../../redux/api/authApi';
+import { useSearchRCMutation } from '../../../../redux/api/cacApi';
+import socialdata from '../../../ReusableComponents/Lotties/loading.json';
 const RegisteredForm = ({ formData, setFormData, nextStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [businessName, setBusinessName] = useState('');
@@ -97,21 +91,26 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
     const registerUser = (value) => {
         if ((formData.type == true) === true) {
             const data = {
-                idNumber: value?.bvn,
+                idNumber: value?.bvn?.length
+                    ? value?.bvn
+                    : `${formData?.countryCode}${value?.phoneNumber}`,
                 phoneNumber: `${formData?.countryCode}${value?.phoneNumber}`,
                 // taxNumber: '126378883',
                 registrationNumber: callRc
             };
+
             registeredSetup(data);
         } else {
             const data = {
-                idNumber: value?.bvn,
+                idNumber: value?.bvn?.length
+                    ? value?.bvn
+                    : `${formData?.countryCode}${value?.phoneNumber}`,
                 phoneNumber: `${formData?.countryCode}${value?.phoneNumber}`
             };
+            console.log(data);
             profileSetUpUnregisteredBusiness(data);
         }
     };
-    // console.log(type);
 
     useEffect(() => {
         if (registeredSetupData) {
@@ -124,6 +123,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
             nextStep();
         }
     }, [profileSetUpUnregisteredBusinessSuccess]);
+    const affiliate = localStorage.getItem('affiliateCode');
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.cardHeading}>
@@ -194,19 +194,25 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                     name="rcNumber"
                                     onChange={(e) => setCallRc(e.target.value)}
                                 />
-
+                                {/* 
                                 <InputWrapper>
                                     <Label>Business Name</Label>
                                 </InputWrapper>
 
-                                {/* <input
+                                <input
                                     type="text"
                                     placeholder={
                                         getRcFisrst
                                             ? 'Fetching'
                                             : 'Enter Your Business Name'
                                     }
-                                    value={businessName}
+                                    value={
+                                        searchRCLoad ? (
+                                            <Loader />
+                                        ) : (
+                                            searchRCData?.companyName
+                                        )
+                                    }
                                     onChange={(e) =>
                                         setBusinessName(e.target.value)
                                     }
@@ -224,18 +230,49 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                         }
                                     />
                                 </InputWrapper>
+                                {affiliate === 'ENG' ||
+                                affiliate === 'EGH' ||
+                                affiliate === 'EKE' ? (
+                                    <InputWrapper>
+                                        <Label>
+                                            {affiliate === 'ENG'
+                                                ? 'Enter your BVN'
+                                                : affiliate === 'EGH'
+                                                ? 'Ghana ID Number'
+                                                : affiliate === 'EKE'
+                                                ? 'Kenya ID Number'
+                                                : ''}
+                                        </Label>
 
-                                <InputWrapper>
-                                    <Label>Enter your BVN</Label>
-                                    <input
-                                        type="number"
-                                        placeholder="Your BVN"
-                                        name="bvn"
-                                        onChange={(e) =>
-                                            setFieldValue('bvn', e.target.value)
-                                        }
-                                    />
-                                </InputWrapper>
+                                        <input
+                                            placeholder={
+                                                affiliate === 'ENG'
+                                                    ? 'Enter your BVN'
+                                                    : affiliate === 'EGH'
+                                                    ? 'Ghana ID Number'
+                                                    : affiliate === 'EKE'
+                                                    ? 'Kenya ID Number'
+                                                    : ''
+                                            }
+                                            label={
+                                                affiliate === 'ENG'
+                                                    ? 'Enter your BVN'
+                                                    : affiliate === 'EGH'
+                                                    ? 'Ghana ID Number'
+                                                    : affiliate === 'EKE'
+                                                    ? 'Kenya ID Number'
+                                                    : ''
+                                            }
+                                            name="bvn"
+                                            // @ts-ignore
+                                            autoCorrect={false}
+                                            onChange={(value) =>
+                                                setFieldValue('bvn', value)
+                                            }
+                                            maxLength={11}
+                                        />
+                                    </InputWrapper>
+                                ) : null}
 
                                 <InputWrapper>
                                     <Label>Phone Number</Label>
@@ -321,17 +358,49 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                             handleSubmit
                         }) => (
                             <form onSubmit={handleSubmit}>
-                                <InputWrapper>
-                                    <Label>Enter your BVN</Label>
-                                    <input
-                                        type="number"
-                                        placeholder="Your BVN"
-                                        name="bvn"
-                                        onChange={(e) =>
-                                            setFieldValue('bvn', e.target.value)
-                                        }
-                                    />
-                                </InputWrapper>
+                                {affiliate === 'ENG' ||
+                                affiliate === 'EGH' ||
+                                affiliate === 'EKE' ? (
+                                    <InputWrapper>
+                                        <Label>
+                                            {affiliate === 'ENG'
+                                                ? 'Enter your BVN'
+                                                : affiliate === 'EGH'
+                                                ? 'Ghana ID Number'
+                                                : affiliate === 'EKE'
+                                                ? 'Kenya ID Number'
+                                                : ''}
+                                        </Label>
+
+                                        <input
+                                            placeholder={
+                                                affiliate === 'ENG'
+                                                    ? 'Enter your BVN'
+                                                    : affiliate === 'EGH'
+                                                    ? 'Ghana ID Number'
+                                                    : affiliate === 'EKE'
+                                                    ? 'Kenya ID Number'
+                                                    : ''
+                                            }
+                                            label={
+                                                affiliate === 'ENG'
+                                                    ? 'Enter your BVN'
+                                                    : affiliate === 'EGH'
+                                                    ? 'Ghana ID Number'
+                                                    : affiliate === 'EKE'
+                                                    ? 'Kenya ID Number'
+                                                    : ''
+                                            }
+                                            name="bvn"
+                                            // @ts-ignore
+                                            autoCorrect={false}
+                                            onChange={(value) =>
+                                                setFieldValue('bvn', value)
+                                            }
+                                            maxLength={11}
+                                        />
+                                    </InputWrapper>
+                                ) : null}
 
                                 <InputWrapper>
                                     <Label>Phone Number</Label>

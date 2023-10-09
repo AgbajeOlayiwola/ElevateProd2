@@ -1,28 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import Card from './Card/index';
-import ButtonComp from '../../ReusableComponents/Button';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import RegisteredForm from './RegisteredForm';
-import StepTwoBVNAuthenticator from './StepTwoBVNAuthenticator';
 import StepThreeCompleteProfile1 from './StepThreeCompleteProfile1';
+import StepTwoBVNAuthenticator from './StepTwoBVNAuthenticator';
 import styles from './styles.module.css';
-import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { Router, useRouter } from 'next/router';
-import Loader from '../../ReusableComponents/Loader';
-import Liveness from './Liveness';
-import { getCookie } from 'cookies-next';
-import Head from 'next/head';
-import HomeSvg from '../../ReusableComponents/HomeSvg';
-import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
-import { Scrollbars } from 'react-custom-scrollbars';
-import withAuth from '../../HOC/withAuth';
-import { loadCountry } from '../../../redux/actions/getCountriesAction';
-import { runVerifyOtp } from '../../../redux/actions/verifyBvnOtp';
+import { useRouter } from 'next/router';
 import { createBusProfileSetup } from '../../../redux/actions/businessProfileSetupAction';
-import { createProfileSetup } from '../../../redux/actions/profileSetupAction';
 import { affiliateCountries } from '../../ReusableComponents/Data';
 import OnboardingProfileSetupSide from '../../ReusableComponents/OnboardingProfileSetupSide';
+import Liveness from './Liveness';
 const ProfileSetups = ({ comingFrom }) => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -179,6 +166,7 @@ const ProfileSetups = ({ comingFrom }) => {
                     formData={formData}
                     setFormData={setFormData}
                     otpError={otpError}
+                    nextStep={() => setPage(3)}
                 />
             ) : (
                 <div

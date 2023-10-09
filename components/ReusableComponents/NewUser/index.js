@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { Formik } from 'formik';
 import Link from 'next/link';
-import validator from 'validator';
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import PasswordStrengthBar from 'react-password-strength-bar';
+import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
-import ButtonComp from '../Button';
-import Visbility from '../Eyeysvg';
-import TermsConditions from '../TermmsConditions';
-import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useRegisterMutation } from '../../../redux/api/authApi';
 import { setProfile } from '../../../redux/slices/profile';
-
+import ButtonComp from '../Button';
+import Visbility from '../Eyeysvg';
+import TermsConditions from '../TermmsConditions';
+import styles from './styles.module.css';
 const customStyles = {
     content: {
         top: '50%',
@@ -109,10 +109,6 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
             .email('Enter a valid email')
             .required('Email is required'),
         password: yup.string().required('Please enter your password'),
-        // .matches(
-        //     /^(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[!@#\$%\^&\*])(?=.{8,})/,
-        //     'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
-        // ),
         preferredName: yup.string().required('Preffered name is required')
     });
 
@@ -126,6 +122,16 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
         const newOption = event.target.value;
         onSelectChange(newOption); // Call the callback function in the parent component
     };
+    const showToastMessage = () => {
+        toast.error(registerErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        showToastMessage();
+    }, [registerErr]);
+
     return (
         <>
             <div className={styles.secondSectionMidYes}>
@@ -135,6 +141,7 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
                     <option value="Yes">Yes</option>
                 </select>
             </div>
+            <ToastContainer />
             <Formik
                 validationSchema={initSchema}
                 initialValues={initialValues}
@@ -156,9 +163,7 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
                     handleSubmit
                 }) => (
                     <form onSubmit={handleSubmit} className={styles.form}>
-                        <p className={styles.error}>
-                            {registerErr ? registerErr?.data?.message : null}
-                        </p>
+                        <p className={styles.error}></p>
                         <Tooltip anchorId="my-element" />
                         <div>
                             <div className={styles.homeForm}>
@@ -226,6 +231,9 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
                                             input="input"
                                         />
                                     </div>
+                                    <PasswordStrengthBar
+                                        password={values.password}
+                                    />
                                     <p className={styles.error}>
                                         {errors ? (
                                             <>{errors?.password}</>

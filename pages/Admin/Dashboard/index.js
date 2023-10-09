@@ -1,57 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import DashLayout from '../../../components/layout/Dashboard';
-import styles from './styles.module.css';
-import Visbility from '../../../components/ReusableComponents/Eyeysvg';
-import PhoneSvg from '../../../components/ReusableComponents/PhoneSvg';
-import LoansSvg from '../../../components/ReusableComponents/LoansSvg';
-import Invoice from '../../../components/ReusableComponents/InvoiceSvg';
-import MposSvg from '../../../components/ReusableComponents/mPOSSvg';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import Levelup from '../../../components/ReusableComponents/LevelUp';
-import LineChart from '../../../components/ReusableComponents/Chart/LineChart';
-import Piechart from '../../../components/ReusableComponents/Chart/Piechart';
-import { OtherAccounts } from '../../../components/ReusableComponents/Data';
 import MakePaymentBtn from '../../../components/ReusableComponents/MakePayment';
+import PhoneSvg from '../../../components/ReusableComponents/PhoneSvg';
 import RecievePaymentBtn from '../../../components/ReusableComponents/RecievePaymnet';
+import styles from './styles.module.css';
 // import withAuth from '../../components/HOC/withAuth.js';
 
-import { useDispatch, useSelector } from 'react-redux';
-import TransactionSvg from '../../../components/ReusableComponents/ReusableSvgComponents/TransactionSvg';
-import EcobankQRSvg from '../../../components/ReusableComponents/EcobankQRSvg';
-import Ussd from '../../../components/ReusableComponents/UssdSvg';
-import SingleTrans from '../../../components/ReusableComponents/SingleTransSvg';
-import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
 import Link from 'next/link';
-import Paylink2 from '../../../components/ReusableComponents/PaylinkSvg/paylink';
-import AccountUpgrade from '../../AccountUpgrade';
-import withAuth from '../../../components/HOC/withAuth';
-import Popup from '../../../components/layout/Popup';
-import DropdownSvg from '../../../components/ReusableComponents/ReusableSvgComponents/DropdownSvg';
-import TotalCollections from '../../../components/ReusableComponents/ReusableSvgComponents/Totalcollections';
-import TotalPendingCollections from '../../../components/ReusableComponents/ReusableSvgComponents/TotalPendingCollectionsSvg';
-import TotlaCollctionsSvg from '../../../components/ReusableComponents/ReusableSvgComponents/TotlaCollectionsFailedSvg';
-import MoreAction from '../../../components/ReusableComponents/MoreAction';
-import TransactionStatus from '../../../components/ReusableComponents/TransactionStatus';
-import { IoMdCopy } from 'react-icons/io';
-import Lottie from 'react-lottie';
-import socialdata from '../../../components/ReusableComponents/Lotties/loading.json';
-import BulkTransfer2 from '../../../components/ReusableComponents/BulkTransfSvg/bulktrans';
-import BillTransfer from '../../../components/ReusableComponents/BillTransSvg';
-import BillSvg from '../../../components/ReusableComponents/ReusableSvgComponents/BillSvg';
 import { AiFillCheckCircle } from 'react-icons/ai';
-import Overlay from '../../../components/ReusableComponents/Overlay';
+import { IoMdCopy } from 'react-icons/io';
+import { useDispatch } from 'react-redux';
 import Addaccounts from '../../../components/ReusableComponents/Addaccounts';
-import CloseBtnSvg from '../../../components/ReusableComponents/ClosebtnSvg';
-import { getBalanceEnquiry } from '../../../redux/actions/balanceEnquieryAction';
-import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
-import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
-import { loadUserProfile } from '../../../redux/actions/userProfileAction';
-import { getTransactionHistory } from '../../../redux/actions/transactionHistoryAction';
-import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
-import { setPrimaryAccountAction } from '../../../redux/actions/setPrimaryAccountAction';
+import BulkTransfer2 from '../../../components/ReusableComponents/BulkTransfSvg/bulktrans';
+import socialdata from '../../../components/ReusableComponents/Lotties/loading.json';
+import Overlay from '../../../components/ReusableComponents/Overlay';
+import BillSvg from '../../../components/ReusableComponents/ReusableSvgComponents/BillSvg';
+import TotalPendingCollections from '../../../components/ReusableComponents/ReusableSvgComponents/TotalPendingCollectionsSvg';
+import TotalCollections from '../../../components/ReusableComponents/ReusableSvgComponents/Totalcollections';
+import TotlaCollctionsSvg from '../../../components/ReusableComponents/ReusableSvgComponents/TotlaCollectionsFailedSvg';
+import SingleTrans from '../../../components/ReusableComponents/SingleTransSvg';
+import { useGetAcctBalsMutation } from '../../../redux/api/authApi';
+import { setAllAccountInfo } from '../../../redux/slices/allAccountInfoSlice';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -118,6 +92,34 @@ const Dashboard = () => {
     const [outflow, setOutflow] = useState(formatter.format(0));
     const [totalMoney, setTotalMMoney] = useState(formatter.format(0));
     const [copyAcctInfo, setCopyAcctInfo] = useState();
+    //olayiwola agbje ola_199x
+    const [
+        getAcctBals,
+        {
+            data: getAcctBalsData,
+            isLoading: getAcctBalsLoad,
+            isSuccess: getAcctBalsSuccess,
+            isError: getAcctBalsFalse,
+            error: getAcctBalsErr,
+            reset: getAcctBalsReset
+        }
+    ] = useGetAcctBalsMutation();
+
+    useEffect(() => {
+        getAcctBals();
+    }, []);
+
+    useEffect(() => {
+        if (getAcctBalsSuccess) {
+            setAcctNumber(
+                getAcctBalsData?.data
+                    .map((account) => account.accountNo)
+                    .filter(Boolean)
+            );
+            dispatch(setAllAccountInfo(getAcctBalsData?.data));
+        }
+        console.log(acctNum);
+    }, [getAcctBalsSuccess]);
 
     const socialOptions = {
         loop: true,
@@ -413,35 +415,43 @@ const Dashboard = () => {
                             </Overlay>
                             <div className={styles.accountsALl}>
                                 <>
-                                    <div className={styles.accntP}>
-                                        <p
-                                            onClick={(e) => {
-                                                setAccountBalanceTest(null),
-                                                    setAcctInfoNum(null),
-                                                    setAcctNumm(
-                                                        accountNo.accountNumber
-                                                    );
-                                                setCopyAcctInfo(accountNo);
-                                            }}
-                                        >
-                                            accountNo.accountNumber
-                                        </p>
-                                        <p>accountNo.customerType Account</p>
-                                    </div>
-                                    <div
-                                        className={
-                                            // setPrimaryAccountSuccess
-                                            //     ?.data?.data
-                                            //     ?.isPrimaryAccount ===
-                                            //     true ||
-                                            // accountNo?.isPrimaryAccount
-                                            //     ?
-                                            styles.success
-                                            // : styles.nothing
-                                        }
-                                    >
-                                        <AiFillCheckCircle />
-                                    </div>
+                                    {getAcctBalsData?.data
+                                        .filter((account) => account.accountNo)
+                                        .map((account) => {
+                                            return (
+                                                <>
+                                                    <div
+                                                        className={
+                                                            styles.accntP
+                                                        }
+                                                    >
+                                                        <p
+                                                            onClick={(e) => {
+                                                                setCopyAcctInfo(
+                                                                    accountNo
+                                                                );
+                                                            }}
+                                                        >
+                                                            {account?.accountNo}
+                                                        </p>
+                                                        <p>
+                                                            {account?.availableBal.toLocaleString()}
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            account?.isPrimaryAccount ===
+                                                            'Y'
+                                                                ? styles.success
+                                                                : styles.nothing
+                                                        }
+                                                    >
+                                                        <AiFillCheckCircle />
+                                                    </div>
+                                                </>
+                                            );
+                                        })}
+
                                     <hr className={styles.accountHr} />
                                 </>
                             </div>

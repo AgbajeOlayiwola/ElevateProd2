@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { ButtonComp, Countries } from '../../../components';
-import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import Visbility from '../../../components/ReusableComponents/Eyeysvg';
-import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../../../components/ReusableComponents/Loader';
-import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
-import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
-import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
 import { Formik } from 'formik';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
-import { useLoginAccountMutation } from '../../../redux/api/authApi';
+import { ButtonComp, Countries } from '../../../components';
 import { affiliateCountries } from '../../../components/ReusableComponents/Data';
-import { setProfile } from '../../../redux/slices/profile';
+import Visbility from '../../../components/ReusableComponents/Eyeysvg';
+import ProfileSetupSide from '../../../components/ReusableComponents/ProfileSetupSide';
+import LockSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LockSvg';
+import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
+import { useLoginAccountMutation } from '../../../redux/api/authApi';
 import { setPinned } from '../../../redux/slices/pinned';
+import { setProfile } from '../../../redux/slices/profile';
+import styles from './styles.module.css';
 // Number of input fields that make up SSN
 const Login = () => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -101,8 +101,18 @@ const Login = () => {
             ) {
                 dispatch(setProfile(loginAccountData?.data));
                 router.push({
-                    pathname: '/Onboarding/ProfileSetup',
+                    pathname: '/Verify',
                     query: { id: 0 }
+                });
+            } else if (
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'PROFILE_SETUP' &&
+                loginAccountData?.data?.user?.createdFromEcobankCred === 'N'
+            ) {
+                dispatch(setProfile(loginAccountData?.data));
+                router.push({
+                    pathname: '/Onboarding/ProfileSetup',
+                    query: { id: 3 }
                 });
             } else if (
                 loginAccountData?.data?.user?.profileSetupStatus ===
@@ -195,12 +205,21 @@ const Login = () => {
     const types = (type) => {
         setOutType(type);
     };
+    const showToastMessage = () => {
+        toast.error(loginAccountErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        showToastMessage();
+    }, [loginAccountErr]);
 
     return (
         <div className={styles.sectionCove}>
             <section className={styles.sectionI}>
                 <ProfileSetupSide text="The world is your Canvas. Explore! " />
             </section>
+            <ToastContainer />
             <section className={styles.sectionII}>
                 <div className={styles.loginCont}>
                     <div className={styles.welc}>
@@ -210,11 +229,7 @@ const Login = () => {
                             Kindly enter your details to Login.
                         </p>
                     </div>
-                    <p className={styles.error}>
-                        {loginAccountErr
-                            ? loginAccountErr?.data?.message
-                            : null}
-                    </p>
+
                     <div className={styles.secondSectionMidCountry}>
                         <label>Choose your Business Location</label>
                         <Countries

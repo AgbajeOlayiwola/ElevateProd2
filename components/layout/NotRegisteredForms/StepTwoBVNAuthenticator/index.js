@@ -1,30 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import {
+    useResendOtpMutation,
+    useUpdatePhoneMutation,
+    useVerifyOtpMutation
+} from '../../../../redux/api/authApi';
 import ButtonComp from '../../../ReusableComponents/Button';
-import { useForm } from 'react-hook-form';
-import styles from './styles.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import {
     CardHeadingBVN,
     LeftHeading,
-    SmallInstructionText,
-    Label,
-    FormInput,
-    ResetOTP,
-    InputWrapper
+    SmallInstructionText
 } from './styles.module';
-import Progressbar from '../../../ReusableComponents/Progressbar';
-import Card from '../../NotRegisteredForms/Card';
-import OtpInput from '../../../ReusableComponents/Otpinput';
-import Loader from '../../../ReusableComponents/Loader';
-import { resetOtpData } from '../../../../redux/actions/resetOtpAction';
-import { changeNumberAction } from '../../../../redux/actions/changeNumberAction';
-import { Formik } from 'formik';
-import {
-    useUpdatePhoneMutation,
-    useResendOtpMutation,
-    useVerifyOtpMutation,
-    useVerifySmsOtpMutation
-} from '../../../../redux/api/authApi';
+import styles from './styles.module.css';
 
 const StepTwoBVNAuthenticator = ({
     handleShowThirdStep,
@@ -32,12 +19,10 @@ const StepTwoBVNAuthenticator = ({
     formData,
     action,
     otpError,
+    nextStep,
     type
 }) => {
     const { profile } = useSelector((store) => store);
-    useEffect(() => {
-        console.log(profile);
-    }, []);
 
     if (typeof window !== 'undefined') {
         let accounts = window?.localStorage?.getItem('user');
@@ -132,6 +117,13 @@ const StepTwoBVNAuthenticator = ({
         };
         updatePhone(data);
     };
+
+    useEffect(() => {
+        if (verifyOtpSuccess) {
+            console.log('otp Error');
+            nextStep();
+        }
+    }, [verifyOtpSuccess]);
     return (
         <div className={styles.bvnBody}>
             <div className={styles.cover}>
@@ -190,9 +182,8 @@ const StepTwoBVNAuthenticator = ({
                                                 handleInputKeyPress(e, index)
                                             }
                                             ref={(input) =>
-                                                (otpInputs.current[
-                                                    index
-                                                ] = input)
+                                                (otpInputs.current[index] =
+                                                    input)
                                             }
                                         />
                                     </>

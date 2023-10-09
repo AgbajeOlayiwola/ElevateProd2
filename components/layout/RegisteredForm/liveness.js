@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles.module.css';
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import Webcam from 'react-webcam';
-import Head from 'next/head';
-import Script from 'next/script';
-import { getCookie } from 'cookies-next';
-import axios from 'axios';
 import { Formik } from 'formik';
-import ButtonComp from '../../ReusableComponents/Button';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Webcam from 'react-webcam';
 import {
     useCreateExistingUserProfileMutation,
     useFaceMatchWithoutBvnMutation,
-    useFacematchMutation,
     useGetMoreAccountNumberDetailsMutation
 } from '../../../redux/api/authApi';
-import { setExistingUserDetails } from '../../../redux/slices/existingUserData';
 import { setMoreAccountNumberDetails } from '../../../redux/slices/moreAccountNumberDetails';
-import { setfaceMatchDetails } from '../../../redux/slices/facematchSlice';
 import { setProfile } from '../../../redux/slices/profile';
+import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
+import ButtonComp from '../../ReusableComponents/Button';
+import styles from './styles.module.css';
 const videoConstraints = {
     width: 390,
     height: 480,
@@ -35,7 +30,7 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ formData, type, action }) => {
+const Liveness = ({ formData, type, action, back }) => {
     const webcamRef = React.useRef(null);
     const [succes, setSuccess] = useState('');
     const [image, setImage] = useState(
@@ -110,6 +105,14 @@ const Liveness = ({ formData, type, action }) => {
         };
         faceMatchWithoutBvn(faceMMatchData);
     };
+    const showToastMessage = () => {
+        toast.error(createExistingUserProfileErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        showToastMessage();
+    }, [createExistingUserProfileErr]);
 
     useEffect(() => {
         if (faceMatchWithoutBvnSuccess) {
@@ -127,9 +130,10 @@ const Liveness = ({ formData, type, action }) => {
                     moreAccountNumberDetails?.accounts?.customerType == 'I'
                         ? 'INDIVIDUAL'
                         : 'COMMERCIAL',
-                firstName: moreAccountNumberDetails?.accounts?.accountName.split(
-                    ' '
-                )[0],
+                firstName:
+                    moreAccountNumberDetails?.accounts?.accountName.split(
+                        ' '
+                    )[0],
                 lastName: moreAccountNumberDetails?.accounts?.accountName
                     .split(' ')
                     ?.slice(1)
@@ -170,6 +174,7 @@ const Liveness = ({ formData, type, action }) => {
 
     return (
         <div className={styles.body}>
+            <ToastContainer />
             <div className={styles.cover}>
                 <div className={styles.imageOut}>
                     <Formik
@@ -192,6 +197,10 @@ const Liveness = ({ formData, type, action }) => {
                         }) => (
                             <form>
                                 <div>
+                                    <ArrowBackSvg
+                                        action={back}
+                                        color="#102572"
+                                    />
                                     <p className={styles.takeSelf}>
                                         Take a Lively Selfie
                                     </p>
@@ -210,8 +219,7 @@ const Liveness = ({ formData, type, action }) => {
                                     ) : null}
                                     <div
                                         className={
-                                            succes ===
-                                            'facial verification successful'
+                                            faceMatchWithoutBvnSuccess
                                                 ? // succes === 'success'
                                                   styles.imageOuter
                                                 : faceMatchWithoutBvnErr
@@ -227,7 +235,11 @@ const Liveness = ({ formData, type, action }) => {
                                         />
                                     </div>
                                 </div>
-
+                                {faceMatchWithoutBvnLoad ? (
+                                    <p>
+                                        Hold On Your Face Is Being Verified.....
+                                    </p>
+                                ) : null}
                                 <ButtonComp
                                     active={'active'}
                                     disabled={true}

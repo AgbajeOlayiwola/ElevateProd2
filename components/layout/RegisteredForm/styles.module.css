@@ -6,7 +6,7 @@
     max-width: 600px;
     padding: 80px 0px;
 }
-.formInpt{
+.formInpt {
     display: flex;
     justify-content: space-between;
     gap: 20px;
@@ -16,7 +16,7 @@
     max-width: 400px;
     margin: 0px auto;
 }
-.disabled{
+.disabled {
     background: grey;
 }
 .form div label {
@@ -516,7 +516,7 @@
     background: #c6c6c6;
 }
 
-.verybody{
+.verybody {
     display: flex;
     flex-direction: column;
     width: 60%;
@@ -924,7 +924,6 @@
     }
 } */
 
-
 @media screen and (max-width: 475px) {
     .body {
         width: 70%;
@@ -1015,7 +1014,7 @@
     justify-content: center;
     margin-top: 20%;
 }
-.error{
+.error {
     font-size: 12px;
     color: red;
 }
@@ -1041,7 +1040,7 @@
 
 @media screen and (max-width: 990px) {
     .body {
-           width: 100%;
+        width: 100%;
     }
 }
 
@@ -1089,6 +1088,13 @@
     }
 }
 .livenes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.livenes .body {
     display: flex;
     justify-content: center;
     align-items: center;

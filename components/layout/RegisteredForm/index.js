@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import ButtonComp from '../../ReusableComponents/Button';
-import Card from '../NotRegisteredForms/Card';
+import React, { useEffect, useState } from 'react';
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
-import StepThree from './StepThree';
 import StepFour from './StepFour';
-import Link from 'next/link';
+import StepThree from './StepThree';
 import styles from './styles.module.css';
-import StepTwoBVNAuthenticator from '../NotRegisteredForms/StepTwoBVNAuthenticator';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import withAuth from '../../HOC/withAuth';
-import { runVerifyOtp } from '../../../redux/actions/verifyBvnOtp';
-import { existingUserProfileData } from '../../../redux/actions/existingProfileAction';
-import { loadCountry } from '../../../redux/actions/getCountriesAction';
+import { useDispatch } from 'react-redux';
 import { affiliateCountries } from '../../ReusableComponents/Data';
 import Liveness from './liveness';
 import VerifyEmail from './verifyemail/verifyEmail';
@@ -110,7 +102,9 @@ const ExistingMultiStep = () => {
                             action={() => {
                                 setPage(3);
                             }}
-                            // action={handleSubmitt}
+                            back={() => {
+                                setPage(1);
+                            }}
                         />
                     </div>
                 );

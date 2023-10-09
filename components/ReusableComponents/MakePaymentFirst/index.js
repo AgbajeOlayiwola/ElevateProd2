@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styles from './styles.module.css';
+import React, { useEffect, useRef, useState } from 'react';
+import CloseButton from '../CloseButtonSvg';
+import Overlay from '../Overlay';
+import BillPayment from './billpayment';
 import BulkTransfer from './bulktransfer';
 import ForeignTransfer from './foreigntransfer';
-import BillPayment from './billpayment';
 import SingleTransfer from './singletransfer';
-import Overlay from '../Overlay';
-import CloseButton from '../CloseButtonSvg';
+import styles from './styles.module.css';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
-import { getBeneficiariesData } from '../../../redux/actions/getBeneficiariesAction';
+import { useDispatch } from 'react-redux';
 
 const MakePaymentFirst = ({
     firstTitle,
@@ -40,24 +38,6 @@ const MakePaymentFirst = ({
     const dispatch = useDispatch();
     const [bankAccount, setBankAccount] = useState([]);
     const [beneficiaries, setBeneficiaries] = useState([]);
-    const { getBeneficiaries } = useSelector(
-        (state) => state.getBeneficiariesReducer
-    );
-    const { bankAccounts } = useSelector((state) => state.bankAccountsReducer);
-    useEffect(() => {
-        dispatch(bankAccountsData());
-        dispatch(getBeneficiariesData());
-    }, []);
-    useEffect(() => {
-        if (bankAccounts !== null) {
-            setBankAccount(bankAccounts);
-        }
-    }, [bankAccounts]);
-    useEffect(() => {
-        if (getBeneficiaries !== null) {
-            setBeneficiaries(getBeneficiaries);
-        }
-    }, [getBeneficiaries]);
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 

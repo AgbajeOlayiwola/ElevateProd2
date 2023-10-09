@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ButtonComp from '../../ReusableComponents/Button';
-import OtpInput from '../../ReusableComponents/Otpinput';
-import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
-import { ResetOTP } from '../NotRegisteredForms/StepTwoBVNAuthenticator/styles.module';
-import styles from './styles.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetOtpData } from '../../../redux/actions/resetOtpAction';
 import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     useResendExisitingOtpMutation,
     useVerifyExistingOtpMutation
 } from '../../../redux/api/authApi';
+import ButtonComp from '../../ReusableComponents/Button';
 import Loader from '../../ReusableComponents/Loader';
+import styles from './styles.module.css';
 const FirstStep = ({ setFormData, formData, action }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [typedOtp, setSetypedOtp] = useState('');
@@ -79,7 +75,7 @@ const FirstStep = ({ setFormData, formData, action }) => {
     const verifyOtp = (e) => {
         e.preventDefault();
         const data = {
-            phoneNumber: '2348136292202',
+            phoneNumber: '2348111062865',
             otp: typedOtp
         };
         verifyExistingOtp(data);
@@ -87,7 +83,7 @@ const FirstStep = ({ setFormData, formData, action }) => {
     const ResetOtp = (e) => {
         e.preventDefault();
         resendExisitingOtp({
-            phoneNumber: '2348136292202'
+            phoneNumber: '2348111062865'
         });
     };
 

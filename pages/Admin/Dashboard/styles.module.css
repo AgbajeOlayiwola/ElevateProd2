@@ -8,8 +8,8 @@
     display: flex;
     justify-content: space-between;
 }
-.addAccount{
-    background:#6bcf003a;
+.addAccount {
+    background: #6bcf003a;
     border-radius: 10px;
     padding: 8px;
     width: fit-content;
@@ -17,8 +17,8 @@
     transition: all 0.2s ease-in-out;
     font-size: 20px;
 }
-.addAccount:hover{
-    background:#6bcf003a;
+.addAccount:hover {
+    background: #6bcf003a;
     border-radius: 10px;
     padding: 10px;
     transition: all 0.2s ease-in-out;
@@ -34,6 +34,7 @@
     color: white;
 }
 .accountsALl {
+    overflow: scroll;
     display: flex;
     gap: 30px;
 }
@@ -155,6 +156,7 @@
 }
 .accountsALl {
     display: flex;
+    overflow: scroll;
     gap: 30px;
     /* justify-content: space-between; */
     align-items: center;
@@ -196,11 +198,11 @@
 .success p {
     color: #6ccf00 !important;
 }
-.success{
+.success {
     color: #69940d;
     cursor: pointer;
 }
-.nothing{
+.nothing {
     cursor: pointer;
 }
 
@@ -517,7 +519,7 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
-.sliderImage{
+.sliderImage {
     margin-right: 40px;
 }
 
@@ -866,16 +868,14 @@
     .failed {
         display: flex;
         gap: 10px;
-
     }
     .success {
         font-family: 'Inter';
         font-style: normal;
-        
+
         /* identical to box height, or 99% */
         display: flex;
         gap: 10px;
-        
     }
 }
 
@@ -888,7 +888,7 @@
         flex-direction: column;
         gap: 11px;
     }
-    .transactionStatus div > p{
+    .transactionStatus div > p {
         display: flex;
         flex-direction: column;
         gap: 11px;
@@ -926,23 +926,23 @@
     .recMak {
         flex-direction: column;
     }
-    .mobileTable{
+    .mobileTable {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-    .mobileStatus{
+    .mobileStatus {
         display: flex;
     }
-    .transactionStatus > div p{
+    .transactionStatus > div p {
         display: flex;
         flex-direction: column;
         gap: 11px;
     }
-    .typeMobile{
+    .typeMobile {
         font-size: 12px;
     }
-    .hrMobile{
+    .hrMobile {
         border: 1px solid #ecebeb;
     }
 }

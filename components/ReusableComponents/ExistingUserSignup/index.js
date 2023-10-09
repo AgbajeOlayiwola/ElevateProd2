@@ -1,26 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles.module.css';
-import OmniliteSvg from '../ReusableSvgComponents/OmniliteSvg';
-import AccountNumberSvg from '../ReusableSvgComponents/AccountNumberSvg';
-import CardSvg from '../ReusableSvgComponents/CardSvg';
-import Visbility from '../Eyeysvg';
-import Modal from 'react-modal';
-import ButtonComp from '../Button';
-import TermsConditions from '../TermmsConditions';
 import Link from 'next/link';
-import { Formik } from 'formik';
-import * as yup from 'yup';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     useAuthEcobankMutation,
     useAuthOmniliteMutation,
-    useGetMoreAccountNumberDetailsMutation,
     useRegisterAccountNumberMutation,
     useRegisterCardMutation
 } from '../../../redux/api/authApi';
-import { useRouter } from 'next/router';
 import { setExistingUserDetails } from '../../../redux/slices/existingUserData';
-import { useDispatch } from 'react-redux';
-
+import ButtonComp from '../Button';
+import Visbility from '../Eyeysvg';
+import AccountNumberSvg from '../ReusableSvgComponents/AccountNumberSvg';
+import CardSvg from '../ReusableSvgComponents/CardSvg';
+import OmniliteSvg from '../ReusableSvgComponents/OmniliteSvg';
+import TermsConditions from '../TermmsConditions';
+import styles from './styles.module.css';
 const customStyles = {
     content: {
         top: '50%',
@@ -118,6 +116,19 @@ const ExistingProfileSetup = ({
             reset: authEcobankReset
         }
     ] = useAuthEcobankMutation();
+    const showToastMessage = () => {
+        toast.error('Error Creating Account', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        showToastMessage();
+    }, [
+        authEcobankErr,
+        authOmniliteErr,
+        registerCardErr,
+        registerAccountNumberErr
+    ]);
 
     const conditionalComponent = () => {
         switch (page) {
@@ -486,6 +497,7 @@ const ExistingProfileSetup = ({
                     </div>
 
                     <div className={styles.existingUserBody}>
+                        <ToastContainer />
                         {conditionalComponent()}
                     </div>
                 </div>

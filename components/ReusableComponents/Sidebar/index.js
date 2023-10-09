@@ -1,23 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import PaymentSvg from '../PaymentSvg';
-import SettingsSvg from '../SettingsSvg';
-import SideBarHomeSvg from '../ShomeSvg';
-import MoreSvg from '../MoreSvg';
-import ElevateLogo from '../Ellevate';
-import LogoutSvg from '../LogoutSvg';
-import { SidebarData } from '../Data';
-import SideBarDrop from './sidebarcont';
-import Dropdownicon from './dropdownicon';
-import Innersubnav from './innersubnav';
+import React, { useEffect, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearProfile } from '../../../redux/slices/profile';
+import { useDispatch } from 'react-redux';
+import { clearAccountNumber } from '../../../redux/slices/accountNumberSlice';
+import { clearExistingUserDetails } from '../../../redux/slices/existingUserData';
 import { clearfaceMatchDetails } from '../../../redux/slices/facematchSlice';
 import { clearMoreAccountNumberDetails } from '../../../redux/slices/moreAccountNumberDetails';
-import { clearAccountNumber } from '../../../redux/slices/accountNumberSlice';
+import { clearProfile } from '../../../redux/slices/profile';
+import { SidebarData } from '../Data';
+import ElevateLogo from '../Ellevate';
+import LogoutSvg from '../LogoutSvg';
+import SideBarDrop from './sidebarcont';
+import styles from './styles.module.css';
 const Sidebar = ({ showSubnav }) => {
     const dispatch = useDispatch();
     // const { logout } = useSelector((state) => state.logoutReducer);
@@ -35,6 +30,8 @@ const Sidebar = ({ showSubnav }) => {
         await dispatch(clearfaceMatchDetails());
         await dispatch(clearMoreAccountNumberDetails());
         await dispatch(clearAccountNumber());
+        await dispatch(clearAccountNumber());
+        await dispatch(clearExistingUserDetails());
         // Redirect the user to the login page (you may use React Router for this)
         router.push('/Auth/Login');
     };

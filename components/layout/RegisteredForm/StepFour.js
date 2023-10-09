@@ -1,20 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
-import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import ButtonComp from '../../ReusableComponents/Button';
+import styles from './styles.module.css';
 
-import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../../ReusableComponents/Loader';
 import { useRouter } from 'next/router';
-import axios from 'axios';
-import Progressbar from '../../ReusableComponents/Progressbar';
-import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
-import BusinessCategory from '../../ReusableComponents/BusinessCategory';
-import CircleSvg from '../../ReusableComponents/ReusableSvgComponents/CircleSvg';
-import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
-import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
-import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     useBusinessSetupMutation,
     useCreateCAcctMutation,
@@ -22,9 +13,12 @@ import {
     useGetCategoriesMutation,
     useSearchRCMutation
 } from '../../../redux/api/authApi';
-import { lgasArr } from '../../ReusableComponents/Data';
-import Loading from '../../../pages/Verify/Loading';
 import { setAccountNumber } from '../../../redux/slices/accountNumberSlice';
+import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
+import { lgasArr } from '../../ReusableComponents/Data';
+import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
+import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
+import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
 
 const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const dispatch = useDispatch();
@@ -265,8 +259,31 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [callRc]);
+    const showToastMessage = () => {
+        toast.error('Thre was ann error creating business', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (businessSetupErr) {
+            showToastMessage();
+        }
+    }, [businessSetupErr]);
+
+    const showToastSuccessMessage = () => {
+        toast.success('Account Creation Underway.', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (businessSetupSuccess) {
+            showToastSuccessMessage();
+        }
+    }, [businessSetupSuccess]);
+
     return (
         <div className={styles.body}>
+            <ToastContainer />
             <section className={styles.sectionI}>
                 <ProfileSetupSide text="Checkout Priceless opportunities Be ahead" />
             </section>
@@ -720,7 +737,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                         </div>
                                     </div>
                                     <div className={styles.existingUserSingle}>
-                                        {/* <div
+                                        <div
                                             className={styles.existingUserCont}
                                         >
                                             <label>
@@ -729,15 +746,13 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                             <input
                                                 type="text"
                                                 value={
-                                                    searchRCLoad ? (
-                                                        <Loading />
-                                                    ) : (
-                                                        'namd'
-                                                    )
+                                                    searchRCLoad
+                                                        ? 'Loading...'
+                                                        : searchRCData?.companyName
                                                 }
                                                 disabled
                                             />
-                                        </div> */}
+                                        </div>
                                         <div
                                             className={styles.existingUserCont}
                                         >
@@ -971,7 +986,9 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                             setRefferalCode(e.target.value)
                                         }
                                     />
-                                    {/* {loading ? <Loader /> : null} */}
+                                    {getAccountStatusLoad || createCAcctLoad ? (
+                                        <p>Account number is being created</p>
+                                    ) : null}
                                     <ButtonComp
                                         disabled={activeBtn}
                                         active={
