@@ -20,31 +20,24 @@ export const getRCDetails = (resetOtpdata) => (dispatch) => {
     cookie = getCookie('cookieToken');
 
     // dispatch(accountNumberLoadStart());
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.businessNameCac}`,
-            resetOtpdata,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.businessNameCac}`, resetOtpdata, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
-            if (response?.data) {
-                axios
-                    .get(
-                        `https://mysmeapp.ecobank.com:8443${apiRoutes.verifyCac}`,
-                        {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-Client-Type': 'web',
-                                Authorization: `Bearer ${cookie}`
-                            }
+            if (response) {
+                axiosInstance
+                    .get(`${apiRoutes.verifyCac}`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Client-Type': 'web',
+                            Authorization: `Bearer ${cookie}`
                         }
-                    )
+                    })
                     .then((response) => {
                         dispatch(getRCSuccess(response?.data));
                     })

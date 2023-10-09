@@ -13,7 +13,7 @@ const PaymentSingleBody = ({
                 <div
                     className={styles.paymentSingleBodyGrey}
                     key={index}
-                    // onClick={() => handleFormChange(text.toLowerCase())}
+                    onClick={() => handleFormChange(text.toLowerCase())}
                     onMouseEnter={() => {
                         setTime(true);
                     }}
@@ -40,7 +40,7 @@ const PaymentSingleBody = ({
                 <div
                     className={styles.paymentSingleBodyGrey}
                     key={index}
-                    // onClick={() => handleFormChange(text.toLowerCase())}
+                    onClick={() => handleFormChange(text.toLowerCase())}
                     onMouseEnter={() => {
                         setTime(true);
                     }}
@@ -67,7 +67,7 @@ const PaymentSingleBody = ({
                 <div
                     className={styles.paymentSingleBodyGrey}
                     key={index}
-                    // onClick={() => handleFormChange(text.toLowerCase())}
+                    onClick={() => handleFormChange(text.toLowerCase())}
                     onMouseEnter={() => {
                         setTime(true);
                     }}

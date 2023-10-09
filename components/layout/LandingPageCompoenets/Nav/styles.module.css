@@ -1,0 +1,23 @@
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 35px;
+}
+.languageSelect {
+    width: 100%;
+}
+.languageSelect > select{
+    color: #000 !important;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Inter !important;
+    font-size: 10px !important;
+    font-style: normal;
+    font-weight: 400 !important;
+    line-height: 15px; /* 150% */
+    letter-spacing: 2px !important;
+    text-transform: uppercase;
+}
+.select{
+    width: 8%;
+}

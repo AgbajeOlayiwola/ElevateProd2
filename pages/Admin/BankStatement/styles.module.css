@@ -224,7 +224,7 @@
 
 .amount {
     width: 15%;
-    text-align: center !important;
+    text-align: center ;
 }
 
 .bank {
@@ -376,3 +376,59 @@
     cursor: pointer;
     color: #7fbb01;
 }
+@media screen and (max-width: 995px) {
+    .balanceStatement div {
+        width: 80%;
+        background: #f8f8f8;
+        border: 1px solid #dbdbdb;
+        box-sizing: border-box;
+        padding: 15px;
+        border-radius: 24px;
+    }
+    .balanceStatement {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 30px;
+    }
+    .balanceStatement div p {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+        margin-bottom: 12px;
+        color: #545454;
+    }
+    
+    .balanceStatement div h2 {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 29px;
+        letter-spacing: 0.02em;
+        color: #001e28;
+    }
+    .tableMain{
+        display: flex;
+    }
+    .TableDetailHeader {
+        display: none;
+    }
+    .beneficiariesMobile{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .beneficiariesMobile div{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+  
+}
+

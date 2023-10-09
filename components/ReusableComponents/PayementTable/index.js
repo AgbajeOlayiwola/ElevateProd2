@@ -9,6 +9,7 @@ import Lottie from 'react-lottie';
 import socialdata from '../../ReusableComponents/Lotties/loading.json';
 import { getTransactionHistory } from '../../../redux/actions/transactionHistoryAction';
 import { getDisputCategoryGen } from '../../../redux/actions/getDisputeInfoAction';
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 const PaymentTable = ({ title, page }) => {
     const { transactionElevate, errorMessageTransactionElevate } = useSelector(
         (state) => state.transactionElevateReducer
@@ -105,7 +106,6 @@ const PaymentTable = ({ title, page }) => {
         if (transactionHistory !== null) {
             setNewestTableDetails([]);
             setTableDetails(transactionHistory.transactions);
-            // //console.logtransactionElevate.transactions);
             if (transactionHistory !== null) {
                 setIsLoading(false);
             }
@@ -150,6 +150,24 @@ const PaymentTable = ({ title, page }) => {
                     .includes(searchValue.toLowerCase());
         }
     };
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
+
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        console.log(width);
+    };
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [width]);
     return (
         <div className={styles.table}>
             <div className={styles.tableHeader}>
@@ -326,70 +344,83 @@ const PaymentTable = ({ title, page }) => {
                 failed={failed}
                 pending={pending}
             />
-            <div className={styles.TableDetailHeader}>
-                <p className={styles.beneficiary}>Beneficiary </p>
-                <p className={styles.type}>Type</p>
-                <p className={styles.amount}>Amount</p>
-                {/* <p className={styles.bank}>Bank/Network</p> */}
-                <p className={styles.date}>Date</p>
-                <p className={styles.status}>Status</p>
-                <div className={styles.more}></div>
-            </div>
-            {isLoading ? (
-                <Lottie options={socialOptions} height={200} width={200} />
-            ) : !newestTableDetails.length ? (
-                <p className={styles.noRecent}>No Recent transaction</p>
-            ) : (
-                newestTableDetails
-                    ?.sort((x, y) => {
-                        let a = new Date(x.transactionDate),
-                            b = new Date(y.transactionDate);
-                        return b - a;
-                    })
-                    ?.filter((item) => {
-                        if (searchValue === '') {
-                            return item;
-                        } else if (filterCondition(item, searchType)) {
-                            return item;
-                        }
-                    })
-                    ?.slice(pagesVisited, pagesVisited + usersPerPage)
-                    ?.map((items, index) => {
-                        return (
-                            <TableDetail
-                                key={index}
-                                // date={items.transactionDate}
-                                title={items.transactionTitle}
-                                Beneficiary={
-                                    items.paymentDirection === 'CREDIT'
-                                        ? items.transactionTitle
-                                        : items.receiver
+            <div className={styles.tableMain}>
+                <div className={styles.TableDetailHeader}>
+                    <p className={styles.beneficiary}>Beneficiary </p>
+                    <p className={styles.type}>Type</p>
+                    <p className={styles.amount}>Amount</p>
+                    {/* <p className={styles.bank}>Bank/Network</p> */}
+                    <p className={styles.date}>Date</p>
+                    <p className={styles.status}>Status</p>
+                    <div className={styles.more}></div>
+                </div>
+                <div className={styles.tableDetails}>
+                    {isLoading ? (
+                        <Lottie
+                            options={socialOptions}
+                            height={200}
+                            width={200}
+                        />
+                    ) : !newestTableDetails.length ? (
+                        <p className={styles.noRecent}>No Recent transaction</p>
+                    ) : (
+                        newestTableDetails
+                            ?.sort((x, y) => {
+                                let a = new Date(x.transactionDate),
+                                    b = new Date(y.transactionDate);
+                                return b - a;
+                            })
+                            ?.filter((item) => {
+                                if (searchValue === '') {
+                                    return item;
+                                } else if (filterCondition(item, searchType)) {
+                                    return item;
                                 }
-                                Type={items.transactionType.replace('_', ' ')}
-                                Amount={formatter.format(
-                                    items.transactionAmount
-                                )}
-                                accountId={items.sourceAccountId}
-                                Bank={items.destinationBank}
-                                Dates={items.transactionDate}
-                                Status={items.transactionStatus}
-                                accountNumber={items.destinationAccountNumber}
-                                network={items.billerCode}
-                                disputes={disputes}
-                                direction={items.paymentDirection}
-                                sender={items.sender}
-                                senderBank={items.sendersBank}
-                                narration={items.narration}
+                            })
+                            ?.slice(pagesVisited, pagesVisited + usersPerPage)
+                            ?.map((items, index) => {
+                                return (
+                                    <TableDetail
+                                        key={index}
+                                        // date={items.transactionDate}
+                                        title={items.transactionTitle}
+                                        Beneficiary={
+                                            items.paymentDirection === 'CREDIT'
+                                                ? items.transactionTitle
+                                                : items.receiver
+                                        }
+                                        Type={items.transactionType.replace(
+                                            '_',
+                                            ' '
+                                        )}
+                                        Amount={formatter.format(
+                                            items.transactionAmount
+                                        )}
+                                        accountId={items.sourceAccountId}
+                                        Bank={items.destinationBank}
+                                        Dates={items.transactionDate}
+                                        Status={items.transactionStatus}
+                                        accountNumber={
+                                            items.destinationAccountNumber
+                                        }
+                                        network={items.billerCode}
+                                        disputes={disputes}
+                                        direction={items.paymentDirection}
+                                        sender={items.sender}
+                                        senderBank={items.sendersBank}
+                                        narration={items.narration}
 
-                                //   phoneNumber={}
-                            />
-                        );
-                    })
-            )}
+                                        //   phoneNumber={}
+                                    />
+                                );
+                            })
+                    )}
+                </div>
+            </div>
             {newestTableDetails.length === 0 ? null : (
                 <ReactPaginate
-                    previousLabel="Previous"
-                    nextLabel="Next"
+                    previousLabel={<AiOutlineLeft />}
+                    nextLabel={<AiOutlineRight />}
                     pageCount={pageCount}
                     onPageChange={({ selected }) => {
                         setPageNumber(selected);

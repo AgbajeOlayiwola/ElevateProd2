@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styles from './styles.module.css';
+import React, { useEffect, useRef, useState } from 'react';
+import CloseButton from '../CloseButtonSvg';
+import Overlay from '../Overlay';
+import BillPayment from './billpayment';
 import BulkTransfer from './bulktransfer';
 import ForeignTransfer from './foreigntransfer';
-import BillPayment from './billpayment';
 import SingleTransfer from './singletransfer';
-import Overlay from '../Overlay';
-import CloseButton from '../CloseButtonSvg';
+import styles from './styles.module.css';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
-import { getBeneficiariesData } from '../../../redux/actions/getBeneficiariesAction';
+import { useDispatch } from 'react-redux';
 
 const MakePaymentFirst = ({
     firstTitle,
@@ -40,24 +38,24 @@ const MakePaymentFirst = ({
     const dispatch = useDispatch();
     const [bankAccount, setBankAccount] = useState([]);
     const [beneficiaries, setBeneficiaries] = useState([]);
-    const { getBeneficiaries } = useSelector(
-        (state) => state.getBeneficiariesReducer
-    );
-    const { bankAccounts } = useSelector((state) => state.bankAccountsReducer);
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
+
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        console.log(width);
+    };
+
     useEffect(() => {
-        dispatch(bankAccountsData());
-        dispatch(getBeneficiariesData());
-    }, []);
-    useEffect(() => {
-        if (bankAccounts !== null) {
-            setBankAccount(bankAccounts);
-        }
-    }, [bankAccounts]);
-    useEffect(() => {
-        if (getBeneficiaries !== null) {
-            setBeneficiaries(getBeneficiaries);
-        }
-    }, [getBeneficiaries]);
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [width]);
     return (
         <Overlay overlay={overlay}>
             <div className={styles.firstDiv} ref={myref}>
@@ -117,16 +115,26 @@ const MakePaymentFirst = ({
                     )}
                 </div>
                 <div>
-                    <img
-                        src="../../Assets/Images/bluemoney.png"
-                        alt=""
-                        className={styles.greenImg}
-                    />
-                    <CloseButton
-                        action={closeAction}
-                        classes={styles.closebtn}
-                        color="white"
-                    />
+                    {width > 950 ? (
+                        <div>
+                            <img
+                                src="../../Assets/Images/bluemoney.png"
+                                alt=""
+                                className={styles.greenImg}
+                            />
+                            <CloseButton
+                                action={closeAction}
+                                classes={styles.closebtn}
+                                color="white"
+                            />
+                        </div>
+                    ) : (
+                        <CloseButton
+                            action={closeAction}
+                            classes={styles.closebtn}
+                            color="grey"
+                        />
+                    )}
                 </div>
             </div>
         </Overlay>

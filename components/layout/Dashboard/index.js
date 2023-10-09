@@ -47,8 +47,6 @@ import { useRouter } from 'next/router';
 
 import { useDispatch, useSelector } from 'react-redux';
 import withAuth from '../../HOC/withAuth';
-import { loadUserProfile } from '../../../redux/actions/userProfileAction';
-import { getProfileImgAction } from '../../../redux/actions/getProfileImageAction';
 const DashLayout = ({
     children,
     page,
@@ -62,24 +60,6 @@ const DashLayout = ({
     const [profileImg, setProfileImg] = useState('');
     const [userProfileData, setUserProfileData] = useState([]);
     const dispatch = useDispatch();
-    const { userProfile } = useSelector((state) => state.userProfileReducer);
-    const { getProfileImg } = useSelector(
-        (state) => state.getProfileImgReducer
-    );
-    useEffect(() => {
-        dispatch(loadUserProfile());
-        dispatch(getProfileImgAction());
-    }, []);
-    useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-        }
-    }, [userProfile]);
-    useEffect(() => {
-        if (getProfileImg !== null) {
-            setProfileImg(getProfileImg);
-        }
-    }, [getProfileImg]);
     const router = useRouter();
     return (
         <>

@@ -6,21 +6,44 @@ import { useForm } from 'react-hook-form';
 import ArrowBackSvg from '../../../components/ReusableComponents/ArrowBackSvg';
 import { useRouter } from 'next/router';
 import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
-import { useDispatch, useSelector } from 'react-redux';
-import { forgotPasswordData } from '../../../redux/actions/actions';
-const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages, loading }) => {
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import { useForgotPasswordMutation } from '../../../redux/api/authApi';
+const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages, onMove }) => {
     const [activeBtn, setActiveBtn] = useState(true);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors }
-    } = useForm();
-    const checkDataContent = (e) => {
-        setEmail(e.target.value);
+    const initSchema = yup.object().shape({
+        email: yup
+            .string()
+            .trim()
+            .email('Enter a valid email')
+            .required('Email is required')
+    });
+
+    const initialValues = {
+        email: ''
     };
-    const [email, setEmail] = useState('');
+    const [
+        forgotPassword,
+        {
+            data: forgotPasswordData,
+            isLoading: forgotPasswordLoad,
+            isSuccess: forgotPasswordSuccess,
+            isError: forgotPasswordFalse,
+            error: forgotPasswordErr,
+            reset: forgotPasswordReset
+        }
+    ] = useForgotPasswordMutation();
+
+    useEffect(() => {
+        console.log(forgotPasswordErr);
+        if (forgotPasswordSuccess) {
+            onMove();
+        } else if (forgotPasswordErr) {
+            setLoading(false);
+        }
+    }, [forgotPasswordSuccess]);
 
     return (
         <>
@@ -33,46 +56,60 @@ const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages, loading }) => {
                 />
                 <p>Reset Password</p>
             </div>
+            <p className={styles.error}>
+                {forgotPasswordErr ? forgotPasswordErr?.data?.message : null}
+            </p>
             <div className={styles.emailP}>
-                {forgotPasswordErrorMessages ? (
-                    <p className={styles.errors}>
-                        {forgotPasswordErrorMessages}
-                    </p>
-                ) : null}
                 <p>
                     Enter the email registered with your account and
                     instructions to reset your password will be sent to your
                     email.
                 </p>
             </div>
-            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="email">Email Address</label>
-                <div className={styles.divs}>
-                    <MailSvg />
-                    <input
-                        type="text"
-                        name="email"
-                        placeholder="Enter your Email"
-                        {...register('email', {
-                            required: 'Email is required',
-                            pattern: {
-                                value: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                message: 'Invalid email address'
-                            }
-                        })}
-                        onChange={checkDataContent}
-                    />
-                </div>
-                <p className={styles.errors}>{errors.email?.message}</p>
-                <ButtonComp
-                    disabled={activeBtn}
-                    active={activeBtn ? 'active' : 'inactive'}
-                    onClick={handleSubmit}
-                    type="submit"
-                    text="Reset Password"
-                    loads={loading}
-                />
-            </form>
+            <Formik
+                validationSchema={initSchema}
+                initialValues={initialValues}
+                // validateOnChange={true}
+                onSubmit={(values, { setSubmitting }) => {
+                    forgotPassword(values);
+                    setLoading(true);
+                    setSubmitting(false);
+                }}
+            >
+                {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    setFieldValue,
+                    handleSubmit
+                }) => (
+                    <form className={styles.form} onSubmit={handleSubmit}>
+                        <label htmlFor="email">Email Address</label>
+                        <div className={styles.divs}>
+                            <MailSvg />
+                            <input
+                                type="text"
+                                onChange={(e) =>
+                                    setFieldValue('email', e.target.value)
+                                }
+                                name="email"
+                            />
+                        </div>
+                        <p className={styles.error}>
+                            {errors ? <>{errors?.email}</> : null}
+                        </p>
+                        <ButtonComp
+                            disabled={activeBtn}
+                            active={activeBtn ? 'active' : 'inactive'}
+                            onClick={handleSubmit}
+                            type="submit"
+                            text="Reset Password"
+                            loads={loading}
+                        />
+                    </form>
+                )}
+            </Formik>
         </>
     );
 };

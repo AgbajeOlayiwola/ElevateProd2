@@ -1,0 +1,27 @@
+.newSIgnUpDefault{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.newSIgnUpDefault div > p{
+    margin-bottom: 8px;
+    color: #3E3E3E;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.newSIgnUpDefault label{
+    color: #3E3E3E;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+margin-bottom: 8px;
+}
+
+.newSIgnUpDefault select{
+    margin-top: 8px;
+}

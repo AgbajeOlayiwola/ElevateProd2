@@ -2,46 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MakePaymentFirst from '../../../components/ReusableComponents/MakePaymentFirst';
 import MakePaymentSecond from '../../../components/ReusableComponents/MakePaymentSecond';
-import PaymentSuccess from '../../../components/ReusableComponents/PaymentSuccess';
-import styles from './styles.module.css';
-import SchedulePayment from '../../../components/ReusableComponents/Schedulepayment';
-import PaymentSingleBody from '../../../components/ReusableComponents/PaymentSingleBody';
 import PaymentCard from '../../../components/ReusableComponents/PaymentCard';
+import PaymentSingleBody from '../../../components/ReusableComponents/PaymentSingleBody';
+import PaymentSuccess from '../../../components/ReusableComponents/PaymentSuccess';
+import SchedulePayment from '../../../components/ReusableComponents/Schedulepayment';
+import styles from './styles.module.css';
 // import PaymentError from '../../components/ReusableComponents/PaymentError';
 import { useRouter } from 'next/router';
-import { PaymentData } from '../../../components/ReusableComponents/Data';
 import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
-import { getTransactionFees } from '../../../redux/actions/transactionFeesAction';
-import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
-import { postInterBank } from '../../../redux/actions/interBankTransferAction';
-import { getBulkTransfer } from '../../../redux/actions/bulkTransferAction';
+import { PaymentData } from '../../../components/ReusableComponents/Data';
 import { postAirtime } from '../../../redux/actions/airtimeAction';
 import { postBills } from '../../../redux/actions/billsAction';
-import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import { getBulkTransfer } from '../../../redux/actions/bulkTransferAction';
+import { postInterBank } from '../../../redux/actions/interBankTransferAction';
+import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
+import { getTransactionFees } from '../../../redux/actions/transactionFeesAction';
 
 const PaymentTypes = () => {
     const router = useRouter();
-
-    const { airtime, errorMessageAirtime } = useSelector(
-        (state) => state.airtimeReducer
-    );
-    const { bills, errorMessageBills } = useSelector(
-        (state) => state.billsReducer
-    );
-    const { interBank, errorMessageInterBank } = useSelector(
-        (state) => state.interBankReducer
-    );
-    const { bulkTransfer, errorMessagebulkTransfer } = useSelector(
-        (state) => state.bulkTransferReducer
-    );
-    const { transactionFees, errorMessageTransactionFees } = useSelector(
-        (state) => state.transactionFeesReducer
-    );
-
-    const { userProfile } = useSelector((state) => state.userProfileReducer);
-
-    // const { internationalTransfer, errorMessageinternationalTransfer } =
-    //     useSelector((state) => state.internationalTransferReducer);
 
     const dispatch = useDispatch();
     // const [acctNum, setAcctNumm] = useState('');
@@ -68,10 +46,6 @@ const PaymentTypes = () => {
     const [failedTrans, setFailedTrans] = useState([]);
     // const [acctNummber, setAcctNumber] = useState('');
 
-    useEffect(() => {
-        dispatch(loadUserProfile());
-    }, []);
-
     let airtimeData;
     let airtimeNetData = {};
     if (typeof window !== 'undefined') {
@@ -95,18 +69,6 @@ const PaymentTypes = () => {
         }, 0);
         setSum(x);
     }, [count]);
-    // useEffect(() => {
-    //     if (items) {
-    //         setCsvData(items);
-
-    //          //console.log(items);
-    //     } else {
-    //         // alert('Hello');
-    //     }
-    //     return () => {
-    //         setCsvData(items);
-    //     };
-    // }, [items, count]);
 
     let number;
     let numberofBene = {};
@@ -118,7 +80,6 @@ const PaymentTypes = () => {
     //where i need to work on
     const interBankCheck = () => {
         if (interBank !== null) {
-            // //console.loginterBank);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -129,12 +90,9 @@ const PaymentTypes = () => {
             setStatus('error');
         }
     };
-    useEffect(() => {
-        interBankCheck();
-    }, [interBank, errorMessageInterBank]);
+
     const billsCheck = () => {
         if (bills !== null) {
-            // //console.logbills);
             setCount((count) => count + 1);
             setIsLoading(false);
             setStatus('success');
@@ -145,81 +103,10 @@ const PaymentTypes = () => {
             setStatus('error');
         }
     };
-    useEffect(() => {
-        billsCheck();
-    }, [bills, errorMessageBills]);
-    const transactionFeesCheck = () => {
-        if (transactionFees !== null) {
-            setTransactionFee(transactionFees.data.transactionFee);
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setEcobank(false);
-        } else if (errorMessageTransactionFees !== null) {
-            setCount((count) => count + 2);
-            setIsLoading(false);
-            setError(errorMessageTransactionFees);
-            setStatus('error');
-        }
-    };
-    useEffect(() => {
-        transactionFeesCheck();
-    }, [transactionFees, errorMessageTransactionFees]);
-    const bulkcheck = () => {
-        if (bulkTransfer !== null) {
-            // //console.log(bulkTransfer);
-            if (bulkTransfer.failedTranscations.length !== 0) {
-                setCount((count) => count + 1);
-                setIsLoading(false);
-                // setError(
-                //     'Some or all of the transactions failed. Please check the Payment history for more details'
-                // );
-                setStatus('error');
-            } else if (bulkTransfer.successfulTranscations.length !== 0) {
-                setCount((count) => count + 1);
-                setIsLoading(false);
-                setStatus('success');
-            }
-            setSuccessfulTrans(bulkTransfer.successfulTranscations);
-            setFailedTrans(bulkTransfer.failedTranscations);
-        } else if (errorMessagebulkTransfer !== null) {
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setError(errorMessagebulkTransfer);
-            setStatus('error');
-        }
-    };
-    useEffect(() => {
-        bulkcheck();
-    }, [bulkTransfer, errorMessagebulkTransfer]);
-    const airtimeCheck = () => {
-        if (airtime !== null) {
-            // //console.logairtime);
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setStatus('success');
-        } else if (errorMessageAirtime !== null) {
-            // //console.logerrorMessageAirtime);
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setError(errorMessageAirtime);
-            setStatus('error');
-        }
-    };
-
-    useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-        }
-    }, [userProfile]);
-    useEffect(() => {
-        airtimeCheck();
-    }, [airtime, errorMessageAirtime]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [count]);
-
-    useEffect(() => {}, [paymentDetails]);
 
     useEffect(() => {
         const {
@@ -227,47 +114,56 @@ const PaymentTypes = () => {
         } = router;
         setLink({ id }.id);
     });
+    const { profile } = useSelector((store) => store);
 
     useEffect(() => {
         if (link !== undefined) {
-            if (userProfileData.hasSetTransactionPin === false) {
-                if (userProfileData.createdFromEcobankCred === false) {
+            if (profile?.data?.user?.hasSetTransactionPin === 'N') {
+                if (profile?.data?.user?.createdFromEcobankCred === 'N') {
                     router.push({
                         pathname: '/AccountUpgrade',
                         query: { id: 'Transaction Pin' }
                     });
-                } else if (userProfileData.createdFromEcobankCred === true) {
+                } else if (
+                    profile?.data?.user?.createdFromEcobankCred === 'Y'
+                ) {
                     router.push({
                         pathname: '/Admin/Profile',
                         query: { id: 'Transaction Pin' }
                     });
                 }
-            } else if (userProfileData.hasSetTransactionPin === true) {
+            } else if (profile?.data?.user?.hasSetTransactionPin === 'Y') {
                 setFormType(link.toLowerCase());
                 setOverlay(true);
             }
         }
     }, [link]);
     const handleFormChange = (formTitle) => {
-        if (userProfileData.hasSetTransactionPin === false) {
+        setFormType(formTitle);
+        setOverlay(true);
+        if (profile?.data?.user?.hasSetTransactionPin === 'N') {
             //console.log(userProfileData.createdFromEcobankCred);
-            if (userProfileData.createdFromEcobankCred === false) {
+            if (profile?.data?.user?.createdFromEcobankCred === 'N') {
                 router.push({
                     pathname: '/AccountUpgrade',
                     query: { id: 'Transaction Pin' }
                 });
-            } else if (userProfileData.createdFromEcobankCred === true) {
+            } else if (profile?.data?.user?.createdFromEcobankCred === 'Y') {
                 router.push({
                     pathname: '/Admin/Profile',
                     query: { id: 'Transaction Pin' }
                 });
             }
             console.log('Test');
-        } else if (userProfileData.hasSetTransactionPin === true) {
+        } else if (profile?.data?.user?.hasSetTransactionPin === 'Y') {
             setFormType(formTitle);
             setOverlay(true);
         }
     };
+    useEffect(() => {
+        console.log(formType);
+    }, [formType]);
+
     const handleClose = () => {
         setOverlay(false);
         setFormType('');
@@ -1036,50 +932,15 @@ const PaymentTypes = () => {
     };
     return (
         <>
-            {/* {active && (
-                <div className={styles.greencard}>
-                    <div className={styles.greencardDetails}>
-                        <div>
-                            <img
-                                src="/Assets/Images/clock.png"
-                                width="47px"
-                                height="55px"
-                            />
-                        </div>
-                        <div className={styles.detailsText}>
-                            <h3>Introducing Scheduled Payments</h3>
-                            <p>
-                                You can now schedule your transfer for a later
-                                time or date by selecting
-                                <span> ‘Schedule for later’ </span> when you
-                                make payments.
-                            </p>
-                        </div>
-                    </div>
-                    <CloseButton
-                        color="#A5A5A5"
-                        action={() => {
-                            setActive(false);
-                        }}
-                        classes={styles.closeButton}
-                    />
-                </div>
-            )} */}
             <div className={styles.allTypes}>
                 <div className={styles.cov}>
-                    <AccountsInfoCard userProfileData={userProfileData} />
-                    {/* <div className={styles.balanceButtons}>
-                            <div className={styles.first}>
-                                <p>Scheduled Payments</p>
-                            </div>
-                            <div className={styles.second}>
-                                <p>Repeat Payments</p>
-                            </div>
-                        </div> */}
+                    <AccountsInfoCard
+                    // userProfileData={userProfileData}
+                    />
                 </div>
                 <div className={styles.cov}>
                     <PaymentCard title="Make Payments" type="make">
-                        {PaymentData.make.map((payType, index) => (
+                        {PaymentData?.make?.map((payType, index) => (
                             <PaymentSingleBody
                                 data={payType}
                                 key={index}

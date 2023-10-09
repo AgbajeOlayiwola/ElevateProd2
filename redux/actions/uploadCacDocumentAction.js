@@ -23,18 +23,14 @@ export const cacData = (cacdata) => (dispatch) => {
     } else {
         cookie = getCookie('cookieToken');
     }
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadCacCert}`,
-            cacdata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.uploadCacCert}`, cacdata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(cacSuccess(response?.data?.message));
         })

@@ -24,18 +24,14 @@ export const uploadBoardResData = (uploadboardresdata) => (dispatch) => {
     } else {
         cookie = getCookie('cookieToken');
     }
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadBoardRes}`,
-            uploadboardresdata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.uploadBoardRes}`, uploadboardresdata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(uploadBoardResSuccess(response?.data[0]?.accountNumber));
         })

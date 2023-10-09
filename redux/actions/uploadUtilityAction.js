@@ -24,18 +24,14 @@ export const uploadUtilityData = (utilitydata) => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     // dispatch(accountNumberLoadStart());
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadUtilityDocument}`,
-            utilitydata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.uploadUtilityDocument}`, utilitydata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(uploadUtilitySuccess(response));
         })

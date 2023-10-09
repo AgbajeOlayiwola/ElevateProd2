@@ -14,26 +14,14 @@ const ExistingMultiStep = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const { query, push } = useRouter();
-    const { forgotPassword, forgotPasswordErrorMessages } = useSelector(
-        (state) => state.fogrotPasswordReducer
-    );
-    const {
-        forgotPasswordReset,
-        forgotPasswordResetErrorMessages
-    } = useSelector((state) => state.forgotPasswordResetReducer);
     const dispatch = useDispatch();
-    useEffect(() => {
-        if (Object.keys(query).length !== 0) {
-            setPage(2);
-        }
-    }, [query]);
 
     const conditionalComponent = () => {
         switch (page) {
             case 0:
                 return (
                     <ForgotPassword
-                        onSubmit={handleSubmit}
+                        onMove={() => setPage(1)}
                         forgotPasswordErrorMessages={errorMessage}
                         loading={loading}
                     />
@@ -60,29 +48,7 @@ const ExistingMultiStep = () => {
                 return <ForgotPassword />;
         }
     };
-    function handleSubmit(e) {
-        dispatch(forgotPasswordData(e));
-        setLoading(true);
-    }
-    useEffect(() => {
-        if (forgotPassword !== '') {
-            setPage(page + 1);
-            setLoading(false);
-        } else if (forgotPasswordErrorMessages !== '') {
-            // //console.log(forgotPasswordErrorMessages);
-            setLoading(false);
-        }
-    }, [forgotPassword, forgotPasswordErrorMessages]);
-    useEffect(() => {
-        // //console.log(forgotPasswordReset);
-        if (forgotPasswordReset !== null) {
-            push('./Login');
-            setLoading(false);
-        } else if (forgotPasswordResetErrorMessages !== null) {
-            setErrorMessage(forgotPasswordResetErrorMessages);
-            setLoading(false);
-        }
-    }, [forgotPasswordReset, forgotPasswordResetErrorMessages]);
+
     const handleClick = () => {
         setPage(page - 1);
     };

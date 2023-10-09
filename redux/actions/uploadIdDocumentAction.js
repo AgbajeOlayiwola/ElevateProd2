@@ -24,19 +24,15 @@ export const identificationDocData = (identificationdata) => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     // dispatch(accountNumberLoadStart());
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadIdentificationDoc}`,
-            identificationdata,
-            {
-                headers: {
-                    // 'Content-Type': 'multipart/form-data',  'X-Client-Type': 'web',
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.uploadIdentificationDoc}`, identificationdata, {
+            headers: {
+                // 'Content-Type': 'multipart/form-data',  'X-Client-Type': 'web',
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(identificationDocSuccess(response?.data?.message));
         })

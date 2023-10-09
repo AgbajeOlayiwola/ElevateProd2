@@ -1,15 +1,15 @@
-import { Layout } from '../components';
 import React, { useEffect, useState } from 'react';
 import '../styles/globals.css';
-
 import { AnimatePresence, motion } from 'framer-motion';
-import { wrapper, store } from '../store';
-import { Provider } from 'react-redux';
 import DashLayout from '../components/layout/Dashboard';
 import { useRouter } from 'next/router';
 import Loader from '../components/ReusableComponents/Loader';
 import socialdata from '../components/ReusableComponents/Lotties/loading.json';
 import Lottie from 'react-lottie';
+// import persistStore from 'redux-persist/es/persistStore';
+import { Providers } from '../redux/provider';
+import { persistor } from '../redux/provider/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const LoadingScreen = () => {
     const socialOptions = {
@@ -53,6 +53,7 @@ const LoadingScreen = () => {
         )
     );
 };
+// let persistor = persistStore(store);
 
 function MyApp({ Component, pageProps, router }) {
     const variants = {
@@ -61,6 +62,7 @@ function MyApp({ Component, pageProps, router }) {
         exit: { opacity: 0, x: 0, y: -200 }
     };
     const [previous, setPrevious] = useState();
+
     // if (
     //     typeof window !== 'undefined' &&
     //     typeof window.navigator !== 'undefined' &&
@@ -83,15 +85,16 @@ function MyApp({ Component, pageProps, router }) {
     return (
         // <Layout>
         <>
-            <Provider store={store}>
-                <DashLayout
-                    page={
-                        router.asPath === '/Admin/CreateStorefront'
-                            ? 'Create Storefront'
-                            : null
-                    }
-                >
-                    {/* <AnimatePresence exitBeforeEnter>
+            <Providers>
+                <PersistGate loading={null} persistor={persistor}>
+                    <DashLayout
+                        page={
+                            router.asPath === '/Admin/CreateStorefront'
+                                ? 'Create Storefront'
+                                : null
+                        }
+                    >
+                        {/* <AnimatePresence exitBeforeEnter>
                         <motion.div
                             key={router.route}
                             variants={variants} // Pass the variant object into Framer Motion
@@ -101,14 +104,16 @@ function MyApp({ Component, pageProps, router }) {
                             transition={{ type: 'linear' }} // Set the transition to linear
                             className=""
                         > */}
-                    {router.pathname.includes('Admin') ? (
-                        <LoadingScreen />
-                    ) : null}
-                    <Component {...pageProps} />
-                    {/* </motion.div>
+                        {router.pathname.includes('Admin') ? (
+                            <LoadingScreen />
+                        ) : null}
+
+                        <Component {...pageProps} />
+                        {/* </motion.div>
                     </AnimatePresence> */}
-                </DashLayout>
-            </Provider>
+                    </DashLayout>
+                </PersistGate>
+            </Providers>
         </>
         // </Layout>
     );

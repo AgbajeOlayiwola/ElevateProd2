@@ -1,12 +1,9 @@
 /* eslint-disable react/display-name */
 import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
-import axiosInstance from '../../redux/helper/apiClient';
-import apiRoutes from '../../redux/helper/apiRoutes';
-import { getCookie } from 'cookies-next';
 import { useDispatch, useSelector } from 'react-redux';
 import Idle from 'react-idle';
-import { logoutAction } from '../../redux/actions/logOutAction';
+
 const withAuth = (WrappedComponent) => {
     return (props) => {
         const dispatch = useDispatch();
@@ -23,18 +20,6 @@ const withAuth = (WrappedComponent) => {
                 router.replace('../Auth/Login');
             }
         };
-        const { accountPrimary, accountPrimaryError } = useSelector(
-            (state) => state.accountPrimaryReducer
-        );
-        // useEffect(() => {
-        //      //console.log(accountPrimaryError);
-        //     if (accountPrimaryError?.data?.message === 'Unauthorized') {
-        //         dispatch(logoutAction());
-        //         if (!localStorage.getItem('user')) {
-        //             Router.replace('../Auth/Login');
-        //         }
-        //     }
-        // }, [accountPrimary, accountPrimaryError]);
 
         useEffect(() => {
             if (localStorage?.getItem('user')) {

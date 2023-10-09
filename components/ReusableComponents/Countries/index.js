@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import styles from './styles.module.css';
+import Loader from '../Loader';
+import OutsideClick from '../OutsideClick';
 
 const Countriess = ({
     countryState,
@@ -10,13 +12,18 @@ const Countriess = ({
     error,
     setSelectCountry,
     setError,
-    setCountryState
+    setCountryState,
+    isLoading,
+    action
 }) => {
     return (
         <>
             <div className={styles.selectCont}>
-                <div className={styles.selectCountry} onClick={displayCountry}>
-                    {selectCountry ? (
+                <div
+                    className={styles.selectCountry}
+                    onClick={() => !isLoading && displayCountry()}
+                >
+                    {selectCountry && !isLoading ? (
                         <div>
                             <div className={styles.flagDiv}>
                                 <div className={styles.flags}>
@@ -36,80 +43,57 @@ const Countriess = ({
                             <img src="/../../Assets/Svgs/dropdownSvg.svg" />
                             {/* </div> */}
                         </div>
-                    ) : (
-                        <>
-                            <p>Choose Country</p>
-                        </>
-                    )}
+                    ) : null}
+                    {!selectCountry && !isLoading ? (
+                        <p>Choose Country</p>
+                    ) : null}
+                    {isLoading && <Loader />}
                 </div>
-                {countryState && (
-                    <ul className={styles.selectOption}>
-                        {countrys.map((item, index) => {
-                            return (
-                                <li
-                                    key={index}
-                                    onClick={() => {
-                                        if (item.name !== 'Nigeria') {
-                                            setError(
-                                                'This App is  available in Nigeria currently'
-                                            );
-                                            setCountryState(false);
-                                        } else {
-                                            setSelectCountry(item);
 
-                                            setCountryState(false);
-                                        }
-                                        // if (error !== '') {
-                                        //     setError('');
-                                        // }
-                                    }}
-                                >
-                                    <img
-                                        src={
-                                            item.flags === undefined
-                                                ? null
-                                                : item.flags.svg
-                                        }
-                                        alt=""
-                                    />
-                                    <p>{item.name}</p>
-                                </li>
-                            );
-                        })}
-                    </ul>
+                {countryState && (
+                    <OutsideClick onClickOutside={action}>
+                        <ul className={styles.selectOption}>
+                            {countrys?.map((item, index) => {
+                                return (
+                                    <li
+                                        key={index}
+                                        onClick={() => {
+                                            if (item?.name) {
+                                                setSelectCountry(item);
+                                                setCountryState(false);
+                                                localStorage.setItem(
+                                                    'affiliateCode',
+                                                    item?.affiliateCode
+                                                );
+                                                if (
+                                                    localStorage.getItem(
+                                                        'affiliateCode'
+                                                    )
+                                                ) {
+                                                    localStorage.setItem(
+                                                        'affiliateCode',
+                                                        item?.affiliateCode
+                                                    );
+                                                }
+                                            }
+                                        }}
+                                    >
+                                        <img
+                                            src={
+                                                item.flags === undefined
+                                                    ? null
+                                                    : item.flags.svg
+                                            }
+                                            alt=""
+                                        />
+                                        <p>{item.name}</p>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </OutsideClick>
                 )}
             </div>
-
-            {/* <select
-                                    className={styles.select}
-                                    {...register('countriess', {
-                                        required:
-                                            'Destination Country is Required'
-                                    })}
-                                    name="countriess"
-                                >
-                                    <option value="">Choose Country</option>
-                                    {countrys.map((item, index) => {
-                                        // //console.logitem.nme);
-                                        return (
-                                        <StyledOption
-                                            key={index}
-                                            value={item.name}
-                                        >
-                                            <span>
-                                                <img
-                                                    src="../../Assets/Images/bluemoney.png"
-                                                    alt=""
-                                                />
-                                            </span>{' '}
-                                            {item.name}
-                                        </StyledOption>
-                                        );
-                                    })}
-                                </select>
-
-                                */}
-            {/* {error ? <p className={styles.error}>{error}</p> : null} */}
         </>
     );
 };

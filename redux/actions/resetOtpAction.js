@@ -26,18 +26,14 @@ export const resetOtpData = (resetOtpdata) => (dispatch) => {
         //  //console.log(cookie);
     }
     // dispatch(accountNumberLoadStart());
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.resetOtp}`,
-            resetOtpdata,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.resetOtp}`, resetOtpdata, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(resetOtpSuccess(response));
             // //console.logresponse);

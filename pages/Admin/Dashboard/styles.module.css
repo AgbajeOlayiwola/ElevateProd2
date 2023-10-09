@@ -8,8 +8,8 @@
     display: flex;
     justify-content: space-between;
 }
-.addAccount{
-    background:#6bcf003a;
+.addAccount {
+    background: #6bcf003a;
     border-radius: 10px;
     padding: 8px;
     width: fit-content;
@@ -17,8 +17,8 @@
     transition: all 0.2s ease-in-out;
     font-size: 20px;
 }
-.addAccount:hover{
-    background:#6bcf003a;
+.addAccount:hover {
+    background: #6bcf003a;
     border-radius: 10px;
     padding: 10px;
     transition: all 0.2s ease-in-out;
@@ -34,6 +34,7 @@
     color: white;
 }
 .accountsALl {
+    overflow: scroll;
     display: flex;
     gap: 30px;
 }
@@ -155,6 +156,7 @@
 }
 .accountsALl {
     display: flex;
+    overflow: scroll;
     gap: 30px;
     /* justify-content: space-between; */
     align-items: center;
@@ -196,11 +198,11 @@
 .success p {
     color: #6ccf00 !important;
 }
-.success{
+.success {
     color: #69940d;
     cursor: pointer;
 }
-.nothing{
+.nothing {
     cursor: pointer;
 }
 
@@ -517,7 +519,7 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
-.sliderImage{
+.sliderImage {
     margin-right: 40px;
 }
 
@@ -803,7 +805,7 @@
 }
 
 .transactionBody {
-    width: 32%;
+    width: 60%;
     max-width: 219px;
     height: 100%;
     display: flex;
@@ -857,6 +859,24 @@
     .name {
         font-size: 12px;
     }
+    .pending {
+        font-family: 'Inter';
+        font-style: normal;
+        display: flex;
+        gap: 10px;
+    }
+    .failed {
+        display: flex;
+        gap: 10px;
+    }
+    .success {
+        font-family: 'Inter';
+        font-style: normal;
+
+        /* identical to box height, or 99% */
+        display: flex;
+        gap: 10px;
+    }
 }
 
 @media screen and (max-width: 1163px) {
@@ -864,6 +884,11 @@
         font-size: 10px;
     }
     .transactionStatus {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+    }
+    .transactionStatus div > p {
         display: flex;
         flex-direction: column;
         gap: 11px;
@@ -900,6 +925,25 @@
 
     .recMak {
         flex-direction: column;
+    }
+    .mobileTable {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .mobileStatus {
+        display: flex;
+    }
+    .transactionStatus > div p {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+    }
+    .typeMobile {
+        font-size: 12px;
+    }
+    .hrMobile {
+        border: 1px solid #ecebeb;
     }
 }
 

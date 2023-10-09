@@ -25,18 +25,14 @@ export const forgotPasswordResetData = (data) => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     // dispatch(accountNumberLoadStart());
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.forgotPasswordReset}`,
-            data,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${data?.token}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.forgotPasswordReset}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${data?.token}`
             }
-        )
+        })
         .then((response) => {
             dispatch(forgotPasswordResetSuccess(response?.data?.message));
         })

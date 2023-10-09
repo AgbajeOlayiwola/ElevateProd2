@@ -9,7 +9,10 @@
     box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
     border-radius: 50px;
 }
-
+.error{
+    font-size: 12px;
+    color: red;
+}
 .covWrapper {
     width: 67%;
     max-width: 400px;

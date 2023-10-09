@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import styles from './styles.module.css';
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import ButtonComp from '../../../ReusableComponents/Button';
+import { Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
 import Webcam from 'react-webcam';
-import Head from 'next/head';
-import Script from 'next/script';
-import { getCookie } from 'cookies-next';
-import axios from 'axios';
-import Loader from '../../../ReusableComponents/Loader';
+import ButtonComp from '../../../ReusableComponents/Button';
+import styles from './styles.module.css';
+
+import {
+    useFaceMatchWithoutBvnMutation,
+    useFacematchMutation
+} from '../../../../redux/api/authApi';
 const videoConstraints = {
     width: 390,
     height: 480,
@@ -25,110 +24,172 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
-const Liveness = ({ action, cookie }) => {
-    const [activeBtn, setActiveBtn] = useState(true);
+const Liveness = ({ formData, type, nextStep }) => {
     const webcamRef = React.useRef(null);
-    const [imgSrc, setImgSrc] = React.useState(null);
     const [succes, setSuccess] = useState('');
-    const [imageSrcI, setImageSrcI] = React.useState(null);
-    const [error, setError] = React.useState('');
-    const [loads, setLoads] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [image, setImage] = useState();
     const capture = React.useCallback(() => {
-        setLoads((prev) => !prev);
-        setLoading((prev) => !prev);
-        const ImageSrcII = webcamRef.current.getScreenshot();
-        setImageSrcI(ImageSrcII);
-        const imageSrc = webcamRef.current.getScreenshot();
-        let newImage = imageSrc.split(',');
-        let base64String = newImage[1];
-        var buf = _base64ToArrayBuffer(base64String);
-        var mimeType = 'image/jpeg';
-        var file = new File([buf], 'userface-1828438.jpg', { type: mimeType });
-
-        var formData = new FormData();
-        formData.append('userFace', file);
-        let cookies;
-        if (cookie === '') {
-            if (getCookie('cookieToken') == undefined) {
-                cookies = getCookie('existingToken');
+        const ImageSrcII = webcamRef?.current?.getScreenshot();
+        setImage(ImageSrcII);
+        // console.log(ImageSrcII);
+        const affiliatData = localStorage.getItem('affiliateCode');
+        if (affiliatData === 'ENG') {
+            if (localStorage.getItem('regprofilesetupdata')) {
+                const storedData = localStorage.getItem('profilesetupdata');
+                const profileSetupData = JSON.parse(storedData);
+                const faceMMatchData = {
+                    userFaceBase64: ImageSrcII,
+                    bvn: profileSetupData?.bvn
+                };
+                // Perform a facial match with the data
+                faceMatch(faceMMatchData);
             } else {
-                cookies = getCookie('cookieToken');
+                const storedData = localStorage.getItem('profilesetupdata');
+                const profileSetupData = JSON.parse(storedData);
+                const faceMMatchData = {
+                    userFaceBase64: ImageSrcII,
+                    bvn: profileSetupData?.bvn
+                };
+                // Perform a facial match with the data
+                faceMatch(faceMMatchData);
             }
         } else {
-            cookies = cookie;
+            if (localStorage.getItem('regprofilesetupdata')) {
+                const storedData = localStorage.getItem('profilesetupdata');
+                const profileSetupData = JSON.parse(storedData);
+                const faceMMatchData = {
+                    userFaceBase64: ImageSrcII,
+                    idNumber: profileSetupData?.bvn
+                };
+                // Perform a facial match with the data
+                faceMatchWithoutBvn(faceMMatchData);
+            } else {
+                const storedData = localStorage.getItem('profilesetupdata');
+                const profileSetupData = JSON.parse(storedData);
+                const faceMMatchData = {
+                    userFaceBase64: ImageSrcII,
+                    idNumber: profileSetupData?.bvn
+                };
+                // Perform a facial match with the data
+                faceMatchWithoutBvn(faceMMatchData);
+            }
         }
+    }, [webcamRef]);
 
-        axios
-            .post(`http://178.128.174.252/authentication/facematch`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookies}`
-                }
-            })
-            .then((response) => {
-                setSuccess(response.data.message);
-                setLoading(false);
-                setLoads(false);
-            })
-            .catch((error) => {
-                // setSuccess(error.response.data.message);
-                setError(error.response.data.message);
-                setLoading(false);
-                setLoads(false);
-            });
-    }, [webcamRef, setImgSrc, setImageSrcI]);
+    const [
+        faceMatch,
+        {
+            data: faceMatchData,
+            isLoading: faceMatchLoad,
+            isSuccess: faceMatchSuccess,
+            isError: faceMatchFalse,
+            error: faceMatchErr,
+            reset: faceMatchReset
+        }
+    ] = useFacematchMutation();
+    const [
+        faceMatchWithoutBvn,
+        {
+            data: faceMatchWithoutBvnData,
+            isLoading: faceMatchWithoutBvnLoad,
+            isSuccess: faceMatchWithoutBvnSuccess,
+            isError: faceMatchWithoutBvnFalse,
+            error: faceMatchWithoutBvnErr,
+            reset: faceMatchWithoutBvnReset
+        }
+    ] = useFaceMatchWithoutBvnMutation();
+
+    // console.log(affiliatData);
+    const faceMtch = () => {};
+
+    useEffect(() => {
+        if (faceMatchSuccess || faceMatchWithoutBvnSuccess) {
+            nextStep();
+        }
+    }, [faceMatchSuccess, faceMatchWithoutBvnSuccess]);
 
     return (
         <div className={styles.body}>
             <div className={styles.cover}>
                 <div className={styles.imageOut}>
-                    <div>
-                        <p className={styles.takeSelf}>Take a Lively Selfie</p>
-                        <p className={styles.finish}>
-                            Finish up with a clear photo of your face to verify
-                            your identity.
-                        </p>
-                        {error ? <p>{error}</p> : null}
-                        <div
-                            className={
-                                succes === 'facial verification successful'
-                                    ? // succes === 'success'
-                                      styles.imageOuter
-                                    : error
-                                    ? styles.errorInner
-                                    : styles.imageInner
-                            }
-                        >
-                            <Webcam
-                                audio={false}
-                                screenshotFormat="image/jpeg"
-                                videoConstraints={videoConstraints}
-                                ref={webcamRef}
-                            />
-                        </div>
-                    </div>
-                    {loading ? (
-                        <p>Hold on your face is been verified!!!!</p>
-                    ) : null}
-                    <ButtonComp
-                        onClick={
-                            succes === 'facial verification successful'
-                                ? action
-                                : capture
-                        }
-                        disabled={activeBtn}
-                        active={activeBtn ? 'active' : 'inactive'}
-                        type="button"
-                        text={
-                            succes === 'facial verification successful'
-                                ? 'Continue'
-                                : 'Snap'
-                        }
-                        err={succes}
-                        loads={loads}
-                    />
+                    <Formik
+                        onSubmit={(values, { setSubmitting }) => {
+                            setSubmitting(false);
+                        }}
+                    >
+                        {({
+                            values,
+                            errors,
+                            touched,
+                            handleChange,
+                            setFieldValue,
+                            handleSubmit
+                        }) => (
+                            <form>
+                                <div>
+                                    <p className={styles.takeSelf}>
+                                        Take a Lively Selfie
+                                    </p>
+                                    <p className={styles.finish}>
+                                        Finish up with a clear photo of your
+                                        face to verify your identity.
+                                    </p>
+
+                                    {faceMatchErr ? (
+                                        <p className={styles.error}>
+                                            {faceMatchErr.data.message}
+                                        </p>
+                                    ) : null}
+                                    <div
+                                        className={
+                                            succes ===
+                                            'facial verification successful'
+                                                ? // succes === 'success'
+                                                  styles.imageOuter
+                                                : faceMatchErr ||
+                                                  faceMatchWithoutBvnErr
+                                                ? styles.errorInner
+                                                : styles.imageInner
+                                        }
+                                    >
+                                        <Webcam
+                                            audio={false}
+                                            screenshotFormat="image/jpeg"
+                                            videoConstraints={videoConstraints}
+                                            ref={webcamRef}
+                                        />
+                                    </div>
+                                </div>
+                                {faceMatchLoad ? (
+                                    <p>
+                                        Hold On Your Face Is Being Verified.....
+                                    </p>
+                                ) : null}
+
+                                <ButtonComp
+                                    active={'active'}
+                                    disabled={true}
+                                    // onClick={
+                                    //     succes ===
+                                    //     'facial verification successful'
+                                    //         ? action
+                                    //         : capture
+                                    // }
+                                    onClick={capture}
+                                    type="button"
+                                    loads={
+                                        faceMatchLoad || faceMatchWithoutBvnLoad
+                                    }
+                                    text={
+                                        succes ===
+                                        'facial verification successful'
+                                            ? 'Continue'
+                                            : 'Snap'
+                                    }
+                                />
+                            </form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         </div>

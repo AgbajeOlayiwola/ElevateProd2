@@ -14,16 +14,16 @@
     display: flex;
     height: 100vh;
     overflow: hidden;
-    width: 85%;
-    max-width: 1283px;
+
     margin: 0px auto;
-    justify-content: space-between;
+    gap: 64px;
 }
 
 .sectionI {
-    width: 37%;
-    max-width: 470px;
+    width: 46%;
+    /* max-width: 470px; */
     position: relative;
+    background-image: url(/Assets/Images/signupbg.png);
 }
 
 .sectionII {

@@ -24,14 +24,15 @@ import { getFullStatementGen } from '../../../redux/actions/getFullStatementActi
 
 const BankStatments = () => {
     const dispatch = useDispatch();
-
     const printRef = useRef();
-
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'NGN',
         currencyDisplay: 'narrowSymbol'
     });
+    const usersPerPage = 15;
+    const pagesVisited = pageNumber * usersPerPage;
+    const pageCount = Math.ceil(tableDetails?.length / usersPerPage);
 
     const [date, setDate] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -51,10 +52,10 @@ const BankStatments = () => {
     const [balance, setBalance] = useState(format);
     const [inflow, setInflow] = useState(format);
     const [outflow, setOutflow] = useState(format);
-
-    const usersPerPage = 15;
-    const pagesVisited = pageNumber * usersPerPage;
-    const pageCount = Math.ceil(tableDetails.length / usersPerPage);
+    const [disputes, setDisputes] = useState();
+    const [isLoading, setIsLoading] = useState(true);
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
 
     const { bankStatement, errorMessagebankStatement } = useSelector(
         (state) => state.bankStatementReducer
@@ -76,7 +77,7 @@ const BankStatments = () => {
     const { accountPrimarys, accountPrimaryError } = useSelector(
         (state) => state.accountPrimaryReducer
     );
-    const [isLoading, setIsLoading] = useState(true);
+
     const {
         getDisputCategOryTypeSuccess,
         getDisputCategOryTypeErrorMessage
@@ -106,7 +107,7 @@ const BankStatments = () => {
         };
         dispatch(loadbankStatement(data));
     }, []);
-    const [disputes, setDisputes] = useState();
+
     useEffect(() => {
         setDisputes(getDisputCategOryTypeSuccess);
     }, [getDisputCategOryTypeSuccess]);
@@ -215,6 +216,22 @@ const BankStatments = () => {
                 item.amount.toLowerCase().includes(searchValue.toLowerCase());
         }
     };
+
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        console.log(width);
+    };
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [width]);
     return (
         <div className={styles.statementCover}>
             <div className={styles.chooseDate}>
@@ -476,7 +493,7 @@ const BankStatments = () => {
                             })}
                     </tbody>
                 </table>
-                <div ref={printRef}>
+                <div className={styles.tableMain} ref={printRef}>
                     <div className={styles.TableDetailHeader}>
                         <p className={styles.date}>Date</p>
                         <p className={styles.bank}>Account</p>
@@ -485,56 +502,82 @@ const BankStatments = () => {
                         <p className={styles.type}>Type</p>
                         {/* <div className={styles.more}></div> */}
                     </div>
-                    {isLoading ? (
-                        <Lottie
-                            options={socialOptions}
-                            height={200}
-                            width={200}
-                        />
-                    ) : !tableDetails.length ? (
-                        'No Recent transaction'
-                    ) : (
-                        tableDetails
-                            ?.sort((x, y) => {
-                                let a = new Date(x.transactionDate),
-                                    b = new Date(y.transactionDate);
-                                return b - a;
-                            })
-                            ?.filter((item) => {
-                                if (searchValue === '') {
-                                    return item;
-                                } else if (filterCondition(item, searchType)) {
-                                    return item;
-                                }
-                            })
-                            ?.slice(pagesVisited, pagesVisited + usersPerPage)
-                            ?.map((items, index) => {
-                                const newDate = items?.transactionTime?.split(
-                                    ' '
-                                );
-                                return (
-                                    <div
-                                        className={styles.TableDetailBody}
-                                        key={index}
-                                    >
-                                        <p className={styles.date}>
-                                            {newDate[0]}
-                                        </p>
-                                        <p className={styles.bank}>
-                                            {items.accountNo}
-                                        </p>
-                                        <div className={styles.benes}>
-                                            <p className={styles.beneNar}>
-                                                {items.narration}
-                                            </p>
-                                        </div>
-                                        <p className={styles.amount}>
-                                            {formatter.format(items.amount)}
-                                        </p>
-                                        <p className={styles.transfer}>
-                                            {items.channel}
-                                        </p>
-                                        {/* <div className={styles.more}>
+                    <div className={styles.tableDivs}>
+                        {isLoading ? (
+                            <Lottie
+                                options={socialOptions}
+                                height={200}
+                                width={200}
+                            />
+                        ) : !tableDetails.length ? (
+                            'No Recent transaction'
+                        ) : (
+                            tableDetails
+                                ?.sort((x, y) => {
+                                    let a = new Date(x.transactionDate),
+                                        b = new Date(y.transactionDate);
+                                    return b - a;
+                                })
+                                ?.filter((item) => {
+                                    if (searchValue === '') {
+                                        return item;
+                                    } else if (
+                                        filterCondition(item, searchType)
+                                    ) {
+                                        return item;
+                                    }
+                                })
+                                ?.slice(
+                                    pagesVisited,
+                                    pagesVisited + usersPerPage
+                                )
+                                ?.map((items, index) => {
+                                    const newDate = items?.transactionTime?.split(
+                                        ' '
+                                    );
+                                    return (
+                                        <>
+                                            {width > 950 ? (
+                                                <div
+                                                    className={
+                                                        styles.TableDetailBody
+                                                    }
+                                                    key={index}
+                                                >
+                                                    <p className={styles.date}>
+                                                        {newDate[0]}
+                                                    </p>
+                                                    <p className={styles.bank}>
+                                                        {items.accountNo}
+                                                    </p>
+                                                    <div
+                                                        className={styles.benes}
+                                                    >
+                                                        <p
+                                                            className={
+                                                                styles.beneNar
+                                                            }
+                                                        >
+                                                            {items.narration}
+                                                        </p>
+                                                    </div>
+                                                    <p
+                                                        className={
+                                                            styles.amount
+                                                        }
+                                                    >
+                                                        {formatter.format(
+                                                            items.amount
+                                                        )}
+                                                    </p>
+                                                    <p
+                                                        className={
+                                                            styles.transfer
+                                                        }
+                                                    >
+                                                        {items.channel}
+                                                    </p>
+                                                    {/* <div className={styles.more}>
                                                 <MoreAction
                                                     type={items.channel}
                                                     transactionAmount={formatter.format(
@@ -543,10 +586,65 @@ const BankStatments = () => {
                                                     disputes={disputes}
                                                 />
                                             </div> */}
-                                    </div>
-                                );
-                            })
-                    )}
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <div
+                                                        className={
+                                                            styles.beneficiariesMobile
+                                                        }
+                                                    >
+                                                        <div>
+                                                            <p
+                                                                className={
+                                                                    styles.amount
+                                                                }
+                                                            >
+                                                                {formatter.format(
+                                                                    items.amount
+                                                                )}
+                                                            </p>
+                                                            <p
+                                                                className={
+                                                                    styles.date
+                                                                }
+                                                            >
+                                                                {newDate[0]}
+                                                            </p>
+                                                        </div>
+                                                        <div>
+                                                            <div
+                                                                className={
+                                                                    styles.benes
+                                                                }
+                                                            >
+                                                                <p
+                                                                    className={
+                                                                        styles.beneNar
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        items.narration
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                            <p
+                                                                className={
+                                                                    styles.transfer
+                                                                }
+                                                            >
+                                                                {items.channel}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                </>
+                                            )}
+                                        </>
+                                    );
+                                })
+                        )}
+                    </div>
                 </div>
                 {!tableDetails.length ? null : (
                     <ReactPaginate

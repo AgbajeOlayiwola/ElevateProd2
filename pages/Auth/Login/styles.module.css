@@ -2,10 +2,10 @@
     display: flex;
     height: 100vh;
     overflow: hidden;
-    width: 85%;
-    max-width: 1283px;
+    width: 100%;
+    /* max-width: 1283px; */
     margin: 0px auto;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 .otpDiv{
     padding: 20px;
@@ -61,9 +61,22 @@
 }
 
 .sectionI {
-    width: 37%;
-    max-width: 470px;
+    width: 50%;
     position: relative;
+    background-image: url(/Assets/Images/signupbg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* display: flex;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0%;
+    background-position: center;
+    overflow: hidden;
+    position: relative; */
 }
 
 .sectionII {

@@ -24,18 +24,14 @@ export const memartData = (memartdata) => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
     // dispatch(accountNumberLoadStart());
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadMemart}`,
-            memartdata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.uploadMemart}`, memartdata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(memartSuccess(response));
             // //console.logresponse);

@@ -22,18 +22,14 @@ export const getUploadReffereeDetails = (uploadrefereeData) => (dispatch) => {
         cookie = getCookie('cookieToken');
     }
 
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.uploadrefferee}`,
-            uploadrefereeData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.uploadrefferee}`, uploadrefereeData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             // //console.logresponse.data.data);
             dispatch(getUploadReffereeSuccess(response));

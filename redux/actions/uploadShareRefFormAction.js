@@ -24,18 +24,14 @@ export const shareRefFormData = (sharerefformdata) => (dispatch) => {
     } else {
         cookie = getCookie('cookieToken');
     }
-    axios
-        .post(
-            `https://mysmeapp.ecobank.com:8443${apiRoutes.shareRefForm}`,
-            sharerefformdata,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Client-Type': 'web',
-                    Authorization: `Bearer ${cookie}`
-                }
+    axiosInstance
+        .post(`${apiRoutes.shareRefForm}`, sharerefformdata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'X-Client-Type': 'web',
+                Authorization: `Bearer ${cookie}`
             }
-        )
+        })
         .then((response) => {
             dispatch(shareRefFormSuccess(response?.data[0]?.accountNumber));
             // //console.logresponse.data.accountNumber);

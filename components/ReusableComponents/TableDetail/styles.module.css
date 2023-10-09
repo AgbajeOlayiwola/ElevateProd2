@@ -55,3 +55,22 @@
 .more {
     width: 5%;
 }
+@media screen and (max-width: 996px) {
+  
+   
+    .mobilleMovement{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .statusAmmountMobile{
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .paymentMobileHr{
+        border: 1px solid #e8e7e7;
+    }
+    
+    
+}

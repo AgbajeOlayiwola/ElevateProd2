@@ -801,30 +801,30 @@
     border-bottom: 2px solid #f6f6f6;
     margin-bottom: 24px;
 }
-
 .billSingle {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background: #ffffff;
-    border-top: 2px solid #f6f6f6;
+    background: white;
+    /* border-top: 2px solid #f6f6f6; */
     padding: 20px 16px;
     cursor: pointer;
 }
 
 .billSingle:first-child {
-    border-bottom: 0px;
+    /* border-bottom: 0px; */
 }
 
 .billSingle:last-child {
-    border-bottom: 2px solid #f6f6f6;
+    /* border-bottom: 2px solid #f6f6f6; */
 }
 
 .billSingle p {
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 400;
+    text-transform: lowercase;
     font-size: 12px;
     line-height: 15px;
     color: #7a7978;
@@ -911,6 +911,66 @@
 .body {
     margin-top: 48px;
 }
+.billBody{
+    margin-top: 10%;
+    padding-bottom: 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.billerItem{
+    display: flex;
+    flex-direction: column;
+}
+.mainDv div{
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    align-items: flex-start;
+}
+.billerCategory h2{
+    color: #69940D;
+}
+.mainDv{
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    border-radius: 16px;
+    padding-left: 22px;
+    display:flex;
+    font-size: 10px;
+    gap: 20px;
+    width: 100%;
+    display: block;
+    flex-direction: column;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    overflow: scroll;
+    text-align: start;
+    justify-content: flex-start;
+}
+
+.mainDvtwo{
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    border-radius: 16px;
+    padding-left: 22px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display:flex;
+    font-size: 10px;
+    gap: 20px;
+    width: 100%;
+    display: block;
+    flex-direction: column;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    overflow: scroll;
+    text-align: start;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+
+.mainDv::-webkit-scrollbar {
+    display: none;
+  }
 @media screen and (max-width: 1098px) {
     .firstDiv {
         width: 95%;
@@ -925,4 +985,28 @@
         height: 80vh;
         z-index: 10;
     }
+    .firstBody,
+.bulkBody {
+    width: 100%;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.firstTitle {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 29px;
+    margin-bottom: 10px;
+    color: #102572;
+    font-family: 'Inter', sans-serif;
+    /* margin: 0px; */
+    /* margin-bottom: 32px; */
+}
+.firstDiv > div:last-child {
+    width: 0%;
+    background-color: #102572;
+    border-radius: 0px 50px 50px 0px;
+    overflow: hidden;
+}
 }

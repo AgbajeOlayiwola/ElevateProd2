@@ -62,7 +62,7 @@
 }
 
 .selectOption {
-    height: 50vh;
+    height: fit-content;
     overflow-y: scroll;
     width: 100%;
     position: absolute;

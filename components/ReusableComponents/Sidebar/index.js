@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
-import styles from './styles.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import PaymentSvg from '../PaymentSvg';
-import SettingsSvg from '../SettingsSvg';
-import SideBarHomeSvg from '../ShomeSvg';
-import MoreSvg from '../MoreSvg';
+import React, { useEffect, useState } from 'react';
+import { FaTimes } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { clearAccountNumber } from '../../../redux/slices/accountNumberSlice';
+import { clearExistingUserDetails } from '../../../redux/slices/existingUserData';
+import { clearfaceMatchDetails } from '../../../redux/slices/facematchSlice';
+import { clearMoreAccountNumberDetails } from '../../../redux/slices/moreAccountNumberDetails';
+import { clearProfile } from '../../../redux/slices/profile';
+import { SidebarData } from '../Data';
 import ElevateLogo from '../Ellevate';
 import LogoutSvg from '../LogoutSvg';
-import { SidebarData } from '../Data';
 import SideBarDrop from './sidebarcont';
-import Dropdownicon from './dropdownicon';
-import Innersubnav from './innersubnav';
-import { FaTimes } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutAction } from '../../../redux/actions/logOutAction';
-
+import styles from './styles.module.css';
 const Sidebar = ({ showSubnav }) => {
     const dispatch = useDispatch();
     // const { logout } = useSelector((state) => state.logoutReducer);
@@ -24,13 +21,39 @@ const Sidebar = ({ showSubnav }) => {
     const [Nav, setNav] = useState(false);
     const [subNavTitle, setSubNavTitle] = useState('');
 
-    const handleLogOut = () => {
-        dispatch(logoutAction());
-        if (!localStorage.getItem('user')) {
-            router.replace('../Auth/Login');
-        }
+    const handleLogOut = async () => {
+        // Clear local storage
+        await localStorage.clear();
+
+        // Dispatch actions to clear Redux state
+        await dispatch(clearProfile());
+        await dispatch(clearfaceMatchDetails());
+        await dispatch(clearMoreAccountNumberDetails());
+        await dispatch(clearAccountNumber());
+        await dispatch(clearAccountNumber());
+        await dispatch(clearExistingUserDetails());
+        // Redirect the user to the login page (you may use React Router for this)
+        router.push('/Auth/Login');
     };
 
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
+
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        console.log(width);
+    };
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [width]);
     // fillColor={router.pathname == '/Dashboard'}
 
     return (
@@ -76,6 +99,7 @@ const Sidebar = ({ showSubnav }) => {
                                                 ? styles.inActive
                                                 : styles.cont
                                         }
+                                        onClick={width > 950 ? '' : showSubnav}
                                     >
                                         <div className={styles.contWrapper}>
                                             <span className={styles.titleIcon}>
