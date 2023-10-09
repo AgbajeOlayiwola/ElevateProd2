@@ -1058,6 +1058,4 @@ const Dashboard = () => {
         </div>
     );
 };
-
-// export default withAuth(Dashboard);
 export default withAuth(Dashboard);
