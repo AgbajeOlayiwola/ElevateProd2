@@ -7,12 +7,12 @@
     align-items: center;
     justify-content: space-between;
 }
-.statementCover{
+.statementCover {
     height: fit-content;
-    background: #FEFEFE;
-box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
-border-radius: 15px;
-padding: 20px 15px;
+    background: #fefefe;
+    box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
+    border-radius: 15px;
+    padding: 20px 15px;
 }
 
 .greencard h3 {
@@ -67,7 +67,7 @@ padding: 20px 15px;
 .cov {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 50%;
     margin-top: 20px;
     box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
 }
@@ -76,7 +76,7 @@ padding: 20px 15px;
     height: 310px;
     overflow: scroll;
     -ms-overflow-style: none;
-        scrollbar-width: none; 
+    scrollbar-width: none;
     padding: 39px 32px 39px 48px;
     background-color: #69940d;
     width: 100%;
@@ -165,7 +165,7 @@ padding: 20px 15px;
     padding: 16px 0px;
 }
 
-.allTypes{
+.allTypes {
     display: flex;
     justify-content: space-between;
     gap: 30px;
@@ -207,11 +207,11 @@ padding: 20px 15px;
     margin-top: 0px;
 }
 @media screen and (max-width: 1366px) {
-.allTypes{
-    display: block;
-    justify-content: space-between;
-    gap: 30px;
-}
+    .allTypes {
+        display: block;
+        justify-content: space-between;
+        gap: 30px;
+    }
 }
 @media screen and (max-width: 1366px) {
     .balanceButtons {

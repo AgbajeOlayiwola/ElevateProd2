@@ -46,6 +46,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [refferalCode, setRefferalCode] = useState();
     const [relaod, setReload] = useState(false);
     const [formError, setFormError] = useState(false);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [gender, setGender] = useState('');
     //
     const [
         getProfile,
@@ -128,19 +131,19 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         });
     }, [localState]);
 
-    useEffect(() => {
-        if (businessSetupData) {
-            if (localStorage.getItem('regprofilesetupdata') && type === false) {
-                createCAcct();
-            } else {
-                const data = {
-                    affiliateCode: 'ENG',
-                    currency: 'NGN'
-                };
-                createIAcct(data);
-            }
-        }
-    }, [businessSetupSuccess]);
+    // useEffect(() => {
+    //     if (businessSetupData) {
+    //         if (localStorage.getItem('regprofilesetupdata') && type === false) {
+    //             createCAcct();
+    //         } else {
+    //             const data = {
+    //                 affiliateCode: 'ENG',
+    //                 currency: 'NGN'
+    //             };
+    //             createIAcct(data);
+    //         }
+    //     }
+    // }, [businessSetupSuccess]);
     useEffect(() => {
         getProfile(null);
         getCategories(null);
@@ -165,7 +168,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         const profileSetupData = JSON.parse(storedData);
         //attach rc name to local storage on liveness test
         if (profileSetupData?.rcName) {
-            setBName(profileSetupData?.rcNamw);
+            setBName(profileSetupData?.rcName);
         }
     }, [getProfileSuccess, bName]);
 
@@ -175,13 +178,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         e.preventDefault();
         setTitle('Other');
     };
-    const gtBname = () => {
-        if (bName) {
-            return bName;
-        } else {
-            return `${profile?.user?.lastName} ${profile?.user?.firstName}`;
-        }
-    };
+
     const [base64String, setBase64String] = useState();
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
@@ -192,7 +189,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             reader.onload = (event) => {
                 const uploadedBase64String = event.target.result;
                 setBase64String(uploadedBase64String); // Store base64 string in state
-                setFileName(file.name); // Store file name in state
+                setFileName(file?.name); // Store file name in state
             };
 
             reader.readAsDataURL(file);
@@ -219,8 +216,11 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
         const isValid = validateForm();
         if (isValid) {
             const data = {
+                firstName: profile?.user?.firstName || firstName,
+                lastName: profile?.user?.lastName || lastName,
+                gender: gender,
                 isRegistered: type,
-                businessName: gtBname(),
+                businessName: bName || `${lastName} ${firstName}`,
                 businessPhoneNumber: profile?.user?.phoneNumber,
                 businessType: selectedBusinessType,
                 businessCategory: selectedCategory,
@@ -292,12 +292,48 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             position: toast.POSITION.TOP_RIGHT
         });
     };
+    const showToastErrorMessage = () => {
+        toast.error('Business Setup Failed', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
     useEffect(() => {
         if (businessSetupSuccess) {
             showToastSuccessMessage();
+        } else if (businessSetupErr) {
+            showToastErrorMessage();
         }
-    }, [businessSetupSuccess]);
+    }, [businessSetupSuccess, businessSetupErr]);
+
+    const showToastIndividualSuccessMessage = () => {
+        toast.success('Getting Account Status.', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    const showToastIndividualErrorMessage = () => {
+        toast.error('Error Creating Account, Try Again', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (createIAcctSuccess) {
+            showToastIndividualSuccessMessage();
+        } else if (createIAcctErr) {
+            showToastIndividualErrorMessage();
+        }
+    }, [createIAcctSuccess, createIAcctErr]);
+    const showToastAccountStatusErrorMessage = () => {
+        toast.error('Error Fetching Account Status', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (getAccountStatusErr) {
+            showToastAccountStatusErrorMessage();
+        }
+    }, [getAccountStatusErr]);
     const affiliate = localStorage.getItem('affiliateCode');
+    console.log(affiliate);
     return (
         <div className={styles.bodyWrapper}>
             <ToastContainer />
@@ -343,29 +379,67 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                         <>
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroups}>
-                                    <label>Enter Full Name</label>
-                                    <input
-                                        type="text"
-                                        value={
-                                            getProfileData
-                                                ? `${getProfileData?.user?.lastName} ${getProfileData?.user?.firstName}`
-                                                : 'Full Name'
-                                        }
-                                        disabled
-                                    />
+                                    <label>Enter Last Name</label>
+                                    {getProfileData?.user?.lastName ? (
+                                        <input
+                                            type="text"
+                                            value={
+                                                getProfileData?.user?.lastName
+                                                    ? `${getProfileData?.user?.lastName}`
+                                                    : 'Full Name'
+                                            }
+                                            disabled
+                                        />
+                                    ) : (
+                                        <input
+                                            type="text"
+                                            value={lastName}
+                                            onChange={(e) =>
+                                                setLastName(e.target.value)
+                                            }
+                                            placeholder="Last Name"
+                                        />
+                                    )}
+                                </div>
+                                <div className={styles.formGroups}>
+                                    <label>Enter First Name</label>
+                                    {getProfileData?.user?.firstName ? (
+                                        <input
+                                            type="text"
+                                            value={
+                                                getProfileData?.user?.lastName
+                                                    ? `${getProfileData?.user?.firstName}`
+                                                    : 'Full Name'
+                                            }
+                                            disabled
+                                        />
+                                    ) : (
+                                        <input
+                                            type="text"
+                                            value={firstName}
+                                            onChange={(e) =>
+                                                setFirstName(e.target.value)
+                                            }
+                                            placeholder="First Name"
+                                        />
+                                    )}
                                 </div>
                                 {/* {alluserData[1].documentData.map(
                                     (usersData, index) => {
                                         return <></>;
                                     }
                                 )} */}
-                                <div className={styles.formGroup}>
-                                    <label>Select your Gender</label>
-                                    <select name="" id="">
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                </div>
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Select your Gender</label>
+                                <select
+                                    name=""
+                                    id=""
+                                    onChange={(e) => setGender(e.target.value)}
+                                >
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
                             </div>
                             <div className={styles.formCont}>
                                 <div className={styles.formGroup}>
@@ -377,7 +451,9 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             value={
                                                 bName
                                                     ? bName
-                                                    : `${getProfileData?.user?.lastName} ${getProfileData?.user?.firstName}`
+                                                    : `${getProfileData?.user?.firstName} ${getProfileData?.user?.lastName}`
+                                                    ? `${lastName} ${firstName}`
+                                                    : ''
                                             }
                                             disabled
                                         />

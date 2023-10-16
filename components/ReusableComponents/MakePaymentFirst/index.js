@@ -8,6 +8,8 @@ import SingleTransfer from './singletransfer';
 import styles from './styles.module.css';
 
 import { useDispatch } from 'react-redux';
+import AirtimeOrData from './airtimeordata';
+import MobileMoney from './mobilemoney';
 
 const MakePaymentFirst = ({
     firstTitle,
@@ -26,8 +28,10 @@ const MakePaymentFirst = ({
     isLoading,
     payload,
     formData,
+    nextPage,
     setFormdata,
-    backAction
+    backAction,
+    forwardPage
 }) => {
     const myref = useRef();
     useEffect(() => {
@@ -66,6 +70,7 @@ const MakePaymentFirst = ({
                             setFormdata={setFormdata}
                             selfaction={selfaction}
                             othersaction={othersaction}
+                            nextPage={nextPage}
                             firstTitle="Single Transfer Payment"
                             buttonText={buttonText}
                             scheduleLater={scheduleLater}
@@ -91,11 +96,44 @@ const MakePaymentFirst = ({
                             formData={formData}
                             setFormdata={setFormdata}
                             action={action}
+                            forwardPage={forwardPage}
                             firstTitle={firstTitle}
                             buttonText={buttonText}
                             bankAccounts={bankAccount}
                             payload={payload}
                             isLoading={isLoading}
+                        />
+                    ) : firstTitle === 'Airtime or Data' ? (
+                        <AirtimeOrData
+                            formData={formData}
+                            setFormdata={setFormdata}
+                            action={action}
+                            nextPage={nextPage}
+                            firstTitle={firstTitle}
+                            buttonText={buttonText}
+                            arrowAction={arrowAction}
+                            scheduleLater={scheduleLater}
+                            dataAction={dataAction}
+                            airtimeAction={airtimeAction}
+                            bankAccounts={bankAccount}
+                            isLoading={isLoading}
+                            closeAction={closeAction}
+                            backAction={backAction}
+                        />
+                    ) : firstTitle === 'Mobile Money' ? (
+                        <MobileMoney
+                            formData={formData}
+                            setFormdata={setFormdata}
+                            action={action}
+                            firstTitle={firstTitle}
+                            buttonText={buttonText}
+                            arrowAction={arrowAction}
+                            scheduleLater={scheduleLater}
+                            dataAction={dataAction}
+                            airtimeAction={airtimeAction}
+                            bankAccounts={bankAccount}
+                            isLoading={isLoading}
+                            backAction={backAction}
                         />
                     ) : (
                         <BillPayment
@@ -114,28 +152,26 @@ const MakePaymentFirst = ({
                         />
                     )}
                 </div>
-                <div>
-                    {width > 950 ? (
-                        <div>
-                            <img
-                                src="../../Assets/Images/bluemoney.png"
-                                alt=""
-                                className={styles.greenImg}
-                            />
-                            <CloseButton
-                                action={closeAction}
-                                classes={styles.closebtn}
-                                color="white"
-                            />
-                        </div>
-                    ) : (
+                {width > 950 ? (
+                    <div>
+                        <img
+                            src="../../Assets/Images/bluemoney.png"
+                            alt=""
+                            className={styles.greenImg}
+                        />
                         <CloseButton
                             action={closeAction}
                             classes={styles.closebtn}
-                            color="grey"
+                            color="white"
                         />
-                    )}
-                </div>
+                    </div>
+                ) : (
+                    <CloseButton
+                        action={closeAction}
+                        classes={styles.closebtn}
+                        color="grey"
+                    />
+                )}
             </div>
         </Overlay>
     );

@@ -11,6 +11,11 @@
     overflow-y: scroll;
     z-index: 10;
 }
+.otpSect > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
 
 .PaymentSecond::-webkit-scrollbar {
     display: none;

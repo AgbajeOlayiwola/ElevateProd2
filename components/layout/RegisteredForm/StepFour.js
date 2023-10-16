@@ -259,6 +259,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [callRc]);
+
     const showToastMessage = () => {
         toast.error('Thre was ann error creating business', {
             position: toast.POSITION.TOP_RIGHT
@@ -275,741 +276,936 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             position: toast.POSITION.TOP_RIGHT
         });
     };
+    const showToastErrorMessage = () => {
+        toast.error('Business Setup Failed', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
     useEffect(() => {
         if (businessSetupSuccess) {
             showToastSuccessMessage();
+        } else if (businessSetupErr) {
+            showToastErrorMessage();
         }
-    }, [businessSetupSuccess]);
+    }, [businessSetupSuccess, businessSetupErr]);
 
+    const showToastIndividualSuccessMessage = () => {
+        toast.success('Getting Account Status.', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    const showToastIndividualErrorMessage = () => {
+        toast.error('Error Creating Account, Try Again', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (createCAcctSuccess) {
+            showToastIndividualSuccessMessage();
+        } else if (createCAcctErr) {
+            showToastIndividualErrorMessage();
+        }
+    }, [createCAcctSuccess, createCAcctErr]);
+    const showToastAccountStatusErrorMessage = () => {
+        toast.error('Error Fetching Account Status', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (getAccountStatusErr) {
+            showToastAccountStatusErrorMessage();
+        }
+    }, [getAccountStatusErr]);
     return (
-        <div className={styles.body}>
+        <>
+            {' '}
             <ToastContainer />
-            <section className={styles.sectionI}>
-                <ProfileSetupSide text="Checkout Priceless opportunities Be ahead" />
-            </section>
-            <section className={styles.sectionII}>
-                <div className={styles.lastStep}>
-                    <div className={styles.cardHeading}>
-                        <ArrowBackSvg action={action} color="#102572" />
-                        <p className={styles.error}></p>
-                        <div>
-                            <h3 className={styles.LeftHeading}>
-                                Complete your Profile
-                            </h3>
+            <div className={styles.body}>
+                <section className={styles.sectionI}>
+                    <ProfileSetupSide text="Checkout Priceless opportunities Be ahead" />
+                </section>
+                <section className={styles.sectionII}>
+                    <div className={styles.lastStep}>
+                        <div className={styles.cardHeading}>
+                            <ArrowBackSvg action={action} color="#102572" />
+                            <p className={styles.error}></p>
+                            <div>
+                                <h3 className={styles.LeftHeading}>
+                                    Complete your Profile
+                                </h3>
+                            </div>
                         </div>
+                        {pageType === 'New' ? (
+                            <div className={styles.lastContainer}>
+                                <form>
+                                    <div className={styles.existingUserHead}>
+                                        <div
+                                            className={
+                                                styles.existingUserSingle
+                                            }
+                                        >
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Enter Business Name
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter Business  Name"
+                                                    value={businessName}
+                                                    onChange={(e) =>
+                                                        setBusinessName(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Select your Business
+                                                    Category
+                                                </label>
+                                                <div
+                                                    className={
+                                                        styles.businessCat
+                                                    }
+                                                >
+                                                    <div
+                                                        className={
+                                                            styles.businessCategories
+                                                        }
+                                                        onClick={() => {
+                                                            setBusinessTest(
+                                                                !businessTest
+                                                            );
+                                                        }}
+                                                    >
+                                                        <SearchSvg color="#005B82" />
+                                                        {selectedCategory ? (
+                                                            <p>
+                                                                {
+                                                                    selectedCategory
+                                                                }
+                                                            </p>
+                                                        ) : (
+                                                            <p>
+                                                                Search Business
+                                                                Category
+                                                            </p>
+                                                        )}
+
+                                                        <DropdownSvg />
+                                                    </div>
+                                                    {businessTest && (
+                                                        <ul
+                                                            className={
+                                                                styles.businessGroup
+                                                            }
+                                                        >
+                                                            {bussinestCate
+                                                                ? bussinestCate?.map(
+                                                                      (
+                                                                          category,
+                                                                          index
+                                                                      ) => {
+                                                                          return (
+                                                                              <li
+                                                                                  key={
+                                                                                      index
+                                                                                  }
+                                                                                  onClick={() => {
+                                                                                      handleCategoryClick(
+                                                                                          category
+                                                                                      ),
+                                                                                          setBusinessTest(
+                                                                                              !businessTest
+                                                                                          );
+                                                                                  }}
+                                                                              >
+                                                                                  {
+                                                                                      category
+                                                                                  }
+                                                                              </li>
+                                                                          );
+                                                                      }
+                                                                  )
+                                                                : null}
+                                                        </ul>
+                                                    )}
+                                                    {!selectedCategory ? (
+                                                        <p
+                                                            className={
+                                                                styles.error
+                                                            }
+                                                        >
+                                                            Please Select a
+                                                            business category
+                                                        </p>
+                                                    ) : null}
+                                                </div>
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>Street Name</label>
+                                                <div
+                                                    className={
+                                                        styles.addressNumber
+                                                    }
+                                                >
+                                                    <input
+                                                        type="text"
+                                                        placeholder="101"
+                                                        className={
+                                                            styles.number
+                                                        }
+                                                    />
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Enter Street Name"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Local Government Area (LGA)
+                                                </label>
+                                                <select
+                                                    onChange={(e) => {
+                                                        setLocalGoverment(
+                                                            e.target.value
+                                                        );
+                                                    }}
+                                                >
+                                                    <option value="">
+                                                        Select Local Government
+                                                    </option>
+                                                    {localGovernment
+                                                        ? localGovernment?.map(
+                                                              (item, index) => {
+                                                                  return (
+                                                                      <option
+                                                                          value={
+                                                                              item
+                                                                          }
+                                                                          key={
+                                                                              index
+                                                                          }
+                                                                      >
+                                                                          {item}
+                                                                      </option>
+                                                                  );
+                                                              }
+                                                          )
+                                                        : null}
+                                                </select>
+                                                {!lga ? (
+                                                    <p className={styles.error}>
+                                                        Please Select a local
+                                                        government
+                                                    </p>
+                                                ) : null}
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={
+                                                styles.existingUserSingle
+                                            }
+                                        >
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Enter Business Phone Number
+                                                </label>
+                                                <div className={styles.phone}>
+                                                    <div
+                                                        className={
+                                                            styles.phoneHeader
+                                                        }
+                                                    >
+                                                        <span>
+                                                            <img
+                                                                src={
+                                                                    formData?.flag
+                                                                }
+                                                                alt=""
+                                                            />
+                                                        </span>
+                                                        <p>
+                                                            {
+                                                                formData?.baseCurrency
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            styles.phoneDetails
+                                                        }
+                                                    >
+                                                        <p>
+                                                            {
+                                                                formData?.countryCode
+                                                            }
+                                                        </p>
+                                                        <input
+                                                            type="number"
+                                                            placeholder="812 345 6789"
+                                                            value={moreAccountNumberDetails?.accounts?.mobileNos.replace(
+                                                                '234',
+                                                                ''
+                                                            )}
+                                                            readOnly
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Select your Business Type
+                                                </label>
+                                                <div
+                                                    className={
+                                                        styles.businessCat
+                                                    }
+                                                >
+                                                    <div
+                                                        className={
+                                                            styles.businessCategories
+                                                        }
+                                                        onClick={() => {
+                                                            setBusinessText(
+                                                                !businessText
+                                                            );
+                                                        }}
+                                                    >
+                                                        <SearchSvg color="#005B82" />
+                                                        {selectedBusinessType ? (
+                                                            <p>
+                                                                {
+                                                                    selectedBusinessType
+                                                                }
+                                                            </p>
+                                                        ) : (
+                                                            <p>
+                                                                Search Business
+                                                                Type
+                                                            </p>
+                                                        )}
+                                                        <DropdownSvg />
+                                                    </div>
+                                                    {businessText && (
+                                                        <ul
+                                                            className={
+                                                                styles.businessGroup
+                                                            }
+                                                        >
+                                                            {businessType?.map(
+                                                                (
+                                                                    business,
+                                                                    index
+                                                                ) => (
+                                                                    <li
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        onClick={() => {
+                                                                            handleBusinessTypeClick(
+                                                                                business
+                                                                            ),
+                                                                                setBusinessText(
+                                                                                    !businessText
+                                                                                );
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            business
+                                                                        }
+                                                                    </li>
+                                                                )
+                                                            )}
+                                                        </ul>
+                                                    )}
+                                                    {!selectedBusinessType ? (
+                                                        <p
+                                                            className={
+                                                                styles.error
+                                                            }
+                                                        >
+                                                            Please Select a
+                                                            business type
+                                                        </p>
+                                                    ) : null}
+                                                </div>
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>State</label>
+                                                <select
+                                                    onChange={(event) => {
+                                                        setLocalState(
+                                                            event.target.value
+                                                        );
+                                                    }}
+                                                >
+                                                    <option>
+                                                        Select State
+                                                    </option>
+                                                    {lgasArr.map(
+                                                        (item, index) => {
+                                                            return (
+                                                                <option
+                                                                    value={
+                                                                        item.state
+                                                                    }
+                                                                    key={index}
+                                                                >
+                                                                    {item.state}
+                                                                </option>
+                                                            );
+                                                        }
+                                                    )}
+                                                </select>
+                                                {!localState ? (
+                                                    <p className={styles.error}>
+                                                        Please Select a state
+                                                    </p>
+                                                ) : null}
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>City/Town</label>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter City"
+                                                    value={city}
+                                                    onChange={(e) =>
+                                                        setCity(e.target.value)
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.existingUserSingle}>
+                                        <label>
+                                            Enter Referal Code <i>(optional)</i>{' '}
+                                        </label>
+                                        <input
+                                            placeholder="Enter  Code"
+                                            className={styles.textInput}
+                                            value={refferalCode}
+                                            onChange={(e) =>
+                                                setRefferalCode(e.target.value)
+                                            }
+                                        />{' '}
+                                        {/* {loading ? <Loader /> : null} */}
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            text="New Account"
+                                            type="submit"
+                                            loads={businessSetupLoad}
+                                            onClick={createBusiness}
+                                        />
+                                    </div>
+                                </form>
+                            </div>
+                        ) : (
+                            <div className={styles.lastContainer}>
+                                <form>
+                                    <div className={styles.existingUserHead}>
+                                        <div
+                                            className={
+                                                styles.existingUserSingle
+                                            }
+                                        >
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Enter your RC /Business
+                                                    Registration Number
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Your RC Number"
+                                                    name="rcNumber"
+                                                    onChange={(e) =>
+                                                        setCallRc(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>TIN </label>
+                                                <div
+                                                    className={
+                                                        styles.addressNumber
+                                                    }
+                                                >
+                                                    <input
+                                                        type="text"
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Select your Business Type
+                                                </label>
+                                                <div
+                                                    className={
+                                                        styles.businessCat
+                                                    }
+                                                >
+                                                    <div
+                                                        className={
+                                                            styles.businessCategories
+                                                        }
+                                                        onClick={() => {
+                                                            setBusinessText(
+                                                                !businessText
+                                                            );
+                                                        }}
+                                                    >
+                                                        <SearchSvg color="#005B82" />
+                                                        {selectedBusinessType ? (
+                                                            <p>
+                                                                {
+                                                                    selectedBusinessType
+                                                                }
+                                                            </p>
+                                                        ) : (
+                                                            <p>
+                                                                Search Business
+                                                                Type
+                                                            </p>
+                                                        )}
+                                                        <DropdownSvg />
+                                                    </div>
+                                                    {businessText && (
+                                                        <ul
+                                                            className={
+                                                                styles.businessGroup
+                                                            }
+                                                        >
+                                                            {businessType?.map(
+                                                                (
+                                                                    business,
+                                                                    index
+                                                                ) => (
+                                                                    <li
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        onClick={() => {
+                                                                            handleBusinessTypeClick(
+                                                                                business
+                                                                            ),
+                                                                                setBusinessText(
+                                                                                    !businessText
+                                                                                );
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            business
+                                                                        }
+                                                                    </li>
+                                                                )
+                                                            )}
+                                                        </ul>
+                                                    )}
+                                                    {!selectedBusinessType ? (
+                                                        <p
+                                                            className={
+                                                                styles.error
+                                                            }
+                                                        >
+                                                            Please Select a
+                                                            business type
+                                                        </p>
+                                                    ) : null}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={
+                                                styles.existingUserSingle
+                                            }
+                                        >
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Enter your Business Name
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    value={
+                                                        searchRCLoad
+                                                            ? 'Loading...'
+                                                            : searchRCData?.companyName
+                                                    }
+                                                    disabled
+                                                />
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Select your Business
+                                                    Category
+                                                </label>
+                                                <div
+                                                    className={
+                                                        styles.businessCat
+                                                    }
+                                                >
+                                                    <div
+                                                        className={
+                                                            styles.businessCategories
+                                                        }
+                                                        onClick={() => {
+                                                            setBusinessTest(
+                                                                !businessTest
+                                                            );
+                                                        }}
+                                                    >
+                                                        <SearchSvg color="#005B82" />
+                                                        {selectedCategory ? (
+                                                            <p>
+                                                                {
+                                                                    selectedCategory
+                                                                }
+                                                            </p>
+                                                        ) : (
+                                                            <p>
+                                                                Search Business
+                                                                Category
+                                                            </p>
+                                                        )}
+
+                                                        <DropdownSvg />
+                                                    </div>
+                                                    {businessTest && (
+                                                        <ul
+                                                            className={
+                                                                styles.businessGroup
+                                                            }
+                                                        >
+                                                            {bussinestCate
+                                                                ? bussinestCate?.map(
+                                                                      (
+                                                                          category,
+                                                                          index
+                                                                      ) => {
+                                                                          return (
+                                                                              <li
+                                                                                  key={
+                                                                                      index
+                                                                                  }
+                                                                                  onClick={() => {
+                                                                                      handleCategoryClick(
+                                                                                          category
+                                                                                      ),
+                                                                                          setBusinessTest(
+                                                                                              !businessTest
+                                                                                          );
+                                                                                  }}
+                                                                              >
+                                                                                  {
+                                                                                      category
+                                                                                  }
+                                                                              </li>
+                                                                          );
+                                                                      }
+                                                                  )
+                                                                : null}
+                                                        </ul>
+                                                    )}
+                                                    {!selectedCategory ? (
+                                                        <p
+                                                            className={
+                                                                styles.error
+                                                            }
+                                                        >
+                                                            Please Select a
+                                                            business category
+                                                        </p>
+                                                    ) : null}
+                                                </div>
+                                            </div>{' '}
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Enter your Business Phone
+                                                    Number
+                                                </label>
+                                                <div className={styles.phone}>
+                                                    <div
+                                                        className={
+                                                            styles.phoneHeader
+                                                        }
+                                                    >
+                                                        <span>
+                                                            <img
+                                                                src={
+                                                                    formData?.flag
+                                                                }
+                                                                alt=""
+                                                            />
+                                                        </span>
+                                                        <p>
+                                                            {
+                                                                formData?.baseCurrency
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            styles.phoneDetails
+                                                        }
+                                                    >
+                                                        <p>
+                                                            {' '}
+                                                            +
+                                                            {
+                                                                formData?.countryCode
+                                                            }
+                                                        </p>
+                                                        <input
+                                                            type="number"
+                                                            placeholder="812 345 6789"
+                                                            value={moreAccountNumberDetails?.accounts?.mobileNos.replace(
+                                                                '234',
+                                                                ''
+                                                            )}
+                                                            readOnly
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.existingUserHead}>
+                                        <div
+                                            className={
+                                                styles.existingUserSingle
+                                            }
+                                        >
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>Street Name</label>
+                                                <div
+                                                    className={
+                                                        styles.addressNumber
+                                                    }
+                                                >
+                                                    <input
+                                                        type="text"
+                                                        placeholder="101"
+                                                        className={
+                                                            styles.number
+                                                        }
+                                                    />
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Enter Street Name"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>
+                                                    Local Government Area (LGA)
+                                                </label>
+                                                <select
+                                                    onChange={(e) =>
+                                                        setLga(e.target.value)
+                                                    }
+                                                >
+                                                    <option value="">
+                                                        Select Local Government
+                                                    </option>
+                                                    {localGovernment
+                                                        ? localGovernment?.map(
+                                                              (item, index) => {
+                                                                  return (
+                                                                      <option
+                                                                          value={
+                                                                              item
+                                                                          }
+                                                                          key={
+                                                                              index
+                                                                          }
+                                                                      >
+                                                                          {item}
+                                                                      </option>
+                                                                  );
+                                                              }
+                                                          )
+                                                        : null}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={
+                                                styles.existingUserSingle
+                                            }
+                                        >
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>State</label>
+                                                <select
+                                                    onChange={(event) => {
+                                                        setLocalState(
+                                                            event.target.value
+                                                        );
+                                                    }}
+                                                >
+                                                    <option>
+                                                        Select State
+                                                    </option>
+                                                    {lgasArr.map(
+                                                        (item, index) => {
+                                                            return (
+                                                                <option
+                                                                    value={
+                                                                        item.state
+                                                                    }
+                                                                    key={index}
+                                                                >
+                                                                    {item.state}
+                                                                </option>
+                                                            );
+                                                        }
+                                                    )}
+                                                </select>
+                                                {!localState ? (
+                                                    <p className={styles.error}>
+                                                        Please Select a state
+                                                    </p>
+                                                ) : null}
+                                            </div>
+                                            <div
+                                                className={
+                                                    styles.existingUserCont
+                                                }
+                                            >
+                                                <label>City/Town</label>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter City"
+                                                    value={city}
+                                                    onChange={(e) =>
+                                                        setCity(e.target.value)
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className={styles.existingUserSingle}>
+                                        <label>
+                                            Enter Referal Code <i>(optional)</i>{' '}
+                                        </label>
+                                        <input
+                                            placeholder="Enter  Code"
+                                            className={styles.textInput}
+                                            value={refferalCode}
+                                            onChange={(e) =>
+                                                setRefferalCode(e.target.value)
+                                            }
+                                        />
+                                        {getAccountStatusLoad ||
+                                        createCAcctLoad ? (
+                                            <p>
+                                                Account number is being created
+                                            </p>
+                                        ) : null}
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            text="Save and Continue"
+                                            onClick={createAnewBusinessAccount}
+                                            loads={
+                                                getAccountStatusLoad ||
+                                                createCAcctLoad ||
+                                                businessSetupLoad
+                                            }
+                                            type="submit"
+                                        />
+                                    </div>
+                                </form>
+                            </div>
+                        )}
                     </div>
-                    {pageType === 'New' ? (
-                        <div className={styles.lastContainer}>
-                            <form>
-                                <div className={styles.existingUserHead}>
-                                    <div className={styles.existingUserSingle}>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>Enter Business Name</label>
-                                            <input
-                                                type="text"
-                                                placeholder="Enter Business  Name"
-                                                value={businessName}
-                                                onChange={(e) =>
-                                                    setBusinessName(
-                                                        e.target.value
-                                                    )
-                                                }
-                                            />
-                                        </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Select your Business Category
-                                            </label>
-                                            <div className={styles.businessCat}>
-                                                <div
-                                                    className={
-                                                        styles.businessCategories
-                                                    }
-                                                    onClick={() => {
-                                                        setBusinessTest(
-                                                            !businessTest
-                                                        );
-                                                    }}
-                                                >
-                                                    <SearchSvg color="#005B82" />
-                                                    {selectedCategory ? (
-                                                        <p>
-                                                            {selectedCategory}
-                                                        </p>
-                                                    ) : (
-                                                        <p>
-                                                            Search Business
-                                                            Category
-                                                        </p>
-                                                    )}
-
-                                                    <DropdownSvg />
-                                                </div>
-                                                {businessTest && (
-                                                    <ul
-                                                        className={
-                                                            styles.businessGroup
-                                                        }
-                                                    >
-                                                        {bussinestCate
-                                                            ? bussinestCate?.map(
-                                                                  (
-                                                                      category,
-                                                                      index
-                                                                  ) => {
-                                                                      return (
-                                                                          <li
-                                                                              key={
-                                                                                  index
-                                                                              }
-                                                                              onClick={() => {
-                                                                                  handleCategoryClick(
-                                                                                      category
-                                                                                  ),
-                                                                                      setBusinessTest(
-                                                                                          !businessTest
-                                                                                      );
-                                                                              }}
-                                                                          >
-                                                                              {
-                                                                                  category
-                                                                              }
-                                                                          </li>
-                                                                      );
-                                                                  }
-                                                              )
-                                                            : null}
-                                                    </ul>
-                                                )}
-                                                {!selectedCategory ? (
-                                                    <p className={styles.error}>
-                                                        Please Select a business
-                                                        category
-                                                    </p>
-                                                ) : null}
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>Street Name</label>
-                                            <div
-                                                className={styles.addressNumber}
-                                            >
-                                                <input
-                                                    type="text"
-                                                    placeholder="101"
-                                                    className={styles.number}
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Enter Street Name"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Local Government Area (LGA)
-                                            </label>
-                                            <select
-                                                onChange={(e) => {
-                                                    setLocalGoverment(
-                                                        e.target.value
-                                                    );
-                                                }}
-                                            >
-                                                <option value="">
-                                                    Select Local Government
-                                                </option>
-                                                {localGovernment
-                                                    ? localGovernment?.map(
-                                                          (item, index) => {
-                                                              return (
-                                                                  <option
-                                                                      value={
-                                                                          item
-                                                                      }
-                                                                      key={
-                                                                          index
-                                                                      }
-                                                                  >
-                                                                      {item}
-                                                                  </option>
-                                                              );
-                                                          }
-                                                      )
-                                                    : null}
-                                            </select>
-                                            {!lga ? (
-                                                <p className={styles.error}>
-                                                    Please Select a local
-                                                    government
-                                                </p>
-                                            ) : null}
-                                        </div>
-                                    </div>
-                                    <div className={styles.existingUserSingle}>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Enter Business Phone Number
-                                            </label>
-                                            <div className={styles.phone}>
-                                                <div
-                                                    className={
-                                                        styles.phoneHeader
-                                                    }
-                                                >
-                                                    <span>
-                                                        <img
-                                                            src={formData?.flag}
-                                                            alt=""
-                                                        />
-                                                    </span>
-                                                    <p>
-                                                        {formData?.baseCurrency}
-                                                    </p>
-                                                </div>
-                                                <div
-                                                    className={
-                                                        styles.phoneDetails
-                                                    }
-                                                >
-                                                    <p>
-                                                        {formData?.countryCode}
-                                                    </p>
-                                                    <input
-                                                        type="number"
-                                                        placeholder="812 345 6789"
-                                                        value={moreAccountNumberDetails?.accounts?.mobileNos.replace(
-                                                            '234',
-                                                            ''
-                                                        )}
-                                                        readOnly
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Select your Business Type
-                                            </label>
-                                            <div className={styles.businessCat}>
-                                                <div
-                                                    className={
-                                                        styles.businessCategories
-                                                    }
-                                                    onClick={() => {
-                                                        setBusinessText(
-                                                            !businessText
-                                                        );
-                                                    }}
-                                                >
-                                                    <SearchSvg color="#005B82" />
-                                                    {selectedBusinessType ? (
-                                                        <p>
-                                                            {
-                                                                selectedBusinessType
-                                                            }
-                                                        </p>
-                                                    ) : (
-                                                        <p>
-                                                            Search Business Type
-                                                        </p>
-                                                    )}
-                                                    <DropdownSvg />
-                                                </div>
-                                                {businessText && (
-                                                    <ul
-                                                        className={
-                                                            styles.businessGroup
-                                                        }
-                                                    >
-                                                        {businessType?.map(
-                                                            (
-                                                                business,
-                                                                index
-                                                            ) => (
-                                                                <li
-                                                                    key={index}
-                                                                    onClick={() => {
-                                                                        handleBusinessTypeClick(
-                                                                            business
-                                                                        ),
-                                                                            setBusinessText(
-                                                                                !businessText
-                                                                            );
-                                                                    }}
-                                                                >
-                                                                    {business}
-                                                                </li>
-                                                            )
-                                                        )}
-                                                    </ul>
-                                                )}
-                                                {!selectedBusinessType ? (
-                                                    <p className={styles.error}>
-                                                        Please Select a business
-                                                        type
-                                                    </p>
-                                                ) : null}
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>State</label>
-                                            <select
-                                                onChange={(event) => {
-                                                    setLocalState(
-                                                        event.target.value
-                                                    );
-                                                }}
-                                            >
-                                                <option>Select State</option>
-                                                {lgasArr.map((item, index) => {
-                                                    return (
-                                                        <option
-                                                            value={item.state}
-                                                            key={index}
-                                                        >
-                                                            {item.state}
-                                                        </option>
-                                                    );
-                                                })}
-                                            </select>
-                                            {!localState ? (
-                                                <p className={styles.error}>
-                                                    Please Select a state
-                                                </p>
-                                            ) : null}
-                                        </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>City/Town</label>
-                                            <input
-                                                type="text"
-                                                placeholder="Enter City"
-                                                value={city}
-                                                onChange={(e) =>
-                                                    setCity(e.target.value)
-                                                }
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className={styles.existingUserSingle}>
-                                    <label>
-                                        Enter Referal Code <i>(optional)</i>{' '}
-                                    </label>
-                                    <input
-                                        placeholder="Enter  Code"
-                                        className={styles.textInput}
-                                        value={refferalCode}
-                                        onChange={(e) =>
-                                            setRefferalCode(e.target.value)
-                                        }
-                                    />{' '}
-                                    {/* {loading ? <Loader /> : null} */}
-                                    <ButtonComp
-                                        disabled={activeBtn}
-                                        active={
-                                            activeBtn ? 'active' : 'inactive'
-                                        }
-                                        text="New Account"
-                                        type="submit"
-                                        loads={businessSetupLoad}
-                                        onClick={createBusiness}
-                                    />
-                                </div>
-                            </form>
-                        </div>
-                    ) : (
-                        <div className={styles.lastContainer}>
-                            <form>
-                                <div className={styles.existingUserHead}>
-                                    <div className={styles.existingUserSingle}>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Enter your RC /Business
-                                                Registration Number
-                                            </label>
-                                            <input
-                                                type="text"
-                                                placeholder="Your RC Number"
-                                                name="rcNumber"
-                                                onChange={(e) =>
-                                                    setCallRc(e.target.value)
-                                                }
-                                            />
-                                        </div>
-
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>TIN </label>
-                                            <div
-                                                className={styles.addressNumber}
-                                            >
-                                                <input type="text" required />
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Select your Business Type
-                                            </label>
-                                            <div className={styles.businessCat}>
-                                                <div
-                                                    className={
-                                                        styles.businessCategories
-                                                    }
-                                                    onClick={() => {
-                                                        setBusinessText(
-                                                            !businessText
-                                                        );
-                                                    }}
-                                                >
-                                                    <SearchSvg color="#005B82" />
-                                                    {selectedBusinessType ? (
-                                                        <p>
-                                                            {
-                                                                selectedBusinessType
-                                                            }
-                                                        </p>
-                                                    ) : (
-                                                        <p>
-                                                            Search Business Type
-                                                        </p>
-                                                    )}
-                                                    <DropdownSvg />
-                                                </div>
-                                                {businessText && (
-                                                    <ul
-                                                        className={
-                                                            styles.businessGroup
-                                                        }
-                                                    >
-                                                        {businessType?.map(
-                                                            (
-                                                                business,
-                                                                index
-                                                            ) => (
-                                                                <li
-                                                                    key={index}
-                                                                    onClick={() => {
-                                                                        handleBusinessTypeClick(
-                                                                            business
-                                                                        ),
-                                                                            setBusinessText(
-                                                                                !businessText
-                                                                            );
-                                                                    }}
-                                                                >
-                                                                    {business}
-                                                                </li>
-                                                            )
-                                                        )}
-                                                    </ul>
-                                                )}
-                                                {!selectedBusinessType ? (
-                                                    <p className={styles.error}>
-                                                        Please Select a business
-                                                        type
-                                                    </p>
-                                                ) : null}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.existingUserSingle}>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Enter your Business Name
-                                            </label>
-                                            <input
-                                                type="text"
-                                                value={
-                                                    searchRCLoad
-                                                        ? 'Loading...'
-                                                        : searchRCData?.companyName
-                                                }
-                                                disabled
-                                            />
-                                        </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Select your Business Category
-                                            </label>
-                                            <div className={styles.businessCat}>
-                                                <div
-                                                    className={
-                                                        styles.businessCategories
-                                                    }
-                                                    onClick={() => {
-                                                        setBusinessTest(
-                                                            !businessTest
-                                                        );
-                                                    }}
-                                                >
-                                                    <SearchSvg color="#005B82" />
-                                                    {selectedCategory ? (
-                                                        <p>
-                                                            {selectedCategory}
-                                                        </p>
-                                                    ) : (
-                                                        <p>
-                                                            Search Business
-                                                            Category
-                                                        </p>
-                                                    )}
-
-                                                    <DropdownSvg />
-                                                </div>
-                                                {businessTest && (
-                                                    <ul
-                                                        className={
-                                                            styles.businessGroup
-                                                        }
-                                                    >
-                                                        {bussinestCate
-                                                            ? bussinestCate?.map(
-                                                                  (
-                                                                      category,
-                                                                      index
-                                                                  ) => {
-                                                                      return (
-                                                                          <li
-                                                                              key={
-                                                                                  index
-                                                                              }
-                                                                              onClick={() => {
-                                                                                  handleCategoryClick(
-                                                                                      category
-                                                                                  ),
-                                                                                      setBusinessTest(
-                                                                                          !businessTest
-                                                                                      );
-                                                                              }}
-                                                                          >
-                                                                              {
-                                                                                  category
-                                                                              }
-                                                                          </li>
-                                                                      );
-                                                                  }
-                                                              )
-                                                            : null}
-                                                    </ul>
-                                                )}
-                                                {!selectedCategory ? (
-                                                    <p className={styles.error}>
-                                                        Please Select a business
-                                                        category
-                                                    </p>
-                                                ) : null}
-                                            </div>
-                                        </div>{' '}
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Enter your Business Phone Number
-                                            </label>
-                                            <div className={styles.phone}>
-                                                <div
-                                                    className={
-                                                        styles.phoneHeader
-                                                    }
-                                                >
-                                                    <span>
-                                                        <img
-                                                            src={formData?.flag}
-                                                            alt=""
-                                                        />
-                                                    </span>
-                                                    <p>
-                                                        {formData?.baseCurrency}
-                                                    </p>
-                                                </div>
-                                                <div
-                                                    className={
-                                                        styles.phoneDetails
-                                                    }
-                                                >
-                                                    <p>
-                                                        {' '}
-                                                        +{formData?.countryCode}
-                                                    </p>
-                                                    <input
-                                                        type="number"
-                                                        placeholder="812 345 6789"
-                                                        value={moreAccountNumberDetails?.accounts?.mobileNos.replace(
-                                                            '234',
-                                                            ''
-                                                        )}
-                                                        readOnly
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={styles.existingUserHead}>
-                                    <div className={styles.existingUserSingle}>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>Street Name</label>
-                                            <div
-                                                className={styles.addressNumber}
-                                            >
-                                                <input
-                                                    type="text"
-                                                    placeholder="101"
-                                                    className={styles.number}
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Enter Street Name"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>
-                                                Local Government Area (LGA)
-                                            </label>
-                                            <select
-                                                onChange={(e) =>
-                                                    setLga(e.target.value)
-                                                }
-                                            >
-                                                <option value="">
-                                                    Select Local Government
-                                                </option>
-                                                {localGovernment
-                                                    ? localGovernment?.map(
-                                                          (item, index) => {
-                                                              return (
-                                                                  <option
-                                                                      value={
-                                                                          item
-                                                                      }
-                                                                      key={
-                                                                          index
-                                                                      }
-                                                                  >
-                                                                      {item}
-                                                                  </option>
-                                                              );
-                                                          }
-                                                      )
-                                                    : null}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className={styles.existingUserSingle}>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>State</label>
-                                            <select
-                                                onChange={(event) => {
-                                                    setLocalState(
-                                                        event.target.value
-                                                    );
-                                                }}
-                                            >
-                                                <option>Select State</option>
-                                                {lgasArr.map((item, index) => {
-                                                    return (
-                                                        <option
-                                                            value={item.state}
-                                                            key={index}
-                                                        >
-                                                            {item.state}
-                                                        </option>
-                                                    );
-                                                })}
-                                            </select>
-                                            {!localState ? (
-                                                <p className={styles.error}>
-                                                    Please Select a state
-                                                </p>
-                                            ) : null}
-                                        </div>
-                                        <div
-                                            className={styles.existingUserCont}
-                                        >
-                                            <label>City/Town</label>
-                                            <input
-                                                type="text"
-                                                placeholder="Enter City"
-                                                value={city}
-                                                onChange={(e) =>
-                                                    setCity(e.target.value)
-                                                }
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className={styles.existingUserSingle}>
-                                    <label>
-                                        Enter Referal Code <i>(optional)</i>{' '}
-                                    </label>
-                                    <input
-                                        placeholder="Enter  Code"
-                                        className={styles.textInput}
-                                        value={refferalCode}
-                                        onChange={(e) =>
-                                            setRefferalCode(e.target.value)
-                                        }
-                                    />
-                                    {getAccountStatusLoad || createCAcctLoad ? (
-                                        <p>Account number is being created</p>
-                                    ) : null}
-                                    <ButtonComp
-                                        disabled={activeBtn}
-                                        active={
-                                            activeBtn ? 'active' : 'inactive'
-                                        }
-                                        text="Save and Continue"
-                                        onClick={createAnewBusinessAccount}
-                                        loads={
-                                            getAccountStatusLoad ||
-                                            createCAcctLoad ||
-                                            businessSetupLoad
-                                        }
-                                        type="submit"
-                                    />
-                                </div>
-                            </form>
-                        </div>
-                    )}
-                </div>
-            </section>
-        </div>
+                </section>
+            </div>
+        </>
     );
 };
 

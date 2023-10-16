@@ -1,7 +1,7 @@
-import Lottie from 'react-lottie';
-import styles from './styles.module.css';
-import animationData from '../components/ReusableComponents/Lotties/error.json';
 import Link from 'next/link';
+import Lottie from 'react-lottie';
+import animationData from '../components/ReusableComponents/Lotties/error.json';
+import styles from './styles.module.css';
 function Error({ statusCode }) {
     const defaultOptions = {
         loop: true,

@@ -1,10 +1,7 @@
 import {
-    BaseQueryFn,
     createApi,
-    FetchArgs,
     fetchBaseQuery
 } from '@reduxjs/toolkit/dist/query/react';
-import { RootState } from 'store';
 
 // const baseUrl = 'https://dpmfb-prod-app-srvr-01.azurewebsites.net/api/v1';
 const baseUrl = 'https://eidev.ecobank.com:7505/';

@@ -3,6 +3,8 @@ import ButtonComp from '../../../ReusableComponents/Button';
 // import { RegisteredCardWrapper } from './styles.module';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { InputWrapper, Label } from './styles.module';
 import styles from './styles.module.css';
 // import { loadCountry } from '../../../../redux/actions/actions';
@@ -36,15 +38,13 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
     };
     const initialValues = {
         bvn: '',
-        phoneNumber: '',
-        dateOfBirth: ''
+        phoneNumber: ''
     };
     const businessInitialValues = {
         rcNumber: '',
         tin: '',
         bvn: '',
-        phoneNumber: '',
-        date: ''
+        phoneNumber: ''
     };
     const [callRc, setCallRc] = useState('');
     searchRC;
@@ -124,9 +124,34 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
         }
     }, [profileSetUpUnregisteredBusinessSuccess]);
     const affiliate = localStorage.getItem('affiliateCode');
+    const showToastMessage = () => {
+        toast.error(registeredSetupErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (registeredSetupErr) {
+            showToastMessage();
+        }
+    }, [registeredSetupErr]);
+    console.log(profileSetUpUnregisteredBusinessErr);
+    const showToasErrortMessage = () => {
+        toast.error(profileSetUpUnregisteredBusinessErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (profileSetUpUnregisteredBusinessErr) {
+            showToasErrortMessage();
+        }
+    }, [profileSetUpUnregisteredBusinessErr]);
+
     return (
         <div className={styles.bodyWrapper}>
             <div className={styles.cardHeading}>
+                <ToastContainer />
                 <h3 className={styles.LeftHeading}>Profile Setup</h3>
                 {/* <p>We recommend you use a phone number linked to BVN</p> */}
             </div>
@@ -158,18 +183,13 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                 rcNumber: callRc,
                                 tin: values?.tin,
                                 bvn: values?.bvn,
-                                phoneNumber: values?.phoneNumber,
-                                date: values?.date
+                                phoneNumber: values?.phoneNumber
                             };
                             localStorage.setItem(
                                 'regprofilesetupdata',
                                 JSON.stringify(data)
                             );
                             registerUser(values);
-
-                            // if (localStorage.getItem('regprofilesetupdata')) {
-                            //     nextStep();
-                            // }
                             setSubmitting(false);
                         }}
                     >
@@ -194,30 +214,6 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                     name="rcNumber"
                                     onChange={(e) => setCallRc(e.target.value)}
                                 />
-                                {/* 
-                                <InputWrapper>
-                                    <Label>Business Name</Label>
-                                </InputWrapper>
-
-                                <input
-                                    type="text"
-                                    placeholder={
-                                        getRcFisrst
-                                            ? 'Fetching'
-                                            : 'Enter Your Business Name'
-                                    }
-                                    value={
-                                        searchRCLoad ? (
-                                            <Loader />
-                                        ) : (
-                                            searchRCData?.companyName
-                                        )
-                                    }
-                                    onChange={(e) =>
-                                        setBusinessName(e.target.value)
-                                    }
-                                    disabled
-                                /> */}
 
                                 <InputWrapper>
                                     <Label>Enter your TIN</Label>
@@ -266,9 +262,13 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                             name="bvn"
                                             // @ts-ignore
                                             autoCorrect={false}
-                                            onChange={(value) =>
-                                                setFieldValue('bvn', value)
-                                            }
+                                            onChange={(value) => {
+                                                setFieldValue(
+                                                    'bvn',
+                                                    value?.target?.value
+                                                ),
+                                                    console.log(value);
+                                            }}
                                             maxLength={11}
                                         />
                                     </InputWrapper>
@@ -302,21 +302,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                         </div>
                                     </div>
                                 </InputWrapper>
-                                {/* <InputWrapper>
-                                    <Label>Date of Birth</Label>
-                                    <input
-                                        type="date"
-                                        placeholder="dd-mm-yyyy"
-                                        max="2004-12-31"
-                                        name="date"
-                                        onChange={(e) =>
-                                            setFieldValue(
-                                                'date',
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                </InputWrapper> */}
+
                                 <ButtonComp
                                     disabled={activeBtn}
                                     active={activeBtn ? 'active' : 'inactive'}
@@ -338,8 +324,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                         onSubmit={(values, { setSubmitting }) => {
                             const data = {
                                 bvn: values?.bvn,
-                                phoneNumber: values?.phoneNumber,
-                                dateOfBirth: values?.dateOfBirth
+                                phoneNumber: values?.phoneNumber
                             };
                             localStorage.setItem(
                                 'profilesetupdata',
@@ -395,9 +380,13 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                             // @ts-ignore
                                             autoCorrect={false}
                                             onChange={(value) =>
-                                                setFieldValue('bvn', value)
+                                                setFieldValue(
+                                                    'bvn',
+                                                    value?.target?.value
+                                                )
                                             }
                                             maxLength={11}
+                                            value={values.bvn}
                                         />
                                     </InputWrapper>
                                 ) : null}
@@ -426,28 +415,14 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                                         e.target.value
                                                     )
                                                 }
+                                                value={values?.phoneNumber}
                                             />
                                         </div>
                                     </div>
                                 </InputWrapper>
-                                {/* <InputWrapper>
-                                    <Label>Date of Birth</Label>
-                                    <input
-                                        type="date"
-                                        placeholder="DD  |  MM  |  YYYY"
-                                        max="2004-12-31"
-                                        name="dateOfBirth"
-                                        onChange={(e) =>
-                                            setFieldValue(
-                                                'dateOfBirth',
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                </InputWrapper> */}
-                                {/* {loading ? <Loader /> : null} */}
+
                                 <ButtonComp
-                                    disabled={activeBtn}
+                                    disabled={true}
                                     active={activeBtn ? 'active' : 'inactive'}
                                     type="submit"
                                     text={'Next'}

@@ -6,6 +6,16 @@
     padding: 32px 36px;
     box-shadow: 0px 0px 74px -10px rgba(0, 0, 0, 0.08);
 }
+.otherAccounts {
+    align-items: center;
+    overflow: scroll;
+}
+.otherAccounts div {
+    display: flex;
+
+    align-items: center;
+    gap: 10px;
+}
 .card {
     background: linear-gradient(124.52deg, #7fbb01 -34.31%, #2f2f2f 115.35%);
     position: relative;
@@ -14,16 +24,16 @@
     color: white;
     padding: 11px;
 }
-.setAccountNumberAsPrimary{
+.setAccountNumberAsPrimary {
     display: flex;
     gap: 18px;
     align-items: center;
 }
-.success{
+.success {
     color: #69940d;
     cursor: pointer;
 }
-.nothing{
+.nothing {
     cursor: pointer;
 }
 .cardRight {
@@ -167,22 +177,22 @@
     top: 30%;
 }
 @media screen and (max-width: 975px) {
-.moneybodyDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    width: 80%;
-}
-.sliderImage {
-    margin-top: 20px;
-    display: none;
-    justify-content: center;
-}
-.bagMoney{
-    position: absolute;
-    right: 5%;
-    top: 30%;
-    display: none;
-}
+    .moneybodyDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 80%;
+    }
+    .sliderImage {
+        margin-top: 20px;
+        display: none;
+        justify-content: center;
+    }
+    .bagMoney {
+        position: absolute;
+        right: 5%;
+        top: 30%;
+        display: none;
+    }
 }

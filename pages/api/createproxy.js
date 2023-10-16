@@ -6,7 +6,7 @@ const app = express();
 app.use(
     '/api/createproxy',
     createProxyMiddleware({
-        target: 'https://eidev.ecobank.com:7505/smeapp-service/',
+        target: 'https://eidev.ecobank.com:7507/smeapp-service/',
         changeOrigin: true
     })
 );

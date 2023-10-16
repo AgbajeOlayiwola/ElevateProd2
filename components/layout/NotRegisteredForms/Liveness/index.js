@@ -38,7 +38,10 @@ const Liveness = ({ formData, type, nextStep }) => {
                 const storedData = localStorage.getItem('profilesetupdata');
                 const profileSetupData = JSON.parse(storedData);
                 const faceMMatchData = {
-                    userFaceBase64: ImageSrcII,
+                    userFaceBase64: ImageSrcII?.replace(
+                        'data:image/jpeg;base64,',
+                        ''
+                    ).trim(),
                     bvn: profileSetupData?.bvn
                 };
                 // Perform a facial match with the data
@@ -47,7 +50,10 @@ const Liveness = ({ formData, type, nextStep }) => {
                 const storedData = localStorage.getItem('profilesetupdata');
                 const profileSetupData = JSON.parse(storedData);
                 const faceMMatchData = {
-                    userFaceBase64: ImageSrcII,
+                    userFaceBase64: ImageSrcII?.replace(
+                        'data:image/jpeg;base64,',
+                        ''
+                    ).trim(),
                     bvn: profileSetupData?.bvn
                 };
                 // Perform a facial match with the data
@@ -58,7 +64,10 @@ const Liveness = ({ formData, type, nextStep }) => {
                 const storedData = localStorage.getItem('profilesetupdata');
                 const profileSetupData = JSON.parse(storedData);
                 const faceMMatchData = {
-                    userFaceBase64: ImageSrcII,
+                    userFaceBase64: ImageSrcII?.replace(
+                        'data:image/jpeg;base64,',
+                        ''
+                    ).trim(),
                     idNumber: profileSetupData?.bvn
                 };
                 // Perform a facial match with the data
@@ -67,7 +76,10 @@ const Liveness = ({ formData, type, nextStep }) => {
                 const storedData = localStorage.getItem('profilesetupdata');
                 const profileSetupData = JSON.parse(storedData);
                 const faceMMatchData = {
-                    userFaceBase64: ImageSrcII,
+                    userFaceBase64: ImageSrcII?.replace(
+                        'data:image/jpeg;base64,',
+                        ''
+                    ).trim(),
                     idNumber: profileSetupData?.bvn
                 };
                 // Perform a facial match with the data

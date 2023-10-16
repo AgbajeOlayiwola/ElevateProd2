@@ -1041,6 +1041,7 @@
 @media screen and (max-width: 990px) {
     .body {
         width: 100%;
+        gap: 0px;
     }
 }
 
@@ -1053,6 +1054,7 @@
         width: 100%;
         max-width: 100%;
         padding: 40px 0px;
+        margin-right: 0px;
     }
 
     .body {
@@ -1078,6 +1080,17 @@
 
     .existingUserSingle {
         width: 100%;
+    }
+    .formInpt {
+        display: flex;
+        justify-content: space-between;
+        gap: 13px;
+    }
+    .sections {
+        width: 100%;
+    }
+    .existingBody {
+        width: 90%;
     }
 }
 

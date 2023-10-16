@@ -203,52 +203,9 @@ const PaymentTypes = () => {
                                 isLoading={isLoading}
                                 closeAction={handleClose}
                                 buttonText="Next"
-                                othersaction={(data) => {
-                                    //console.log(data);
-                                    setSenderDetails(data.sourceAccount);
-                                    //console.log(senderDetails);
-                                    if (data.bankName === 'ECOBANK') {
-                                        setEcobank(true);
-                                        setCount(count + 1);
-                                    } else if (
-                                        data.bankNameBene === 'ECOBANK'
-                                    ) {
-                                        setEcobank(true);
-                                        setCount(count + 1);
-                                    } else {
-                                        const payload = {
-                                            accountId: data.sourceAccount,
-                                            destinationBankCode:
-                                                data.bankName === ''
-                                                    ? data.bankNameBene
-                                                    : data.bankName,
-                                            transactionAmount: parseInt(
-                                                data.amount,
-                                                10
-                                            ),
-                                            transactionType: 'INTERBANK'
-                                        };
-                                        dispatch(getTransactionFees(payload));
-                                        setIsLoading(true);
-                                    }
-                                    // if (data.beneficiary === true) {
-                                    //     const beneficiaryData = {
-                                    //         beneficiaryName: data.accountName,
-                                    //         accountNumber: data.accountNumber,
-                                    //         bankName: data.bankName,
-                                    //         bankCode: data.bankName
-                                    //     };
-                                    //     dispatch(
-                                    //         postBeneficiariesData(
-                                    //             beneficiaryData
-                                    //         )
-                                    //     );
-                                    // }
-                                    setPaymentDetails(data);
+                                nextPage={() => {
+                                    setCount(count + 1);
                                 }}
-                                // scheduleLater={() => {
-                                //     setCount(count + 4);
-                                // }}
                             />
                         );
                     case 1:
@@ -396,6 +353,9 @@ const PaymentTypes = () => {
                                 closeAction={handleClose}
                                 buttonText="Send Now"
                                 payload={paymentDetails.details}
+                                forwardPage={() => {
+                                    setCount(count + 1);
+                                }}
                                 action={(data) => {
                                     setPaymentDetails(data);
                                     setSenderDetails(data.sourceAccount);
@@ -650,10 +610,6 @@ const PaymentTypes = () => {
                                 buttonText="Send Now"
                                 closeAction={handleClose}
                                 isLoading={isLoading}
-                                // dataAction={(data) => {
-                                // setCount(count + 1);
-                                //     setPaymentDetails(data);
-                                // }}
                                 airtimeAction={(data) => {
                                     setPaymentDetails(data);
                                     setSenderDetails(data.sourceAccount);
@@ -833,17 +789,107 @@ const PaymentTypes = () => {
                                 senderName={`${userProfileData.lastName} ${userProfileData.firstName}`}
                             />
                         );
-                    // case 4:
-                    //     return (
-                    //         <SchedulePayment
-                    //             overlay={overlay}
-                    //             action={() => {
-                    //                 setCount(0);
-                    //                 setFormType('');
-                    //             }}
-                    //             closeAction={handleClose}
-                    //         />
-                    //     );
+                }
+            case 'airtime or data':
+                switch (count) {
+                    case 0:
+                        return (
+                            <MakePaymentFirst
+                                formData={formData}
+                                setFormdata={setFormdata}
+                                overlay={overlay}
+                                firstTitle={'Airtime or Data'}
+                                closeAction={handleClose}
+                                buttonText="Send Now"
+                            />
+                        );
+                    case 1:
+                        return (
+                            <MakePaymentFirst
+                                backAction={() => {
+                                    setCount(count - 1);
+                                }}
+                                formData={formData}
+                                setFormdata={setFormdata}
+                                overlay={overlay}
+                                firstTitle={bill}
+                                buttonText="Send Now"
+                                closeAction={handleClose}
+                                isLoading={isLoading}
+                            />
+                        );
+                    case 2:
+                        return (
+                            <MakePaymentSecond
+                                formData={formData}
+                                setFormdata={setFormdata}
+                                isLoading={isLoading}
+                                closeAction={handleClose}
+                                title="Airtime or Data"
+                                charges={transactionFee}
+                                overlay={overlay}
+                            />
+                        );
+                    case 3:
+                        return (
+                            <PaymentSuccess
+                                overlay={overlay}
+                                error={error}
+                                statusbar={status}
+                                title="Airtime or Data"
+                            />
+                        );
+                }
+            case 'mobile money':
+                switch (count) {
+                    case 0:
+                        return (
+                            <MakePaymentFirst
+                                formData={formData}
+                                setFormdata={setFormdata}
+                                overlay={overlay}
+                                firstTitle={'Mobile Money'}
+                                closeAction={handleClose}
+                                buttonText="Send Now"
+                            />
+                        );
+                    case 1:
+                        return (
+                            <MakePaymentFirst
+                                backAction={() => {
+                                    setCount(count - 1);
+                                }}
+                                formData={formData}
+                                setFormdata={setFormdata}
+                                overlay={overlay}
+                                firstTitle={bill}
+                                buttonText="Send Now"
+                                closeAction={handleClose}
+                                isLoading={isLoading}
+                            />
+                        );
+                    case 2:
+                        return (
+                            <MakePaymentSecond
+                                formData={formData}
+                                setFormdata={setFormdata}
+                                isLoading={isLoading}
+                                closeAction={handleClose}
+                                title="Airtime or Data"
+                                charges={transactionFee}
+                                overlay={overlay}
+                            />
+                        );
+                    case 3:
+                        return (
+                            <PaymentSuccess
+                                overlay={overlay}
+                                error={error}
+                                statusbar={status}
+                                amount={paymentDetails.amount}
+                                senderName={`${userProfileData.lastName} ${userProfileData.firstName}`}
+                            />
+                        );
                 }
 
             case 'fx transfer ':

@@ -6,7 +6,7 @@
     align-items: center;
     background: #c6c6c6;
 }
-.countryCode{
+.countryCode {
     display: flex;
     background: #f3f3f3;
     color: #263775;
@@ -18,13 +18,13 @@
     height: 52px;
     border: 1px solid #c6c6c6;
 }
-.countryCode p{
+.countryCode p {
     margin: 0px;
 }
-.submit{
+.submit {
     display: flex;
 }
-.submit input:nth-child(1){
+.submit input:nth-child(1) {
     width: 30%;
 }
 .cover {
@@ -35,7 +35,7 @@
     max-width: 600px;
     padding: 80px 0px;
 }
-.newOtpInput{
+.newOtpInput {
     display: flex;
     gap: 10px;
 }
@@ -186,7 +186,7 @@
 
 @media screen and (max-width: 1186px) {
     .cover {
-        width: 80%;
+        width: 100%;
         max-width: 100%;
     }
     .otpInps input {
@@ -201,11 +201,16 @@
         color: #102572;
         padding: 0px;
     }
+    .cover > div {
+        width: 90%;
+        max-width: 400px;
+        margin: 0px auto;
+    }
 }
 
 @media screen and (max-width: 551px) {
     .cover {
-        width: 90%;
+        width: 100%;
         max-width: 100%;
     }
 }

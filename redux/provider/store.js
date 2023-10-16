@@ -25,6 +25,8 @@ import languageReducer from '../slices/language';
 import moreAccountNumberDetailsReducer from '../slices/moreAccountNumberDetails';
 import pinnedReducer from '../slices/pinned';
 import profileReducer from '../slices/profile';
+import resetPasswordReducer from '../slices/resetpasswordslice';
+import transferReducer from '../slices/transferSlice';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [docsApi.reducerPath]: docsApi.reducer,
@@ -37,7 +39,9 @@ const reducers = combineReducers({
     pinned: pinnedReducer,
     accountNumber: accountNumberReducer,
     faceMatchDetails: faceMatchDetailsReducr,
-    allAccountInfo: allAccountInfoReducr
+    allAccountInfo: allAccountInfoReducr,
+    transfer: transferReducer,
+    resetPasswordslice: resetPasswordReducer
 });
 
 const persistConfig = {
@@ -51,7 +55,9 @@ const persistConfig = {
         'pinned',
         'accountNumber',
         'faceMatchDetails',
-        'allAccountInfo'
+        'allAccountInfo',
+        'transfer',
+        'resetPasswordslice'
     ]
 };
 

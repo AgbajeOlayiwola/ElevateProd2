@@ -1,13 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+    useBulkTransferMutation,
+    useSingleTransferMutation
+} from '../../../redux/api/authApi';
+import { clearTransfer } from '../../../redux/slices/transferSlice';
+import ArrowBackSvg from '../ArrowBackSvg';
 import ButtonComp from '../Button';
-import styles from './styles.module.css';
+import CloseButton from '../CloseButtonSvg';
 import OtpInput from '../Otpinput';
 import Overlay from '../Overlay';
-import Loader from '../Loader';
 import ConfirmLockSvg from '../ReusableSvgComponents/ConfirmLockSvg';
-import CloseButton from '../CloseButtonSvg';
-import { useForm } from 'react-hook-form';
-import ArrowBackSvg from '../ArrowBackSvg';
+import styles from './styles.module.css';
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
 const MakePaymentSecond = ({
     overlay,
     transferAction,
@@ -29,62 +37,83 @@ const MakePaymentSecond = ({
     const [activeBtn, setActiveBtn] = useState(false);
     const [newAmount, setNewAmount] = useState('');
     const [beneActive, setBeneActive] = useState(false);
-    const [ssnValues, setValue] = useState({
-        ssn1: '',
-        ssn2: '',
-        ssn3: '',
-        ssn4: '',
-        ssn5: '',
-        ssn6: ''
-    });
-
-    useEffect(() => {
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'NGN',
-            currencyDisplay: 'narrowSymbol'
-        });
-
-        const formattedAmount = formatter.format(amount);
-
-        setNewAmount(formattedAmount);
-    }, []);
-
-    const handleChange = (e) => {
-        const { maxLength, value, name } = e.target;
-        const [fieldName, fieldIndex] = name.split('-');
-
-        // Check if they hit the max character length
-        if (value.length >= maxLength) {
-            // Check if it's not the last input field
-            if (parseInt(fieldIndex, 10) < 6) {
-                // Get the next input field
-                const nextSibling = document.querySelector(
-                    `input[name=ssn-${parseInt(fieldIndex, 10) + 1}]`
-                );
-                // If found, focus the next field
-                if (nextSibling !== null) {
-                    nextSibling.focus();
-                } else {
-                    setActiveBtn(true);
-                }
-            } else {
-                setActiveBtn(true);
-            }
+    const { transfer } = useSelector((store) => store);
+    const [otpValue, setOtpValue] = useState('');
+    const affiliate = localStorage.getItem('affiliateCode');
+    const dispatch = useDispatch();
+    console.log(transfer);
+    const handleOtpChange = (otp) => {
+        setOtpValue(otp);
+    };
+    console.log(otpValue);
+    const transferFunction = (e) => {
+        e.preventDefault();
+        const data = {
+            ...transfer,
+            transactionPin: otpValue
+        };
+        console.log(data);
+        singleTransfer(data);
+    };
+    const [
+        singleTransfer,
+        {
+            data: singleTransferData,
+            isLoading: singleTransferLoad,
+            isSuccess: singleTransferSuccess,
+            isError: singleTransferFalse,
+            error: singleTransferErr,
+            reset: singleTransferReset
         }
-
-        setValue({
-            ...value,
-            [`ssn${fieldIndex}`]: value
+    ] = useSingleTransferMutation();
+    const [
+        bulkTransfer,
+        {
+            data: bulkTransferData,
+            isLoading: bulkTransferLoad,
+            isSuccess: bulkTransferSuccess,
+            isError: bulkTransferFalse,
+            error: bulkTransferErr,
+            reset: bulkTransferReset
+        }
+    ] = useBulkTransferMutation();
+    const showToastMessage = () => {
+        toast.error(singleTransferErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
         });
     };
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+    useEffect(() => {
+        if (singleTransferErr) {
+            showToastMessage();
+        }
+    }, [singleTransferErr]);
+    const showSuccessToastMessage = () => {
+        toast.success('Transafr Successfull', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        closeAction();
+        dispatch(clearTransfer());
+    };
+    useEffect(() => {
+        if (singleTransferSuccess) {
+            showSuccessToastMessage();
+        }
+    }, [singleTransferSuccess]);
+    const bulkTransferAction = (e) => {
+        e.preventDefault();
+        const data = {
+            ...transfer,
+            transactionPin: otpValue
+        };
+        console.log(data);
+        bulkTransfer(data);
+    };
+
     return (
         <Overlay overlay={overlay}>
+            <ToastContainer />
             <div>
                 <div className={styles.PaymentSecond}>
                     <div className={styles.icons}>
@@ -109,7 +138,14 @@ const MakePaymentSecond = ({
                         {amount === 'sum' ? null : (
                             <div className={styles.transactionamount}>
                                 <p>Amount</p>
-                                <h3>{newAmount}</h3>
+                                <h3>
+                                    {getSymbolFromCurrency(
+                                        countryToCurrency[
+                                            `${affiliate.substring(1)}`
+                                        ]
+                                    )}
+                                    {transfer?.transactionAmount}
+                                </h3>
                             </div>
                         )}
                         {title === 'Bills Payment' ? (
@@ -118,7 +154,7 @@ const MakePaymentSecond = ({
                                     <p className={styles.transactionTitle}>
                                         To
                                     </p>
-                                    <h3>{recieverName}</h3>
+                                    <h3>{transfer?.beneficiaryName}</h3>
                                 </div>
                                 <div className={styles.transactionsingle}>
                                     <p className={styles.transactionTitle}>
@@ -138,7 +174,7 @@ const MakePaymentSecond = ({
                                     <p className={styles.transactionTitle}>
                                         From
                                     </p>
-                                    <h3>{sender}</h3>
+                                    <h3>{transfer?.accountNumber}</h3>
                                 </div>
                             </div>
                         ) : (
@@ -150,7 +186,7 @@ const MakePaymentSecond = ({
                                     <h3>
                                         {title === 'Bulk Payments'
                                             ? `${number} Recipient`
-                                            : recieverName}
+                                            : transfer?.destinationAccountNo}
                                     </h3>
                                 </div>
                                 <div className={styles.transactionsingle}>
@@ -161,7 +197,7 @@ const MakePaymentSecond = ({
                                         <span></span>{' '}
                                         {title === 'Bulk Payments'
                                             ? `${number} banks`
-                                            : recieverBank}
+                                            : transfer?.destinationBank}
                                     </h3>
                                 </div>
 
@@ -186,11 +222,11 @@ const MakePaymentSecond = ({
                                     <p className={styles.transactionTitle}>
                                         From
                                     </p>
-                                    <h3>{sender}</h3>
+                                    <h3>{transfer?.accountNumber}</h3>
                                 </div>
                             </div>
                         )}
-                        <form onSubmit={handleSubmit(transferAction)}>
+                        <form>
                             {title === 'Single Transfer' ? (
                                 beneActive ? null : (
                                     <div className={styles.saveBene}>
@@ -198,7 +234,6 @@ const MakePaymentSecond = ({
                                             <input
                                                 type="checkbox"
                                                 name="beneficiary"
-                                                {...register('beneficiary')}
                                             />
                                             <span>
                                                 <i></i>
@@ -209,57 +244,23 @@ const MakePaymentSecond = ({
                                 )
                             ) : null}
                             <h4>Enter Transaction Pin</h4>
-                            <div className={styles.otpInps}>
-                                <input
-                                    type="password"
-                                    name="ssn-1"
-                                    {...register('ssn-1')}
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-2"
-                                    {...register('ssn-2')}
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-3"
-                                    {...register('ssn-3')}
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-4"
-                                    {...register('ssn-4')}
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-5"
-                                    {...register('ssn-5')}
-                                    maxLength={1}
-                                    onChange={handleChange}
-                                />
-                                <input
-                                    type="password"
-                                    name="ssn-6"
-                                    {...register('ssn-6')}
-                                    maxLength={1}
-                                    onChange={handleChange}
+                            <div className={styles.otpSect}>
+                                <OtpInput
+                                    onOtpChange={handleOtpChange}
+                                    otpfields={6}
                                 />
                             </div>
                             <ButtonComp
-                                disabled={activeBtn}
-                                active={activeBtn ? 'active' : 'inactive'}
+                                disabled={true}
+                                active={false}
                                 text="Confirm"
                                 type="submit"
-                                loads={isLoading}
-                                // err={isLoading}
+                                onClick={
+                                    title === 'Single Transfer'
+                                        ? transferFunction
+                                        : bulkTransferAction
+                                }
+                                loads={singleTransferLoad}
                             />
                         </form>
                     </div>

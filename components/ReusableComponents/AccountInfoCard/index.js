@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoMdCopy } from 'react-icons/io';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Visbility from '../Eyeysvg';
 
 const settings = {
@@ -34,12 +34,6 @@ const AccountsInfoCard = ({ userProfileData }) => {
     const [acctInfoNum, setAcctInfoNum] = useState();
     const [copyAcctInfo, setCopyAcctInfo] = useState();
 
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'NGN',
-        currencyDisplay: 'narrowSymbol'
-    });
-
     const types = (type) => {
         setOutType(type);
     };
@@ -51,24 +45,22 @@ const AccountsInfoCard = ({ userProfileData }) => {
         }
     }
     const [newAccuntId, setNewAccountId] = useState();
-
-    // const copyAccountNumber = () => {
-    //     copyTextToClipboard(`Account Name - ${userProfileData.lastName}  ${userProfileData.firstName}
-    //     Account No. - ${copyAcctInfo.accountNumber}
-    //     Bank Name - Ecobank
-    //     Swift Code - ${copyAcctInfo.accountSwiftCode}
-    //     Bank Branch - ${copyAcctInfo.accountBankName} `)
-    //         .then(() => {
-    //             // If successful, update the isCopied state value
-    //             setIsCopied(true);
-    //             setTimeout(() => {
-    //                 setIsCopied(false);
-    //             }, 1500);
-    //         })
-    //         .catch((err) => {
-    //             //  //console.log(err);
-    //         });
-    // };
+    const { allAccountInfo } = useSelector((store) => store);
+    console.log(allAccountInfo);
+    useEffect(() => {
+        setAcctNumber(
+            allAccountInfo
+                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                .map((account) => account.accountNo)
+                .filter(Boolean)
+        );
+        setBalance(
+            allAccountInfo
+                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                .map((account) => account?.availableBal)
+                .filter(Boolean)
+        );
+    }, []);
     return (
         <div className={styles.moneyCont}>
             <div className={styles.card}>
@@ -77,18 +69,10 @@ const AccountsInfoCard = ({ userProfileData }) => {
                         <div className={styles.moneybodyDiv}>
                             <div>
                                 <div className={styles.cardMone}>
-                                    <h1>
-                                        {outType
-                                            ? '*******'
-                                            : accountBalanceTest
-                                            ? accountBalanceTest
-                                            : balance}
-                                    </h1>
+                                    <h1></h1>
                                     <Visbility color="green" typeSet={types} />
                                 </div>
-                                <p className={styles.avail}>
-                                    Available Balance
-                                </p>
+                                <p className={styles.avail}>{balance}</p>
                             </div>
                             <div>
                                 <p className={styles.accountDetails}>
@@ -100,11 +84,7 @@ const AccountsInfoCard = ({ userProfileData }) => {
                                             styles.setAccountNumberAsPrimary
                                         }
                                     >
-                                        <p>
-                                            {acctInfoNum != null
-                                                ? acctInfoNum
-                                                : acctNum}
-                                        </p>
+                                        <p>{acctNummber}</p>
                                     </div>
 
                                     <div>
@@ -140,21 +120,37 @@ const AccountsInfoCard = ({ userProfileData }) => {
                 ) : ( */}
                 <>
                     <h2>Other Accounts</h2>
-                    <div className={styles.accountsALl}>
-                        <>
-                            <div className={styles.accntP}>
-                                <p></p>
-                                <p> Account</p>
-                            </div>
-                            <div className={styles.success}>
-                                <AiFillCheckCircle />
-                            </div>
-                            <hr className={styles.accountHr} />
-                        </>
-
-                        {/* <div className={styles.otherAccountsDiv}>
-                        <button>+Add New</button>
-                    </div> */}
+                    <div className={styles.otherAccounts}>
+                        {allAccountInfo?.map((account) => {
+                            return (
+                                <div>
+                                    <div className={styles.accntP}>
+                                        <p
+                                            onClick={(e) => {
+                                                setCopyAcctInfo(
+                                                    account?.accountNo
+                                                );
+                                            }}
+                                        >
+                                            {account?.accountNo}
+                                        </p>
+                                        <p>
+                                            {account?.availableBal.toLocaleString()}
+                                        </p>
+                                    </div>
+                                    <div
+                                        className={
+                                            account?.isPrimaryAccount === 'Y'
+                                                ? styles.success
+                                                : styles.nothing
+                                        }
+                                    >
+                                        <AiFillCheckCircle />
+                                    </div>
+                                    <hr className={styles.accountHr} />
+                                </div>
+                            );
+                        })}
                     </div>
                 </>
             </div>

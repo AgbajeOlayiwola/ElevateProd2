@@ -122,7 +122,14 @@ const ExistingProfileSetup = ({
         });
     };
     useEffect(() => {
-        showToastMessage();
+        if (
+            authEcobankErr ||
+            authOmniliteErr ||
+            registerCardErr ||
+            registerAccountNumberErr
+        ) {
+            showToastMessage();
+        }
     }, [
         authEcobankErr,
         authOmniliteErr,

@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { ButtonComp } from '../../../components';
-import Card from '../../../components/layout/NotRegisteredForms/Card/index';
-import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
-import ArrowBackSvg from '../../../components/ReusableComponents/ArrowBackSvg';
-import { useRouter } from 'next/router';
-import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
 import { Formik } from 'formik';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
+import { ButtonComp } from '../../../components';
+import ArrowBackSvg from '../../../components/ReusableComponents/ArrowBackSvg';
+import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponents/MailSvg';
 import { useForgotPasswordMutation } from '../../../redux/api/authApi';
+import { setResetPassword } from '../../../redux/slices/resetpasswordslice';
+import styles from './styles.module.css';
 const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages, onMove }) => {
     const [activeBtn, setActiveBtn] = useState(true);
     const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
     const router = useRouter();
     const initSchema = yup.object().shape({
         email: yup
@@ -72,6 +73,7 @@ const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages, onMove }) => {
                 // validateOnChange={true}
                 onSubmit={(values, { setSubmitting }) => {
                     forgotPassword(values);
+                    dispatch(setResetPassword(values?.email));
                     setLoading(true);
                     setSubmitting(false);
                 }}
@@ -90,9 +92,9 @@ const ForgotPassword = ({ onSubmit, forgotPasswordErrorMessages, onMove }) => {
                             <MailSvg />
                             <input
                                 type="text"
-                                onChange={(e) =>
-                                    setFieldValue('email', e.target.value)
-                                }
+                                onChange={(e) => {
+                                    setFieldValue('email', e.target.value);
+                                }}
                                 name="email"
                             />
                         </div>

@@ -165,17 +165,16 @@ const Login = () => {
                     pathname: '/Onboarding/ExistingProfileSetup',
                     query: { id: 4 }
                 });
+            } else if (
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                    'PROFILE_SETUP' &&
+                loginAccountData?.data?.user?.createdFromEcobankCred === 'Y'
+            ) {
+                router.push({
+                    pathname: '/Onboarding/ExistingProfileSetup',
+                    query: { id: 2 }
+                });
             }
-            // else if (
-            //     loginAccountData?.user?.profileSetupStatus ===
-            //         'PROFILE_SETUP' &&
-            //     loginAccountData?.user?.createdFromEcobankCred === 'Y'
-            // ) {
-            //     router.push({
-            //         pathname: '/Onboarding/ExistingProfileSetup',
-            //         query: { id: 1}
-            //     });
-            // }
             // else if (
             //     loginAccountData?.user?.profileSetupStatus ===
             //         'PROFILE_SETUP' &&

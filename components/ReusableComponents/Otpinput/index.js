@@ -1,75 +1,58 @@
-import React, { useState } from 'react';
+import { useRef, useState } from 'react';
 import styles from './styles.module.css';
 
-// Number of input fields that make up SSN
+const OtpInput = ({ onOtpChange, otpfields }) => {
+    const otpLength = otpfields;
+    const [otpValues, setOtpValues] = useState(Array(otpLength).fill(''));
+    const otpInputs = useRef([]);
 
-const OtpInput = ({ otpFormData, setOtpFormData }) => {
-    const numOfFields = 6;
+    const handleInputChange = (inputIndex, value) => {
+        const newOtpValues = [...otpValues];
+        newOtpValues[inputIndex] = value;
+        setOtpValues(newOtpValues);
 
-    const [ssnValues, setValue] = useState(['']);
-    const handleChange = (e) => {
-        const { maxLength, value, name } = e.target;
-        const [fieldName, fieldIndex] = name.split('-');
+        // Concatenate the values to form the OTP string
+        const myOtp = newOtpValues.join('');
 
-        // Check if they hit the max character length
-        if (value.length >= maxLength) {
-            // Check if it's not the last input field
-            if (parseInt(fieldIndex, 10) <= 6) {
-                // Get the next input field
-                const nextSibling = document.querySelector(
-                    `input[name=ssn-${parseInt(fieldIndex, 10) + 1}]`
-                );
-                setValue((prevValue) => [...prevValue, value]);
+        // Call the callback function to pass the OTP value to the parent component
+        onOtpChange(myOtp);
 
-                //  //console.log(ssnValues);
+        if (value && inputIndex < otpLength - 1) {
+            const nextInput = otpInputs.current[inputIndex + 1];
+            if (nextInput) {
+                nextInput.focus(); // Move cursor to the next input if it exists
+            }
+        }
+    };
 
-                // If found, focus the next field
-                if (nextSibling !== null) {
-                    nextSibling.focus();
-                } else {
+    const handleInputKeyPress = (event, inputIndex) => {
+        if (event.key === 'Backspace' || event.key === 'Delete') {
+            event.preventDefault();
+            handleInputChange(inputIndex, '');
+
+            if (inputIndex > 0) {
+                const prevInput = otpInputs.current[inputIndex - 1];
+                if (prevInput) {
+                    prevInput.focus(); // Move cursor to the previous input
                 }
             }
         }
     };
 
     return (
-        <div className={styles.otpInps}>
-            <input
-                type="password"
-                name="ssn-1"
-                maxLength={1}
-                onChange={handleChange}
-            />
-            <input
-                type="password"
-                name="ssn-2"
-                maxLength={1}
-                onChange={handleChange}
-            />
-            <input
-                type="password"
-                name="ssn-3"
-                maxLength={1}
-                onChange={handleChange}
-            />
-            <input
-                type="password"
-                name="ssn-4"
-                maxLength={1}
-                onChange={handleChange}
-            />
-            <input
-                type="password"
-                name="ssn-5"
-                maxLength={1}
-                onChange={handleChange}
-            />
-            <input
-                type="password"
-                name="ssn-6"
-                maxLength={1}
-                onChange={handleChange}
-            />
+        <div className={styles.divInputs}>
+            {otpValues.map((value, index) => (
+                <input
+                    key={index}
+                    type="password"
+                    className={styles.otpinput}
+                    maxLength={1}
+                    value={value}
+                    onInput={(e) => handleInputChange(index, e.target.value)}
+                    onKeyDown={(e) => handleInputKeyPress(e, index)}
+                    ref={(input) => input && (otpInputs.current[index] = input)}
+                />
+            ))}
         </div>
     );
 };

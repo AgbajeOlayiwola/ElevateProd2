@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import ButtonComp from '../Button';
-import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
-
+import { Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import SourceSvg from '../ReusableSvgComponents/SourceSvg';
+import {
+    useAccountInquiryMutation,
+    usePaymentbanklistMutation
+} from '../../../redux/api/authApi';
+import { setTransfer } from '../../../redux/slices/transferSlice';
+import ButtonComp from '../Button';
 import PlusSvg from '../ReusableSvgComponents/PlusSvg';
-import Beneficiary from '../Beneficiary';
-import Loader from '../Loader';
-import { loadbank } from '../../../redux/actions/bankAction';
-import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAction';
-import { postIntraBankEnquiry } from '../../../redux/actions/intraBankEnquieryAction';
+import styles from './styles.module.css';
 
 const BulkTransfer = ({
     action,
@@ -20,7 +18,8 @@ const BulkTransfer = ({
     payload,
     formData,
     setFormdata,
-    isLoading
+    isLoading,
+    forwardPage
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [diffAmount, setDiffAmount] = useState(false);
@@ -32,13 +31,8 @@ const BulkTransfer = ({
     const [acctNo, setAcctNo] = useState('');
     const [bank, setBank] = useState([]);
     const dispatch = useDispatch();
-    const { banks } = useSelector((state) => state.banksReducer);
-    const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
-        (state) => state.interBankEnquiryReducer
-    );
-    const { intraBankEnquiry, errorMessageIntraBankEnquiry } = useSelector(
-        (state) => state.intraBankEnquiryReducer
-    );
+    const [accountNumber, setAccountNumber] = useState();
+    const [bankCode, setBankCode] = useState('');
     const [number, setNumber] = useState([{ number: 1, bank: [] }]);
     const XLSX = require('xlsx');
     const isValidNUBAN = (accountNumber, bankCode) => {
@@ -47,12 +41,9 @@ const BulkTransfer = ({
     const isValidNUBANAcct = (accountNumber) => {
         accountNumber = accountNumber.trim();
 
-        if (accountNumber.length != 13) return false; // 3-digit bank code + 10-digit NUBAN
+        if (accountNumber.length != 13) return false;
 
         let accountNumberDigits = accountNumber.split('');
-
-        //   // //console.log("accountNumberDigits: ", accountNumberDigits);
-
         let sum =
             accountNumberDigits[0] * 3 +
             accountNumberDigits[1] * 7 +
@@ -132,434 +123,524 @@ const BulkTransfer = ({
     useEffect(() => {
         localStorage.setItem('number', JSON.stringify(number));
     }, [number]);
-    useEffect(() => {
-        interBankEnquiryCheck();
-    }, [interBankEnquiry, errorMessageInterBankEnquiry]);
-    useEffect(() => {
-        intraBankEnquiryCheck();
-    }, [intraBankEnquiry, errorMessageIntraBankEnquiry]);
 
-    useEffect(() => {
-        dispatch(loadbank('ENG'));
-    }, []);
-    useEffect(() => {
-        if (banks !== null) {
-            setBank(banks);
-        }
-    }, [banks]);
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'NGN',
         currencyDisplay: 'narrowSymbol'
     });
+
+    const [
+        paymentbanklist,
+        {
+            data: paymentbanklistData,
+            isLoading: paymentbanklistLoad,
+            isSuccess: paymentbanklistSuccess,
+            isError: paymentbanklistFalse,
+            error: paymentbanklistErr,
+            reset: paymentbanklistReset
+        }
+    ] = usePaymentbanklistMutation();
+
+    useEffect(() => {
+        paymentbanklist();
+    }, []);
+
+    const initialValues = {
+        ecoSourceAccount: '',
+        ecoAccountNumber: '',
+        ecoAccountName: '',
+        ecoSourceAccount: '',
+        ecoChooseBank: '',
+        ecoEnterAmount: '',
+        ecoNarration: '',
+        ecoAccountId: '',
+        ecoCurrency: '',
+        destinationBankCode: ''
+    };
+    const [
+        accountInquiry,
+        {
+            data: accountInquiryData,
+            isLoading: accountInquiryLoad,
+            isSuccess: accountInquirySuccess,
+            isError: accountInquiryFalse,
+            error: accountInquiryErr,
+            reset: accountInquiryReset
+        }
+    ] = useAccountInquiryMutation();
+    useEffect(() => {
+        if (accountNumber) {
+            accountInquiry({
+                destinationBankCode: bankCode,
+                accountNumber: accountNumber
+            });
+        }
+    }, [accountNumber]);
+    const [transactionsArray, setTransactionsArray] = useState([]);
+    useEffect(() => {
+        console.log(transactionsArray);
+        dispatch(setTransfer(transactionsArray));
+    }, [transactionsArray]);
+
+    const { allAccountInfo } = useSelector((store) => store);
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
             {/* <Beneficiary /> */}
-            <form onSubmit={handleSubmit(action)}>
-                <div className={styles.narration}>
-                    <label className={styles.bulkLabel}>Source Account</label>
-                    <select
-                        name="sourceAccount"
-                        {...register('sourceAccount', {
-                            required: 'Source Account is required'
-                        })}
-                        onInput={(event) => {
-                            setFormdata({
-                                ...formData,
-                                accountNum: event.target.value
-                            });
-                        }}
-                        // value={formData.accountNum}
-                    >
-                        <option value="">Select Account To Use</option>
-                        {/* <option defaultValue={bankAccounts[0]?.accountId}>
-                                {bankAccounts[0]?.accountNumber}
-                            </option> */}
-                        {bankAccounts?.map((accounts, index) => {
-                            return (
-                                <option value={accounts.accountId} key={index}>
-                                    {`${
-                                        accounts.accountNumber
-                                    } - ${formatter.format(
-                                        accounts.accountBalance
-                                    )}`}
-                                </option>
-                            );
-                        })}
-                    </select>
-                    <p className={styles.error}>
-                        {errors?.sourceAccount?.message}
-                    </p>
-                </div>
-                <p className={styles.beneTitle}>Beneficiary Details</p>
-                {csvUpload ? (
-                    <p>File Successfully uploaded!!!</p>
-                ) : (
-                    number?.map((e, index) => {
-                        const fieldName = `details[${index}]`;
-                        // let `amount${index}` = 0;
-                        return (
-                            <div key={index}>
-                                <div className={styles.addedFormCont}>
-                                    <div className={styles.formNumber}>
-                                        <label className={styles.bulkLabel}>
-                                            Account Number
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder="Enter Account Number"
-                                            {...register(
-                                                `${fieldName}.accountNumber`,
-                                                {
-                                                    required:
-                                                        'Account Number  is required',
-                                                    pattern: {
-                                                        value: /^[0-9]/i,
-                                                        message:
-                                                            'Account Number can only be number '
+            <Formik
+                // validationSchema={initSchema}
+                // validateOnChange={true}
+                initialValues={initialValues}
+                onSubmit={(values, { setSubmitting }) => {
+                    // console.log(values);
+                    const newTransaction = {
+                        accountId: values?.ecoAccountId,
+                        accountNumber: values?.ecoSourceAccount,
+                        beneficiaryName: accountInquiryData?.data?.accountName,
+                        currency: values?.ecoCurrency,
+                        destinationAccountNo: values?.ecoAccountNumber,
+                        destinationBank: values?.ecoChooseBank,
+                        destinationBankCode: values?.destinationBankCode,
+                        isEcobankToEcobankTransaction: false,
+                        transactionAmount: values?.ecoEnterAmount
+                    };
+                    setTransactionsArray((prevTransactions) => [
+                        ...prevTransactions,
+                        newTransaction
+                    ]);
+
+                    forwardPage();
+                    setSubmitting(false);
+                }}
+            >
+                {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    setFieldValue,
+                    handleSubmit
+                }) => (
+                    <form onSubmit={handleSubmit}>
+                        <div className={styles.narration}>
+                            <label className={styles.bulkLabel}>
+                                Source Account
+                            </label>
+                            <select
+                                name="ecoSourceAccount"
+                                onChange={(e) => {
+                                    const selectedAccount = allAccountInfo.find(
+                                        (account) =>
+                                            account?.accountNo ===
+                                            e.target.value
+                                    );
+                                    if (selectedAccount) {
+                                        setFieldValue(
+                                            'ecoSourceAccount',
+                                            selectedAccount?.accountNo
+                                        );
+                                        setFieldValue(
+                                            'ecoAccountId',
+                                            selectedAccount?.accountId
+                                        );
+                                        setFieldValue(
+                                            'ecoCurrency',
+                                            selectedAccount?.currency
+                                        );
+                                    }
+                                }}
+                            >
+                                <option value="">Select Account To Use</option>
+                                {allAccountInfo
+                                    .filter((account) => account?.accountNo)
+                                    .map((account) => {
+                                        return (
+                                            <>
+                                                <option
+                                                    className={styles.accntP}
+                                                    value={account?.accountNo}
+                                                >
+                                                    {account?.accountNo}
+                                                </option>
+                                            </>
+                                        );
+                                    })}
+                            </select>
+                            <p className={styles.error}>
+                                {/* {errors?.sourceAccount?.message} */}
+                            </p>
+                        </div>
+                        <div className={styles.formBank}>
+                            <label className={styles.bulkLabel}>
+                                Choose Bank
+                            </label>
+                            <select
+                                className={styles.accntP}
+                                onChange={(e) => {
+                                    const selectedBank =
+                                        paymentbanklistData?.data?.find(
+                                            (bank) =>
+                                                bank?.institutionName ===
+                                                e.target.value
+                                        );
+                                    if (selectedBank) {
+                                        setFieldValue(
+                                            'ecoChooseBank',
+                                            selectedBank?.institutionName
+                                        );
+                                        setFieldValue(
+                                            'destinationBankCode',
+                                            selectedBank?.institutionId
+                                        );
+                                        setBankCode(
+                                            selectedBank?.institutionId
+                                        );
+                                    }
+                                }}
+                            >
+                                <option>Choose Bank</option>
+                                {paymentbanklistData?.data?.map(
+                                    (bank, index) => {
+                                        return (
+                                            <option
+                                                value={bank?.institutionName}
+                                                key={index}
+                                            >
+                                                {bank?.institutionName}
+                                            </option>
+                                        );
+                                    }
+                                )}
+                            </select>
+                        </div>
+                        <p className={styles.beneTitle}>Beneficiary Details</p>
+                        {csvUpload ? (
+                            <p>File Successfully uploaded!!!</p>
+                        ) : (
+                            number?.map((e, index) => {
+                                const fieldName = `details[${index}]`;
+                                // let `amount${index}` = 0;
+                                return (
+                                    <div key={index}>
+                                        <div className={styles.addedFormCont}>
+                                            <div className={styles.formNumber}>
+                                                <label
+                                                    className={styles.bulkLabel}
+                                                >
+                                                    Account Number
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter Account Number"
+                                                    onInput={(e) => {
+                                                        setFieldValue(
+                                                            'ecoAccountNumber',
+                                                            e.target.value
+                                                        );
+                                                        setAccountNumber(
+                                                            e.target.value
+                                                        );
+                                                    }}
+                                                    // onInput={(e) => {
+                                                    //     if (
+                                                    //         e.target.value
+                                                    //             .length === 10
+                                                    //     ) {
+                                                    //         setIndex(index);
+                                                    //         setAcctNo(
+                                                    //             e.target.value
+                                                    //         );
+                                                    //         const newState =
+                                                    //             number.map(
+                                                    //                 (
+                                                    //                     s,
+                                                    //                     indexx
+                                                    //                 ) => {
+                                                    //                     if (
+                                                    //                         index ===
+                                                    //                         indexx
+                                                    //                     ) {
+                                                    //                         return {
+                                                    //                             number: indexx,
+                                                    //                             bank: getAllBanksByAccount(
+                                                    //                                 e
+                                                    //                                     .target
+                                                    //                                     .value
+                                                    //                             )
+                                                    //                         };
+                                                    //                     } else {
+                                                    //                         return s;
+                                                    //                     }
+                                                    //                 }
+                                                    //             );
+                                                    //         setNumber(newState);
+                                                    // }
+                                                    // }}
+                                                    name="ecoAccountNumber"
+                                                />
+                                            </div>
+                                            {accountInquiryErr ? (
+                                                <p className={styles.error}>
+                                                    {
+                                                        accountInquiryErr?.data
+                                                            ?.message
                                                     }
+                                                </p>
+                                            ) : null}
+                                        </div>
+                                        <div className={styles.narration}>
+                                            <label> Account Name</label>
+                                            <input
+                                                // defaultValue={...e.accountName}
+                                                type="text"
+                                                value={
+                                                    accountInquiryData?.data
+                                                        ?.accountName
                                                 }
-                                            )}
-                                            // value={
-                                            //     payload !== undefined
-                                            //         ? e.accountNumber
-                                            //         : null
-                                            // }
-                                            onInput={(e) => {
-                                                if (
-                                                    e.target.value.length === 10
-                                                ) {
-                                                    setIndex(index);
-                                                    setAcctNo(e.target.value);
-                                                    const newState = number.map(
-                                                        (s, indexx) => {
-                                                            if (
-                                                                index === indexx
-                                                            ) {
-                                                                return {
-                                                                    number: indexx,
-                                                                    bank: getAllBanksByAccount(
-                                                                        e.target
-                                                                            .value
-                                                                    )
-                                                                };
-                                                            } else {
-                                                                return s;
-                                                            }
+                                                name={`${fieldName}.accountName`}
+                                                disabled
+                                                required
+                                            />
+                                            {/* <p className={styles.error}>
+                                                {errors?.accountNumber?.message}
+                                            </p> */}
+                                        </div>
+
+                                        {diffAmount ? (
+                                            <div className={styles.amountDiv}>
+                                                <label
+                                                    className={styles.bulkLabel}
+                                                >
+                                                    Amount
+                                                </label>
+                                                <input
+                                                    onChange={(e) => {
+                                                        setFieldValue(
+                                                            'ecoEnterAmount',
+                                                            e.target.value
+                                                        );
+                                                        if (
+                                                            e?.target.value
+                                                                .length === 0
+                                                        ) {
+                                                            setActiveBtn(false);
+                                                        } else if (
+                                                            e?.target.value
+                                                                .length > 0
+                                                        ) {
+                                                            setActiveBtn(true);
                                                         }
-                                                    );
-                                                    setNumber(newState);
-                                                }
-                                            }}
-                                            name={`${fieldName}.accountNumber`}
-                                        />
+                                                    }}
+                                                    name={`${fieldName}.amount`}
+                                                    type="text"
+                                                    placeholder="0.00"
+                                                />
+                                            </div>
+                                        ) : null}
                                     </div>
-                                    <div className={styles.formBank}>
-                                        <label className={styles.bulkLabel}>
-                                            Choose Bank
-                                        </label>
-                                        <select
-                                            {...register(
-                                                `${fieldName}.bankName`,
-                                                {
-                                                    required:
-                                                        'Bank name is required'
-                                                }
-                                            )}
-                                            name={`${fieldName}.bankName`}
-                                            onChange={(e) => {
+                                );
+                            })
+                        )}
+
+                        <div className={styles.narration}>
+                            <div className={styles.uploadCsv}>
+                                <p>Tap to carry out up to 5 transactions</p>
+                                {csvUpload ? null : (
+                                    <div className={styles.actionButtons}>
+                                        <div
+                                            className={styles.plus}
+                                            onClick={() => {
                                                 if (
-                                                    e.target.value === 'ECOBANK'
+                                                    number.length === 5 ||
+                                                    number.length > 5
                                                 ) {
-                                                    const details = {
-                                                        accountNumber: acctNo
-                                                    };
-                                                    dispatch(
-                                                        postIntraBankEnquiry(
-                                                            details
-                                                        )
+                                                    alert(
+                                                        'You can only carry out 5 transactions at the same time. Use CSV file instead'
                                                     );
                                                 } else {
-                                                    const details = {
-                                                        destinationBankCode:
-                                                            e.target.value,
-                                                        accountNo: acctNo
-                                                    };
-                                                    dispatch(
-                                                        postInterBankEnquiry(
-                                                            details
+                                                    setNumber((arr) => [
+                                                        ...arr,
+                                                        {
+                                                            number: `${arr.length}`,
+                                                            bank: []
+                                                        }
+                                                    ]);
+                                                }
+                                            }}
+                                        >
+                                            <PlusSvg />
+                                        </div>
+                                        <div
+                                            className={styles.minus}
+                                            onClick={() => {
+                                                if (
+                                                    number.length === 1 ||
+                                                    number.length < 1
+                                                ) {
+                                                    alert(
+                                                        'Minimum of one Beneficiary'
+                                                    );
+                                                } else {
+                                                    setNumber(
+                                                        number.filter(
+                                                            (item) => {
+                                                                return (
+                                                                    item !==
+                                                                    number[
+                                                                        number.length -
+                                                                            1
+                                                                    ]
+                                                                );
+                                                            }
                                                         )
                                                     );
                                                 }
                                             }}
                                         >
-                                            {/* {payload !== undefined ? (
-                                                <option value={e.bankName}>
-                                                    {e.bankName}
-                                                </option>
-                                            ) : ( */}
-                                            <option value="">
-                                                Select Bank
-                                            </option>
-                                            {/* )} */}
-
-                                            <option value="ECOBANK">
-                                                ECOBANK
-                                            </option>
-                                            {e?.bank?.map((item, index) => {
-                                                return (
-                                                    <option
-                                                        value={item.bankCodes}
-                                                        key={index}
-                                                    >
-                                                        {item.bankname}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
+                                            -
+                                        </div>
                                     </div>
-                                </div>
-                                <div className={styles.narration}>
-                                    <label> Account Name</label>
+                                )}
+                            </div>
+                            {csvUpload ? null : diffAmount ? null : (
+                                <div className={styles.amountDiv}>
+                                    <label className={styles.bulkLabel}>
+                                        Amount
+                                    </label>
                                     <input
-                                        {...register(
-                                            `${fieldName}.accountName`
-                                        )}
-                                        // defaultValue={...e.accountName}
+                                        name="amount"
                                         type="text"
-                                        value={e?.number?.accountName}
-                                        name={`${fieldName}.accountName`}
-                                        disabled
-                                        required
-                                    />
-                                    <p className={styles.error}>
-                                        {errors?.accountNumber?.message}
-                                    </p>
-                                </div>
-
-                                {diffAmount ? (
-                                    <div className={styles.amountDiv}>
-                                        <label className={styles.bulkLabel}>
-                                            Amount
-                                        </label>
-                                        <input
-                                            {...register(
-                                                `${fieldName}.amount`,
-                                                {
-                                                    required:
-                                                        'Amount  is required',
-                                                    pattern: {
-                                                        value: /^[0-9]/i,
-                                                        message:
-                                                            'Amount can only be number '
-                                                    }
-                                                }
-                                            )}
-                                            name={`${fieldName}.amount`}
-                                            type="text"
-                                            placeholder="0.00"
-                                        />
-                                    </div>
-                                ) : null}
-                            </div>
-                        );
-                    })
-                )}
-
-                <div className={styles.narration}>
-                    <div className={styles.uploadCsv}>
-                        <p>Tap to carry out up to 5 transactions</p>
-                        {csvUpload ? null : (
-                            <div className={styles.actionButtons}>
-                                <div
-                                    className={styles.plus}
-                                    onClick={() => {
-                                        if (
-                                            number.length === 5 ||
-                                            number.length > 5
-                                        ) {
-                                            alert(
-                                                'You can only carry out 5 transactions at the same time. Use CSV file instead'
-                                            );
-                                        } else {
-                                            setNumber((arr) => [
-                                                ...arr,
-                                                {
-                                                    number: `${arr.length}`,
-                                                    bank: []
-                                                }
-                                            ]);
-                                        }
-                                    }}
-                                >
-                                    <PlusSvg />
-                                </div>
-                                <div
-                                    className={styles.minus}
-                                    onClick={() => {
-                                        if (
-                                            number.length === 1 ||
-                                            number.length < 1
-                                        ) {
-                                            alert('Minimum of one Beneficiary');
-                                        } else {
-                                            setNumber(
-                                                number.filter((item) => {
-                                                    return (
-                                                        item !==
-                                                        number[
-                                                            number.length - 1
-                                                        ]
-                                                    );
-                                                })
-                                            );
-                                        }
-                                    }}
-                                >
-                                    -
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                    {csvUpload ? null : diffAmount ? null : (
-                        <div className={styles.amountDiv}>
-                            <label className={styles.bulkLabel}>Amount</label>
-                            <input
-                                {...register('amount', {
-                                    required: 'Amount  is required',
-                                    pattern: {
-                                        value: /^[0-9]/i,
-                                        message: 'Amount can only be number '
-                                    }
-                                })}
-                                name="amount"
-                                type="text"
-                                placeholder="0.00"
-                                onChange={(e) => {
-                                    if (e?.target.value.length === 0) {
-                                        setActiveBtn(false);
-                                    } else if (e?.target.value.length > 0) {
-                                        setActiveBtn(true);
-                                    }
-                                }}
-                            />
-                        </div>
-                    )}
-
-                    <div className={styles.saveBene}>
-                        <label className={styles.beneCheck}>
-                            <input
-                                type="checkbox"
-                                onChange={(e) => {
-                                    if (e.target.checked) {
-                                        setDiffAmount(true);
-                                        setActiveBtn(true);
-                                    } else if (!e.target.checked) {
-                                        setDiffAmount(false);
-                                        setActiveBtn(false);
-                                    }
-                                }}
-                            />
-                            <span>
-                                <i></i>
-                            </span>
-                        </label>
-                        <p>Input Different Amount</p>
-                    </div>
-                    <div className={styles.amountDiv}>
-                        <p className={styles.beneTitle}>
-                            For more than 5 transaction
-                        </p>
-                        <div className={styles.uploadCsvs}>
-                            <p>
-                                <label>
-                                    Tap to
-                                    <input
-                                        type="file"
-                                        accept=".csv, .xlsm"
+                                        placeholder="0.00"
                                         onChange={(e) => {
-                                            //  //console.log(e.target.files[0]);
-                                            if (
-                                                e.target.files[0].name.split(
-                                                    '.'
-                                                )[1] === 'xlsm'
+                                            setFieldValue(
+                                                'ecoEnterAmount',
+                                                e.target.value
+                                            );
+                                            if (e?.target.value.length === 0) {
+                                                setActiveBtn(false);
+                                            } else if (
+                                                e?.target.value.length > 0
                                             ) {
-                                                const reader = new FileReader();
-                                                reader.onload = (e) => {
-                                                    const data =
-                                                        e.target.result;
-                                                    const workbook = XLSX.read(
-                                                        data,
-                                                        { type: 'array' }
-                                                    );
-                                                    const sheetName =
-                                                        workbook.SheetNames[0];
-                                                    const worksheet =
-                                                        workbook.Sheets[
-                                                            sheetName
-                                                        ];
-                                                    const json = XLSX.utils.sheet_to_json(
-                                                        worksheet
-                                                    );
-                                                    localStorage.setItem(
-                                                        'csvData',
-                                                        JSON.stringify(json)
-                                                    );
-                                                };
-                                                reader.readAsArrayBuffer(
-                                                    e.target.files[0]
-                                                );
-
-                                                localStorage.removeItem(
-                                                    'number'
-                                                );
-                                                setCsvUpload(true);
                                                 setActiveBtn(true);
-                                            } else {
-                                                setFileError(
-                                                    'File Uploaded is Not CsV'
-                                                );
                                             }
                                         }}
                                     />
-                                    <span> Upload CSV File</span>
+                                </div>
+                            )}
+
+                            <div className={styles.saveBene}>
+                                <label className={styles.beneCheck}>
+                                    <input
+                                        type="checkbox"
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setDiffAmount(true);
+                                                setActiveBtn(true);
+                                            } else if (!e.target.checked) {
+                                                setDiffAmount(false);
+                                                setActiveBtn(false);
+                                            }
+                                        }}
+                                    />
+                                    <span>
+                                        <i></i>
+                                    </span>
                                 </label>
-                            </p>
-                            <p>{fileError}</p>
-                            <p>
-                                <a
-                                    href="../../../Assets/CSV.xlsm"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    download="CSV Template"
-                                >
-                                    <span>Download CSV File</span>
-                                </a>
-                            </p>
+                                <p>Input Different Amount</p>
+                            </div>
+                            <div className={styles.amountDiv}>
+                                <p className={styles.beneTitle}>
+                                    For more than 5 transaction
+                                </p>
+                                <div className={styles.uploadCsvs}>
+                                    <p>
+                                        <label>
+                                            Tap to
+                                            <input
+                                                type="file"
+                                                accept=".csv, .xlsm"
+                                                onChange={(e) => {
+                                                    //  //console.log(e.target.files[0]);
+                                                    if (
+                                                        e.target.files[0].name.split(
+                                                            '.'
+                                                        )[1] === 'xlsm'
+                                                    ) {
+                                                        const reader =
+                                                            new FileReader();
+                                                        reader.onload = (e) => {
+                                                            const data =
+                                                                e.target.result;
+                                                            const workbook =
+                                                                XLSX.read(
+                                                                    data,
+                                                                    {
+                                                                        type: 'array'
+                                                                    }
+                                                                );
+                                                            const sheetName =
+                                                                workbook
+                                                                    .SheetNames[0];
+                                                            const worksheet =
+                                                                workbook.Sheets[
+                                                                    sheetName
+                                                                ];
+                                                            const json =
+                                                                XLSX.utils.sheet_to_json(
+                                                                    worksheet
+                                                                );
+                                                            localStorage.setItem(
+                                                                'csvData',
+                                                                JSON.stringify(
+                                                                    json
+                                                                )
+                                                            );
+                                                        };
+                                                        reader.readAsArrayBuffer(
+                                                            e.target.files[0]
+                                                        );
+
+                                                        localStorage.removeItem(
+                                                            'number'
+                                                        );
+                                                        setCsvUpload(true);
+                                                        setActiveBtn(true);
+                                                    } else {
+                                                        setFileError(
+                                                            'File Uploaded is Not CsV'
+                                                        );
+                                                    }
+                                                }}
+                                            />
+                                            <span> Upload CSV File</span>
+                                        </label>
+                                    </p>
+                                    <p>{fileError}</p>
+                                    <p>
+                                        <a
+                                            href="../../../Assets/CSV.xlsm"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            download="CSV Template"
+                                        >
+                                            <span>Download CSV File</span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <ButtonComp
+                                disabled={activeBtn}
+                                active={activeBtn ? 'active' : 'inactive'}
+                                text={buttonText}
+                                type="submit"
+                                // err={errorMessageInterBankEnquiry}
+                            />
                         </div>
-                    </div>
-                    {isLoading ? (
-                        <Loader />
-                    ) : (
-                        <ButtonComp
-                            disabled={activeBtn}
-                            active={activeBtn ? 'active' : 'inactive'}
-                            text={buttonText}
-                            type="submit"
-                            // err={errorMessageInterBankEnquiry}
-                        />
-                    )}
-                    {/* <p className={styles.schedule}>
-                        Not paying now?<span>Schedule for Later</span>
-                    </p> */}
-                </div>
-            </form>
+                    </form>
+                )}
+            </Formik>
         </div>
     );
 };

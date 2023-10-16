@@ -1,42 +1,30 @@
-import NairaSvg from '../NairaSvg';
-import BulkTransfer from '../BulkTransfSvg';
-import StarSharp from '../StarSharpSvg';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
-import * as RiIcons from 'react-icons/ri';
-import * as MdIcons from 'react-icons/md';
-import * as CgIcons from 'react-icons/cg';
-import * as FiIcons from 'react-icons/fi';
 import * as BiIcons from 'react-icons/bi';
-import * as HiIcons from 'react-icons/hi';
-import SingleTrans from '../SingleTransSvg';
-import BulkTransfer2 from '../BulkTransfSvg/bulktrans';
-import BillTransfer from '../BillTransSvg';
-import FxTrans from '../FxtransSvg';
-import Paylink2 from '../PaylinkSvg/paylink';
-import Ussd from '../UssdSvg';
-import MposSvg2 from '../mPOSSvg/Mpos';
-import EcobankQRSvg from '../EcobankQRSvg';
-import DashboardSvg from '../ReusableSvgComponents/DashboardSvg';
-import PaymentSvg from '../ReusableSvgComponents/PaymentSvg';
-import ToolSvg from '../ReusableSvgComponents/ToolSvg';
-import StorefrontSvg from '../ReusableSvgComponents/StorefrontSvg';
-import SettingsSvg from '../ReusableSvgComponents/SettingsSvg';
-import PaymentActiveSvg from '../ReusableSvgComponents/PaymentActiveSvg';
-import ToolsActiveSvg from '../ReusableSvgComponents/toolsActiveSvg';
-import StorefrontActiveSvg from '../ReusableSvgComponents/StorefrontActiveSvg';
-import SettingsActiveSvg from '../ReusableSvgComponents/SettingsActiveSvg';
 import { BsFillCollectionFill, BsPiggyBankFill } from 'react-icons/bs';
-import { HiBanknotes } from 'react-icons/hi';
+import * as RiIcons from 'react-icons/ri';
+import AnalyticsSvg from '../AnalyticsSvg';
+import BillTransfer from '../BillTransSvg';
+import BulkTransfer from '../BulkTransfSvg';
+import BulkTransfer2 from '../BulkTransfSvg/bulktrans';
 import DigitalAccountSvg from '../DigitalAccountSvg';
+import EInvoicingSvg from '../EInvoicing';
 import EasyPaymentSvg from '../EasyPaymentSvg';
+import EcobankQRSvg from '../EcobankQRSvg';
+import FxTrans from '../FxtransSvg';
+import InventorySvg from '../InventorySvg';
+import NairaSvg from '../NairaSvg';
+import Paylink2 from '../PaylinkSvg/paylink';
 import PaymentCollectionSvg from '../PaymentCollection';
 import QuickLoans from '../QuickLoans';
+import DashboardSvg from '../ReusableSvgComponents/DashboardSvg';
+import PaymentActiveSvg from '../ReusableSvgComponents/PaymentActiveSvg';
+import PaymentSvg from '../ReusableSvgComponents/PaymentSvg';
+import SettingsActiveSvg from '../ReusableSvgComponents/SettingsActiveSvg';
+import SettingsSvg from '../ReusableSvgComponents/SettingsSvg';
+import SingleTrans from '../SingleTransSvg';
+import StarSharp from '../StarSharpSvg';
 import StoreFront from '../StoreFront';
-import EInvoicingSvg from '../EInvoicing';
-import InventorySvg from '../InventorySvg';
-import AnalyticsSvg from '../AnalyticsSvg';
+import Ussd from '../UssdSvg';
+import MposSvg2 from '../mPOSSvg/Mpos';
 export const SidebarData = [
     {
         title: 'Dashboard',
@@ -355,6 +343,16 @@ export const PaymentData = {
         {
             icon: <FxTrans />,
             text: 'FX Transfer'
+        },
+        {
+            icon: <BillTransfer />,
+            text: 'Airtime or Data',
+            summary: 'Buy airtime or Data'
+        },
+        {
+            icon: <BillTransfer />,
+            text: 'Mobile Money',
+            summary: 'Set Mobile Money'
         }
     ],
     receive: [

@@ -7,7 +7,7 @@
     height: 100vh;
     justify-content: space-between;
 }
-.verybody{
+.verybody {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -21,14 +21,14 @@
     align-items: baseline;
     gap: 26px;
 }
-.verCovOuter{
+.verCovOuter {
     width: 60%;
 }
-.newOtpInput{
+.newOtpInput {
     display: flex;
     gap: 15px;
 }
-.newOtpInput input{
+.newOtpInput input {
     height: 70px !important;
     text-align: center;
     font-size: 30px;
@@ -49,19 +49,19 @@
     border-radius: 50px;
     padding: 80px 0px;
 }
-.error{
+.error {
     font-size: 14px;
     color: red;
 }
-.resendEmail{
+.resendEmail {
     text-align: center;
 }
-.resendEmail > p{
-    color: #A5A5A5;  
+.resendEmail > p {
+    color: #a5a5a5;
     cursor: pointer;
 }
-.resendEmail p > span{
-    color: #102572 ;
+.resendEmail p > span {
+    color: #102572;
     font-weight: 700;
     text-decoration: underline;
 }
@@ -103,6 +103,18 @@
 @media screen and (max-width: 1123px) {
     .verifyPopup {
         width: 50%;
+    }
+    .sectionI {
+        display: none;
+    }
+    .verCovOuter {
+        width: 100%;
+    }
+    .verybody {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
     }
 }
 

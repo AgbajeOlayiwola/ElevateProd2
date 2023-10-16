@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 // const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-auth/v1/api/auth/';
-const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-service/';
+// https://cheffieapp.com/api/v1/authentication/user/
+const baseUrl = 'https://eidev.ecobank.com:7507/smeapp-service/';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -251,19 +252,13 @@ export const authApi = createApi({
                 };
             }
         }),
-        singleTransfer: builder.mutation({
-            query: () => {
-                return {
-                    url: 'single-transfer',
-                    method: 'post'
-                };
-            }
-        }),
+
         bulkTransfer: builder.mutation({
-            query: () => {
+            query: (body) => {
                 return {
                     url: 'bulk-transfer',
-                    method: 'post'
+                    method: 'post',
+                    body
                 };
             }
         }),
@@ -284,10 +279,11 @@ export const authApi = createApi({
             }
         }),
         billerDetails: builder.mutation({
-            query: () => {
+            query: (body) => {
                 return {
                     url: 'biller-details',
-                    method: 'post'
+                    method: 'post',
+                    body
                 };
             }
         }),
@@ -295,7 +291,8 @@ export const authApi = createApi({
             query: () => {
                 return {
                     url: 'airtime-topup-networks',
-                    method: 'post'
+                    method: 'post',
+                    body: {}
                 };
             }
         }),
@@ -474,11 +471,21 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        singleTransfer: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'payment-single-transfer',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
+    useSingleTransferMutation,
     useAccountInquiryMutation,
     usePaymentbanklistMutation,
     useGetAcctBalsMutation,
@@ -513,7 +520,6 @@ export const {
     useUpdatePhoneMutation,
     useGetProfileMutation,
     useUnregisteredSetupMutation,
-    useSingleTransferMutation,
     useBulkTransferMutation,
     useBillerPaymentMutation,
     useBillerValidationMutation,

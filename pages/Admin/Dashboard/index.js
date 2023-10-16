@@ -17,6 +17,7 @@ import { IoMdCopy } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
 import Addaccounts from '../../../components/ReusableComponents/Addaccounts';
 import BulkTransfer2 from '../../../components/ReusableComponents/BulkTransfSvg/bulktrans';
+import Loader from '../../../components/ReusableComponents/Loader';
 import socialdata from '../../../components/ReusableComponents/Lotties/loading.json';
 import Overlay from '../../../components/ReusableComponents/Overlay';
 import BillSvg from '../../../components/ReusableComponents/ReusableSvgComponents/BillSvg';
@@ -80,7 +81,7 @@ const Dashboard = () => {
     let pending = 0;
     let failed = 0;
     const [accountUpgrade, setAccountUpgrade] = useState(true);
-    const [balance, setBalance] = useState('......');
+    const [balance, setBalance] = useState('********');
     const [tableDetails, setTableDetails] = useState([]);
     const [userProfileData, setUserProfileData] = useState([]);
     const [dateState, setDateState] = useState(false);
@@ -113,14 +114,19 @@ const Dashboard = () => {
         if (getAcctBalsSuccess) {
             setAcctNumber(
                 getAcctBalsData?.data
+                    .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
                     .map((account) => account.accountNo)
+                    .filter(Boolean)
+            );
+            setBalance(
+                getAcctBalsData?.data
+                    .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                    .map((account) => account?.availableBal)
                     .filter(Boolean)
             );
             dispatch(setAllAccountInfo(getAcctBalsData?.data));
         }
-        console.log(acctNum);
     }, [getAcctBalsSuccess]);
-
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -328,13 +334,7 @@ const Dashboard = () => {
                                     <div className={styles.moneybodyDiv}>
                                         <div>
                                             <div className={styles.cardMone}>
-                                                <h1>
-                                                    {/* {outType
-                                                        ? '*******'
-                                                        : accountBalanceTest
-                                                        ? accountBalanceTest
-                                                        : balance} */}
-                                                </h1>
+                                                <h1>{balance}</h1>
                                                 <Visbility
                                                     color="green"
                                                     // typeSet={types}
@@ -353,11 +353,7 @@ const Dashboard = () => {
                                                 Account Number
                                             </p>
                                             <div className={styles.assctDrop}>
-                                                <p>
-                                                    {/* {acctInfoNum != null
-                                                        ? acctInfoNum
-                                                        : acctNum} */}
-                                                </p>
+                                                <p>{acctNumber}</p>
 
                                                 <div>
                                                     {isCopied ? (
@@ -414,46 +410,56 @@ const Dashboard = () => {
                                 />
                             </Overlay>
                             <div className={styles.accountsALl}>
-                                <>
-                                    {getAcctBalsData?.data
-                                        .filter((account) => account.accountNo)
-                                        .map((account) => {
-                                            return (
-                                                <>
-                                                    <div
-                                                        className={
-                                                            styles.accntP
-                                                        }
-                                                    >
-                                                        <p
-                                                            onClick={(e) => {
-                                                                setCopyAcctInfo(
-                                                                    accountNo
-                                                                );
-                                                            }}
+                                {getAcctBalsLoad ? (
+                                    <Loader />
+                                ) : (
+                                    <>
+                                        {getAcctBalsData?.data
+                                            .filter(
+                                                (account) => account.accountNo
+                                            )
+                                            .map((account) => {
+                                                return (
+                                                    <>
+                                                        <div
+                                                            className={
+                                                                styles.accntP
+                                                            }
                                                         >
-                                                            {account?.accountNo}
-                                                        </p>
-                                                        <p>
-                                                            {account?.availableBal.toLocaleString()}
-                                                        </p>
-                                                    </div>
-                                                    <div
-                                                        className={
-                                                            account?.isPrimaryAccount ===
-                                                            'Y'
-                                                                ? styles.success
-                                                                : styles.nothing
-                                                        }
-                                                    >
-                                                        <AiFillCheckCircle />
-                                                    </div>
-                                                </>
-                                            );
-                                        })}
+                                                            <p
+                                                                onClick={(
+                                                                    e
+                                                                ) => {
+                                                                    setCopyAcctInfo(
+                                                                        account?.accountNo
+                                                                    );
+                                                                }}
+                                                            >
+                                                                {
+                                                                    account?.accountNo
+                                                                }
+                                                            </p>
+                                                            <p>
+                                                                {account?.availableBal.toLocaleString()}
+                                                            </p>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                account?.isPrimaryAccount ===
+                                                                'Y'
+                                                                    ? styles.success
+                                                                    : styles.nothing
+                                                            }
+                                                        >
+                                                            <AiFillCheckCircle />
+                                                        </div>
+                                                    </>
+                                                );
+                                            })}
 
-                                    <hr className={styles.accountHr} />
-                                </>
+                                        <hr className={styles.accountHr} />
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>

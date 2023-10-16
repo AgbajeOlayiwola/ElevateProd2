@@ -5,32 +5,32 @@
     font-family: 'Inter', sans-serif;
     line-height: 17px;
 }
-.PaymentSingle div:nth-child(1){
-    background: #90E8001A !important;
+.PaymentSingle div:nth-child(1) {
+    background: none !important;
     width: 100%;
 }
-.PaymentSingle div:nth-child(2){
-    background: #BA00E80D !important;
+.PaymentSingle div:nth-child(2) {
+    background: #ba00e80d !important;
     width: 100%;
 }
-.PaymentSingle div:nth-child(2) div{
+.PaymentSingle div:nth-child(2) div {
     background: none !important;
 }
-.PaymentSingle div:nth-child(1) div{
+.PaymentSingle div:nth-child(1) div {
     background: none !important;
 }
-.PaymentSingle div:nth-child(3){
-    background: #D5F7E5 !important;
+.PaymentSingle div:nth-child(3) {
+    background: #d5f7e5 !important;
     width: 100%;
 }
-.PaymentSingle div:nth-child(3) div{
+.PaymentSingle div:nth-child(3) div {
     background: none !important;
 }
 .PaymentSingle div:nth-child(4) {
     background: none !important;
     width: 100%;
 }
-.PaymentSingle div:nth-child(4) div{
+.PaymentSingle div:nth-child(4) div {
     background: none !important;
 }
 .make {
