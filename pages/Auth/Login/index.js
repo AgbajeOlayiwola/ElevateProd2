@@ -112,7 +112,7 @@ const Login = () => {
                 dispatch(setProfile(loginAccountData?.data));
                 router.push({
                     pathname: '/Onboarding/ProfileSetup',
-                    query: { id: 3 }
+                    query: { id: 1 }
                 });
             } else if (
                 loginAccountData?.data?.user?.profileSetupStatus ===
@@ -129,9 +129,9 @@ const Login = () => {
                     'LIVENESS_VERIFIED' &&
                 loginAccountData?.data?.user?.createdFromEcobankCred === 'Y'
             ) {
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'EcoData' }]
+                router.push({
+                    pathname: '/Onboarding/ProfileSetup',
+                    query: { id: 3 }
                 });
             } else if (
                 loginAccountData?.data?.user?.profileSetupStatus ===

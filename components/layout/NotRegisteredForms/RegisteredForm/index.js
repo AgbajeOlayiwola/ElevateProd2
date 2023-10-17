@@ -269,7 +269,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                                 ),
                                                     console.log(value);
                                             }}
-                                            maxLength={11}
+                                            // maxLength={11}
                                         />
                                     </InputWrapper>
                                 ) : null}
@@ -385,7 +385,7 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                                                     value?.target?.value
                                                 )
                                             }
-                                            maxLength={11}
+                                            // maxLength={11}
                                             value={values.bvn}
                                         />
                                     </InputWrapper>
