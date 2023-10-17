@@ -68,7 +68,7 @@ const Liveness = ({ formData, type, nextStep }) => {
                         'data:image/jpeg;base64,',
                         ''
                     ).trim(),
-                    idNumber: profileSetupData?.bvn
+                    idNumber: profileSetupData?.bvn.trim()
                 };
                 // Perform a facial match with the data
                 faceMatchWithoutBvn(faceMMatchData);
@@ -80,7 +80,7 @@ const Liveness = ({ formData, type, nextStep }) => {
                         'data:image/jpeg;base64,',
                         ''
                     ).trim(),
-                    idNumber: profileSetupData?.bvn
+                    idNumber: profileSetupData?.bvn.trim()
                 };
                 // Perform a facial match with the data
                 faceMatchWithoutBvn(faceMMatchData);
