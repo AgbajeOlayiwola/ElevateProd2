@@ -271,49 +271,7 @@ const BulkTransfer = ({
                                 {/* {errors?.sourceAccount?.message} */}
                             </p>
                         </div>
-                        <div className={styles.formBank}>
-                            <label className={styles.bulkLabel}>
-                                Choose Bank
-                            </label>
-                            <select
-                                className={styles.accntP}
-                                onChange={(e) => {
-                                    const selectedBank =
-                                        paymentbanklistData?.data?.find(
-                                            (bank) =>
-                                                bank?.institutionName ===
-                                                e.target.value
-                                        );
-                                    if (selectedBank) {
-                                        setFieldValue(
-                                            'ecoChooseBank',
-                                            selectedBank?.institutionName
-                                        );
-                                        setFieldValue(
-                                            'destinationBankCode',
-                                            selectedBank?.institutionId
-                                        );
-                                        setBankCode(
-                                            selectedBank?.institutionId
-                                        );
-                                    }
-                                }}
-                            >
-                                <option>Choose Bank</option>
-                                {paymentbanklistData?.data?.map(
-                                    (bank, index) => {
-                                        return (
-                                            <option
-                                                value={bank?.institutionName}
-                                                key={index}
-                                            >
-                                                {bank?.institutionName}
-                                            </option>
-                                        );
-                                    }
-                                )}
-                            </select>
-                        </div>
+
                         <p className={styles.beneTitle}>Beneficiary Details</p>
                         {csvUpload ? (
                             <p>File Successfully uploaded!!!</p>

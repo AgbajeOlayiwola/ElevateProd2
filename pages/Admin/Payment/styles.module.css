@@ -222,11 +222,22 @@
 @media screen and (max-width: 1301px) {
     .cov {
         flex-direction: column;
+        width: 100%;
+    }
+}
+@media screen and (max-width: 1391px) {
+    .cov {
+        flex-direction: column;
+        width: 100%;
     }
 }
 
 @media screen and (max-width: 1081px) {
     .balanceButtons {
         width: 60%;
+    }
+    .cov {
+        flex-direction: column;
+        width: 100%;
     }
 }

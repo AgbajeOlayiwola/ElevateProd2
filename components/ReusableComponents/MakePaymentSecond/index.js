@@ -89,11 +89,11 @@ const MakePaymentSecond = ({
         }
     }, [singleTransferErr]);
     const showSuccessToastMessage = () => {
-        toast.success('Transafr Successfull', {
+        toast.success('Transfer Successfull', {
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });
-        closeAction();
+        // closeAction();
         dispatch(clearTransfer());
     };
     useEffect(() => {
