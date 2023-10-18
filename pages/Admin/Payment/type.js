@@ -13,10 +13,8 @@ import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfo
 import { PaymentData } from '../../../components/ReusableComponents/Data';
 import { postAirtime } from '../../../redux/actions/airtimeAction';
 import { postBills } from '../../../redux/actions/billsAction';
-import { getBulkTransfer } from '../../../redux/actions/bulkTransferAction';
-import { postInterBank } from '../../../redux/actions/interBankTransferAction';
-import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
 import { getTransactionFees } from '../../../redux/actions/transactionFeesAction';
+import { clearTransfer } from '../../../redux/slices/transferSlice';
 
 const PaymentTypes = () => {
     const router = useRouter();
@@ -211,7 +209,10 @@ const PaymentTypes = () => {
                     case 1:
                         return (
                             <MakePaymentSecond
-                                closeAction={handleClose}
+                                closeAction={() => {
+                                    handleClose();
+                                    dispatch(clearTransfer());
+                                }}
                                 formData={formData}
                                 setFormData={setFormdata}
                                 isLoading={isLoading}
@@ -231,60 +232,6 @@ const PaymentTypes = () => {
                                 overlay={overlay}
                                 backAction={() => {
                                     setCount(count - 1);
-                                }}
-                                transferAction={(data) => {
-                                    setIsLoading(true);
-                                    if (data.beneficiary === true) {
-                                        const beneficiaryData = {
-                                            beneficiaryName:
-                                                paymentDetails.accountName,
-                                            accountNumber:
-                                                paymentDetails.accountNumber,
-                                            bankName: paymentDetails.bankName,
-                                            bankCode: paymentDetails.bankName
-                                        };
-                                        dispatch(
-                                            postBeneficiariesData(
-                                                beneficiaryData
-                                            )
-                                        );
-                                    }
-                                    const paymentData = {
-                                        isEcobankToEcobankTransaction: ecobank,
-                                        destinationBank:
-                                            paymentDetails.bankName === ''
-                                                ? paymentDetails.bankNameBene
-                                                : paymentDetails.bankName,
-                                        destinationBankCode:
-                                            paymentDetails.bankName === ''
-                                                ? paymentDetails.bankNameBene
-                                                : paymentDetails.bankName,
-                                        beneficiaryName:
-                                            paymentDetails.accountName,
-                                        destinationAccountNo:
-                                            paymentDetails.accountNumber === ''
-                                                ? paymentDetails.accountNumberBene
-                                                : paymentDetails.accountNumber,
-                                        //change back to int
-                                        transactionAmount: parseInt(
-                                            paymentDetails.amount,
-                                            10
-                                        ).toString(),
-                                        narration: paymentDetails.narration,
-                                        transactionPin:
-                                            data.beneficiary === true
-                                                ? Object.values(data)
-                                                      .toString()
-                                                      .replace('true', '')
-                                                      .replaceAll(',', '')
-                                                : Object.values(data)
-                                                      .toString()
-                                                      .replace('false', '')
-                                                      .replaceAll(',', ''),
-                                        accountId: senderDetails
-                                    };
-
-                                    dispatch(postInterBank(paymentData));
                                 }}
                             />
                         );
@@ -315,30 +262,8 @@ const PaymentTypes = () => {
                                 title="Single Transfer Payment"
                                 amount={paymentDetails.amount}
                                 beneName={paymentDetails.accountName}
-                                // repeatAction={() => {
-                                //     setCount(count + 1);
-                                // }}
                             />
                         );
-                    // case 3:
-                    //     return (
-                    //         <PaymentRepeat
-                    //             overlay={overlay}
-                    //             closeAction={handleClose}
-                    //             type="Single Transfer"
-                    //         />
-                    //     );
-                    // case 4:
-                    // return (
-                    //     <SchedulePayment
-                    //         overlay={overlay}
-                    //         action={() => {
-                    //             setCount(count - 4);
-                    //             // setFormType('');
-                    //         }}
-                    //         closeAction={handleClose}
-                    //     />
-                    // );
                 }
 
             case 'bulk transfer':
@@ -370,7 +295,10 @@ const PaymentTypes = () => {
                                 formData={formData}
                                 setFormdata={setFormdata}
                                 isLoading={isLoading}
-                                closeAction={handleClose}
+                                closeAction={() => {
+                                    handleClose();
+                                    dispatch(clearTransfer());
+                                }}
                                 amount={
                                     csvData !== null
                                         ? 'sum'
@@ -399,131 +327,6 @@ const PaymentTypes = () => {
                                 }
                                 backAction={() => {
                                     setCount(count - 1);
-                                }}
-                                transferAction={(data) => {
-                                    setIsLoading(true);
-                                    const paymentData = {
-                                        accountId: senderDetails,
-                                        transactionPin: Object.values(data)
-                                            .toString()
-                                            .replaceAll(',', ''),
-                                        transactions:
-                                            csvData !== null
-                                                ? csvData.slice(2).map((e) => {
-                                                      return {
-                                                          isEcobankToEcobankTransaction:
-                                                              e.bankName ===
-                                                              'Ecobank'
-                                                                  ? true
-                                                                  : false,
-                                                          destinationBank:
-                                                              e.Bank,
-                                                          destinationBankCode:
-                                                              e.Bank ===
-                                                              'ACCESS BANK'
-                                                                  ? '999044'
-                                                                  : e.Bank ===
-                                                                    'Citi Bank'
-                                                                  ? 'CITI-ACC'
-                                                                  : e.Bank ===
-                                                                    'Fidelity Bank'
-                                                                  ? 'FIDELITY-ACC'
-                                                                  : e.Bank ===
-                                                                    'First Bank of Nigeria'
-                                                                  ? 'FIRST-ACC'
-                                                                  : e.Bank ===
-                                                                    'First City Monument Bank'
-                                                                  ? 'FCMB-ACC'
-                                                                  : e.Bank ===
-                                                                    'GT Bank Plc'
-                                                                  ? 'GUARANTY-ACC'
-                                                                  : e.Bank ===
-                                                                    'Heritage'
-                                                                  ? 'HERITAGE-ACC'
-                                                                  : e.Bank ===
-                                                                    'Stanbic IBTC Bank'
-                                                                  ? 'STANBIC-IBTC-ACC'
-                                                                  : e.Bank ===
-                                                                    'Standard Chartered'
-                                                                  ? 'STANDARD-CHARTERED'
-                                                                  : e.Bank ===
-                                                                    'Sterling Bank'
-                                                                  ? 'STERLING-ACC'
-                                                                  : e.Bank ===
-                                                                    'Union Bank'
-                                                                  ? 'UNION-ACC'
-                                                                  : e.Bank ===
-                                                                    'United Bank for Africa'
-                                                                  ? 'UNITED-ACC'
-                                                                  : e.Bank ===
-                                                                    'Unity Bank'
-                                                                  ? 'UNITY-ACC'
-                                                                  : e.Bank ===
-                                                                    'Wema Bank'
-                                                                  ? 'WEMA-ACC'
-                                                                  : e.Bank ===
-                                                                    'Zenith Bank'
-                                                                  ? 'ZENITH-ACC'
-                                                                  : e.Bank ===
-                                                                    'Ecobank'
-                                                                  ? 'ECOBANK'
-                                                                  : null,
-                                                          beneficiaryName:
-                                                              e.BeneName,
-                                                          destinationAccountNo:
-                                                              e.AccountNo,
-                                                          transactionAmount:
-                                                              parseInt(
-                                                                  e.Amount,
-                                                                  10
-                                                              ).toString(),
-                                                          narration: e.narration
-                                                      };
-                                                  })
-                                                : paymentDetails.details?.map(
-                                                      (details, index) => {
-                                                          if (
-                                                              details.accountNumber ===
-                                                              ''
-                                                          ) {
-                                                              return null;
-                                                          } else {
-                                                              return {
-                                                                  isEcobankToEcobankTransaction:
-                                                                      details.bankName ===
-                                                                      'Ecobank'
-                                                                          ? true
-                                                                          : false,
-                                                                  destinationBank:
-                                                                      details.bankName,
-                                                                  destinationBankCode:
-                                                                      details.bankName,
-                                                                  beneficiaryName:
-                                                                      numberofBene[
-                                                                          index
-                                                                      ].number
-                                                                          .accountName,
-                                                                  destinationAccountNo:
-                                                                      details.accountNumber,
-                                                                  transactionAmount:
-                                                                      paymentDetails.amount ===
-                                                                      ''
-                                                                          ? parseInt(
-                                                                                details.amount,
-                                                                                10
-                                                                            ).toString()
-                                                                          : parseInt(
-                                                                                paymentDetails.amount,
-                                                                                10
-                                                                            ).toString(),
-                                                                  narration: ''
-                                                              };
-                                                          }
-                                                      }
-                                                  )
-                                    };
-
-                                    dispatch(getBulkTransfer(paymentData));
                                 }}
                             />
                         );

@@ -7,6 +7,7 @@ import {
 } from '../../../redux/api/authApi';
 import { setTransfer } from '../../../redux/slices/transferSlice';
 import ButtonComp from '../Button';
+import Loader from '../Loader';
 import PlusSvg from '../ReusableSvgComponents/PlusSvg';
 import styles from './styles.module.css';
 
@@ -120,9 +121,6 @@ const BulkTransfer = ({
             alert(errorMessageIntraBankEnquiry);
         }
     };
-    useEffect(() => {
-        localStorage.setItem('number', JSON.stringify(number));
-    }, [number]);
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -178,12 +176,89 @@ const BulkTransfer = ({
         }
     }, [accountNumber]);
     const [transactionsArray, setTransactionsArray] = useState([]);
-    useEffect(() => {
-        console.log(transactionsArray);
-        dispatch(setTransfer(transactionsArray));
-    }, [transactionsArray]);
+    const [formValues, setFormValues] = useState(null);
 
+    const [formFields, setFormFields] = useState([
+        {
+            bank: '',
+            accountNumber: '',
+            accountName: '',
+            amount: ''
+        }
+    ]);
+
+    const addFormFields = () => {
+        console.log('Button clicked');
+        setFormFields([
+            ...formFields,
+            {
+                bank: '',
+                accountNumber: '',
+                accountName: '',
+                amount: ''
+            }
+        ]);
+    };
+    useEffect(() => {
+        localStorage.setItem('number', JSON.stringify(number));
+    }, [number]);
+
+    const handleAccountNumberChange = (index) => {
+        const updatedFormFields = [...formFields];
+        updatedFormFields[index].accountName =
+            accountInquiryData?.data?.accountName;
+        setFormFields(updatedFormFields);
+    };
+    const removeFormFields = (index) => {
+        if (formFields.length > 1) {
+            const updatedFormFields = [...formFields];
+            updatedFormFields.splice(index, 1);
+            setFormFields(updatedFormFields);
+        }
+    };
+    useEffect(() => {
+        if (formValues) {
+            // Extract values from formValues
+            const {
+                ecoAccountId,
+                ecoSourceAccount,
+                ecoCurrency,
+                ecoAccountNumber,
+                ecoChooseBank,
+                destinationBankCode,
+                ecoEnterAmount
+            } = formValues;
+
+            // Create a new transaction object
+            const newTransaction = {
+                accountId: ecoAccountId,
+                accountNumber: ecoSourceAccount,
+                beneficiaryName: accountInquiryData?.data?.accountName,
+                currency: ecoCurrency,
+                destinationAccountNo: ecoAccountNumber,
+                destinationBank: ecoChooseBank,
+                destinationBankCode: destinationBankCode,
+                isEcobankToEcobankTransaction: false,
+                transactionAmount: ecoEnterAmount
+            };
+
+            // Update transactionsArray
+            setTransactionsArray((prevTransactions) => [
+                ...prevTransactions,
+                newTransaction
+            ]);
+        }
+    }, [formValues]);
+
+    useEffect(() => {
+        if (transactionsArray.length > 0) {
+            // Dispatch the action after transactionsArray has been updated
+            dispatch(setTransfer(transactionsArray));
+            forwardPage();
+        }
+    }, [transactionsArray]);
     const { allAccountInfo } = useSelector((store) => store);
+
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
@@ -194,23 +269,8 @@ const BulkTransfer = ({
                 initialValues={initialValues}
                 onSubmit={(values, { setSubmitting }) => {
                     // console.log(values);
-                    const newTransaction = {
-                        accountId: values?.ecoAccountId,
-                        accountNumber: values?.ecoSourceAccount,
-                        beneficiaryName: accountInquiryData?.data?.accountName,
-                        currency: values?.ecoCurrency,
-                        destinationAccountNo: values?.ecoAccountNumber,
-                        destinationBank: values?.ecoChooseBank,
-                        destinationBankCode: values?.destinationBankCode,
-                        isEcobankToEcobankTransaction: false,
-                        transactionAmount: values?.ecoEnterAmount
-                    };
-                    setTransactionsArray((prevTransactions) => [
-                        ...prevTransactions,
-                        newTransaction
-                    ]);
+                    setFormValues(values);
 
-                    forwardPage();
                     setSubmitting(false);
                 }}
             >
@@ -271,115 +331,97 @@ const BulkTransfer = ({
                                 {/* {errors?.sourceAccount?.message} */}
                             </p>
                         </div>
-                        <div className={styles.formBank}>
-                            <label className={styles.bulkLabel}>
-                                Choose Bank
-                            </label>
-                            <select
-                                className={styles.accntP}
-                                onChange={(e) => {
-                                    const selectedBank =
-                                        paymentbanklistData?.data?.find(
-                                            (bank) =>
-                                                bank?.institutionName ===
-                                                e.target.value
-                                        );
-                                    if (selectedBank) {
-                                        setFieldValue(
-                                            'ecoChooseBank',
-                                            selectedBank?.institutionName
-                                        );
-                                        setFieldValue(
-                                            'destinationBankCode',
-                                            selectedBank?.institutionId
-                                        );
-                                        setBankCode(
-                                            selectedBank?.institutionId
-                                        );
-                                    }
-                                }}
-                            >
-                                <option>Choose Bank</option>
-                                {paymentbanklistData?.data?.map(
-                                    (bank, index) => {
-                                        return (
-                                            <option
-                                                value={bank?.institutionName}
-                                                key={index}
-                                            >
-                                                {bank?.institutionName}
-                                            </option>
-                                        );
-                                    }
-                                )}
-                            </select>
-                        </div>
+
                         <p className={styles.beneTitle}>Beneficiary Details</p>
                         {csvUpload ? (
                             <p>File Successfully uploaded!!!</p>
                         ) : (
-                            number?.map((e, index) => {
-                                const fieldName = `details[${index}]`;
-                                // let `amount${index}` = 0;
-                                return (
+                            <div>
+                                {formFields.map((field, index) => (
                                     <div key={index}>
-                                        <div className={styles.addedFormCont}>
-                                            <div className={styles.formNumber}>
-                                                <label
-                                                    className={styles.bulkLabel}
-                                                >
-                                                    Account Number
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Enter Account Number"
-                                                    onInput={(e) => {
-                                                        setFieldValue(
-                                                            'ecoAccountNumber',
-                                                            e.target.value
-                                                        );
-                                                        setAccountNumber(
-                                                            e.target.value
-                                                        );
+                                        <div className={styles.formBank}>
+                                            <label className={styles.bulkLabel}>
+                                                Choose Bank
+                                            </label>
+                                            {paymentbanklistLoad ? (
+                                                <Loader />
+                                            ) : (
+                                                <select
+                                                    className={styles.accntP}
+                                                    onChange={(e) => {
+                                                        const selectedBank =
+                                                            paymentbanklistData?.data?.find(
+                                                                (bank) =>
+                                                                    bank?.institutionName ===
+                                                                    e.target
+                                                                        .value
+                                                            );
+                                                        if (selectedBank) {
+                                                            setFieldValue(
+                                                                'ecoChooseBank',
+                                                                selectedBank?.institutionName
+                                                            );
+                                                            setFieldValue(
+                                                                'destinationBankCode',
+                                                                selectedBank?.institutionId
+                                                            );
+                                                            setBankCode(
+                                                                selectedBank?.institutionId
+                                                            );
+                                                        }
                                                     }}
-                                                    // onInput={(e) => {
-                                                    //     if (
-                                                    //         e.target.value
-                                                    //             .length === 10
-                                                    //     ) {
-                                                    //         setIndex(index);
-                                                    //         setAcctNo(
-                                                    //             e.target.value
-                                                    //         );
-                                                    //         const newState =
-                                                    //             number.map(
-                                                    //                 (
-                                                    //                     s,
-                                                    //                     indexx
-                                                    //                 ) => {
-                                                    //                     if (
-                                                    //                         index ===
-                                                    //                         indexx
-                                                    //                     ) {
-                                                    //                         return {
-                                                    //                             number: indexx,
-                                                    //                             bank: getAllBanksByAccount(
-                                                    //                                 e
-                                                    //                                     .target
-                                                    //                                     .value
-                                                    //                             )
-                                                    //                         };
-                                                    //                     } else {
-                                                    //                         return s;
-                                                    //                     }
-                                                    //                 }
-                                                    //             );
-                                                    //         setNumber(newState);
-                                                    // }
-                                                    // }}
-                                                    name="ecoAccountNumber"
-                                                />
-                                            </div>
+                                                >
+                                                    <option>Choose Bank</option>
+                                                    {paymentbanklistData?.data?.map(
+                                                        (bank, index) => {
+                                                            return (
+                                                                <option
+                                                                    value={
+                                                                        bank?.institutionName
+                                                                    }
+                                                                    key={index}
+                                                                >
+                                                                    {
+                                                                        bank?.institutionName
+                                                                    }
+                                                                </option>
+                                                            );
+                                                        }
+                                                    )}
+                                                </select>
+                                            )}
+                                        </div>
+                                        <br />
+                                        <div className={styles.formNumber}>
+                                            <label className={styles.bulkLabel}>
+                                                Account Number
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder="Enter Account Number"
+                                                onInput={(e) => {
+                                                    handleAccountNumberChange(
+                                                        index
+                                                    );
+                                                    setFieldValue(
+                                                        'ecoAccountNumber',
+                                                        e.target.value
+                                                    );
+                                                    setAccountNumber(
+                                                        e.target.value
+                                                    );
+                                                }}
+                                                name="ecoAccountNumber"
+                                            />
+                                        </div>
+                                        <div className={styles.narration}>
+                                            <label> Account Name</label>
+                                            <input
+                                                type="text"
+                                                value={field.accountName} // Set the account name
+                                                disabled
+                                                required
+                                            />
                                             {accountInquiryErr ? (
                                                 <p className={styles.error}>
                                                     {
@@ -389,114 +431,73 @@ const BulkTransfer = ({
                                                 </p>
                                             ) : null}
                                         </div>
-                                        <div className={styles.narration}>
-                                            <label> Account Name</label>
-                                            <input
-                                                // defaultValue={...e.accountName}
-                                                type="text"
-                                                value={
-                                                    accountInquiryData?.data
-                                                        ?.accountName
-                                                }
-                                                name={`${fieldName}.accountName`}
-                                                disabled
-                                                required
-                                            />
-                                            {/* <p className={styles.error}>
-                                                {errors?.accountNumber?.message}
-                                            </p> */}
-                                        </div>
-
+                                        <br />
                                         {diffAmount ? (
-                                            <div className={styles.amountDiv}>
-                                                <label
-                                                    className={styles.bulkLabel}
+                                            <>
+                                                <div
+                                                    className={styles.amountDiv}
                                                 >
-                                                    Amount
-                                                </label>
-                                                <input
-                                                    onChange={(e) => {
-                                                        setFieldValue(
-                                                            'ecoEnterAmount',
-                                                            e.target.value
-                                                        );
-                                                        if (
-                                                            e?.target.value
-                                                                .length === 0
-                                                        ) {
-                                                            setActiveBtn(false);
-                                                        } else if (
-                                                            e?.target.value
-                                                                .length > 0
-                                                        ) {
-                                                            setActiveBtn(true);
+                                                    <label
+                                                        className={
+                                                            styles.bulkLabel
                                                         }
-                                                    }}
-                                                    name={`${fieldName}.amount`}
-                                                    type="text"
-                                                    placeholder="0.00"
-                                                />
-                                            </div>
+                                                    >
+                                                        Amount
+                                                    </label>
+                                                    <input
+                                                        onChange={(e) => {
+                                                            setFieldValue(
+                                                                'ecoEnterAmount',
+                                                                e.target.value
+                                                            );
+                                                            if (
+                                                                e.target.value
+                                                                    .length ===
+                                                                0
+                                                            ) {
+                                                                setActiveBtn(
+                                                                    false
+                                                                );
+                                                            } else if (
+                                                                e.target.value
+                                                                    .length > 0
+                                                            ) {
+                                                                setActiveBtn(
+                                                                    true
+                                                                );
+                                                            }
+                                                        }}
+                                                        type="text"
+                                                        placeholder="0.00"
+                                                    />
+                                                </div>
+                                                <br />
+                                                <br />
+                                            </>
                                         ) : null}
                                     </div>
-                                );
-                            })
+                                ))}
+                            </div>
                         )}
 
                         <div className={styles.narration}>
                             <div className={styles.uploadCsv}>
-                                <p>Tap to carry out up to 5 transactions</p>
+                                {/* <p>Tap to carry out up to 5 transactions</p> */}
                                 {csvUpload ? null : (
                                     <div className={styles.actionButtons}>
                                         <div
                                             className={styles.plus}
-                                            onClick={() => {
-                                                if (
-                                                    number.length === 5 ||
-                                                    number.length > 5
-                                                ) {
-                                                    alert(
-                                                        'You can only carry out 5 transactions at the same time. Use CSV file instead'
-                                                    );
-                                                } else {
-                                                    setNumber((arr) => [
-                                                        ...arr,
-                                                        {
-                                                            number: `${arr.length}`,
-                                                            bank: []
-                                                        }
-                                                    ]);
-                                                }
-                                            }}
+                                            onClick={addFormFields}
                                         >
                                             <PlusSvg />
                                         </div>
                                         <div
                                             className={styles.minus}
-                                            onClick={() => {
-                                                if (
-                                                    number.length === 1 ||
-                                                    number.length < 1
-                                                ) {
-                                                    alert(
-                                                        'Minimum of one Beneficiary'
-                                                    );
-                                                } else {
-                                                    setNumber(
-                                                        number.filter(
-                                                            (item) => {
-                                                                return (
-                                                                    item !==
-                                                                    number[
-                                                                        number.length -
-                                                                            1
-                                                                    ]
-                                                                );
-                                                            }
-                                                        )
-                                                    );
-                                                }
-                                            }}
+                                            onClick={() =>
+                                                removeFormFields(
+                                                    formFields.length - 1
+                                                )
+                                            }
                                         >
                                             -
                                         </div>

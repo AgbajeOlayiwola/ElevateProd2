@@ -93,8 +93,10 @@ const MakePaymentSecond = ({
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });
-        // closeAction();
-        dispatch(clearTransfer());
+        setTimeout(() => {
+            closeAction();
+            dispatch(clearTransfer());
+        }, 7000);
     };
     useEffect(() => {
         if (singleTransferSuccess) {
@@ -110,7 +112,49 @@ const MakePaymentSecond = ({
         console.log(data);
         bulkTransfer(data);
     };
+    const totalAmount = 0;
+    useEffect(() => {
+        if (title === 'Bulk Payments') {
+            totalAmount = transfer.reduce((sum, item) => {
+                const transactionAmount = parseFloat(item.transactionAmount);
+                if (!isNaN(transactionAmount)) {
+                    return sum + transactionAmount;
+                }
+                return sum;
+            }, 0);
+        }
+    }, []);
 
+    const showBulkSuccessToastMessage = () => {
+        toast.success(bulkTransferData?.responseMessage, {
+            autoClose: 10000,
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        setTimeout(() => {
+            closeAction();
+            dispatch(clearTransfer());
+        }, 7000);
+    };
+    useEffect(() => {
+        if (bulkTransferSuccess) {
+            showBulkSuccessToastMessage();
+        }
+    }, [bulkTransferSuccess]);
+
+    const showBulkErrorToastMessage = () => {
+        toast.error(bulkTransferErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (bulkTransferErr) {
+            showBulkErrorToastMessage();
+        }
+    }, [bulkTransferErr]);
+    console.log('Total Amount:', totalAmount);
     return (
         <Overlay overlay={overlay}>
             <ToastContainer />
@@ -144,7 +188,9 @@ const MakePaymentSecond = ({
                                             `${affiliate.substring(1)}`
                                         ]
                                     )}
-                                    {transfer?.transactionAmount}
+                                    {title === 'Bulk Payments'
+                                        ? totalAmount
+                                        : transfer?.transactionAmount}
                                 </h3>
                             </div>
                         )}
@@ -185,7 +231,7 @@ const MakePaymentSecond = ({
                                     </p>
                                     <h3>
                                         {title === 'Bulk Payments'
-                                            ? `${number} Recipient`
+                                            ? `${transfer.length} Recipient`
                                             : transfer?.destinationAccountNo}
                                     </h3>
                                 </div>
@@ -196,7 +242,7 @@ const MakePaymentSecond = ({
                                     <h3>
                                         <span></span>{' '}
                                         {title === 'Bulk Payments'
-                                            ? `${number} banks`
+                                            ? `${transfer.length} banks`
                                             : transfer?.destinationBank}
                                     </h3>
                                 </div>
@@ -222,7 +268,11 @@ const MakePaymentSecond = ({
                                     <p className={styles.transactionTitle}>
                                         From
                                     </p>
-                                    <h3>{transfer?.accountNumber}</h3>
+                                    <h3>
+                                        {title === 'Bulk Payments'
+                                            ? transfer[0].accountNumber
+                                            : transfer?.accountNumber}
+                                    </h3>
                                 </div>
                             </div>
                         )}
@@ -260,7 +310,7 @@ const MakePaymentSecond = ({
                                         ? transferFunction
                                         : bulkTransferAction
                                 }
-                                loads={singleTransferLoad}
+                                loads={singleTransferLoad || bulkTransferLoad}
                             />
                         </form>
                     </div>

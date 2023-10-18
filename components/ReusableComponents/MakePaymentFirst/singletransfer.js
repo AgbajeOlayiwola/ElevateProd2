@@ -1,4 +1,5 @@
 import { Formik } from 'formik';
+import debounce from 'lodash/debounce';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Lottie from 'react-lottie';
@@ -11,6 +12,7 @@ import {
 } from '../../../redux/api/authApi';
 import { setTransfer } from '../../../redux/slices/transferSlice';
 import ButtonComp from '../Button';
+import Loader from '../Loader';
 import socialdata from '../Lotties/loading.json';
 import styles from './styles.module.css';
 const SingleTransfer = ({
@@ -141,6 +143,11 @@ const SingleTransfer = ({
     // };
 
     const dispatch = useDispatch();
+    const handleInputChange = (value) => {
+        // You can perform any other actions here if needed
+        setAccountNumber(value);
+    };
+    const debouncedInputChange = debounce(handleInputChange, 1000);
 
     useEffect(() => {
         dispatch(loadbank('ENG'));
@@ -428,7 +435,9 @@ const SingleTransfer = ({
                                                 'ecoAccountNumber',
                                                 e.target.value
                                             );
-                                            setAccountNumber(e.target.value);
+                                            debouncedInputChange(
+                                                e.target.value
+                                            );
                                         }}
                                         type="text"
                                         placeholder="Enter account number here"
@@ -642,46 +651,52 @@ const SingleTransfer = ({
                                 </div>
                                 <div className={styles.narration}>
                                     <label>Choose Bank</label>
-                                    <select
-                                        className={styles.accntP}
-                                        onChange={(e) => {
-                                            const selectedBank =
-                                                paymentbanklistData?.data?.find(
-                                                    (bank) =>
-                                                        bank?.institutionName ===
-                                                        e.target.value
-                                                );
-                                            if (selectedBank) {
-                                                setFieldValue(
-                                                    'ecoChooseBank',
-                                                    selectedBank?.institutionName
-                                                );
-                                                setFieldValue(
-                                                    'destinationBankCode',
-                                                    selectedBank?.institutionId
-                                                );
-                                                setBankCode(
-                                                    selectedBank?.institutionId
-                                                );
-                                            }
-                                        }}
-                                    >
-                                        <option>Choose Bank</option>
-                                        {paymentbanklistData?.data?.map(
-                                            (bank, index) => {
-                                                return (
-                                                    <option
-                                                        value={
-                                                            bank?.institutionName
-                                                        }
-                                                        key={index}
-                                                    >
-                                                        {bank?.institutionName}
-                                                    </option>
-                                                );
-                                            }
-                                        )}
-                                    </select>
+                                    {paymentbanklistLoad ? (
+                                        <Loader />
+                                    ) : (
+                                        <select
+                                            className={styles.accntP}
+                                            onChange={(e) => {
+                                                const selectedBank =
+                                                    paymentbanklistData?.data?.find(
+                                                        (bank) =>
+                                                            bank?.institutionName ===
+                                                            e.target.value
+                                                    );
+                                                if (selectedBank) {
+                                                    setFieldValue(
+                                                        'ecoChooseBank',
+                                                        selectedBank?.institutionName
+                                                    );
+                                                    setFieldValue(
+                                                        'destinationBankCode',
+                                                        selectedBank?.institutionId
+                                                    );
+                                                    setBankCode(
+                                                        selectedBank?.institutionId
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            <option>Choose Bank</option>
+                                            {paymentbanklistData?.data?.map(
+                                                (bank, index) => {
+                                                    return (
+                                                        <option
+                                                            value={
+                                                                bank?.institutionName
+                                                            }
+                                                            key={index}
+                                                        >
+                                                            {
+                                                                bank?.institutionName
+                                                            }
+                                                        </option>
+                                                    );
+                                                }
+                                            )}
+                                        </select>
+                                    )}
                                     <p className={styles.error}>
                                         {errors ? (
                                             <>{errors?.ecoChooseBank}</>

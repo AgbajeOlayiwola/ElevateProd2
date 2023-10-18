@@ -170,7 +170,7 @@
     justify-content: space-between;
     gap: 30px;
 }
-.NFCScanner {
+/* .NFCScanner {
     width: 40%;
     max-width: 496px;
     background: #fefefe;
@@ -183,7 +183,7 @@
     left: 41%;
     padding: 48px;
     z-index: 10;
-}
+} */
 
 .NFCScanner h2 {
     font-size: 16px;
