@@ -26,6 +26,7 @@ import moreAccountNumberDetailsReducer from '../slices/moreAccountNumberDetails'
 import pinnedReducer from '../slices/pinned';
 import profileReducer from '../slices/profile';
 import resetPasswordReducer from '../slices/resetpasswordslice';
+import tokenReducer from '../slices/tokenSlice';
 import transferReducer from '../slices/transferSlice';
 const reducers = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
@@ -41,7 +42,8 @@ const reducers = combineReducers({
     faceMatchDetails: faceMatchDetailsReducr,
     allAccountInfo: allAccountInfoReducr,
     transfer: transferReducer,
-    resetPasswordslice: resetPasswordReducer
+    resetPasswordslice: resetPasswordReducer,
+    token: tokenReducer
 });
 
 const persistConfig = {
@@ -57,7 +59,8 @@ const persistConfig = {
         'faceMatchDetails',
         'allAccountInfo',
         'transfer',
-        'resetPasswordslice'
+        'resetPasswordslice',
+        'token'
     ]
 };
 

@@ -280,6 +280,11 @@ export const RecievePayment = [
         title: 'USSD',
         path: 'USSD only',
         icon: <StarSharp />
+    },
+    {
+        title: 'Virtual Account',
+        path: 'Virtual Account',
+        icon: <StarSharp />
     }
     // {
     //     title: 'Paylink',
@@ -375,6 +380,11 @@ export const PaymentData = {
             icon: <MposSvg2 />,
             text: 'Phone POS',
             summary: 'Pay for your TV bills, electricity e.t.c'
+        },
+        {
+            icon: <Paylink2 />,
+            text: 'Virtual Account',
+            summary: 'Generate a virtual account.'
         }
     ]
 };

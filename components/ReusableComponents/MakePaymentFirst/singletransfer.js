@@ -14,6 +14,7 @@ import { setTransfer } from '../../../redux/slices/transferSlice';
 import ButtonComp from '../Button';
 import Loader from '../Loader';
 import socialdata from '../Lotties/loading.json';
+import Search from '../SearchInput';
 import styles from './styles.module.css';
 const SingleTransfer = ({
     othersaction,
@@ -152,6 +153,10 @@ const SingleTransfer = ({
     useEffect(() => {
         dispatch(loadbank('ENG'));
     }, []);
+    const [selectedBank, setSelectedBank] = useState(null);
+    const handleBankSelect = (bank) => {
+        setSelectedBank(bank);
+    };
     // console.log(accountInquiryErr);
     useEffect(() => {
         setNewBeneficiarieso([]);
@@ -189,7 +194,9 @@ const SingleTransfer = ({
     useEffect(() => {
         if (accountNumber) {
             accountInquiry({
-                destinationBankCode: bankCode ? bankCode : 'ECOBANK',
+                destinationBankCode: selectedBank?.institutionId
+                    ? selectedBank?.institutionId
+                    : 'ECOBANK',
                 accountNumber: accountNumber
             });
         }
@@ -560,11 +567,12 @@ const SingleTransfer = ({
                                 isEcobankToEcobankTransaction: false,
                                 currency: values?.ecoCurrency,
                                 destinationBank: values?.ecoChooseBank,
-                                destinationBankCode:
-                                    values?.destinationBankCode,
+
                                 beneficiaryName:
                                     accountInquiryData?.data?.accountName,
-                                destinationAccountNo: values?.ecoAccountNumber,
+                                destinationBank: selectedBank?.institutionName,
+                                destinationBankCode:
+                                    selectedBank?.institutionId,
                                 transactionAmount: values?.ecoEnterAmount,
                                 narration: values?.ecoEnterAmount,
                                 accountId: values?.ecoAccountId,
@@ -650,52 +658,19 @@ const SingleTransfer = ({
                                     </p> */}
                                 </div>
                                 <div className={styles.narration}>
-                                    <label>Choose Bank</label>
                                     {paymentbanklistLoad ? (
                                         <Loader />
                                     ) : (
-                                        <select
-                                            className={styles.accntP}
-                                            onChange={(e) => {
-                                                const selectedBank =
-                                                    paymentbanklistData?.data?.find(
-                                                        (bank) =>
-                                                            bank?.institutionName ===
-                                                            e.target.value
-                                                    );
-                                                if (selectedBank) {
-                                                    setFieldValue(
-                                                        'ecoChooseBank',
-                                                        selectedBank?.institutionName
-                                                    );
-                                                    setFieldValue(
-                                                        'destinationBankCode',
-                                                        selectedBank?.institutionId
-                                                    );
-                                                    setBankCode(
-                                                        selectedBank?.institutionId
-                                                    );
-                                                }
-                                            }}
-                                        >
-                                            <option>Choose Bank</option>
-                                            {paymentbanklistData?.data?.map(
-                                                (bank, index) => {
-                                                    return (
-                                                        <option
-                                                            value={
-                                                                bank?.institutionName
-                                                            }
-                                                            key={index}
-                                                        >
-                                                            {
-                                                                bank?.institutionName
-                                                            }
-                                                        </option>
-                                                    );
-                                                }
-                                            )}
-                                        </select>
+                                        <div className={styles.formBank}>
+                                            <label className={styles.bulkLabel}>
+                                                Choose Bank
+                                            </label>
+                                            <Search
+                                                array={paymentbanklistData}
+                                                placeholder="Search for bank"
+                                                onBankSelect={handleBankSelect}
+                                            />
+                                        </div>
                                     )}
                                     <p className={styles.error}>
                                         {errors ? (

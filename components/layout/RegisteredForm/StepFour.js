@@ -19,7 +19,7 @@ import { lgasArr } from '../../ReusableComponents/Data';
 import ProfileSetupSide from '../../ReusableComponents/ProfileSetupSide';
 import DropdownSvg from '../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
-
+const countryToCurrency = require('country-to-currency');
 const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -221,11 +221,12 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
         };
         businessSetup(data);
     };
+    const affiliate = localStorage.getItem('affiliateCode');
     useEffect(() => {
         if (businessSetupData && pageType !== 'New') {
             const data = {
-                affiliateCode: 'ENG',
-                currency: 'NGN'
+                affiliateCode: affiliate,
+                currency: countryToCurrency[`${affiliate.substring(1)}`]
             };
             createCAcct(data);
         } else if (businessSetupData && pageType === 'New') {
@@ -237,17 +238,12 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             router.push('/Success');
         }
     }, [businessSetupSuccess]);
+
     useEffect(() => {
         if (createCAcctData) {
             getAccountStatus();
         }
     }, [createCAcctSuccess]);
-    useEffect(() => {
-        if (getAccountStatusData) {
-            dispatch(setAccountNumber(getAccountStatusData?.data?.trackerRef));
-            router.push('/Success');
-        }
-    }, [getAccountStatusSuccess]);
 
     const [callRc, setCallRc] = useState('');
 
@@ -293,6 +289,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
         toast.success('Getting Account Status.', {
             position: toast.POSITION.TOP_RIGHT
         });
+        router.push('/Verify/Account');
     };
     const showToastIndividualErrorMessage = () => {
         toast.error('Error Creating Account, Try Again', {
@@ -311,11 +308,7 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
             position: toast.POSITION.TOP_RIGHT
         });
     };
-    useEffect(() => {
-        if (getAccountStatusErr) {
-            showToastAccountStatusErrorMessage();
-        }
-    }, [getAccountStatusErr]);
+
     return (
         <>
             {' '}
@@ -1192,7 +1185,6 @@ const StepFour = ({ title, action, setFormData, formData, countryNames }) => {
                                             text="Save and Continue"
                                             onClick={createAnewBusinessAccount}
                                             loads={
-                                                getAccountStatusLoad ||
                                                 createCAcctLoad ||
                                                 businessSetupLoad
                                             }

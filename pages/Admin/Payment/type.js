@@ -113,24 +113,22 @@ const PaymentTypes = () => {
         setLink({ id }.id);
     });
     const { profile } = useSelector((store) => store);
-
+    const affiliate = localStorage.getItem('affiliateCode');
     useEffect(() => {
         if (link !== undefined) {
-            if (profile?.data?.user?.hasSetTransactionPin === 'N') {
-                if (profile?.data?.user?.createdFromEcobankCred === 'N') {
+            if (profile?.user?.hasSetTransactionPin === 'N') {
+                if (profile?.user?.createdFromEcobankCred === 'N') {
                     router.push({
                         pathname: '/AccountUpgrade',
                         query: { id: 'Transaction Pin' }
                     });
-                } else if (
-                    profile?.data?.user?.createdFromEcobankCred === 'Y'
-                ) {
+                } else if (profile?.user?.createdFromEcobankCred === 'Y') {
                     router.push({
                         pathname: '/Admin/Profile',
                         query: { id: 'Transaction Pin' }
                     });
                 }
-            } else if (profile?.data?.user?.hasSetTransactionPin === 'Y') {
+            } else if (profile?.user?.hasSetTransactionPin === 'Y') {
                 setFormType(link.toLowerCase());
                 setOverlay(true);
             }
@@ -139,14 +137,14 @@ const PaymentTypes = () => {
     const handleFormChange = (formTitle) => {
         setFormType(formTitle);
         setOverlay(true);
-        if (profile?.data?.user?.hasSetTransactionPin === 'N') {
+        if (profile?.user?.hasSetTransactionPin === 'N') {
             //console.log(userProfileData.createdFromEcobankCred);
             if (profile?.data?.user?.createdFromEcobankCred === 'N') {
                 router.push({
                     pathname: '/AccountUpgrade',
                     query: { id: 'Transaction Pin' }
                 });
-            } else if (profile?.data?.user?.createdFromEcobankCred === 'Y') {
+            } else if (profile?.user?.createdFromEcobankCred === 'Y') {
                 router.push({
                     pathname: '/Admin/Profile',
                     query: { id: 'Transaction Pin' }
@@ -186,6 +184,16 @@ const PaymentTypes = () => {
             }, 0)
         );
     }, [csvData]);
+    useEffect(() => {
+        const {
+            query: { id }
+        } = router;
+        setLink({ id }.id);
+        if (link) {
+            setFormType(link.toLowerCase());
+        }
+    }, [link]);
+    console.log(formType);
     const renderForm = () => {
         switch (formType) {
             case 'single transfer':
@@ -789,14 +797,27 @@ const PaymentTypes = () => {
                 </div>
                 <div className={styles.cov}>
                     <PaymentCard title="Make Payments" type="make">
-                        {PaymentData?.make?.map((payType, index) => (
-                            <PaymentSingleBody
-                                data={payType}
-                                key={index}
-                                type="make"
-                                handleFormChange={handleFormChange}
-                            />
-                        ))}
+                        {affiliate === 'ENG'
+                            ? PaymentData.make
+                                  .filter(
+                                      (item) => item.text !== 'Mobile Money'
+                                  )
+                                  .map((payType, index) => (
+                                      <PaymentSingleBody
+                                          data={payType}
+                                          key={index}
+                                          type="make"
+                                          handleFormChange={handleFormChange}
+                                      />
+                                  ))
+                            : PaymentData.make.map((payType, index) => (
+                                  <PaymentSingleBody
+                                      data={payType}
+                                      key={index}
+                                      type="make"
+                                      handleFormChange={handleFormChange}
+                                  />
+                              ))}
                     </PaymentCard>
                 </div>
             </div>

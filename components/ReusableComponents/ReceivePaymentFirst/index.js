@@ -1,14 +1,20 @@
-import React, { useEffect, useState, useRef } from 'react';
-import ButtonComp from '../Button';
-import styles from './styles.module.css';
-import { useForm } from 'react-hook-form';
-import Image from 'next/image';
-import Overlay from '../Overlay';
-import CloseButton from '../CloseButtonSvg';
-import SourceSvg from '../ReusableSvgComponents/SourceSvg';
-import Loader from '../Loader';
+import { Formik } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+    useDynamicQrMutation,
+    usePaymentbanklistMutation,
+    useUssdRefferenceMutation
+} from '../../../redux/api/authApi';
+import ButtonComp from '../Button';
+import CloseButton from '../CloseButtonSvg';
+import Loader from '../Loader';
+import OtpInput from '../Otpinput';
+import Overlay from '../Overlay';
+import Search from '../SearchInput';
+import styles from './styles.module.css';
 // import axios from 'axios';
 
 const ReceivePaymentFirst = ({
@@ -24,36 +30,53 @@ const ReceivePaymentFirst = ({
 }) => {
     const [activeBtn, setActiveBtn] = useState(false);
     const [description, setDescription] = useState('');
-    const { accountPrimarys, accountPrimaryError } = useSelector(
-        (state) => state.accountPrimaryReducer
-    );
-    // const [amount, setAmount] = useState('');
+    const [otpValue, setOtpValue] = useState('');
     const dispatch = useDispatch();
     const myref = useRef();
-    useEffect(() => {
-        //console.log(error);
-        dispatch(loadAccountPrimary());
-        myref.current.scrollTo(0, 0);
-        window.scrollTo(0, 0);
-        // const fetchCountryApi =  () => {
-        //     const countriesApi = await axios(
-        //         'https://ellevate-app.herokuapp.com/countries'
-        //     );
-        //     const countriesData = await countriesApi.json();
-        //     setAmount(countriesData);
-        //     // //console.log(countriesData);
-        //     fetchCountryApi();
-        // };
-    }, []);
-    useEffect(() => {
-        //  //console.log(accountPrimarys);
-    }, [accountPrimarys]);
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
-    // //console.log(amount);
+    const [
+        paymentbanklist,
+        {
+            data: paymentbanklistData,
+            isLoading: paymentbanklistLoad,
+            isSuccess: paymentbanklistSuccess,
+            isError: paymentbanklistFalse,
+            error: paymentbanklistErr,
+            reset: paymentbanklistReset
+        }
+    ] = usePaymentbanklistMutation();
+    const [
+        ussdRefference,
+        {
+            data: ussdRefferenceData,
+            isLoading: ussdRefferenceLoad,
+            isSuccess: ussdRefferenceSuccess,
+            isError: ussdRefferenceFalse,
+            error: ussdRefferenceErr,
+            reset: ussdRefferenceReset
+        }
+    ] = useUssdRefferenceMutation();
+
+    const [selectedBank, setSelectedBank] = useState(null);
+    const handleBankSelect = (bank) => {
+        setSelectedBank(bank);
+    };
+    const [
+        dynamicQr,
+        {
+            data: dynamicQrData,
+            isLoading: dynamicQrLoad,
+            isSuccess: dynamicQrSuccess,
+            isError: dynamicQrFalse,
+            error: dynamicQrErr,
+            reset: dynamicQrReset
+        }
+    ] = useDynamicQrMutation();
+    const handleOtpChange = (otp) => {
+        setOtpValue(otp);
+        if (otpValue.length === 5) {
+            setActiveBtn(true);
+        }
+    };
     const banks = [
         {
             bankName: 'GTBank',
@@ -156,132 +179,288 @@ const ReceivePaymentFirst = ({
             bankID: '000'
         }
     ];
+    const { allAccountInfo } = useSelector((store) => store);
+    const initialValues = {
+        ecoAccountId: '',
+        ecoSourceAccount: '',
+        ecoCurrency: '',
+        accountNumber: '',
+        amount: '',
+        paymentTitle: '',
+        description: ''
+    };
+    useEffect(() => {
+        paymentbanklist();
+    }, []);
+    useEffect(() => {
+        if (paymentbanklistSuccess) {
+            console.log(paymentbanklistData);
+        }
+    }, [paymentbanklistSuccess]);
+
+    const showToastMessage = () => {
+        toast.error(ussdRefferenceErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (ussdRefferenceErr) {
+            showToastMessage();
+        }
+    }, [ussdRefferenceErr]);
+    const showQrToastMessage = () => {
+        toast.error(dynamicQrErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+    };
+    useEffect(() => {
+        if (dynamicQrErr) {
+            showQrToastMessage();
+        }
+    }, [dynamicQrErr]);
     return (
         <Overlay overlay={overlay}>
+            <ToastContainer />
             <div className={styles.firstDiv} ref={myref}>
                 <div className={styles.firstBody}>
                     <div>
                         <h2>{firstTitle}</h2>
-                        {/* <p className={styles.accept}>
-                            (Accepts Card Payment without POS)
-                        </p> */}
-                        <form onSubmit={handleSubmit(action)}>
-                            {/* <div className={styles.formGroup}>
-                                <label>Account to Credit</label>
-                                <select>
-                                    <option>
-                                        {' '}
-                                        Source <span>- Marvelous N******</span>
-                                    </option>
-                                    <option>
-                                        {' '}
-                                        Source <span>- Troniclab</span>
-                                    </option>
-                                </select>
-                            </div> */}
-                            <div className={styles.formGroup}>
-                                <label>Account Number</label>
-                                <input
-                                    type="number"
-                                    name="amount"
-                                    value={accountPrimarys?.accountNumber}
-                                />
-                                <p className={styles.error}>
-                                    {errors?.amount?.message}
-                                </p>
+                        <Formik
+                            initialValues={initialValues}
+                            onSubmit={(values, { setSubmitting }) => {
+                                const data = {
+                                    amount: values.amount,
+                                    nameOfPayment: values.paymentTitle,
+                                    productName: values.paymentTitle,
+                                    productCode: values.paymentTitle,
+                                    description: values.description,
+                                    transactionPin: otpValue
+                                };
+                                const ussdData = {
+                                    amount: values.amount,
+                                    subMerchant: values.paymentTitle,
+                                    transactionPin: otpValue
+                                };
+                                if (firstTitle === 'Create USSD Payment Code') {
+                                    ussdRefference(data);
+                                } else {
+                                    dynamicQr(data);
+                                }
+                                setSubmitting(false);
+                            }}
+                        >
+                            {({
+                                values,
+                                errors,
+                                touched,
+                                handleChange,
+                                setFieldValue,
+                                handleSubmit
+                            }) => (
+                                <form onSubmit={handleSubmit}>
+                                    <div className={styles.narration}>
+                                        <label>Source Account</label>
+                                        <select
+                                            name="ecoSourceAccount"
+                                            onChange={(e) => {
+                                                const selectedAccount =
+                                                    allAccountInfo.find(
+                                                        (account) =>
+                                                            account?.accountNo ===
+                                                            e.target.value
+                                                    );
+                                                if (selectedAccount) {
+                                                    setFieldValue(
+                                                        'ecoSourceAccount',
+                                                        selectedAccount?.accountNo
+                                                    );
+                                                    setFieldValue(
+                                                        'ecoAccountId',
+                                                        selectedAccount?.accountId
+                                                    );
+                                                    setFieldValue(
+                                                        'ecoCurrency',
+                                                        selectedAccount?.currency
+                                                    );
+                                                }
+                                            }}
+                                        >
+                                            <option value="">
+                                                Select Account To Use
+                                            </option>
+                                            {allAccountInfo
+                                                .filter(
+                                                    (account) =>
+                                                        account.accountNo
+                                                )
+                                                .map((account) => {
+                                                    return (
+                                                        <>
+                                                            <option
+                                                                className={
+                                                                    styles.accntP
+                                                                }
+                                                                value={
+                                                                    account?.accountNo
+                                                                }
+                                                            >
+                                                                <p>
+                                                                    {
+                                                                        account?.accountNo
+                                                                    }
+                                                                </p>
+                                                            </option>
+                                                        </>
+                                                    );
+                                                })}
+                                        </select>
+                                        <br />
+                                    </div>
+                                    <br />
+                                    <div className={styles.formGroup}>
+                                        {/* <label>Account Number</label>
+                                        <input
+                                            type="number"
+                                            onChange={(e) => {
+                                                setFieldValue(
+                                                    'accountNumber',
+                                                    e.target.value
+                                                );
+                                            }}
+                                            name="amount"
+                                        />
+                                        <p className={styles.error}>
+                                            {errors?.amount?.message}
+                                        </p> */}
 
-                                <label>Enter Amount</label>
-                                <input
-                                    {...register('amount', {
-                                        required: 'Please enter Amount',
-                                        pattern: {
-                                            value: /^[0-9]/i,
-                                            message:
-                                                'Amount can only be number '
-                                        }
-                                    })}
-                                    type="number"
-                                    name="amount"
-                                    placeholder="0.00"
-                                />
-                                <p className={styles.error}>
-                                    {errors?.amount?.message}
-                                </p>
-                            </div>
-                            {firstTitle === 'Create USSD Payment Code' ? (
-                                <div className={styles.formGroup}>
-                                    <label>Bank</label>
-                                    <select {...register('bank')}>
-                                        <option>Select Bank</option>
-                                        {banks?.map((item, index) => {
-                                            return (
-                                                <option key={index}>
-                                                    {item.bankName}
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </div>
-                            ) : null}
-                            <div className={styles.formGroup}>
-                                <label>Payment title</label>
-                                <input
-                                    {...register('accountName', {
-                                        required: 'Please enter Paayment Name'
-                                        // pattern: {
-                                        //     value: /^[A-Za-z ]+$/i,
-                                        //     message: 'Only Alphabelts allowed'
-                                        // }
-                                    })}
-                                    type="text"
-                                    placeholder="Enter Payment Name"
-                                />
-                                <p className={styles.error}>
-                                    {errors?.accountName?.message}
-                                </p>
-                            </div>
-
-                            <div className={styles.formGroup}>
-                                <label>Description</label>
-                                <textarea
-                                    {...register('description', {
-                                        required: 'Please enter Description'
-                                        // pattern: {
-                                        //     value: /^[A-Za-z ]+$/i,
-                                        //     message: 'Only Alphabelts allowed'
-                                        // }
-                                    })}
-                                    name="description"
-                                    id=""
-                                    placeholder="Enter note to be displayed to customer."
-                                    value={description}
-                                    onChange={(e) => {
-                                        setDescription(e.target.value);
-                                        if (e.target.value.length === 0) {
-                                            setActiveBtn(false);
-                                        } else if (e.target.value.length > 0) {
-                                            setActiveBtn(true);
-                                        }
-                                    }}
-                                ></textarea>
-                                <p className={styles.error}>
-                                    {errors?.description?.message}
-                                </p>
-                            </div>
-                            {error ? (
-                                <p className={styles.error}>{error}</p>
-                            ) : null}
-                            {isLoading ? (
-                                <Loader />
-                            ) : (
-                                <ButtonComp
-                                    disabled={activeBtn}
-                                    active={activeBtn ? 'active' : 'inactive'}
-                                    text={buttonText}
-                                    type="submit"
-                                />
+                                        <label>Enter Amount</label>
+                                        <input
+                                            type="number"
+                                            name="amount"
+                                            placeholder="0.00"
+                                            onChange={(e) => {
+                                                setFieldValue(
+                                                    'amount',
+                                                    e.target.value
+                                                );
+                                            }}
+                                        />
+                                        {/* <p className={styles.error}>
+                                            {errors?.amount?.message}
+                                        </p> */}
+                                    </div>
+                                    <br />
+                                    {firstTitle ===
+                                    'Create USSD Payment Code' ? (
+                                        <div className={styles.narration}>
+                                            {paymentbanklistLoad ? (
+                                                <Loader />
+                                            ) : (
+                                                <div
+                                                    className={styles.formBank}
+                                                >
+                                                    <label
+                                                        className={
+                                                            styles.bulkLabel
+                                                        }
+                                                    >
+                                                        Choose Bank
+                                                    </label>
+                                                    <Search
+                                                        array={
+                                                            paymentbanklistData
+                                                        }
+                                                        placeholder="Search for bank"
+                                                        onBankSelect={
+                                                            handleBankSelect
+                                                        }
+                                                    />
+                                                </div>
+                                            )}
+                                            <p className={styles.error}>
+                                                {errors ? (
+                                                    <>{errors?.ecoChooseBank}</>
+                                                ) : null}
+                                            </p>
+                                        </div>
+                                    ) : null}
+                                    <div className={styles.formGroup}>
+                                        {firstTitle ===
+                                        'Create USSD Payment Code' ? (
+                                            <label>Sub Merchant</label>
+                                        ) : (
+                                            <label>Payment title</label>
+                                        )}
+                                        <input
+                                            type="text"
+                                            placeholder="Enter Payment Name"
+                                            onChange={(e) => {
+                                                setFieldValue(
+                                                    'paymentTitle',
+                                                    e.target.value
+                                                );
+                                            }}
+                                        />
+                                        <p className={styles.error}>
+                                            {errors?.accountName?.message}
+                                        </p>
+                                    </div>
+                                    {firstTitle ===
+                                    'Create USSD Payment Code' ? null : (
+                                        <div className={styles.formGroup}>
+                                            <label>Description</label>
+                                            <textarea
+                                                name="description"
+                                                id=""
+                                                placeholder="Enter note to be displayed to customer."
+                                                value={values.description}
+                                                onChange={(e) => {
+                                                    setFieldValue(
+                                                        'description',
+                                                        e.target.value
+                                                    );
+                                                }}
+                                            ></textarea>
+                                            <p className={styles.error}>
+                                                {errors?.description?.message}
+                                            </p>
+                                        </div>
+                                    )}
+                                    <br />
+                                    <div className={styles.otps}>
+                                        <label>Transaction PIN.</label>
+                                        <br />
+                                        <OtpInput
+                                            onOtpChange={handleOtpChange}
+                                            otpfields={6}
+                                        />
+                                    </div>
+                                    {error ? (
+                                        <p className={styles.error}>{error}</p>
+                                    ) : null}
+                                    {isLoading ? (
+                                        <Loader />
+                                    ) : (
+                                        <ButtonComp
+                                            disabled={activeBtn}
+                                            active={
+                                                activeBtn
+                                                    ? 'active'
+                                                    : 'inactive'
+                                            }
+                                            loads={
+                                                dynamicQrLoad ||
+                                                ussdRefferenceLoad
+                                            }
+                                            text={buttonText}
+                                            type="submit"
+                                        />
+                                    )}
+                                </form>
                             )}
-                        </form>
+                        </Formik>
                     </div>
                 </div>
                 <div>

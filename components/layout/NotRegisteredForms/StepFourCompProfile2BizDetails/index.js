@@ -1,45 +1,26 @@
 //I commented out line 176
-import React, { useState, useEffect } from 'react';
-import ButtonComp from '../../../ReusableComponents/Button';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import Card from '../../NotRegisteredForms/Card';
-import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import ButtonComp from '../../../ReusableComponents/Button';
 import {
-    CardContainer,
-    CardHeadingBVN,
-    LeftHeading,
+    FormInput,
     // SmallInstructionText,
     Label,
-    FormInput,
-    ResetOTP,
-    InputWrapper,
-    ProgressBar,
-    SmallCardContainer,
-    RegStatusHeading,
-    ButtonWrapper,
-    ToggleYes,
-    ToggleNo,
-    ToggleYesText,
-    ToggleNoText,
-    GenderWrapper,
     LastFieldAndButton,
-    SelectInput
+    SelectInput,
+    SmallCardContainer
 } from './styles.module';
 import styles from './styles.module.css';
-import Progressbar from '../../../ReusableComponents/Progressbar';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { useRouter } from 'next/router';
+import { businessCategoriesData } from '../../../../redux/actions/businessCategoriesAction';
+import { CompleteBusinessProfile } from '../../../../redux/actions/completeBusinessProfileAction';
+import { createNewCorpUserAccount } from '../../../../redux/actions/createNewCorporateUserAction';
+import { createNewUserAccount } from '../../../../redux/actions/createNwUserAccountAction';
+import { statesData } from '../../../../redux/actions/statesAction';
 import axiosInstance from '../../../../redux/helper/apiClient';
 import apiRoutes from '../../../../redux/helper/apiRoutes';
-import CircleSvg from '../../../ReusableComponents/ReusableSvgComponents/CircleSvg';
-import BusinessCategory from '../../../ReusableComponents/BusinessCategory';
-import { CompleteBusinessProfile } from '../../../../redux/actions/completeBusinessProfileAction';
-import { createNewUserAccount } from '../../../../redux/actions/createNwUserAccountAction';
-import { createNewCorpUserAccount } from '../../../../redux/actions/createNewCorporateUserAction';
-import { businessCategoriesData } from '../../../../redux/actions/businessCategoriesAction';
-import { statesData } from '../../../../redux/actions/statesAction';
 const StepFourCompProfile2BizDetails = ({
     handleShowSuccessStep,
     formData,
@@ -502,7 +483,7 @@ const StepFourCompProfile2BizDetails = ({
                             circleStatus={activeBtn}
                         />
                         <label>
-                            I agree with Ellevate App
+                            I agree with  SMEApp
                             <span>Terms and Conditions</span>
                         </label>
                     </div>

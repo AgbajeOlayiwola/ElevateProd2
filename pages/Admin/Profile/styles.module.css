@@ -869,7 +869,10 @@
 .signRightSingle div:first-child {
     margin-top: 0px;
 }
-
+.trans > div {
+    display: flex;
+    gap: 100px;
+}
 .signRightSingle div input[type='checkbox'] {
     width: 10px;
     height: 10px;

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -8,8 +9,8 @@ import { clearExistingUserDetails } from '../../../redux/slices/existingUserData
 import { clearfaceMatchDetails } from '../../../redux/slices/facematchSlice';
 import { clearMoreAccountNumberDetails } from '../../../redux/slices/moreAccountNumberDetails';
 import { clearProfile } from '../../../redux/slices/profile';
+import { clearToken } from '../../../redux/slices/tokenSlice';
 import { SidebarData } from '../Data';
-import ElevateLogo from '../Ellevate';
 import LogoutSvg from '../LogoutSvg';
 import SideBarDrop from './sidebarcont';
 import styles from './styles.module.css';
@@ -32,6 +33,7 @@ const Sidebar = ({ showSubnav }) => {
         await dispatch(clearAccountNumber());
         await dispatch(clearAccountNumber());
         await dispatch(clearExistingUserDetails());
+        await dispatch(clearToken());
         // Redirect the user to the login page (you may use React Router for this)
         router.push('/Auth/Login');
     };
@@ -64,7 +66,14 @@ const Sidebar = ({ showSubnav }) => {
             <div className={styles.top}>
                 <Link href="/Admin/Dashboard">
                     <div className={styles.ellevate}>
-                        <ElevateLogo />
+                        {/* <ElevateLogo /> */}
+
+                        <Image
+                            src="/MY_SME_LOGO_GREEN_RGB@4x1.png"
+                            width={64}
+                            height={46}
+                            alt="logo"
+                        />
                     </div>
                 </Link>
                 <div className={styles.track}>

@@ -1,6 +1,41 @@
 .sectionII {
     width: 55%;
 }
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0000001a;
+    z-index: 10;
+}
+.inner {
+    width: 50%;
+    height: 50%;
+    padding: 20px 60px;
+    background-color: white;
+    border-radius: 50px;
+}
+.handleForm {
+    display: flex;
+    justify-content: center;
+}
+.inn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    height: 100%;
+}
+.trans > div {
+    display: flex;
+    gap: 50px;
+}
 .sectionI {
     width: 42%;
 }

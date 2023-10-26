@@ -95,6 +95,12 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                     ? value?.bvn
                     : `${formData?.countryCode}${value?.phoneNumber}`,
                 phoneNumber: `${formData?.countryCode}${value?.phoneNumber}`,
+                idType:
+                    affiliate === 'ENG'
+                        ? 'BVN'
+                        : affiliate === 'EGH'
+                        ? 'GHANACARD'
+                        : 'id',
                 // taxNumber: '126378883',
                 registrationNumber: callRc
             };
@@ -105,6 +111,12 @@ const RegisteredForm = ({ formData, setFormData, nextStep }) => {
                 idNumber: value?.bvn?.length
                     ? value?.bvn
                     : `${formData?.countryCode}${value?.phoneNumber}`,
+                idType:
+                    affiliate === 'ENG'
+                        ? 'BVN'
+                        : affiliate === 'EGH'
+                        ? 'GHANACARD'
+                        : 'id',
                 phoneNumber: `${formData?.countryCode}${value?.phoneNumber}`
             };
             console.log(data);

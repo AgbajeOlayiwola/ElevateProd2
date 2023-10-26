@@ -57,146 +57,6 @@ const BankStatments = () => {
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
-    const { bankStatement, errorMessagebankStatement } = useSelector(
-        (state) => state.bankStatementReducer
-    );
-
-    const {
-        getFullStatementSuccess,
-        getFullStatementerrorMessage
-    } = useSelector((state) => state.getFullStatementReducer);
-
-    const { bankAccounts, bankAccountErrorMessages } = useSelector(
-        (state) => state.bankAccountsReducer
-    );
-
-    const { balanceEnquiry, errorMessageBalanceEnquiry } = useSelector(
-        (state) => state.balanceEnquiryReducer
-    );
-
-    const { accountPrimarys, accountPrimaryError } = useSelector(
-        (state) => state.accountPrimaryReducer
-    );
-
-    const {
-        getDisputCategOryTypeSuccess,
-        getDisputCategOryTypeErrorMessage
-    } = useSelector((state) => state.getDisputeTypeReducer);
-    const socialOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: socialdata,
-        rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice'
-        }
-    };
-    useEffect(() => {
-        dispatch(bankAccountsData());
-        dispatch(loadAccountPrimary());
-        dispatch(getDisputCategOryTypeGen());
-        const todaysDate = new Date().toISOString();
-        const getDateXDaysAgo = (numOfDays, date = new Date()) => {
-            const daysAgo = new Date();
-            return new Date(
-                daysAgo.setDate(date.getDate() - numOfDays)
-            ).toISOString();
-        };
-        const data = {
-            startDate: getDateXDaysAgo(183),
-            endDate: todaysDate
-        };
-        dispatch(loadbankStatement(data));
-    }, []);
-
-    useEffect(() => {
-        setDisputes(getDisputCategOryTypeSuccess);
-    }, [getDisputCategOryTypeSuccess]);
-
-    useEffect(() => {
-        if (accountPrimarys !== null) {
-            const data = {
-                accountId: accountPrimarys.accountId
-            };
-            dispatch(getBalanceEnquiry(data));
-        }
-    }, [accountPrimarys]);
-
-    useEffect(() => {
-        if (bankAccount !== null) {
-            setBankAccount(bankAccounts);
-        }
-    }, [bankAccounts]);
-
-    useEffect(() => {
-        if (getFullStatementSuccess !== null) {
-            setIsLoading(false);
-            setLoading(false);
-            setDate(false);
-            setSuccess(true);
-            setError('success');
-        } else if (getFullStatementerrorMessage !== null) {
-            setDate(false);
-            setLoading(false);
-            setSuccess(true);
-            setError('error');
-        }
-    }, [getFullStatementSuccess, getFullStatementerrorMessage]);
-
-    useEffect(() => {
-        let balanceData;
-        bankAccount?.filter((item) => {
-            if (item.accountNumber === account) {
-                setId(item.accountId);
-                return (balanceData = {
-                    accountId: item.accountId
-                });
-            }
-        });
-
-        dispatch(getBalanceEnquiry(balanceData));
-    }, [account]);
-
-    useEffect(() => {
-        if (balanceEnquiry !== null) {
-            const formattedAmount = formatter.format(
-                balanceEnquiry.availableBalance
-            );
-            setBalance(formattedAmount);
-        }
-    }, [balanceEnquiry]);
-    useEffect(() => {
-        if (bankStatement !== null) {
-            setIsLoading(false);
-            setLoading(false);
-            setTableDetails(bankStatement);
-            setOverlay(false);
-            bankStatement
-                .filter((item) => {
-                    if (item.tranType === 'Inflow') {
-                        return item;
-                    }
-                })
-                .reduce((a, b) => {
-                    setInflow(formatter.format(a));
-                    return a + +b.amount;
-                }, 0);
-            bankStatement
-                .filter((item) => {
-                    if (item.tranType === 'Outflow') {
-                        return item;
-                    }
-                })
-                .reduce((a, b) => {
-                    setOutflow(formatter.format(a));
-                    return a + +b.amount;
-                }, 0);
-        } else if (errorMessagebankStatement !== null) {
-            setLoading(false);
-        }
-    }, [bankStatement, errorMessagebankStatement]);
-    useEffect(() => {}, [inflow, outflow, tableDetails]);
-    //  //console.log(inflow);
-
     const filterCondition = (item, searchType) => {
         switch (searchType) {
             case 'amount':
@@ -380,7 +240,8 @@ const BankStatments = () => {
                                     userUnit: 'px'
                                 });
 
-                                const pdfWidth = pdf.internal.pageSize.getWidth();
+                                const pdfWidth =
+                                    pdf.internal.pageSize.getWidth();
                                 pdf.html(element, {
                                     html2canvas: {
                                         scale: 0.57,
@@ -532,9 +393,8 @@ const BankStatments = () => {
                                     pagesVisited + usersPerPage
                                 )
                                 ?.map((items, index) => {
-                                    const newDate = items?.transactionTime?.split(
-                                        ' '
-                                    );
+                                    const newDate =
+                                        items?.transactionTime?.split(' ');
                                     return (
                                         <>
                                             {width > 950 ? (

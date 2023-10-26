@@ -88,6 +88,7 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
 
     const handleProceed = async (val) => {
         await dispatch(setProfile(val?.data));
+        dispatch(setToken(val?.data?.token));
         router.push('/Verify');
     };
 
@@ -303,7 +304,7 @@ const NewUser = ({ selectCountry, selectedOption, onSelectChange }) => {
                                 onChange={() => setActiveBtn(true)}
                                 className={styles.termms}
                             />
-                            I agree with ellevate app{' '}
+                            I agree with SMEApp{' '}
                             <span
                                 className={styles.termsBtn}
                                 onClick={openModal}

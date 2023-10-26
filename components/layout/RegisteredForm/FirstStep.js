@@ -75,15 +75,29 @@ const FirstStep = ({ setFormData, formData, action }) => {
     const verifyOtp = (e) => {
         e.preventDefault();
         const data = {
-            phoneNumber: '2348111062865',
+            phoneNumber: replaceFirstZero(existingUserDetails?.originalMsisdn),
             otp: typedOtp
         };
         verifyExistingOtp(data);
     };
+    function replaceFirstZero(inputStr) {
+        if (inputStr.charAt(0) === '0') {
+            inputStr = formData?.countryCode + inputStr.slice(1);
+        } else if (inputStr.charAt(0) === '+') {
+            inputStr = '' + inputStr.slice(1);
+        }
+        return inputStr;
+    }
+    useEffect(() => {
+        resendExisitingOtp({
+            phoneNumber: replaceFirstZero(existingUserDetails?.originalMsisdn)
+        });
+    }, []);
+
     const ResetOtp = (e) => {
         e.preventDefault();
         resendExisitingOtp({
-            phoneNumber: '2348111062865'
+            phoneNumber: existingUserDetails?.originalMsisdn
         });
     };
 

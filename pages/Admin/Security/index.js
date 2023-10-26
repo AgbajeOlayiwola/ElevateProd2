@@ -1,29 +1,18 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import DashLayout from '../../../components/layout/Dashboard';
-import ProfileLayout from '../../../components/layout/ProfileLayout';
+import { useDispatch } from 'react-redux';
 import BeneSvg from '../../../components/ReusableComponents/BeneSvg';
 import CustomerSingle from '../../../components/ReusableComponents/CustomerSingle';
 import EditProfileSvg from '../../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
+import ProfileLayout from '../../../components/layout/ProfileLayout';
 import styles from './styles.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import Loader from '../../../components/ReusableComponents/Loader';
-import validator from 'validator';
-import { useEffect } from 'react';
 import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
-import { loadchangeTransactionPin } from '../../../redux/actions/changeTransactionPinAction';
-import { loadresetPassword } from '../../../redux/actions/resetPasswordAction';
 
 const Security = () => {
     const dispatch = useDispatch();
-    const { resetPassword, errorMessageresetPassword } = useSelector(
-        (state) => state.resetPasswordReducer
-    );
-    const { changeTransactionPin, changeTransactionPinError } = useSelector(
-        (state) => state.changeTransactionPinReducer
-    );
     const [error, setError] = useState('');
     const [errorMessages, setErrorMessages] = useState('');
     const [outcome, setOutcome] = useState(false);
@@ -47,53 +36,7 @@ const Security = () => {
     const typed = (type) => {
         setOutTyped(type);
     };
-    const handlePaswword = (e) => {
-        setCount(e.target.value.length);
-        setConfPassword(e.target.value);
-        if (password != confirmPassword) {
-            setPasswordMatch('Passwords do not match');
-        }
-    };
-    const handlePwd = (e) => {
-        setCount(e.target.value.length);
-        if (
-            validator.isStrongPassword(e.target.value, {
-                minLength: 8,
-                minLowercase: 1,
-                minUppercase: 1,
-                minNumbers: 1,
-                minSymbols: 1
-            })
-        ) {
-            setErrorMessages(' Strong');
-        } else if (
-            validator.isStrongPassword(e.target.value, {
-                minLength: 8,
-                minLowercase: 1,
-                minUppercase: 0,
-                minNumbers: 1,
-                minSymbols: 0
-            })
-        ) {
-            setErrorMessages('Medium');
-        } else {
-            setErrorMessages('Weak');
-        }
-        setPassword(e.target.value);
-        if (e.target.value === '') {
-            setErrorMessages('');
-        }
-    };
-    const handleNewPin = (e) => {
-        setCount(e.target.value.length);
-        setConfPin(e.target.value);
-        if (pin !== confirmPin) {
-            setPasswordMatch('Pin do not match');
-        }
-    };
-    const handlePin = (e) => {
-        setPin(e.target.value);
-    };
+
     const profileData = [
         {
             text: 'Change Transaction Pin',
@@ -111,71 +54,7 @@ const Security = () => {
         handleSubmit,
         formState: { errors }
     } = useForm();
-    const changePin = (data) => {
-        setLoading(true);
-        const changePinData = {
-            oldPin: data.oldPin,
-            newPin: data.newPin,
-            confirmPin: data.confirmPin
-        };
-        dispatch(loadchangeTransactionPin(changePinData));
-    };
 
-    const resetPinCheck = () => {
-        if (changeTransactionPin !== null) {
-            // //console.logchangeTransactionPin);
-            setLoading(false);
-            setMessage('Pin Changed Successfully');
-            setStatusbar('success');
-            setOutcome(true);
-        } else if (changeTransactionPinError !== null) {
-            // //console.logchangeTransactionPinError);
-            setLoading(false);
-            setMessage(changeTransactionPinError);
-            setOutcome(true);
-            setStatusbar('error');
-        }
-    };
-
-    useEffect(() => {
-        resetPinCheck();
-    }, [changeTransactionPinError, changeTransactionPin]);
-    const changePassword = (data) => {
-        setLoading(true);
-        const changePasswordData = {
-            oldPassword: data.oldPassword,
-            newPassword: data.newPassword,
-            confirmPassword: data.confirmPassword
-        };
-        if (data.oldPassword === data.newPassword) {
-            setMessage('New password cannot be the same as Old password');
-            setOutcome(true);
-            setStatusbar('error');
-            setLoading(false);
-        } else {
-            dispatch(loadresetPassword(changePasswordData));
-        }
-    };
-
-    const resetPasswordCheck = () => {
-        if (resetPassword !== null) {
-            // //console.logresetPassword);
-            setLoading(false);
-            setMessage('Password Changed Successfully');
-            setStatusbar('success');
-            setOutcome(true);
-        } else if (errorMessageresetPassword !== null) {
-            // //console.logerrorMessageresetPassword);
-            setLoading(false);
-            setMessage(errorMessageresetPassword);
-            setOutcome(true);
-            setStatusbar('error');
-        }
-    };
-
-    useEffect(() => {
-        resetPasswordCheck();
-    }, [errorMessageresetPassword, resetPassword]);
     const renderForm = () => {
         switch (text) {
             case 'Change Transaction Pin':

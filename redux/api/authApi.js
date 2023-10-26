@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 // const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-auth/v1/api/auth/';
 // https://cheffieapp.com/api/v1/authentication/user/
-const baseUrl = 'https://eidev.ecobank.com:7507/smeapp-service/';
+const baseUrl = 'https://eidev.ecobank.com:7505/smeapp-service/';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -11,7 +11,7 @@ export const authApi = createApi({
         // mode: 'no-cors',
 
         prepareHeaders: (headers, { getState }) => {
-            const token = getState().profile?.token;
+            const token = getState().token;
             headers.set('Accept', 'application/json'),
                 headers.set('Content-Type', 'application/json'); // Set Content-Type here
             // Add other allowed headers here
@@ -297,10 +297,11 @@ export const authApi = createApi({
             }
         }),
         mobiNetworks: builder.mutation({
-            query: () => {
+            query: (body) => {
                 return {
                     url: 'mobilemoney-networks',
-                    method: 'post'
+                    method: 'post',
+                    body: {}
                 };
             }
         }),
@@ -321,18 +322,20 @@ export const authApi = createApi({
             }
         }),
         airtimeTopup: builder.mutation({
-            query: () => {
+            query: (body) => {
                 return {
                     url: 'airtime-topup',
-                    method: 'post'
+                    method: 'post',
+                    body
                 };
             }
         }),
         mobileMoney: builder.mutation({
-            query: () => {
+            query: (body) => {
                 return {
                     url: 'mobilemoney',
-                    method: 'post'
+                    method: 'post',
+                    body
                 };
             }
         }),
@@ -480,11 +483,89 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        verifyTransactionPin: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'user-verify-transaction-pin',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        createTransactionPin: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'user-create-transaction-pin',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        getRelationshipManager: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'get-relationship-manager',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        physicalQr: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'physical-qr',
+                    method: 'post',
+                    body: {}
+                };
+            }
+        }),
+        dynamicQr: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'dynamic-qr',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        ussdRefference: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'ussd-reference',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        ordrVirtualAccount: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'virtual-account-order',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        virtualAccountStatus: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'virtual-account-trans-status',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
+    usePhysicalQrMutation,
+    useDynamicQrMutation,
+    useUssdRefferenceMutation,
+    useGetRelationshipManagerMutation,
+    useCreateTransactionPinMutation,
+    useVerifyTransactionPinMutation,
     useSingleTransferMutation,
     useAccountInquiryMutation,
     usePaymentbanklistMutation,

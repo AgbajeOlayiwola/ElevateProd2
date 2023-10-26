@@ -1,18 +1,17 @@
 import { Formik } from 'formik';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Webcam from 'react-webcam';
-import ButtonComp from '../../../ReusableComponents/Button';
-import styles from './styles.module.css';
-
 import {
     useFaceMatchWithoutBvnMutation,
     useFacematchMutation
 } from '../../../../redux/api/authApi';
-const videoConstraints = {
-    width: 390,
-    height: 480,
-    facingMode: 'user'
-};
+import ButtonComp from '../../../ReusableComponents/Button';
+import styles from './styles.module.css';
+
 const _base64ToArrayBuffer = (base64String) => {
     if (window !== undefined) {
         var binary_string = window.atob(base64String);
@@ -24,10 +23,22 @@ const _base64ToArrayBuffer = (base64String) => {
         return bytes.buffer;
     }
 };
+const videoConstraints = {
+    width: 390,
+    height: 480,
+    facingMode: 'user'
+};
+const mobilevideoConstraints = {
+    width: 290,
+    height: 290,
+    facingMode: 'user'
+};
 const Liveness = ({ formData, type, nextStep }) => {
     const webcamRef = React.useRef(null);
     const [succes, setSuccess] = useState('');
     const [image, setImage] = useState();
+    const { profile } = useSelector((store) => store);
+    console.log(profile);
     const capture = React.useCallback(() => {
         const ImageSrcII = webcamRef?.current?.getScreenshot();
         setImage(ImageSrcII);
@@ -35,7 +46,7 @@ const Liveness = ({ formData, type, nextStep }) => {
         const affiliatData = localStorage.getItem('affiliateCode');
         if (affiliatData === 'ENG') {
             if (localStorage.getItem('regprofilesetupdata')) {
-                const storedData = localStorage.getItem('profilesetupdata');
+                const storedData = localStorage.getItem('regprofilesetupdata');
                 const profileSetupData = JSON.parse(storedData);
                 const faceMMatchData = {
                     userFaceBase64: ImageSrcII?.replace(
@@ -43,6 +54,8 @@ const Liveness = ({ formData, type, nextStep }) => {
                         ''
                     ).trim(),
                     bvn: profileSetupData?.bvn
+                        ? profileSetupData?.bvn.trim()
+                        : profile?.user?.idNumber
                 };
                 // Perform a facial match with the data
                 faceMatch(faceMMatchData);
@@ -55,20 +68,24 @@ const Liveness = ({ formData, type, nextStep }) => {
                         ''
                     ).trim(),
                     bvn: profileSetupData?.bvn
+                        ? profileSetupData?.bvn.trim()
+                        : profile?.user?.idNumber
                 };
                 // Perform a facial match with the data
                 faceMatch(faceMMatchData);
             }
         } else {
             if (localStorage.getItem('regprofilesetupdata')) {
-                const storedData = localStorage.getItem('profilesetupdata');
+                const storedData = localStorage.getItem('regprofilesetupdata');
                 const profileSetupData = JSON.parse(storedData);
                 const faceMMatchData = {
                     userFaceBase64: ImageSrcII?.replace(
                         'data:image/jpeg;base64,',
                         ''
                     ).trim(),
-                    idNumber: profileSetupData?.bvn.trim()
+                    idNumber: profileSetupData?.bvn
+                        ? profileSetupData?.bvn.trim()
+                        : profile?.user?.idNumber
                 };
                 // Perform a facial match with the data
                 faceMatchWithoutBvn(faceMMatchData);
@@ -80,7 +97,9 @@ const Liveness = ({ formData, type, nextStep }) => {
                         'data:image/jpeg;base64,',
                         ''
                     ).trim(),
-                    idNumber: profileSetupData?.bvn.trim()
+                    idNumber: profileSetupData?.bvn
+                        ? profileSetupData?.bvn.trim()
+                        : profile?.user?.idNumber
                 };
                 // Perform a facial match with the data
                 faceMatchWithoutBvn(faceMMatchData);
@@ -120,8 +139,48 @@ const Liveness = ({ formData, type, nextStep }) => {
         }
     }, [faceMatchSuccess, faceMatchWithoutBvnSuccess]);
 
+    useEffect(() => {
+        if (faceMatchWithoutBvnErr) {
+            showToastErrorMessage();
+        }
+    }, [faceMatchWithoutBvnErr]);
+    const showToastFaceErrorMessage = () => {
+        toast.error(faceMatchErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    const showToastErrorMessage = () => {
+        toast.error(faceMatchWithoutBvnErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (faceMatchErr) {
+            showToastFaceErrorMessage();
+        }
+    }, [faceMatchErr]);
+    const [width, setWidth] = useState(0);
+    const [height, setHeight] = useState(0);
+
+    const handleWindowResize = () => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        console.log(width);
+    };
+
+    useEffect(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+        // component is mounted and window is available
+        handleWindowResize();
+        window.addEventListener('resize', handleWindowResize);
+        // unsubscribe from the event on component unmount
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, [width]);
+    console.log(faceMatchWithoutBvnErr, faceMatchErr);
     return (
         <div className={styles.body}>
+            <ToastContainer />
             <div className={styles.cover}>
                 <div className={styles.imageOut}>
                     <Formik
@@ -152,6 +211,7 @@ const Liveness = ({ formData, type, nextStep }) => {
                                             {faceMatchErr.data.message}
                                         </p>
                                     ) : null}
+
                                     <div
                                         className={
                                             succes ===
@@ -164,15 +224,28 @@ const Liveness = ({ formData, type, nextStep }) => {
                                                 : styles.imageInner
                                         }
                                     >
-                                        <Webcam
-                                            audio={false}
-                                            screenshotFormat="image/jpeg"
-                                            videoConstraints={videoConstraints}
-                                            ref={webcamRef}
-                                        />
+                                        {faceMatchLoad ||
+                                        faceMatchWithoutBvnLoad ? (
+                                            <Image
+                                                src={image}
+                                                height={width > 900 ? 600 : 280}
+                                                width={width > 900 ? 600 : 290}
+                                            />
+                                        ) : (
+                                            <Webcam
+                                                audio={false}
+                                                screenshotFormat="image/jpeg"
+                                                videoConstraints={
+                                                    width > 900
+                                                        ? videoConstraints
+                                                        : mobilevideoConstraints
+                                                }
+                                                ref={webcamRef}
+                                            />
+                                        )}
                                     </div>
                                 </div>
-                                {faceMatchLoad ? (
+                                {faceMatchLoad || faceMatchWithoutBvnLoad ? (
                                     <p>
                                         Hold On Your Face Is Being Verified.....
                                     </p>

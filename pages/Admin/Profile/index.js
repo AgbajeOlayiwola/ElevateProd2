@@ -1,63 +1,48 @@
 import Image from 'next/image';
-import React, { useEffect, useState, useRef } from 'react';
-import DashLayout from '../../../components/layout/Dashboard';
-import ProfileLayout from '../../../components/layout/ProfileLayout';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import Iframe from 'react-iframe';
+import Lottie from 'react-lottie';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ButtonComp } from '../../../components';
 import ArrowBackSvg from '../../../components/ReusableComponents/ArrowBackSvg';
 import BeneSvg from '../../../components/ReusableComponents/BeneSvg';
 import BvnSvg from '../../../components/ReusableComponents/BvnSvg';
-import Iframe from 'react-iframe';
-import CheckedSvg from '../../../components/ReusableComponents/CheckedSvg';
+import CloseBtnSvg from '../../../components/ReusableComponents/ClosebtnSvg';
+import { affiliateCountries } from '../../../components/ReusableComponents/Data';
 import Visbility from '../../../components/ReusableComponents/Eyeysvg';
 import InputTag from '../../../components/ReusableComponents/Input';
+import Loader from '../../../components/ReusableComponents/Loader';
+import animationData from '../../../components/ReusableComponents/Lotties/contact-us.json';
+import socialdataa from '../../../components/ReusableComponents/Lotties/loading.json';
+import socialdata from '../../../components/ReusableComponents/Lotties/social-media-marketing.json';
 import ManageBeneSingle from '../../../components/ReusableComponents/ManageBene';
-import ManageLimit from '../../../components/ReusableComponents/ManageLimit1';
-import ManageLimit2 from '../../../components/ReusableComponents/ManageLimit2';
-import ManageLimitSvg from '../../../components/ReusableComponents/ManageLimitSvg';
-import ManageSignSvg from '../../../components/ReusableComponents/ManageSignSvg';
+import OtpInput from '../../../components/ReusableComponents/Otpinput';
+import OutsideClick from '../../../components/ReusableComponents/OutsideClick';
+import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
 import ProfileSingle from '../../../components/ReusableComponents/ProfileSingle';
 import AddSvg from '../../../components/ReusableComponents/ReusableSvgComponents/AddSvg';
 import ContactSvg from '../../../components/ReusableComponents/ReusableSvgComponents/ContactSvg';
 import EditProfileSvg from '../../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
-import LogoutSvg from '../../../components/ReusableComponents/ReusableSvgComponents/LogoutSvg';
 import RmSvg from '../../../components/ReusableComponents/RmSvg';
 import ShareSvg from '../../../components/ReusableComponents/ShareSvg';
-import styles from './styles.module.css';
-import Lottie from 'react-lottie';
-import animationData from '../../../components/ReusableComponents/Lotties/contact-us.json';
-import socialdata from '../../../components/ReusableComponents/Lotties/social-media-marketing.json';
-import { useDispatch, useSelector } from 'react-redux';
-import socialdataa from '../../../components/ReusableComponents/Lotties/loading.json';
-
-import { useForm } from 'react-hook-form';
-import Loader from '../../../components/ReusableComponents/Loader';
-import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
-import Link from 'next/link';
-import { ButtonComp } from '../../../components';
-import { useRouter } from 'next/router';
-import { FaTrash } from 'react-icons/fa';
-import OutsideClick from '../../../components/ReusableComponents/OutsideClick';
 import StorePopup from '../../../components/ReusableComponents/StorePopup';
-import CloseBtnSvg from '../../../components/ReusableComponents/ClosebtnSvg';
-import { deleteCookie, getCookie } from 'cookies-next';
-import withAuth from '../../../components/HOC/withAuth';
-import { deleteAccountAction } from '../../../redux/actions/deleteAccountAction';
-import { getAllComplaintGet } from '../../../redux/actions/getAllComplaintAction';
-import { getBeneficiariesData } from '../../../redux/actions/getBeneficiariesAction';
-import { getAirtimeBeneficiariesData } from '../../../redux/actions/getAirtimeBeneficiariesAction';
-import { loadUserProfile } from '../../../redux/actions/userProfileAction';
-import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
-import { postAirtimeNetwork } from '../../../redux/actions/airtimeNetworkAction';
-import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
-import { getProfileImgAction } from '../../../redux/actions/getProfileImageAction';
-import { loadfetchRM } from '../../../redux/actions/fetRmAction';
-import { loadViewBvn } from '../../../redux/actions/viewBvnAction';
-import { loadsetTransactionPin } from '../../../redux/actions/setTransactionPinAction';
-import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
-import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAction';
-import { loadfreezeTransactions } from '../../../redux/actions/freezeTransactionAction';
-import { loadunfreezeTransactions } from '../../../redux/actions/unfreezeTransactionAction';
-import { deleteBeneficiariesData } from '../../../redux/actions/deleteBeneficiariesAction';
+import ProfileLayout from '../../../components/layout/ProfileLayout';
 import { deleteAirtimeBeneficiariesData } from '../../../redux/actions/deleteAirtimeBeneficiariesAction';
+import { deleteBeneficiariesData } from '../../../redux/actions/deleteBeneficiariesAction';
+import { loadfreezeTransactions } from '../../../redux/actions/freezeTransactionAction';
+import { postInterBankEnquiry } from '../../../redux/actions/interbankEnquieryAction';
+import { postBeneficiariesData } from '../../../redux/actions/postBeneficiariesAction';
+import { loadunfreezeTransactions } from '../../../redux/actions/unfreezeTransactionAction';
+import {
+    useGetRelationshipManagerMutation,
+    useVerifyTransactionPinMutation
+} from '../../../redux/api/authApi';
+import styles from './styles.module.css';
 const Profile = () => {
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(false);
@@ -93,69 +78,12 @@ const Profile = () => {
     const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const [copyAcctInfo, setCopyAcctInfo] = useState();
     const [alert, setAlert] = useState(false);
+    const [otpValue, setOtpValue] = useState('');
+    const affiliate = localStorage.getItem('affiliateCode');
+    const [countryCodes, setCountryCodes] = useState([]);
+    const [flags, setFlags] = useState([]);
     const dispatch = useDispatch();
-    const { getBeneficiaries } = useSelector(
-        (state) => state.getBeneficiariesReducer
-    );
-    const { getAirtimeBeneficiaries } = useSelector(
-        (state) => state.getAirtimeBeneficiariesReducer
-    );
-    const { deleteBeneficiaries } = useSelector(
-        (state) => state.deleteBeneficiariesReducer
-    );
-    const { deleteAirtimeBeneficiaries } = useSelector(
-        (state) => state.deleteAirtimeBeneficiariesReducer
-    );
-    const { setTransactionPin, setTransactionPinError } = useSelector(
-        (state) => state.setTransactionPinReducer
-    );
-    const { viewBvn, errorMessageviewBvn } = useSelector(
-        (state) => state.viewBvnReducer
-    );
-    const { freezeTransactions, errormessageFreeze } = useSelector(
-        (state) => state.freezeTransactionsReducer
-    );
-    const { unfreezeTransactions, errormessage } = useSelector(
-        (state) => state.unfreezeTransactionsReducer
-    );
-    const { userProfile } = useSelector((state) => state.userProfileReducer);
-    const { getProfileImg } = useSelector(
-        (state) => state.getProfileImgReducer
-    );
-    const { accountPrimarys, accountPrimaryError } = useSelector(
-        (state) => state.accountPrimaryReducer
-    );
-    const { banks } = useSelector((state) => state.banksReducer);
-    const { interBankEnquiry, errorMessageInterBankEnquiry } = useSelector(
-        (state) => state.interBankEnquiryReducer
-    );
-    const { intraBankEnquiry, errorMessageIntraBankEnquiry } = useSelector(
-        (state) => state.intraBankEnquiryReducer
-    );
-    const { postBeneficiaries, errorMessagepostBeneficiaries } = useSelector(
-        (state) => state.postBeneficiariesReducer
-    );
-    const {
-        postAirtimeBeneficiaries,
-        errorMessagepostAirtimeBeneficiaries
-    } = useSelector((state) => state.postAirtimeBeneficiariesReducer);
-    const { fetchRM, fetchRMErrorMessages } = useSelector(
-        (state) => state.fetchRMReducer
-    );
-    const { airtimeNetwork } = useSelector(
-        (state) => state.airtimeNetworkReducer
-    );
-    const [allDisputes, setAllDisputes] = useState();
-    const { getAllComplaintSuccess, getAllComplaintErrorMessage } = useSelector(
-        (state) => state.getComplaintReducer
-    );
-    const { deleteAccountSuccess, deleteAccountErrorMessage } = useSelector(
-        (state) => state.deleteAccountReducer
-    );
-    const { bankAccounts, bankAccountErrorMessages } = useSelector(
-        (state) => state.bankAccountsReducer
-    );
-    const [isLoading, setIsLoading] = useState(true);
+
     const socialOptions = {
         loop: true,
         autoplay: true,
@@ -167,53 +95,6 @@ const Profile = () => {
     const [deleteAccountEmail, setDeleteAccountEmail] = useState();
     const [deleteAccountPassword, setDeleteAccountPassword] = useState();
     const [deleteAccountError, setDeleteAccountError] = useState();
-    const deleteAccount = () => {
-        const Data = {
-            email: deleteAccountEmail,
-            password: deleteAccountPassword
-        };
-        dispatch(deleteAccountAction(Data));
-    };
-    useEffect(() => {
-        Object.keys(bankAccounts)?.map((accountNo) => {
-            if (bankAccounts[accountNo].isPrimaryAccount === true) {
-                setCopyAcctInfo(bankAccounts[0]);
-            }
-        });
-    }, [bankAccounts]);
-    useEffect(() => {
-        //console.log(deleteAccountErrorMessage);
-        if (deleteAccountErrorMessage) {
-            //console.log(deleteAccountErrorMessage);
-            setDeleteAccountError(deleteAccountErrorMessage?.data?.message);
-        } else if (deleteAccountSuccess) {
-            // dispatch(logoutAction());
-            localStorage.removeItem('user');
-
-            localStorage.removeItem('token');
-            localStorage.clear();
-
-            if (getCookie('cookieToken') == undefined) {
-                deleteCookie('existingToken');
-            } else {
-                deleteCookie('cookieToken');
-            }
-            if (!localStorage.getItem('user')) {
-                router.replace('../Auth/Login');
-            }
-        }
-    }, [deleteAccountSuccess, deleteAccountErrorMessage]);
-
-    useEffect(() => {
-        dispatch(getAllComplaintGet());
-    }, []);
-    useEffect(() => {
-        if (getAllComplaintSuccess !== null) {
-            //console.log(getAllComplaintSuccess);
-            setAllDisputes(getAllComplaintSuccess?.data?.disputeRecord);
-            setIsLoading(false);
-        }
-    }, [getAllComplaintSuccess]);
 
     const defaultOptions = {
         loop: true,
@@ -232,81 +113,6 @@ const Profile = () => {
             preserveAspectRatio: 'xMidYMid slice'
         }
     };
-    const interBankEnquiryCheck = () => {
-        if (interBankEnquiry !== null) {
-            setInterEnquiry(interBankEnquiry);
-            setActiveBtn(true);
-        }
-    };
-    const iframeRef = useRef(null);
-
-    useEffect(() => {
-        interBankEnquiryCheck();
-    }, [interBankEnquiry]);
-    const intraBankEnquiryCheck = () => {
-        if (intraBankEnquiry !== null) {
-            setInterEnquiry(intraBankEnquiry);
-            setActiveBtn(true);
-        }
-    };
-    useEffect(() => {
-        intraBankEnquiryCheck();
-    }, [intraBankEnquiry]);
-    const newBene = () => {
-        if (postBeneficiaries !== null) {
-            setOutcome(true);
-            setMessage('Beneficary added successfully');
-            setStatusbar('success');
-            setLoading(false);
-            setshowInterEnquiry(false);
-            setInterEnquiry('');
-            setActiveBtn(false);
-        } else if (errorMessagepostBeneficiaries !== null) {
-            setOutcome(true);
-            setMessage(errorMessagepostBeneficiaries);
-            setStatusbar('error');
-            setLoading(false);
-            setActiveBtn(false);
-        }
-    };
-
-    useEffect(() => {
-        newBene();
-    }, [postBeneficiaries, errorMessagepostBeneficiaries]);
-    useEffect(() => {
-        if (postAirtimeBeneficiaries !== null) {
-            setOutcome(true);
-            setMessage('Beneficary added successfully');
-            setStatusbar('success');
-            setLoading(false);
-            setActiveBtn(false);
-        } else if (errorMessagepostAirtimeBeneficiaries !== null) {
-            setOutcome(true);
-            setMessage(errorMessagepostAirtimeBeneficiaries);
-            setStatusbar('error');
-            setLoading(false);
-            setActiveBtn(false);
-        }
-    }, [postAirtimeBeneficiaries, errorMessagepostAirtimeBeneficiaries]);
-    const transactionPin = () => {
-        if (setTransactionPin !== null) {
-            setMessage('Transaction Pin Set Successfully');
-            setStatusbar('success');
-            setOutcome(true);
-            setLoading(false);
-            // setOutcome('First');
-        } else if (setTransactionPinError !== null) {
-            setMessage(setTransactionPinError);
-            setStatusbar('error');
-            setOutcome(true);
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        transactionPin();
-    }, [setTransactionPin, setTransactionPinError]);
-    const [deleteCondition, setDeleteCondition] = useState();
 
     const getAllBanksByAccount = (accountNo) => {
         //NOTE, This can be fetched from the Database
@@ -332,164 +138,20 @@ const Profile = () => {
 
         return bankList.map((bank) => bank);
     };
-    const isValidNUBAN = (accountNumber, bankCode) => {
-        return isValidNUBANAcct(bankCode.trim() + accountNumber.trim());
-    };
-    const isValidNUBANAcct = (accountNumber) => {
-        accountNumber = accountNumber.trim();
 
-        if (accountNumber.length != 13) return false; // 3-digit bank code + 10-digit NUBAN
-
-        let accountNumberDigits = accountNumber.split('');
-
-        //   // //console.log("accountNumberDigits: ", accountNumberDigits);
-
-        let sum =
-            accountNumberDigits[0] * 3 +
-            accountNumberDigits[1] * 7 +
-            accountNumberDigits[2] * 3 +
-            accountNumberDigits[3] * 3 +
-            accountNumberDigits[4] * 7 +
-            accountNumberDigits[5] * 3 +
-            accountNumberDigits[6] * 3 +
-            accountNumberDigits[7] * 7 +
-            accountNumberDigits[8] * 3 +
-            accountNumberDigits[9] * 3 +
-            accountNumberDigits[10] * 7 +
-            accountNumberDigits[11] * 3;
-
-        let mod = sum % 10;
-        let checkDigit = mod == 0 ? mod : 10 - mod;
-
-        return checkDigit == accountNumberDigits[12];
-    };
-    useEffect(() => {
-        dispatch(getBeneficiariesData());
-        dispatch(getAirtimeBeneficiariesData());
-        dispatch(loadUserProfile());
-        dispatch(loadAccountPrimary());
-        // dispatch(loadbank('ENG'));
-        dispatch(postAirtimeNetwork());
-        dispatch(bankAccountsData());
-        dispatch(getProfileImgAction());
-    }, []);
-    useEffect(() => {
-        if (airtimeNetwork !== null) {
-            setAirtimeNetworkData(airtimeNetwork);
-        }
-    }, [airtimeNetwork]);
-    useEffect(() => {
-        setInterEnquiry('');
-    }, []);
-    useEffect(() => {
-        if (accountPrimarys !== null) {
-            setAcctNumber(accountPrimarys.accountNumber);
-            const test = { accountId: accountPrimarys.accountId };
-            dispatch(loadfetchRM(test));
-        } else {
-            setAcctNumber('Pending');
-        }
-    }, [accountPrimarys]);
-    useEffect(() => {
-        if (fetchRM !== null) {
-            setRMDetails(fetchRM);
-        } else if (fetchRMErrorMessages !== null) {
-            setRMDetails(fetchRMErrorMessages);
-        }
-    }, [fetchRM, fetchRMErrorMessages]);
-    useEffect(() => {
-        dispatch(getBeneficiariesData());
-    }, [deleteBeneficiaries, postBeneficiaries]);
-    useEffect(() => {
-        if (getBeneficiaries !== null) {
-            setBeneficiaries(getBeneficiaries);
-        }
-    }, [getBeneficiaries]);
-    useEffect(() => {
-        dispatch(getAirtimeBeneficiariesData());
-    }, [deleteAirtimeBeneficiaries, postAirtimeBeneficiaries]);
-    useEffect(() => {
-        if (getAirtimeBeneficiaries !== null) {
-            setAirtimeBeneficiaries(getAirtimeBeneficiaries);
-        }
-    }, [getAirtimeBeneficiaries]);
-    useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-            setFreeze(userProfile.freezeTransactions);
-        }
-    }, [userProfile]);
-    useEffect(() => {
-        if (getProfileImg !== null) {
-            setProfileImg(getProfileImg);
-        }
-    }, [getProfileImg]);
-    useEffect(() => {
-        if (deleteBeneficiaries !== null) {
-            dispatch(getBeneficiariesData());
-        }
-    }, [deleteBeneficiaries]);
-    useEffect(() => {
-        if (deleteAirtimeBeneficiaries !== null) {
-            dispatch(getAirtimeBeneficiariesData());
-        }
-    }, [deleteAirtimeBeneficiaries]);
-
-    useEffect(() => {
-        if (freezeTransactions !== null) {
-            setFreeze(true);
-        } else if (errormessageFreeze !== null) {
-            setFreeze(false);
-        }
-    }, [freezeTransactions]);
-    useEffect(() => {
-        if (unfreezeTransactions !== null) {
-            setFreeze(false);
-        } else if (errormessage !== null) {
-            setFreeze(true);
-        }
-    }, [unfreezeTransactions]);
-    const bvnAction = (data) => {
-        setLoading(true);
-        setError('');
-        setBvn('');
-        const bvnData = {
-            dateOfBirth: data.date,
-            password: data.bvnPassword
-        };
-        dispatch(loadViewBvn(bvnData));
-    };
-
-    const viewBvnAction = () => {
-        if (viewBvn !== null) {
-            setLoading(false);
-            setBvn(viewBvn.data.bvn);
-        } else if (errorMessageviewBvn !== null) {
-            setLoading(false);
-            setError(errorMessageviewBvn);
-        }
-    };
-
-    useEffect(() => {
-        viewBvnAction();
-    }, [viewBvn, errorMessageviewBvn]);
-    const setTransactionPinAction = (data) => {
-        setLoading(true);
-        dispatch(loadsetTransactionPin(data));
-    };
     const profileData = [
         {
             text: 'View Profile',
             icon: <EditProfileSvg />,
             color: '#7A7978'
         },
-        userProfileData.hasSetTransactionPin === true
-            ? ''
-            : {
-                  text: 'Set Transaction Pin',
-                  icon: <ManageSignSvg />,
-                  color: '#7A7978'
-              },
+        // userProfileData.hasSetTransactionPin === true
+        //     ? ''
+        //     : {
+        //           text: 'Set Transaction Pin',
+        //           icon: <ManageSignSvg />,
+        //           color: '#7A7978'
+        //       },
         // {
         //     text: 'Referral Code',
         //     icon: <EditProfileSvg />,
@@ -545,21 +207,7 @@ const Profile = () => {
     const [countryNames, setCountryNames] = useState();
     const [searchItem, setSearchItem] = useState('');
     const [beneType, setBeneType] = useState('Account');
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            setCountryNames({
-                affiliateCode: 'ENG',
-                baseCurrency: 'NGN',
-                countryCode: '234',
-                flags: {
-                    svg: 'https://flagcdn.com/ng.svg',
-                    png: 'https://flagcdn.com/w320/ng.png'
-                },
-                name: 'Nigeria'
-            });
-        }
-    }, []);
-    // //console.log(countryNames.flags.svg);
+
     const types = (type) => {
         setOutType(type);
     };
@@ -569,42 +217,86 @@ const Profile = () => {
     const pin = (type) => {
         setOutPin(type);
     };
-    const pins = (type) => {
-        setOutPinn(type);
-    };
-    useEffect(() => {
-        setMessage('');
-        const {
-            query: { id }
-        } = router;
-        setLink({ id }.id);
-    }, []);
-    const deleteAction = () => {
-        //console.log('test');
-    };
 
+    const { allAccountInfo } = useSelector((store) => store);
+    console.log(allAccountInfo);
+    function countries(affiliate) {
+        const selectedCountries = affiliateCountries.filter(
+            (country) => country.affiliateCode === affiliate
+        );
+
+        const selectedCountryCodes = selectedCountries.map(
+            (country) => country.countryCode
+        );
+        const selectedFlags = selectedCountries.map((country) => country.flags);
+
+        setCountryCodes(selectedCountryCodes);
+        setFlags(selectedFlags);
+    }
+    console.log(countryCodes, flags);
     useEffect(() => {
-        if (link !== undefined) {
-            setText('Set Transaction Pin');
-        } else {
-            setText('View Profile');
+        countries(affiliate);
+        setAcctNumber(
+            allAccountInfo
+                .filter((account) => account?.isPrimaryAccount === 'Y') // Filter by primary flag
+                .map((account) => account.accountNo)
+                .filter(Boolean)
+        );
+    }, []);
+    const [
+        verifyTransactionPin,
+        {
+            data: verifyTransactionPinData,
+            isLoading: verifyTransactionPinLoad,
+            isSuccess: verifyTransactionPinSuccess,
+            isError: verifyTransactionPinFalse,
+            error: verifyTransactionPinErr,
+            reset: verifyTransactionPinReset
         }
-    }, [link]);
+    ] = useVerifyTransactionPinMutation();
+    const [
+        getRelationshipManager,
+        {
+            data: getRelationshipManagerData,
+            isLoading: getRelationshipManagerLoad,
+            isSuccess: getRelationshipManagerSuccess,
+            isError: getRelationshipManagerFalse,
+            error: getRelationshipManagerErr,
+            reset: getRelationshipManagerReset
+        }
+    ] = useGetRelationshipManagerMutation();
+    useEffect(() => {
+        getRelationshipManager({ accountNo: allAccountInfo[0]?.accountNo });
+    }, []);
+
+    const showVerifyTransactionPinErrorMessage = () => {
+        toast.error('Error Vrifying Transaction Pin', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (verifyTransactionPinErr) {
+            showVerifyTransactionPinErrorMessage();
+        }
+    }, [verifyTransactionPinErr]);
+    const handleViewBvn = (e) => {
+        e.preventDefault();
+        verifyTransactionPin({
+            transactionPin: otpValue
+        });
+    };
+    const handleOtpChange = (otp) => {
+        setOtpValue(otp);
+    };
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors }
     } = useForm();
-    useEffect(() => {
-        const iframe = iframeRef.current;
+    const { profile } = useSelector((store) => store);
 
-        // Add a request header to the iframe
-        iframe?.contentWindow.postMessage(
-            { type: 'SET_HEADER', header: 'Authorization: Bearer TOKEN' },
-            `{"channel":"SME","custId":${userProfile?.profileId},"affiliateCode":"ENG","lastactivedate":1574837056694,"appVersion":"4.0.1","languageCode":"en"}`
-        );
-    }, []);
+    console.log(profile);
     const [openDelete, setOpenDelete] = useState(false);
     const renderForm = () => {
         switch (text) {
@@ -628,11 +320,7 @@ const Profile = () => {
                                     <InputTag
                                         type="text"
                                         placeholder="Babatune Abiodun"
-                                        value={
-                                            !userProfile
-                                                ? null
-                                                : `${userProfile.lastName} ${userProfile.firstName}`
-                                        }
+                                        value={`${profile?.user?.lastName} ${profile?.user?.firstName}`}
                                     />
                                 </div>
                                 <div className={styles.formGroup}>
@@ -640,11 +328,7 @@ const Profile = () => {
                                     <InputTag
                                         type="email"
                                         placeholder="babatuneabiodun@gmail.com"
-                                        value={
-                                            !userProfileData
-                                                ? null
-                                                : userProfileData.email
-                                        }
+                                        value={profile?.user?.email}
                                     />
                                 </div>
                                 <div className={styles.formGroup}>
@@ -653,35 +337,20 @@ const Profile = () => {
                                         <div className={styles.phoneHeader}>
                                             <span>
                                                 <img
-                                                    src={
-                                                        countryNames
-                                                            ? countryNames.flags
-                                                                  .svg
-                                                            : null
-                                                    }
+                                                    src={flags[0]?.svg}
                                                     alt=""
                                                 />
                                             </span>
-                                            <p>
-                                                {countryNames
-                                                    ? countryNames.baseCurrency
-                                                    : null}
-                                            </p>
+                                            <p>{countryCodes}</p>
                                         </div>
                                         <div className={styles.phoneDetails}>
-                                            {/* <p>
-                                                {countryNames
-                                                    ? countryNames.countryCode
-                                                    : null}
-                                            </p> */}
                                             <input
                                                 type="number"
                                                 placeholder="812 345 6789"
-                                                defaultValue={
-                                                    !userProfileData
-                                                        ? null
-                                                        : userProfileData.phoneNumber
-                                                }
+                                                defaultValue={profile?.user?.phoneNumber.replace(
+                                                    '234',
+                                                    ''
+                                                )}
                                                 readOnly
                                             />
                                         </div>
@@ -984,7 +653,7 @@ const Profile = () => {
                 switch (count) {
                     case 0:
                         return (
-                            <form onSubmit={handleSubmit(bvnAction)}>
+                            <form onSubmit={handleViewBvn}>
                                 <h2 className={styles.title}>View my BVN</h2>
                                 <div className={styles.bvn}>
                                     <p>
@@ -996,44 +665,20 @@ const Profile = () => {
                                     <p className={styles.error}>{error}</p>
                                 ) : null}
                                 <div className={styles.formGroup}>
-                                    <label>Date of Birth</label>
-                                    <input
-                                        type="date"
-                                        placeholder="DD  |  MM  |  YYYY"
-                                        {...register('date', {
-                                            required: 'DOB is Required'
-                                        })}
-                                    />
-                                    <p className={styles.error}>
-                                        {errors?.date?.message}
-                                    </p>
-                                </div>
-                                <div className={styles.formGroup}>
-                                    <label>Enter your Password</label>
-                                    <div className={styles.divs}>
-                                        <input
-                                            placeholder="Enter your Password"
-                                            {...register('bvnPassword', {
-                                                required: 'Password is Required'
-                                            })}
-                                            name="bvnPassword"
-                                            type={outType ? 'text' : 'password'}
-                                        />
-                                        <Visbility
-                                            typeSet={types}
-                                            input="input"
+                                    <p>Enter Transaction Pin to view bvn</p>
+                                    <div className={styles.trans}>
+                                        <OtpInput
+                                            onOtpChange={handleOtpChange}
+                                            otpfields={6}
                                         />
                                     </div>
-                                    <p className={styles.error}>
-                                        {errors?.bvnPassword?.message}
-                                    </p>
                                 </div>
-                                {bvn ? (
+                                {verifyTransactionPinSuccess ? (
                                     <div className={styles.formGroup}>
                                         <label>Your BVN</label>
                                         <div className={styles.divs}>
                                             <input
-                                                value={bvn}
+                                                value={profile?.user?.bvn}
                                                 type={
                                                     outTyped
                                                         ? 'password'
@@ -1048,7 +693,7 @@ const Profile = () => {
                                     </div>
                                 ) : null}
                                 <div className={styles.bvnButton}>
-                                    {loading ? (
+                                    {verifyTransactionPinLoad ? (
                                         <Loader />
                                     ) : (
                                         <button type="submit">
@@ -1076,7 +721,10 @@ const Profile = () => {
                                     <InputTag
                                         type="text"
                                         placeholder="Babatune Abiodun"
-                                        value={RMDetails?.crm?.name}
+                                        value={
+                                            getRelationshipManagerData?.data
+                                                ?.rmName
+                                        }
                                     />
                                 </div>
                                 <div className={styles.formGroup}>
@@ -1085,9 +733,11 @@ const Profile = () => {
                                         type="text"
                                         placeholder="081 234 5678"
                                         value={
-                                            RMDetails?.crm?.phone === null
+                                            getRelationshipManagerData?.data
+                                                ?.rmPhoneNumber === null
                                                 ? 'No Phone Number'
-                                                : RMDetails?.crm?.phone
+                                                : getRelationshipManagerData
+                                                      ?.data?.rmPhoneNumber
                                         }
                                     />
                                 </div>
@@ -1097,9 +747,11 @@ const Profile = () => {
                                         type="text"
                                         placeholder="081 234 5678"
                                         value={
-                                            RMDetails?.crm?.email === null
+                                            getRelationshipManagerData?.data
+                                                ?.rmEmail === null
                                                 ? 'No Email'
-                                                : RMDetails?.crm?.email
+                                                : getRelationshipManagerData
+                                                      ?.data?.rmEmail
                                         }
                                     />
                                 </div>
@@ -1113,14 +765,14 @@ const Profile = () => {
                         <div className={styles.referralCont}>
                             <p className={styles.referralCode}>
                                 Your Referral Code is:
-                                <span> {userProfileData.referralCode}</span>
+                                <span> {profile?.user?.referralCode}</span>
                             </p>
                             <h5
                                 onClick={() => {
                                     {
                                         navigator.clipboard
                                             .writeText(
-                                                userProfileData.referralCode
+                                                profile?.user?.referralCode
                                             )
                                             .then(() => {
                                                 alert('Copied');
@@ -1352,93 +1004,89 @@ const Profile = () => {
             //                 />
             //             );
             //     }
-            case 'Set Transaction Pin':
-                switch (count) {
-                    case 0:
-                        return (
-                            <>
-                                <h2 className={styles.title}>
-                                    Set Transaction Pin
-                                </h2>
-                                <form
-                                    onSubmit={handleSubmit(
-                                        setTransactionPinAction
-                                    )}
-                                >
-                                    <div className={styles.formGroup}>
-                                        <label>
-                                            Enter your Transaction Pin
-                                        </label>
-                                        <div className={styles.divs}>
-                                            <input
-                                                placeholder="Enter your Password"
-                                                {...register('transactionPin', {
-                                                    required:
-                                                        'Transaction Pin is required',
-                                                    minLength: {
-                                                        value: 6,
-                                                        message:
-                                                            'Min length is 6'
-                                                    },
-                                                    maxLength: {
-                                                        value: 6,
-                                                        message:
-                                                            'Max length is 6'
-                                                    },
-                                                    pattern: {
-                                                        value: /^[0-9]/i,
-                                                        message:
-                                                            'Transaction Pin can only be number '
-                                                    }
-                                                })}
-                                                name="transactionPin"
-                                                type={
-                                                    outPin ? 'text' : 'password'
-                                                }
-                                            />
-                                            <Visbility
-                                                typeSet={pin}
-                                                input="input"
-                                            />
-                                        </div>
-                                        <p className={styles.error}>
-                                            {errors?.transactionPin?.message}
-                                        </p>
-                                    </div>
-                                    <div className={styles.formGroup}>
-                                        <label>Enter your Password</label>
-                                        <div className={styles.divs}>
-                                            <input
-                                                placeholder="Enter your Password"
-                                                {...register('password', {
-                                                    required:
-                                                        'Password is Required'
-                                                })}
-                                                name="password"
-                                                type={
-                                                    outPinn
-                                                        ? 'text'
-                                                        : 'password'
-                                                }
-                                            />
-                                            <Visbility
-                                                typeSet={pins}
-                                                input="input"
-                                            />
-                                        </div>
-                                        <p className={styles.error}>
-                                            {errors?.password?.message}
-                                        </p>
-                                    </div>
-                                    {loading ? (
-                                        <Loader />
-                                    ) : (
-                                        <button>Set Transaction Pin</button>
-                                    )}
-                                </form>
-                            </>
-                        );
-                }
+            // case 'Set Transaction Pin':
+            //     switch (count) {
+            //         case 0:
+            //             return (
+            //                 <>
+            //                     <h2 className={styles.title}>
+            //                         Set Transaction Pin
+            //                     </h2>
+            //                     <form>
+            //                         <div className={styles.formGroup}>
+            //                             <label>
+            //                                 Enter your Transaction Pin
+            //                             </label>
+            //                             <div className={styles.divs}>
+            //                                 <input
+            //                                     placeholder="Enter your Password"
+            //                                     {...register('transactionPin', {
+            //                                         required:
+            //                                             'Transaction Pin is required',
+            //                                         minLength: {
+            //                                             value: 6,
+            //                                             message:
+            //                                                 'Min length is 6'
+            //                                         },
+            //                                         maxLength: {
+            //                                             value: 6,
+            //                                             message:
+            //                                                 'Max length is 6'
+            //                                         },
+            //                                         pattern: {
+            //                                             value: /^[0-9]/i,
+            //                                             message:
+            //                                                 'Transaction Pin can only be number '
+            //                                         }
+            //                                     })}
+            //                                     name="transactionPin"
+            //                                     type={
+            //                                         outPin ? 'text' : 'password'
+            //                                     }
+            //                                 />
+            //                                 <Visbility
+            //                                     typeSet={pin}
+            //                                     input="input"
+            //                                 />
+            //                             </div>
+            //                             <p className={styles.error}>
+            //                                 {errors?.transactionPin?.message}
+            //                             </p>
+            //                         </div>
+            //                         <div className={styles.formGroup}>
+            //                             <label>Enter your Password</label>
+            //                             <div className={styles.divs}>
+            //                                 <input
+            //                                     placeholder="Enter your Password"
+            //                                     {...register('password', {
+            //                                         required:
+            //                                             'Password is Required'
+            //                                     })}
+            //                                     name="password"
+            //                                     type={
+            //                                         outPinn
+            //                                             ? 'text'
+            //                                             : 'password'
+            //                                     }
+            //                                 />
+            //                                 <Visbility
+            //                                     typeSet={pin}
+            //                                     input="input"
+            //                                 />
+            //                             </div>
+            //                             <p className={styles.error}>
+            //                                 {errors?.password?.message}
+            //                             </p>
+            //                         </div>
+            //                         {loading ? (
+            //                             <Loader />
+            //                         ) : (
+            //                             <button>Set Transaction Pin</button>
+            //                         )}
+            //                     </form>
+            //                 </>
+            //             );
+            //     }
 
             case 'Contact us':
                 switch (count) {
@@ -1848,21 +1496,26 @@ const Profile = () => {
                                                                     .value ===
                                                                 'ECOBANK'
                                                             ) {
-                                                                const details = {
-                                                                    accountNumber: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        accountNumber:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postIntraBankEnquiry(
                                                                         details
                                                                     )
                                                                 );
                                                             } else {
-                                                                const details = {
-                                                                    destinationBankCode:
-                                                                        e.target
-                                                                            .value,
-                                                                    accountNo: accountNumber
-                                                                };
+                                                                const details =
+                                                                    {
+                                                                        destinationBankCode:
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                        accountNo:
+                                                                            accountNumber
+                                                                    };
                                                                 dispatch(
                                                                     postInterBankEnquiry(
                                                                         details
@@ -2082,7 +1735,7 @@ const Profile = () => {
                                         Your Referral Code is:
                                         <span>
                                             {' '}
-                                            {userProfileData.referralCode}
+                                            {profile?.user?.referralCode}
                                         </span>
                                     </p>
                                     <h5
@@ -2090,7 +1743,8 @@ const Profile = () => {
                                             {
                                                 navigator.clipboard
                                                     .writeText(
-                                                        userProfileData.referralCode
+                                                        profile?.user
+                                                            ?.referralCode
                                                     )
                                                     .then(() => {
                                                         alert('Copied');
@@ -2126,31 +1780,12 @@ const Profile = () => {
                                             Description
                                         </div>
                                     </div>
-                                    {isLoading ? (
-                                        <Lottie
-                                            options={socialOptionss}
-                                            height={200}
-                                            width={200}
-                                        />
-                                    ) : allDisputes.length === 0 ? (
-                                        <>
-                                            <h1 className={styles.nodisputes}>
-                                                No Disputes have been lodged
-                                            </h1>
-                                        </>
-                                    ) : (
-                                        allDisputes
-                                            ?.filter((item) => {
-                                                const newDate = item.createAt.split(
-                                                    'T'
-                                                );
-                                                return item;
-                                            })
-                                            ?.map((item, index) => {
-                                                //console.log(item);
-                                                return item;
-                                            })
-                                    )}
+
+                                    <>
+                                        <h1 className={styles.nodisputes}>
+                                            No Disputes have been lodged
+                                        </h1>
+                                    </>
                                 </div>
                             </>
                         );
@@ -2161,6 +1796,7 @@ const Profile = () => {
     return (
         // <DashLayout page="Profile Management">
         <>
+            <ToastContainer />
             <ProfileLayout
                 head={
                     <>
@@ -2177,9 +1813,7 @@ const Profile = () => {
                             <div className={styles.profileBodyHeaderCont}>
                                 {/* <h2>Marvelous Solutions</h2> */}
                                 <p>
-                                    {!userProfileData
-                                        ? null
-                                        : `${userProfileData.lastName} ${userProfileData.firstName}`}
+                                    {`${profile?.user?.lastName} ${profile?.user?.firstName}`}
                                 </p>
                             </div>
                         </div>
@@ -2217,7 +1851,7 @@ const Profile = () => {
                             <div className={styles.accountNumber}>
                                 <h4>Account Number</h4>
                                 <div className={styles.accountNumberCopy}>
-                                    <p>{acctNumber}</p>
+                                    <p>{allAccountInfo[0]?.accountNo}</p>
                                     {alert ? (
                                         <p>Copied to Clipboard</p>
                                     ) : (
@@ -2226,11 +1860,9 @@ const Profile = () => {
                                                 {
                                                     navigator.clipboard
                                                         .writeText(
-                                                            `Account Name - ${userProfileData.lastName}  ${userProfileData.firstName} 
-        Account No. - ${copyAcctInfo.accountNumber}
-        Bank Name - Ecobank
-        Swift Code - ${copyAcctInfo.accountSwiftCode}
-        Bank Branch - ${copyAcctInfo.accountBankName} `
+                                                            `Account Name -${profile?.user?.lastName} ${profile?.user?.firstName}
+        Account No. - ${allAccountInfo[0]?.accountNo}
+        Bank Name - Ecobank `
                                                         )
                                                         .then(() => {
                                                             setAlert(true);
@@ -2377,4 +2009,4 @@ const Profile = () => {
     );
 };
 
-export default withAuth(Profile);
+export default Profile;

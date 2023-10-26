@@ -1,17 +1,55 @@
 import { useRouter } from 'next/router';
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './styles.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { createNewUserAccount } from '../../../redux/actions/createNwUserAccountAction';
-import { logoutAction } from '../../../redux/actions/logOutAction';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Loader from '../../../components/ReusableComponents/Loader';
-import {
-    useCreateCAcctMutation,
-    useCreateIAcctMutation
-} from '../../../redux/api/authApi';
+import { useGetAccountStatusMutation } from '../../../redux/api/authApi';
+import { setAccountNumber } from '../../../redux/slices/accountNumberSlice';
+import styles from './styles.module.css';
 
 const AccountLoading = () => {
-    const [accountWait, setAccountWait] = useState();
+    const [
+        getAccountStatus,
+        {
+            data: getAccountStatusData,
+            isLoading: getAccountStatusLoad,
+            isSuccess: getAccountStatusSuccess,
+            isError: getAccountStatusFalse,
+            error: getAccountStatusErr,
+            reset: getAccountStatusReset
+        }
+    ] = useGetAccountStatusMutation();
+    const showToastAccountStatusErrorMessage = () => {
+        toast.error('Error Fetching Account Status', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (getAccountStatusErr || getAccountStatusFalse) {
+            showToastAccountStatusErrorMessage();
+            const interval = setInterval(getAccountStatus(), 300000);
+            // Clear the interval when the component unmounts
+            return () => {
+                clearInterval(interval);
+            };
+        }
+    }, [getAccountStatusErr, getAccountStatusFalse]);
+    const showToastStatusSuccessMessage = () => {
+        toast.success('Account Number retrieved.', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        if (getAccountStatusSuccess) {
+            showToastStatusSuccessMessage();
+            dispatch(setAccountNumber(getAccountStatusData?.data?.trackerRef));
+            router.push('/Success');
+        }
+    }, [getAccountStatusSuccess]);
+    useEffect(() => {
+        getAccountStatus();
+    }, []);
 
     const router = useRouter();
 
@@ -88,44 +126,29 @@ const AccountLoading = () => {
     }, []);
     const [count, setCount] = useState(0);
 
-    useEffect(() => {
-        if (timer === '00:00:00') {
-            dispatch(logoutAction());
-            if (!localStorage.getItem('user')) {
-                // router.replace('/Auth/Login');
-            }
-        }
-        if (timer === '00:00:10') {
-            setAccountWait('Your Account Number will be sent to your Email');
-        }
-    }, [timer]);
-    const [error, setError] = useState();
+    useEffect(() => {}, [timer]);
 
     return (
         <>
+            <ToastContainer />
             {/* <h2>{timer}</h2> */}
             <div className={styles.cover}>
                 <div className={styles.covInn}>
                     <div className={styles.load}>
-                        {error ? (
-                            <div className={styles.error}>
-                                <h2 className={styles.error}>{error}</h2>
-                                <br />
-                            </div>
-                        ) : timer <= '00:00:10' ? (
+                        {/* {timer <= '00:00:10' ? (
                             <div>
                                 <p className={styles.error}>{timer}</p>
-                                <p className={styles.error}>{accountWait}</p>
+                                <p className={styles.error}></p>
                             </div>
-                        ) : (
-                            <>
-                                <Loader />
-                                <p className={styles.kindly}>
-                                    Kindly wait while the system fetches your
-                                    account number, this will take a moment.
-                                </p>
-                            </>
-                        )}
+                        ) : ( */}
+                        <>
+                            <Loader />
+                            <p className={styles.kindly}>
+                                Kindly wait while the system fetches your
+                                account number, this will take a moment.
+                            </p>
+                        </>
+                        {/* )} */}
                         <br />{' '}
                     </div>
                 </div>

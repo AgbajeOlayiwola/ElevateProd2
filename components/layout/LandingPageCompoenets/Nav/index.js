@@ -1,14 +1,20 @@
+import Image from 'next/image';
 import React from 'react';
 import Cover from '../Cover';
-import styles from './styles.module.css';
-import SmeAppSvg from '../../../ReusableComponents/SmeLogoSvg';
 import LanguageSelect from './languageSelect';
+import styles from './styles.module.css';
 
 const Nav = () => {
     return (
         <Cover>
             <div className={styles.nav}>
-                <SmeAppSvg />
+                {/* <SmeAppSvg /> */}
+                <Image
+                    src="/MY_SME_LOGO_GREEN_RGB@41.png"
+                    width={150}
+                    height={108}
+                    alt="logo"
+                />
                 <div className={styles.selec}>
                     <LanguageSelect />
                 </div>

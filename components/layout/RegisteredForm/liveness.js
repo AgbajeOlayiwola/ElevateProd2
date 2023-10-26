@@ -1,4 +1,5 @@
 import { Formik } from 'formik';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,6 +12,7 @@ import {
 } from '../../../redux/api/authApi';
 import { setMoreAccountNumberDetails } from '../../../redux/slices/moreAccountNumberDetails';
 import { setProfile } from '../../../redux/slices/profile';
+import { setToken } from '../../../redux/slices/tokenSlice';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import ButtonComp from '../../ReusableComponents/Button';
 import styles from './styles.module.css';
@@ -34,20 +36,9 @@ const Liveness = ({ formData, type, action, back }) => {
     const webcamRef = React.useRef(null);
     const [succes, setSuccess] = useState('');
     const [image, setImage] = useState();
+    const { profile } = useSelector((store) => store);
     const dispatch = useDispatch();
-    const capture = React.useCallback(() => {
-        const ImageSrcII = webcamRef?.current?.getScreenshot();
-        setImage(ImageSrcII);
-        console.log(ImageSrcII);
-        const faceMMatchData = {
-            userFaceBase64: ImageSrcII?.replace(
-                'data:image/jpeg;base64,',
-                ''
-            ).trim(),
-            idNumber: moreAccountNumberDetails?.accounts?.bvn
-        };
-        faceMatchWithoutBvn(faceMMatchData);
-    }, [webcamRef]);
+
     const [
         getMoreAccountNumberDetails,
         {
@@ -78,6 +69,7 @@ const Liveness = ({ formData, type, action, back }) => {
         }
     }, [getMoreAccountNumberDetailsSuccess]);
     const { moreAccountNumberDetails } = useSelector((store) => store);
+    console.log(moreAccountNumberDetails);
 
     // console.log(existingUserDetails);
     // console.log(moreAccountNumberDetails);
@@ -110,9 +102,26 @@ const Liveness = ({ formData, type, action, back }) => {
             position: toast.POSITION.TOP_RIGHT
         });
     };
+    useEffect(() => {}, []);
+    const affiliatData = localStorage.getItem('affiliateCode');
     useEffect(() => {
         showToastMessage();
     }, [createExistingUserProfileErr]);
+    const capture = React.useCallback(() => {
+        const ImageSrcII = webcamRef?.current?.getScreenshot();
+        setImage(ImageSrcII);
+        console.log(ImageSrcII);
+        const faceMMatchData = {
+            userFaceBase64: ImageSrcII?.replace(
+                'data:image/jpeg;base64,',
+                ''
+            ).trim(),
+            idNumber: affiliatData
+                ? moreAccountNumberDetails?.accounts?.bvn
+                : ''
+        };
+        faceMatchWithoutBvn(faceMMatchData);
+    }, [webcamRef]);
 
     useEffect(() => {
         if (faceMatchWithoutBvnSuccess) {
@@ -155,7 +164,9 @@ const Liveness = ({ formData, type, action, back }) => {
                     moreAccountNumberDetails?.accounts?.currencyCode || null,
                 customerId:
                     moreAccountNumberDetails?.accounts?.customerID || null,
-                bvn: moreAccountNumberDetails?.accounts?.bvn || null,
+                bvn: profile?.user?.idNumber
+                    ? profile?.user?.idNumber
+                    : moreAccountNumberDetails?.accounts?.bvn || null,
                 accounts: existingUserDetails?.accounts,
                 city: '',
                 state: '',
@@ -168,6 +179,7 @@ const Liveness = ({ formData, type, action, back }) => {
     useEffect(() => {
         if (createExistingUserProfileSuccess) {
             dispatch(setProfile(createExistingUserProfileData?.data));
+            dispatch(setToken(createExistingUserProfileData?.data?.token));
             action();
         }
     }, [createExistingUserProfileSuccess]);
@@ -227,12 +239,23 @@ const Liveness = ({ formData, type, action, back }) => {
                                                 : styles.imageInner
                                         }
                                     >
-                                        <Webcam
-                                            audio={false}
-                                            screenshotFormat="image/jpeg"
-                                            videoConstraints={videoConstraints}
-                                            ref={webcamRef}
-                                        />
+                                        {faceMatchWithoutBvnLoad ||
+                                        createExistingUserProfileLoad ? (
+                                            <Image
+                                                src={image}
+                                                height={600}
+                                                width={600}
+                                            />
+                                        ) : (
+                                            <Webcam
+                                                audio={false}
+                                                screenshotFormat="image/jpeg"
+                                                videoConstraints={
+                                                    videoConstraints
+                                                }
+                                                ref={webcamRef}
+                                            />
+                                        )}
                                     </div>
                                 </div>
                                 {faceMatchWithoutBvnLoad ? (

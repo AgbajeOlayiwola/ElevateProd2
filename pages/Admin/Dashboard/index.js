@@ -10,23 +10,31 @@ import PhoneSvg from '../../../components/ReusableComponents/PhoneSvg';
 import RecievePaymentBtn from '../../../components/ReusableComponents/RecievePaymnet';
 import styles from './styles.module.css';
 // import withAuth from '../../components/HOC/withAuth.js';
-
 import Link from 'next/link';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoMdCopy } from 'react-icons/io';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ButtonComp } from '../../../components';
 import Addaccounts from '../../../components/ReusableComponents/Addaccounts';
 import BulkTransfer2 from '../../../components/ReusableComponents/BulkTransfSvg/bulktrans';
 import Loader from '../../../components/ReusableComponents/Loader';
 import socialdata from '../../../components/ReusableComponents/Lotties/loading.json';
+import OtpInput from '../../../components/ReusableComponents/Otpinput';
 import Overlay from '../../../components/ReusableComponents/Overlay';
 import BillSvg from '../../../components/ReusableComponents/ReusableSvgComponents/BillSvg';
 import TotalPendingCollections from '../../../components/ReusableComponents/ReusableSvgComponents/TotalPendingCollectionsSvg';
 import TotalCollections from '../../../components/ReusableComponents/ReusableSvgComponents/Totalcollections';
 import TotlaCollctionsSvg from '../../../components/ReusableComponents/ReusableSvgComponents/TotlaCollectionsFailedSvg';
 import SingleTrans from '../../../components/ReusableComponents/SingleTransSvg';
-import { useGetAcctBalsMutation } from '../../../redux/api/authApi';
+import {
+    useCreateTransactionPinMutation,
+    useGetAcctBalsMutation,
+    useGetProfileMutation
+} from '../../../redux/api/authApi';
 import { setAllAccountInfo } from '../../../redux/slices/allAccountInfoSlice';
+import { setProfile } from '../../../redux/slices/profile';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -173,7 +181,7 @@ const Dashboard = () => {
         setPreviousRoute(prevPath);
         // //console.log(prevPath);
     }
-
+    const [pinCondition, setPinCondition] = useState();
     const current = new Date();
 
     const copyAccountNumber = () => {};
@@ -190,15 +198,113 @@ const Dashboard = () => {
         console.log(width);
     };
     useEffect(() => {
+        setPinCondition(profile?.user?.hasSetTransactionPin);
+    }, []);
+
+    useEffect(() => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
         handleWindowResize();
         window.addEventListener('resize', handleWindowResize);
         return () => window.removeEventListener('resize', handleWindowResize);
     }, [width]);
+
     // resize the screen
+    const [
+        createTransactionPin,
+        {
+            data: createTransactionPinData,
+            isLoading: createTransactionPinLoad,
+            isSuccess: createTransactionPinSuccess,
+            isError: createTransactionPinFalse,
+            error: createTransactionPinErr,
+            reset: createTransactionPinReset
+        }
+    ] = useCreateTransactionPinMutation();
+    const [
+        getProfile,
+        {
+            data: getProfileData,
+            isLoading: getProfileLoad,
+            isSuccess: getProfileSuccess,
+            isError: getProfileFalse,
+            error: getProfileErr,
+            reset: getProfileReset
+        }
+    ] = useGetProfileMutation();
+    const [otpValue, setOtpValue] = useState('');
+
+    const { profile } = useSelector((store) => store);
+
+    const handleOtpChange = (otp) => {
+        setOtpValue(otp);
+    };
+    const showToastTransactionPinSuccessMessage = () => {
+        toast.success('Transaction Pin Created', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
+    useEffect(() => {
+        getProfile();
+    }, []);
+
+    useEffect(() => {
+        if (createTransactionPinSuccess) {
+            setPinCondition('Y');
+            getProfile();
+        }
+    }, [createTransactionPinSuccess]);
+    useEffect(() => {
+        if (getProfileSuccess) {
+            dispatch(setProfile(getProfileData?.data));
+
+            showToastTransactionPinSuccessMessage();
+        }
+    }, [getProfileSuccess]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        createTransactionPin({
+            transactionPin: otpValue
+        });
+    };
+
+    console.log(profile);
     return (
         <div className={styles.statementCover}>
+            <ToastContainer />
+            {pinCondition === 'N' ? (
+                <div className={styles.overlay}>
+                    <form onSubmit={handleSubmit} className={styles.handleForm}>
+                        <div className={styles.inner}>
+                            <div className={styles.inn}>
+                                {createTransactionPinErr ? (
+                                    <p className={styles.error}>
+                                        Error Setting Transaction Pin
+                                    </p>
+                                ) : null}
+                                <h3>Create a transaction pin</h3>
+                                <div className={styles.trans}>
+                                    <OtpInput
+                                        onOtpChange={handleOtpChange}
+                                        otpfields={6}
+                                    />
+                                </div>
+                                <ButtonComp
+                                    text="Create Transaction Pin"
+                                    type="submit"
+                                    disabled={true}
+                                    active={'active'}
+                                    loads={
+                                        getProfileLoad ||
+                                        createTransactionPinLoad
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            ) : null}
             <Levelup account={userProfileData} />
             <div className={styles.cove}>
                 <section className={styles.sectionI}>
@@ -242,7 +348,7 @@ const Dashboard = () => {
                         <Link
                             href={{
                                 pathname: '/Admin/Payment',
-                                query: { id: 'Bills Payment' }
+                                query: { id: 'airtime or data' }
                             }}
                         >
                             <div className={styles.dinCLass}>
@@ -255,7 +361,7 @@ const Dashboard = () => {
                         <Link
                             href={{
                                 pathname: '/Admin/Payment',
-                                query: { id: 'Bills Payment' }
+                                query: { id: 'airtime or data' }
                             }}
                         >
                             <div className={styles.dinCLass}>

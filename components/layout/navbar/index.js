@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import styles from './style.module.css';
 import Link from 'next/link';
-import NotificationsSvg from '../../ReusableComponents/NotificationSvg';
-import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
-import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
-import SearchButtonSvg from '../../ReusableComponents/ReusableSvgComponents/SearchButtonSvg';
-import CartSvg from '../../ReusableComponents/ReusableSvgComponents/CartSvg';
-import { FaBars } from 'react-icons/fa';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
+import React from 'react';
+import { FaBars } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
+import NotificationsSvg from '../../ReusableComponents/NotificationSvg';
+import CartSvg from '../../ReusableComponents/ReusableSvgComponents/CartSvg';
+import SearchButtonSvg from '../../ReusableComponents/ReusableSvgComponents/SearchButtonSvg';
+import SearchSvg from '../../ReusableComponents/ReusableSvgComponents/SearchSvg';
+import styles from './style.module.css';
 
 const Navbar = ({
     page,
@@ -35,6 +35,7 @@ const Navbar = ({
     //     }
     // }, [userProfile]);
     //  //console.log(userProfileData);
+    const { profile } = useSelector((store) => store);
     return (
         <nav className={styles.navigation}>
             {preview === true ? (
@@ -97,15 +98,8 @@ const Navbar = ({
                         {router.pathname === '/Admin/Dashboard' ? (
                             <div className={styles.userName}>
                                 <h3 className={styles.name}>
-                                    Welcome,
-                                    {userProfile
-                                        ? userProfile.preferredName
-                                        : null}{' '}
-                                    👍🏼
+                                    Hello {profile?.user?.preferredName},
                                 </h3>
-                                {/* <p className={styles.company}>
-                                    Marvelous Solutions
-                                </p> */}
                             </div>
                         ) : page === 'Storefront' ? (
                             <>

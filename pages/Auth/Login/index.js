@@ -15,6 +15,7 @@ import MailSvg from '../../../components/ReusableComponents/ReusableSvgComponent
 import { useLoginAccountMutation } from '../../../redux/api/authApi';
 import { setPinned } from '../../../redux/slices/pinned';
 import { setProfile } from '../../../redux/slices/profile';
+import { setToken } from '../../../redux/slices/tokenSlice';
 import styles from './styles.module.css';
 // Number of input fields that make up SSN
 const Login = () => {
@@ -68,6 +69,7 @@ const Login = () => {
     };
     const handleNavIn = async (val) => {
         await dispatch(setProfile(val?.data));
+        dispatch(setToken(val?.data?.token));
         router.push('/Admin/Dashboard');
     };
 
@@ -106,8 +108,11 @@ const Login = () => {
                 });
             } else if (
                 loginAccountData?.data?.user?.profileSetupStatus ===
+                    'LIVENESS_VERIFIED' ||
+                (loginAccountData?.data?.user?.profileSetupStatus ===
                     'PROFILE_SETUP' &&
-                loginAccountData?.data?.user?.createdFromEcobankCred === 'N'
+                    loginAccountData?.data?.user?.createdFromEcobankCred ===
+                        'N')
             ) {
                 dispatch(setProfile(loginAccountData?.data));
                 router.push({
@@ -126,7 +131,7 @@ const Login = () => {
                 });
             } else if (
                 loginAccountData?.data?.user?.profileSetupStatus ===
-                    'LIVENESS_VERIFIED' &&
+                    'PROFILE_SETUP_COMPLETED' &&
                 loginAccountData?.data?.user?.createdFromEcobankCred === 'Y'
             ) {
                 router.push({
@@ -146,9 +151,12 @@ const Login = () => {
                 });
             } else if (
                 loginAccountData?.data?.user?.profileSetupStatus ===
-                    'LIVENESS_VERIFIED' &&
-                loginAccountData?.data?.user?.createdFromEcobankCred === 'N' &&
-                loginAccountData?.data?.user?.phoneNumber !== null
+                    'LIVENESS_VERIFIED' ||
+                (loginAccountData?.data?.user?.profileSetupStatus ===
+                    'PROFILE_SETUP_COMPLETED' &&
+                    loginAccountData?.data?.user?.createdFromEcobankCred ===
+                        'N' &&
+                    loginAccountData?.data?.user?.phoneNumber !== null)
             ) {
                 dispatch(setProfile(loginAccountData?.data));
                 router.push({
@@ -174,6 +182,14 @@ const Login = () => {
                     pathname: '/Onboarding/ExistingProfileSetup',
                     query: { id: 2 }
                 });
+            } else if (
+                loginAccountData?.data?.user?.profileSetupStatus ===
+                'AWAITING_ACCOUNT_NUMBER'
+            ) {
+                router.push({
+                    pathname: '/Verify/Account',
+                    query: { id: 2 }
+                });
             }
             // else if (
             //     loginAccountData?.user?.profileSetupStatus ===
@@ -189,11 +205,7 @@ const Login = () => {
                 loginAccountData?.data?.user?.profileSetupStatus ===
                     'ACCOUNT_NUMBER_RETRIEVED' ||
                 loginAccountData?.data?.user?.profileSetupStatus ===
-                    'PROFILE_SETUP_COMPLETED' ||
-                loginAccountData?.data?.user?.profileSetupStatus ===
-                    'ACCOUNT_CREATED' ||
-                loginAccountData?.data?.user?.profileSetupStatus ===
-                    'AWAITING_ACCOUNT_NUMBER'
+                    'ACCOUNT_CREATED'
             ) {
                 handleNavIn(loginAccountData);
             }

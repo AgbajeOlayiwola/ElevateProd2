@@ -1,28 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import BeneficiaryAvatarSvg from '../ReusableSvgComponents/BeneficiaryAvatarSvg';
-import { getBeneficiariesData } from '../../../redux/actions/getBeneficiariesAction';
 
 const Beneficiary = ({ action }) => {
-    const { getBeneficiaries } = useSelector(
-        (state) => state.getBeneficiariesReducer
-    );
-    const [beneficiaries, setBeneficiaries] = useState([]);
-    const [search, setSearch] = useState('');
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getBeneficiariesData());
-    }, []);
-    useEffect(() => {
-        if (getBeneficiaries !== null) {
-            setBeneficiaries(getBeneficiaries);
-        }
-    }, [getBeneficiaries]);
-    let beneficiaryName;
+    // const { getBeneficiaries } = useSelector(
+    //     (state) => state.getBeneficiariesReducer
+    // );
+    // const [beneficiaries, setBeneficiaries] = useState([]);
+    // const [search, setSearch] = useState('');
+    // const dispatch = useDispatch();
+    // useEffect(() => {
+    //     dispatch(getBeneficiariesData());
+    // }, []);
+    // useEffect(() => {
+    //     if (getBeneficiaries !== null) {
+    //         setBeneficiaries(getBeneficiaries);
+    //     }
+    // }, [getBeneficiaries]);
+    // let beneficiaryName;
     return (
         <div className={styles.beneficiary}>
-            <div className={styles.beneficiaryHeader}>
+            {/* <div className={styles.beneficiaryHeader}>
                 <h2>Beneficiaries</h2>
 
                 <div className={styles.beneficiarySearch}>
@@ -81,7 +78,7 @@ const Beneficiary = ({ action }) => {
                             );
                         })
                 )}
-            </div>
+            </div> */}
         </div>
     );
 };

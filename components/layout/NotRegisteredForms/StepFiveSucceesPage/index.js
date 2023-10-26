@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { ButtonComp } from '../../../../components';
-import styles from './styles.module.css';
-import Image from 'next/image';
 import Link from 'next/link';
-import Success from '../../../ReusableComponents/Success';
-import apiRoutes from '../../../../redux/helper/apiRoutes';
-import axiosInstance from '../../../../redux/helper/apiClient';
-import { setCookie, getCookie } from 'cookies-next';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { ButtonComp } from '../../../../components';
+import Success from '../../../ReusableComponents/Success';
+import styles from './styles.module.css';
 
 const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
     const [activeBtn, setActiveBtn] = useState(true);
@@ -37,10 +33,10 @@ const StepFiveSuccessPage = ({ handleShowSuccessStep }) => {
                             text="Proceed To Dashboard"
                         />
                     </Link>
-                    <p>
+                    {/* <p>
                         With your Account,you have a Deposit/Inflow Limit:
                         #1,000,000
-                    </p>
+                    </p> */}
                 </div>
             </>
         </div>

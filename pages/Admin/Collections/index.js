@@ -1,48 +1,29 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import PaymentTable from '../../../components/ReusableComponents/PayementTable';
+import { useDispatch } from 'react-redux';
+import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
+import { PaymentData } from '../../../components/ReusableComponents/Data';
+import Overlay from '../../../components/ReusableComponents/Overlay';
+import PaymentCard from '../../../components/ReusableComponents/PaymentCard';
+import PaymentSingleBody from '../../../components/ReusableComponents/PaymentSingleBody';
 import ReceivePaymentFirst from '../../../components/ReusableComponents/ReceivePaymentFirst';
 import ReceivePaymentSecond from '../../../components/ReusableComponents/ReceivePaymentSecond';
-import styles from './styles.module.css';
-import Overlay from '../../../components/ReusableComponents/Overlay';
-import PaymentSingleBody from '../../../components/ReusableComponents/PaymentSingleBody';
-import PaymentCard from '../../../components/ReusableComponents/PaymentCard';
-import { useRouter } from 'next/router';
-import { PaymentData } from '../../../components/ReusableComponents/Data';
 import ReceivePaymentThird from '../../../components/ReusableComponents/ReceivePaymentThird';
-import UssdFirst from '../../../components/ReusableComponents/UssdFirst';
-import Share from '../../../components/ReusableComponents/Share';
-import QrFirst from '../../../components/layout/QrData';
-import AccountsInfoCard from '../../../components/ReusableComponents/AccountInfoCard';
 import RecievePaymentStatus from '../../../components/ReusableComponents/RecievePaymentStatus';
-import { getQrMerchantInfoGen } from '../../../redux/actions/getQrMerchantAction';
-import { loadpaylinkGen } from '../../../redux/actions/paylinkAction';
+import Share from '../../../components/ReusableComponents/Share';
+import UssdFirst from '../../../components/ReusableComponents/UssdFirst';
+import VirtualAccountFirst from '../../../components/ReusableComponents/VirtualAccount';
+import QrFirst from '../../../components/layout/QrData';
 import { generateQrCodeDetails } from '../../../redux/actions/generateQrCodeAction';
+import { loadpaylinkGen } from '../../../redux/actions/paylinkAction';
 import { loadussdGen } from '../../../redux/actions/ussdGenAction';
-import { loadUserProfile } from '../../../redux/actions/userProfileAction';
+import styles from './styles.module.css';
 
 const Collections = () => {
     const router = useRouter();
-    const { accountPrimarys, accountPrimaryError } = useSelector(
-        (state) => state.accountPrimaryReducer
-    );
-    const { ussdGen, errorMessageussdGen } = useSelector(
-        (state) => state.ussdGenReducer
-    );
-    const { ussdStatus, errorMessageussdStatus } = useSelector(
-        (state) => state.ussdStatusReducer
-    );
-
-    const { generateQrCodeSuccess, generateQrCodeError } = useSelector(
-        (state) => state.generateQrInfo
-    );
-    const { paylikSuccess, payLinkerrorMessage } = useSelector(
-        (state) => state.payLinkGenReducer
-    );
-    const { userProfile } = useSelector((state) => state.userProfileReducer);
 
     const dispatch = useDispatch();
-    const [formType, setFormType] = useState('');
+    const [formType, setFormType] = useState('ussd only');
     // const [formData, setFormdata] = useState({ accountNum: '' });
     // const [ecobank, setEcobank] = useState('true');
     const [overlay, setOverlay] = useState(false);
@@ -66,166 +47,6 @@ const Collections = () => {
     const [errorQr, setErrorQr] = useState('');
 
     useEffect(() => {
-        dispatch(loadUserProfile());
-    }, []);
-    let airtimeData;
-    let airtimeNetData = {};
-    if (typeof window !== 'undefined') {
-        airtimeData = window.localStorage.getItem('Airtime');
-        airtimeNetData = JSON.parse(airtimeData);
-    }
-    let desiredPackage;
-    let desiredPackageData = {};
-    if (typeof window !== 'undefined') {
-        desiredPackage = window.localStorage.getItem('DesiredPackage');
-        desiredPackageData = JSON.parse(desiredPackage);
-    }
-    let csvType = [];
-    useEffect(() => {
-        csvType = JSON.parse(localStorage.getItem('csvData'));
-        setCsvData(csvType);
-        let x = csvType?.slice(2).reduce((a, b) => {
-            return a + b.Amount;
-        }, 0);
-        setSum(x);
-    }, [count]);
-
-    useEffect(() => {
-        if (userProfile !== null) {
-            setUserProfileData(userProfile);
-        }
-    }, [userProfile]);
-
-    let number;
-    let numberofBene = {};
-    if (typeof window !== 'undefined') {
-        number = window.localStorage.getItem('number');
-        numberofBene = JSON.parse(number);
-    }
-    // useEffect(() => {
-    //     dispatch(loadAccountPrimary());
-    //     dispatch(loadUserProfile());
-    // }, []);
-    // useEffect(() => {
-    //     if (userProfile !== null) {
-    //         setUserProfileData(userProfile);
-    //     }
-    // }, [userProfile]);
-    // useEffect(() => {
-    //     if (balanceEnquiry !== null) {
-    //         const formatter = new Intl.NumberFormat('en-US', {
-    //             style: 'currency',
-    //             currency: 'NGN',
-    //             currencyDisplay: 'narrowSymbol'
-    //         });
-    //         const formattedAmount = formatter.format(
-    //             balanceEnquiry.availableBalance
-    //         );
-    //         setBalance(formattedAmount);
-    //     }
-    // }, [balanceEnquiry]);
-    //where i need to work on
-    // useEffect(() => {
-    //     //console.log(accountPrimarys);
-    //     //console.log(bankAccounts);
-    //     //console.log(formData.accountNum);
-    //     setSenderDetails(accountPrimarys);
-    //     if (bankAccounts !== null) {
-    //         //console.log(senderDetails);
-    //         Object.keys(bankAccounts)?.map((accountNo) => {
-    //             if (
-    //                 bankAccounts[accountNo].accountNumber == formData.accountNum
-    //             ) {
-    //                 // setAcctNumber(accountPrimarys);
-    //                 let balanceData;
-    //                 balanceData = {
-    //                     accountId: bankAccounts[accountNo].accountId
-    //                 };
-    //                 setSenderDetails(accountPrimarys.accountId);
-    //                 //  //console.log(senderDetails.accountId);
-    //                 dispatch(getBalanceEnquiry(balanceData));
-    //             } else {
-    //                 setAcctNumber('Pending');
-    //             }
-    //         });
-    //     }
-    // }, [bankAccounts]);
-    const ussdGenCheck = () => {
-        if (ussdGen !== null) {
-            // //console.logussdGen);
-            setRecieveLink(ussdGen.paymentReference);
-            setTrack(ussdGen.transactionId);
-            setCount((count) => count + 1);
-            // const ussdStatus = {
-            //     transactionRef: ussdGen.transactionId
-            // };
-            // dispatch(loadussdStatus(ussdStatus));
-            setIsLoading(false);
-            // setStatus('success');
-        } else if (errorMessageussdGen !== null) {
-            // setCount((count) => count + 1);
-            setIsLoading(false);
-            setError(errorMessageussdGen.response.data.message);
-            //console.log(error);
-            // setStatus('error');
-        }
-    };
-    const payLinkCheck = () => {
-        //console.log(paylikSuccess);
-        if (paylikSuccess !== null) {
-            //console.log(paylikSuccess);
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setStatus('success');
-        } else if (payLinkerrorMessage !== null) {
-            // setCount((count) => count + 1);
-            setIsLoading(false);
-            setErrorQr(payLinkerrorMessage.response.data.message[0]);
-            setStatus('error');
-        }
-    };
-    useEffect(() => {
-        payLinkCheck();
-    }, [paylikSuccess, payLinkerrorMessage]);
-    const qrCheck = () => {
-        if (generateQrCodeSuccess !== null) {
-            //console.log(generateQrCodeSuccess);
-            setCount((count) => count + 1);
-            setIsLoading(false);
-            setStatus('success');
-        } else if (generateQrCodeError !== null) {
-            // setCount((count) => count + 1);
-            setIsLoading(false);
-            setErrorQr(generateQrCodeError.response.data.message);
-            setStatus('error');
-        }
-    };
-    useEffect(() => {
-        qrCheck();
-    }, [generateQrCodeSuccess, generateQrCodeError]);
-    useEffect(() => {
-        ussdGenCheck();
-        //  //console.log(error.response.data.message[0]);
-    }, [ussdGen, errorMessageussdGen]);
-    // const ussdStatusCheck = () => {
-    //     if (ussdStatus !== null) {
-    //         // //console.logussdStatus);
-    //         setCount((count) => count + 1);
-    //         setIsLoading(false);
-    //         // setStatus('success');
-    //     } else if (errorMessageussdStatus !== null) {
-    //         // setCount((count) => count + 1);
-    //         setIsLoading(false);
-    //         setError(errorMessageussdStatus);
-    //          //console.log(error);
-    //         // setStatus('error');
-    //     }
-    // };
-    // useEffect(() => {
-    //     ussdStatusCheck();
-    // }, [ussdStatus, errorMessageussdStatus]);
-
-    useEffect(() => {
         window.scrollTo(0, 0);
     }, [count]);
 
@@ -238,77 +59,6 @@ const Collections = () => {
         setLink({ id }.id);
     });
 
-    useEffect(() => {
-        if (link !== undefined) {
-            if (userProfileData.hasSetTransactionPin === false) {
-                if (userProfileData.createdFromEcobankCred === false) {
-                    router.push({
-                        pathname: '/AccountUpgrade',
-                        query: { id: 'Transaction Pin' }
-                    });
-                } else if (userProfileData.createdFromEcobankCred === true) {
-                    router.push({
-                        pathname: '/Admin/Profile',
-                        query: { id: 'Transaction Pin' }
-                    });
-                }
-            } else if (userProfileData.hasSetTransactionPin === true) {
-                setFormType(link.toLowerCase());
-                setOverlay(true);
-            }
-        }
-    }, [link]);
-    const handleFormChange = (formTitle) => {
-        if (userProfileData.hasSetTransactionPin === false) {
-            //console.log(userProfileData.createdFromEcobankCred);
-            if (userProfileData.createdFromEcobankCred === false) {
-                router.push({
-                    pathname: '/AccountUpgrade',
-                    query: { id: 'Transaction Pin' }
-                });
-            } else if (userProfileData.createdFromEcobankCred === true) {
-                router.push({
-                    pathname: '/Admin/Profile',
-                    query: { id: 'Transaction Pin' }
-                });
-            }
-        } else if (userProfileData.hasSetTransactionPin === true) {
-            setFormType(formTitle);
-            setOverlay(true);
-        }
-    };
-    const handleClose = () => {
-        setOverlay(false);
-        setFormType('');
-        setCount(0);
-        setIsLoading(false);
-        setPaymentDetails({});
-        setError([]);
-        setErrorQr([]);
-    };
-
-    const buttonHandleClose = () => {
-        if (formType === 'mpos') {
-            setCount(count + 1);
-        } else {
-            setOverlay(false);
-            setFormType('');
-            setCount(0);
-            setPaymentDetails({});
-            setError([]);
-            setErrorQr([]);
-        }
-    };
-    //console.log(csvData);
-    //console.log(sum);
-
-    useEffect(() => {
-        setSum(
-            csvData?.slice(2).reduce((a, b) => {
-                return a + b.Amount;
-            }, 0)
-        );
-    }, [csvData]);
     const [randomString, setRandomString] = useState('');
     function generateRandomString() {
         const characters =
@@ -424,6 +174,7 @@ const Collections = () => {
             bankID: '000'
         }
     ];
+
     useEffect(() => {
         if (formType === 'ussd only') {
             bankCode?.filter((item) => {
@@ -434,23 +185,53 @@ const Collections = () => {
                 }
             });
         }
-        //console.log(formType);
     }, [count]);
-    const { getQrMerchnatInfoSuccess, getQrMerchnatInfoErrorMessage } =
-        useSelector((state) => state.getQrMerchantInfoReducermport);
+
     const [merchantInf, setMerchantInfo] = useState();
-    useEffect(() => {
-        dispatch(getQrMerchantInfoGen());
-        //console.log(getQrMerchnatInfoSuccess);
-    }, []);
-    useEffect(() => {
-        if (getQrMerchnatInfoSuccess != null) {
-            setMerchantInfo(getQrMerchnatInfoSuccess);
+    const handleFormChange = (formTitle) => {
+        // if (userProfileData.hasSetTransactionPin === false) {
+        //     //console.log(userProfileData.createdFromEcobankCred);
+        //     if (userProfileData.createdFromEcobankCred === false) {
+        //         router.push({
+        //             pathname: '/AccountUpgrade',
+        //             query: { id: 'Transaction Pin' }
+        //         });
+        //     } else if (userProfileData.createdFromEcobankCred === true) {
+        //         router.push({
+        //             pathname: '/Admin/Profile',
+        //             query: { id: 'Transaction Pin' }
+        //         });
+        //     }
+        // } else if (userProfileData.hasSetTransactionPin === true) {
+        setFormType(formTitle);
+        setOverlay(true);
+        // }
+    };
+    const handleClose = () => {
+        setOverlay(false);
+        setFormType('');
+        setCount(0);
+        setIsLoading(false);
+        setPaymentDetails({});
+        setError([]);
+        setErrorQr([]);
+    };
+
+    const buttonHandleClose = () => {
+        if (formType === 'mpos') {
+            setCount(count + 1);
+        } else {
+            setOverlay(false);
+            setFormType('');
+            setCount(0);
+            setPaymentDetails({});
+            setError([]);
+            setErrorQr([]);
         }
-    }, [getQrMerchnatInfoSuccess]);
+    };
     const renderForm = () => {
         switch (formType) {
-            case 'paylink':
+            case 'Paylink':
                 switch (count) {
                     // case 0:
                     //     return (
@@ -735,21 +516,37 @@ const Collections = () => {
                             />
                         );
                 }
-            case 'phone pos':
+            case 'virtual account':
                 switch (count) {
                     case 0:
                         return (
-                            <ReceivePaymentFirst
+                            <VirtualAccountFirst
                                 overlay={overlay}
-                                firstTitle="Use Mobile POS"
+                                firstTitle="Virtual Account"
                                 buttonText="Next"
                                 closeAction={handleClose}
                                 action={(data) => {
-                                    // //console.logdata);
                                     setCount(count + 1);
                                 }}
                             />
                         );
+                    case 1:
+                        return (
+                            <ReceivePaymentFirst
+                                overlay={overlay}
+                                firstTitle="Virtual Account"
+                                buttonText="Next"
+                                closeAction={handleClose}
+                                action={(data) => {
+                                    setCount(count + 1);
+                                }}
+                            />
+                        );
+                }
+            case 'phone Pos':
+                switch (count) {
+                    case 0:
+                        return <VirtualAccountFirst />;
                     case 1:
                         return (
                             <ReceivePaymentSecond
@@ -789,46 +586,9 @@ const Collections = () => {
     };
     return (
         <div className={styles.statementCover}>
-            {/* {active && (
-                <div className={styles.greencard}>
-                    <div className={styles.greencardDetails}>
-                        <div>
-                            <img
-                                src="/Assets/Images/clock.png"
-                                width="47px"
-                                height="55px"
-                            />
-                        </div>
-                        <div className={styles.detailsText}>
-                            <h3>Introducing Scheduled Payments</h3>
-                            <p>
-                                You can now schedule your transfer for a later
-                                time or date by selecting
-                                <span> ‘Schedule for later’ </span> when you
-                                make payments.
-                            </p>
-                        </div>
-                    </div>
-                    <CloseButton
-                        color="#A5A5A5"
-                        action={() => {
-                            setActive(false);
-                        }}
-                        classes={styles.closeButton}
-                    />
-                </div>
-            )} */}
             <div className={styles.allTypes}>
                 <div className={styles.cov}>
                     <AccountsInfoCard userProfileData={userProfileData} />
-                    {/* <div className={styles.balanceButtons}>
-                            <div className={styles.first}>
-                                <p>Scheduled Payments</p>
-                            </div>
-                            <div className={styles.second}>
-                                <p>Repeat Payments</p>
-                            </div>
-                        </div> */}
                 </div>
                 <div className={styles.cov}>
                     <PaymentCard title="Receive Payments" type="receive">
@@ -843,11 +603,11 @@ const Collections = () => {
                     </PaymentCard>
                 </div>
             </div>
-            <PaymentTable
+            {/* <PaymentTable
                 title="Payment History"
                 test={count}
                 page="Collections"
-            />
+            /> */}
 
             {renderForm()}
         </div>

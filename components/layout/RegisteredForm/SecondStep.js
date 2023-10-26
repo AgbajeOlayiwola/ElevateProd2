@@ -110,6 +110,7 @@ const RegisteredForm = ({
     useEffect(() => {
         if (createExistingUserProfileData) {
             dispatch(setProfile(createExistingUserProfileData?.data));
+            dispatch(setToken(createExistingUserProfileData?.data?.token));
             nextStep();
         }
     }, [createExistingUserProfileSuccess]);

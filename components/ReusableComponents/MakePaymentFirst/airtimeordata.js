@@ -117,18 +117,30 @@ const AirtimeOrData = ({
         }
     }, [airNetworksSuccess]);
     const { allAccountInfo } = useSelector((store) => store);
+    const showErrorToastMessage = () => {
+        toast.error('Airtime payment Error', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (airtimeTopupErr) {
+            showErrorToastMessage();
+        }
+    }, [airtimeTopupErr]);
     const showSuccessToastMessage = () => {
         toast.success('Airtime payment Successfull', {
             position: toast.POSITION.TOP_RIGHT,
             className: 'toast-message'
         });
-        closeAction();
+        // closeAction();
     };
     useEffect(() => {
-        if (airtimeTopupErr) {
+        if (airtimeTopupSuccess) {
             showSuccessToastMessage();
         }
-    }, [airtimeTopupErr]);
+    }, [airtimeTopupSuccess]);
     const [otpValue, setOtpValue] = useState('');
     const handleOtpChange = (otp) => {
         setOtpValue(otp);
@@ -146,15 +158,15 @@ const AirtimeOrData = ({
                         onSubmit={(values, { setSubmitting }) => {
                             // console.log(values);
                             const data = {
-                                transactionReference: '',
+                                // transactionReference: '',
                                 transactionAmount: values?.ammount,
                                 accountNumber: values?.ecoSourceAccount,
                                 paymentDescription: values?.Narration,
                                 affiliateCode: affiliate,
                                 billerCode: values?.networkCode,
+
                                 billerId:
-                                    billerDetailsData?.data?.billerDetail
-                                        ?.billerID,
+                                    billerDetailsData?.data?.billerDetail?.billerID.toString(),
                                 productCode:
                                     billerDetailsData?.data
                                         ?.billerProductInfo[0]?.productCode,
@@ -281,11 +293,13 @@ const AirtimeOrData = ({
                                                     console.log(
                                                         selBiller?.amountType
                                                     );
-                                                    setArryAmaount(
-                                                        selBiller?.amount.split(
-                                                            ','
-                                                        )
-                                                    );
+                                                    if (selBiller?.amount) {
+                                                        setArryAmaount(
+                                                            selBiller?.amount.split(
+                                                                ','
+                                                            )
+                                                        );
+                                                    }
                                                     setSelectedAmountType(
                                                         selBiller?.amountType
                                                     );

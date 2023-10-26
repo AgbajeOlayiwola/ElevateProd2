@@ -1,11 +1,10 @@
+import Image from 'next/image';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import lang from '../../../../utils/language';
+import Cover from '../Cover';
 import ButttonComponet from '../button';
 import styles from './styles.module.css';
-import Cover from '../Cover';
-import Image from 'next/image';
-import Link from 'next/link';
-import lang from '../../../../utils/language';
-import { useSelector } from 'react-redux';
 const HeroSection = () => {
     const { language } = useSelector((state) => state);
     return (
@@ -37,6 +36,7 @@ const HeroSection = () => {
                         src="/Assets/Images/Rectangle.png"
                         width="530"
                         height="640"
+                        alt="MYSMEAPP"
                     />
                     <div className={styles.dotsFlex}>
                         <div className={styles.activeDots}>

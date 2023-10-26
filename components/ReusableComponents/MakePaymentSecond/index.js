@@ -12,7 +12,12 @@ import ButtonComp from '../Button';
 import CloseButton from '../CloseButtonSvg';
 import OtpInput from '../Otpinput';
 import Overlay from '../Overlay';
+import {
+    RegistrationStatus,
+    SuccessMainHeading
+} from '../PaymentSuccess/styles.module';
 import ConfirmLockSvg from '../ReusableSvgComponents/ConfirmLockSvg';
+import SuccessCheckSvg from '../ReusableSvgComponents/SuccessCheckSvg';
 import styles from './styles.module.css';
 const getSymbolFromCurrency = require('currency-symbol-map');
 const countryToCurrency = require('country-to-currency');
@@ -94,8 +99,8 @@ const MakePaymentSecond = ({
             className: 'toast-message'
         });
         setTimeout(() => {
-            closeAction();
-            dispatch(clearTransfer());
+            // closeAction();
+            // dispatch(clearTransfer());
         }, 7000);
     };
     useEffect(() => {
@@ -112,16 +117,21 @@ const MakePaymentSecond = ({
         console.log(data);
         bulkTransfer(data);
     };
-    const totalAmount = 0;
+    const [totalAmount, setTotalAmount] = useState();
+
     useEffect(() => {
         if (title === 'Bulk Payments') {
-            totalAmount = transfer.reduce((sum, item) => {
-                const transactionAmount = parseFloat(item.transactionAmount);
-                if (!isNaN(transactionAmount)) {
-                    return sum + transactionAmount;
-                }
-                return sum;
-            }, 0);
+            setTotalAmount(
+                transfer.reduce((sum, item) => {
+                    const transactionAmount = parseFloat(
+                        item.transactionAmount
+                    );
+                    if (!isNaN(transactionAmount)) {
+                        return sum + transactionAmount;
+                    }
+                    return sum;
+                }, 0)
+            );
         }
     }, []);
 
@@ -158,97 +168,107 @@ const MakePaymentSecond = ({
     return (
         <Overlay overlay={overlay}>
             <ToastContainer />
-            <div>
-                <div className={styles.PaymentSecond}>
-                    <div className={styles.icons}>
-                        <div className={styles.backIcon}>
-                            <ArrowBackSvg color="#102572" action={backAction} />
-                        </div>
-                        <div className={styles.closeCont}>
-                            <CloseButton
-                                color="#A5A5A5"
-                                classes={styles.closeBtn}
-                                action={closeAction}
-                            />
-                        </div>
-                    </div>
-                    <div className={styles.PaymentSecondCont}>
-                        <div className={styles.svgLock}>
-                            <div>
-                                <ConfirmLockSvg />
-                            </div>
-                        </div>
-                        <h2>Confirm Transaction</h2>
-                        {amount === 'sum' ? null : (
-                            <div className={styles.transactionamount}>
-                                <p>Amount</p>
-                                <h3>
-                                    {getSymbolFromCurrency(
-                                        countryToCurrency[
-                                            `${affiliate.substring(1)}`
-                                        ]
-                                    )}
-                                    {title === 'Bulk Payments'
-                                        ? totalAmount
-                                        : transfer?.transactionAmount}
-                                </h3>
-                            </div>
-                        )}
-                        {title === 'Bills Payment' ? (
-                            <div className={styles.transactiondetails}>
-                                <div className={styles.transactionsingles}>
-                                    <p className={styles.transactionTitle}>
-                                        To
-                                    </p>
-                                    <h3>{transfer?.beneficiaryName}</h3>
-                                </div>
-                                <div className={styles.transactionsingle}>
-                                    <p className={styles.transactionTitle}>
-                                        Platform
-                                    </p>
-                                    <h3>
-                                        <span></span> {recieverBank}
-                                    </h3>
-                                </div>
-                                <div className={styles.transactionsingle}>
-                                    <p className={styles.transactionTitle}>
-                                        Charges
-                                    </p>
-                                    <h3>{charges}</h3>
-                                </div>
-                                <div className={styles.transactionsingle}>
-                                    <p className={styles.transactionTitle}>
-                                        From
-                                    </p>
-                                    <h3>{transfer?.accountNumber}</h3>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className={styles.transactiondetails}>
-                                <div className={styles.transactionsingles}>
-                                    <p className={styles.transactionTitle}>
-                                        To
-                                    </p>
-                                    <h3>
-                                        {title === 'Bulk Payments'
-                                            ? `${transfer.length} Recipient`
-                                            : transfer?.destinationAccountNo}
-                                    </h3>
-                                </div>
-                                <div className={styles.transactionsingle}>
-                                    <p className={styles.transactionTitle}>
-                                        Beneficiary Bank
-                                    </p>
-                                    <h3>
-                                        <span></span>{' '}
-                                        {title === 'Bulk Payments'
-                                            ? `${transfer.length} banks`
-                                            : transfer?.destinationBank}
-                                    </h3>
+            <>
+                {singleTransferSuccess || bulkTransferSuccess ? (
+                    <>
+                        <div className={styles.PaymentSecond}>
+                            <div className={styles.successPage}>
+                                <div className={styles.successCheck}>
+                                    <div>
+                                        <SuccessCheckSvg />
+                                    </div>
                                 </div>
 
-                                {title === 'Single Transfer' ? (
-                                    recieverBank === 'ECOBANK' ? null : (
+                                <RegistrationStatus>
+                                    <SuccessMainHeading>
+                                        Payment Successful
+                                    </SuccessMainHeading>
+
+                                    {/* <h6 className={styles.elevateSuccess}>
+                                        Success
+                                    </h6> */}
+
+                                    <ButtonComp
+                                        disabled={true}
+                                        active={'active'}
+                                        text="Close"
+                                        type="button"
+                                        onClick={closeAction}
+                                    />
+                                </RegistrationStatus>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <div>
+                        <div className={styles.PaymentSecond}>
+                            <div className={styles.icons}>
+                                <div className={styles.backIcon}>
+                                    <ArrowBackSvg
+                                        color="#102572"
+                                        action={backAction}
+                                    />
+                                </div>
+                                <div className={styles.closeCont}>
+                                    <CloseButton
+                                        color="#A5A5A5"
+                                        classes={styles.closeBtn}
+                                        action={closeAction}
+                                    />
+                                </div>
+                            </div>
+                            <div className={styles.PaymentSecondCont}>
+                                <div className={styles.svgLock}>
+                                    <div>
+                                        <ConfirmLockSvg />
+                                    </div>
+                                </div>
+                                <h2>Confirm Transaction</h2>
+                                {amount === 'sum' ? null : (
+                                    <div className={styles.transactionamount}>
+                                        <p>Amount</p>
+                                        <h3>
+                                            {getSymbolFromCurrency(
+                                                countryToCurrency[
+                                                    `${affiliate.substring(1)}`
+                                                ]
+                                            )}
+                                            {title === 'Bulk Payments'
+                                                ? totalAmount
+                                                : transfer?.transactionAmount}
+                                        </h3>
+                                    </div>
+                                )}
+                                {title === 'Bills Payment' ? (
+                                    <div className={styles.transactiondetails}>
+                                        <div
+                                            className={
+                                                styles.transactionsingles
+                                            }
+                                        >
+                                            <p
+                                                className={
+                                                    styles.transactionTitle
+                                                }
+                                            >
+                                                To
+                                            </p>
+                                            <h3>{transfer?.beneficiaryName}</h3>
+                                        </div>
+                                        <div
+                                            className={styles.transactionsingle}
+                                        >
+                                            <p
+                                                className={
+                                                    styles.transactionTitle
+                                                }
+                                            >
+                                                Platform
+                                            </p>
+                                            <h3>
+                                                <span></span> {recieverBank}
+                                            </h3>
+                                        </div>
                                         <div
                                             className={styles.transactionsingle}
                                         >
@@ -261,61 +281,142 @@ const MakePaymentSecond = ({
                                             </p>
                                             <h3>{charges}</h3>
                                         </div>
-                                    )
-                                ) : null}
-
-                                <div className={styles.transactionsingle}>
-                                    <p className={styles.transactionTitle}>
-                                        From
-                                    </p>
-                                    <h3>
-                                        {title === 'Bulk Payments'
-                                            ? transfer[0].accountNumber
-                                            : transfer?.accountNumber}
-                                    </h3>
-                                </div>
-                            </div>
-                        )}
-                        <form>
-                            {title === 'Single Transfer' ? (
-                                beneActive ? null : (
-                                    <div className={styles.saveBene}>
-                                        <label className={styles.beneCheck}>
-                                            <input
-                                                type="checkbox"
-                                                name="beneficiary"
-                                            />
-                                            <span>
-                                                <i></i>
-                                            </span>
-                                        </label>
-                                        <p>Save Beneficiary</p>
+                                        <div
+                                            className={styles.transactionsingle}
+                                        >
+                                            <p
+                                                className={
+                                                    styles.transactionTitle
+                                                }
+                                            >
+                                                From
+                                            </p>
+                                            <h3>{transfer?.accountNumber}</h3>
+                                        </div>
                                     </div>
-                                )
-                            ) : null}
-                            <h4>Enter Transaction Pin</h4>
-                            <div className={styles.otpSect}>
-                                <OtpInput
-                                    onOtpChange={handleOtpChange}
-                                    otpfields={6}
-                                />
+                                ) : (
+                                    <div className={styles.transactiondetails}>
+                                        <div
+                                            className={
+                                                styles.transactionsingles
+                                            }
+                                        >
+                                            <p
+                                                className={
+                                                    styles.transactionTitle
+                                                }
+                                            >
+                                                To
+                                            </p>
+                                            <h3>
+                                                {title === 'Bulk Payments'
+                                                    ? `${transfer.length} Recipient`
+                                                    : transfer?.beneficiaryName}
+                                            </h3>
+                                        </div>
+                                        <div
+                                            className={styles.transactionsingle}
+                                        >
+                                            <p
+                                                className={
+                                                    styles.transactionTitle
+                                                }
+                                            >
+                                                Beneficiary Bank
+                                            </p>
+                                            <h3>
+                                                <span></span>{' '}
+                                                {title === 'Bulk Payments'
+                                                    ? `${transfer.length} banks`
+                                                    : transfer?.destinationBank}
+                                            </h3>
+                                        </div>
+
+                                        {title === 'Single Transfer' ? (
+                                            recieverBank ===
+                                            'ECOBANK' ? null : (
+                                                <div
+                                                    className={
+                                                        styles.transactionsingle
+                                                    }
+                                                >
+                                                    <p
+                                                        className={
+                                                            styles.transactionTitle
+                                                        }
+                                                    >
+                                                        Charges
+                                                    </p>
+                                                    <h3>{charges}</h3>
+                                                </div>
+                                            )
+                                        ) : null}
+
+                                        <div
+                                            className={styles.transactionsingle}
+                                        >
+                                            <p
+                                                className={
+                                                    styles.transactionTitle
+                                                }
+                                            >
+                                                From
+                                            </p>
+                                            <h3>
+                                                {title === 'Bulk Payments'
+                                                    ? transfer[0].accountNumber
+                                                    : transfer?.accountNumber}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                )}
+                                <form>
+                                    {title === 'Single Transfer' ? (
+                                        beneActive ? null : (
+                                            <div className={styles.saveBene}>
+                                                <label
+                                                    className={styles.beneCheck}
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        name="beneficiary"
+                                                    />
+                                                    <span>
+                                                        <i></i>
+                                                    </span>
+                                                </label>
+                                                <p>Save Beneficiary</p>
+                                            </div>
+                                        )
+                                    ) : null}
+                                    <h4>Enter Transaction Pin</h4>
+                                    <div className={styles.otpSect}>
+                                        <OtpInput
+                                            onOtpChange={handleOtpChange}
+                                            otpfields={6}
+                                        />
+                                    </div>
+                                    <ButtonComp
+                                        disabled={true}
+                                        active={false}
+                                        text="Confirm"
+                                        type="submit"
+                                        onClick={
+                                            title === 'Single Transfer'
+                                                ? transferFunction
+                                                : bulkTransferAction
+                                        }
+                                        loads={
+                                            singleTransferLoad ||
+                                            bulkTransferLoad
+                                        }
+                                    />
+                                </form>
                             </div>
-                            <ButtonComp
-                                disabled={true}
-                                active={false}
-                                text="Confirm"
-                                type="submit"
-                                onClick={
-                                    title === 'Single Transfer'
-                                        ? transferFunction
-                                        : bulkTransferAction
-                                }
-                                loads={singleTransferLoad || bulkTransferLoad}
-                            />
-                        </form>
+                        </div>
                     </div>
-                </div>
-            </div>
+                )}
+            </>
         </Overlay>
     );
 };

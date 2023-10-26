@@ -1,7 +1,6 @@
+import Image from 'next/image';
 import React from 'react';
-import HomeSvg from '../HomeSvg';
 import styles from './styles.module.css';
-import Logo from '../ReusableSvgComponents/LogoSvg';
 
 const OnboardingProfileSetupSide = ({ text }) => {
     return (
@@ -14,7 +13,13 @@ const OnboardingProfileSetupSide = ({ text }) => {
                         <p className={styles.SMeApp}>
                             Powered by <span>Ecobank</span>
                         </p> */}
-                        <Logo />
+                        {/* <Logo /> */}
+                        <Image
+                            src="/MY_SME_LOGO_GREEN_RGB@41.png"
+                            width={150}
+                            height={108}
+                            alt="logo"
+                        />
                     </div>
 
                     <h2>{text}</h2>

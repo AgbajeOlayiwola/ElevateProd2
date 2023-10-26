@@ -1,18 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ButtonComp, Messagesvg } from '../../../components';
-import styles from './styles.module.css';
 import { useRouter } from 'next/router';
-import {
-    useResendEmailMutation,
-    useResendEmailOtpMutation,
-    useVerifyEmailMutation,
-    useVerifySmsOtpMutation
-} from '../../../redux/api/authApi';
-import VerifyEmailSvg from '../../../components/ReusableComponents/VerifyEmailSvg';
-import OtpInput from '../../../components/ReusableComponents/Otpinput';
-import { Formik } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { ButtonComp } from '../../../components';
+import VerifyEmailSvg from '../../../components/ReusableComponents/VerifyEmailSvg';
+import {
+    useResendEmailOtpMutation,
+    useVerifyEmailMutation
+} from '../../../redux/api/authApi';
 import { setProfile } from '../../../redux/slices/profile';
+import { setToken } from '../../../redux/slices/tokenSlice';
+import styles from './styles.module.css';
 const Loading = () => {
     const router = useRouter();
     const [activeBtn, setActiveBtn] = useState(true);
@@ -74,6 +71,7 @@ const Loading = () => {
     const [loading, setLoading] = useState(false);
     const handleProceed = async (val) => {
         await dispatch(setProfile(val?.data));
+        dispatch(setToken(val?.data?.token));
         router.push('/Onboarding/ProfileSetup');
     };
 

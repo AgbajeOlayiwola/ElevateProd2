@@ -534,7 +534,7 @@ const ExistingProfileSetup = ({
                         onChange={() => setActiveBtn(true)}
                         className={styles.termms}
                     />
-                    I agree with ellevate app{' '}
+                    I agree with SMEApp{' '}
                     <span className={styles.termsBtn} onClick={openModal}>
                         <span>Terms and Conditions</span>
                     </span>

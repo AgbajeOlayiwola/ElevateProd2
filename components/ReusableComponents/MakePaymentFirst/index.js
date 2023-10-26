@@ -134,6 +134,7 @@ const MakePaymentFirst = ({
                             bankAccounts={bankAccount}
                             isLoading={isLoading}
                             backAction={backAction}
+                            closeAction={closeAction}
                         />
                     ) : (
                         <BillPayment

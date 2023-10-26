@@ -11,14 +11,13 @@ import {
     useBusinessSetupMutation,
     useCreateCAcctMutation,
     useCreateIAcctMutation,
-    useGetAccountStatusMutation,
     useGetCategoriesMutation,
     useGetProfileMutation
 } from '../../../../redux/api/authApi';
-import { setAccountNumber } from '../../../../redux/slices/accountNumberSlice';
 import { lgasArr } from '../../../ReusableComponents/Data';
 import DropdownSvg from '../../../ReusableComponents/ReusableSvgComponents/DropdownSvg';
 import SearchSvg from '../../../ReusableComponents/ReusableSvgComponents/SearchSvg';
+const countryToCurrency = require('country-to-currency');
 const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     // local states;
     const [title, setTitle] = useState('Basic');
@@ -49,6 +48,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [gender, setGender] = useState('');
+    const [dateOfBirh, setDateOfBirh] = useState('');
+
     //
     const [
         getProfile,
@@ -106,17 +107,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             reset: createCAcctReset
         }
     ] = useCreateCAcctMutation();
-    const [
-        getAccountStatus,
-        {
-            data: getAccountStatusData,
-            isLoading: getAccountStatusLoad,
-            isSuccess: getAccountStatusSuccess,
-            isError: getAccountStatusFalse,
-            error: getAccountStatusErr,
-            reset: getAccountStatusReset
-        }
-    ] = useGetAccountStatusMutation();
+
     const dispatch = useDispatch();
     useEffect(() => {
         if (selectedCategory) {
@@ -211,23 +202,33 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
 
         return isValid;
     };
+    const affiliate = localStorage.getItem('affiliateCode');
     const handleSubmitIII = (e) => {
         e.preventDefault();
-        const isValid = validateForm();
+        const isValid = true;
         if (isValid) {
             const data = {
                 firstName: profile?.user?.firstName || firstName,
                 lastName: profile?.user?.lastName || lastName,
                 gender: gender,
+                dateOfBirh: getProfileData?.user?.dateOfBirth
+                    ? getProfileData?.user?.dateOfBirth
+                    : dateOfBirh,
                 isRegistered: type,
-                businessName: bName || `${lastName} ${firstName}`,
+                businessName: bName
+                    ? bName
+                    : `${getProfileData?.user?.firstName} ${getProfileData?.user?.lastName}`
+                    ? `${getProfileData?.user?.firstName} ${getProfileData?.user?.lastName}`
+                    : `${lastName} ${firstName}`,
                 businessPhoneNumber: profile?.user?.phoneNumber,
                 businessType: selectedBusinessType,
                 businessCategory: selectedCategory,
-                street: address,
-                state: localState,
-                city: city,
-                lga: lga,
+                street: getProfileData?.user?.address
+                    ? getProfileData?.user?.address.trim()
+                    : address,
+                state: affiliate !== 'ENG' ? '' : localState,
+                city: affiliate !== 'ENG' ? '' : city,
+                lga: affiliate !== 'ENG' ? '' : lga,
                 dateIncorporated: null,
                 countryCode: formData?.countryCode,
                 refereeCode: refferalCode,
@@ -238,17 +239,18 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     };
 
     const basicAction = () => {};
+
     useEffect(() => {
         if (businessSetupSuccess && type === false) {
             const data = {
-                affiliateCode: 'ENG',
-                currency: 'NGN'
+                affiliateCode: affiliate,
+                currency: countryToCurrency[`${affiliate.substring(1)}`]
             };
             createIAcct(data);
         } else if (businessSetupSuccess && type === true) {
             const data = {
-                affiliateCode: 'ENG',
-                currency: 'NGN'
+                affiliateCode: affiliate,
+                currency: countryToCurrency[`${affiliate.substring(1)}`]
             };
             createCAcct(data);
         }
@@ -262,20 +264,15 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
     };
     useEffect(() => {
         if (createCAcctSuccess) {
-            getAccountStatus();
+            router.push('/Verify/Account');
         }
     }, [createCAcctSuccess]);
     useEffect(() => {
         if (createIAcctSuccess) {
-            getAccountStatus();
+            router.push('/Verify/Account');
         }
     }, [createIAcctSuccess]);
-    useEffect(() => {
-        if (getAccountStatusData) {
-            dispatch(setAccountNumber(getAccountStatusData?.data?.trackerRef));
-            router.push('/Success');
-        }
-    }, [getAccountStatusSuccess]);
+
     const showToastMessage = () => {
         toast.error('Thre was ann error creating business', {
             position: toast.POSITION.TOP_RIGHT
@@ -322,17 +319,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
             showToastIndividualErrorMessage();
         }
     }, [createIAcctSuccess, createIAcctErr]);
-    const showToastAccountStatusErrorMessage = () => {
-        toast.error('Error Fetching Account Status', {
-            position: toast.POSITION.TOP_RIGHT
-        });
-    };
-    useEffect(() => {
-        if (getAccountStatusErr) {
-            showToastAccountStatusErrorMessage();
-        }
-    }, [getAccountStatusErr]);
-    const affiliate = localStorage.getItem('affiliateCode');
+
     console.log(affiliate);
     return (
         <div className={styles.bodyWrapper}>
@@ -430,16 +417,39 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                     }
                                 )} */}
                             </div>
-                            <div className={styles.formGroup}>
-                                <label>Select your Gender</label>
-                                <select
-                                    name=""
-                                    id=""
-                                    onChange={(e) => setGender(e.target.value)}
-                                >
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
+                            <div className={styles.nameDiv}>
+                                <div className={styles.formGroup}>
+                                    <label>Select your Gender</label>
+                                    <select
+                                        name=""
+                                        id=""
+                                        onChange={(e) =>
+                                            setGender(e.target.value)
+                                        }
+                                    >
+                                        <option value="Choose">
+                                            Choose your gender
+                                        </option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Date of Birth</label>
+                                    <input
+                                        type="date"
+                                        value={
+                                            // getProfileData?.user?.dateOfBirth
+                                            //     ? getProfileData?.user
+                                            //           ?.dateOfBirth
+                                            //     :
+                                            dateOfBirh
+                                        }
+                                        onChange={(e) =>
+                                            setDateOfBirh(e.target.value)
+                                        }
+                                    />
+                                </div>
                             </div>
                             <div className={styles.formCont}>
                                 <div className={styles.formGroup}>
@@ -452,8 +462,8 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                                 bName
                                                     ? bName
                                                     : `${getProfileData?.user?.firstName} ${getProfileData?.user?.lastName}`
-                                                    ? `${lastName} ${firstName}`
-                                                    : ''
+                                                    ? `${getProfileData?.user?.firstName} ${getProfileData?.user?.lastName}`
+                                                    : `${lastName} ${firstName}`
                                             }
                                             disabled
                                         />
@@ -626,16 +636,19 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                         </>
                     ) : (
                         <>
-                            {formError ? (
+                            {/* {formError ? (
                                 <p className={styles.error}>
                                     {' '}
                                     Please fill all The forms
                                 </p>
-                            ) : null}
+                            ) : null} */}
+
                             <div className={styles.nameDiv}>
                                 <div className={styles.formGroup}>
                                     <div>
-                                        <label>Number | Street Name</label>
+                                        <label>
+                                            Number | Full Business Address
+                                        </label>
                                         <div className={styles.addressNumber}>
                                             <input
                                                 type="text"
@@ -645,103 +658,121 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                             <input
                                                 type="text"
                                                 placeholder="Enter Street Name"
-                                                value={address}
+                                                value={
+                                                    getProfileData?.user
+                                                        ?.address
+                                                        ? getProfileData?.user
+                                                              ?.address
+                                                        : address
+                                                }
                                                 onChange={(e) =>
                                                     setAddress(e.target.value)
                                                 }
                                             />
                                         </div>
                                     </div>
-                                    <div className={styles.singleFormGroup}>
-                                        <label>
-                                            Local Government Area (LGA)
-                                        </label>
-                                        <select
-                                            name=""
-                                            id=""
-                                            onChange={(e) =>
-                                                setLga(e.target.value)
-                                            }
-                                        >
-                                            <option value="">Select LGA</option>
-                                            {localGovernment
-                                                ? localGovernment?.map(
-                                                      (item, index) => {
-                                                          return (
-                                                              <option
-                                                                  value={item}
-                                                                  key={index}
-                                                              >
-                                                                  {item}
-                                                              </option>
-                                                          );
-                                                      }
-                                                  )
-                                                : null}
-                                        </select>
-                                        {!lga ? (
-                                            <p className={styles.error}>
-                                                Please Select a local government
-                                            </p>
-                                        ) : null}
-                                    </div>
-                                </div>
-                                <div className={styles.formGroup}>
-                                    <div
-                                        className={styles.singleFormGroup}
-                                        style={{
-                                            marginTop: '0px'
-                                        }}
-                                    >
-                                        <label>State</label>
-                                        <select
-                                            name=""
-                                            id=""
-                                            value={formData.state}
-                                            onChange={(event) =>
-                                                setLocalState(
-                                                    event.target.value
-                                                )
-                                            }
-                                        >
-                                            <option value="">
-                                                Select State
-                                            </option>
-                                            {lgasArr.map((item, index) => {
-                                                return (
-                                                    <option
-                                                        value={item.state}
-                                                        key={index}
-                                                    >
-                                                        {item.state}
-                                                    </option>
-                                                );
-                                            })}
-                                        </select>
-
-                                        {!localState ? (
-                                            <p className={styles.error}>
-                                                Please Select a state
-                                            </p>
-                                        ) : null}
-                                    </div>
-                                    <div className={styles.singleFormGroup}>
-                                        <label>City/Town</label>
-                                        <input
-                                            type="text"
-                                            value={city}
-                                            onChange={(e) =>
-                                                setCity(e.target.value)
-                                            }
-                                            placeholder="Enter City/Town"
-                                        />
-                                    </div>
-                                    {city?.length <= 0 ? (
-                                        <p className={styles.error}>
-                                            Please Fill In city
-                                        </p>
+                                    {affiliate === 'ENG' ? (
+                                        <div className={styles.singleFormGroup}>
+                                            <label>
+                                                Local Government Area (LGA)
+                                            </label>
+                                            <select
+                                                name=""
+                                                id=""
+                                                onChange={(e) =>
+                                                    setLga(e.target.value)
+                                                }
+                                            >
+                                                <option value="">
+                                                    Select LGA
+                                                </option>
+                                                {localGovernment
+                                                    ? localGovernment?.map(
+                                                          (item, index) => {
+                                                              return (
+                                                                  <option
+                                                                      value={
+                                                                          item
+                                                                      }
+                                                                      key={
+                                                                          index
+                                                                      }
+                                                                  >
+                                                                      {item}
+                                                                  </option>
+                                                              );
+                                                          }
+                                                      )
+                                                    : null}
+                                            </select>
+                                            {!lga ? (
+                                                <p className={styles.error}>
+                                                    Please Select a local
+                                                    government
+                                                </p>
+                                            ) : null}
+                                        </div>
                                     ) : null}
                                 </div>
+                                {affiliate === 'ENG' ? (
+                                    <div className={styles.formGroup}>
+                                        <div
+                                            className={styles.singleFormGroup}
+                                            style={{
+                                                marginTop: '0px'
+                                            }}
+                                        >
+                                            <label>State</label>
+                                            <select
+                                                name=""
+                                                id=""
+                                                value={formData.state}
+                                                onChange={(event) =>
+                                                    setLocalState(
+                                                        event.target.value
+                                                    )
+                                                }
+                                            >
+                                                <option value="">
+                                                    Select State
+                                                </option>
+                                                {lgasArr.map((item, index) => {
+                                                    return (
+                                                        <option
+                                                            value={item.state}
+                                                            key={index}
+                                                        >
+                                                            {item.state}
+                                                        </option>
+                                                    );
+                                                })}
+                                            </select>
+
+                                            {!localState ? (
+                                                <p className={styles.error}>
+                                                    Please Select a state
+                                                </p>
+                                            ) : null}
+                                        </div>
+                                        <div className={styles.singleFormGroup}>
+                                            <label>City/Town</label>
+                                            <input
+                                                type="text"
+                                                value={city}
+                                                onChange={(e) =>
+                                                    setCity(e.target.value)
+                                                }
+                                                placeholder="Enter City/Town"
+                                            />
+                                        </div>
+
+                                        {city?.length <= 0 ? (
+                                            <p className={styles.error}>
+                                                Please Fill In city
+                                            </p>
+                                        ) : null}
+                                    </div>
+                                ) : null}
                             </div>
                             <div className={styles.formCont}>
                                 <div className={styles.formGroup}>
@@ -771,8 +802,7 @@ const StepThreeCompleteProfile1 = ({ formData, setFormData, action, type }) => {
                                         loads={
                                             businessSetupLoad ||
                                             createCAcctLoad ||
-                                            createIAcctLoad ||
-                                            getAccountStatusLoad
+                                            createIAcctLoad
                                         }
                                     />
                                 </div>
