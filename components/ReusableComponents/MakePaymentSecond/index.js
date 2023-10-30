@@ -165,6 +165,8 @@ const MakePaymentSecond = ({
         }
     }, [bulkTransferErr]);
     console.log('Total Amount:', totalAmount);
+
+    console.log(transfer);
     return (
         <Overlay overlay={overlay}>
             <ToastContainer />
@@ -398,7 +400,7 @@ const MakePaymentSecond = ({
                                     </div>
                                     <ButtonComp
                                         disabled={true}
-                                        active={false}
+                                        active={'active'}
                                         text="Confirm"
                                         type="submit"
                                         onClick={

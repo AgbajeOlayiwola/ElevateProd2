@@ -11,6 +11,9 @@
     left: 25%;
     z-index: 10;
 }
+.elevateSuccess {
+    text-align: center;
+}
 .transaction > div {
     display: flex;
     justify-content: space-between;

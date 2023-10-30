@@ -1,5 +1,4 @@
 import { Formik } from 'formik';
-import debounce from 'lodash/debounce';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Lottie from 'react-lottie';
@@ -65,6 +64,7 @@ const SingleTransfer = ({
     const [narration, setNarration] = useState(
         payload.narration !== '' ? payload.narration : ''
     );
+
     const [amount, setAmount] = useState(
         payload.amount !== '' ? payload.amount : ''
     );
@@ -148,7 +148,7 @@ const SingleTransfer = ({
         // You can perform any other actions here if needed
         setAccountNumber(value);
     };
-    const debouncedInputChange = debounce(handleInputChange, 1000);
+    // const debouncedInputChange = debounce(handleInputChange, 1000);
 
     useEffect(() => {
         dispatch(loadbank('ENG'));
@@ -191,16 +191,7 @@ const SingleTransfer = ({
     useEffect(() => {
         setInterEnquiry('');
     }, []);
-    useEffect(() => {
-        if (accountNumber) {
-            accountInquiry({
-                destinationBankCode: selectedBank?.institutionId
-                    ? selectedBank?.institutionId
-                    : 'ECOBANK',
-                accountNumber: accountNumber
-            });
-        }
-    }, [accountNumber]);
+
     let beneficiaryName;
     const { allAccountInfo } = useSelector((store) => store);
     // paymentbanklist;
@@ -234,7 +225,15 @@ const SingleTransfer = ({
             console.log(paymentbanklistData);
         }
     }, [paymentbanklistSuccess]);
-
+    console.log(accountNumber);
+    const handleBlur = () => {
+        accountInquiry({
+            destinationBankCode: selectedBank?.institutionId
+                ? selectedBank?.institutionId
+                : 'ECOBANK',
+            accountNumber: accountNumber
+        });
+    };
     const initSchema = yup.object().shape({
         ecoSourceAccount: yup.string().required('Source Account.'),
         ecoAccountNumber: yup.string().required('Input account number'),
@@ -442,10 +441,9 @@ const SingleTransfer = ({
                                                 'ecoAccountNumber',
                                                 e.target.value
                                             );
-                                            debouncedInputChange(
-                                                e.target.value
-                                            );
+                                            setAccountNumber(e.target.value);
                                         }}
+                                        onBlur={handleBlur}
                                         type="text"
                                         placeholder="Enter account number here"
                                     />
@@ -690,6 +688,7 @@ const SingleTransfer = ({
                                             );
                                             setAccountNumber(e.target.value);
                                         }}
+                                        onBlur={handleBlur}
                                         type="text"
                                         placeholder="Enter account number here"
                                     />

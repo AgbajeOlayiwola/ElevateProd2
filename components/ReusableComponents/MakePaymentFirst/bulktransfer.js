@@ -169,15 +169,15 @@ const BulkTransfer = ({
             reset: accountInquiryReset
         }
     ] = useAccountInquiryMutation();
-    useEffect(() => {
-        if (accountNumber) {
-            accountInquiry({
-                destinationBankCode:
-                    type === 'Ecobank' ? 'ECOBANK' : selectedBank.institutionId,
-                accountNumber: accountNumber
-            });
-        }
-    }, [accountNumber]);
+    // useEffect(() => {
+    //     if (accountNumber) {
+    //         accountInquiry({
+    //             destinationBankCode:
+    //                 type === 'Ecobank' ? 'ECOBANK' : selectedBank.institutionId,
+    //             accountNumber: accountNumber
+    //         });
+    //     }
+    // }, [accountNumber]);
     const [transactionsArray, setTransactionsArray] = useState([]);
     const [formValues, setFormValues] = useState(null);
 
@@ -253,23 +253,18 @@ const BulkTransfer = ({
                 destinationBankCode:
                     type === 'Ecobank' ? 'ECOBANK' : selectedBank?.institutionId
             };
-
-            // if (type === 'ECOBANK') {
-            //     newTransaction.destinationBank = 'ECOBANK';
-            //     newTransaction.destinationBankCode = 'ECOBANK';
-            // } else {
-            //     newTransaction.destinationBank = selectedBank?.institutionName;
-            //     newTransaction.destinationBankCode =
-            //         selectedBank?.institutionId;
-            // }
-
-            // Update transactionsArray
-            setTransactionsArray((prevTransactions) => [
-                ...prevTransactions,
-                newTransaction
-            ]);
+            setTransactionsArray(
+                (prevTransactions) => [...prevTransactions, newTransaction],
+                () => {
+                    console.log(
+                        'Updated transactionsArray:',
+                        transactionsArray
+                    );
+                }
+            );
         }
-    }, [formValues]);
+    }, [formValues, transactionsArray]);
+    console.log(transactionsArray);
 
     useEffect(() => {
         if (transactionsArray.length > 0) {
@@ -280,7 +275,14 @@ const BulkTransfer = ({
         }
     }, [transactionsArray]);
     const { allAccountInfo } = useSelector((store) => store);
-
+    const handleBlur = () => {
+        accountInquiry({
+            destinationBankCode: selectedBank?.institutionId
+                ? selectedBank?.institutionId
+                : 'ECOBANK',
+            accountNumber: accountNumber
+        });
+    };
     return (
         <div>
             <h2 className={styles.firstTitle}>{firstTitle}</h2>
@@ -445,26 +447,40 @@ const BulkTransfer = ({
                                                             e.target.value
                                                         );
                                                     }}
+                                                    onBlur={handleBlur}
                                                     name="ecoAccountNumber"
                                                 />
                                             </div>
-                                            <div className={styles.narration}>
-                                                <label> Account Name</label>
-                                                <input
-                                                    type="text"
-                                                    value={field.accountName} // Set the account name
-                                                    disabled
-                                                    required
-                                                />
-                                                {accountInquiryErr ? (
-                                                    <p className={styles.error}>
-                                                        {
-                                                            accountInquiryErr
-                                                                ?.data?.message
-                                                        }
-                                                    </p>
-                                                ) : null}
-                                            </div>
+                                            {accountInquiryLoad ? (
+                                                <Loader />
+                                            ) : (
+                                                <div
+                                                    className={styles.narration}
+                                                >
+                                                    <label> Account Name</label>
+                                                    <input
+                                                        type="text"
+                                                        value={
+                                                            field.accountName
+                                                        } // Set the account name
+                                                        disabled
+                                                        required
+                                                    />
+                                                    {accountInquiryErr ? (
+                                                        <p
+                                                            className={
+                                                                styles.error
+                                                            }
+                                                        >
+                                                            {
+                                                                accountInquiryErr
+                                                                    ?.data
+                                                                    ?.message
+                                                            }
+                                                        </p>
+                                                    ) : null}
+                                                </div>
+                                            )}
                                             <br />
                                             {diffAmount ? (
                                                 <>
@@ -823,26 +839,40 @@ const BulkTransfer = ({
                                                             e.target.value
                                                         );
                                                     }}
+                                                    onBlur={handleBlur}
                                                     name="ecoAccountNumber"
                                                 />
                                             </div>
-                                            <div className={styles.narration}>
-                                                <label> Account Name</label>
-                                                <input
-                                                    type="text"
-                                                    value={field.accountName} // Set the account name
-                                                    disabled
-                                                    required
-                                                />
-                                                {accountInquiryErr ? (
-                                                    <p className={styles.error}>
-                                                        {
-                                                            accountInquiryErr
-                                                                ?.data?.message
-                                                        }
-                                                    </p>
-                                                ) : null}
-                                            </div>
+                                            {accountInquiryLoad ? (
+                                                <Loader />
+                                            ) : (
+                                                <div
+                                                    className={styles.narration}
+                                                >
+                                                    <label> Account Name</label>
+                                                    <input
+                                                        type="text"
+                                                        value={
+                                                            field.accountName
+                                                        } // Set the account name
+                                                        disabled
+                                                        required
+                                                    />
+                                                    {accountInquiryErr ? (
+                                                        <p
+                                                            className={
+                                                                styles.error
+                                                            }
+                                                        >
+                                                            {
+                                                                accountInquiryErr
+                                                                    ?.data
+                                                                    ?.message
+                                                            }
+                                                        </p>
+                                                    ) : null}
+                                                </div>
+                                            )}
                                             <br />
                                             {diffAmount ? (
                                                 <>

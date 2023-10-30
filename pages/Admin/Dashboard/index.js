@@ -35,6 +35,8 @@ import {
 } from '../../../redux/api/authApi';
 import { setAllAccountInfo } from '../../../redux/slices/allAccountInfoSlice';
 import { setProfile } from '../../../redux/slices/profile';
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -89,7 +91,8 @@ const Dashboard = () => {
     let pending = 0;
     let failed = 0;
     const [accountUpgrade, setAccountUpgrade] = useState(true);
-    const [balance, setBalance] = useState('********');
+    const affiliate = localStorage.getItem('affiliateCode');
+    const [balance, setBalance] = useState(0.0);
     const [tableDetails, setTableDetails] = useState([]);
     const [userProfileData, setUserProfileData] = useState([]);
     const [dateState, setDateState] = useState(false);
@@ -244,9 +247,6 @@ const Dashboard = () => {
             position: toast.POSITION.TOP_RIGHT
         });
     };
-    useEffect(() => {
-        getProfile();
-    }, []);
 
     useEffect(() => {
         if (createTransactionPinSuccess) {
@@ -257,7 +257,6 @@ const Dashboard = () => {
     useEffect(() => {
         if (getProfileSuccess) {
             dispatch(setProfile(getProfileData?.data));
-
             showToastTransactionPinSuccessMessage();
         }
     }, [getProfileSuccess]);
@@ -440,7 +439,18 @@ const Dashboard = () => {
                                     <div className={styles.moneybodyDiv}>
                                         <div>
                                             <div className={styles.cardMone}>
-                                                <h1>{balance}</h1>
+                                                {getSymbolFromCurrency(
+                                                    countryToCurrency[
+                                                        `${affiliate.substring(
+                                                            1
+                                                        )}`
+                                                    ]
+                                                )}
+                                                <h1>
+                                                    {parseFloat(
+                                                        balance
+                                                    ).toLocaleString('en-US')}
+                                                </h1>
                                                 <Visbility
                                                     color="green"
                                                     // typeSet={types}

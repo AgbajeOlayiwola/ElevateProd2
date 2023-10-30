@@ -16,7 +16,11 @@
 .formGroup {
     margin-top: 24px;
 }
-
+.otpInputs div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
 .formGroup label {
     font-family: 'Inter', sans-serif;
     font-style: normal;

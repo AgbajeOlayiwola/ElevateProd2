@@ -5,7 +5,8 @@ import { AiFillCheckCircle } from 'react-icons/ai';
 import { IoMdCopy } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import Visbility from '../Eyeysvg';
-
+const getSymbolFromCurrency = require('currency-symbol-map');
+const countryToCurrency = require('country-to-currency');
 const settings = {
     dots: false,
     infinite: true,
@@ -33,7 +34,7 @@ const AccountsInfoCard = ({ userProfileData }) => {
     const [acctNum, setAcctNumm] = useState('account number');
     const [acctInfoNum, setAcctInfoNum] = useState();
     const [copyAcctInfo, setCopyAcctInfo] = useState();
-
+    const affiliate = localStorage.getItem('affiliateCode');
     const types = (type) => {
         setOutType(type);
     };
@@ -69,10 +70,20 @@ const AccountsInfoCard = ({ userProfileData }) => {
                         <div className={styles.moneybodyDiv}>
                             <div>
                                 <div className={styles.cardMone}>
-                                    <h1></h1>
+                                    <h1>
+                                        {' '}
+                                        {getSymbolFromCurrency(
+                                            countryToCurrency[
+                                                `${affiliate.substring(1)}`
+                                            ]
+                                        )}{' '}
+                                        {parseFloat(balance).toLocaleString(
+                                            'en-US'
+                                        )}
+                                    </h1>
                                     <Visbility color="green" typeSet={types} />
                                 </div>
-                                <p className={styles.avail}>{balance}</p>
+                                <p className={styles.avail}></p>
                             </div>
                             <div>
                                 <p className={styles.accountDetails}>

@@ -49,6 +49,7 @@
 .cardMone {
     display: flex;
     align-items: center;
+    gap: 8px;
 }
 
 #green {
@@ -69,7 +70,7 @@
     font-family: 'Inter', sans-serif;
     font-style: normal;
     font-weight: 900;
-    font-size: 24px;
+    font-size: 14px;
     line-height: 29px;
     margin-right: 8px;
 }

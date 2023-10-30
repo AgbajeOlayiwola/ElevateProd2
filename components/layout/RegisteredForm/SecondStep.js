@@ -12,7 +12,6 @@ import {
     useGetMoreAccountNumberDetailsMutation
 } from '../../../redux/api/authApi';
 import { setExistingUserDetails } from '../../../redux/slices/existingUserData';
-import { setfaceMatchDetails } from '../../../redux/slices/facematchSlice';
 import { setProfile } from '../../../redux/slices/profile';
 import ArrowBackSvg from '../../ReusableComponents/ArrowBackSvg';
 import Visbility from '../../ReusableComponents/Eyeysvg';
@@ -95,10 +94,6 @@ const RegisteredForm = ({
     const { moreAccountNumberDetails } = useSelector((store) => store);
     const { faceMatchDetails } = useSelector((store) => store);
 
-    console.log(faceMatchDetails);
-
-    console.log(existingUserDetails);
-    console.log(moreAccountNumberDetails);
     useEffect(() => {
         if (getMoreAccountNumberDetailsData) {
             dispatch(
@@ -122,6 +117,7 @@ const RegisteredForm = ({
     useEffect(() => {
         showToastMessage();
     }, [createExistingUserProfileErr]);
+
     return (
         <>
             <ToastContainer />
@@ -147,7 +143,73 @@ const RegisteredForm = ({
                             // validateOnChange={true}
                             onSubmit={(values, { setSubmitting }) => {
                                 if (localStorage.getItem('loginWith')) {
-                                    dispatch(setfaceMatchDetails(values));
+                                    const data = {
+                                        base64_image:
+                                            faceMatchWithoutBvnData?.data
+                                                ?.base64_image,
+                                        facematch_metamap_id:
+                                            faceMatchWithoutBvnData?.data
+                                                ?.facematch_metamap_id,
+                                        facematch_source:
+                                            faceMatchWithoutBvnData?.data
+                                                ?.facematch_metamap_id,
+                                        sharePointId:
+                                            faceMatchWithoutBvnData?.data
+                                                ?.sharePointId,
+                                        password: faceMatchDetails?.password,
+                                        email: faceMatchDetails?.email,
+                                        customerCategory:
+                                            moreAccountNumberDetails?.accounts
+                                                ?.customerType == 'I'
+                                                ? 'INDIVIDUAL'
+                                                : 'COMMERCIAL',
+                                        firstName:
+                                            moreAccountNumberDetails?.accounts?.accountName.split(
+                                                ' '
+                                            )[0],
+                                        lastName:
+                                            moreAccountNumberDetails?.accounts?.accountName
+                                                .split(' ')
+                                                ?.slice(1)
+                                                ?.join(' '),
+                                        middleName: '',
+                                        gender:
+                                            moreAccountNumberDetails?.accounts
+                                                ?.gender === 'M'
+                                                ? 'Male'
+                                                : moreAccountNumberDetails
+                                                      ?.accounts?.gender === 'F'
+                                                ? 'Female'
+                                                : null, //Format as M or F
+                                        dateOfBirth:
+                                            moreAccountNumberDetails?.accounts
+                                                ?.dob || null,
+                                        nationality:
+                                            existingUserDetails?.affiliateCountry ||
+                                            null,
+                                        phoneNumber:
+                                            moreAccountNumberDetails?.accounts
+                                                ?.mobileNos || null,
+                                        accountNumber:
+                                            moreAccountNumberDetails?.accounts
+                                                ?.accountNumber || null,
+                                        currencyCode:
+                                            moreAccountNumberDetails?.accounts
+                                                ?.currencyCode || null,
+                                        customerId:
+                                            moreAccountNumberDetails?.accounts
+                                                ?.customerID || null,
+                                        bvn: profile?.user?.idNumber
+                                            ? profile?.user?.idNumber
+                                            : moreAccountNumberDetails?.accounts
+                                                  ?.bvn || null,
+                                        accounts: existingUserDetails?.accounts,
+                                        city: '',
+                                        state: '',
+                                        lga: ''
+                                    };
+                                    createExistingUserProfile(data);
+
                                     action();
                                 } else {
                                     const data = {

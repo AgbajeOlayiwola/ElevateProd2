@@ -271,10 +271,11 @@ export const authApi = createApi({
             }
         }),
         billerValidation: builder.mutation({
-            query: () => {
+            query: (body) => {
                 return {
                     url: 'biller-validation',
-                    method: 'post'
+                    method: 'post',
+                    body
                 };
             }
         }),
@@ -306,18 +307,20 @@ export const authApi = createApi({
             }
         }),
         billerCategories: builder.mutation({
-            query: () => {
+            query: (body) => {
                 return {
                     url: 'biller-categories',
-                    method: 'post'
+                    method: 'post',
+                    body: {}
                 };
             }
         }),
         billers: builder.mutation({
-            query: () => {
+            query: (body) => {
                 return {
                     url: 'billers',
-                    method: 'post'
+                    method: 'post',
+                    body
                 };
             }
         }),
@@ -493,6 +496,16 @@ export const authApi = createApi({
                 };
             }
         }),
+        updateTransactionPin: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'user-update-transaction-pin',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+
         createTransactionPin: builder.mutation({
             query: (body) => {
                 return {
@@ -555,11 +568,52 @@ export const authApi = createApi({
                     body
                 };
             }
+        }),
+        changePassword: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'user-change-password',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        accountMiniStatement: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'account-mini-statement',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        accountFullStatement: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'account-full-statement',
+                    method: 'post',
+                    body
+                };
+            }
+        }),
+        facematchithAccountnumber: builder.mutation({
+            query: (body) => {
+                return {
+                    url: 'facematch-with-accountnumber',
+                    method: 'post',
+                    body
+                };
+            }
         })
     })
 });
 
 export const {
+    useFacematchithAccountnumberMutation,
+    useAccountMiniStatementMutation,
+    useAccountFullStatementMutation,
+    useChangePasswordMutation,
+    useUpdateTransactionPinMutation,
     usePhysicalQrMutation,
     useDynamicQrMutation,
     useUssdRefferenceMutation,

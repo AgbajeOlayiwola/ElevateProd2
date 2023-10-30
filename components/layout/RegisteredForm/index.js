@@ -69,6 +69,11 @@ const ExistingMultiStep = () => {
             }));
         });
     }, []);
+    useEffect(() => {
+        if (localStorage.getItem('loginWith')) {
+            setPage(1);
+        }
+    }, []);
     const conditionalComponent = () => {
         switch (page) {
             case 0:
@@ -81,7 +86,21 @@ const ExistingMultiStep = () => {
                         }}
                     />
                 );
+
             case 1:
+                return (
+                    <div className={styles.livenes}>
+                        <Liveness
+                            action={() => {
+                                if (localStorage.getItem('loginWith')) {
+                                    setPage(2);
+                                }
+                            }}
+                        />
+                    </div>
+                );
+
+            case 2:
                 return (
                     <SecondStep
                         formData={formData}
@@ -93,20 +112,6 @@ const ExistingMultiStep = () => {
                             setPage(2);
                         }}
                     />
-                );
-
-            case 2:
-                return (
-                    <div className={styles.livenes}>
-                        <Liveness
-                            action={() => {
-                                setPage(3);
-                            }}
-                            back={() => {
-                                setPage(1);
-                            }}
-                        />
-                    </div>
                 );
             case 3:
                 return (

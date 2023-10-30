@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
     useBillerDetailsMutation,
+    useBillerValidationMutation,
     useMobiNetworksMutation,
     useMobileMoneyMutation
 } from '../../../redux/api/authApi';
@@ -24,6 +25,7 @@ const countryToCurrency = require('country-to-currency');
 const MobileMoney = ({ firstTitle, closeAction }) => {
     const dispatch = useDispatch();
     const [selectedAmountType, setSelectedAmountType] = useState();
+    const [billerId, setBillerId] = useState();
     const affiliate = localStorage.getItem('affiliateCode');
     const [showOtherFields, setShowOtherFields] = useState(false);
     const [arrayAmmount, setArryAmaount] = useState([]);
@@ -44,7 +46,8 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
         ecoSourceAccount: '',
         ammount: '',
         phoneNumbr: '',
-        naration: ''
+        naration: '',
+        customer_name: ''
     };
 
     const [
@@ -80,6 +83,18 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
             reset: billerDetailsReset
         }
     ] = useBillerDetailsMutation();
+    const [
+        billerValidation,
+        {
+            data: billerValidationData,
+            isLoading: billerValidationLoad,
+            isSuccess: billerValidationSuccess,
+            isError: billerValidationFalse,
+            error: billerValidationErr,
+            reset: billerValidationReset
+        }
+    ] = useBillerValidationMutation();
+
     useEffect(() => {
         mobiNetworks();
     }, []);
@@ -97,6 +112,29 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
             showSuccessToastMessage();
         }
     }, [mobileMoneySuccess]);
+    const validateBiller = (values) => {
+        const data = {
+            transactionReference: '',
+            transactionAmount: values?.ammount,
+            accountNumber: values?.ecoSourceAccount,
+            billerCode: billerDetailsData?.data?.billerDetail?.billerCode,
+            billerId: billerId,
+            customerName: '',
+            transactionType: 'MOBILEMONEY',
+            productCode:
+                billerDetailsData?.data?.billerProductInfo[0]?.productCode,
+            currency: countryToCurrency[`${affiliate.substring(1)}`],
+            formDataValue: [
+                {
+                    fieldName: 'BEN_PHONE_NO',
+                    fieldValue: values?.phoneNumbr,
+                    dataType: 'string'
+                }
+            ]
+        };
+        console.log(data);
+        billerValidation(data);
+    };
     return (
         <div>
             {mobileMoneySuccess ? (
@@ -114,9 +152,9 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                     Mobile Money Transfer Successful
                                 </SuccessMainHeading>
 
-                                {/* <h6 className={styles.elevateSuccess}>
-                                        Success
-                                    </h6> */}
+                                <h4 className={styles.elevateSuccess}>
+                                    {billerValidationData?.data?.customerName}
+                                </h4>
 
                                 <ButtonComp
                                     disabled={true}
@@ -148,9 +186,7 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                         billerCode:
                                             billerDetailsData?.data
                                                 ?.billerDetail?.billerCode,
-                                        billerId:
-                                            billerDetailsData?.data
-                                                ?.billerDetail?.billerId,
+                                        billerId: billerId,
                                         productCode:
                                             billerDetailsData?.data
                                                 ?.billerProductInfo[0]
@@ -247,7 +283,7 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                             <Loader />
                                         ) : (
                                             <div>
-                                                <label>Choose Category</label>
+                                                <label>Choose Network</label>
                                                 <select
                                                     onChange={(e) => {
                                                         setFieldValue(
@@ -271,6 +307,9 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                                         });
 
                                                         if (selBiller) {
+                                                            setBillerId(
+                                                                selBiller?.id
+                                                            );
                                                             console.log(
                                                                 selBiller?.amountType
                                                             );
@@ -333,42 +372,12 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                                 <br />
                                                 <br />
 
-                                                {selectedAmountType === 'V' ? (
-                                                    <div>
-                                                        <label>Amount</label>
-                                                        <div
-                                                            className={
-                                                                styles.ammt
-                                                            }
-                                                        >
-                                                            <p>
-                                                                {getSymbolFromCurrency(
-                                                                    countryToCurrency[
-                                                                        `${affiliate.substring(
-                                                                            1
-                                                                        )}`
-                                                                    ]
-                                                                )}
-                                                            </p>
-                                                            <input
-                                                                onChange={(
-                                                                    e
-                                                                ) => {
-                                                                    setFieldValue(
-                                                                        'ammount',
-                                                                        e.target
-                                                                            .value
-                                                                    );
-                                                                }}
-                                                                type="text"
-                                                                placeholder="Amount"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div>
-                                                        <label>
-                                                            Ammount{' '}
+                                                <div>
+                                                    <label>Amount</label>
+                                                    <div
+                                                        className={styles.ammt}
+                                                    >
+                                                        <p>
                                                             {getSymbolFromCurrency(
                                                                 countryToCurrency[
                                                                     `${affiliate.substring(
@@ -376,52 +385,50 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                                                     )}`
                                                                 ]
                                                             )}
-                                                        </label>
-                                                        <div
-                                                            className={
-                                                                styles.ammt
+                                                        </p>
+                                                        <input
+                                                            onChange={(e) => {
+                                                                setFieldValue(
+                                                                    'ammount',
+                                                                    e.target
+                                                                        .value
+                                                                );
+                                                            }}
+                                                            onBlur={() =>
+                                                                validateBiller(
+                                                                    values
+                                                                )
                                                             }
-                                                        >
-                                                            <select
-                                                                onChange={(
-                                                                    e
-                                                                ) => {
-                                                                    setFieldValue(
-                                                                        'ammount',
-                                                                        e.target
-                                                                            .value
-                                                                    );
-                                                                }}
-                                                                type="text"
-                                                                placeholder="data"
-                                                            >
-                                                                <option>
-                                                                    Choose
-                                                                    Amount
-                                                                </option>
-                                                                {arrayAmmount?.map(
-                                                                    (
-                                                                        item,
-                                                                        index
-                                                                    ) => {
-                                                                        return (
-                                                                            <option
-                                                                                key={
-                                                                                    index
-                                                                                }
-                                                                            >
-                                                                                {
-                                                                                    item
-                                                                                }
-                                                                            </option>
-                                                                        );
-                                                                    }
-                                                                )}
-                                                            </select>
-                                                        </div>
+                                                            type="text"
+                                                            placeholder="Amount"
+                                                        />
                                                     </div>
-                                                )}
+                                                </div>
 
+                                                <br />
+                                            </>
+                                        ) : null}
+                                        {billerValidationLoad ? (
+                                            <Loader />
+                                        ) : !billerValidationData ? null : (
+                                            <>
+                                                <div>
+                                                    <label>Customer Name</label>
+                                                    <div
+                                                        className={styles.ammt}
+                                                    >
+                                                        <input
+                                                            value={
+                                                                billerValidationData
+                                                                    ?.data
+                                                                    ?.customerName
+                                                            }
+                                                            type="text"
+                                                            placeholder="customer name"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <br />
                                                 <br />
                                                 <div>
                                                     <label>Narration</label>
@@ -459,7 +466,7 @@ const MobileMoney = ({ firstTitle, closeAction }) => {
                                                 <br />
                                                 <br />
                                             </>
-                                        ) : null}
+                                        )}
                                         <ButtonComp
                                             disabled={true}
                                             active={'active'}

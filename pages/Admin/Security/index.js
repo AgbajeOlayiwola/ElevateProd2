@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Formik } from 'formik';
+import React, { useEffect, useState } from 'react';
+import PasswordStrengthBar from 'react-password-strength-bar';
 import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import * as yup from 'yup';
+import { ButtonComp } from '../../../components';
 import BeneSvg from '../../../components/ReusableComponents/BeneSvg';
 import CustomerSingle from '../../../components/ReusableComponents/CustomerSingle';
+import Visbility from '../../../components/ReusableComponents/Eyeysvg';
+import OtpInput from '../../../components/ReusableComponents/Otpinput';
+import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
 import EditProfileSvg from '../../../components/ReusableComponents/ReusableSvgComponents/EditProfileSvg';
 import ProfileLayout from '../../../components/layout/ProfileLayout';
+import {
+    useChangePasswordMutation,
+    useUpdateTransactionPinMutation
+} from '../../../redux/api/authApi';
 import styles from './styles.module.css';
-
-import Visbility from '../../../components/ReusableComponents/Eyeysvg';
-import Loader from '../../../components/ReusableComponents/Loader';
-import PaymentSuccess from '../../../components/ReusableComponents/PopupStyle';
 
 const Security = () => {
     const dispatch = useDispatch();
@@ -49,178 +57,269 @@ const Security = () => {
             color: '#7A7978'
         }
     ];
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+    const [
+        updateTransactionPin,
+        {
+            data: updateTransactionPinData,
+            isLoading: updateTransactionPinLoad,
+            isSuccess: updateTransactionPinSuccess,
+            isError: updateTransactionPinFalse,
+            error: updateTransactionPinErr,
+            reset: updateTransactionPinReset
+        }
+    ] = useUpdateTransactionPinMutation();
 
+    const [otpValue, setOtpValue] = useState('');
+    const handleOtpChange = (otp) => {
+        setOtpValue(otp);
+    };
+    const [confOtpValue, setConfOtpValue] = useState('');
+    const handleConfOtpChange = (otp) => {
+        setConfOtpValue(otp);
+    };
+    const changeOtp = (e) => {
+        e.preventDefault();
+        const data = {
+            oldTransactionPin: otpValue,
+            newTransactionPin: confOtpValue
+        };
+        updateTransactionPin(data);
+    };
+
+    const showSuccessToastMessage = () => {
+        toast.success('Transaction Pin Updated ', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (updateTransactionPinSuccess) {
+            showSuccessToastMessage();
+        }
+    }, [updateTransactionPinSuccess]);
+    const showErroroastMessage = () => {
+        toast.error(updateTransactionPinErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (updateTransactionPinErr) {
+            showErroroastMessage();
+        }
+    }, [updateTransactionPinErr]);
+
+    const initSchema = yup.object().shape({
+        confirm_password: yup
+            .string()
+            .required('Please confirm password')
+            .oneOf([yup.ref('password'), null], 'Passwords must match'),
+        password: yup.string().required('Please enter your old password'),
+        new_password: yup.string().required('Enter your new password')
+    });
+
+    const initialValues = {
+        password: '',
+        confirm_password: '',
+        new_password: ''
+    };
+    const [
+        changePassword,
+        {
+            data: changePasswordData,
+            isLoading: changePasswordLoad,
+            isSuccess: changePasswordSuccess,
+            isError: changePasswordFalse,
+            error: changePasswordErr,
+            reset: changePasswordReset
+        }
+    ] = useChangePasswordMutation();
+    const showSuccessPassToastMessage = () => {
+        toast.success('Transaction Pin Updated ', {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (changePasswordSuccess) {
+            showSuccessPassToastMessage();
+        }
+    }, [changePasswordSuccess]);
+    const showErrorPassToastMessage = () => {
+        toast.error(changePasswordErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (changePasswordErr) {
+            showErrorPassToastMessage();
+            console.log(changePasswordErr);
+        }
+    }, [changePasswordErr]);
     const renderForm = () => {
         switch (text) {
             case 'Change Transaction Pin':
                 return (
-                    <form onSubmit={handleSubmit(changePin)}>
-                        <h2 className={styles.title}>Transaction Pin</h2>
-                        <div className={styles.groupForm}>
-                            <div className={styles.formGroup}>
-                                <label>Old Transaction Pin</label>
-                                <input
-                                    type="password"
-                                    placeholder="Old Transaction Pin"
-                                    {...register('oldPin', {
-                                        required:
-                                            'Old Transaction Pin is Required'
-                                    })}
-                                    value={oldTransactionPin}
-                                    onInput={(e) => {
-                                        setOldTransactionPin(e.target.value);
-                                    }}
-                                />
-                                <p className={styles.error}>
-                                    {errors?.oldPin?.message}
-                                </p>
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label>New Transaction Pin</label>
-                                <div className={styles.divs}>
-                                    <input
-                                        type={outType ? 'text' : 'password'}
-                                        placeholder="New Transaction Pin"
-                                        {...register('newPin', {
-                                            required: 'New Pin is Required'
-                                        })}
-                                        value={pin}
-                                        onInput={handlePin}
-                                    />
-                                    <Visbility typeSet={types} input="input" />
-                                </div>
-                                <p className={styles.error}>
-                                    {errors?.newPin?.message}
-                                </p>
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label>Confirm Transaction Pin</label>
-                                <div className={styles.divs}>
-                                    <input
-                                        type={outTyped ? 'text' : 'password'}
-                                        placeholder="Confirm Transaction Pin"
-                                        {...register('confirmPin', {
-                                            required: 'Confirm Pin is Required'
-                                        })}
-                                        value={confirmPin}
-                                        onChange={handleNewPin}
-                                    />
-                                    <Visbility typeSet={typed} input="input" />
-                                </div>
-                                {pin == confirmPin ? null : (
-                                    <p className={styles.error}>
-                                        {passwordMatch}
-                                    </p>
-                                )}
-                                <p className={styles.error}>
-                                    {errors?.confirmPin?.message}
-                                </p>
-                            </div>
+                    <form>
+                        <ToastContainer />
+                        <div className={styles.otpInputs}>
+                            <label>Old Transaction Pin</label>
+
+                            <br />
+                            <OtpInput
+                                onOtpChange={handleOtpChange}
+                                otpfields={6}
+                            />
                         </div>
-                        <div className={styles.profileBody}>
-                            {loading ? (
-                                <Loader />
-                            ) : (
-                                <button type="submit">Update</button>
-                            )}
+                        <br />
+                        <br />
+                        <div className={styles.otpInputs}>
+                            <label>New Transaction Pin</label>
+                            <br />
+                            <OtpInput
+                                onOtpChange={handleConfOtpChange}
+                                otpfields={6}
+                            />
                         </div>
+                        <br />
+                        <br />
+                        <br />
+                        <ButtonComp
+                            disabled={true}
+                            active={'active'}
+                            text={'Change Transaction Pin'}
+                            type="submit"
+                            onClick={changeOtp}
+                            loads={updateTransactionPinLoad}
+                        />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
                     </form>
                 );
             case 'Change Password':
                 return (
-                    <form onSubmit={handleSubmit(changePassword)}>
-                        <h2 className={styles.title}>New Password</h2>
-                        <div className={styles.groupForm}>
-                            <div className={styles.formGroup}>
-                                <label>Old Password</label>
-                                <input
-                                    type="password"
-                                    placeholder="Old Password"
-                                    {...register('oldPassword', {
-                                        required: 'Old Password is Required'
-                                    })}
-                                    value={oldPassword}
-                                    onInput={(e) => {
-                                        setOldPassword(e.target.value);
-                                    }}
-                                />
-                                <p className={styles.error}>
-                                    {errors?.oldPassword?.message}
-                                </p>
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label>New Password</label>
-                                <div className={styles.divs}>
-                                    <input
-                                        type={outType ? 'text' : 'password'}
-                                        placeholder="New Password"
-                                        {...register('newPassword', {
-                                            required: 'New Password is Required'
-                                        })}
-                                        value={password}
-                                        onInput={handlePwd}
+                    <Formik
+                        validationSchema={initSchema}
+                        initialValues={initialValues}
+                        // validateOnChange={true}
+                        onSubmit={(values, { setSubmitting }) => {
+                            const data = {
+                                currentPassword: values.password,
+                                newPassword: values.new_password
+                            };
+                            changePassword(data);
+                            setSubmitting(false);
+                        }}
+                    >
+                        {({
+                            values,
+                            errors,
+                            touched,
+                            handleChange,
+                            setFieldValue,
+                            handleSubmit
+                        }) => (
+                            <form onSubmit={handleSubmit}>
+                                <ToastContainer />
+                                <h2 className={styles.title}>New Password</h2>
+                                <div className={styles.groupForm}>
+                                    <div className={styles.formGroup}>
+                                        <label>Old Password</label>
+                                        <input
+                                            type="password"
+                                            placeholder="Old Password"
+                                            onChange={(e) =>
+                                                setFieldValue(
+                                                    'password',
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors ? (
+                                            <>{errors?.password}</>
+                                        ) : null}
+                                    </p>
+                                    <div className={styles.formGroup}>
+                                        <label>New Password</label>
+                                        <div className={styles.divs}>
+                                            <input
+                                                type={
+                                                    outType
+                                                        ? 'text'
+                                                        : 'password'
+                                                }
+                                                onChange={(e) =>
+                                                    setFieldValue(
+                                                        'new_password',
+                                                        e.target.value
+                                                    )
+                                                }
+                                                placeholder="New Password"
+                                            />
+                                            <Visbility
+                                                typeSet={types}
+                                                input="input"
+                                            />
+                                        </div>
+                                    </div>
+                                    <p className={styles.error}>
+                                        {errors ? (
+                                            <>{errors?.new_password}</>
+                                        ) : null}
+                                    </p>
+                                    <PasswordStrengthBar
+                                        password={values.new_password}
                                     />
-                                    <Visbility typeSet={types} input="input" />
-                                </div>
-                                <p className={styles.error}>
-                                    {errors?.newPassword?.message}
-                                </p>
-                            </div>
-                            {errorMessages === '' ? null : (
-                                <div className={styles.errorCont}>
-                                    <div
-                                        className={
-                                            errorMessages === 'Strong'
-                                                ? styles.strong
-                                                : errorMessages === 'Medium'
-                                                ? styles.medium
-                                                : errorMessages === 'Weak'
-                                                ? styles.errors
-                                                : styles.strong
-                                        }
-                                    >
-                                        <p>{errorMessages}</p>
+                                    <div className={styles.formGroup}>
+                                        <label>Confirm Password</label>
+                                        <div className={styles.divs}>
+                                            <input
+                                                placeholder="Confirm Password "
+                                                onChange={(e) =>
+                                                    setFieldValue(
+                                                        'confirm_password',
+                                                        e.target.value
+                                                    )
+                                                }
+                                                type={
+                                                    outTyped
+                                                        ? 'text'
+                                                        : 'password'
+                                                }
+                                            />
+                                            <Visbility
+                                                typeSet={typed}
+                                                input="input"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            )}
-                            <div className={styles.formGroup}>
-                                <label>Confirm Password</label>
-                                <div className={styles.divs}>
-                                    <input
-                                        placeholder="Confirm Password "
-                                        type={outTyped ? 'text' : 'password'}
-                                        {...register('confirmPassword', {
-                                            required:
-                                                'Confirm Password is Required'
-                                        })}
-                                        value={confirmPassword}
-                                        onChange={handlePaswword}
-                                    />
-                                    <Visbility typeSet={typed} input="input" />
-                                </div>
-                                {password == confirmPassword ? null : (
-                                    <p className={styles.error}>
-                                        {passwordMatch}
-                                    </p>
-                                )}
                                 <p className={styles.error}>
-                                    {errors?.confirmPassword?.message}
+                                    {errors ? (
+                                        <>{errors?.confirm_password}</>
+                                    ) : null}
                                 </p>
-                            </div>
-                        </div>
-                        <div className={styles.profileBody}>
-                            {loading ? (
-                                <Loader />
-                            ) : (
-                                <button type="submit">Update</button>
-                            )}
-                        </div>
-                    </form>
+                                <div className={styles.profileBody}>
+                                    <ButtonComp
+                                        disabled={true}
+                                        active={'active'}
+                                        text={'Change Password'}
+                                        type="submit"
+                                        loads={changePasswordLoad}
+                                    />
+                                </div>
+                            </form>
+                        )}
+                    </Formik>
                 );
         }
     };

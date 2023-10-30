@@ -21,7 +21,7 @@ import styles from './styles.module.css';
 
 const Collections = () => {
     const router = useRouter();
-
+    const affiliate = localStorage.getItem('affiliateCode');
     const dispatch = useDispatch();
     const [formType, setFormType] = useState('ussd only');
     // const [formData, setFormdata] = useState({ accountNum: '' });
@@ -592,14 +592,25 @@ const Collections = () => {
                 </div>
                 <div className={styles.cov}>
                     <PaymentCard title="Receive Payments" type="receive">
-                        {PaymentData.receive.map((payType, index) => (
-                            <PaymentSingleBody
-                                data={payType}
-                                key={index}
-                                type="receive"
-                                handleFormChange={handleFormChange}
-                            />
-                        ))}
+                        {affiliate !== 'ENG'
+                            ? PaymentData.receive
+                                  .filter((item) => item.text !== 'USSD only')
+                                  .map((payType, index) => (
+                                      <PaymentSingleBody
+                                          data={payType}
+                                          key={index}
+                                          type="receive"
+                                          handleFormChange={handleFormChange}
+                                      />
+                                  ))
+                            : PaymentData.receive.map((payType, index) => (
+                                  <PaymentSingleBody
+                                      data={payType}
+                                      key={index}
+                                      type="receive"
+                                      handleFormChange={handleFormChange}
+                                  />
+                              ))}
                     </PaymentCard>
                 </div>
             </div>

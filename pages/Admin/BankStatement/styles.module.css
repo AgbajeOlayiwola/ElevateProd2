@@ -10,7 +10,13 @@
     border-radius: 15px;
     padding: 20px 15px;
 }
-
+.chooseDate > select {
+    width: 30%;
+}
+.error {
+    color: red;
+    font-size: 16px;
+}
 .chooseDate div {
     cursor: pointer;
     background: #7fbb01;
@@ -224,7 +230,7 @@
 
 .amount {
     width: 15%;
-    text-align: center ;
+    text-align: center;
 }
 
 .bank {
@@ -292,7 +298,6 @@
 .paginationActive a {
     color: white;
 }
-
 
 .TableDetailBody {
     display: flex;
@@ -403,7 +408,7 @@
         margin-bottom: 12px;
         color: #545454;
     }
-    
+
     .balanceStatement div h2 {
         font-family: 'Inter';
         font-style: normal;
@@ -413,22 +418,20 @@
         letter-spacing: 0.02em;
         color: #001e28;
     }
-    .tableMain{
+    .tableMain {
         display: flex;
     }
     .TableDetailHeader {
         display: none;
     }
-    .beneficiariesMobile{
+    .beneficiariesMobile {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-    .beneficiariesMobile div{
+    .beneficiariesMobile div {
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
-  
 }
-

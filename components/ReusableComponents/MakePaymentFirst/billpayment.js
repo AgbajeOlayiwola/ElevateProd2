@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 
 import { useDispatch } from 'react-redux';
-import { loadbillerType } from '../../../redux/actions/billerTypeAction';
+import { useBillerCategoriesMutation } from '../../../redux/api/authApi';
 import Loader from '../Loader';
-import socialdata from '../Lotties/loading.json';
-import ArrowRightSvg from '../ReusableSvgComponents/ArrowRightSvg';
+import SelectBillerCategory from '../SelectBillerCategory';
 
 const BillPayment = ({
     action,
     firstTitle,
     buttonText,
-    arrowAction,
+
     airtimeAction,
     scheduleLater,
     dataAction,
@@ -22,64 +20,52 @@ const BillPayment = ({
     setFormdata,
     backAction
 }) => {
-    const [network, setNetwork] = useState();
-    const [networkData, setNetworkData] = useState({});
-    const [beneActive, setBeneActive] = useState();
-    // const [activeBtn, setActiveBtn] = useState(false);
-    const [billerCategories, setBillerCategories] = useState([]);
-    const [airtimeNetworkData, setAirtimeNetworkData] = useState([]);
     const [billerTypes, setBillerTypes] = useState([]);
     const [billerPlans, setBillerPlans] = useState();
-    const [billerId, setBillerId] = useState('');
-    const [dest, setDest] = useState('');
-    const [amount, setAmount] = useState('');
-    const [airtimebeneficiaries, setAirtimeBeneficiaries] = useState([]);
-    const [isLoadingg, setIsLoading] = useState(true);
-    const [isLoadinggg, setIsLoadinggg] = useState(false);
-    const [bene, setBene] = useState(false);
     const dispatch = useDispatch();
 
-    const socialOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: socialdata,
-        rendererSettings: {
-            preserveAspectRatio: 'xMidYMid slice'
-        }
-    };
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
     const loadbillerTypeData = () => {
         if (firstTitle !== 'Bill Payment') {
-            dispatch(loadbillerType(firstTitle));
         }
-        setBillerTypes([]);
-        setBillerPlans();
     };
+
+    const [
+        billerCategories,
+        {
+            data: billerCategoriesData,
+            isLoading: billerCategoriesLoad,
+            isSuccess: billerCategoriesSuccess,
+            isError: billerCategoriesFalse,
+            error: billerCategoriesErr,
+            reset: billerCategoriesReset
+        }
+    ] = useBillerCategoriesMutation();
+
+    useEffect(() => {
+        billerCategories(null);
+    }, []);
+    const [clickedItem, setClickedItem] = useState(null);
+    console.log(billerCategoriesData);
 
     return (
         <div>
-            <>
-                <h2 className={styles.firstTitle}>{firstTitle}</h2>
-                <div className={styles.billBody}>
-                    <div
-                        className={styles.billSingle}
-                        onClick={arrowAction}
-                        key={index}
-                    >
-                        <p>bill.categoryCode</p>
-                        <ArrowRightSvg />
-                    </div>
-                </div>
-            </>
-
-            {isLoading ? (
+            {billerCategoriesLoad ? (
                 <Loader />
             ) : (
-                <button type="submit">Get Utility</button>
+                <>
+                    <h2 className={styles.firstTitle}>{firstTitle}</h2>
+                    <div className={styles.billBody}>
+                        {billerCategoriesData?.data?.billerCategoryInfoList.map(
+                            (item, index) => {
+                                return (
+                                    <>
+                                        <SelectBillerCategory item={item} />
+                                    </>
+                                );
+                            }
+                        )}
+                    </div>
+                </>
             )}
         </div>
     );

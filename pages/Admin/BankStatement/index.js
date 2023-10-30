@@ -1,26 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './styles.module.css';
-import DashLayout from '../../../components/layout/Dashboard';
-import StorePopup from '../../../components/ReusableComponents/StorePopup';
-import CloseButton from '../../../components/ReusableComponents/CloseButtonSvg';
-import ReactPaginate from 'react-paginate';
-
-import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../../../components/ReusableComponents/Loader';
-import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import MoreAction from '../../../components/ReusableComponents/MoreAction';
-import PaymentSuccess from '../../../components/ReusableComponents/PaymentSuccess';
-import socialdata from '../../../components/ReusableComponents/Lotties/loading.json';
-import Lottie from 'react-lottie';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaDownload } from 'react-icons/fa';
-import withAuth from '../../../components/HOC/withAuth';
-import { bankAccountsData } from '../../../redux/actions/bankAccountsDetailsAction';
-import { loadAccountPrimary } from '../../../redux/actions/getPrimaryAccountAction';
-import { getDisputCategOryTypeGen } from '../../../redux/actions/getDisputeCategoryTypeAction';
-import { loadbankStatement } from '../../../redux/actions/bankStatementAction';
-import { getBalanceEnquiry } from '../../../redux/actions/balanceEnquieryAction';
-import { getFullStatementGen } from '../../../redux/actions/getFullStatementAction';
+import ReactPaginate from 'react-paginate';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CloseButton from '../../../components/ReusableComponents/CloseButtonSvg';
+import Loader from '../../../components/ReusableComponents/Loader';
+import PaymentSuccess from '../../../components/ReusableComponents/PaymentSuccess';
+import StorePopup from '../../../components/ReusableComponents/StorePopup';
+import {
+    useAccountFullStatementMutation,
+    useAccountMiniStatementMutation
+} from '../../../redux/api/authApi';
+import styles from './styles.module.css';
 
 const BankStatments = () => {
     const dispatch = useDispatch();
@@ -33,7 +26,7 @@ const BankStatments = () => {
     const usersPerPage = 15;
     const pagesVisited = pageNumber * usersPerPage;
     const pageCount = Math.ceil(tableDetails?.length / usersPerPage);
-
+    const { allAccountInfo } = useSelector((store) => store);
     const [date, setDate] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
@@ -56,6 +49,7 @@ const BankStatments = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
+    const [acctNum, setAcctNum] = useState(allAccountInfo[0]?.accountNo);
 
     const filterCondition = (item, searchType) => {
         switch (searchType) {
@@ -92,22 +86,87 @@ const BankStatments = () => {
         // unsubscribe from the event on component unmount
         return () => window.removeEventListener('resize', handleWindowResize);
     }, [width]);
+    const [selectAcc, setSelectAcct] = useState();
+
+    const [
+        accountMiniStatement,
+        {
+            data: accountMiniStatementData,
+            isLoading: accountMiniStatementLoad,
+            isSuccess: accountMiniStatementSuccess,
+            isError: accountMiniStatementFalse,
+            error: accountMiniStatementErr,
+            reset: accountMiniStatementReset
+        }
+    ] = useAccountMiniStatementMutation();
+    const [
+        accountFullStatement,
+        {
+            data: accountFullStatementData,
+            isLoading: accountFullStatementLoad,
+            isSuccess: accountFullStatementSuccess,
+            isError: accountFullStatementFalse,
+            error: accountFullStatementErr,
+            reset: accountFullStatementReset
+        }
+    ] = useAccountFullStatementMutation();
+
+    const showErrorPassToastMessage = () => {
+        toast.error(accountFullStatementErr?.data?.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            className: 'toast-message'
+        });
+        // closeAction();
+    };
+    useEffect(() => {
+        if (accountFullStatementErr) {
+            showErrorPassToastMessage();
+        }
+    }, [accountFullStatementErr]);
+    useEffect(() => {
+        accountMiniStatement({ accountNumber: acctNum });
+    }, []);
     return (
         <div className={styles.statementCover}>
+            <ToastContainer />
             <div className={styles.chooseDate}>
                 <select
-                    className={styles.accountNumbers}
+                    name="ecoSourceAccount"
                     onChange={(e) => {
-                        setAccount(e.target.value);
+                        const selectedAccount = allAccountInfo.find(
+                            (account) => account?.accountNo === e.target.value
+                        );
+                        if (selectedAccount) {
+                            setFieldValue(
+                                'ecoSourceAccount',
+                                selectedAccount?.accountNo
+                            );
+                            setFieldValue(
+                                'ecoAccountId',
+                                selectedAccount?.accountId
+                            );
+                            setFieldValue(
+                                'ecoCurrency',
+                                selectedAccount?.currency
+                            );
+                        }
                     }}
                 >
-                    {Object.keys(bankAccounts)?.map((accountNo, index) => {
-                        return (
-                            <option key={index}>
-                                {bankAccounts[accountNo].accountNumber}
-                            </option>
-                        );
-                    })}
+                    <option value="">Select Account To Use</option>
+                    {allAccountInfo
+                        .filter((account) => account.accountNo)
+                        .map((account) => {
+                            return (
+                                <>
+                                    <option
+                                        className={styles.accntP}
+                                        value={account?.accountNo}
+                                    >
+                                        <p>{account?.accountNo}</p>
+                                    </option>
+                                </>
+                            );
+                        })}
                 </select>
                 <div
                     onClick={() => {
@@ -118,7 +177,7 @@ const BankStatments = () => {
                     <p>Request Full Statement</p>
                 </div>
             </div>
-            {success ? (
+            {accountFullStatementSuccess ? (
                 <PaymentSuccess
                     overlay={overlay}
                     type="profile"
@@ -131,7 +190,7 @@ const BankStatments = () => {
                         setStartDate('');
                         setSuccess(false);
                     }}
-                    error={getFullStatementerrorMessage.response.data.message}
+                    error={accountFullStatementErr?.data?.message}
                 />
             ) : null}
             {date ? (
@@ -146,30 +205,38 @@ const BankStatments = () => {
                             />
                         </div>
                         <div className={styles.generateForm}>
-                            <div className={styles.formGroup}>
-                                <label>Choose Account</label>
-                                <select
-                                    name=""
-                                    id=""
-                                    onChange={(e) => {
-                                        setAccount(e.target.value);
-                                    }}
-                                >
-                                    <option value="">
-                                        Select Bank Account
-                                    </option>
-                                    {bankAccount?.map((item, index) => {
+                            <select
+                                name="ecoSourceAccount"
+                                onChange={(e) => {
+                                    const selectedAccount = allAccountInfo.find(
+                                        (account) =>
+                                            account?.accountNo ===
+                                            e.target.value
+                                    );
+                                    if (selectedAccount) {
+                                        console.log(selectedAccount);
+                                        setSelectAcct(
+                                            selectedAccount?.accountNo
+                                        );
+                                    }
+                                }}
+                            >
+                                <option value="">Select Account To Use</option>
+                                {allAccountInfo
+                                    .filter((account) => account.accountNo)
+                                    .map((account) => {
                                         return (
-                                            <option
-                                                key={index}
-                                                value={item.accountNumber}
-                                            >
-                                                {item.accountNumber}
-                                            </option>
+                                            <>
+                                                <option
+                                                    className={styles.accntP}
+                                                    value={account?.accountNo}
+                                                >
+                                                    <p>{account?.accountNo}</p>
+                                                </option>
+                                            </>
                                         );
                                     })}
-                                </select>
-                            </div>
+                            </select>
                             <div className={styles.formGroup}>
                                 <label>Start Date</label>
                                 <input
@@ -188,7 +255,7 @@ const BankStatments = () => {
                                     }}
                                 />
                             </div>
-                            {loading ? (
+                            {accountFullStatementLoad ? (
                                 <Loader />
                             ) : (
                                 <button
@@ -197,9 +264,9 @@ const BankStatments = () => {
                                         const data = {
                                             startRange: startDate,
                                             endRange: endDate,
-                                            accountId: id
+                                            accountId: selectAcc
                                         };
-                                        dispatch(getFullStatementGen(data));
+                                        accountFullStatement(data);
                                     }}
                                 >
                                     Generate
@@ -253,35 +320,6 @@ const BankStatments = () => {
                             }}
                         />
                     </div>
-                    {/* <div className={styles.tableFilter}>
-                            <div>
-                                <img src="../Assets/Svgs/search.svg" alt="" />
-                                <input
-                                    type="text"
-                                    placeholder={`Filter by ${searchType}`}
-                                    onChange={(e) => {
-                                        setSearchValue(e.target.value);
-                                    }}
-                                />
-                            </div>
-                            <select
-                                name=""
-                                id=""
-                                onChange={(e) => {
-                                    setSearchType(e.target.value);
-                                }}
-                            >
-                                <option value="amount">Amount</option>
-                                <option value="account">Account</option>
-                                <option value="type">Type</option>
-                            </select>
-                            <button>
-                        Filter
-                        <span>
-                            <img src="../Assets/Svgs/Vector 26.svg" alt="" />
-                        </span>
-                    </button>
-                        </div> */}
                 </div>
                 <div className={styles.tableFilters}>
                     {/* <h2
@@ -364,14 +402,12 @@ const BankStatments = () => {
                         {/* <div className={styles.more}></div> */}
                     </div>
                     <div className={styles.tableDivs}>
-                        {isLoading ? (
-                            <Lottie
-                                options={socialOptions}
-                                height={200}
-                                width={200}
-                            />
+                        {accountMiniStatementLoad ? (
+                            <Loader />
                         ) : !tableDetails.length ? (
-                            'No Recent transaction'
+                            <p className={styles.error}>
+                                {accountMiniStatementErr?.data?.message}
+                            </p>
                         ) : (
                             tableDetails
                                 ?.sort((x, y) => {
@@ -525,4 +561,4 @@ const BankStatments = () => {
     );
 };
 
-export default withAuth(BankStatments);
+export default BankStatments;

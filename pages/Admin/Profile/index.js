@@ -147,11 +147,12 @@ const Profile = () => {
         },
         // userProfileData.hasSetTransactionPin === true
         //     ? ''
-        //     : {
-        //           text: 'Set Transaction Pin',
-        //           icon: <ManageSignSvg />,
-        //           color: '#7A7978'
-        //       },
+        //     :
+        // {
+        //     text: 'Update Transaction Pin',
+        //     icon: <ManageSignSvg />,
+        //     color: '#7A7978'
+        // },
         // {
         //     text: 'Referral Code',
         //     icon: <EditProfileSvg />,
@@ -169,12 +170,12 @@ const Profile = () => {
         //     color: '#7A7978'
         // },
         {
-            text: 'Bank Verification Number (BVN)',
+            text: 'Bank ID Number',
             icon: <BvnSvg />,
             color: '#7A7978'
         },
         {
-            text: 'RM Name and Contact Details',
+            text: 'Relationship managers Name and Contact Details',
             icon: <RmSvg />,
             color: '#7A7978'
         },
@@ -265,6 +266,7 @@ const Profile = () => {
             reset: getRelationshipManagerReset
         }
     ] = useGetRelationshipManagerMutation();
+
     useEffect(() => {
         getRelationshipManager({ accountNo: allAccountInfo[0]?.accountNo });
     }, []);
@@ -649,12 +651,14 @@ const Profile = () => {
             //         </form>
             //     );
 
-            case 'Bank Verification Number (BVN)':
+            case 'Bank ID Number':
                 switch (count) {
                     case 0:
                         return (
                             <form onSubmit={handleViewBvn}>
-                                <h2 className={styles.title}>View my BVN</h2>
+                                <h2 className={styles.title}>
+                                    View my Bank ID Number
+                                </h2>
                                 <div className={styles.bvn}>
                                     <p>
                                         Kindly enter your details below to view
@@ -678,7 +682,7 @@ const Profile = () => {
                                         <label>Your BVN</label>
                                         <div className={styles.divs}>
                                             <input
-                                                value={profile?.user?.bvn}
+                                                value={profile?.user?.idNumber}
                                                 type={
                                                     outTyped
                                                         ? 'password'
@@ -697,14 +701,17 @@ const Profile = () => {
                                         <Loader />
                                     ) : (
                                         <button type="submit">
-                                            View my BVN
+                                            View my{' '}
+                                            {affiliate === 'ENG'
+                                                ? 'BVN'
+                                                : 'iD Number'}
                                         </button>
                                     )}
                                 </div>
                             </form>
                         );
                 }
-            case 'RM Name and Contact Details':
+            case 'Relationship managers Name and Contact Details':
                 switch (count) {
                     case 0:
                         return (
@@ -1004,80 +1011,16 @@ const Profile = () => {
             //                 />
             //             );
             //     }
-            // case 'Set Transaction Pin':
+            // case 'Update Transaction Pin':
             //     switch (count) {
             //         case 0:
             //             return (
             //                 <>
             //                     <h2 className={styles.title}>
-            //                         Set Transaction Pin
+            //                         Update Transaction Pin
             //                     </h2>
             //                     <form>
-            //                         <div className={styles.formGroup}>
-            //                             <label>
-            //                                 Enter your Transaction Pin
-            //                             </label>
-            //                             <div className={styles.divs}>
-            //                                 <input
-            //                                     placeholder="Enter your Password"
-            //                                     {...register('transactionPin', {
-            //                                         required:
-            //                                             'Transaction Pin is required',
-            //                                         minLength: {
-            //                                             value: 6,
-            //                                             message:
-            //                                                 'Min length is 6'
-            //                                         },
-            //                                         maxLength: {
-            //                                             value: 6,
-            //                                             message:
-            //                                                 'Max length is 6'
-            //                                         },
-            //                                         pattern: {
-            //                                             value: /^[0-9]/i,
-            //                                             message:
-            //                                                 'Transaction Pin can only be number '
-            //                                         }
-            //                                     })}
-            //                                     name="transactionPin"
-            //                                     type={
-            //                                         outPin ? 'text' : 'password'
-            //                                     }
-            //                                 />
-            //                                 <Visbility
-            //                                     typeSet={pin}
-            //                                     input="input"
-            //                                 />
-            //                             </div>
-            //                             <p className={styles.error}>
-            //                                 {errors?.transactionPin?.message}
-            //                             </p>
-            //                         </div>
-            //                         <div className={styles.formGroup}>
-            //                             <label>Enter your Password</label>
-            //                             <div className={styles.divs}>
-            //                                 <input
-            //                                     placeholder="Enter your Password"
-            //                                     {...register('password', {
-            //                                         required:
-            //                                             'Password is Required'
-            //                                     })}
-            //                                     name="password"
-            //                                     type={
-            //                                         outPinn
-            //                                             ? 'text'
-            //                                             : 'password'
-            //                                     }
-            //                                 />
-            //                                 <Visbility
-            //                                     typeSet={pin}
-            //                                     input="input"
-            //                                 />
-            //                             </div>
-            //                             <p className={styles.error}>
-            //                                 {errors?.password?.message}
-            //                             </p>
-            //                         </div>
+
             //                         {loading ? (
             //                             <Loader />
             //                         ) : (
@@ -1894,7 +1837,7 @@ const Profile = () => {
                                             action={() => {
                                                 if (
                                                     item.text ===
-                                                    'RM Name and Contact Details '
+                                                    'Relationship managers Name and Contact Details '
                                                 ) {
                                                     if (
                                                         RMDetails ===
